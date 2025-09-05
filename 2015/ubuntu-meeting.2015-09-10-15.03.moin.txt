@@ -1,0 +1,463 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 10 Sep at 15:03 &mdash; 15:36 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-09-10-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:21.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (49)
+ * pitti (39)
+ * infinity (24)
+ * tdaitx (16)
+ * bdmurray (15)
+ * doko (13)
+ * ubottu (13)
+ * cyphermox (11)
+ * barry (10)
+ * robru (6)
+ * caribou (5)
+ * meetingology (3)
+ * ogra_ (1)
+
+
+
+== Full Log ==
+
+
+ 15:03 <slangasek> #startmeeting
+
+ 15:03 <meetingology> Meeting started Thu Sep 10 15:03:46 2015 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <ogra_> oh, did MacSlow join foudations ?
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx)
+
+ 15:04 <slangasek> bdmurray infinity slangasek cyphermox barry caribou doko tdaitx sil2100 robru pitti
+
+ 15:04 <bdmurray> nvestigation into retracer issues and queue sizes
+
+ 15:04 <bdmurray> modifed the retracers to not try to get the core for a crash that has already been retraced
+
+ 15:04 <bdmurray> updated retracer.py not to log the swift token as it is noisy in the logs
+
+ 15:04 <bdmurray> wrote code to analyze successfully retraced armhf OOPSes to find buckets w/o bugs (to then manually open bugs)
+
+ 15:04 <bdmurray> worked on apport bug 1490030 (apport hook for shim-signed)
+
+ 15:04 <ubottu> bug 1490030 in shim-signed (Ubuntu) "shim-signed should include an apport hook applying to shim and shim-signed source packages" [Undecided,New] https://launchpad.net/bugs/1490030
+
+ 15:04 <bdmurray> modified merges.ubuntu.com reports not to show blacklisted packages
+
+ 15:04 <bdmurray> ✔ done
+
+ 15:05 <infinity> - Kernel SRU work
+
+ 15:05 <infinity> - Meetings, interviews, meetings, and more meetings
+
+ 15:05 <infinity> - Championed PPA deletion in the LP meeting for robru, should get that this cycle
+
+ 15:05 <infinity> - Fleshed out s390x in Launchpad plans in the same meeting
+
+ 15:05 <infinity> - Finally landed mirror fix to avoid Translations hash sum mismatches
+
+ 15:05 <infinity> - More work on glibc in both Debian and Ubuntu
+
+ 15:05 <infinity> - Bootstrapping s390x
+
+ 15:05 <infinity> (done)
+
+ 15:05 <barry> infinity: yay! re: mirror fix
+
+ 15:06 <infinity> Is mumble explodey for anyone else, or is it just me?
+
+ 15:06 <barry> infinity: seems ok
+
+ 15:07 <infinity> Weird.  It connects me, shows no channels, and eventually kicks me out again.
+
+ 15:07 <slangasek> * short week, Labor Day holiday
+
+ 15:07 <slangasek> * interviewing continues for the open generalist role
+
+ 15:07 <slangasek> * we are now also hiring for a dedicated zSeries engineer: https://ldd.tbe.taleo.net/ldd01/ats/careers/requisition.jsp?org=CANONICAL&cws=1&rid=1023
+
+ 15:07 <slangasek> * most of the week spent either interviewing or in planning meetings for s390x
+
+ 15:07 <slangasek> * also some discussions about golang for its in-progress MIR
+
+ 15:07 <slangasek> (done)
+
+ 15:07 <slangasek> * spent some time looking at component-mismatches, which is quite lengthy right now - particularly for packages needing demotion, seems this is a lot harder to keep clean ever since -proposed happened
+
+ 15:08 <doko> I always start with component-mismatches-proposed
+
+ 15:08 <slangasek> cyphermox:
+
+ 15:08 <cyphermox> - Monday was a national holiday.
+
+ 15:08 <cyphermox> - upload ubiquity 2.21.28
+
+ 15:08 <cyphermox> - fix NM bugs blocking autopkgtests
+
+ 15:08 <cyphermox> - skiboot SRU to vivid
+
+ 15:08 <cyphermox> - sponsored multipath bug fix for LP: #1489379 (libchecktur w/ -fexceptions)
+
+ 15:08 <cyphermox> - some debugging netcfg for setting the hostname in preseeded installs
+
+ 15:08 <ubottu> Launchpad bug 1489379 in multipath-tools (Ubuntu) "LTE: ISST:leeklp4 no mpath choices for install ubuntu 15.10" [High,Fix released] https://launchpad.net/bugs/1489379
+
+ 15:08 <cyphermox> - upload console-setup update to get dracut installable.
+
+ 15:08 <cyphermox> - reviewed/sponsored libreoffice, libreoffice-l10n, writer2latex, nlpsolver.
+
+ 15:08 <cyphermox> - setting up my environment for fwupdate testing
+
+ 15:09 <cyphermox> - blocked on firmware availability.
+
+ 15:09 <cyphermox> (done)
+
+ 15:09 <barry> short week due to usa holiday
+
+ 15:09 <barry> lots more py35 transition work.  down to 9 legit ftbfs in primary flavor seeds (an additional 4-5 ftbfs in all other seeds).  see email to ubuntu-devel@ for details (several fixes uploaded since then).  bugs filed on all packages.
+
+ 15:09 <barry> python-netaddr 0.17.7-1; LP: #1492359; python-testtools 1.4.0-0ubuntu2; LP: #1352900
+
+ 15:09 <ubottu> Launchpad bug 1492359 in genshi (Ubuntu) "genshi FTBFS with Python 3.5 in Wily" [High,Fix released] https://launchpad.net/bugs/1492359
+
+ 15:09 <ubottu> Launchpad bug 1352900 in pypy (Ubuntu) "[MIR] pypy" [Undecided,Fix released] https://launchpad.net/bugs/1352900
+
+ 15:09 <barry> interviews, etc.
+
+ 15:09 <barry> --done--
+
+ 15:09 * infinity gives up on mumble.
+
+ 15:10 <slangasek> caribou:
+
+ 15:10 <caribou> Bugfix:
+
+ 15:10 <caribou> - lucid -> precise -> trusty upgrade issue
+
+ 15:11 <caribou> * Unbootable system after upgrade (LP: #1491894)
+
+ 15:11 <ubottu> Launchpad bug 1491894 in grub2 (Ubuntu Trusty) "lucid to precise to trusty upgrade may leave system unbootable" [High,In progress] https://launchpad.net/bugs/1491894
+
+ 15:11 <caribou> Able to reproduce, working on a fix
+
+ 15:11 <caribou> ☑ Done
+
+ 15:11 <doko> - looking at the ruby mess. ruby2.2 was added as supported this cycle, but nobody rebuilt packages. done that.
+
+ 15:11 <doko> - made ruby-rspec build by dropping most of the test dependencies (universe)
+
+ 15:11 <doko> - ruby fixing, syncing, cursing ...
+
+ 15:11 <doko> - python3.5 rc3
+
+ 15:11 <doko> - openjdk-7, openjdk-8, openjdk-9 updates
+
+ 15:11 <doko> - MIRs, ruby package removals, syncs, merges, fix ftbfs's
+
+ 15:11 <doko> - s390x cross toolchains
+
+ 15:11 <doko> - s390x meeting
+
+ 15:11 <doko> - some more GCC triggered transitions nbs is clean again, update_output.txt as well.
+
+ 15:11 <doko> - started to re-enable pypy-* packages.
+
+ 15:11 <doko> (done)
+
+ 15:11 <tdaitx> * Short week, holiday on Monday (2015-09-07)
+
+ 15:11 <tdaitx> Current/Past
+
+ 15:11 <tdaitx> - Investigated a few
+
+ 15:11 <tdaitx> - Provided pull requests for JRuby (https://github.com/jruby/jruby/pull/3309 and https://github.com/jruby/jruby/pull/3310) to fix mspec failure (LP: #1491526)
+
+ 15:11 <tdaitx> - Refreshed patch to include dep3 info (Debian #794190)
+
+ 15:11 <tdaitx> - Found regression on JDK7 TLS 1.2 backports, investigating cause (LP: #1482924)
+
+ 15:11 <tdaitx> Next steps
+
+ 15:11 <ubottu> Launchpad bug 1491526 in jruby (Ubuntu) "jruby FTBFS when running mspec tests" [Undecided,New] https://launchpad.net/bugs/1491526
+
+ 15:11 <tdaitx> - Refactor JRuby 3310 pull request
+
+ 15:11 <tdaitx> - Fix JDK TLS 1.2 regression
+
+ 15:12 <tdaitx> - Guarantee that local JCK 7 tests are running fine for trusty, then move those to canonistack
+
+ 15:12 <tdaitx> - Setup and use umt schroots, move them to canonistack
+
+ 15:12 <ubottu> Debian bug 794190 in quota "quota FTBFS on wily proposed due to wrong LDFLAGS usage" [Important,Open] http://bugs.debian.org/794190
+
+ 15:12 <tdaitx> Waiting/On hold
+
+ 15:12 <ubottu> Launchpad bug 1482924 in openjdk-7 (Ubuntu) "Regressions due to USN-2696-1" [Undecided,New] https://launchpad.net/bugs/1482924
+
+ 15:12 <tdaitx> - trust-store (universe) blocks pulseaudio (main); found MIR request but I'm unable to change status, left a comment but no answer so far (LP: #1338587)
+
+ 15:12 <ubottu> Launchpad bug 1338587 in trust-store (Ubuntu) "[MIR] trust-store" [Undecided,Fix released] https://launchpad.net/bugs/1338587
+
+ 15:12 <tdaitx> (done)
+
+ 15:12 <robru> (short week with labour day)
+
+ 15:12 <robru> lp:cupstream2distro
+
+ 15:12 <robru> - set the request creator's name in debian/changelog rather than using ci train bot name.
+
+ 15:12 <robru> - call checkUpload to enforce correct package upload permissions, ending honor system that used to be in place
+
+ 15:12 <robru> - eliminated the need to ever reconfigure a silo by sourcing info directly from bileto (this was a massive architectural shift that took a bunch of work which is why this list is really short) (also this isn't in production yet)
+
+ 15:12 <robru> (done)
+
+ 15:12 <pitti> sil2100 is on vac
+
+ 15:12 <pitti> systemd:
+
+ 15:12 <pitti> - integrate networkd with the distro (resolvconf, if-*.d hooks) and document how to enable it (https://blueprints.launchpad.net/ubuntu/+spec/foundations-w-networkd-vs-ifupdown), announce to u-devel@
+
+ 15:12 <pitti> - fix various regressions in trunk spotted by our daily(ish) upstream package builds, provide 226 in PPA for testing
+
+ 15:12 <pitti> autopkgtest:
+
+ 15:12 <pitti> - Add fallback for dealing with build profiles with trusty's libdpkg-perl, to fix linux tests
+
+ 15:12 <pitti> - Fix armhf/ppc64el autopkgtest runners to pull from ftpmaster.internal
+
+ 15:12 <pitti> - Discuss kernel version reporting in tests with apw
+
+ 15:13 <pitti> misc:
+
+ 15:13 <pitti> - Build new 15.04 langpacks with libusermetrics (#1484882)
+
+ 15:13 <pitti> - Investigate NetworkManager test regressions; make some adjustments, file #1492126 and #1492168 for root causes
+
+ 15:13 <pitti> - Some travel preps for the snappy sprint
+
+ 15:13 <pitti> - usual daily -proposed cleanup/unblocking/investigations
+
+ 15:13 <pitti> [END]
+
+ 15:13 <barry> pitti: love the new summary at the end of adt-run
+
+ 15:13 <pitti> barry: me too! nice idea
+
+ 15:14 <pitti> barry: one of these 5 s improvements :)
+
+ 15:14 <barry> pitti: :)
+
+ 15:15 <slangasek> tdaitx: "unable to change status" - so we need to get you bug privileges still?
+
+ 15:17 <tdaitx> slangasek, possibly, I was not sure if I should have them already or just after I got in as a core dev
+
+ 15:18 <slangasek> tdaitx: there's a separate process for getting bug triaging privileges that doesn't require you to be an Ubuntu dev; bdmurray probably has the link handy :)
+
+ 15:18 <infinity> I don't see why that MIR would need its status changed?
+
+ 15:18 <slangasek> tdaitx: though for MIR bugs, note that the bug is a process bug so you probably don't need to change its state anyway, the MIR team does this
+
+ 15:19 <bdmurray> tdaitx: https://wiki.ubuntu.com/UbuntuBugControl
+
+ 15:19 <bdmurray> "Requirement 4 can be waived if you are an upstream developer or bug triager or if a Ubuntu developer vouches for you (your triaging ability)."
+
+ 15:19 <slangasek> any other questions over status?
+
+ 15:21 <slangasek> [TOPIC] AOB
+
+ 15:21 <slangasek> pitti, bdmurray: there's a bug escalated by the phone team about apport that I'd like to get your input on
+
+ 15:21 <slangasek> bug #1278780
+
+ 15:21 <ubottu> bug 1278780 in apport (Ubuntu) "apport takes too long to write crash report, appears to lock up phone" [High,Triaged] https://launchpad.net/bugs/1278780
+
+ 15:21 <pitti> slangasek: I've seen it; you summarized it well
+
+ 15:21 <slangasek> ok
+
+ 15:22 <pitti> apart from the nice level tweakage I'm afraid I don't have any othe magic sauce to pour over this, though
+
+ 15:22 <infinity> tdaitx: For MIRs of this nature specifically, if something has been in main in the past and fell out again (because it was unseeded or nothing depended on it anymore), just poke an archive admin with a pointer to the old bug/status, and we can re-promote it (done now).
+
+ 15:22 <slangasek> I think the short term plan is that crash reporting will be disabled on the phone by default until they can give us something more fine-grained for blacklisting
+
+ 15:22 <pitti> high nice level is better for background processes and worse for foreground, so maybe we should optimize for the latter
+
+ 15:23 <pitti> slangasek: but TBH I doubt that it'll make a noticeable difference
+
+ 15:23 <pitti> it might suck a tad less, but it'd still suck
+
+ 15:23 <slangasek> pitti: would you be ok with dropping the os.nice() call anyway, to see if it does make a difference?
+
+ 15:23 <pitti> slangasek: yes, I'm fine with that; I'd just not claim that this would fix the bug
+
+ 15:23 <doko> tdaitx, no need to redo the MIR, it already was approved. promoted that
+
+ 15:23 <slangasek> and am I right that when the unity system compositor is what crashes, the kernel has to dump all the mapped memory, including the graphics buffers?
+
+ 15:24 <tdaitx> bdmurray, slangasek yeah, I have that page saved, I am in the bug squad and was collecting additional triaging experience before I sent out my request to join bug control
+
+ 15:24 <bdmurray> Disabling by default seems a bit drastic to me. Given pitti's changes to apport, which has resulted in more crashes being reported, have there actually been more reports complaints re "appears to lock up phone"
+
+ 15:24 <pitti> slangasek: I'm less sure about that (not famiilar with the innards of core dumps), but it seems likely
+
+ 15:24 <slangasek> bdmurray: yes, there have
+
+ 15:25 <slangasek> bdmurray: and it's a grave issue, including potentially a regulatory one if the phone is blocked and you can't make an emergency call
+
+ 15:25 <barry> on a different note, is anybody here a libunity expert (or know one)?
+
+ 15:25 <bdmurray> slangasek: alrighty
+
+ 15:25 <infinity> slangasek: That would certainly have been true in the old skool Xorg days with an mmapped /dev/mem, can't say how unity8/mir behave in that regard, but it seems likely.
+
+ 15:26 <slangasek> bdmurray: I'm going to continue pressing the phone team for a fine-grained blacklist so that we can do something better than disabling it by default, but I don't think we should block on this
+
+ 15:26 <bdmurray> it looks like Laney has been working on the ability to turn on and off crash reporting
+
+ 15:26 <slangasek> infinity, pitti: what if the system compositor had a custom SIGSEGV handler to unmap the video buffers and reraise the signal?
+
+ 15:27 <slangasek> bdmurray: there's a toggle for it in the UI that apparently doesn't work right currently
+
+ 15:27 <pitti> slangasek: that would certainly be very helpful
+
+ 15:27 <slangasek> pitti: "helpful" - but would it be sane? :)
+
+ 15:27 <infinity> "maybe".
+
+ 15:27 <bdmurray> slangasek: right, he's made some changes to whoopsie-preferences today see bug 1437633
+
+ 15:27 <ubottu> bug 1437633 in Canonical System Image "Choosing not to report crashes and errors setting reverts" [Critical,In progress] https://launchpad.net/bugs/1437633
+
+ 15:27 <pitti> slangasek: for most processes it shouldn't take that long, supposedly not manyu programs are handling huge gfx buffers
+
+ 15:27 <infinity> Manipulating memory after a crash is always iffy.
+
+ 15:27 <pitti> slangasek: absolutely, yes
+
+ 15:28 <infinity> We have such features intentionally disabled in glibc because it's pretty lolz to operate on pointers that might be pointing to another universe.
+
+ 15:28 <pitti> slangasek: it's dramatically unlikely that a stack trace goes "through" the framebuffer, there should be no code there
+
+ 15:28 <pitti> slangasek: and in the end the stack trace is all that we keep anyway for a successful retrace
+
+ 15:28 <slangasek> bdmurray: right, that's the other bug that pmcgowan mentioned
+
+ 15:28 <pitti> slangasek: so freeing data can only be helpful
+
+ 15:28 <slangasek> pitti, bdmurray: so it seems at least worth suggesting this to the unity team
+
+ 15:28 <infinity> pitti: If the crash is in shader magic or something, it could absolutely be running rampant through video memory.
+
+ 15:29 <slangasek> infinity: would that show on the process stack?
+
+ 15:29 <pitti> infinity: well, we can't dump GPU code anyway, can we/
+
+ 15:29 <pitti> ?
+
+ 15:29 <infinity> slangasek: Hrm.  Probably not, I suppose.  Would just be an opaque call from libgl.  Probably.
+
+ 15:29 <infinity> I'm a bit rusty on all of that, it's been a decade since I lived with daniels.
+
+ 15:29 <pitti> I mean, if we have the choice between "no bugs for unity" vs. "a few corner cases have broken stack traces", the former sounds much more desirable
+
+ 15:29 <pitti> err, the latter
+
+ 15:29 <slangasek> ok, I'll suggest this then, thanks
+
+ 15:30 <pitti> (not that unity having no bugs wouldn't be desirable..)
+
+ 15:30 <slangasek> (I'm not sure how much of the process's memory will actually be video buffers, but it's worth looking at)
+
+ 15:30 <pitti> slangasek: are you aware of the "gcore" tool?
+
+ 15:30 <slangasek> no
+
+ 15:30 <infinity> pitti: We can dump GPU code, but it would be an entirely different trace, via a callback to the kms driver or libgl.
+
+ 15:30 <pitti> slangasek: quite handy for doing such comparisons without acutally having to crash your program
+
+ 15:30 <infinity> pitti: See all the Intel GPU vomit one gets in dmesg. :P
+
+ 15:31 <slangasek> pitti: ah nice
+
+ 15:31 <pitti> infinity: right, I thought X (or kernel or whatever) has some special apport hooks for that
+
+ 15:31 <infinity> pitti: X does, yes.
+
+ 15:31 <pitti> slangasek: so one could do gcore / do something to trigger video memory free / gcore again / compare
+
+ 15:31 <infinity> pitti: Mir probably wants the same ones.
+
+ 15:31 <slangasek> pitti: pmap might also give us the info we need for this
+
+ 15:32 <slangasek> infinity: if the phone were using KMS, sure ;)
+
+ 15:32 <slangasek> (yes eventually we want it for the desktop if we don't have it there already)
+
+ 15:32 <bdmurray> its probably worth noting that fixing bug 1437633 won't actually stop apport from creating crash reports
+
+ 15:32 <ubottu> bug 1437633 in Canonical System Image "Choosing not to report crashes and errors setting reverts" [Critical,In progress] https://launchpad.net/bugs/1437633
+
+ 15:33 <slangasek> ah because that's a setting for reporting crashes
+
+ 15:33 <slangasek> bdmurray: thanks for catching that
+
+ 15:33 <bdmurray> bug 1389407 might be better
+
+ 15:33 <slangasek> so really we're looking at an upstart override or something here
+
+ 15:33 <ubottu> bug 1389407 in ubuntu-system-settings (Ubuntu RTM) "choosing not to report "app crashes and errors" leaves apport and whoopsie running" [High,Confirmed] https://launchpad.net/bugs/1389407
+
+ 15:34 <slangasek> right
+
+ 15:34 <slangasek> bdmurray: thanks
+
+ 15:34 <slangasek> anything else?
+
+ 15:34 <pitti> slangasek: bug updated
+
+ 15:36 <slangasek> going....
+
+ 15:36 <slangasek> going...
+
+ 15:36 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

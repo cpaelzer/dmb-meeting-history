@@ -1,0 +1,490 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 05 Dec at 16:04 &mdash; 16:35 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-12-05-16.04.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:05.
+
+
+=== FeatureDefinitionFreeze ===
+The discussion about "FeatureDefinitionFreeze" started at 16:30.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:33.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (37)
+ * slangasek (36)
+ * stgraber (34)
+ * jodh (32)
+ * ubottu (27)
+ * xnox (20)
+ * cjwatson (12)
+ * barry (10)
+ * doko (7)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:04 <slangasek> #startmeeting
+
+ 16:04 <meetingology> Meeting started Thu Dec  5 16:04:52 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:04 <meetingology> 
+
+ 16:04 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:05 <slangasek> [TOPIC] Lightning round
+
+ 16:05 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson xnox stokachu)
+
+ 16:05 <slangasek> xnox stokachu slangasek jodh cjwatson doko stgraber barry bdmurray
+
+ 16:05 <xnox> \o/
+
+ 16:05 <xnox> boot-ui:
+
+ 16:05 <xnox> * Fixed bug #540645
+
+ 16:05 <xnox> discard:
+
+ 16:05 <xnox> * Work on bug #1039887, merge proposal sent, but i don't like the
+
+ 16:05 <xnox> approach i took.
+
+ 16:05 <ubottu> bug 540645 in plymouth (Ubuntu Precise) "no fsck messages shown in details mode (no splash on cmdline)" [Undecided,Confirmed] https://launchpad.net/bugs/540645
+
+ 16:05 <xnox> cross-compile:
+
+ 16:05 <ubottu> bug 1039887 in mountall (Ubuntu) "fstab does not honor /proc mount options" [Medium,Triaged] https://launchpad.net/bugs/1039887
+
+ 16:05 <xnox> * sent qmake/cmake/qt cross-compilation status report to doko
+
+ 16:05 <xnox> mdadm-by-default:
+
+ 16:05 <xnox> * working on merging mdadm container support into d-i (grub-installer
+
+ 16:05 <xnox> patch appears to be incomplete)
+
+ 16:05 <xnox> * working on restructuring dmraid/mdadm activation (testing locally)
+
+ 16:05 <xnox> misc:
+
+ 16:05 <xnox> * assisted with ubiquity autopilot tests, now running in
+
+ 16:05 <xnox> jenkins.qa.ubuntu.com
+
+ 16:05 <xnox> * transitions, build-fixes, cross-build fixes...
+
+ 16:05 <xnox> ..
+
+ 16:07 <slangasek> stokachu let me know he can't make the meeting this week - or for all of December actually, but he will be sending a delegate to the meetings for the rest of the month when he can
+
+ 16:07 <doko> may I conitnue? have to leave early
+
+ 16:07 <slangasek> and I have nothing to report, other than [VAC] :)
+
+ 16:07 <slangasek> jodh:
+
+ 16:08 <jodh> * Upstart
+
+ 16:08 <jodh> - core-1311-upstart-roadmap: Good progress on cgroup support,
+
+ 16:08 <jodh> although we can only go so far until the cgroup manager (cgmanager)
+
+ 16:08 <jodh> spec is completed (bp core-1311-cgroup-manager):
+
+ 16:08 <jodh> - Updated spec (http://upstart.ubuntu.com/wiki/Cgroup) with further
+
+ 16:08 <jodh> sub-cgroup details and new initctl command.
+
+ 16:08 <jodh> - Discussions with straber and hallyn on end-to-end handling of
+
+ 16:08 <jodh> interactions between Upstart and the cgmanager.
+
+ 16:08 <jodh> - Wrote parsing code and subset of parser tests for "cgroup" stanza.
+
+ 16:08 <jodh> - Wrote scafolding code that will eventually call the cgmanager.
+
+ 16:08 <jodh> - Implemented some of the serialisation+deserialisation code for the
+
+ 16:08 <jodh> cgroup handling.
+
+ 16:08 <jodh> - Raised bug 1258098 - in progress (currently working on new tests).
+
+ 16:08 <ubottu> bug 1258098 in upstart "D-Bus session bus address not serialised" [Medium,New] https://launchpad.net/bugs/1258098
+
+ 16:08 <jodh> * TODO:
+
+ 16:08 <jodh> - upstart cgroups:
+
+ 16:08 <jodh> - Implement D-Bus method and initctl command to notify Upstart of
+
+ 16:08 <jodh> cgroup managers address.
+
+ 16:08 <jodh> - Work with stgraber+hallyn to identify best way to avoid upstart
+
+ 16:08 <jodh> blocking on the cgroup manager.
+
+ 16:08 <jodh> - Update the spec to add an explanation of how Upstart will
+
+ 16:09 <jodh> communicate with the cgmanager.
+
+ 16:09 <jodh> - coerce Upstart devs to help clear the MP backlog :)
+
+ 16:09 <jodh> ⥟
+
+ 16:09 <slangasek> doko: go ahead now
+
+ 16:09 <doko> - compiler work, cross compiler work, bootstrap work, breaking the world with a soname bump
+
+ 16:10 <doko> - aarch64 now has ssp, but not yet enabled by default
+
+ 16:10 <doko> (done)
+
+ 16:10 <cjwatson> Off on Monday with an eye injury.  Mostly better now.
+
+ 16:10 <cjwatson> Resurrected my auto-cross-builder.
+
+ 16:10 <cjwatson> Fixed rsyslog regression that broke permission handling in /var/log (bug 1256695, plus bug 484336 as a bonus).
+
+ 16:10 <ubottu> bug 1256695 in rsyslog (Ubuntu Trusty) "cannot create log files in /var/log" [Critical,Fix released] https://launchpad.net/bugs/1256695
+
+ 16:10 <cjwatson> Otherwise I've pretty much been in a cave working on GRUB, particularly for several customer bugs.  These have included:
+
+ 16:10 <ubottu> bug 484336 in rsyslog (Ubuntu) "/etc/rsyslog.conf permissions incorrect/missing for creation of dynamic files" [Undecided,Fix released] https://launchpad.net/bugs/484336
+
+ 16:10 <cjwatson> - Bug 1097570: backported to precise and awaiting SRU review.
+
+ 16:10 <ubottu> bug 1097570 in grub2 (Ubuntu Precise) "grub2-signed can not find the right device when there are two filesystems containing the file '.disk/info'." [High,In progress] https://launchpad.net/bugs/1097570
+
+ 16:10 <cjwatson> - Bug 1240360: fixed in unstable/trusty; backported to precise and awaiting SRU review.
+
+ 16:10 <ubottu> bug 1240360 in OEM Priority Project "Rename boot option from "recovery mode" to "safe mode" in GRUB menu" [High,In progress] https://launchpad.net/bugs/1240360
+
+ 16:10 <cjwatson> - Bug 1178618: fixed upstream after several iterations to get the basic approach right; backported to unstable/trusty; backported to precise and awaiting SRU review.
+
+ 16:10 <ubottu> bug 1178618 in grub2 (Ubuntu Precise) "--hotkey option does not work when the menu is hidden" [Medium,Triaged] https://launchpad.net/bugs/1178618
+
+ 16:10 <cjwatson> - Bug 1065281: isolated what will hopefully be the last piece of this, a patch from GRUB 2.00 that we never backported; committed backport for next precise upload.
+
+ 16:10 <ubottu> bug 1065281 in grub2 (Ubuntu Precise) "Installer crashed when trying to partition 4k/4k sector hard disks" [High,In progress] https://launchpad.net/bugs/1065281
+
+ 16:10 <cjwatson> - Bug 1237519: arranged to read partition start offsets from sysfs; fixed upstream; committed backport for next unstable/trusty upload; working on backport for next precise upload.
+
+ 16:10 <ubottu> bug 1237519 in grub2 (Ubuntu Precise) "Grub2 fails to install to non-standard device path" [High,In progress] https://launchpad.net/bugs/1237519
+
+ 16:10 <cjwatson> - Extensive work on a new snapshot for experimental, intending to get this into trusty before the Christmas break so that we can see how it fares with new ports (ARM, ARM64, PV-GRUB2).  Initial upload almost ready; current roadblock is a grub-install bug.
+
+ 16:10 <cjwatson> ..
+
+ 16:11 <stgraber> Hard to know what to report on since we haven't met in quite a while :)
+
+ 16:11 <stgraber> Anyway, in the past few weeks, I've mostly been doing:
+
+ 16:11 <stgraber> - cgmanager
+
+ 16:11 <stgraber> - Helped refine the design and provided prototype implementation
+
+ 16:11 <stgraber> - Published the cgroup spec for Upstart on the wiki: http://upstart.ubuntu.com/wiki/Cgroup
+
+ 16:11 <stgraber> - Now helping Serge fight with DBus and libnih limitations
+
+ 16:11 <stgraber> (it's not impossible that we may have to give up and go back to our own minimal protocol)
+
+ 16:11 <stgraber> - Setup initial website and mailing-list
+
+ 16:11 <stgraber> - LXC
+
+ 16:11 <slangasek> stgraber: any more info you can provide on the status of core-1311-cgroup-manager?  (since jodh mentions things are blocked on the upstart side)
+
+ 16:11 <stgraber> - Updated our python3 binding with a dozen missing functions/properties
+
+ 16:11 <stgraber> - Setup auto-generated documentation at http://qa.linuxcontainers.org/master/current/doc/ (thanks to jodh for the doxygen support!)
+
+ 16:11 <stgraber> - Setup a new mailman server for linuxcontainers.org, planning to migrated all the container mailing-lists on Sunday
+
+ 16:11 <stgraber> - A ton of code review and dealing with existing bug reports and pull requests
+
+ 16:11 <stgraber> - Tested unprivileged containers, now waiting for the 3.13 based kernel to actually have this working
+
+ 16:11 <slangasek> jodh: "notify Upstart of cgroup manager's address" - er, surely the cgroup manager should have a well-known address!?
+
+ 16:11 <stgraber> - Working on a config rework branch
+
+ 16:11 <stgraber> - Working on the container auto-start branch
+
+ 16:11 <stgraber> - Porting lxc-start-ephemeral to the new clone binding
+
+ 16:11 <stgraber> - Ubuntu touch
+
+ 16:11 <stgraber> - Wrote a few more tests for the system-image ports branch
+
+ 16:11 <stgraber> - Setup goldfish as a new device target in trusty
+
+ 16:11 <stgraber> - Helped debug some problems (that turned out not to really be problems)
+
+ 16:11 <stgraber> - ISO tracker integration work
+
+ 16:12 <stgraber> - SRU and New reviews
+
+ 16:12 <slangasek> doko: what soname bump are you breaking the world with?
+
+ 16:12 <stgraber> - A bunch of merges (and still slowly working on resolvconf on the side)
+
+ 16:12 <barry> stgraber: mailman3 right? <wink>
+
+ 16:12 <stgraber> (DONE)
+
+ 16:12 <stgraber> slangasek: hallyn is doing most of the implementation which so far unfortunately meant a lot of head banging because of DBus acting rather weirdly with userns
+
+ 16:12 <stgraber> barry: 12.04, so mailman 2.1
+
+ 16:12 <barry> stgraber: yeah, just kidding :)
+
+ 16:12 <doko> slangasek, I think that was pcre3
+
+ 16:12 <jodh> slangasek: we're not strictly blocked just yet - there are still tests I can write.
+
+ 16:12 <barry> system-image 2.0.2; LP: #1215586 (deferred); LP: #1257757; LP: #1256947
+
+ 16:12 <ubottu> Launchpad bug 1215586 in ubuntu-system-settings "The u/i cannot handle the array-of-dictionaries update descriptions" [High,Triaged] https://launchpad.net/bugs/1215586
+
+ 16:12 <jodh> slangasek: re address, maybe - it's not spec'ed yet?
+
+ 16:12 <ubottu> Launchpad bug 1257757 in system-image (Ubuntu) "/usr/sbin/system-image-dbus:FileNotFoundError:get_keyring:verify:__exit__:_exit_wrapper:<lambda>:_check_for_update:check_for_update:run_until:_get_blacklist_1:get_keyring:__exit__:__exit__:_exit_wrapper" [Undecided,Incomplete] https://launchpad.net/bugs/1257757
+
+ 16:12 <ubottu> Launchpad bug 1256947 in system-image (Ubuntu) "Incorrect use of context managers causes FTBFS on buildds" [Critical,In progress] https://launchpad.net/bugs/1256947
+
+ 16:12 <barry> debian bug #731280 (genshi 0.7 + python 3); debian bug #731187 (retest); flufl.i18n conversion to pybuild; debian bug #729924 (vim py3 support)
+
+ 16:12 <ubottu> Debian bug 731280 in genshi "genshi: Update to 0.7 and add Python 3 support" [Normal,Open] http://bugs.debian.org/731280
+
+ 16:12 <ubottu> Debian bug 731187 in python-setuptools "python-setuptools: upgrade failure for experimental's 1.3.2-1" [Important,Fixed] http://bugs.debian.org/731187
+
+ 16:12 <ubottu> Debian bug 729924 in vim "vim: Add Python 3 support" [Wishlist,Open] http://bugs.debian.org/729924
+
+ 16:12 <barry> python issue 19888 (__qualname__/__name__ repr bug), issue 19555 ($SO); LP: #1253523; new python-setuptools testing
+
+ 16:13 <ubottu> Launchpad bug 1253523 in python2.7 (Ubuntu) "Python2.7 v. 2.7.6-1 in proposed has an incorrect dependency" [High,In progress] https://launchpad.net/bugs/1253523
+
+ 16:13 <barry> core-1311-python3-roadmap (spreadsheet updates); LP: #1253458
+
+ 16:13 <ubottu> Launchpad bug 1253458 in byobu (Ubuntu Trusty) "Switch to Python 3" [High,In progress] https://launchpad.net/bugs/1253458
+
+ 16:13 <slangasek> doko: the C++ lib again? (Since the C lib hasn't had an soname change in recorded history :)
+
+ 16:13 <barry> dmb meeting, vUDS
+
+ 16:13 <barry> done
+
+ 16:13 <jodh> slangasek: the point is that upstart needs to be notified when to connect and where to connect. If the latter can default, great, but we'd still need 'initctl connect-to-cgmanager' or similar.
+
+ 16:13 <cjwatson> stgraber: I just went for the last week, fwiw
+
+ 16:14 <bdmurray> I'm gonna cover the whole period
+
+ 16:14 <bdmurray> bug triage of update-manager, ubuntu-release-upgrader bugs
+
+ 16:14 <bdmurray> review and commenting on dpkg already installed and configured bug reports
+
+ 16:14 <stgraber> slangasek: the specific issues we seem to be having so far is unreliable scm_cred passing over a DBus socket (looks racy for some reason), DBus somehow closing connections when coming from another userns and lack of threading support in our libnih
+
+ 16:14 <bdmurray> consolidation of duplicates of dpkg bug 1241893 regarding configuring a package that failed during unpack
+
+ 16:14 <ubottu> bug 1241893 in dpkg (Ubuntu) "dpkg tries to configure a package that failed during the unpack stage" [Undecided,Confirmed] https://launchpad.net/bugs/1241893
+
+ 16:14 <bdmurray> investigation into console-setup conflict bug reports when installing ubuntu
+
+ 16:14 <bdmurray> tested pendrive linux usb creator and reported bug 1257957 re: ubuntu-website
+
+ 16:14 <ubottu> bug 1257957 in Ubuntu Website "Create a bootable USB stick on Windows page needs updating" [Undecided,New] https://launchpad.net/bugs/1257957
+
+ 16:14 <bdmurray> reported apport bug LP: #1251357 regarding double gzip'ing of apt-clone_system_state
+
+ 16:14 <ubottu> Launchpad bug 1251357 in apport (Ubuntu) "package_hook will gzip a file a second time" [Low,Triaged] https://launchpad.net/bugs/1251357
+
+ 16:14 <bdmurray> tested fix for usb-creator bug 915626
+
+ 16:14 <ubottu> bug 915626 in usb-creator (Ubuntu) "usb-creator-gtk crashed with SIGSEGV in _dbus_watch_invalidate" [High,Fix released] https://launchpad.net/bugs/915626
+
+ 16:14 <bdmurray> SRU verification of update-notifier bug 1193509
+
+ 16:14 <bdmurray> SRU verification of bug 580961 re unzip for Q and R
+
+ 16:14 <bdmurray> Saucy SRU upload of the fix for bug 1024590 (aptdaemon)
+
+ 16:14 <bdmurray> submitted merge proposal for adding -proposed into uvt machines
+
+ 16:14 <bdmurray> reviewed existing json data sources for their utility (also the bugs they include)
+
+ 16:14 <ubottu> bug 1193509 in update-notifier (Ubuntu Saucy) "notified of crash reports which you do not have permission to read and submit" [High,Fix released] https://launchpad.net/bugs/1193509
+
+ 16:14 <bdmurray> created a bugs resolved upstream, hottest bugs, release nominations json data source
+
+ 16:14 <ubottu> bug 580961 in unzip (Ubuntu) "unzip fails to deal correctly with filename encodings" [Critical,Triaged] https://launchpad.net/bugs/580961
+
+ 16:14 <ubottu> bug 1024590 in aptdaemon (Ubuntu Saucy) "update-manager crashed with AttributeError in _on_download_changed(): 'NoneType' object has no attribute 'get_value'" [Medium,In progress] https://launchpad.net/bugs/1024590
+
+ 16:14 <bdmurray> worked on bug notifier reading json data files
+
+ 16:14 <bdmurray> modified bug notifier to search for bugs with tags recently added to them
+
+ 16:15 <bdmurray> pushed changes to lpltk for bugs to have the date_tag_added method
+
+ 16:15 <bdmurray> modified lpltk to return bug's creation date for when the tag was added if it is not found in the activity log
+
+ 16:15 <bdmurray> submitted merge proposal for change to phased-updater reviewing system (don't review fully phased updates)
+
+ 16:15 <bdmurray> wrote some code for checking an apport crash to check errors to see if it is still occurring in saucy or trusty
+
+ 16:15 <bdmurray> review and closing of update-notifier crashs related to cdroms.c (which went away in saucy)
+
+ 16:15 <bdmurray> review of potentially fixed software-properties crashes
+
+ 16:15 <bdmurray> wrote a blog post about my upstart user job for my magicpad
+
+ 16:15 <bdmurray> errors work
+
+ 16:15 <bdmurray> sorted out selected version issue (bug 1191182)
+
+ 16:15 <ubottu> bug 1191182 in Errors "choosing a period on the main page appends a version to the query" [High,Fix released] https://launchpad.net/bugs/1191182
+
+ 16:15 <bdmurray> investigation into updating assets.ubuntu.com with new javascript
+
+ 16:15 <bdmurray> worked on being able to update ubuntu-assets.errors (team membership)
+
+ 16:15 <bdmurray> investigation into counter discrepancy between landing page and problem page
+
+ 16:15 <slangasek> jodh: no, not "default" - it should not be configurable at all, the cgroup manager address should be a well-known name, and the dbus interface shouldn't expose an option to change it since we will never need this...
+
+ 16:15 <bdmurray> submitted a merge proposal for canonical-memento with the updated assets revision number
+
+ 16:15 <bdmurray> pinged webops / oatman regarding missing yui build folder in canonical-website-editors branch of ubuntu-assets
+
+ 16:15 <bdmurray> submitted merge proposal to stop using assets for errors
+
+ 16:15 <bdmurray> merged mpt's branch changing the colors of the releases at errors
+
+ 16:15 <bdmurray> added in a counter for release:src_package:src_version to errors
+
+ 16:15 <bdmurray> checked to see if this counter was being written to I discovered an error with submit.py in daisy and fixed it
+
+ 16:15 <bdmurray> worked with webops to update errors and daisy and switch away from assets
+
+ 16:15 <bdmurray> committed a fix for bug 1167239
+
+ 16:15 <ubottu> bug 1167239 in Errors "Bug link in bucket heading looks nothing like a link" [Medium,Fix released] https://launchpad.net/bugs/1167239
+
+ 16:15 <slangasek> jodh: as for notification of when to connect, given that the address is always known, can't upstart use inotify here?
+
+ 16:15 <bdmurray> ⁂ done
+
+ 16:16 <stgraber> slangasek: can inotify tell you once something bound the socket vs when it was created?
+
+ 16:17 <doko> slangasek, https://launchpad.net/ubuntu/+source/pcre3/1:8.31-2ubuntu2
+
+ 16:17 <xnox> slangasek: jodh: i thought upstart would be starting cgroups manager, and thus post-start can emit event to signal upstart that cgroups manager is ready.
+
+ 16:17 <xnox> or well the fact that cgroups manager started should be enough...
+
+ 16:17 <stgraber> slangasek: actually, no, inotify won't work because the path will be /sys/fs/cgroup/cgmanager and /sys/fs/cgroup is a tmpfs mounted by cgmanager pre-start so you can't get an inotify watch on that
+
+ 16:18 <slangasek> stgraber: threading support - why are you using threads? :-(
+
+ 16:19 <jodh> xnox: that would be another way to do it. However, up to this point, we've adopted the same technique as the notify-* initctl commands.
+
+ 16:19 <jodh> slangasek: maybe - sounds like we either need more discussion or more spec! :)
+
+ 16:19 <stgraber> slangasek: I'm not sure, would have to ask Serge. My best guess is that it's to address some of Google's performance concerns but that's just a guess.
+
+ 16:20 <xnox> jodh: seems like we have too many nofity-* API already. I wonder if it can be a "notify" "var" "value".
+
+ 16:21 <slangasek> stgraber: I'm pretty sure socket creation == bind, for unix sockets.  but yeah, if the directory heirarchy makes it untenable to do this directly with inotify, I guess a dbus callback may be saner
+
+ 16:21 <jodh> xnox: yeah, I've actually been vaguely thinking of something like that for a while.
+
+ 16:21 <slangasek> jodh: discussion/spec> agreed. :)  Where are the discussions on this happening?
+
+ 16:22 <jodh> slangasek: all over - we have the cgmanager lxc thread (with draft cgmanager spec), the upstart cgroup spec thread, the upstart cgroup spec (courtesy of stgraber), and conversations here and there. Would be kinda useful to have a mini sprint on this I feel.
+
+ 16:23 * doko has to leave now. will read the backlog
+
+ 16:23 <jodh> slangasek: I can put another mail out to upstart-devel requesting further feedback on the updated upstart cgroup handling spec for now though.
+
+ 16:23 <slangasek> jodh: a sprint has the opposite effect of what I'm looking for, which is that the design process is transparent and gets more eyeballs on it
+
+ 16:23 <slangasek> let's keep discussion on upstart-devel for now, please
+
+ 16:24 <slangasek> and maybe there should be cc:s to the lxc list, wherever that is?
+
+ 16:26 <stgraber> I don't think anything that's been discussed in the spec or on upstart-devel currently influences the design on the cgmanager side, so Ccing would just cause extra noise at this point
+
+ 16:26 <slangasek> ok
+
+ 16:26 <jodh> slangasek: right. Yes, I'll cc them. I was not necessarily implying a private sprint fwiw :)
+
+ 16:27 <slangasek> stgraber: is there a spec on the cgmanager side that documents the socket address, so the upstart spec can reference that?
+
+ 16:27 <stgraber> we're currently having a separate discussion on lxc-devel with Tejun Heo on the inner workings of the daemon itself but that's not very relevant to upstart so I don't think we should Cc that one the other way either
+
+ 16:27 <slangasek> jodh: public or not, a sprint has fewer people participating than a mailing list :)
+
+ 16:27 <stgraber> slangasek: it's not set in stone yet due to kernel limitations we may end up with two sockets
+
+ 16:27 <slangasek> ok
+
+ 16:29 <slangasek> anything else re: lightning round?
+
+ 16:30 <slangasek> [TOPIC] FeatureDefinitionFreeze
+
+ 16:30 <slangasek> according to https://wiki.ubuntu.com/TrustyTahr/ReleaseSchedule, feature definition freeze for trusty was... November 21
+
+ 16:30 <slangasek> I'm not entirely sure how that was meant to work, given that this was the last day of vUDS ;)
+
+ 16:31 <slangasek> but we do need to get our blueprint drafting done, work items recorded, etc. ASAP
+
+ 16:31 <slangasek> please make sure you have this done for any blueprints you're drafter on by EOD tomorrow
+
+ 16:31 <slangasek> ok?
+
+ 16:32 <barry> ack
+
+ 16:32 <slangasek> (and please mark your blueprints 'review' or 'pending approval' when done)
+
+ 16:33 <slangasek> [TOPIC] AOB
+
+ 16:33 <slangasek> anything else today?
+
+ 16:33 <slangasek> recipes to share for creative use of turkey leftovers?
+
+ 16:35 <barry> don't look at me :)
+
+ 16:35 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

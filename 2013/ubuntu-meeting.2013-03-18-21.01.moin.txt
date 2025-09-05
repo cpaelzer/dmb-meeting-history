@@ -1,0 +1,904 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by mdz at 21:01:26 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-03-18-21.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *action review
+
+ *Agenda
+''LINK:'' https://wiki.ubuntu.com/TechnicalBoardAgenda has:  (mdz, 21:03:56)
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html   (mdz, 21:03:56)
+
+ *Proposed changes to release management
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html   (mdz, 21:05:36)
+  *Support duration for interim releases  (mdz, 21:14:03)
+  *effective date for new maintenance period for regular releases  (mdz, 21:33:38)
+
+ *chair for next meeting
+
+
+
+Meeting ended at 22:02:59 UTC.
+
+
+
+== Votes ==
+
+
+ * Enable users to continuously track the development focus of Ubuntu without having to explicitly upgrade
+   For: 3 Against: 0 Abstained: 0
+
+ * Reduce maintenance period for regular (non-LTS) Ubuntu releases from 18 months to 9 months (starting with release TBD)
+   For: 3 Against: 0 Abstained: 0
+
+ * Enable users to continuously track the development focus of Ubuntu as a "rolling release" rather than having to explicitly upgrade
+   For: 0 Against: 3 Abstained: 0
+
+ * Implement the above change to the maintenance schedule effective in 13.04 and later
+   For: 3 Against: 0 Abstained: 0
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * mdz (129)
+ * cjwatson (99)
+ * infinity (51)
+ * meetingology (40)
+ * stgraber (33)
+ * ScottK (12)
+ * ogra_ (9)
+ * micahg (8)
+ * xnox (7)
+ * rickspencer3 (6)
+ * ogasawara (5)
+ * jdstrand (4)
+ * bryce (3)
+ * lool (2)
+ * AlanBell (2)
+ * doko (1)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 21:01:26 <mdz> #startmeeting
+
+ 21:01:26 <meetingology> Meeting started Mon Mar 18 21:01:26 2013 UTC.  The chair is mdz. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 21:01:26 <meetingology> 
+
+ 21:01:26 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 21:01:48 <cjwatson> Hi
+
+ 21:02:06 <mdz> kees, ayt?
+
+ 21:02:11 <mdz> I don't seem to have a list of actions from the previous meeting
+
+ 21:02:22 <mdz> I'll have to dig it out of IRC logs unless someone has it handy
+
+ 21:02:42 <stgraber> mdz: only action was for me to setup the two new flavours
+
+ 21:02:57 <stgraber> mdz: which is 90% done, I think we're just missing Ubuntu GNOME on the iso tracker
+
+ 21:02:57 <mdz> #topic action review
+
+ 21:02:59 <mdz> stgraber to create packagesets + upload teams for Kylin and UbuntuGnome
+
+ 21:03:07 <stgraber> done
+
+ 21:03:27 <mdz> ok
+
+ 21:03:36 <mdz> #topic Agenda
+
+ 21:03:56 <mdz> https://wiki.ubuntu.com/TechnicalBoardAgenda has:
+
+ 21:03:56 <mdz> https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html
+
+ 21:04:02 <mdz> i.e. "Examine sabdfl's updated release management straw man"
+
+ 21:04:05 <mdz> and that's it
+
+ 21:04:07 <mdz> anything else for the agenda?
+
+ 21:04:46 <mdz> there's this leadership meeting that Jono asked about: https://lists.ubuntu.com/archives/technical-board/2013-March/001536.html
+
+ 21:04:59 <cjwatson> I suspect the release thing will keep us busy
+
+ 21:05:08 <mdz> ok
+
+ 21:05:33 <mdz> #topic Proposed changes to release management
+
+ 21:05:36 <mdz> #link https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html
+
+ 21:06:28 <mdz> so the core of this seems to be phasing out the non-LTS releases
+
+ 21:06:49 <stgraber> ok, so who do we have here for this discussion?
+
+ 21:06:49 <infinity> Or, rather, reducing their support cycle.
+
+ 21:06:57 <micahg> o/
+
+ 21:07:09 <stgraber> rickspencer3: around?
+
+ 21:07:10 <rickspencer3> I'm hear, fwiw
+
+ 21:07:20 <rickspencer3> so, what infinity said
+
+ 21:07:20 * xnox is just lurking.
+
+ 21:08:07 <mdz> ah yes, this is newer than what I'd read
+
+ 21:08:28 <cjwatson> Newer and quite different, I suspect - you'll want to catch up
+
+ 21:08:38 * lool is watching too
+
+ 21:08:52 <mdz> yes, sorry I'm a bit behind on this, it's been a busy week
+
+ 21:09:18 * ogra_ waves from the balcony
+
+ 21:09:21 <mdz> so what questions or concerns do folks have?
+
+ 21:09:25 <stgraber> so from what I remember we appear to have some kind of consensus around shortening the support length of regular releases to 7 or 8 months
+
+ 21:10:02 <infinity> I'm with the majority on the supporting the reduced lifecycle, but thinking 8 is more appropriate than 7, while we're bikeshedding.
+
+ 21:10:07 <stgraber> therefore making reducing the number of releases we need to SRU fixes to and reducing the amount of work the security and kernel team have to do
+
+ 21:10:10 <cjwatson> That seems to have been fairly broadly supported by mail; the exact details are bikeshed, but most people seem to prefer 8
+
+ 21:10:14 <mdz> the previous proposal sounded more like debian testing + long term releases, this one sounds more like RHEL+Fedora
+
+ 21:10:17 <cjwatson> (In my biased assessment)
+
+ 21:10:37 <bryce> mdz, one other item if there's room in the agenda - MRE for xserver.  Proposal is in the techboard  list's moderation queue.
+
+ 21:10:55 <mdz> bryce, ok, please add to the wiki as a reminder
+
+ 21:10:57 * cjwatson processes the mod queue
+
+ 21:11:00 <mdz> I'm not sure if we will get to it given we have a meaty topic
+
+ 21:11:02 <bryce> mdz, will do
+
+ 21:11:19 <cjwatson> I think there probably isn't enough time for the board to process something received just now
+
+ 21:11:31 <stgraber> bryce: we're usually happy to process those by e-mail so we can do that if as we suspect the release discussion ends up taking the rest of the meeting
+
+ 21:11:34 <cjwatson> It's out of the mod queue though
+
+ 21:11:47 <micahg> from a quality perspective, 9 would seemingly be the sweet spot at the moment in that it mirrors the LTS cycle (.1 is usually 3 months after release), meaning that most bugs that will be fixed are probably fixed by then
+
+ 21:12:03 <mdz> it seems like the release proposal includes several parts which could potentially be considered separately
+
+ 21:12:04 <cjwatson> Have we seen the indicated strawman from the kernel team on LTS kernel maintenance yet?
+
+ 21:12:05 <ScottK> FWIW, Kubuntu would like 9.
+
+ 21:12:24 <mdz> e.g. reducing the support duration for interim releases seems fairly uncontroversial
+
+ 21:12:27 <cjwatson> months> TBH I'm easy as long as we reduce the overlap count
+
+ 21:12:35 <ogasawara> cjwatson: it's essentially what we have written up at https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+
+ 21:12:36 <mdz> are folks open to breaking it up a little so we can close out some of the items?
+
+ 21:12:43 <lool> yes, there are proposed changes to LTS point releases too
+
+ 21:12:44 <cjwatson> mdz: definitely
+
+ 21:12:44 <infinity> mdz: That seems reasonable.
+
+ 21:12:44 <bryce> stgraber, that would be fine (and probably sufficient for this).  Thanks.
+
+ 21:12:55 <ScottK> For those catching up, Kubuntu, as a project, did a comprehensive review of the proposal.  https://lists.ubuntu.com/archives/technical-board/2013-March/001553.html
+
+ 21:13:13 <stgraber> mdz: I think it's the only way to get anything done in this meeting, so +1 :)
+
+ 21:13:41 <cjwatson> ogasawara: So my reading is that that indicates rolling Q-kernel-on-12.04 users forward, rather than continuing to support the Q kernel?
+
+ 21:13:52 <cjwatson> Wait, bad example
+
+ 21:14:03 <mdz> #subtopic Support duration for interim releases
+
+ 21:14:05 <ogasawara> cjwatson: no, we agreed to support them to the LTS, not roll forward
+
+ 21:14:08 <cjwatson> R-kernel-on-12.04 would be rolled forward in, er, 13.04 + 8/9 months
+
+ 21:14:08 <cjwatson> ?
+
+ 21:14:15 <cjwatson> If we stop 13.04 support then
+
+ 21:14:30 <micahg> mdz: can we call them regular releases as kees suggested?
+
+ 21:14:52 <micahg> interim implies not important (to paraphrase)
+
+ 21:14:55 <mdz> I didn't see that. I'm not fussed about the name personally
+
+ 21:14:55 <ogra_> yeah, that "interim" thing is an awful term
+
+ 21:15:11 <mdz> "standard" is what we called them once upon a time
+
+ 21:15:15 <ogra_> yeah
+
+ 21:15:18 <cjwatson> ogasawara: Mark's proposal calls for 13.04 support to cease before 14.04 LTS; I'm not clear whether https://wiki.ubuntu.com/Kernel/LTSEnablementStack takes that into account
+
+ 21:15:22 <micahg> that works fine too
+
+ 21:15:30 <cjwatson> I guess this is more on the LTS-support topic, though
+
+ 21:15:50 <ogasawara> cjwatson: we initially agreed that we would support each enablement stack for 18mo, ie naturally support duration, but with the proposal to the TB, I think we should support each until the 14.04.1 release
+
+ 21:16:18 <ogasawara> cjwatson: so that would be the only deviation from what we have today
+
+ 21:16:27 <mdz> what's the specific issue for the TB to arbitrate here, on the topic of maintenance for regular releases?
+
+ 21:16:29 <cjwatson> ogasawara: I have some questions/concerns there, but should probably hold them off until we reach the relevant subtopic
+
+ 21:16:51 <infinity> mdz: I think it just boils down to "do we cut the support cycle shorter" and "how long".
+
+ 21:17:05 <infinity> mdz: The former seems to have broad agreement already, the latter needs a short bikeshed and vote, I imagine.
+
+ 21:17:13 <mdz> agreed
+
+ 21:17:15 <rickspencer3> I might add "and starting with which standard release"
+
+ 21:17:20 <infinity> Oh, and that.
+
+ 21:17:27 <infinity> I'd prefer to start with R.
+
+ 21:17:34 <mdz> do we have representation from the security team here today?
+
+ 21:17:38 <rickspencer3> me too
+
+ 21:17:45 <infinity> jdstrand: You paying attention?
+
+ 21:18:19 * jdstrand reads backscroll
+
+ 21:18:37 <ogasawara> cjwatson: I'm happy to follow up via email if needed (might be easier)
+
+ 21:18:42 <cjwatson> If we had a way to poll our users in any kind of effective way, I'd like to explore retroactively starting with 12.10; but as it stands, I think that would be as likely as not to send a bad message and act as a distraction
+
+ 21:18:56 <mdz> jdstrand, just looking for input on the question of maintenance duration for regular releases
+
+ 21:19:20 <cjwatson> (aka, commitments are hard to unwind once you've made them)
+
+ 21:19:26 <infinity> cjwatson: Comm... What you said.
+
+ 21:19:52 <jdstrand> We are prepared to do 18 months if needed. I think 8 months seems reasonable for people to migrate, but we'll support 7+
+
+ 21:19:58 <infinity> cjwatson: We can revisit SRU policy to keep 12.10 maintenance as lightweight as possible, but I think dropping support entirely would be in very poor form.
+
+ 21:20:04 <jdstrand> ie, we're flexible :)
+
+ 21:20:17 <cjwatson> infinity: Yeah
+
+ 21:20:46 <cjwatson> I would definitely like to pare back the extent to which developers feel they have to do dual uploads to precise/quantal, because I do think that's a bottleneck
+
+ 21:21:02 <ScottK> I think we can solve that within the SRU team.
+
+ 21:21:03 <infinity> Absolutely.  But we're on a tangent again. ;)
+
+ 21:21:06 <cjwatson> But I'm not going to press for dropping support entirely
+
+ 21:21:11 <rickspencer3> cjwatson, could we take that as a future TB discussion point?
+
+ 21:21:14 <cjwatson> Sure
+
+ 21:21:21 <infinity> And yes, we can solve that without TB intervention.  We're good at rejecting uploads.
+
+ 21:21:28 <infinity> Really good.
+
+ 21:21:39 <mdz> does anyone have a serious objection to reducing the maintenance lifetime by at least 9 months?
+
+ 21:22:01 * ScottK likes precisely 9 months ....
+
+ 21:22:10 <stgraber> right, SRU policies can be discussed on ubuntu-release@l.u.c and be brought to the TB if the SRU team feels they need extra power or want to run something by us (though we have a reasonable overlap between the two teams ;))
+
+ 21:22:25 <infinity> mdz: From reviewing the thread, I think 9 would make most everyone happy.  8 would make almost everyone happy.  7 would make Mark happy, and the rest of us nervous.
+
+ 21:22:34 <mdz> right, to rephrase: does anyone feel strongly that maintenance ought to be *longer* than 9 months?
+
+ 21:22:46 <cjwatson> So, on 9 months, the arguments that (a) this brings us up to the LTS.1 sweet spot and (b) this lines up with upstream point release cadence (at minimum in KDE) are ones I find compelling
+
+ 21:22:49 <mdz> trying to bisect the problem ;-)
+
+ 21:23:19 <jdstrand> I think it was implied in my last comment, but 9 is fine by the security team
+
+ 21:23:20 <stgraber> I'm perfectly happy with 9 months. I'd only be nervous with < 8 months.
+
+ 21:23:28 <mdz> sounds like no objections
+
+ 21:24:04 <mdz> would anyone be negatively impacted by making it 9 months exactly?
+
+ 21:24:13 <mdz> i.e. could anyone not live with that?
+
+ 21:25:14 <infinity> I think cutting our support cycle in half is already such a huge win that quibbling over another month or two isn't worth it.  If there are compelling reasons for 9 (and there seem to be), I'm all for it.
+
+ 21:25:17 <mdz> infinity, is it implied by your comment that Mark would be dissatisfied with that?
+
+ 21:25:35 <mdz> a bit odd that he doesn't seem to be here
+
+ 21:25:38 <infinity> mdz: Oh, he hasn't expressed concern about people wanting 8/9, just that he initially wanted 7.
+
+ 21:25:46 <mdz> ok
+
+ 21:25:56 <cjwatson> rickspencer3: Do you know if Mark has expressed a strong opinion on this particular bikeshed?
+
+ 21:26:13 <rickspencer3> cjwatson, I do not know
+
+ 21:26:44 <cjwatson> OK.  It sounds like 9 is a good common position, then
+
+ 21:26:47 * xnox o/
+
+ 21:26:59 * micahg apologizes, but has to go
+
+ 21:27:05 <cjwatson> xnox: ?
+
+ 21:27:10 <infinity> I'm pretty comfy with the 3 month overlap, personally.  While people upgrading Ubuntu->Ubuntu (or any in-archive flavour) can do their testing and upgrading fairly rapidly, 3 months gives derivatives a bit of breathing room to rebase.
+
+ 21:27:19 <xnox> if we decide that raring gets 9 month support there will be no overlap between quantal EOL and raring EOL, unless quantal support is extended.
+
+ 21:27:47 <ScottK> But "S" will be out before then.
+
+ 21:27:53 <infinity> xnox: That's... What Scott said.
+
+ 21:28:03 <ogra_> xnox, people are forced to upgrade
+
+ 21:28:04 <mdz> ok, seems like we can put 9 months to a vote
+
+ 21:28:08 <stgraber> xnox: we're also discussing allowing upgrading by more than a single release
+
+ 21:28:13 <cjwatson> quantal support is probably a separate topic for at least two reasons, but ... what stgraber said
+
+ 21:28:14 <infinity> (And leads to another discussion topic, where I think we need to support better upgrade paths)
+
+ 21:28:15 <xnox> stgraber: ok.
+
+ 21:29:00 <stgraber> mdz: do we want to also bundle what release to start the 9 months support with as part of the vote, or do you want to split?
+
+ 21:29:04 <mdz> #vote Reduce maintenance period for regular (non-LTS) Ubuntu releases from 18 months to 9 months (starting with release TBD)
+
+ 21:29:04 <meetingology> Please vote on: Reduce maintenance period for regular (non-LTS) Ubuntu releases from 18 months to 9 months (starting with release TBD)
+
+ 21:29:04 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 21:29:07 <mdz> stgraber, ;-)
+
+ 21:29:16 <stgraber> mdz: that answers it ;)
+
+ 21:29:21 <stgraber> +1
+
+ 21:29:21 <meetingology> +1 received from stgraber
+
+ 21:29:30 <mdz> +1
+
+ 21:29:30 <meetingology> +1 received from mdz
+
+ 21:29:32 <cjwatson> +1
+
+ 21:29:32 <meetingology> +1 received from cjwatson
+
+ 21:30:25 <mdz> we're missing kees, pitti and soren, yes?
+
+ 21:30:42 <mdz> so that's all TB members present?
+
+ 21:30:59 <cjwatson> Unfortunately narrow quorum for such an important topic
+
+ 21:31:20 <mdz> we can ask for comments/votes by email as well
+
+ 21:31:25 <mdz> if you want
+
+ 21:31:36 <infinity> I can pretend to be kees.
+
+ 21:31:58 <ogra_> xchat agrees, you are equally red colored ...
+
+ 21:32:00 <mdz> a discussion about quorum should ideally have preceded the start of a vote
+
+ 21:32:07 <mdz> #endvote
+
+ 21:32:07 <meetingology> Voting ended on: Reduce maintenance period for regular (non-LTS) Ubuntu releases from 18 months to 9 months (starting with release TBD)
+
+ 21:32:07 <meetingology> Votes for:3 Votes against:0 Abstentions:0
+
+ 21:32:07 <meetingology> Motion carried
+
+ 21:32:09 <cjwatson> Sorry, didn't mean to derail
+
+ 21:32:14 * cjwatson looks at the mails from the relevant people
+
+ 21:32:23 <mdz> I'm comfortable with meeting quorum on this particular subtopic
+
+ 21:32:26 <cjwatson> kees expressed support for truncating the support cycle
+
+ 21:32:42 <cjwatson> So did soren and pitti
+
+ 21:32:45 <cjwatson> OK
+
+ 21:33:27 <mdz> the next topic should probably be when to make the change effective
+
+ 21:33:38 <mdz> #subtopic effective date for new maintenance period for regular releases
+
+ 21:33:43 <mdz> what are the main options?
+
+ 21:33:52 <infinity> s/effective date/effective release/
+
+ 21:34:02 <mdz> fair enough
+
+ 21:34:06 <infinity> The former being somewhat ambiguous as to what it will apply to.
+
+ 21:34:20 <cjwatson> I guess the main options are 12.10, 13.04, later
+
+ 21:34:25 <infinity> ^
+
+ 21:35:00 <cjwatson> I thought we'd essentially disposed of that part of the discussion above, but as you like :)
+
+ 21:35:01 <infinity> 13.04 being, I think, the "obvious" middle ground between "we want this done ASAP" and "we don't want to shaft previously-assumed commitments".
+
+ 21:35:33 <mdz> 12.10 doesn't seem workable for reasons discussed above, i.e. breaking promises to users retroactively
+
+ 21:35:39 <cjwatson> It phases in effort savings over time rather than cutting things off immediately, but that's life, I think
+
+ 21:35:58 <mdz> "Maintenance updates will be provided for Ubuntu 12.10 for 18 months, through April 2014."
+
+ 21:36:10 <cjwatson> Well, "immediately" would in fact be at minimum four months from now in any event
+
+ 21:36:21 <cjwatson> (That being 12.10 + 9 months)
+
+ 21:36:26 <mdz> I haven't heard a compelling reason why we should go back on that promise
+
+ 21:36:35 <mdz> how about 13.04? any concerns to discuss there?
+
+ 21:36:46 <cjwatson> No, I agree.  It's an option, and we are right to consider it, but I think we're also right to reject it
+
+ 21:36:52 <ScottK> Ideally this would kick in at the start of an LTS cycle, but that's a long time from now.
+
+ 21:37:09 <stgraber> right, I don't think we should change anything we already released. Now the question is 13.04 vs 13.10.
+
+ 21:37:17 <infinity> ScottK: What we were discussing in #-release should likely cover the scariness of this happening between LTSen.
+
+ 21:37:24 <mdz> yes, that seems a lot to ask, especially if the goal is to help focus limited attention and resources sooner is much better than later
+
+ 21:37:26 <ScottK> infinity: Agreed.
+
+ 21:38:39 * ScottK isn't arguing for this starting for 14.10, but putting out there as a natural spot in the meta-cycle.  As infinity said, it's manageable for 13.04/10.
+
+ 21:39:15 <mdz> so there's some preference for 13.04 as it's sooner, so we can start implementing this sooner and get the benefits of less maintenance load sooner
+
+ 21:39:41 <cjwatson> I don't think shortening 13.04 to 9 months is going to be a surprise to all that many people at this point.
+
+ 21:39:45 <mdz> unless there's a specific reason to prefer 13.10, that seems like enough of a tiebreaker to me
+
+ 21:39:59 <stgraber> right, so based on the above, the options really are 13.04, 13.10 or 14.10 (14.04 being special as it's an LTS)
+
+ 21:40:20 <cjwatson> From the discussion I think we can just have an up/down vote on 13.40.
+
+ 21:40:21 <cjwatson> 13.04.
+
+ 21:40:28 <mdz> I think 14.10 is right out; if that's the fastest we can move as a project then we are doomed :-)
+
+ 21:40:32 <mdz> cjwatson, agreed
+
+ 21:40:40 <cjwatson> :-)
+
+ 21:40:47 <stgraber> now with the upgrade changes being discussed, I'm happy to do that with 13.04
+
+ 21:40:59 <mdz> #vote Implement the above change to the maintenance schedule effective in 13.04 and later
+
+ 21:40:59 <meetingology> Please vote on: Implement the above change to the maintenance schedule effective in 13.04 and later
+
+ 21:40:59 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 21:41:02 <mdz> +1
+
+ 21:41:02 <meetingology> +1 received from mdz
+
+ 21:41:08 <stgraber> +1
+
+ 21:41:08 <meetingology> +1 received from stgraber
+
+ 21:41:48 <cjwatson> +1
+
+ 21:41:48 <meetingology> +1 received from cjwatson
+
+ 21:42:03 <mdz> #endvote
+
+ 21:42:03 <meetingology> Voting ended on: Implement the above change to the maintenance schedule effective in 13.04 and later
+
+ 21:42:03 <meetingology> Votes for:3 Votes against:0 Abstentions:0
+
+ 21:42:03 <meetingology> Motion carried
+
+ 21:42:22 <mdz> I'm looking at #3 on https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html
+
+ 21:42:30 <mdz> it doesn't seem like there's much substance to it
+
+ 21:42:39 <mdz> just a "designation"
+
+ 21:42:46 <mdz> is there any practical impact to this part of the proposal?
+
+ 21:42:50 <cjwatson> Well
+
+ 21:43:22 <cjwatson> As stated it implies having an unstable series, which is quite a big deal operationally :)
+
+ 21:43:31 <infinity> The second half of it is actually a fairly large technical snafu hidden in a quick aside.
+
+ 21:43:41 <cjwatson> Sorry, not unstable, I mean a perpetual testing
+
+ 21:43:48 <infinity> And given how quickly we freeze/release, I'm not sure it's worth it.
+
+ 21:43:49 <mdz> cjwatson, oh?
+
+ 21:43:56 <mdz> hmm
+
+ 21:44:00 <cjwatson> We could perhaps meet the request by having an alias
+
+ 21:44:08 <infinity> We've already been working to compress the FF->release window, etc.
+
+ 21:44:16 <cjwatson> I actually always wondered why we never did suite aliasing, and I think the answer is "inertia"
+
+ 21:44:37 <infinity> cjwatson: Oh, sure, we could absolutely do Debian-style symlink aliases.
+
+ 21:44:40 <cjwatson> But having a dists/development -> raring (at the current time) symlink wouldn't be that big a deal
+
+ 21:44:44 <mdz> we didn't do it because we didn't want the inter-release upgrade behavior that Debian had
+
+ 21:44:46 <infinity> cjwatson: That's much more lightweight than what I assumed was meant here.
+
+ 21:45:07 <mdz> cjwatson, yeah, that's what I assumed this would entail - a symlink which always pointed to the "rolling release"
+
+ 21:45:22 <infinity> mdz: You'd agree that if we only alias "development", but not "stable", etc, then we don't have the Debian problem?
+
+ 21:45:22 <mdz> whether that's an eternal suite or one which changes sometimes
+
+ 21:45:22 <cjwatson> infinity: I may be being presumptuous, but I had the impression Mark's proposal was fungible in terms of exact implementation
+
+ 21:45:28 <mdz> infinity, yes
+
+ 21:45:38 <infinity> I'd be all for that.
+
+ 21:45:55 <cjwatson> Then it's a bikeshed about the name which we don't need to have here
+
+ 21:45:58 <infinity> I read it as a heavyweight "do development in something sid-like, fork for release, repeat".
+
+ 21:46:03 <mdz> the proposal asks the TB to evaluate whether that's a good idea
+
+ 21:46:13 <cjwatson> That said, that doesn't answer the question of PPAs easily building for just the "edge" release
+
+ 21:46:23 <mdz> I'd be comfortable delegating that to the people running the archive
+
+ 21:46:29 <stgraber> cjwatson: how much pain would you expect to result from opening the next dev cycle at the same time we hit final freeze (or even FF)? (and changing the "development" symlink to point to it at that point)
+
+ 21:46:39 <mdz> (the implementation)
+
+ 21:46:49 <cjwatson> stgraber: As it stands it's not possible - it causes madness in the implementation
+
+ 21:46:58 <mdz> with a goal of making it possible to stay on the rolling release without explicit intervention from the user
+
+ 21:47:00 <infinity> stgraber: Soyuz can't deal with two active releases.
+
+ 21:47:04 <ogra_> and madness for doko perhaps :)
+
+ 21:47:12 <infinity> stgraber: That's likely a solvable problem, but not a solved one currently.
+
+ 21:47:25 <cjwatson> The problem I have with it is actually more fundamental than the implementation
+
+ 21:47:33 <mdz> cjwatson, do tell
+
+ 21:47:44 <cjwatson> I think that doing that distracts developer attention into ooh-new-shiny at exactly the point we want them to be doing final polish on the release
+
+ 21:47:46 <infinity> It also, of course, sucks resources from the freeze and release.
+
+ 21:47:51 <infinity> cjwatson: Jinx.
+
+ 21:47:58 <ogra_> ++
+
+ 21:48:15 <ScottK> We've got permission to open backports pre-release for stuff people HAVE to have.
+
+ 21:48:17 <cjwatson> Which is why I've never put much energy into unhardcoding things like the one-development-series assumption in Soyuz, and sorting out the ancestry madness that I believe to exist
+
+ 21:48:39 <cjwatson> (Er, don't ask me to expand too much on the latter - I think it's based on a comment from Celso from about five years back)
+
+ 21:48:55 <stgraber> yeah, that's a fair point. We need developers to move from the "implement new cool stuff" to "fixing bugs" mode for at least a few weeks in the cycle.
+
+ 21:49:12 <cjwatson> Anyway, I don't think this stops us having a dev -> whatever symlink
+
+ 21:49:20 <mdz> cjwatson, hmm, maybe I'm misreading this
+
+ 21:49:24 <infinity> So.  Back to the symlink topic.  That doesn't solve Mark's magical PPA that always targets devel strawman.
+
+ 21:49:32 <mdz> but it wasn't implicit to me that this proposal meant changing anything in terms of the freeze
+
+ 21:49:35 <cjwatson> I hear we have a release sprint at some point with the LP guys; perhaps we should put this on the table for that
+
+ 21:49:46 <infinity> mdz: That was Colin and I responding to Stephane.
+
+ 21:49:50 <cjwatson> mdz: It didn't.  I was responding specifically to stgraber's comment.
+
+ 21:49:55 <cjwatson> 21:46 <stgraber> cjwatson: how much pain would you expect to result from opening the next dev cycle at the same time we hit final freeze (or even FF)? (and changing the "development" symlink to point to it at that point)
+
+ 21:49:56 <mdz> just making it possible to stay on the newest/development release continuously
+
+ 21:49:58 <mdz> ok
+
+ 21:50:52 <cjwatson> infinity: How about we get together at a convenient point this week and see if we can work out something that would work, and take it to the Australian cabal for sanity-checking?
+
+ 21:51:06 <mdz> so would the TB be comfortable taking a vote on declaring the project's intent that we should make it possible for users to track the development focus continuously and easily, while leaving the exact implementation open?
+
+ 21:51:08 <cjwatson> I don't think we're going to invent something in ten minutes
+
+ 21:51:10 <infinity> cjwatson: So, the PPA thing could be "solved" by doing a mass source+bin copy from rel-1 to rel when we open a new release.  Would grind ppa.lp.net to a halt for a ridiculous amount of time while it republished the world, though.
+
+ 21:51:22 <infinity> cjwatson: But yes, we can discuss that out of band.
+
+ 21:51:31 <cjwatson> mdz: yes
+
+ 21:52:04 <xnox> i have been running raring from week1 and for about 2 months, I had quantal-updates & quantal-security enabled. I was still receiving packages from quantal pockets now and then. If opening a new dev-series will solve the problem of fixing next release first, I'm up for it.
+
+ 21:52:16 <stgraber> I think at least the general idea of symlinking "development" (or similar) to the current dev release makes sense and doesn't hurt.
+
+ 21:52:29 * infinity nods.
+
+ 21:52:43 <xnox> imho that would mean freasing release pocket at feature-freeze.
+
+ 21:52:45 <infinity> xnox: That's a process failure that's beyond the TB to fix.  Bring it up with -release later, though.
+
+ 21:52:50 <stgraber> assuming people have to change their apt config manually to that and we don't do weird things like using this by default in our pre-release images
+
+ 21:52:59 <doko> cjwatson, it probably could help preparing the opening of the new release. however this currently can be done too by using non-virtualized PPA's, only that using the new release would be more visible
+
+ 21:53:49 <mdz> #vote Enable users to continuously track the development focus of Ubuntu as a "rolling release" rather than having to explicitly upgrade
+
+ 21:53:49 <meetingology> Please vote on: Enable users to continuously track the development focus of Ubuntu as a "rolling release" rather than having to explicitly upgrade
+
+ 21:53:49 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 21:53:53 <cjwatson> +1
+
+ 21:53:53 <meetingology> +1 received from cjwatson
+
+ 21:53:54 <mdz> wording ok?
+
+ 21:53:57 <mdz> +1
+
+ 21:53:57 <meetingology> +1 received from mdz
+
+ 21:53:59 <cjwatson> well
+
+ 21:54:01 <stgraber> +1
+
+ 21:54:01 <meetingology> +1 received from stgraber
+
+ 21:54:06 <cjwatson> "rolling release" has a ton of baggage
+
+ 21:54:15 <mdz> suggested alternative wording?
+
+ 21:54:23 <stgraber> I don't like the rolling release wording either (because it's not)
+
+ 21:54:24 <ogra_> rolling development release ?
+
+ 21:54:24 <infinity> Development release.  Or Development series.
+
+ 21:54:26 <cjwatson> drop 'as a "rolling release"'?
+
+ 21:54:34 <cjwatson> The sentence is fine without that
+
+ 21:54:41 <stgraber> cjwatson: +1
+
+ 21:54:42 <mdz> #vote Enable users to continuously track the development focus of Ubuntu without having to explicitly upgrade
+
+ 21:54:42 <meetingology> Voting still open on: Enable users to continuously track the development focus of Ubuntu as a "rolling release" rather than having to explicitly upgrade
+
+ 21:54:44 <infinity> It's not a release.  And rolling itself has other baggage.
+
+ 21:54:51 <mdz> -1
+
+ 21:54:51 <meetingology> -1 received from mdz
+
+ 21:54:52 <cjwatson> +1
+
+ 21:54:52 <meetingology> +1 received from cjwatson
+
+ 21:55:02 <cjwatson> mdz: oh?
+
+ 21:55:05 <mdz> trying to find a way to cancel the vote I alread ystarted
+
+ 21:55:08 <cjwatson> ah
+
+ 21:55:13 <AlanBell> you have to endvote
+
+ 21:55:26 <mdz> that will say that we confirmed that thing that we just agreed to change the wording of
+
+ 21:55:39 <stgraber> -1
+
+ 21:55:39 <meetingology> -1 received from stgraber
+
+ 21:55:41 <cjwatson> how about we all -1 and then endvote
+
+ 21:55:41 <cjwatson> -1
+
+ 21:55:41 <meetingology> -1 received from cjwatson
+
+ 21:55:43 <mdz> THE MEETING BOT IS ABOUT TO TELL A LIE
+
+ 21:55:45 <mdz> oh
+
+ 21:55:48 <mdz> NOW IT'S GOING TO TELL THE TRUTH
+
+ 21:55:49 <mdz> #endvote
+
+ 21:55:49 <meetingology> Voting ended on: Enable users to continuously track the development focus of Ubuntu as a "rolling release" rather than having to explicitly upgrade
+
+ 21:55:49 <meetingology> Votes for:0 Votes against:3 Abstentions:0
+
+ 21:55:49 <meetingology> Motion denied
+
+ 21:55:49 <ogra_> lol
+
+ 21:55:50 <AlanBell> yeah, do that
+
+ 21:56:01 <mdz> #vote Enable users to continuously track the development focus of Ubuntu without having to explicitly upgrade
+
+ 21:56:01 <meetingology> Please vote on: Enable users to continuously track the development focus of Ubuntu without having to explicitly upgrade
+
+ 21:56:01 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 21:56:02 <mdz> +1
+
+ 21:56:02 <meetingology> +1 received from mdz
+
+ 21:56:05 <mdz> sorry for all the noise
+
+ 21:56:05 <cjwatson> +1
+
+ 21:56:05 <meetingology> +1 received from cjwatson
+
+ 21:56:06 <stgraber> +1
+
+ 21:56:06 <meetingology> +1 received from stgraber
+
+ 21:56:11 <mdz> #endvote
+
+ 21:56:11 <meetingology> Voting ended on: Enable users to continuously track the development focus of Ubuntu without having to explicitly upgrade
+
+ 21:56:11 <meetingology> Votes for:3 Votes against:0 Abstentions:0
+
+ 21:56:11 <meetingology> Motion carried
+
+ 21:56:30 <mdz> ok that leaves the question of doing additional maintenance work on LTS releases
+
+ 21:56:41 <cjwatson> to me, lots of this was stuff we're already doing
+
+ 21:56:49 <infinity> Indeed.
+
+ 21:56:55 <cjwatson> but then there's a handwave about lots more stuff we could do
+
+ 21:56:59 <mdz> what needs deciding?
+
+ 21:57:01 <ScottK> "required upgrades to newer versions of platform components" was the major change.
+
+ 21:57:13 <infinity> And of the stuff we're already doing, some of it could be done better, but that's implementation, not policy.
+
+ 21:57:15 <stgraber> to what extent do we need TB approval for that? It sounded to me like most of it can be done through the regular process by just having the SRU team change its criteria a bit
+
+ 21:57:17 <mdz> what determines which upgrades are "required"?)
+
+ 21:57:35 <ScottK> That seems to me approximately the last thing we should inflict on users of LTS releases.
+
+ 21:57:35 <cjwatson> "required upgrade" I think means "in -updates with the same package name
+
+ 21:57:36 <cjwatson> "
+
+ 21:58:01 <infinity> I think there's a huge can of worms here, where assuming stable API/ABI isn't always true.
+
+ 21:58:02 <mdz> cjwatson, that seems tautological
+
+ 21:58:03 <cjwatson> rather than the X-stack approach of "rename a bunch of libraries", or putting things in -backports or PPAs
+
+ 21:58:12 <cjwatson> ^- why it's not tautological
+
+ 21:58:21 <infinity> We do this already for leaf packages (Firefox), and that's fine, but core system libraries WILL break your system when you didn't think they would.
+
+ 21:58:47 <cjwatson> I think there are lots of things we can/should split out of this, but I'm not sure we're going to get it done here
+
+ 21:58:49 <mdz> cjwatson, I'm not sure I follow
+
+ 21:58:52 <cjwatson> things I can think of include:
+
+ 21:59:05 <mdz> so the status quo is that there's a set of stuff that goes into -updates
+
+ 21:59:06 <cjwatson> - applying better autotesting to -proposed -> -updates transitions
+
+ 21:59:12 <cjwatson> - some kind of blessed-PPA system
+
+ 21:59:15 <mdz> what is proposed to change about htat?
+
+ 21:59:18 <micahg> infinity: firefox has a reason that it's needed for security updates
+
+ 21:59:20 <cjwatson> - better -backports infrastructure and advertising it better
+
+ 21:59:38 <cjwatson> - explicit SRU policy changes to weaken restrictions on some packages
+
+ 21:59:40 <cjwatson> - probably more
+
+ 21:59:57 <mdz> the example given is upgrading Unity
+
+ 22:00:12 <infinity> cjwatson: I think those break into two broad categories of "stuff that's just implementation fluff" and "stuff that needs broader discussion, not a TB vote".
+
+ 22:00:12 <cjwatson> mdz: I am trying to clarify Mark's "required upgrades" vs. "optional upgrades" terminology into terms that the rest of us understand
+
+ 22:00:25 <mdz> ok, we're out of time
+
+ 22:00:26 <stgraber> I think I'd ideally like to see backports be replaced by blessed PPAs so we can better cover the case where we backport a whole stack and may want to support multiple version of that stack in parallel. But this would likely be a lengthy discussion that should only reach the TB when we have a concrete proposal.
+
+ 22:00:30 <cjwatson> "required upgrades" -> we put it in -updates and you get it automatically
+
+ 22:00:45 <mdz> seems like we can pick this up in 2 weeks given it doesn't change anything until next year, right?
+
+ 22:00:54 <mdz> or is it proposed to be retroactive?
+
+ 22:00:55 <cjwatson> "optional upgrades" -> we put it in something like -updates, but you have to opt in in some way (e.g. selecting a different kernel flavour)
+
+ 22:01:08 <xnox> webkit is joining firefox support model for LTS releases.
+
+ 22:01:12 <cjwatson> I think we can pick it up in two weeks either way, and/or continue by mail
+
+ 22:01:15 <ScottK> Re Unity, look at the number of packages affected by bug 1154229, the new  Unity stack FFe, and ask if that's reasonable to deal with post-release.
+
+ 22:01:16 <mdz> ok
+
+ 22:01:18 <ubottu> bug 1154229 in unity-scope-gdrive (Ubuntu) "[FFE] New Unity Dash" [Undecided,Triaged] https://launchpad.net/bugs/1154229
+
+ 22:01:21 <infinity> mdz: Some of this already applies to precise, and may be retroactive if we decide to do things differently, but I don't think the LTS stuff is urgent.
+
+ 22:01:22 <micahg> xnox: same thing, security reasons
+
+ 22:01:31 <mdz> ok, we'll pick up the rest at the next meeting
+
+ 22:01:35 <mdz> which will be chaired by...
+
+ 22:01:42 <mdz> #topic chair for next meeting
+
+ 22:01:51 <cjwatson> Unity is I think an unfortunate example, as I tried to cover in https://lists.ubuntu.com/archives/technical-board/2013-March/001531.html
+
+ 22:02:04 <mdz> I think we're going alpha-by-nick, no?
+
+ 22:02:08 <mdz> so it would be pitti?
+
+ 22:02:13 <cjwatson> Yes
+
+ 22:02:24 <stgraber> didn't pitti cover for a missing chair lately?
+
+ 22:02:24 <mdz> who is conveniently not present to object. DONE
+
+ 22:02:31 <mdz> yes he did
+
+ 22:02:34 <stgraber> I think he did 2 meetings ago
+
+ 22:02:36 <mdz> I don't recall who it was though
+
+ 22:02:42 <stgraber> so it probably should be soren then (or me)
+
+ 22:02:54 <mdz> ok, soren then
+
+ 22:02:58 <mdz> Next chair: soren
+
+ 22:02:59 <mdz> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

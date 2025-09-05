@@ -1,0 +1,565 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 09 Jul at 15:05 &mdash; 15:50 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-07-09-15.05.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:05.
+
+
+=== Team changes ===
+The discussion about "Team changes" started at 15:27.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:33.
+
+  * ''LINK:'' https://www.kernel.org/doc/Documentation/filesystems/tmpfs.txt 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (62)
+ * slangasek (61)
+ * infinity (36)
+ * sil2100 (20)
+ * cyphermox (18)
+ * barry (13)
+ * tyhicks (12)
+ * caribou (10)
+ * doko (8)
+ * ubottu (8)
+ * meetingology (3)
+ * ogra_ (3)
+
+
+
+== Full Log ==
+
+
+ 15:05 <slangasek> #startmeeting
+
+ 15:05 <meetingology> Meeting started Thu Jul  9 15:05:03 2015 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:05 <meetingology> 
+
+ 15:05 <meetingology> Available commands: action commands idea info link nick
+
+ 15:05 <slangasek> [TOPIC] Lightning round
+
+ 15:05 <slangasek> $ echo $(shuf -e barry doko stgraber bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti)
+
+ 15:05 <slangasek> caribou stgraber bdmurray infinity robru cyphermox pitti slangasek barry sil2100 doko
+
+ 15:06 <caribou> oh, I get to start
+
+ 15:06 <slangasek> caribou: yep :)
+
+ 15:06 <caribou> Bugfix :
+
+ 15:06 <caribou> - ifenslave ambigous message
+
+ 15:06 <caribou> * identified root cause, open Debian bug with patch
+
+ 15:06 <caribou> Crash Dump
+
+ 15:06 <caribou> - Worked on Kdump enablement cloud-init script
+
+ 15:06 <caribou> Charm dev
+
+ 15:06 <caribou> - Developed Kernel Crash Dump subordinate charm
+
+ 15:06 <caribou> (done)
+
+ 15:08 <slangasek> ah, stgraber probably not around
+
+ 15:08 <slangasek> bdrung_work:
+
+ 15:08 <slangasek> eh
+
+ 15:08 <slangasek> bdmurray:
+
+ 15:08 <slangasek> stupid tabcomplete
+
+ 15:08 <infinity> We might not have a Brian either.
+
+ 15:09 <slangasek> yes, we indeed might not since I approved his vacation request
+
+ 15:09 <slangasek> infinity:
+
+ 15:09 <infinity> Short (3-day) week:
+
+ 15:09 <infinity> - General SRU/AA work
+
+ 15:09 <infinity> - Helped apw sort out ubuntu-fan for wily
+
+ 15:09 <infinity> - Worked with apw on ubuntu-fan SRU proposal
+
+ 15:09 <infinity> - Worked with rbasak on docker.io SRUs
+
+ 15:09 <infinity> - Found, debugged, and ushered in a fix for a kernel panic on the arm64 buildds
+
+ 15:09 <infinity> - Working on LP: #1414818 for IBM
+
+ 15:09 <ubottu> Launchpad bug 1414818 in opensm (Ubuntu) "Add missing OFED packages for Ubuntu 14.04.2" [High,New] https://launchpad.net/bugs/1414818
+
+ 15:09 <infinity> - Identified casper backports needed for 14.04.3 and got them in with apw
+
+ 15:09 <infinity> - Kernel SRU wrangling for 14.04.3
+
+ 15:09 <infinity> - Some merges and bugfixes in wily
+
+ 15:09 <infinity> - Failed to sleep all week
+
+ 15:09 <infinity> (done)
+
+ 15:10 <pitti> ssh infinity sleep 28800
+
+ 15:10 <caribou> sleep: command not found
+
+ 15:11 <slangasek> pitti: underlying kernel bug, never puts the CPU into anything below C0
+
+ 15:11 <pitti> robru?
+
+ 15:11 <slangasek> robru:
+
+ 15:12 <infinity> slangasek: That's the most accurate nerd analogy for insomnia that I've ever seen.
+
+ 15:12 <cyphermox> robru might be in C3?
+
+ 15:13 <slangasek> heh
+
+ 15:13 <cyphermox> should I?
+
+ 15:14 <slangasek> cyphermox: go ahead
+
+ 15:14 <cyphermox> * fixed d-i overlay support (net-retriever, base-installer, apt-setup)
+
+ 15:14 <cyphermox> * updated sg3-utils (+ added udeb) for QEMU/IPR support for multipath
+
+ 15:14 <cyphermox> * finished multipath-tools merge
+
+ 15:14 <cyphermox> * updated partman-multipath, partman-base, hw-detect for naming change
+
+ 15:14 <cyphermox> * investigated/fixed tgt for proposed migration (blocked multipath-tools)
+
+ 15:14 <cyphermox> * investigated lava-dispatcher (blocked multipath-tools, skipped)
+
+ 15:14 <cyphermox> * fix fwupdate FTBFS
+
+ 15:14 <cyphermox> * SRUs:
+
+ 15:14 <cyphermox> - debian-installer-utils bug 1402042 (support --- in user-params)
+
+ 15:14 <ubottu> bug 1402042 in debian-installer-utils (Ubuntu Utopic) "console= parameters need to be added before -- on kernel cmdline" [Undecided,In progress] https://launchpad.net/bugs/1402042
+
+ 15:14 <cyphermox> - udev (systemd) bug 1437375 for trusty (exception for ibmveth MAC)
+
+ 15:14 <ubottu> bug 1437375 in systemd (Ubuntu Trusty) "[udev] Adding "Austin" adapter to Ubuntu partition take over system network interface" [Undecided,In progress] https://launchpad.net/bugs/1437375
+
+ 15:14 <cyphermox> - partman-auto bug 1461860 for trusty (ppc64el recipe)
+
+ 15:14 <ubottu> bug 1461860 in partman-auto (Ubuntu Trusty) "Installation scheme based on Separate /home, /usr, /var, and /tmp partitions fail" [Medium,In progress] https://launchpad.net/bugs/1461860
+
+ 15:14 <cyphermox> * debugging multipath-tools:
+
+ 15:14 <cyphermox> - bug 1463046: local HDs found as multipath when they shouldn't be
+
+ 15:14 <ubottu> bug 1463046 in multipath-tools (Ubuntu) "installation of multipath-tools-boot can break boot" [High,Triaged] https://launchpad.net/bugs/1463046
+
+ 15:14 <cyphermox> - bug 1468897: skip USB devices
+
+ 15:14 <ubottu> bug 1468897 in multipath-tools (Ubuntu) "multipath creates binding for Removable(USB) drives" [Medium,In progress] https://launchpad.net/bugs/1468897
+
+ 15:14 <cyphermox> * investigating iso smoketest failures
+
+ 15:14 <cyphermox> (done)
+
+ 15:15 <pitti> autopkgtest cloud:
+
+ 15:15 <pitti> - britney: Add much simpler AMQP/cloud based autopkgtest triggering, to get rid of lp:auto-package-testing and much indirection+duplication (landed)
+
+ 15:15 <pitti> - britney: Add autopkgtest result retrieval from swift (MP pending review)
+
+ 15:15 <pitti> - create swift server mock for writing britney tests
+
+ 15:15 <pitti> - do britney run for wily, triggering 500 tests; various robustifications and fixes from these
+
+ 15:15 <pitti> - Rewrite autopkgtest-cloud's swift results retriever to be suitable for inclusion into debci
+
+ 15:15 <pitti> systemd: package/test 222 (landed now), various bug fixes (#1450009, 1471258)
+
+ 15:15 <pitti> ecryptfs-utils: Fix broken cryptswap configuration with LVM, clean up on upgrades, prepare SRUs (bug 1453738), fix broken libecryptfs0 shipping libecryptfs.so.1
+
+ 15:15 <ubottu> bug 1453738 in ecryptfs-utils (Ubuntu Vivid) "installer in LVM mode sets up broken encrypted swap, using duplicate unencrypted swap" [High,In progress] https://launchpad.net/bugs/1453738
+
+ 15:15 <pitti> misc:
+
+ 15:15 <pitti> - review https://code.launchpad.net/~brian-murray/apport/support-ppa-packages/+merge/263437, almost ready now
+
+ 15:15 <pitti> - merges: openvpn, policykit-1, ruby-defaults
+
+ 15:15 <pitti> [END]
+
+ 15:17 <slangasek> * short week: holiday last Friday, sick yesterday
+
+ 15:17 <slangasek> * miscellaneous SRU processing
+
+ 15:17 <slangasek> * helping set up ci train silo for the upcoming gcc 5 transition
+
+ 15:17 <slangasek> * livecd-rootfs sponsorship to move a scope out of the phone rootfs
+
+ 15:17 <slangasek> * TB discussions about ubuntu-fan and SRUability
+
+ 15:17 <slangasek> * discussions around KVM support for ppc64el on 14.04
+
+ 15:17 <slangasek> * discussions around UEFI capsule update support
+
+ 15:17 <slangasek> * finished paperwork for new Java hire, who will be starting July 27
+
+ 15:17 <slangasek> * continuing search for Foundations engineers
+
+ 15:17 <slangasek> (done)
+
+ 15:17 <barry> short week due to usa holiday and pto
+
+ 15:17 <barry> more python 3.5 test rebuilds, with patches going upstream and into debian as appropriate
+
+ 15:17 <barry> python issue #15014 fixes RFC 4952 AUTH initial response (py3.5 fix for regression breaking packages in the wild)
+
+ 15:17 <barry> more git-dpm conversion work for dpmt
+
+ 15:17 <barry> lazr.delegates 2.0.3 (upstream) and 2.0.3-1 (debian) for launchpad related fix
+
+ 15:17 <barry> zope.interface 4.1.2-1 new upstream and cross build fixes
+
+ 15:18 <barry> reported LP: #1473093 (checkbox-ng for py3.5)
+
+ 15:18 <ubottu> Launchpad bug 1473093 in Next Generation Checkbox (CLI) "tests fail on python3.5" [Critical,Confirmed] https://launchpad.net/bugs/1473093
+
+ 15:18 <barry> --done--
+
+ 15:18 <sil2100> o/
+
+ 15:18 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:18 <sil2100> - Manually prepare languagepack packages for most important languages
+
+ 15:18 <sil2100> - Prepare livecd-rootfs for youtube scope removal
+
+ 15:18 <sil2100> - Coordinate device and custom tarball landings for OTA-5
+
+ 15:18 <sil2100> - Coordinate landings for OTA-5, image preparations
+
+ 15:18 <sil2100> - Documenting the new release schedule for OTA upgrades
+
+ 15:18 <sil2100> - RTM status meetings and discussions
+
+ 15:18 <sil2100> - Gathering feedback regarding derived vs. overlay
+
+ 15:18 <sil2100> - Discussions regarding fixing the broken wily language-packs
+
+ 15:18 <sil2100> - Selective work on triaging the appmenu-qt5 bug with hiding windows
+
+ 15:18 <sil2100> - Cleanup in assigned bugs
+
+ 15:18 <sil2100> - Various changes and improvements to commitlog generation infrastructure
+
+ 15:18 <sil2100> - Discussions about the setup of new channels
+
+ 15:18 <sil2100> (done)
+
+ 15:19 <slangasek> doko:
+
+ 15:19 <doko> - announced the GCC 5 transition
+
+ 15:19 <doko> - reviewd and fixed 30 GCC 5 ftbfs in Debian, merged to Ubuntu
+
+ 15:19 <doko> - populated https://launchpad.net/~ci-train-ppa-service/+archive/ubuntu/landing-016/+packages
+
+ 15:19 <doko> - getting angry with unmerged packages since 2013 ... trafficserver
+
+ 15:19 <doko> - python3.5 beta3
+
+ 15:19 <doko> (done)
+
+ 15:20 * infinity checks if trafficserver is his...
+
+ 15:20 <pitti> unmerged packages> amen
+
+ 15:20 <infinity> Oh look, it is.
+
+ 15:20 <infinity> *sigh*
+
+ 15:21 <infinity> doko: Hint taken. :P
+
+ 15:21 <doko> ;-P
+
+ 15:21 <pitti> those are the ones which really drive me away from fixing -proposed stuff in some cases (becoming TIL on even more crappy packages)
+
+ 15:21 <slangasek> :)
+
+ 15:22 <infinity> pitti: Yeah, it's a vicous cycle.  Cause you end up TIL, then you don't have enough time for merges, then someone else gets angry with you for not merging, then they get annoyed enough to merge it themselves, then they end up being the one who lags, repeat.
+
+ 15:22 <slangasek> alrighty - any questions over status?
+
+ 15:22 <pitti> infinity: heh, yes; we still suffer a lot from the old years where we tossed just about anything into ubuntu that people threw at us..
+
+ 15:22 <slangasek> fwiw I've asked bdmurray to work on getting better reporting out of MoM so that we can actually see "merges I'm responsible for, sorted by age"
+
+ 15:23 <barry> bdmurray: can you add "merges i will never get to, let's just be honest about it"?
+
+ 15:24 <doko> infinity, pitti: would be nice to track autoremovals in unstable, and then have a separate section for these in update_excuses
+
+ 15:24 <infinity> slangasek: If I could get age out of "grep-merges", that would do it.
+
+ 15:25 <slangasek> infinity: heh, never heard of 'grep-merges'.  But if the main report would list the age, presumably that would give you this?
+
+ 15:25 <infinity> doko: Yeah, looking at trafficserver, it probably wants a removal from wily and then a sync after the gcc-5 transition, so it can FTBFS. :P
+
+ 15:26 <infinity> slangasek: Yeah, not sure where grep-merges pulls from, but I assume it's the same report you're talking about.
+
+ 15:26 <slangasek> merges.ubuntu.com/main.html etc
+
+ 15:27 <slangasek> [TOPIC] Team changes
+
+ 15:28 <slangasek> I mentioned earlier in the meeting that stgraber was probably not around... there's a specific reason for this :)
+
+ 15:28 <pitti> noooo!
+
+ 15:28 <slangasek> as many of you have seen, stgraber has been working full time on lxd together with folks in CDO for quite a while now
+
+ 15:29 <slangasek> this situation is now being formalized - Stéphane is now the LXD technical lead, reporting on the server team!
+
+ 15:29 <sil2100> Oh no!
+
+ 15:29 <infinity> And now I'm the shortest member of the team.  This is unacceptable.
+
+ 15:29 <slangasek> so congratulations to stgraber on the new role, and we wish him well - while making no promises not to continue harrassing him with Foundations questions ;)
+
+ 15:30 <sil2100> The foundations are cracking!
+
+ 15:30 <slangasek> this means that, once the paperwork goes through, we will be hiring for not one, but two Foundations engineer positions
+
+ 15:31 <pitti> infinity: ^ you have a way to rectify that then :)
+
+ 15:31 <slangasek> so pester all your brilliant and short friends to apply
+
+ 15:31 <sil2100> hmmm ;)
+
+ 15:31 <barry> slangasek: is one of those the java dude?
+
+ 15:31 <slangasek> barry: this would be two, in addition to javadude (whose name is Tiago)
+
+ 15:31 <barry> oh!  we have a winner!  cool
+
+ 15:32 <sil2100> Woohoo
+
+ 15:32 <sil2100> Damn, I'd like to have more time for some system-image server work, grrr
+
+ 15:33 <slangasek> [TOPIC] AOB
+
+ 15:33 <slangasek> anything else this week?
+
+ 15:34 <pitti> after spending the fourth or so day on cleaning up after "we messed up swap space config in the installer years ago"
+
+ 15:34 <pitti> I wondered if we should just stop doing it completely -- it's 2015..
+
+ 15:34 <barry> pitti: yeah, i still see that on some of my machines ;)
+
+ 15:34 <pitti> kirkland mentioned "swapspace", which dynamically creates swap files on demand on your root partition (or perhaps /var) instead of eternally blocking an entire partition
+
+ 15:35 <pitti> does anyone have experience with that?
+
+ 15:35 <slangasek> I don't think "dynamically" creating swap partitions sounds like a great idea to me
+
+ 15:35 <infinity> pitti: I have no experience with userspace swapfile magic like that, but I might be inclined to agree that switching from partitions to files for desktop installs would be reasonable.
+
+ 15:35 <infinity> Maybe.
+
+ 15:35 <pitti> I mean, we need to fix ecryptfs-setup-swap either way
+
+ 15:36 <slangasek> there was discussion long ago about switching from swap partition to swap file; I don't know why it was never done
+
+ 15:36 <pitti> but as a matter of fact, everyone who installed with "encrypt my home dir" between perhaps precise and vivid had no swap at all
+
+ 15:36 <slangasek> pitti: I'm missing context - what's the problem with ecryptfs-setup-swap?
+
+ 15:36 <pitti> slangasek: there were various bugs in that and ubiquity which prevented having swap space at all, or in the case of LVM having unencryted plus encrypted where the unencrypted one won
+
+ 15:37 <slangasek> erm?  I thought the desktop LVM+crypt recipe gave you a single encrypted VG and nothing else
+
+ 15:37 <pitti> i. e. we already seeem to have a non-negligible user base with no swap at all, and not seem to have too many complaints
+
+ 15:37 <pitti> slangasek: no, not LVM crypt; unencrypted LVM plus "encrypt my home dir" (ecryptfs)
+
+ 15:38 <slangasek> ah
+
+ 15:38 <pitti> or just plain simple partitioning plus ecryptfs
+
+ 15:38 <ogra_> pitti, just keep in mind that no swap at all makes the kernel behave differently ...
+
+ 15:38 <slangasek> so the decision of whether to enable swap at install time should in no way be based on whether the average user noticed they didn't have swap
+
+ 15:38 <ogra_> (in case you consider dropping swap altogether)
+
+ 15:39 <slangasek> the average user shouldn't need to know what swap is, and the decision of whether to enable it for the user should be based on whether it gives the best user experience
+
+ 15:39 <pitti> ogra_: well, it wasn't an active decision -- those were years old bugs in ecryptfs/ubiquity which only surfaced with the systemd transition
+
+ 15:39 <barry> is it even possible to go back and fix all those installs that effectively have no swap, say in some kind of update?
+
+ 15:39 <ogra_> pitti, right, it looked to me you are discussing a future default though
+
+ 15:39 <pitti> right, so there's various alternatives: only configure swap partition with < 4 GB of RAM
+
+ 15:39 <pitti> or do away with having to decide about static swap at installer time and do dynamic swap
+
+ 15:40 <slangasek> pitti: where does this 4GB number come from?  Sounds arbitrary to me :)
+
+ 15:40 <pitti> ogra_: yes, it made me wonder whether "swap partition" is still a good answer
+
+ 15:40 <pitti> slangasek: exactly
+
+ 15:40 <infinity> pitti: I use far more than 4G normally. :P
+
+ 15:40 <pitti> OTOH, creating 32 GB of swap space on a 16 GB RAM system is just an utter waste
+
+ 15:40 <pitti> (by the old "twice your RAM" rule of thumb)
+
+ 15:40 <slangasek> I have 8GB of RAM, and I have a swap partition, and I want a good reason if you're going to take it away ;)
+
+ 15:40 <pitti> (not sure what partman does, though)
+
+ 15:40 <infinity> partman-swap is a little smarter than that.
+
+ 15:40 <slangasek> pitti: that's clearly not the right rule of thumb for high-mem systems, but that means we should fix the rule of thumb, not remove swap
+
+ 15:41 <infinity> I think it's "twice your RAM up to X, then a set value" or something.
+
+ 15:41 <pitti> yeah, I'm sure it does, but I wanted to get a feeling what you think about replacing it with dynamic swap files
+
+ 15:41 <slangasek> pitti: take out the "dynamic" and yes
+
+ 15:41 <slangasek> any swap file is "dynamic" in the sense that the user can "easily" resize it
+
+ 15:41 <infinity> I think files are probably the right answer (except maybe for servers, but serious server people tend to write their own recipes anyway).
+
+ 15:41 <slangasek> but we don't need to support it being dynamic initially
+
+ 15:41 <pitti> well, "swap file" gets rid of this ever-breaking ecryptfs-setup-swap; but "dynamic" is really half the point here
+
+ 15:42 <pitti> (FWIW, I don't know what swapfile does exactly, I just got told an hour or so ago by kirkland that it's on-demand in some fashion)
+
+ 15:42 <infinity> pitti: How does dynamic work?  When we're hitting the wall, does it just add another swapfile, and delete it when we don't need it anymore?
+
+ 15:42 <pitti> err, "swapspace" is the package, not swapfile
+
+ 15:42 <slangasek> pitti: I think it'd be a good idea if you chatted with cjwatson to understand what the blockers were for us never having switched to swap files (aside from ENOTIME)
+
+ 15:43 <pitti> Small, stable system add-on that continuously and automatically adapts
+
+ 15:43 <infinity> slangasek: I'd guess ENOTIME, and also fragmentation/speed concerns on rotary disks.
+
+ 15:43 <pitti> available virtual memory space to your actual memory needs.  Claims disk space
+
+ 15:43 <pitti> for use as swap space when needed; frees it up for use by the filesystem when
+
+ 15:43 <pitti> not needed.
+
+ 15:43 <pitti> well, the other thing is I don't want to "own" this project -- I'm oversubscribed already
+
+ 15:44 <pitti> but since this doesn't seem to be unanimous, I guess I just crawl back into my corner :)
+
+ 15:44 <pitti> (it really seemed to me like a case of "OMG nobody threw this out yet?")
+
+ 15:44 <pitti> but if people are still using it, so be it
+
+ 15:44 <tyhicks> it would be nice to remove swap partition setup goop from ecryptfs-utils
+
+ 15:45 <tyhicks> (thanks for fixing ecryptfs-setup-swap, pitti :)
+
+ 15:45 <tyhicks> I don't think we can do away with swap completely
+
+ 15:45 <pitti> tyhicks: fingers crossed that this is the last bug :)
+
+ 15:45 <slangasek> pitti: I think there's a consensus for moving to a swap partition.  I think having a *daemon* trying to manage the size of your swap at runtime is crazypants
+
+ 15:45 <slangasek> sorry, moving to a swap /file/
+
+ 15:45 <pitti> slangasek: file? ah yes
+
+ 15:45 <tyhicks> pitti: where would the swapfile be stored? does swapfile handle encryption?
+
+ 15:46 <pitti> tyhicks: I don't know anything about swapspace, so I don't know
+
+ 15:46 <pitti> kirkland looked into it some time ago and felt that it was worth taking a look
+
+ 15:47 <pitti> but if it's anything like a swap file it would just use the underlying fs' encryption
+
+ 15:47 <tyhicks> but encrypted home is per-user
+
+ 15:47 <pitti> well, not *that* encryption (ecryptfs)
+
+ 15:47 <tyhicks> we can't put the swapfile in /home/foo/
+
+ 15:47 <pitti> e-s-swapspace is cryptsetup
+
+ 15:47 <tyhicks> ah, ok
+
+ 15:47 <pitti> no, should probably be in /var/cache or so
+
+ 15:48 <pitti> or maybe swapspace is even just using unallocated blocks
+
+ 15:48 <infinity> Obviously, you should just put your swapfile in a tmpfs, so it's zapped on power loss and you don't care about encryption.  Duh.
+
+ 15:48 <pitti> infinity: that's a *great* idea!
+
+ 15:48 <infinity> pitti: I KNOW.
+
+ 15:48 <pitti> what was the name of that? memdouble or so (from DOS times)
+
+ 15:48 <slangasek> I'm not sure tmpfs has the right semantics for this.  Maybe we should use overlayfs for it
+
+ 15:48 <infinity> We have that too, it's called zram!
+
+ 15:48 <infinity> And works quite well.
+
+ 15:49 <pitti> and then you recursively use it 8 times, problem solved
+
+ 15:49 <slangasek> that way we only have to store the delta of the memory
+
+ 15:49 <pitti> ok, I think we're through with this discussion :)
+
+ 15:49 <tyhicks> "tmpfs puts everything into the kernel internal caches and grows and
+
+ 15:49 <tyhicks> shrinks to accommodate the files it contains and is able to swap
+
+ 15:49 <tyhicks> unneeded pages out to swap space."
+
+ 15:49 <tyhicks> https://www.kernel.org/doc/Documentation/filesystems/tmpfs.txt
+
+ 15:49 <tyhicks> infinity: I know you were joking, but that would make for a fun test :)
+
+ 15:50 <infinity> tyhicks: Yeahp, and swapping to yourself is awesome.
+
+ 15:50 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,205 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 16 Aug at 14:34 &mdash; 15:02 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-08-16-14.34.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by slyon at 14:34.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 14:34)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 14:34)
+
+=== New MIRs ===
+
+Discussion started by slyon at 14:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 14:41)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 14:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 14:43)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 14:54.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 14:54)
+
+=== Any other business? ===
+
+Discussion started by slyon at 15:01.
+
+
+
+
+== People present (lines said) ==
+
+ * slyon (46)
+ * sarnold (21)
+ * ubottu (4)
+ * meetingology (2)
+ * jbicha (1)
+
+
+
+== Full log ==
+
+
+ 14:34 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:34 <meetingology> Meeting started at 14:34:33 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:34 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:34 <slyon> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 14:34 <slyon> #topic current component mismatches
+
+ 14:34 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:34 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:34 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:35 <slyon> -release looks all fine
+
+ 14:35 <sarnold> I'm loving the new 'known false positives' bug :)
+
+ 14:35 <slyon> :)
+
+ 14:36 <slyon> -proposed: libwacom -> python-libevdev is a new component mismatch..
+
+ 14:36 <slyon> the source is a desktop package, so I'd like to ask didrocks to investigate
+
+ 14:36 <slyon> (who apparently isn't here today, so maybe postpone to next week)
+
+ 14:37 <sarnold> that's getting mighty close to feature freeze
+
+ 14:38 <slyon> right. but I think promotions to main are usually not cosidered feature freeze critical (unless they explicitly are for enabling new features, of course)
+
+ 14:39 <slyon> inetutils looks interesting, never saw such mismatch before (dependency on itself)...
+
+ 14:39 <slyon> it seems to be related to telnet, which is a foundations package, so I'll try to investigate what's going on there.
+
+ 14:39 <sarnold> oh wow, heh I missed that..
+
+ 14:40 <slyon> also gsasl -> libgssglue seems new, it's foundations, too. I'll ask jawn-smith about that, who did the other mutt related MIRs
+
+ 14:40 <slyon> #topic New MIRs
+
+ 14:40 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:41 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:41 <slyon> we have bug #1986591
+
+ 14:41 <ubottu> Bug 1986591 in fstrm (Ubuntu) "[MIR] fstrm" [Undecided, New] https://launchpad.net/bugs/1986591
+
+ 14:41 <slyon> sarnold: you had some opinion on this apparently?
+
+ 14:42 <sarnold> slyon: mostly I wanted to push back against adding these packages to main in focal
+
+ 14:42 <sarnold> slyon: as far as I know there's no business demand for this feature; I'm completely fine with community-driven feature requests, but doing a ton of work for it on a two year old release doesn't seem productive to me
+
+ 14:43 <slyon> I agree. And I think we should postpone this to next week, too. So we can discuss the case with more MIR team members.
+
+ 14:43 <slyon> so, leaving it open and moving on.
+
+ 14:43 <slyon> #topic Incomplete bugs / questions
+
+ 14:43 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:43 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:44 <slyon> bug #1963707 is still pending the "hw available for testing?" question
+
+ 14:44 <ubottu> Bug 1963707 in libqrtr-glib (Ubuntu) "[MIR] libqrtr-glib" [Low, Incomplete] https://launchpad.net/bugs/1963707
+
+ 14:44 <sarnold> aha, nice, I wondered why it was back :)
+
+ 14:45 <slyon> bug #1909665 is still incomplete (does not have a MIR template). It should probably be assigned to whoever is working on this
+
+ 14:45 <ubottu> Bug 1909665 in lua5.4 (Ubuntu) "[MIR] ibus-libpinyin dependencies" [Low, Incomplete] https://launchpad.net/bugs/1909665
+
+ 14:45 <sarnold> lua transition, is that a foundations thing?
+
+ 14:46 <slyon> no. it's server
+
+ 14:47 <slyon> at least lua5.3 is subscribed to ~ubuntu-server
+
+ 14:48 <sarnold> okay, having read more of the bug I think you're right, ubuntu-server, and it feels like they're pretty close :)
+
+ 14:48 <slyon> yes. so let's keep it open until ready, maybe next week.
+
+ 14:49 <sarnold> comment #13 does suggest it might be a few months -- is it fine to leave it in this list until then? or should we move it to ubuntu-server so they don't lose track of it?
+
+ 14:49 <sarnold> I don't want to be hectoring about it :) but I also would hate for it to be overlooked when it feels close
+
+ 14:49 <slyon> sarnold: that's a good idea! We should assign ubuntu-server
+
+ 14:50 <sarnold> done
+
+ 14:50 <slyon> thx
+
+ 14:50 <slyon> bug #1986592 is incomplete. I'll assign it to the reporter, to make it disappear from our list until ready
+
+ 14:50 <ubottu> Bug 1986592 in openconnect (Ubuntu) "[MIR] network-manager-openconnect, openconnect" [Undecided, Incomplete] https://launchpad.net/bugs/1986592
+
+ 14:50 <sarnold> good idea
+
+ 14:50 <sarnold> I have stronger opinions here
+
+ 14:50 <sarnold> we do not need every single popularly used vpn in main
+
+ 14:52 <slyon> sarnold: could you put that as a comment into the LP bug report?
+
+ 14:52 <sarnold> openconnect sounds like it may be better than the proprietary stuff it is meant to replace, but it almost always interops with horrible old proprietary junk that's a decade behind the times, or more
+
+ 14:53 <slyon> to start a discussion before the reporter puts lots of effort in preparing the MIR templates
+
+ 14:54 <slyon> #topic MIR related Security Review Queue
+
+ 14:54 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 14:54 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:55 <slyon> sarnold: any news on the security reviews?
+
+ 14:55 <sarnold> mark esler has been an absolute machine chewing through MIRs :) I'm feeling so much better about this list today than eg two weeks ago
+
+ 14:56 <sarnold> I'm concerned about nullboot; chrisccoulson's time is limited and in very high demand
+
+ 14:56 <slyon> anything we can help with wrt nullboot? to speed things up? cc juliank ^
+
+ 14:56 <sarnold> all the smart-card related packages are shared security/desktop, and so long as our security certifications team is short-staffed I can't imagine those getting traction
+
+ 14:58 <sarnold> nothing comes to mind; I'll ask chris when he thinks he might be able to get to it, but as usual, there's almost always a steady-stream of high-priority Interrupt-Driven sorts of needs..
+
+ 14:59 <jbicha> slyon: I asked about hardware for libqrtr-glib. I don't think the desktop team has access to this hardware directly. We need to check with Canonical's hardware certification team
+
+ 14:59 <slyon> jbicha: thanks for the update. we'll keep tracking the bug as "Incomplete" until there is a testing opportunity
+
+ 15:01 <slyon> sarnold: wrt nullboot: I cannot find a definitive deadline in the MIR report. but it seems to be entangled with enabling FDE functionallity, which might bring up some discussions during the next sprint
+
+ 15:01 <sarnold> definintely :)
+
+ 15:01 <slyon> #topic Any other business?
+
+ 15:01 <sarnold> none here
+
+ 15:02 <slyon> we had very little attendence during today's meeting, which is sad :(
+
+ 15:02 <slyon> thanks for being here and updating things with me sarnold!
+
+ 15:02 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

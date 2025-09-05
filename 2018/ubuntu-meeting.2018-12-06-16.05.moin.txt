@@ -1,0 +1,489 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 06 Dec at 16:05 &mdash; 16:40 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2018/ubuntu-meeting.2018-12-06-16.05.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 16:05.
+
+  * ''LINK:'' https://salsa.debian.org/apt-team/apt/commit/294b5e77a25d2600e7f3ce12a996d1694b5be817 
+  * ''LINK:'' https://code.launchpad.net/~codyshepherd/livecd-rootfs/bionic-proposed-snaps-manifest/+merge/359645 
+  * ''LINK:'' https://code.launchpad.net/~codyshepherd/livecd-rootfs/xenial-proposed-snaps-manifest/+merge/359649 
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 16:16.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 16:32.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:36.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cyphermox (63)
+ * bdmurray (33)
+ * gaughen (23)
+ * rbalint (18)
+ * juliank (17)
+ * doko (10)
+ * tdaitx (10)
+ * ubottu (9)
+ * tobikoch (7)
+ * platonical (7)
+ * Odd_Bloke (5)
+ * fginther (4)
+ * meetingology (3)
+ * rcj (2)
+
+
+
+== Full Log ==
+
+
+ 16:05 <cyphermox> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:05 <meetingology> Meeting started Thu Dec  6 16:05:50 2018 UTC.  The chair is cyphermox. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:05 <meetingology> 
+
+ 16:05 <meetingology> Available commands: action commands idea info link nick
+
+ 16:05 <cyphermox> #topic Lightning rounds
+
+ 16:06 <cyphermox> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson rcj philroche Odd_Bloke fginther juliank platonical tobikoch)
+
+ 16:06 <cyphermox> tdaitx sil2100 rcj xnox mwhudson juliank infinity fginther bdmurray platonical Odd_Bloke cyphermox philroche doko rbalint tobikoch vorlon
+
+ 16:06 <tdaitx> * openjdk-11 update with autopkgtests
+
+ 16:06 <tdaitx> - seeing lots of failures in the ppa builds, disk space was reported as a problem, but vbuilders have 60 GB disk
+
+ 16:06 <tdaitx> - still got failures afre removing intermediate testsuite files
+
+ 16:06 <tdaitx> - arm and intel failed, ibm worked fine, launchpad team said nothing was changed so package changes were probably at fault
+
+ 16:06 <tdaitx> - more often disk usage sampling finally indicated a testsuite that grew by 30 GB in less than 2 minutes (local build is faster and on a ssd)
+
+ 16:06 <tdaitx> - investigating which particular tests are at "fault", then decide to either ignore them (depending on importance) or free space somewhere else
+
+ 16:06 <tdaitx> * openjdk-11 migration to bionic
+
+ 16:06 <tdaitx> - local rebuilds of packages that need patching and must be build with openjdk-10
+
+ 16:06 <tdaitx> - sorting out what new package dependencies are being used on debian since cosmic
+
+ 16:06 <tdaitx> (done)
+
+ 16:06 <gaughen> sil2100 is in CPT, and riding back to the hotel
+
+ 16:06 <gaughen> rcj
+
+ 16:07 <rcj> * tons of vacation
+
+ 16:07 <rcj> (done)
+
+ 16:07 <gaughen> xnox is out today
+
+ 16:08 <gaughen> may be on airplane
+
+ 16:08 <gaughen> mwhudson is sleeping hopefully
+
+ 16:08 <gaughen> juliank,
+
+ 16:08 <juliank> * magic apt stuff
+
+ 16:08 <cyphermox> super moo powers! yay
+
+ 16:08 <juliank> https://salsa.debian.org/apt-team/apt/commit/294b5e77a25d2600e7f3ce12a996d1694b5be817
+
+ 16:08 <juliank> (done)
+
+ 16:09 <cyphermox> fginther:
+
+ 16:10 <fginther> * Partner calls
+
+ 16:10 <fginther> * Posted job opening: https://boards.greenhouse.io/canonical/jobs/1456314
+
+ 16:10 <fginther> (done)
+
+ 16:10 <fginther> bdmurray:
+
+ 16:10 <bdmurray> submitted RT #115646 re staging ET access to porter-i386.canonical.com
+
+ 16:10 <bdmurray> submitted RT re updating daisy code in Error Tracker
+
+ 16:10 <bdmurray> reported oopsrepository bug LP: #1805912 - and fixed it too
+
+ 16:10 <bdmurray> also fixed another bug regarding writing to BucketMetadata
+
+ 16:10 <bdmurray> worked with IS regarding failed daisy update and also a separate bad unit
+
+ 16:10 <ubottu> Launchpad bug 1805912 in Daisy "BucketMetadata has some junk in it" [Medium,In progress] https://launchpad.net/bugs/1805912
+
+ 16:10 <bdmurray> modified ET mojo spec not to use rabbitmq-stats plus some other stuff
+
+ 16:10 <bdmurray> merged libreoffice bionic badtest hint from osomon
+
+ 16:10 <bdmurray> reviewed rbalint's monster unattended-upgrades SRU
+
+ 16:10 <bdmurray> review of Ubuntu Bug Control application from Canonical employee
+
+ 16:11 <bdmurray> special SRU review / release of netplan.io for Bionic
+
+ 16:11 <bdmurray> worked on allowing ubuntu-release-upgrader to attempt an upgrade with
+
+ 16:11 <bdmurray> PPAs enabled
+
+ 16:11 <bdmurray> Now errors.ubuntu.com doesn't have any strange releases on the front page, something Adam had brought up a bit ago.
+
+ 16:11 <bdmurray> It was a bit complicated but looks nice now.
+
+ 16:12 <bdmurray> ✔ done
+
+ 16:12 <bdmurray> platonical:
+
+ 16:12 <platonical> * Livecd-rootfs SRUs:
+
+ 16:12 <platonical> https://code.launchpad.net/~codyshepherd/livecd-rootfs/bionic-proposed-snaps-manifest/+merge/359645
+
+ 16:12 <platonical> https://code.launchpad.net/~codyshepherd/livecd-rootfs/xenial-proposed-snaps-manifest/+merge/359649
+
+ 16:12 <platonical> * Bug verification on LP: #1801134
+
+ 16:12 <ubottu> Launchpad bug 1801134 in livecd-rootfs (Ubuntu Xenial) "/etc/resolv.conf broken in Xenial minimal" [Undecided,Fix committed] https://launchpad.net/bugs/1801134
+
+ 16:12 <platonical> * Partner image work
+
+ 16:12 <platonical> (done)
+
+ 16:12 <platonical> Odd_Bloke:
+
+ 16:12 <Odd_Bloke> * Various partner pieces of work
+
+ 16:12 <Odd_Bloke> * Investigated using Sentry for build system error tracking
+
+ 16:12 <Odd_Bloke> * Moved old trusty releases to our S3 archive to free up disk space on the cloud-images.u.c host
+
+ 16:12 <Odd_Bloke> (done)
+
+ 16:12 <Odd_Bloke> cyphermox:
+
+ 16:12 <cyphermox> MIR: review gnome-shell-extension-desktop-icons
+
+ 16:12 <cyphermox> - plymouth: update upstream patches for keyboard deactivation
+
+ 16:12 <cyphermox> - Secure Boot/ grub SRU testing (Windows 10 / MAAS chainloading) (bug LP: #1792575)
+
+ 16:12 <ubottu> Launchpad bug 1792575 in shim-signed (Ubuntu Xenial) "Boot failure with efi shims from 20180913.0" [Undecided,Confirmed] https://launchpad.net/bugs/1792575
+
+ 16:12 <cyphermox> - netplan:
+
+ 16:12 <cyphermox> - finishing up tunnel support (integration tests + parent device issues)
+
+ 16:12 <cyphermox> - workaround for device matching issues when MACs are shared
+
+ 16:12 <cyphermox> - Whitepaper: writing up Secure Boot PKI stuff.
+
+ 16:12 <cyphermox> - debugging NM+dnsmasq autopkgtests fail in disco
+
+ 16:12 <cyphermox> (done)
+
+ 16:14 <tobikoch> p_hilroche is ooo
+
+ 16:14 <tobikoch> doko:
+
+ 16:14 <doko> - packaged GCC 7.4 release, update 8.2
+
+ 16:14 <doko> - some MIRs
+
+ 16:14 <doko> - preparing bionic test rebuild
+
+ 16:14 <doko> - OpenJDK 12 packaging, reviewed new OpenJDK 11 packaging changes
+
+ 16:14 <doko> - fixing various ftbfs
+
+ 16:14 <doko> - debhelper merge (pending since June)
+
+ 16:14 <doko> (done)
+
+ 16:14 <rbalint> * meld new upstream release 3.18.3
+
+ 16:14 <rbalint> * created unattended-upgrades mirror on Salsa with CI config
+
+ 16:14 <rbalint> https://salsa.debian.org/rbalint/unattended-upgrades
+
+ 16:14 <rbalint> * followed up on unattended-upgrades SRU regressions
+
+ 16:15 <rbalint> * fixed old LP: #1806678 in git
+
+ 16:15 <ubottu> Launchpad bug 1806678 in rax-nova-agent (Ubuntu) "rax-nova-agent can be upgraded without upgrading python3-novaagent, then it crashes" [Undecided,New] https://launchpad.net/bugs/1806678
+
+ 16:15 <rbalint> * fixed LP: #1806076 on apt's side in git
+
+ 16:15 <ubottu> Launchpad bug 1806076 in unattended-upgrades (Ubuntu) "unattended-upgrade --help raises UnicodeEncodeError when stdout encoding is ascii" [Undecided,New] https://launchpad.net/bugs/1806076
+
+ 16:15 <rbalint> * collected bzr branches of one round of Foundation's packages for git conversion
+
+ 16:15 <rbalint> * proposed check for motd news format:
+
+ 16:15 <rbalint> https://code.launchpad.net/~rbalint/ubuntu-motd/check-news-format/+merge/360195
+
+ 16:15 <rbalint> * also for nicer minimized motd:
+
+ 16:15 <rbalint> https://code.launchpad.net/~rbalint/livecd-rootfs/separate-motd-minimized/+merge/360193
+
+ 16:15 <rbalint> * fixed foolscap autopkgtest
+
+ 16:15 <rbalint> * packaged new twisted 18.9.0 upstream
+
+ 16:15 <rbalint> (done)
+
+ 16:15 <tobikoch> * mfdiff refactoring
+
+ 16:15 <tobikoch> * vanguarding
+
+ 16:15 <tobikoch> * some image build parallellelization work
+
+ 16:15 <tobikoch> * minor amount of partner work
+
+ 16:15 <tobikoch> (done)
+
+ 16:16 <cyphermox> #topic Release incoming bugs
+
+ 16:16 <cyphermox> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs
+
+ 16:16 <cyphermox> (and this time I got the right URL)
+
+ 16:16 <cyphermox> bdmurray: anything on that report you want to talk about?
+
+ 16:16 <bdmurray> I noticed Adam took bug 1797335 but there isn't a card for it
+
+ 16:16 <ubottu> bug 1797335 in glibc (Ubuntu) "strstr() on ubuntu18.04 8 times slower than on ubuntu16" [Undecided,Confirmed] https://launchpad.net/bugs/1797335
+
+ 16:17 <bdmurray> So should we create one?
+
+ 16:18 <gaughen> he's got it in the glibc sru he's working on
+
+ 16:18 <gaughen> bdmurray, so yes, to creating one and it should go straight to in progress
+
+ 16:18 <bdmurray> gaughen: ack
+
+ 16:18 <gaughen> bdmurray, you'll create it?
+
+ 16:18 <bdmurray> bug 1805490 was raised by seb
+
+ 16:18 <ubottu> bug 1805490 in grub2-signed (Ubuntu) "Grub2 Failed to install "efibootmgr failed to register the boot entry: Block device required."" [High,Confirmed] https://launchpad.net/bugs/1805490
+
+ 16:18 <bdmurray> gaughen: when my system is working better yes
+
+ 16:19 <gaughen> let me do it then
+
+ 16:19 <cyphermox> bdmurray: not new
+
+ 16:19 <cyphermox> I'll take it though, see if there's more to get out of this now
+
+ 16:19 <gaughen> cyphermox, bdmurray and I'll card this one too
+
+ 16:19 <bdmurray> cool
+
+ 16:19 <cyphermox> gaughen: ta
+
+ 16:20 <bdmurray> then there is bug 1804673 which may have an upstream fix
+
+ 16:20 <ubottu> bug 1804673 in gnutls28 (Ubuntu) "gnutls causes gnome-music segmentation fault" [High,Confirmed] https://launchpad.net/bugs/1804673
+
+ 16:20 <gaughen> I have one quesiton on that last one
+
+ 16:20 <cyphermox> wow
+
+ 16:20 <gaughen> is this warm enough that we should look at it in the next couple of weeks, or can it wait until Jan?
+
+ 16:20 <cyphermox> is that not a desktop bug?
+
+ 16:21 <juliank> I'd cherry-pick the gnutls one, that should be trivial, but not sure about SRU testing
+
+ 16:21 <bdmurray> no, seb said gnutls is ours which is true
+
+ 16:21 <cyphermox> ok
+
+ 16:21 <cyphermox> well, yeah, gnutls is ours
+
+ 16:22 <cyphermox> my point was it's easy to use gnutls wrong in gnome-music that would lead to a segfault
+
+ 16:22 <juliank> APT uses gnutls, so I tend to take care of it when I see it somewhere
+
+ 16:22 <cyphermox> but since it's been tracked down to gnutls itself
+
+ 16:22 <gaughen> I'll card this beasty also bdmurray, it does look like one we should look at
+
+ 16:22 <cyphermox> juliank wants to take it?
+
+ 16:22 <gaughen> sounds like it
+
+ 16:22 <juliank> yeah
+
+ 16:22 <cyphermox> cool
+
+ 16:23 <bdmurray> Then there is bug 1805027 which I'm keeping an eye since I experience it too
+
+ 16:23 <ubottu> bug 1805027 in systemd (Ubuntu) "systemd-resolved can't resolve Comcast mail server addresses" [Undecided,Confirmed] https://launchpad.net/bugs/1805027
+
+ 16:24 <juliank> who uses comcast mail servers anyway?
+
+ 16:25 <bdmurray> people forced to?
+
+ 16:25 <cyphermox> it's a fun bug
+
+ 16:26 <juliank> Can reproduce to
+
+ 16:26 <cyphermox> yup
+
+ 16:26 <juliank> resolvectl query works, but actually using it fails
+
+ 16:26 <cyphermox> it's quite likely EDNS foobar
+
+ 16:26 <juliank> (on disco)
+
+ 16:26 <cyphermox> (so that inflight SRU that may or may not be in disco?)
+
+ 16:27 <cyphermox> xnox isn't around to claim it, but it can probably wait until he's there?
+
+ 16:27 <gaughen> so it's confirmed to NOT be addressed by the latest systemd sru?
+
+ 16:27 <cyphermox> we only confirm it's not fixed in disco
+
+ 16:27 <bdmurray> gaughen: no, it is not. Although I tested it and it didn't help.
+
+ 16:27 <juliank> it's definitely not fixed in yesterday's disco upload
+
+ 16:27 <cyphermox> no clue if the SRU is applied is disco. certainly /should/ be
+
+ 16:27 <gaughen> I carded it
+
+ 16:28 <cyphermox> so maybe it's not the same bug
+
+ 16:28 <bdmurray> juliank: you tested it on disco?
+
+ 16:28 <juliank> that includes " resolved: Increase size of TCP stub replies."
+
+ 16:28 <cyphermox> we do have all the info to fix it though, so it's just a matter of how fast it needs to be addressed
+
+ 16:28 <juliank> yes, with  239-7ubuntu15
+
+ 16:28 <cyphermox> heh
+
+ 16:28 <juliank> cyphermox: before the release
+
+ 16:28 <juliank> :D
+
+ 16:28 <cyphermox> well, yeah
+
+ 16:28 <cyphermox> but I mean "before xnox is available" or not
+
+ 16:29 <cyphermox> I can easily go debug it
+
+ 16:29 <juliank> Given that this affects a small group of users, does not seem that high priority
+
+ 16:29 <gaughen> cyphermox, I don't think it's that hot
+
+ 16:29 <bdmurray> i think there is a danger of people modifying systems in a bad way
+
+ 16:29 <cyphermox> just not sure if that's a good idea priority-wise ;)
+
+ 16:29 <cyphermox> bdmurray: yeah
+
+ 16:29 <gaughen> cyphermox, I don't think it's a jam it in the current iteration
+
+ 16:29 <cyphermox> juliank: it affects a "small" group of many users, the most likely to modify their systems in a bad way, sadly
+
+ 16:30 <bdmurray> Its what I did for my dad.
+
+ 16:30 <gaughen> I've carded it and put it towards the top of general distro
+
+ 16:30 <cyphermox> cool
+
+ 16:30 <cyphermox> bdmurray: anything else?
+
+ 16:30 <juliank> it definitely sounds like a fun bug
+
+ 16:31 <bdmurray> I kinda wanted to talk about samba ownership but I guess Steve should be around for that.
+
+ 16:31 <doko> is it ours?
+
+ 16:31 <gaughen> doko, it's shared with server
+
+ 16:31 <cyphermox> ack
+
+ 16:32 <gaughen> bdmurray, I planned to chat with Josh about it later today
+
+ 16:32 <cyphermox> punt until later then?
+
+ 16:32 <cyphermox> #topic Team proposed-migration report
+
+ 16:32 <bdmurray> Oh, it looks like somebody is on it.
+
+ 16:32 <cyphermox> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:32 <cyphermox> doko:
+
+ 16:33 <cyphermox> (samba is nice segway)
+
+ 16:33 <doko> the only one is imagemagick
+
+ 16:33 <cyphermox> ohh
+
+ 16:33 <doko> freeipa is not ours, people are trying to migrate to openjdk-11 from -8
+
+ 16:34 <cyphermox> ok
+
+ 16:35 <rbalint> i can take imagemagick for next week, we have a history with ruby-rmagick :-)
+
+ 16:36 <cyphermox> card then?
+
+ 16:36 <gaughen> sure, I'll create it and put it in your queue rbalint
+
+ 16:36 <cyphermox> ok; moving on
+
+ 16:36 <cyphermox> #topic AOB
+
+ 16:36 <cyphermox> anything else from anyone?
+
+ 16:37 <rbalint> bdmurray, thanks for the monster u-u SRU review! :-)
+
+ 16:37 <bdmurray> rbalint: hopefully the rest of the process is smooth
+
+ 16:38 <rbalint> it looks like so so far
+
+ 16:39 <cyphermox> alright
+
+ 16:39 <rbalint> aob: i plan converiting low-traffic Foundations packages from bzr to git without further coordination, if you want yours to be held back please add it to https://wiki.ubuntu.com/UbuntuDevelopment/MigratingFromBzrToGit
+
+ 16:40 <cyphermox> thanks everyone! :)
+
+ 16:40 <cyphermox> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

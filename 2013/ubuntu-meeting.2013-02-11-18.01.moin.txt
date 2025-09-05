@@ -1,0 +1,211 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:01:39 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-02-11-18.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:01:45)
+ *Announcements
+
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/freeipa.html   (jdstrand, 18:15:36)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libphp-jpgraph.html   (jdstrand, 18:15:39)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/zoneminder.html   (jdstrand, 18:15:42)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/obby.html   (jdstrand, 18:15:45)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libsmi.html   (jdstrand, 18:15:49)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:22:16 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (32)
+ * mdeslaur (11)
+ * tyhicks (10)
+ * sarnold (7)
+ * jjohansen (6)
+ * sbeattie (4)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 18:01:39 <jdstrand> #startmeeting
+
+ 18:01:39 <meetingology> Meeting started Mon Feb 11 18:01:39 2013 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:01:39 <meetingology> 
+
+ 18:01:39 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:01:40 <jjohansen> \o
+
+ 18:01:45 <jdstrand> The meeting agenda can be found at:
+
+ 18:01:45 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:01:47 <jdstrand> [TOPIC] Announcements
+
+ 18:02:05 <jdstrand> Stefan Bader (smb) provided debdiffs for oneiric-raring for xen
+
+ 18:02:10 <jdstrand> Christian Kuersteiner (ckuerste) provided debdiffs for oneiric-quantal for firebird2.5 (LP: #1115902)
+
+ 18:02:12 <ubottu> Launchpad bug 1115902 in firebird2.5 (Ubuntu Raring) "NULL Pointer Denial of Service Vulnerability" [Medium,Fix released] https://launchpad.net/bugs/1115902
+
+ 18:02:14 <jdstrand> Malcolm Scott (malc) provided a debdiff for precise for cfingerd (LP: #1104425)
+
+ 18:02:15 <ubottu> Launchpad bug 1104425 in cfingerd (Debian) "SECURITY: remotely-exploitable buffer overflow in cfingerd's rfc1413 (ident) client" [Unknown,Fix committed] https://launchpad.net/bugs/1104425
+
+ 18:02:30 <jdstrand> Your work is very much appreciated and will keep Ubuntu users secure. Great job and thanks! :)
+
+ 18:02:39 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:02:42 <jdstrand> I'll go first
+
+ 18:03:01 <jdstrand> I'm on community this week
+
+ 18:03:20 <jdstrand> and patch piloting
+
+ 18:03:47 <jdstrand> I've got openjdk that I am testing today and will most likely push tomorrow
+
+ 18:04:04 <jdstrand> I've also got another pending update
+
+ 18:04:28 <jdstrand> and quite a few meetings this week
+
+ 18:04:48 <jdstrand> I'm not particularly hopeful, but if I have time, I look at the lxc mir
+
+ 18:04:53 <jdstrand> mdeslaur: you're up
+
+ 18:05:29 <mdeslaur> I'm in the happy place this week. I have a few updates pending which should go out tomorrow.
+
+ 18:05:34 <mdeslaur> and am currently working on some more
+
+ 18:05:53 <mdeslaur> the CVE list has gone up a bit, so I'll try and chainsaw my way through some of it this week.
+
+ 18:06:16 <jdstrand> mdeslaur: fyi, I deferred nss for the time being
+
+ 18:06:21 <mdeslaur> need to take a look at the work items also this weeks
+
+ 18:06:27 <jdstrand> upstream is working on a fix, but nothing to do atm
+
+ 18:06:31 <mdeslaur> jdstrand: cool, thanks
+
+ 18:06:42 <mdeslaur> that's about it from me. sbeattie, you're next
+
+ 18:06:55 <sbeattie> I'm once again focused on apparmor this week.
+
+ 18:07:10 <sbeattie> Ever so gradually making progress on my work items related to that.
+
+ 18:07:24 <sbeattie> That's pretty much it for me, tyhicks?
+
+ 18:07:27 <mdeslaur> sbeattie: making any progress there?
+
+ 18:07:36 <sbeattie> yeah, it's just slow.
+
+ 18:07:55 <tyhicks> I have a short week
+
+ 18:07:59 <mdeslaur> cool
+
+ 18:08:00 <tyhicks> Off Thursday and Friday
+
+ 18:08:15 <tyhicks> I should be focused on AppArmor primarily this week
+
+ 18:08:32 <tyhicks> I want to make some changes to the dbus package in the dbus-dev PPA
+
+ 18:09:03 <tyhicks> I still haven't uploaded my compiler warning fixes and I want to enable libaudit support now that audit is in main
+
+ 18:09:05 <mdeslaur> do we have an eta on when we'll be pushing any of that to raring?
+
+ 18:09:32 <tyhicks> jjohansen: Are you wanting to have the socket labeling work done firsT?
+
+ 18:10:03 <jjohansen> tyhicks: before the apparmor bits hit main? Hrmm I think we should discuss that
+
+ 18:10:37 <tyhicks> mdeslaur: That will be the biggest remaining chunk, I think, so we'll have to discuss a bit more
+
+ 18:10:47 <mdeslaur> ok
+
+ 18:11:18 <tyhicks> Then I'll try to get some work on in the kernel policy interface
+
+ 18:11:25 <tyhicks> that's it for me
+
+ 18:11:27 <tyhicks> jjohansen: you're up
+
+ 18:12:54 <jjohansen> so I am working on apparmor again this week, I'll be continuing with the socket labeling work, and I have some fixes to the stacking exec path / label merging to do
+
+ 18:12:54 <jjohansen> I'll also be getting together with tyhicks to look at the dbus bits to see what needs to be done before it is merged
+
+ 18:13:34 <jjohansen> I think thats it from /me sarnold your up
+
+ 18:13:48 <sarnold> I'm also on AppArmor duty this week, I'll be reviewing John's patches
+
+ 18:14:06 <sarnold> his last patch flood was pretty steep :) so I expect it'll keep me occupied for a while
+
+ 18:14:11 <sarnold> I'm also on triage this week
+
+ 18:14:35 * jjohansen will give sarnold another flood of patches this week, just to make sure he is drowning
+
+ 18:14:38 <sarnold> but the last two weeks look like they had more than their share of security problems :) so I'm hoping for a quiet week :)
+
+ 18:14:47 <sarnold> jjohansen: woo :)
+
+ 18:14:59 * sarnold <-- patchmonster nom nom nom
+
+ 18:15:11 <jdstrand> :)
+
+ 18:15:12 <mdeslaur> hehe
+
+ 18:15:12 <sarnold> that's it for me, back to jdstrand
+
+ 18:15:21 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:15:25 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:15:35 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:15:36 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/freeipa.html
+
+ 18:15:39 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libphp-jpgraph.html
+
+ 18:15:42 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/zoneminder.html
+
+ 18:15:45 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/obby.html
+
+ 18:15:49 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libsmi.html
+
+ 18:15:56 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:16:01 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:22:13 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold: thanks!
+
+ 18:22:16 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

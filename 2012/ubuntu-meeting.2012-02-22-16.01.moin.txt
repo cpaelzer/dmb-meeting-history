@@ -1,0 +1,421 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:01:43 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-22-16.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:33:15 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (50)
+ * ev (34)
+ * bdmurray (29)
+ * stgraber (27)
+ * doko (23)
+ * ubottu (13)
+ * barry (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:01:43 <slangasek> #startmeeting
+
+ 16:01:43 <meetingology> Meeting started Wed Feb 22 16:01:43 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01:43 <meetingology> 
+
+ 16:01:43 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:59 <slangasek> [TOPIC] lightning round
+
+ 16:02:14 <slangasek> well, down by two today... should be a quick meeting yes? :)
+
+ 16:02:15 <slangasek> $ echo $(shuf -e barry doko stgraber ev bdmurray slangasek)
+
+ 16:02:15 <slangasek> stgraber bdmurray barry ev doko slangasek
+
+ 16:02:27 <stgraber> hello
+
+ 16:02:34 <stgraber> - Networking
+
+ 16:02:35 <stgraber> - SRUs for ifenslave/vlan/bridge-utils are finally in oneiric-updates!
+
+ 16:02:35 <stgraber> - Did some more IPv6 testing, trying to switch to single-stack for part of my network so testing current radvd, NM and squid. Filed a few bugs for cyphermox :)
+
+ 16:02:37 <stgraber> - Updated isc-dhcp to 4.1-ESV-R4 that's their Extended Support Version, did a call for testing and will upload it later today.
+
+ 16:02:40 <stgraber> - Friendly-Recovery
+
+ 16:02:43 <stgraber> - Implemented the 'system information' option and did a few more bugfixes. James proposed some good changes, will review the merge and ask for a FFe to get that added.
+
+ 16:02:46 <stgraber> - LTSP
+
+ 16:02:49 <stgraber> - Released LTSP 5.3 after two years of development (well, 729 days so not "exactly"), uploaded to Ubuntu. 5.3.1 has already been released as bugfix release but I'll probably wait till 5.3.2 to update Ubuntu.
+
+ 16:02:53 <stgraber> - Still some work on the udeb needed to finally kill bug 813837
+
+ 16:02:55 <ubottu> Launchpad bug 813837 in ltsp (Ubuntu Precise) "ltsp client not able to load boot file: ltsp/amd64.tmp/pxelinux.0" [Medium,Triaged] https://launchpad.net/bugs/813837
+
+ 16:02:55 <stgraber> - TPM
+
+ 16:02:58 <stgraber> - Got pretty close to having a working TPM authenticating on wireless, everything seems to work except for some broken pkcs11 output and problems using the private key...
+
+ 16:03:01 <stgraber> - Started looking at bug 934799, can probably be fixed by manually trigger the udev rule or doing the chown/chmod in the postinst
+
+ 16:03:02 <ubottu> Launchpad bug 934799 in trousers (Ubuntu) "trousers start script has exit status 137" [Undecided,New] https://launchpad.net/bugs/934799
+
+ 16:03:04 <stgraber> - Also bug 926305 is high on the TPM todo list
+
+ 16:03:05 <ubottu> Launchpad bug 926305 in opencryptoki (Ubuntu) "fails to load modules for pkcs11 backends" [Undecided,Confirmed] https://launchpad.net/bugs/926305
+
+ 16:03:06 <stgraber> - Installer
+
+ 16:03:09 <stgraber> - Merged a couple of fixes in Ubiquity, updated test suite and uploaded a new Ubiquity, will spend a lot more time working on installer bugs from now on.
+
+ 16:03:12 <stgraber> - Containers
+
+ 16:03:14 <stgraber> - Uploaded updated udev to avoid flooding the host with events when a container boots.
+
+ 16:03:17 <stgraber> - Some bugfixes for the Ubuntu template and review of the Ubuntu server guide's section on LXC.
+
+ 16:03:20 <stgraber> - Other
+
+ 16:03:23 <stgraber> - pastebinit 1.3 has now been released and is in Precise
+
+ 16:03:25 <stgraber> - Did quite a few last minute sponsoring of new packages for Precise, most of them are in source NEW
+
+ 16:03:28 <stgraber> (done
+
+ 16:03:31 <stgraber> )
+
+ 16:03:48 <bdmurray> short week as monday was a holiday
+
+ 16:03:56 <bdmurray> tested bug 933035 regarding resolvconf
+
+ 16:03:56 <bdmurray> merged bug patterns from Vadim Rutkovsky
+
+ 16:03:57 <bdmurray> bug control application review for brettcornwall
+
+ 16:03:57 <bdmurray> bugbot fix for package-install-segfault re and mythfrontend
+
+ 16:03:58 <ubottu> Launchpad bug 933035 in resolvconf (Ubuntu) "Upgrade from 11.10 to Precise: resolvconf 1.63ubuntu7 fails to configure with "cp: cannot create regular file `/run/resolvconf/resolv.conf': No such file or directory"" [Medium,Incomplete] https://launchpad.net/bugs/933035
+
+ 16:04:04 <bdmurray> bug triage of some ubiquity hard disk error bugs
+
+ 16:04:05 <bdmurray> duplicate finding kernel install failures on live media (bug 932663)
+
+ 16:04:05 <bdmurray> duplicate finding filesystem.size missing (bug 557388)
+
+ 16:04:05 <ubottu> Launchpad bug 932663 in casper (Ubuntu) "kernel upgrade failed on a USB live system created by usb-creator" [High,Triaged] https://launchpad.net/bugs/932663
+
+ 16:04:07 <ubottu> Launchpad bug 557388 in ubiquity (Ubuntu) "Ubiquity crashes over recipe that leads to "Missing filesystem.size."" [High,Fix released] https://launchpad.net/bugs/557388
+
+ 16:04:17 <bdmurray> flot / jquery work to dynamically set the size of the div for the recent package bug task graphs
+
+ 16:04:20 <bdmurray> modifications to recent package bug tasks graph not to fade the colors of the stacked bar
+
+ 16:04:23 <bdmurray> moved the legend in flot outside of the graph
+
+ 16:04:25 <bdmurray> recent package bug graphs making the labels on the y-axis hyperlinks to full launchpad searches
+
+ 16:04:34 <bdmurray> fixed lucid-proposed version of update-manager (apport hook)
+
+ 16:04:35 <bdmurray> update of OneiricOcelot release notes regarding wubi (regarding rev 241)
+
+ 16:04:35 <bdmurray> wrote lp-grab-descriptions based on lp-grab-attachments
+
+ 16:04:35 <bdmurray> ubiquity apport package hook modifications to fix bug 874727
+
+ 16:04:37 <ubottu> Launchpad bug 874727 in apport (Ubuntu Precise) "media error bug report blocking is incomplete" [High,Triaged] https://launchpad.net/bugs/874727
+
+ 16:04:45 <bdmurray> ␗
+
+ 16:07:49 <slangasek> barry:
+
+ 16:07:55 <barry> telepathy-qt4 ftbfs, libdbusmenu ftbfs, bug 934592 (oneconf ftbfs), sync python-keyring, python issue 13703 (hash collision dos issue), sync'd sphinx, claws-mail, claws-mail-extra-plugins.  todo: looking at ftbfs and nbs reports; bugs, bugs, bugs and more +1 maint work; still working on python issue 13703, hopefully will have joint release candidates in the next day or two.  𝄢
+
+ 16:07:57 <ubottu> Launchpad bug 934592 in oneconf (Ubuntu) "Out of date po/POTFILES.in causes FTBFS" [Undecided,Fix released] https://launchpad.net/bugs/934592
+
+ 16:08:58 <slangasek> ev:
+
+ 16:09:42 <ev> - Released some new versions of whoopsie (0.1.8, 0.1.9, and 0.1.10).
+
+ 16:09:42 <ev> - Don't start the crash reporting daemon if crash reporting is turned off.
+
+ 16:09:44 <ev> - Cleaned up of the core processing code and much of the backend code, in
+
+ 16:09:45 <ev> preparation for deployment.
+
+ 16:09:47 <ev> - Filed RT 51011 for deploying the crash database.  Had a catch up with James
+
+ 16:09:48 <ev> to discuss where things stand.
+
+ 16:09:49 <ev> - Started leveraging cloud-init to build out an end to end system testing
+
+ 16:09:51 <ev> framework, so we can ensure that every change works all the way down to the
+
+ 16:09:51 <ev> database.
+
+ 16:09:53 <ev> - Figured out, with help from #bzr, how to merge a subdirectory of a branch
+
+ 16:09:54 <ev> into a subdirectory of another branch without losing history.  Case in
+
+ 16:09:56 <ev> point, moving Whoopsie's GNOME Control Center preferences page into
+
+ 16:09:57 <ev> activity-log-manager:
+
+ 16:09:58 <ev> bzr fast-export /tmp/whoopsie-export
+
+ 16:09:59 <ev> bzr fast-import-filter -i preferences/ /tmp/whoopsie-export > /tmp/whoopsie-export-filter
+
+ 16:10:00 <ev> bzr fast-import /tmp/whoopsie-export-filter /tmp/whoopsie-export-branch
+
+ 16:10:01 <ev> cd /tmp/whoopsie-export-branch
+
+ 16:10:01 <ev> bzr mkdir diagnostics
+
+ 16:10:03 <ev> bzr mv * diagnostics
+
+ 16:10:04 <ev> bzr commit
+
+ 16:10:05 <ev> cd ~/bzr/activity-log-manager
+
+ 16:10:06 <ev> bzr merge -r0..-1 /tmp/whoopsie-export-branch
+
+ 16:10:09 <ev> bzr mv diagnostics src/diagnostics
+
+ 16:10:10 <ev> bzr commit
+
+ 16:10:11 <ev> - Moved the crash reporting preferences page from a separate page into a tab
+
+ 16:10:13 <ev> in the activity-log-manager page:
+
+ 16:10:14 <ev> https://code.launchpad.net/~ev/activity-log-manager/whoopsie/+merge/93899
+
+ 16:10:16 <ev> - Finally finished addressing all of Martin's concerns in my apport merge,
+
+ 16:10:17 <ev> after lots of subsequent fixes \o/:
+
+ 16:10:19 <ev> https://code.launchpad.net/~ev/apport/whoopsie/+merge/92753
+
+ 16:10:20 <ev> - Interview calls.
+
+ 16:10:21 <ev> (done!)
+
+ 16:10:34 <doko> surprisingly short today ...
+
+ 16:10:40 <barry> ev: you should write that up somewhere more permanent than irc :)
+
+ 16:10:58 <doko> - openjdk-7 build, currently building in precise
+
+ 16:10:59 <doko> - fixing and forwarding issues in openjdk7 and -web to IcedTea
+
+ 16:10:59 <doko> - openjdk6 pull from the branch to fix GC issues on ARM
+
+ 16:10:59 <doko> - eglibc fixes (gdm restart, ARM dbg package, reboot required)
+
+ 16:10:59 <doko> - look into some gcc-4.6 issues
+
+ 16:10:59 <doko> - python2.7 and python3.2 merges for FF.
+
+ 16:11:03 <doko> - look into gcc-4.7 bootstrap failures on ARM (now fixed)
+
+ 16:11:05 <doko> - help Linaro understanding the eglibc packaging (Ken working on builds)
+
+ 16:11:07 <doko> done
+
+ 16:11:24 <ev> barry: :)
+
+ 16:12:07 <slangasek> are the apport UI changes landed, then? I noticed my last crash had a different dialog
+
+ 16:13:18 <ev> yes, finally
+
+ 16:13:22 <slangasek> * short week, celebrated Président Day on Monday by eating camembert and butter
+
+ 16:13:25 <slangasek> * resolvconf upload fixing the last of the known issues
+
+ 16:13:28 <slangasek> * new upstream release of qemu-linaro uploaded; now usable as a buildd on a hardy kernel
+
+ 16:13:31 <slangasek> * upload cmake to let more packages in precise/main be auto-cross-buildable
+
+ 16:13:34 <slangasek> * work on getting upstart in Ubuntu into a usable state
+
+ 16:13:36 <slangasek> * interviewing
+
+ 16:13:39 <slangasek> done
+
+ 16:13:41 <slangasek> any questions?
+
+ 16:14:06 <slangasek> [TOPIC] Bugs
+
+ 16:14:46 <doko> Andreas Moog did file the ftbfs issues from the last test rebuild, so I hadn't to do it
+
+ 16:14:54 <bdmurray> Not too many to look at today
+
+ 16:15:16 <slangasek> good, I gorged myself on bugs yesterday at Mardi Gras anyway
+
+ 16:15:16 <bdmurray> I assigned bug 883618 to the team recently
+
+ 16:15:17 <ubottu> Launchpad bug 883618 in update-manager (Ubuntu) "Console upgrade useless.. XSet warnings all over the screen" [High,Triaged] https://launchpad.net/bugs/883618
+
+ 16:15:19 <doko> would be nice if somebody could approve the setting of the precice release branch
+
+ 16:15:30 <slangasek> doko: what do you mean?
+
+ 16:15:45 <barry> slangasek: ew
+
+ 16:15:59 <slangasek> barry: ;)
+
+ 16:16:09 <slangasek> bdmurray: yeah, I was just assigning that one to jodh
+
+ 16:16:19 <barry> slangasek: and right before lunch!
+
+ 16:16:27 <bdmurray> slangasek: okay, great
+
+ 16:16:27 <slangasek> heh, sorry
+
+ 16:16:34 <barry> :)
+
+ 16:16:47 <slangasek> fwiw I didn't see any references to xset in the current update-manager code, so I'm not sure where that comes from
+
+ 16:16:48 <doko> hmm, looks like it already is: see bug 935038
+
+ 16:16:49 <ubottu> Launchpad bug 935038 in ball (Ubuntu Precise) "ball version 1.4.1+20111206-3 FTBFS on armhf in precise" [High,New] https://launchpad.net/bugs/935038
+
+ 16:17:06 <doko> we just need to confirm these
+
+ 16:17:30 <slangasek> doko: as in, marking them confirmed?
+
+ 16:17:36 <doko> yes
+
+ 16:18:12 <slangasek> I'm not sure that matters anymore, now that LP automatically moves half the bugs to "confirmed" as soon as someone comments on them
+
+ 16:18:22 <doko> heh
+
+ 16:18:36 <bdmurray> comments on? that's a bit unfair
+
+ 16:18:57 <bdmurray> its even easier you just have to click affects me too ;-)
+
+ 16:18:58 <doko> so now we ignore bugs in state Confirmed instead if New? ;-P
+
+ 16:19:04 <doko> of even
+
+ 16:19:13 <slangasek> "triaged" maybe makes a difference; but they should be obvious anyway... don't see the point in spending the effort moving the bug state around
+
+ 16:19:18 <slangasek> let's just fix the bugs instead :)
+
+ 16:19:27 <slangasek> doko: exactly ;)
+
+ 16:20:01 <doko> slangasek, makes sense, thare are more to ignore ;)
+
+ 16:20:06 <slangasek> bdmurray: doesn't it also do it when someone comments though?  which is much less certain to indicate that it's a confirmed bug
+
+ 16:20:11 <doko> can't type today
+
+ 16:20:17 <slangasek> bdmurray: anyway, any other bugs in the menagerie?
+
+ 16:20:33 <bdmurray> slangasek: no affects me too or a bug is made a duplicate of it
+
+ 16:20:40 <slangasek> ah, ok
+
+ 16:20:46 <bdmurray> bug 936761 - is there anything to be done there?
+
+ 16:20:47 <ubottu> Launchpad bug 936761 in update-manager (Ubuntu) "Mythbuntu upgrade from Lucid to Precise pulls in all of unity" [High,Confirmed] https://launchpad.net/bugs/936761
+
+ 16:21:38 <slangasek> looks like the desktop team needs to fix it
+
+ 16:22:08 <slangasek> reassigned the bug to gnome-session
+
+ 16:22:28 <bdmurray> thanks
+
+ 16:23:03 <bdmurray> then bug 824708 has a rather high heat as a lot of people have said it affects them
+
+ 16:23:05 <ubottu> Launchpad bug 824708 in aptitude (Ubuntu) "Changelog download failed: Download queue destroyed." [Medium,Triaged] https://launchpad.net/bugs/824708
+
+ 16:23:26 <stgraber> slangasek: I've noticed Xubuntu and Mythbuntu at some point started assuming that they always get installed from a media where they contorl the available set of packages, not sure if it's related though.
+
+ 16:24:05 <slangasek> stgraber: sorta-related
+
+ 16:24:11 <slangasek> the moral of the story is, they shouldn't do that :)
+
+ 16:24:14 <stgraber> slangasek: so for example installing Xubuntu from netinstall will get you unity-greeter that will crash at boot time. Installing from media, they don't have unity-greeter and so fallback to lightdm-gtk-greeter which is what they want and so works
+
+ 16:24:46 <stgraber> that's currently making the automated upgrades for at least Xubuntu fail (so I turned them off for now as they're aware of the issue)
+
+ 16:24:48 <slangasek> they should ensure there are suitable alternatives in the underlying dependencies and use a metapackage to express their preferences
+
+ 16:25:34 <slangasek> bdmurray: do you know why pitti has set a milestone for 824708?
+
+ 16:25:45 <doko> bug 824708
+
+ 16:25:46 <bdmurray> slangasek: no I do not
+
+ 16:25:46 <ubottu> Launchpad bug 824708 in aptitude (Ubuntu) "Changelog download failed: Download queue destroyed." [Medium,Triaged] https://launchpad.net/bugs/824708
+
+ 16:26:02 <slangasek> oh, he was just pushing an a2 milestone forward
+
+ 16:26:21 <slangasek> so it has high heat, but I don't think it's something for us to spend time on
+
+ 16:26:30 <slangasek> they can just use 'apt-get changelog' instead
+
+ 16:27:08 <slangasek> (and aptitude has much more serious problems in precise, since it doesn't do multiarch)
+
+ 16:27:34 <bdmurray> okay, makes sense
+
+ 16:28:12 <slangasek> anything else?
+
+ 16:28:25 <bdmurray> that's all from me
+
+ 16:28:29 <slangasek> cool
+
+ 16:28:31 <slangasek> [TOPIC] AOB
+
+ 16:29:10 <slangasek> anything more to discuss?  the floor's open :)
+
+ 16:29:51 <doko> the armel panda buildds did land
+
+ 16:30:08 <doko> but not yet the third powerpc
+
+ 16:30:21 <slangasek> I've pestered IS about the powerpc already
+
+ 16:30:28 <slangasek> the RT ticket has a deadline of Mar 1
+
+ 16:30:40 <slangasek> which I'm told gets looked at :)
+
+ 16:31:24 <slangasek> (and there's activity on the ticket in the past week)
+
+ 16:33:15 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

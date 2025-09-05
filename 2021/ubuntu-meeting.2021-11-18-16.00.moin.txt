@@ -1,0 +1,695 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 18 Nov at 16:00 &mdash; 16:51 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-11-18-16.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 16:00.
+
+ * ''LINK:'' https://code.launchpad.net/~dbungert/curtin/+git/curtin/+merge/412027   (dbungert, 16:06)
+ * ''LINK:'' https://github.com/canonical/ubuntu-desktop-installer/pull/523   (dbungert, 16:06)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 16:11.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 16:11)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html   (bdmurray, 16:16)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html   (bdmurray, 16:16)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 16:29.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 16:30)
+
+=== AOB ===
+
+Discussion started by bdmurray at 16:48.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (58)
+ * bdmurray (50)
+ * ubottu (39)
+ * sil2100 (38)
+ * juliank (25)
+ * dbungert (23)
+ * jawn-smith (18)
+ * schopin (16)
+ * slyon (15)
+ * waveform (12)
+ * xypron (9)
+ * ginggs (5)
+ * doko (4)
+ * meetingology (2)
+ * mclemenceau (2)
+
+
+
+== Full log ==
+
+
+ 16:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:00 <meetingology> Meeting started at 16:00:47 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:00 <bdmurray> #topic Lightning Round
+
+ 16:01 * bdmurray does the shuffle
+
+ 16:01 <bdmurray> ginggs schopin juliank doko waveform alexghiti dbungert mwhudson jawn-smith slyon bdmurray vorlon xypron sil2100
+
+ 16:01 <bdmurray> ginggs:
+
+ 16:01 <ginggs> * still busy adding python3.10 as a supported version
+
+ 16:01 <ginggs> * helped tryton-* migrate
+
+ 16:01 <ginggs> * looked at pcre2 merge as a follow up to LP: #1931857 . filed debian bug #999836 and got a quick response from the maintainer, so was able to sync instead
+
+ 16:01 <ubottu> Launchpad bug 1931857 in pcre2 (Ubuntu) "[21.10 FEAT] Update PCRE2 for JIT and Performance Improvements on s390x" [High, Fix Released] https://launchpad.net/bugs/1931857
+
+ 16:01 <ubottu> Debian bug 999836 in src:pcre2 "pcre2: please enable JIT on s390x" [Wishlist, Open] https://bugs.debian.org/999836
+
+ 16:01 <ginggs> (done)
+
+ 16:02 <schopin> Notes comprise last week's work as well, since I didn't attend the meeting.
+
+ 16:02 <schopin> * OpenSSL:
+
+ 16:02 <schopin> + Worked on quite a few packages in main to get them to build against
+
+ 16:02 <schopin> libssl3.  See https://launchpad.net/~schopin/+archive/ubuntu/foundation-openssl3
+
+ 16:02 <schopin> for a relatively complete list.
+
+ 16:02 <schopin> + Sent out a heads-up on ubuntu-devel@l.u.c that OpenSSL 3.0.0 upload to
+
+ 16:02 <schopin> -proposed is imminent
+
+ 16:02 <schopin> + Took part in the initial investigation of a SSH failure in our FIPS images
+
+ 16:02 <schopin> in the Azure cloud (LP: #1951251)
+
+ 16:02 <ubottu> Launchpad bug 1951251 in cloud-images "Ubuntu FIPS libssl1.1 update breaks diffie-hellman-group-exchange-sha256 key exchange" [Undecided, Confirmed] https://launchpad.net/bugs/1951251
+
+ 16:02 <schopin> * Looked into Rust's lockfile story as part of the MIR policy update for the
+
+ 16:02 <schopin> language
+
+ 16:02 <schopin> * Merged ntfs-3g, waiting for sponsorship (LP: #1951239)
+
+ 16:02 <ubottu> Launchpad bug 1951239 in ntfs-3g (Ubuntu) "Merge ntfs-3g 1:2021.8.22-3 from Debian" [Wishlist, New] https://launchpad.net/bugs/1951239
+
+ 16:02 <schopin> * Requested a sync for libxmlb, along with some legwork to prepare for the small
+
+ 16:02 <schopin> transition it'll trigger (LP: #1951389)
+
+ 16:02 <ubottu> Launchpad bug 1951389 in libxmlb (Ubuntu) "Sync libxmlb 0.3.2-1 (main) from Debian unstable (main)" [Wishlist, New] https://launchpad.net/bugs/1951389
+
+ 16:02 <schopin> ✓ done
+
+ 16:03 <bdmurray> juliank:
+
+ 16:03 <juliank> One second
+
+ 16:03 <juliank> * released nullboot 0.1.0
+
+ 16:03 <juliank> * identified cause and fixing openssl double free error (LP: #1921518) in wget;
+
+ 16:03 <ubottu> Launchpad bug 1921518 in wget (Ubuntu Focal) "OpenSSL 'double free' error" [Undecided, Fix Committed] https://launchpad.net/bugs/1921518
+
+ 16:03 <juliank> filed follow up bugs for more affected packages.
+
+ 16:03 <juliank> * having trouble connecting to launchpad intermittently, debugging lead nowhere
+
+ 16:03 <juliank> * apt 2.3.12 release:
+
+ 16:03 <juliank> - removed the "Yes, do as I say" prompt in favor of opaque error message when trying to remove essential+protected packages
+
+ 16:03 <juliank> - prevented the apt solver from removing essential+protected packages
+
+ 16:03 <juliank> * merged git
+
+ 16:03 <juliank> * merged xfsprogs
+
+ 16:03 <juliank> * synced oomd
+
+ 16:03 <juliank> * communicated shim review board decision about systemd-boot signing to Debian
+
+ 16:04 <juliank> * a couple of shim review starts (emailed people word lists encrypted with GPG)
+
+ 16:04 <juliank> (done)
+
+ 16:04 <bdmurray> doko:
+
+ 16:05 <doko> - first shot at packaging GCC 12, the goal is to have a usable package for an archive test rebuild, to first file issues into GCC upstream
+
+ 16:05 <doko> - binutils updates, both the branch, and the trunk (will update in the distro in January)
+
+ 16:05 <doko> - some merges
+
+ 16:05 <doko> - some python 3.10 fixes
+
+ 16:05 <dbungert> * firewalld: LP: #1945596 - tests rely upon constructing a network manager
+
+ 16:05 <dbungert> config, but system config is interfering.  Sponsored.  Also sent to firewalld
+
+ 16:05 <ubottu> Launchpad bug 1945596 in firewalld (Ubuntu) "Autopkgtest fail of 1.0.1-2ubuntu3 - Activation failed because the device is unmanaged" [Undecided, Fix Released] https://launchpad.net/bugs/1945596
+
+ 16:05 <dbungert> upstream https://github.com/firewalld/firewalld/pull/880
+
+ 16:05 <ubottu> Pull 880 in firewalld/firewalld "test(functions): network-manager - manage test dev" [Open]
+
+ 16:05 <dbungert> * python-cartopy: LP: #1950386 - minor issue with test control file.  Fix sent
+
+ 16:05 <ubottu> Launchpad bug 1950386 in python-cartopy (Ubuntu) "python-cartopy: autopkgtest failure against python3-defaults/3.9.7-4" [Undecided, New] https://launchpad.net/bugs/1950386
+
+ 16:05 <dbungert> to Debian, merged but not yet uploaded.
+
+ 16:05 <dbungert> * numpy: LP: #1950537 - multiple FTBFS reasons.  Suggest moving to the newer
+
+ 16:05 <ubottu> Launchpad bug 1950537 in numpy (Ubuntu) "autopkgtest failure with py3.10" [Undecided, New] https://launchpad.net/bugs/1950537
+
+ 16:05 <dbungert> upstream version, now in Debian experimental, which is a version which claims
+
+ 16:05 <dbungert> to support py3.10.  Fix distutils ADT The install files needed some careful
+
+ 16:05 <dbungert> fixes to be compatible with py3.9 and/or py3.10 being in the working set.  MP
+
+ 16:05 <dbungert> to Debian.  Sponsor ready patch also on LP if we need it sooner.
+
+ 16:06 <dbungert> * subiquity: fixes for API test flakiness.  Can almost run multiple subiquity
+
+ 16:06 <dbungert> test processes in parallel, one more error outstanding.
+
+ 16:06 <dbungert> * curtin vs jammy: u-d-i is having some tracebacks from curtin regarding lsblk
+
+ 16:06 <dbungert> output.  The output format of lsblk is different.  Update curtin to handle
+
+ 16:06 <dbungert> the new format, and also bundled util-linux in the u-d-i snap for now.
+
+ 16:06 <dbungert> https://code.launchpad.net/~dbungert/curtin/+git/curtin/+merge/412027
+
+ 16:06 <dbungert> https://github.com/canonical/ubuntu-desktop-installer/pull/523
+
+ 16:06 <ubottu> Pull 523 in canonical/ubuntu-desktop-installer "snapcraft: bundle util-linux" [Merged]
+
+ 16:06 <dbungert> * update-notifier: LP: #1821412 - testing before SRU.  F/H/I fine, Bionic
+
+ 16:06 <ubottu> Launchpad bug 1821412 in update-notifier (Ubuntu Impish) "'System program problem' report button does nothing" [Undecided, New] https://launchpad.net/bugs/1821412
+
+ 16:06 <dbungert> failed.  Investigating, may move F/H/I SRU forward without Bionic.
+
+ 16:06 <dbungert> (done)
+
+ 16:06 <waveform> * MIR for raqm (LP: #1951069)
+
+ 16:06 <waveform> * Merge for netcat-openbsd (LP: #1950985)
+
+ 16:06 <waveform> * Investigating BT failure on Pi3B under UC18 (LP: #1949869)
+
+ 16:06 <waveform> * Worked on zswap config for pi images
+
+ 16:06 <waveform> * Worked on missing system-boot from etc/fstab on jammy images
+
+ 16:06 <waveform> * ... and not much else because livecd-rootfs hates me (and the feeling is mutual)
+
+ 16:06 <ubottu> Launchpad bug 1951069 in raqm (Ubuntu) "[MIR] raqm" [Undecided, New] https://launchpad.net/bugs/1951069
+
+ 16:06 <ubottu> Launchpad bug 1950985 in netcat-openbsd (Ubuntu) "Please merge netcat-openbsd 1.218-2 from Debian unstable" [Wishlist, New] https://launchpad.net/bugs/1950985
+
+ 16:06 <waveform> * Interview / take-home-tests
+
+ 16:06 <ubottu> Launchpad bug 1949869 in Kernel SRU Workflow "bionic/linux-raspi2: 4.15.0-1099.105 snap-debs snap:pi-kernel" [Medium, In Progress] https://launchpad.net/bugs/1949869
+
+ 16:06 <waveform> * Pi meetings
+
+ 16:06 <waveform> (done)
+
+ 16:06 <jawn-smith> * ubuntu-image
+
+ 16:06 <jawn-smith> * Enable --snap flag for classic images. Implemented this in two different ways
+
+ 16:06 <jawn-smith> 1) using livecd-rootfs pre-seed step to add more snaps
+
+ 16:06 <jawn-smith> 2) modifying snapd and livecd-rootfs, and handling all snap installation using snapd's image.Prepare()
+
+ 16:06 <jawn-smith> * method 1 will be used for now, method 2 will be enabled when we redesign classic builds
+
+ 16:06 <jawn-smith> * LP: #1951334 PR created and merged
+
+ 16:06 <ubottu> Launchpad bug 1951334 in ubuntu-image (Ubuntu) "system-data partitions can be created without a name" [Undecided, In Progress] https://launchpad.net/bugs/1951334
+
+ 16:06 <jawn-smith> * start reviewing --sector-size PR by sil2100
+
+ 16:06 <jawn-smith> * Merge party
+
+ 16:06 <jawn-smith> * shadow (LP: #1951134)
+
+ 16:06 <ubottu> Launchpad bug 1951134 in linux-aws (Ubuntu) "hirsute:linux-aws ubuntu_ltp Failed test cases : fs_fill" [Undecided, New] https://launchpad.net/bugs/1951134
+
+ 16:06 <jawn-smith> * golang-1.17 (LP: #1951125)
+
+ 16:06 <ubottu> Launchpad bug 1951125 in golang-1.17 (Ubuntu) "Please merge golang-1.17 1.17.3-1 (main) from Debian unstable" [Undecided, Confirmed] https://launchpad.net/bugs/1951125
+
+ 16:06 <jawn-smith> * treated this as a mini-transition and rebuilt some packages against it. They will need no-change rebuilds after this merge migrates
+
+ 16:06 <jawn-smith> * golang-defaults (LP: #1951439)
+
+ 16:06 <ubottu> Launchpad bug 1951439 in golang-defaults (Ubuntu) "Sync golang-defaults 2:1.17~1 (main) from Debian unstable (main)" [Undecided, New] https://launchpad.net/bugs/1951439
+
+ 16:06 <jawn-smith> * Helping waveform with classic pi image builds using ubuntu-image, which resulted in:
+
+ 16:07 <jawn-smith> * Improvements to pi-gadget. https://github.com/snapcore/pi-gadget/pull/80 covers:
+
+ 16:07 <ubottu> Pull 80 in snapcore/pi-gadget "Fix apt usage and improve classic docs" [Open]
+
+ 16:07 <jawn-smith> 1) apt errors if host series is newer than target series
+
+ 16:07 <jawn-smith> 2) doc updates
+
+ 16:07 <jawn-smith> [done]
+
+ 16:07 <slyon> - read up on LXD vs udev situation (https://systemd.io/CONTAINER_INTERFACE/)
+
+ 16:07 <slyon> - working on systemd v249 merge, resolved DHCP/udev vs LXD issue (LP: #1950794)
+
+ 16:07 <slyon> + workaround for systemd-sysusers vs privileged LXD containers (LP: #1950787)
+
+ 16:07 <slyon> + https://bileto.ubuntu.com/excuses/4704/jammy.html
+
+ 16:07 <slyon> - proposed-migration: mtr FTBFS (reported as Debian#999730) & dbus-python
+
+ 16:07 <slyon> - merges: rsyslog (new upstream) & busybox – incl. migration
+
+ 16:07 <slyon> - more investigation wrt. UC18 vs systemd (LP: #1949089)
+
+ 16:07 <ubottu> Launchpad bug 1950794 in systemd (Ubuntu) "DHCPv4 (IAID+DUID) networking broken in LXC containers" [Undecided, New] https://launchpad.net/bugs/1950794
+
+ 16:07 <ubottu> Launchpad bug 1950787 in systemd (Ubuntu) "systemd-sysusers cannot mount /dev in privileged containers (to pass credentials)" [Undecided, Fix Committed] https://launchpad.net/bugs/1950787
+
+ 16:07 <ubottu> Debian bug 999730 in mtr "mtr: Fix FTBFS with glib2.0 >= 2.70 and deprecated GTimeVal of gtk+2.0" [Serious, Open] https://bugs.debian.org/999730
+
+ 16:07 <ubottu> Launchpad bug 1949089 in systemd (Ubuntu Bionic) "systemd randomly fails to activate mount units in Ubuntu Core 18" [Undecided, New] https://launchpad.net/bugs/1949089
+
+ 16:07 <slyon> - MIR review for postgresql-14 (LP: #1949579)
+
+ 16:07 <slyon> - interview & take-home test
+
+ 16:07 <slyon> === Netplan ===
+
+ 16:07 <slyon> - triaged https://forum.snapcraft.io/t/ubuntu-core-20-boot-delayed-by-missing-wi-fi-usb-dongle-despite-optional-true-netplan-config
+
+ 16:07 <slyon> - some discussions around UC20 vs cloud-init/netplan regression
+
+ 16:07 <slyon> - initial investigation on snapd get/set vs netplan (LP: #1949893)
+
+ 16:07 <slyon> ✓ done
+
+ 16:07 <ubottu> Launchpad bug 1949579 in postgresql-14 (Ubuntu) "[MIR] postgresql-14" [Undecided, In Progress] https://launchpad.net/bugs/1949579
+
+ 16:07 <ubottu> Launchpad bug 1949893 in netplan "new interface does not show up after dbus config apply" [Undecided, New] https://launchpad.net/bugs/1949893
+
+ 16:07 <bdmurray> configured cnf extractor machine to use unattended-upgrades
+
+ 16:07 <bdmurray> review of candidate applications, interviews
+
+ 16:07 <bdmurray> reported bug regarding building Intel IoT ISO images (LP: #1951173)
+
+ 16:07 <bdmurray> upload livecd-rootfs changes for the above to Jammy and Focal
+
+ 16:07 <ubottu> Launchpad bug 1951173 in livecd-rootfs (Ubuntu Focal) "build an ISO image for the Intel IoT project" [Undecided, Fix Released] https://launchpad.net/bugs/1951173
+
+ 16:07 <bdmurray> SRU verification of the livecd-rootfs changes for Focal
+
+ 16:07 <bdmurray> merged ballot's changes to the Error Tracker mojo specification
+
+ 16:07 <bdmurray> triage of an Intel IoT bug (LP: #1950624)
+
+ 16:07 <bdmurray> reported bug re: SRU of lintian w/ jammy (LP: #1951310)
+
+ 16:07 <ubottu> Launchpad bug 1950624 in intel "[iotg][tgl][tgl-aaeon] GRUB needs nopersistent added to boot options" [High, New] https://launchpad.net/bugs/1950624
+
+ 16:07 <ubottu> Launchpad bug 1951310 in lintian (Ubuntu Impish) "add Jammy as a known release to lintian" [Undecided, In Progress] https://launchpad.net/bugs/1951310
+
+ 16:08 <bdmurray> uploaded SRUs for the above
+
+ 16:08 <bdmurray> getting trained (HR)
+
+ 16:08 <bdmurray> review of ubuntu-release-notes bug reports
+
+ 16:08 <bdmurray> checking things off the 22.04 opening checklist
+
+ 16:08 <bdmurray> ✔ done
+
+ 16:08 <vorlon> * +1 maintenance this week
+
+ 16:08 <vorlon> * a lot of fixes for python3.10 compatibility, fortunately most of them small
+
+ 16:08 <vorlon> * wrote some R code
+
+ 16:08 <vorlon> * found what looked like a bug in the glibc packaging but actually just requires no-change rebuilds of packages encoding references to libdl LP: #1951340
+
+ 16:08 <ubottu> Launchpad bug 1951340 in glibc (Ubuntu Jammy) "libdl.so missing in impish and jammy" [High, New] https://launchpad.net/bugs/1951340
+
+ 16:08 <vorlon> * out on vacation last week
+
+ 16:08 <vorlon> (done)
+
+ 16:08 <vorlon> * out on vacation next week
+
+ 16:08 <vorlon> * trying to figure out why component-mismatches is wrong about probert-network
+
+ 16:08 <xypron> For the Nezha board I now have a 5.14.19 kernel that boots.
+
+ 16:08 <xypron> Should be rebased on 5.15 and packaged.
+
+ 16:08 <xypron> Packaged new upstream Debian version of anacron (LP #1924915)
+
+ 16:08 <xypron> Packaged new upstream Debian version of make-dfsg (LP #989961)
+
+ 16:08 <xypron> Packaged fixed lintian to resolve autopkg test problem (LP #1950989)
+
+ 16:08 <xypron> <done />
+
+ 16:08 <ubottu> Launchpad bug 1924915 in anacron (Ubuntu) "Typo in anacron log message ('ststus' should be 'status')" [Low, Fix Committed] https://launchpad.net/bugs/1924915
+
+ 16:08 <ubottu> Launchpad bug 989961 in make-dfsg (Ubuntu) "no gmake symlink created" [Wishlist, Triaged] https://launchpad.net/bugs/989961
+
+ 16:08 <ubottu> Launchpad bug 1950989 in lintian (Ubuntu) "lintian: failed autopkg tests" [Undecided, In Progress] https://launchpad.net/bugs/1950989
+
+ 16:08 <sil2100> * Holidays last week o/ Shorter week because of that.
+
+ 16:08 <sil2100> * SRU reviews and releases
+
+ 16:08 <sil2100> * ubuntu-image:
+
+ 16:08 <sil2100> - Reviewed PR for extra-snap support in classic from William
+
+ 16:08 <sil2100> - Reviewed and merged PR for inclusive naming from William
+
+ 16:09 <sil2100> - Followed up on go-diskfs changes to image handling
+
+ 16:09 <sil2100> - Worked on and prepared PR for sector-size customization (still need to update docs)
+
+ 16:09 <sil2100> - Reviewed and merged PR for fixing system-data naming from William
+
+ 16:09 <sil2100> - Promoted 2.0 to candidate (and for a moment to stable, but reverted)
+
+ 16:09 <sil2100> - Started drafting specification for classic image build improvements
+
+ 16:09 <sil2100> - Sync up meeting, discussing the near term plan!
+
+ 16:09 <sil2100> * Ubuntu Core:
+
+ 16:09 <sil2100> - Coordination to get a new core20 into stable
+
+ 16:09 <sil2100> - Rebuilt core20 with a reverted core20 as latest version causes amd64 regressions
+
+ 16:09 <sil2100> - Discussions regarding core22 builds
+
+ 16:09 <sil2100> - Preparing for phasing out new core18
+
+ 16:09 <sil2100> - Set up a new bot instance and got core stale snap reporting working
+
+ 16:09 <sil2100> - Fixed bug that caused the alerts to only get sent to the first recipient
+
+ 16:09 <sil2100> * ESM britney: added a feature to be able to list all supported ESM PPAs (index page)
+
+ 16:09 <sil2100> * Sponsored and reviewed multiple packages for Xilinx
+
+ 16:09 <sil2100> * Interviews
+
+ 16:09 <sil2100> * Surveys
+
+ 16:09 <sil2100> * Kicked off and uploaded first base langpacks for jammy
+
+ 16:09 <sil2100> * DMB meeting
+
+ 16:09 <sil2100> * HWE sync meeting
+
+ 16:09 <sil2100> * Various organizational meetings
+
+ 16:09 <sil2100> * Kicked off new Intel IOT UC20 images
+
+ 16:09 <sil2100> * Refreshed Bileto auth token via IS, that caused ADT test results to not be reported back
+
+ 16:10 <sil2100> * Started review of the pi-gadget classic changes from William, as we discussed them yesterday!
+
+ 16:10 <sil2100> (done)
+
+ 16:10 <bdmurray> Any questions on status?
+
+ 16:11 <bdmurray> #topic Release Incoming Bugs
+
+ 16:11 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:11 <bdmurray> bug 1951096
+
+ 16:11 <ubottu> Bug 1951096 in ubuntu-release-upgrader (Ubuntu) "Dist upgrade from focal to jammy fails when upgrading ubuntu-desktop, breaking gnome-control-center" [Undecided, New] https://launchpad.net/bugs/1951096
+
+ 16:12 <bdmurray> Well that seems kind of important ;-)
+
+ 16:12 <bdmurray> Let's go ahead and card that
+
+ 16:13 <mclemenceau> ok
+
+ 16:13 <mclemenceau> carded
+
+ 16:13 <bdmurray> bug 1943530 - dimitri just said that we should do this
+
+ 16:13 <ubottu> Bug 1943530 in krb5 (Ubuntu) "link libkrb5 with openssl" [Undecided, Confirmed] https://launchpad.net/bugs/1943530
+
+ 16:16 <vorlon> should wait until after openssl 3 is uploaded
+
+ 16:16 <vorlon> preferably would wait until Debian commits
+
+ 16:16 <bdmurray> so snooze the bug?
+
+ 16:16 <vorlon> yeah
+
+ 16:16 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html
+
+ 16:16 <bdmurray> I see nothing!
+
+ 16:16 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 16:17 <bdmurray> bug 1948884 sil2100 was going to look at
+
+ 16:17 <ubottu> Bug 1948884 in casper (Ubuntu) "casper interactive_netmount looks for the wrong url on 20.04.3" [Low, New] https://launchpad.net/bugs/1948884
+
+ 16:17 <bdmurray> has that happened?
+
+ 16:18 <sil2100> Oh
+
+ 16:18 <sil2100> Ok, yeah, that got dropped on the floor, didn't look at it at all
+
+ 16:18 <sil2100> Let me write that down somewhere
+
+ 16:18 * bdmurray hands sil2100 as sticky note
+
+ 16:19 <bdmurray> bug 1949205
+
+ 16:19 <ubottu> Bug 1949205 in initramfs-tools (Ubuntu) "Volume group 'vgubuntu' not found when parition encrypted in LUKS" [Undecided, Confirmed] https://launchpad.net/bugs/1949205
+
+ 16:20 <bdmurray> there's also bug 1949206 from the same reporter
+
+ 16:20 <juliank> this is working correclty
+
+ 16:20 <ubottu> Bug 1949206 in ubiquity (Ubuntu) "parted_server: OUT: Error fsyncing/closing /dev/nvme0n1p1: Input/output error" [Undecided, Confirmed] https://launchpad.net/bugs/1949206
+
+ 16:20 <vorlon> seems to be complaining about the error message only
+
+ 16:21 <vorlon> and then the next line is fsck of /dev/mapper/vgubuntu-root, so it's clearly been found at boot
+
+ 16:21 <juliank> The error message appears because we try to access the LVM first, we don't know if it's lcoked
+
+ 16:21 <vorlon> low-priority
+
+ 16:21 <juliank> it's just confusing
+
+ 16:21 <juliank> it can't be fixed without breaking other use cases
+
+ 16:21 <vorlon> corrected the bug title
+
+ 16:21 <vorlon> we should untag this
+
+ 16:22 <bdmurray> that's 205 correct?
+
+ 16:22 <vorlon> yes
+
+ 16:23 <bdmurray> then the next one
+
+ 16:23 <bdmurray> Could it be a hardware issue?
+
+ 16:28 <bdmurray> we'll pass on that bug for now
+
+ 16:29 <bdmurray> #topic Team proposed-migration report
+
+ 16:29 <bdmurray> vorlon:
+
+ 16:30 <vorlon> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:31 <vorlon> a lot of packages here, no longer blocked by autopkgtest queues so these need looking at
+
+ 16:31 <vorlon> python-crypto, this is actually an obsolete package that the openstack team needs to drop their deps on so we can remove it
+
+ 16:31 <vorlon> so I don't think we should spend time fixing it
+
+ 16:32 <vorlon> dbus-python - slyon it looks like this is yours?
+
+ 16:32 <slyon> yes. the dbus-python tests are resolved, but I still need to get pyqt5 moving
+
+ 16:33 <vorlon> libcgi-pm-perl, libgetopt-long-descriptive-perl is xypron
+
+ 16:33 <vorlon> doesn't look like anyone had libidn from last time
+
+ 16:33 <vorlon> is a transition
+
+ 16:33 <vorlon> anyone want to take that one?
+
+ 16:34 <xypron> libgetopt-long-decriptive-perl: there is a bug in lintian. That is why I repackaged it. Waiting for sponsor.
+
+ 16:34 <vorlon> xypron: where is your package for sponsoring?
+
+ 16:35 <xypron> vorlon: https://bugs.launchpad.net/ubuntu/+source/lintian/+bug/1950989 has the defdfiff
+
+ 16:35 <ubottu> Launchpad bug 1950989 in lintian (Ubuntu) "lintian: failed autopkg tests" [Undecided, In Progress]
+
+ 16:36 <vorlon> xypron: thanks, I'll have a look at it today
+
+ 16:36 <xypron> vorlon: or ppa:xypron/merge-from-debian
+
+ 16:36 <vorlon> no one volunteering for libidn so I'll take a look at is as part of +1 maintenance
+
+ 16:36 <vorlon> libregexp-pattern-license-perl is juliank
+
+ 16:36 <vorlon> also libstring-copyright-perl
+
+ 16:36 <vorlon> and licensecheck
+
+ 16:37 <vorlon> waveform: are you still working on pillow?
+
+ 16:37 <juliank> did I (forget to) do that?
+
+ 16:37 <vorlon> I see pillow is blocked by an MIR
+
+ 16:37 <waveform> vorlon, yup -- MIR filed for raqm, and I've checked the other pkgs
+
+ 16:37 <vorlon> waveform: "checked" them? I still see failing autopkgtests that will block migration
+
+ 16:37 <waveform> (need to double-check ocrmypdf but the rest have -proposed updates already that should get things moving once the MIR clears)
+
+ 16:38 <vorlon> do those tests need rerun with --all-proposed?
+
+ 16:38 <vorlon> the MIR is orthogonal to the autopkgtest failures
+
+ 16:38 <waveform> ah, in that case probably yes
+
+ 16:39 <vorlon> triggering now
+
+ 16:39 <vorlon> psycopg2, no one took this last time?
+
+ 16:39 <vorlon> sil2100: do you want this one?
+
+ 16:39 <sil2100> hm, ok
+
+ 16:39 <jawn-smith> I could take it
+
+ 16:39 <vorlon> jawn-smith: psycopg2 then
+
+ 16:39 <sil2100> I'll take it
+
+ 16:39 <sil2100> ...or not!
+
+ 16:39 <sil2100> :>
+
+ 16:39 <vorlon> python-click was given to mwhudson, I guess?
+
+ 16:40 <bdmurray> we might not have actually told him though
+
+ 16:40 <vorlon> heh
+
+ 16:41 <vorlon> python-docutils is just waiting on sphinx which is blocked by pgrouting... I think there was something about pgrouting/ppc64el being a test failure we should ignore?
+
+ 16:41 <juliank> yes
+
+ 16:41 <vorlon> I'll follow that one up out-of-band
+
+ 16:42 <juliank> it gets puleld from proposed instead of release pocket due to bug somewhere in perl stuff
+
+ 16:42 <vorlon> ah right
+
+ 16:42 <juliank> see #-release backlog
+
+ 16:42 <vorlon> python-reportlab: sil2100: ?
+
+ 16:43 <vorlon> python-testtools: bdmurray?
+
+ 16:43 <bdmurray> okay
+
+ 16:43 <vorlon> pyyaml: ginggs?
+
+ 16:44 <ginggs> sure, i'll take it
+
+ 16:44 <vorlon> numpy - dbungert were you already working on this?
+
+ 16:45 <dbungert> vorlon: yes, it's just waiting at this point
+
+ 16:45 <dbungert> so I can take another
+
+ 16:45 <vorlon> ok
+
+ 16:45 <vorlon> tasksel should just need component-mismatch handling, I'll take it
+
+ 16:46 <vorlon> dbungert: do you want node-jquery? :)
+
+ 16:46 <dbungert> lol, OK
+
+ 16:46 <vorlon> schopin: can you take gobject-introspection?
+
+ 16:46 <schopin> OK
+
+ 16:46 <sil2100> vorlon: on  it!
+
+ 16:46 <vorlon> have I missed anyone?
+
+ 16:47 <bdmurray> I don't think so
+
+ 16:47 <vorlon> doko: do you want to take liburi-perl?
+
+ 16:48 <vorlon> sounds like a no
+
+ 16:48 <vorlon> back to bdmurray
+
+ 16:48 <bdmurray> #topic AOB
+
+ 16:49 <bdmurray> We'd previously talked about doing a sponsoring party and I think we should do that tomorrow
+
+ 16:49 <bdmurray> I'll send some notes to our mailing list
+
+ 16:49 * juliank sponsored something today, but also needs to do some shim review stuff tomorrow
+
+ 16:50 <juliank> Gotta comment that people send back the right word lists :D
+
+ 16:50 <juliank> (thus, verifying their email addresses)
+
+ 16:50 <bdmurray> okay, thanks everybody
+
+ 16:51 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

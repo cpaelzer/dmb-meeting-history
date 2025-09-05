@@ -1,0 +1,553 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 27 Jun at 14:30 &mdash; 15:04 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-06-27-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:34.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:34)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:47)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/cairomm1.16/+bug/2020273   (cpaelzer, 14:48)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/cairomm1.16/+bug/2020273/comments/2 - my normal MIR review  (slyon, 14:50)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:52.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:52)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:52)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pull/27   (cpaelzer, 14:54)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/gtkmm4.0/+bug/2020472   (joalif, 14:57)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:59.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:59)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:00)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:00)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:00.
+
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/dh-builtusing ...  (sarnold, 15:01)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (154)
+ * sarnold (27)
+ * dviererbe (15)
+ * slyon (14)
+ * didrocks (10)
+ * joalif (6)
+ * jbicha (6)
+ * eslerm (5)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:40 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:30 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:30 <cpaelzer> Hello everyone
+
+ 14:30 <cpaelzer> glad to see so many waiting
+
+ 14:31 <cpaelzer> so without further ado, jumping on agenda point 1
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:31 <cpaelzer> bryce is still working on that spamassassin case
+
+ 14:31 <cpaelzer> it seems we will need it
+
+ 14:31 <cpaelzer> and he preps the paperwork
+
+ 14:31 <cpaelzer> but as in the past, those perl libs are just structural wrappers around the source
+
+ 14:32 <didrocks> o/
+
+ 14:32 <cpaelzer> so we have been - and here for efficiency - do some less deep checks
+
+ 14:32 <cpaelzer> mostly "is this really such a simple case"
+
+ 14:32 <cpaelzer> but, not open for review yet
+
+ 14:32 <cpaelzer> just a heads up
+
+ 14:32 <joalif> o/
+
+ 14:32 <cpaelzer> jamespage: the other never ending story is yourd - jaraco.text
+
+ 14:33 <cpaelzer> when you read this later, let us know what the state and expectation on this should be
+
+ 14:33 <cpaelzer> we have a new cycle, so everything might be different now :-)
+
+ 14:33 <cpaelzer> ruby has gotten stub bugs
+
+ 14:33 <cpaelzer> existing, but not yet ready
+
+ 14:33 <sarnold> good morning
+
+ 14:33 <cpaelzer> I see nothing else new in those files
+
+ 14:34 <cpaelzer> hello also to didrocks joalif and sarnold
+
+ 14:34 <cpaelzer> and to slyon eslerm and dviererbe who were here before logging started :-)
+
+ 14:34 <cpaelzer> ok, going on
+
+ 14:34 <cpaelzer> #topic New MIRs
+
+ 14:34 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:34 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:35 <sarnold> oof, good luck to bryce
+
+ 14:35 <cpaelzer> hehe
+
+ 14:35 <cpaelzer> as i said, ruby isn't really ready yet
+
+ 14:35 <cpaelzer> so we can ignore that for this week
+
+ 14:35 <cpaelzer> I'll mark them incomplete for now
+
+ 14:36 <cpaelzer> that leaves https://bugs.launchpad.net/ubuntu/+source/dotnet6/+bug/2023531
+
+ 14:36 <dviererbe> I filed an MIR for dotnet6. Its a large and complex package but there is no time pressure to get it into main this cycle
+
+ 14:36 <cpaelzer> dviererbe: dare you, how could you brind this
+
+ 14:36 <cpaelzer> it is huge for sure
+
+ 14:36 <slyon> dviererbe: I guess foundations would be the owning team. I can see it subscribed.. do you want me to do that?
+
+ 14:36 <slyon> can't*
+
+ 14:37 <cpaelzer> dviererbe: any reason to start with dotnet6 and not 7 ?
+
+ 14:37 <cpaelzer> or is 7 already up and in some interim state?
+
+ 14:37 <dviererbe> We only want to MIR LTS versions
+
+ 14:37 <cpaelzer> (maybe I should read the bug)
+
+ 14:37 <sarnold> - This MIR exists in parralel to the MIR for dotnet7
+
+ 14:37 <dviererbe> cpaelzer: Waht does "brind mean"
+
+ 14:38 <cpaelzer> bring + a typo
+
+ 14:38 <cpaelzer> As I understood, dotnet7 is not an LTS, so no MIR for it
+
+ 14:38 <dviererbe> ohh... I'm sorry
+
+ 14:38 <dviererbe> correct
+
+ 14:38 <cpaelzer> dviererbe: what are the target releases for this - only mantic or later?
+
+ 14:38 <cpaelzer> dviererbe: or will this be going back in time, as you backport all of it all the time anyway
+
+ 14:39 <dviererbe> Including all, back until jammy would be preferred
+
+ 14:39 <sarnold> will we have both dotnet6 and dotnet8 in 24.04 LTS ? https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core
+
+ 14:39 <cpaelzer> or will you make a choice
+
+ 14:39 <dviererbe> dotnet8 will be there in 24.04
+
+ 14:39 <cpaelzer> which dotnet matches which Ubuntu LTSes
+
+ 14:39 <sarnold> "Even numbered releases are LTS releases that get free support and patches for three years." oof that's long, eh? :(
+
+ 14:40 <cpaelzer> so will it be dotnet6 18-04->23.10 and then dotnet8 24.04->future ?
+
+ 14:40 <dviererbe> only since jammy
+
+ 14:41 <cpaelzer> ?
+
+ 14:41 <dviererbe> The actual support strategy is a little bit complicated. I will add a comment to the bug
+
+ 14:41 <sarnold> thanks
+
+ 14:41 <cpaelzer> dotnet8 on >=jammy - is that it
+
+ 14:41 <cpaelzer> appreciate that
+
+ 14:41 <sarnold> what's our plan for after the end of upstream support?
+
+ 14:42 <dviererbe> If I recall correctly dotnet8 will only be needed in >= 24.04 and dotnet6 in >= 22.04
+
+ 14:42 <dviererbe> The plan is to provide a transitional package that deinstalls dotnet when it reaches EOL
+
+ 14:42 <sarnold> aha, interesting
+
+ 14:42 <dviererbe> We already talked with security about that
+
+ 14:42 <cpaelzer> wow
+
+ 14:43 <cpaelzer> umm, yeah please outline that on the bug :-)
+
+ 14:43 <sarnold> it does sound familiar. sigh :( my memory isn't what it was :(
+
+ 14:43 <dviererbe> no worries you have a lot to do
+
+ 14:43 <cpaelzer> ok, I made a post on the bug
+
+ 14:43 <cpaelzer> and I'm waiting for dviererbe to add more details later
+
+ 14:43 <cpaelzer> in any case, we need to start a review on it
+
+ 14:44 <cpaelzer> and that isn't as special in this case
+
+ 14:44 <cpaelzer> as things with daemons and ports are often more complex to review
+
+ 14:44 <sarnold> do we have such strong feelings about 'no generated objects / sources' the same way debian does?
+
+ 14:44 <cpaelzer> this is more pain for security later on I guess
+
+ 14:44 <cpaelzer> sarnold: we do have the opinion to avoid whenever possible, but not strictly forbid them AFAIK
+
+ 14:44 <sarnold> this feels likely to be supported via the 'big blog from MS' model
+
+ 14:44 <sarnold> s/blog/blob/'
+
+ 14:44 <cpaelzer> s/blog/blob/ ?
+
+ 14:45 <cpaelzer> yeah :-)
+
+ 14:45 <cpaelzer> ok, counting slyon out as he is in the requesting team
+
+ 14:45 <sarnold> which I have to say isn't very pleasing when applied to eg mysql
+
+ 14:45 <dviererbe> sarnold: Maybe you can talk with Ian about the dotnet package. we work with him for security releases
+
+ 14:45 * slyon nods
+
+ 14:45 <cpaelzer> that leaves joalif didrocks or me to review
+
+ 14:45 <cpaelzer> volunteers or should I roll a dice
+
+ 14:46 <joalif> roll a dice :p
+
+ 14:46 <didrocks> if there is no time constraints, I can take it, but we can make it fun too with a dice roll :)
+
+ 14:46 <cpaelzer> 1-2 me, 3-4 joalif, 5-6 didrocks
+
+ 14:46 <cpaelzer> 1
+
+ 14:46 <cpaelzer> = me
+
+ 14:46 <sarnold> snake eyes!
+
+ 14:46 <dviererbe> I'm sorry :/
+
+ 14:46 <cpaelzer> there goes my automation of statistics ... o/
+
+ 14:47 <didrocks> sorry too for you :/ wonder how you did your dice roll though!
+
+ 14:47 <cpaelzer> all fine dviererbe
+
+ 14:47 <cpaelzer> didrocks: I have literally dices on my desk for planning and situations like this
+
+ 14:47 <sarnold> :D
+
+ 14:47 <cpaelzer> benefit of old role players I can cover any team size
+
+ 14:47 <cpaelzer> ok, going on
+
+ 14:47 <didrocks> waow, that’s orgnanization! :)
+
+ 14:47 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:47 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:47 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:47 <sarnold> I wanna see that three-sided die
+
+ 14:47 <cpaelzer> sarnold: you do realize thet is a D6/2
+
+ 14:48 <cpaelzer> primes are hard
+
+ 14:48 <sarnold> oh. that's less fun.
+
+ 14:48 <cpaelzer> but as manager we can be creative
+
+ 14:48 <cpaelzer> two of the recent cases are in here
+
+ 14:48 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/cairomm1.16/+bug/2020273
+
+ 14:48 <cpaelzer> tasks of slyon for4 jbicha
+
+ 14:48 <slyon> I had a question about the symbols handling on this one ^
+
+ 14:48 <sarnold> "This does not need a security review"  <3 :)
+
+ 14:48 <cpaelzer> state ok for now
+
+ 14:48 <slyon> as discussed on the mailinglist
+
+ 14:49 <cpaelzer> so we are coming back to symbosl
+
+ 14:49 <cpaelzer> symbols
+
+ 14:49 <cpaelzer> I haven't seen that, do you have a link slyon?
+
+ 14:50 <cpaelzer> is that the continuation of the discussion seb opened a while ago?
+
+ 14:50 <sarnold> yeah
+
+ 14:50 <slyon> https://bugs.launchpad.net/ubuntu/+source/cairomm1.16/+bug/2020273/comments/2 - my normal MIR review
+
+ 14:50 <cpaelzer> IIRC last week we said he is writing a PR to clarify the "one should try"
+
+ 14:50 <joalif> talking about symbols in my review this week https://bugs.launchpad.net/ubuntu/+source/gtkmm4.0/+bug/2020472 , symbols were missing as well for gtkmm4.0 but I wrote it is ok since gtkmm3.0 are also missing and is already in universe
+
+ 14:50 <slyon> essentially, I couldn't find a previous MIR (seems this has been in main forever). So I did a full review
+
+ 14:50 <cpaelzer> slyon: yeah, that happened to me as well
+
+ 14:51 <slyon> cairomm[1.16] does not ship any .symbols files and I could not find any other attempt at ABI compatibilty testing. Therefore, I asked the questions why it should be skipped for this package (cc jbicha)
+
+ 14:51 <cpaelzer> yeah
+
+ 14:51 <cpaelzer> and as discussed we want to see it tried and given up for a reason
+
+ 14:51 <cpaelzer> instead of giving up generally
+
+ 14:51 <didrocks> agreed
+
+ 14:51 <slyon> right.
+
+ 14:51 <cpaelzer> ok for now
+
+ 14:52 <cpaelzer> let us wait what the answer is
+
+ 14:52 <cpaelzer> to close out this agenda item - https://bugs.launchpad.net/ubuntu/+source/libhttp-cookiejar-perl/+bug/2024245 - has an open question and therefore is ok to be incomplete for now
+
+ 14:52 <slyon> And accepting it just because it has been bad before (without any reasoning given) isn't good
+
+ 14:52 <slyon> IMHO
+
+ 14:52 <cpaelzer> yep
+
+ 14:52 <cpaelzer> there is some balance to strike, but yes
+
+ 14:52 <cpaelzer> we can keep it at that for now
+
+ 14:52 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:52 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:52 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:52 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:52 <jbicha> .
+
+ 14:53 <cpaelzer> oh, hi jbicha
+
+ 14:53 <cpaelzer> do you want to immediately discuss/report about that?
+
+ 14:53 <cpaelzer> or only seen the highlights so far
+
+ 14:53 <jbicha> for glibmm2.68, I have a draft to force symbols tracking for amd64 on Ubuntu only https://salsa.debian.org/gnome-team/glibmm2.68/-/merge_requests/2
+
+ 14:53 <cpaelzer> awesome
+
+ 14:53 <cpaelzer> thanks jbicha
+
+ 14:53 <jbicha> I can investigate cairomm1.16 then too
+
+ 14:54 <cpaelzer> let us know via an update in the bug if you think this lands in time or if you expect this to take ages (more thna you can wait with promotion)
+
+ 14:54 <slyon> that'd be great, thanks jbicha
+
+ 14:54 <cpaelzer> while we are at it - here we have the aforementioned PR about symbols
+
+ 14:54 <cpaelzer> https://github.com/canonical/ubuntu-mir/pull/27
+
+ 14:56 <cpaelzer> I think slyon and I commented
+
+ 14:56 <jbicha> I'm curious to see how difficult it is to update the symbols for glibmm for the next major release. The Desktop Team may come back to the MIR team if it's just too much of a headache
+
+ 14:56 <cpaelzer> we can wait for an answer
+
+ 14:56 <cpaelzer> jbicha: that sounds fair to me
+
+ 14:56 <jbicha> I expect to have an update for cairomm by next week's meeting
+
+ 14:56 <joalif> jbicha: symbols are missing for gtkmm4.0 too could you also take a look at it ?
+
+ 14:57 <joalif> https://bugs.launchpad.net/ubuntu/+source/gtkmm4.0/+bug/2020472
+
+ 14:57 <sarnold> jbicha: I really like the sound of that salsa merge request
+
+ 14:57 <cpaelzer> while making progress - the other PR up is https://github.com/canonical/ubuntu-mir/pull/28
+
+ 14:57 <jbicha> gtkmm will be like glibmm so I'll aim to complete by next meeting too
+
+ 14:57 <cpaelzer> slyon: that is simple enough and I'm +1
+
+ 14:58 <cpaelzer> if no one objects I'd merge it as-is
+
+ 14:58 <cpaelzer> any -1 here?
+
+ 14:58 <sarnold> +1
+
+ 14:58 <joalif> +1
+
+ 14:58 <cpaelzer> enough for me as it is trivial
+
+ 14:58 <cpaelzer> thanks
+
+ 14:58 <didrocks> answered +1 on the PR, unsure how useful this is, but ok :)
+
+ 14:58 <cpaelzer> the other cases are open
+
+ 14:58 <cpaelzer> but not ready
+
+ 14:59 <cpaelzer> the only issue worth is https://github.com/canonical/ubuntu-mir/issues/26
+
+ 14:59 <cpaelzer> sarnold:  given the changes, can we close this now?
+
+ 14:59 <cpaelzer> if you are ok, please do so sarnold
+
+ 14:59 <cpaelzer> and keeping time in mind, I'm going on ...
+
+ 14:59 <sarnold> cpaelzer: I figured we'd close it when we merge in https://github.com/canonical/ubuntu-mir/pull/27
+
+ 14:59 <cpaelzer> ack @sarnold
+
+ 14:59 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:59 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:59 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:59 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:00 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:00 <cpaelzer> Internal link
+
+ 15:00 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:00 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:00 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:00 <cpaelzer> That LGTM - any concerns from your side sarnold ?
+
+ 15:00 <sarnold> that big pile of perl is worrying ..
+
+ 15:00 <sarnold> but right now, things feel pretty good
+
+ 15:00 <cpaelzer> it is coming
+
+ 15:00 <cpaelzer> but usually those go by mostly without security
+
+ 15:00 <cpaelzer> we will see
+
+ 15:00 <cpaelzer> thanks sarnold
+
+ 15:00 <cpaelzer> #topic Any other business?
+
+ 15:00 <cpaelzer> please mind that your other meetings might start now
+
+ 15:00 <didrocks> nothing here
+
+ 15:01 <cpaelzer> this is done any minute ...
+
+ 15:01 <eslerm> cargo and rust dependencies
+
+ 15:01 <sarnold> https://launchpad.net/ubuntu/+source/dh-builtusing ...
+
+ 15:01 <cpaelzer> yeah you wanted to bring those up last time
+
+ 15:01 <cpaelzer> we might lose qorum, but you should bring up the question for awareness
+
+ 15:01 <slyon> I think we'd need didrocks opinion on https://bugs.launchpad.net/ubuntu/+source/cargo/+bug/1993819/comments/5 to move forward the cargo MIR
+
+ 15:01 <sarnold> is ^^ this thing Good Enough? please skim it :)
+
+ 15:01 <cpaelzer> and if we can not close it out bring it up as first item next time
+
+ 15:02 <didrocks> yeah, as I didn’t "win" any MIR this week, I can have another look at this
+
+ 15:02 <cpaelzer> thank you didrocks
+
+ 15:02 <eslerm> at the Rust Support in Main meeting in Prague, other teams agreed to define a policy for tracking rebuild-dependencies
+
+ 15:02 <eslerm> this is important to the Security Team, as we need to rebuild Rust packages when vulnerabilities in their dependencies are patched
+
+ 15:02 <eslerm> i.e., patching a package should trigger rebuilding all statically linked reverse-dependencies, and rebuilds of their reverse-dependencies, and so on
+
+ 15:02 <cpaelzer> yeah, that is driven by foundations IIRC
+
+ 15:02 <eslerm> at the meeting we agreed that this new policy should apply to all packages, not just Rust
+
+ 15:03 <didrocks> I think as foundation has toolchains maintainer, this is rather something between security and them, no?
+
+ 15:03 <cpaelzer> yes didrocks
+
+ 15:03 <didrocks> (I'm happy to give a hand on Go, and explaining how this works out for it as I think I might be the one with the most awareness of govulncheck and so on…)
+
+ 15:03 <cpaelzer> slyon: would you chase down internally if this was lost or net even meant to be on foundations plate?
+
+ 15:04 <slyon> Yes, will do
+
+ 15:04 <cpaelzer> thanks
+
+ 15:04 <cpaelzer> we are good for today
+
+ 15:04 <cpaelzer> sorry to have kept you so long
+
+ 15:04 <cpaelzer> but it is important, all the time
+
+ 15:04 <cpaelzer> o/
+
+ 15:04 <sarnold> thanks cpaelzer, all
+
+ 15:04 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

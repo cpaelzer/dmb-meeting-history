@@ -1,0 +1,556 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:01:37 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-08-29-15.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Bugs
+
+ *Blueprints
+
+ *AOB
+
+
+
+Meeting ended at 15:45:35 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (63)
+ * xnox (53)
+ * ogra_ (40)
+ * ev (32)
+ * stokachu (17)
+ * bdmurray (14)
+ * ubottu (9)
+ * doko_ (6)
+ * jodh (6)
+ * barry (5)
+ * meetingology (4)
+
+
+
+== Full Log ==
+
+
+ 15:01:37 <slangasek> #startmeeting
+
+ 15:01:37 <meetingology> Meeting started Wed Aug 29 15:01:37 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01:37 <meetingology> 
+
+ 15:01:37 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01:38 <barry> ./
+
+ 15:01:52 <slangasek> #topic Lightning round
+
+ 15:02:26 <slangasek> will be a short one today; stgraber and infinity are at LinuxPlumbConFestSummitHat, cjwatson is off
+
+ 15:02:33 <slangasek> ev, we're counting on you to make up the difference
+
+ 15:02:38 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:02:41 <slangasek> jodh barry cjwatson bdmurray ev stokachu stgraber doko infinity slangasek xnox ogra
+
+ 15:02:42 <ev> lol
+
+ 15:02:49 <ogra_> \o/
+
+ 15:02:50 <jodh> * misc: Off Monday (Bank Holiday).
+
+ 15:02:50 <jodh> * boot/upstart:
+
+ 15:02:50 <jodh> - Stateful re-exec: Continued work to get post re-exec environment sane
+
+ 15:02:50 <jodh> (thanks to slangasek for his help).
+
+ 15:02:53 <jodh> J
+
+ 15:02:54 <ev> slangasek: public holiday - I'm going to disappoint today
+
+ 15:02:55 * ogra_ wins
+
+ 15:03:15 <barry> short week.  more work on gwibber py3 port; joined by robru, so we're splitting up the remainining tasks, and i'm reviewing and merging his mps into my branch.  should have our first full integration tests this week, hopefully landing the py3 branch soon after.  gave a udw talk on python3.  gave same talk (expanded) to PES.  dmb meeting.  done.
+
+ 15:03:42 <bdmurray> bug triage of package installation failures / distribution upgrades
+
+ 15:03:42 <bdmurray> gathering of and research into BootDmesg from bug reports to determine number of people using mdadm
+
+ 15:03:45 <bdmurray> wrote code to create duplicate signatures for existing bugs with a VarLogDistupgradeApttermlog.gz file
+
+ 15:03:48 <bdmurray> investigation into DuplicateSignature not being created for all package installation failures
+
+ 15:03:58 <bdmurray> apport upload to quantal with an improved duplicate signature creation
+
+ 15:03:58 <bdmurray> investigation into dpkg already installed and configured issue
+
+ 15:03:58 <bdmurray> research into apport reporting python dbus no reply reports and them appearing on errors.ubuntu.com
+
+ 15:04:01 <bdmurray> upload to precise-proposed for bug 1042970
+
+ 15:04:03 <ubottu> Launchpad bug 1042970 in apport (Ubuntu Precise) "apport not blocking DBus no reply bug reports" [High,In progress] https://launchpad.net/bugs/1042970
+
+ 15:04:06 <bdmurray> done
+
+ 15:05:26 <slangasek> jodh: do you confirm the bug that my test case turned up?  any progress on fixing that?
+
+ 15:05:34 <ev> - Short week; public holiday on Monday.
+
+ 15:05:34 <ev> - Fix odd behavior around the most common problems form.
+
+ 15:05:34 <ev> - Reworked most common problems table to actually show the most common 100
+
+ 15:05:34 <ev> problems, rather than any problems with an instance count greater than 20.
+
+ 15:05:44 <jodh> slangasek: yes, thanks - been working on it all day.
+
+ 15:05:44 <ev> - Investigated whether we were indeed handling etags correctly - we are.
+
+ 15:05:44 <ev> - Worked with IS to diagnose problems with the retracers exiting multiple
+
+ 15:05:44 <ev> times a day. At least part of the problem is that the retracers were pointed
+
+ 15:05:44 <ev> at a single Cassandra node. I fixed that, but we're still seeing issues. It
+
+ 15:05:50 <ev> now looks like we may be inserting too much data in a single operation
+
+ 15:05:50 <ev> (hitting limits in Thrift). I need access to the Cassandra and retracer logs
+
+ 15:05:50 <ev> to find out for sure (see below).
+
+ 15:05:50 <ev> - Speed ups to the most common problems API call in the hope that they
+
+ 15:05:50 <ev> remedy some of the problems we're seeing with timeouts loading the table.
+
+ 15:05:51 <ev> - Grab five rows at a time - this might be evil. Cassandra is very sensitive
+
+ 15:05:51 <ev> to multigets of rows.
+
+ 15:05:54 <slangasek> jodh: ok
+
+ 15:05:55 <ev> - Trying to fix canonical-memento to sync retracer logs with the correct
+
+ 15:05:55 <ev> permissions.
+
+ 15:05:55 <ev> - Wrote a new State of the Ubuntu Error Tracker email. Sent to Matthew and
+
+ 15:05:55 <ev> Brian for review.
+
+ 15:05:55 <ev> - Finished wiring up the 90 day unique user calculation. Created RT 55650 for
+
+ 15:05:56 <ev> it.
+
+ 15:06:02 <ev> - Reviewed Dmitrijs' geonames branch, Brian's LiveCDBuild branch of whoopsie,
+
+ 15:06:02 <ev> and mvo's apport recoverable problem using branch of software-center.
+
+ 15:06:02 <ev> - Fixed a bug that was preventing us from correctly bucketing crashes that had
+
+ 15:06:02 <ev> a package without a version specified in the report.
+
+ 15:06:02 <ev> - Added getting the problem instances for a user and individual instances to
+
+ 15:06:02 <ev> the errors.ubuntu.com API.
+
+ 15:06:18 <ev> - Other things I'm probably forgetting. See the State of the Ubuntu Error Tracker email when it comes out for more detail.
+
+ 15:06:21 <ev> (done)
+
+ 15:06:25 <ogra_> wow
+
+ 15:06:33 <ogra_> that was short !
+
+ 15:06:37 <ev> see!
+
+ 15:06:41 <stokachu> - Not to nag but waiting on multiarch SRU's to be reviewed :)
+
+ 15:06:43 <stokachu> - @bdmurry - I was told to mention http://pad.lv/941673 because of
+
+ 15:06:45 <stokachu> some 'vandalism' where someone set the case to fix released with
+
+ 15:06:47 <stokachu> no fix..so not sure.
+
+ 15:06:48 <ubottu> Launchpad bug 941673 in accountsservice (Ubuntu Precise) "performance of accounts-daemon is very poor" [High,Triaged]
+
+ 15:06:49 <stokachu> - Begin investigating customer supported cases that need to be addressed
+
+ 15:06:51 <stokachu> for milestone 12.04.02
+
+ 15:06:53 <stokachu> - Monitor +1 FTBS for any main packages and other archives when time permits
+
+ 15:07:19 <stokachu> (Done)
+
+ 15:08:56 <bdmurray> stokachu: probably just an innocent mistake
+
+ 15:09:06 <barry> stokachu: every month or so, we get a guy who vandalizes a handful of mailman bug tasks by doing assignments and status changes.  he has a slightly different id but same name every time, and we get the lpadmins to ban him every time.  it's highly annoying, and even though i've reached out to him numerous times, he still comes back and does it again.   i really don't know why :/
+
+ 15:09:32 <stokachu> oh ok, what was weird is i couldnt set the status back to what it was
+
+ 15:09:38 <stokachu> probably permissions
+
+ 15:10:53 <ogra_> doko_, ?
+
+ 15:11:03 <slangasek> doko_: your turn
+
+ 15:11:26 <stokachu> slangasek: ive asked in -devel for the patch pilots to review those multi-arch but having no luck
+
+ 15:11:36 <stokachu> i know youre busy
+
+ 15:11:43 <xnox> bdmurray: the annoying bit with status changes, is that you can't see them in the lp.net at all: it's doesn't show up in related/commented/* bugs. Such that a vandal account can have prestine personal bugs views, yet changing statuses everywhere.
+
+ 15:11:45 <doko_> - python2.7, python3.2, python3.3 updates
+
+ 15:11:45 <doko_> - address all open multiarch issues for python3.3
+
+ 15:11:45 <doko_> - finally found the "no stdout for sharedmods build" in python
+
+ 15:11:45 <doko_> - python3-stdlib-extensions update, distribute update
+
+ 15:11:45 <doko_> - gdb update to 7.5
+
+ 15:11:46 <slangasek> stokachu: well, I was patch pilot this week and didn't get to them :P  so I'm going to make up the time
+
+ 15:11:55 <stokachu> lol ok
+
+ 15:11:55 <doko_> (done)
+
+ 15:12:04 <slangasek> stokachu: no need to make excuses for me being busy, we're all busy ;)
+
+ 15:12:16 <bdmurray> xnox: they can't hide from the mailing lists
+
+ 15:12:22 <stokachu> sounds good man
+
+ 15:12:46 <xnox> bdmurray: which one? I want to grep for someone.
+
+ 15:12:46 <barry> doko_: wow!  what was the problem w/stdout?
+
+ 15:13:49 <bdmurray> xnox: https://lists.ubuntu.com/mailman/listinfo/ubuntu-bugs
+
+ 15:13:55 <slangasek> doko_, barry: that reminds me, a friend reported an amusing mis-feature in python2.7 regarding stdout encoding... the whole bit where the locale encoding is only used when stdout is a terminal?  Apparently doesn't apply in python2.7 if you're from __future__ import print_function :D
+
+ 15:13:56 <xnox> bdmurray: ok. thanks.
+
+ 15:14:16 <slangasek> * fully back on my feet now following surgery, boots no longer getting in my way
+
+ 15:14:19 <slangasek> * helping jodh with upstart stateful reexec
+
+ 15:14:22 <slangasek> * patch pilot day
+
+ 15:14:24 <slangasek> * 12.04.1 in the bag
+
+ 15:14:24 <barry> wow
+
+ 15:14:27 <slangasek> * discussions around choice of secureboot bootloader for 12.10
+
+ 15:14:29 <slangasek> * proposal to drop alternate CDs for 12.10 - thanks all for the participation in the list discussion
+
+ 15:14:32 <slangasek> * todo this week:
+
+ 15:14:34 <slangasek> * work with ogra on a Google OnAir session on how to use your Panda board
+
+ 15:14:38 <slangasek> * XDG_RUNTIME_DIR spec to be done this week
+
+ 15:14:40 <slangasek> * continued work on upstart re-exec support
+
+ 15:14:43 <slangasek> * multiarch SRU reviews!
+
+ 15:14:45 <slangasek> (done)
+
+ 15:14:49 <stokachu> :D
+
+ 15:15:02 <slangasek> ogra_: your go
+
+ 15:15:04 <ogra_> cograts to your boot-fixes :)
+
+ 15:15:06 <xnox> ?
+
+ 15:15:19 <ogra_> xnox, he doesnt like you anymore
+
+ 15:15:22 <ogra_> :)
+
+ 15:15:27 <ogra_> xnox, go :)
+
+ 15:15:28 <slangasek> oh oops
+
+ 15:15:31 <slangasek> xnox: your turn :P
+
+ 15:15:38 <xnox> * Fixed geoname lookup code (Now only 4 New York's instead of 20),
+
+ 15:15:38 <xnox> which is now awaiting deployment by IS. See RT #55554.
+
+ 15:15:38 <xnox> * Sponsored a fix for quantal update-notifier (crashed upgrades to
+
+ 15:15:38 <xnox> quantal & quantal daily cds) http://pad.lv/1040380
+
+ 15:15:38 <xnox> * Filed feature freeze exceptions for landing ubiquity lvm/luks work
+
+ 15:15:38 <xnox> #1042649, #1042647, #1042642, #1042639. Two of which will be landing
+
+ 15:15:39 <ubottu> Launchpad bug 1040380 in update-notifier (Ubuntu) "package-data-downloader crashed with AttributeError in process_download_requests(): 'Deb822' object has no attribute 'has_key'" [Medium,Fix released]
+
+ 15:15:40 <xnox> today / tomorrow (manual partitioning layout change & lvm checkbox,
+
+ 15:15:43 <xnox> including all translations for manual LVM & crypto). Watch the updates
+
+ 15:15:45 <xnox> on those tickets. This has been discussed with Kate Steward and
+
+ 15:15:46 <xnox> mentioned in the release meeting on Friday. Currently fighting with
+
+ 15:15:48 <xnox> debconf translation system.
+
+ 15:15:51 <xnox> * Started the wiki page of what testcases should be created for
+
+ 15:15:53 <xnox> LVM/LUKS ubiquity features: https://wiki.ubuntu.com/Ubiquity/LVMLUKSTesting
+
+ 15:15:57 <xnox> * BTW. llvmpipe actually works nice in VMs now. (I give two CPUs and
+
+ 15:15:59 <xnox> 2048MB RAM to the VM)
+
+ 15:16:01 <xnox> * Boost1.46 finally removed from the archive after the last round of
+
+ 15:16:03 <xnox> fixing reverse build-deps on versioned -dev packages.
+
+ 15:16:05 <xnox> * Follow up on removing alternative CDs: threads & posts.
+
+ 15:16:07 <xnox> * Merge & Deploy updated ubiquity slideshow support for the "new" &
+
+ 15:16:09 <xnox> "improved" slideshows which now support localised screenshots via
+
+ 15:16:11 <xnox> ubuntu-defaults (as part of patch piloting at the same time).
+
+ 15:16:13 <xnox> * Booking travel for UDS-R. Monday was a Late Summer Bank Holiday, so
+
+ 15:16:15 <xnox> short week.
+
+ 15:16:17 <xnox> * Ported debtagshw to python3 on the weekend, need to submit that
+
+ 15:16:19 <xnox> patch for review.
+
+ 15:16:21 <xnox> -done-
+
+ 15:16:29 <ogra_> done:
+
+ 15:16:29 <ogra_> * made omap4 PVR work (we now have a working GLES driver in quantal for panda)
+
+ 15:16:29 <ogra_> * included pvr-omap4 as default in the panda images (GLES works OOTB with tomorrows images)
+
+ 15:16:29 <ogra_> * compiz GLES testbuilds (still ongoing, should land today though)
+
+ 15:16:29 <ogra_> * some fixes for the virtual bamboo-feeder
+
+ 15:16:30 <ogra_> * held an UDW talk about arm
+
+ 15:16:31 <ogra_> * fixing build issues with livecd-rootfs that had grown a feature to automatically build foreign arches in a qemu vm ...
+
+ 15:16:35 <ogra_> (our buildds being armel then forced the panda livefs build to try to use qemu for armhf images)
+
+ 15:16:37 <ogra_> todo:
+
+ 15:16:39 <ogra_> * bug 1028905
+
+ 15:16:40 <ubottu> Launchpad bug 1028905 in cdrom-detect (Ubuntu Quantal) "cdrom-detect in quantal omap4 hangs trying to look for install media on an extended partition" [High,Confirmed] https://launchpad.net/bugs/1028905
+
+ 15:16:41 <ogra_> * make a decision if we want to show the source device in the partitioner on pandas (bug 1042930)
+
+ 15:16:41 <ubottu> Launchpad bug 1042930 in ubiquity (Ubuntu) "partition size error during install of Quantal on Panda board" [Undecided,Confirmed] https://launchpad.net/bugs/1042930
+
+ 15:16:45 <ogra_> * prepare for beta
+
+ 15:16:53 <ogra_> ... my BT still doesnt work if i use the kbd and the headset in full duplex mode ...
+
+ 15:17:07 <ogra_> (half duplex works just fine)
+
+ 15:17:10 <ogra_> ..
+
+ 15:17:40 <slangasek> xnox: fyi I poked IS about RT #55554 on our sync call, so it's gotten into the right queue now and should happen soon-ish
+
+ 15:18:03 <xnox> slangasek: \0/ yeah I did see it bouncing about
+
+ 15:18:41 <xnox> ogra_: panda boards & wifi? still.... it was meant to work with -proposed kernel, but now there are multiple bugs about it (both from server (me) and desktop images)
+
+ 15:19:03 <ogra_> xnox, rtg just fixed linux-firmware
+
+ 15:19:18 <xnox> ogra_: ah, perfect =) will test.
+
+ 15:19:23 <ogra_> quantal should be fine, if you see anyprecise bugs for wlan, please notify me
+
+ 15:19:36 <xnox> ok.
+
+ 15:19:50 <xnox> precise is fine so far with wlan and everything else =)
+
+ 15:20:02 <ogra_> seems the kernel didnt declare an explicit need for the fw file
+
+ 15:20:22 <ogra_> so the scripts didnt pull it in
+
+ 15:20:25 <ogra_> ..
+
+ 15:21:50 <slangasek> #topic Bugs
+
+ 15:22:12 <slangasek> bdmurray: termites?  cockroaches?
+
+ 15:22:36 * xnox has metro bugs
+
+ 15:22:43 <bdmurray> I don't have much other than bug 523896 which I found a few more duplicates of
+
+ 15:22:44 <ubottu> Launchpad bug 523896 in shadow (Ubuntu Quantal) "useradd: cannot lock /etc/passwd; try again later." [High,Triaged] https://launchpad.net/bugs/523896
+
+ 15:23:55 <slangasek> yeah... that's a JFDI at this point
+
+ 15:24:09 <slangasek> solution in https://bugs.launchpad.net/ubuntu/+source/shadow/+bug/523896/comments/20
+
+ 15:24:11 <ubottu> Launchpad bug 523896 in shadow (Ubuntu Quantal) "useradd: cannot lock /etc/passwd; try again later." [High,Triaged]
+
+ 15:24:13 <slangasek> any takers for implementing it?
+
+ 15:25:56 <xnox> upstart job to delete those?
+
+ 15:25:58 <xnox> @boot
+
+ 15:25:58 <meetingology> xnox: Error: "boot" is not a valid command.
+
+ 15:26:09 <xnox> i could do it.
+
+ 15:26:46 <xnox> is there a real fix for this though? or are we just going to keep that forever
+
+ 15:26:52 <slangasek> it's just a small upstart job to rm -f /etc/gshadow.lock /etc/shadow.lock /etc/passwd.lock /etc/group.lock when the rootfs is mounted
+
+ 15:26:52 <slangasek> xnox: can you squeeze that in?
+
+ 15:27:13 <xnox> yeah. should be ok.
+
+ 15:27:36 <slangasek> xnox: no, that's the correct fix - whatever's causing it should *also* be more graceful, but there's always the possibility of a power event causing these to be left behind, so the system needs to be robustified
+
+ 15:27:45 <slangasek> assigning to you, thanks
+
+ 15:27:48 <slangasek> bdmurray: anything else?
+
+ 15:27:58 <xnox> bug 1042159 and bug 1043149 Microsoft is offering Windows 8 Preview Release for free. One new feature is that it hibernates when user shutdowns. This breaks wubi & ntfs-3g
+
+ 15:28:00 <ubottu> Launchpad bug 1042159 in Wubi "[regression since 12.04] wubi won't boot when Windows8 is hibernated (default)" [Undecided,Confirmed] https://launchpad.net/bugs/1042159
+
+ 15:28:01 <ubottu> Launchpad bug 1043149 in ntfs-3g (Ubuntu) "[regression since 12.04] ntfs-3g refuses to mount Windows8 not using hibernation" [Undecided,New] https://launchpad.net/bugs/1043149
+
+ 15:28:20 <bdmurray> slangasek: no that's it for today
+
+ 15:28:47 <xnox> the feature is that by default on shut-down windows8 hibernates kernel & restores that on boot.
+
+ 15:29:08 * xnox doesn't want to look at this =)
+
+ 15:29:10 <ogra_> lovely
+
+ 15:29:44 <xnox> all IT media are crazy about "Windows 8 boots too fast".... well it hibernates fast....
+
+ 15:30:05 <ogra_> yeah
+
+ 15:30:20 <slangasek> xnox: does wubi or ntfs-3g misbehave (corrupt data) when this happens?
+
+ 15:31:25 <xnox> slangasek: that is something to test. If we can force them & see if Windows still boots after (i) wubi usage or (ii) ntfs-3g read or (iii) write usage.
+
+ 15:31:47 <xnox> anyone wants to install Windows8 PR?
+
+ 15:31:59 <xnox> and dual boot ubuntu?
+
+ 15:32:37 <xnox> this can wait for an SRU, since windows8 will be released after quantal.
+
+ 15:32:55 <slangasek> well, wubi itself is difficult to SRU
+
+ 15:33:25 <xnox> true.
+
+ 15:34:03 <slangasek> the comments in #1043149 are interesting; suggests that this is a problem even when you try to explicitly avoid the hibernate option?
+
+ 15:34:52 <slangasek> seems that this is very risky to correct for from the Ubuntu side and we may have to simply document a workaround that users will need to apply under Windows 8
+
+ 15:35:00 <xnox> slangasek: yes. In Window8 hibernate = full hibernate; shutdown = hibernate kernel & shutdown the rest.
+
+ 15:35:08 * slangasek opens a release notes task for now
+
+ 15:35:33 <xnox> ok. "Please disable _all_ of hibernations if you want to use wubi or access files from ubuntu"
+
+ 15:36:58 <slangasek> yeah
+
+ 15:37:35 <slangasek> ok, marked the bug up
+
+ 15:37:45 <slangasek> stokachu: anything from your end?  besides the usual suspects :)
+
+ 15:38:22 <stokachu> slangasek: i think we'rd good right now
+
+ 15:39:27 <slangasek> ok cool
+
+ 15:39:39 <slangasek> [TOPIC] Blueprints
+
+ 15:40:06 <slangasek> in general we seem to be having a hard time this cycle getting blueprints down to the trend line
+
+ 15:40:10 <slangasek> I'm not sure exactly why that is
+
+ 15:40:27 <slangasek> but I'm going to propose a new policy to try to help those along
+
+ 15:40:57 <slangasek> starting next week, please include for your lightning round reports a summary of the status of each blueprint that you have outstanding work items for
+
+ 15:41:06 * ogra_ thinks we have a lot idling specs that we probalbly should just postpone
+
+ 15:41:17 <slangasek> probably
+
+ 15:41:37 <slangasek> so the above is intended as a nudge to remind folks to do the actual postponement if appropriate rather than letting them linger
+
+ 15:41:45 <slangasek> ok?
+
+ 15:41:50 <xnox> ok.
+
+ 15:42:19 <slangasek> [TOPIC] AOB
+
+ 15:42:22 <ogra_> o/
+
+ 15:42:23 <slangasek> anything else?
+
+ 15:42:29 <slangasek> we've got some time to fill ;)
+
+ 15:42:31 <slangasek> ogra_: go
+
+ 15:42:46 <ogra_> its my moms b-day this friday and i would like to end my friday early to visit my parents +
+
+ 15:42:59 <ogra_> that means i need someone to replace me in the release meeting
+
+ 15:43:06 <ogra_> anyone volunteering ?
+
+ 15:43:14 <stokachu> CaKE
+
+ 15:43:18 <slangasek> ogra_: I can cover.  will you send the summary to the list as usual?
+
+ 15:43:19 <ogra_> ++
+
+ 15:43:33 <ogra_> slangasek, yeah, only the meeting itself
+
+ 15:43:50 * ogra_ will have a cacke for each of you :)
+
+ 15:43:55 <slangasek> ;)
+
+ 15:43:59 <ogra_> *cake too :P
+
+ 15:44:59 <slangasek> anything else?
+
+ 15:45:35 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

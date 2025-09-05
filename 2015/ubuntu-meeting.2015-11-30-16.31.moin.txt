@@ -1,0 +1,261 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 30 Nov at 16:31 &mdash; 16:59 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-11-30-16.31.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 16:31.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:31.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 16:57.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pngcrush.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/wv2.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libxml-dt-perl.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/dimp1.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/xcfa.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 16:58.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * tyhicks (42)
+ * jjohansen (13)
+ * mdeslaur (10)
+ * sarnold (9)
+ * sbeattie (9)
+ * jdstrand (6)
+ * chrisccoulson (5)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 16:31 <tyhicks> #startmeeting
+
+ 16:31 <meetingology> Meeting started Mon Nov 30 16:31:19 2015 UTC.  The chair is tyhicks. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:31 <meetingology> 
+
+ 16:31 <meetingology> Available commands: action commands idea info link nick
+
+ 16:31 <tyhicks> The meeting agenda can be found at:
+
+ 16:31 <tyhicks> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:31 <tyhicks> [TOPIC] Announcements
+
+ 16:31 <tyhicks> Stefan Bader (smb) provided a debdiff for precise for xen
+
+ 16:31 <tyhicks> Andreas Cadhalpun provided a debdiff for wily for ffmpeg
+
+ 16:31 <tyhicks> Thank you for your assistance in keeping Ubuntu users secure! :)
+
+ 16:31 <tyhicks> [TOPIC] Weekly stand-up report
+
+ 16:32 <tyhicks> jdstrand: since you'll be in and out, let us know when you're "in"
+
+ 16:32 <tyhicks> mdeslaur: go ahead
+
+ 16:32 <mdeslaur> I'm on community this week
+
+ 16:32 <mdeslaur> I have a gnutls26 update to test and push out
+
+ 16:32 <mdeslaur> and I'm trying to reproduce an nss issue in xenial
+
+ 16:32 <mdeslaur> to do that, I'm trying to fix uvt to work properly with xenial
+
+ 16:33 <mdeslaur> and after that, I may work on some sudo updates that rebase xenial's version for older releases to finally fix the clock issue
+
+ 16:33 <mdeslaur> that's pretty much it...sbeattie, you're up
+
+ 16:33 <sbeattie> I'm on bug triage this week.
+
+ 16:34 <sbeattie> On the pie gcc front, I'm hip deep in kernel build process stuff, trying to figure out all the locations where to disable it.
+
+ 16:35 <sbeattie> I have an openjdk-6 update to test and push out, along with another package
+
+ 16:35 <mdeslaur> sbeattie: I saw a gcc-5 upload with some peculiar changelog entries...did it get enabled?
+
+ 16:36 <sbeattie> mdeslaur: oh, I'm pulling the latest upload down right now, I haven't looked at the changelog.
+
+ 16:36 <sbeattie> do ko sent me an email asking about stuff.
+
+ 16:37 <tyhicks> * Add --enable-default-pie option to GCC configure, taken from the trunk.
+
+ 16:37 <sbeattie> ah, woot!
+
+ 16:37 <tyhicks> nice :)
+
+ 16:38 <mdeslaur> does that mean it's on, or just that the option is added?
+
+ 16:38 <mdeslaur> because that's in the debian changelog part
+
+ 16:38 <mdeslaur> then there's "* Configure with --enable-default-pie on s390x."
+
+ 16:40 <sbeattie> yeah, it looks like it just got turned on for s390x. interesting
+
+ 16:41 <jjohansen> no chance for regressions there
+
+ 16:41 <sbeattie> anyway, I'll still need to deal with fallout from that, so, along with a shortish week (friday off), that + usual email and kernel triage will probably consume my week
+
+ 16:41 <sbeattie> tyhicks: you're up
+
+ 16:42 <tyhicks> I'm on cve triage
+
+ 16:42 <tyhicks> I need to send off my findings from my mapplauncherd review as well as the code and profile generation bits for confining the generic booster process
+
+ 16:42 <jdstrand> I'm in
+
+ 16:42 <tyhicks> jdstrand: go ahead
+
+ 16:43 <jdstrand> ok, I'm catching up from holiday
+
+ 16:43 <jdstrand> preparing for a sprint next week
+
+ 16:43 <jdstrand> have an embargoed item
+
+ 16:43 <jdstrand> and finishing up some policy work on touch and snappy that I started before the holiday
+
+ 16:43 <jdstrand> that's it from me
+
+ 16:44 <tyhicks> thanks
+
+ 16:45 <tyhicks> I also need to do snappy sprint prep
+
+ 16:45 <tyhicks> I have a review to do for the snapd socket access checks so that non-root processes can connect
+
+ 16:45 <tyhicks> and I'm still trying to get to unprivileged AppArmor policy loads inside of a user namespace
+
+ 16:45 <tyhicks> jjohansen: you're up
+
+ 16:46 <jjohansen> so I am primarily working on apparmor stacking this week
+
+ 16:46 <jjohansen> I have some ml followup to do, and some bug follow-up that could eat some time depending on testing
+
+ 16:47 <jjohansen> primarily bug 1446906, that I am following
+
+ 16:47 <ubottu> bug 1446906 in lxc (Ubuntu) "lxc container with postfix, permission denied on mailq" [Medium,Confirmed] https://launchpad.net/bugs/1446906
+
+ 16:47 <tyhicks> jjohansen: could you send that fix to sarnold and myself for review?
+
+ 16:47 <jjohansen> the kt also has an apparmor related bug in 4.3 that they are looking at, they think it might be test related
+
+ 16:48 <sarnold> is that the caching timestamp bug?
+
+ 16:48 <jjohansen> tyhicks: yeah, I want to clean it up a bit first, but I will send it out. Note that its on top of the larger 25 patch series
+
+ 16:49 <tyhicks> ok
+
+ 16:49 <jjohansen> sarnold: no, it is to due with mediation of a file based unix domain socket that has been shutdown
+
+ 16:49 <sarnold> jjohansen: heh, sorry, I meant the one the KT reported that they think is test relatede
+
+ 16:50 <jjohansen> sarnold: not sure, I have just seen the mention of it and that brad is looking into it
+
+ 16:50 <jjohansen> so its on my radar but I don't have details yet
+
+ 16:50 <jjohansen> oh, I should also get ahead of the curve and do the 4.4 rebase, and point tim and and andy at it
+
+ 16:50 <sarnold> aha. I took a quick look at what they were talking about last week, and I couldn't figure out how on earth that test goes wrong. it feels like it'd be worth taking apparmor out of the equation on that one and try to write a reproduer that does't rely upon upstart ..
+
+ 16:51 <jjohansen> oh fun, looks like sarnold has volunteered to take that one off my hands :)
+
+ 16:51 <tyhicks> jjohansen: ISTR you and Tim talking at the sprint about how the 4.4 rebase required no changes from the 4.3 rebase so Tim was just going to handle it himself?
+
+ 16:52 <jjohansen> tyhicks: that was the 4.3 rebase at the sprint, I haven't looked at 4.4 at all
+
+ 16:52 <tyhicks> ah
+
+ 16:52 <jjohansen> though I expect it is similar
+
+ 16:52 <tyhicks> ok
+
+ 16:52 <tyhicks> sarnold: you're up
+
+ 16:52 <sarnold> i'm in the happy place this week
+
+ 16:53 <sarnold> I'd like to take a short week this week (thinking friday off)
+
+ 16:53 <sarnold> i will finish the libmicrohttpd mir, will start (and probably finish) the dpdk mir, catch up from holiday email, and hopefully review an apparmor patch or two
+
+ 16:54 <sarnold> tyhicks feels like he's drowning this week, so perhaps steal a day of cve triage
+
+ 16:54 <tyhicks> :)
+
+ 16:54 <sarnold> that's it for me, chrisccoulson?
+
+ 16:54 <tyhicks> I'll let you know
+
+ 16:54 <tyhicks> thanks
+
+ 16:55 <chrisccoulson> So, last week I got the camera working in the browser on the phone. I'm still ironing out some bugs with that (orientation is still messed up, and I'm seeing the device reset frequently as well)
+
+ 16:55 <sarnold> woo :)
+
+ 16:55 <chrisccoulson> I also need to get someone to review my changes to libhybris, but I'm not sure who's responsible for that now
+
+ 16:56 <chrisccoulson> Other than that, I plan to tackle the stuff I wanted to do last week but never got around to :) (bug 1447345), as well as the usual code review stuff
+
+ 16:56 <ubottu> bug 1447345 in Oxide "Support the unprivileged namespace sandbox" [High,Triaged] https://launchpad.net/bugs/1447345
+
+ 16:56 <chrisccoulson> (short week too - I'm out on wednesday)
+
+ 16:56 <chrisccoulson> That's me done
+
+ 16:57 <tyhicks> chrisccoulson: nice to hear that the camera work is progressing :)
+
+ 16:57 <tyhicks> [TOPIC] Highlighted packages
+
+ 16:57 <tyhicks> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:57 <tyhicks> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:57 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/pngcrush.html
+
+ 16:57 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/wv2.html
+
+ 16:58 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/libxml-dt-perl.html
+
+ 16:58 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/dimp1.html
+
+ 16:58 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/xcfa.html
+
+ 16:58 <tyhicks> [TOPIC] Miscellaneous and Questions
+
+ 16:58 <tyhicks> Does anyone have any other questions or items to discuss?
+
+ 16:59 <tyhicks> jdstrand, mdeslaur, sbeattie, jjohansen, sarnold, ChrisCoulson: Thanks!
+
+ 16:59 <tyhicks> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

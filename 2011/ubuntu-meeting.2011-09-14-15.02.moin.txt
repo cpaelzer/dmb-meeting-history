@@ -1,0 +1,432 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:26 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-09-14-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' http://www.chiark.greenend.org.uk/~sgtatham/moon-on-stick.jpeg   (cjwatson, 15:10:31)
+
+ *burndown chartz
+''LINK:'' http://status.ubuntu.com/ubuntu-oneiric/canonical-foundations.html   (slangasek, 15:23:46)
+
+ *AOB
+''LINK:'' https://rt.cpan.org/Public/Bug/Display.html?id=33289   (cjwatson, 15:29:17)
+''LINK:'' https://rt.cpan.org/Public/Bug/Display.html?id=67305   (cjwatson, 15:29:32)
+''ACTION:'' cjwatson to get libnet-server-perl fixed for ipv6  (slangasek, 15:29:35)
+
+
+
+Meeting ended at 15:32:05 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * cjwatson to get libnet-server-perl fixed for ipv6
+
+
+
+== Action items, by person ==
+
+ * cjwatson
+ ** cjwatson to get libnet-server-perl fixed for ipv6
+
+
+
+== People present (lines said) ==
+
+ * slangasek (43)
+ * stgraber (25)
+ * cjwatson (22)
+ * jhunt (16)
+ * bdmurray (16)
+ * mvo (12)
+ * ubottu (11)
+ * ScottK (10)
+ * doko (7)
+ * barry (6)
+ * ev (6)
+ * meetingology (4)
+ * nullcore (3)
+
+
+
+== Full Log ==
+
+
+ 15:02:26 <slangasek> #startmeeting
+
+ 15:02:26 <meetingology> Meeting started Wed Sep 14 15:02:26 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:02:26 <meetingology> 
+
+ 15:02:26 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:41 <slangasek> [TOPIC] lightning round
+
+ 15:02:45 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt mvo ev bdmurray slangasek)
+
+ 15:02:48 <slangasek> stgraber doko barry bdmurray cjwatson ev slangasek jhunt mvo
+
+ 15:02:56 <slangasek> stgraber: heya
+
+ 15:02:59 <stgraber> hey!
+
+ 15:03:03 <stgraber> - IPv6
+
+ 15:03:03 <stgraber> - Made some progress on automated testing. I now have scripts generating all the needed networks, configurations and LXC containers (router and tester).
+
+ 15:03:07 <stgraber> - Did some manual testing of the DUID changes by cyphermox (bug 849994)
+
+ 15:03:08 <ubottu> Launchpad bug 849994 in network-manager (Ubuntu) "FFE: add NetworkManager DUID support" [Undecided,New] https://launchpad.net/bugs/849994
+
+ 15:03:11 <stgraber> - Will run a batch of manual tests of netcfg as automating them is taking longer than expected (I really need to find a way of running d-i in a LXC container ;))
+
+ 15:03:15 <stgraber> - iSCSI
+
+ 15:03:18 <stgraber> - Made some progress on bug 838809. The problem is that open-iscsi is now being started at boot time ;)
+
+ 15:03:19 <ubottu> Launchpad bug 838809 in Ubuntu Oneiric "authenticated and unauthenicated iscsi clients fails to complete boot" [High,Confirmed] https://launchpad.net/bugs/838809
+
+ 15:03:21 <stgraber> - Need to spend more time finding a way of starting iscsid without disconnecting existing sessions.
+
+ 15:03:25 <stgraber> - An easy workaround would be to "exit 0" when open-iscsi detects that we have run iscsistart in the initrd. This would restore the old behaviour.
+
+ 15:03:28 <stgraber> - Problem with the workaround (and the pre-Oneiric open-iscsi) is that we only mount one lun from initramfs (the one needed for /), any other luns defined in /etc/iscsi aren't getting connected.
+
+ 15:03:34 <stgraber> - friendly-recovery
+
+ 15:03:36 <stgraber> - With the suggestions of James and Colin, got a bunch of debdiffs attached to bug 575469
+
+ 15:03:38 <ubottu> Launchpad bug 575469 in friendly-recovery (Ubuntu Oneiric) "[UIFe] [FFe] recovery mode mounts filesystems read-write rather than read-only" [Medium,Confirmed] https://launchpad.net/bugs/575469
+
+ 15:03:40 <stgraber> - This moves friendly-recovery out of /usr, add a read-only mode and splits recovery and single-mode into two different things. Currently waiting for the FFe and UIFe.
+
+ 15:03:43 <stgraber> - TODO
+
+ 15:03:46 <stgraber> - Figure out how we want to fix that open-iscsi bug
+
+ 15:03:48 <stgraber> - Do a last seed review and update for Edubuntu, possibly dropping at least Gnome Nanny (doesn't seem to work...)
+
+ 15:03:52 <stgraber> - Finish the automated IPv6 testing and push the code somewhere
+
+ 15:03:57 <stgraber> - Still need to spend more time trying to get TPM working in a PPA
+
+ 15:04:00 <mvo> \o/ 575469
+
+ 15:04:30 <doko> - NBS, http://people.canonical.com/~ubuntu-archive/nbs.html looks mucher nicer now ;)
+
+ 15:04:34 <slangasek> stgraber: what's the status of getting the ipv6 automated testing handed off to qa?
+
+ 15:04:52 <slangasek> do we expect that in place between now and release?
+
+ 15:05:08 <stgraber> slangasek: I'm first trying to get it working here ;) I'll have it running daily on a box of mine and will send the scripts to QA
+
+ 15:05:32 <stgraber> slangasek: I don't expect we'll have working IPv6 in DC very soon so it may take a while until it's running on QA infrastructure
+
+ 15:05:46 <slangasek> hmmm, ok
+
+ 15:06:46 <stgraber> at least the current implementation runs on LXC so I can get it running on anything that I have around and has ipv6 connectivity.
+
+ 15:06:51 <slangasek> doko: nbs> yay!
+
+ 15:07:05 <doko> - and FTBFS 7x24
+
+ 15:07:07 <doko> ..
+
+ 15:07:40 <stgraber> from what we discussed at the sprint, it seemed unlikely we'd be allowed to get an IPv6 tunnel or native connectivity from the QA infrastructure, at least not quickly.
+
+ 15:07:46 <doko> who did want to look at indicator-applet?
+
+ 15:07:50 <slangasek> stgraber: maybe the test configs should include a router with a tunnel?
+
+ 15:07:55 <slangasek> hmm
+
+ 15:08:22 <slangasek> doko: surely that should be flagged to the desktop team to clear up?
+
+ 15:08:40 <cjwatson> I thought it had been and they kind of stalled
+
+ 15:08:54 <doko> I'll assign it
+
+ 15:09:00 <slangasek> doko: thanks
+
+ 15:09:34 <stgraber> slangasek: I guess I could have the router act as a DNS server and HTTP proxy which might be enough to install and run some tests when we don't actually have public ipv6 connectivity
+
+ 15:09:41 <slangasek> doko: anything else?  Perhaps something you were working on during day 8 of the week, or hours 25-26 :)
+
+ 15:09:53 <doko> ohh, it is, bug 829491
+
+ 15:09:54 <ubottu> Launchpad bug 829491 in indicator-applet (Ubuntu Oneiric) "indicator-applet version 0.4.12-0ubuntu1 failed to build in oneiric" [High,Confirmed] https://launchpad.net/bugs/829491
+
+ 15:10:12 * cjwatson gets slangasek a moon on a stic
+
+ 15:10:14 <cjwatson> *stick
+
+ 15:10:23 <doko> no, only openjdk-7 update, fortran rebuild, and some unrelated bug fixes
+
+ 15:10:31 <cjwatson> http://www.chiark.greenend.org.uk/~sgtatham/moon-on-stick.jpeg
+
+ 15:10:33 <slangasek> deep-fried, I trust
+
+ 15:10:45 <slangasek> haha
+
+ 15:10:50 <barry> :)
+
+ 15:10:55 <barry> i guess i'm up then...
+
+ 15:11:01 <barry> bug 407862; bug 839588; bug 621242; bug 831102; bug 835001; bug 770882; python bug 11715 (multiarch on kubuntu); python27 for lucid work (not totally given up yet, but close :).  done.
+
+ 15:11:06 <ubottu> Launchpad bug 407862 in Rsyslog "Messages not being sent to system logs" [Wishlist,Fix released] https://launchpad.net/bugs/407862
+
+ 15:11:07 <ubottu> Launchpad bug 839588 in python2.7 (Ubuntu) "Python 2.7 unable to find it's header files in virtualenv" [Medium,Confirmed] https://launchpad.net/bugs/839588
+
+ 15:11:08 <ubottu> Launchpad bug 621242 in mocker (Ubuntu Oneiric) "[MIR] mocker" [High,Fix released] https://launchpad.net/bugs/621242
+
+ 15:11:09 <ubottu> Launchpad bug 831102 in python-django-nova (Ubuntu Oneiric) "python-django-nova version 0.3~git20110711-0ubuntu1 failed to build in oneiric" [High,Fix released] https://launchpad.net/bugs/831102
+
+ 15:11:10 <ubottu> Launchpad bug 835001 in pyacidobasic (Ubuntu Oneiric) "pyacidobasic version 1.0-3 failed to build in oneiric" [High,Fix released] https://launchpad.net/bugs/835001
+
+ 15:11:21 <cjwatson> stgraber: could use tayga and totd to do NAT64 :-)
+
+ 15:11:41 <cjwatson> maybe
+
+ 15:11:55 <bdmurray> branch and merge proposal for apport to add the apport version to apport bug reports
+
+ 15:11:58 <bdmurray> branch and merge proposal for ubiquity apport source package hook changes
+
+ 15:12:01 <bdmurray> merge proposal / upload for dkms apport hook fixing bug 816199
+
+ 15:12:02 <ubottu> Launchpad bug 816199 in dkms (Ubuntu) "dkms_packages.py crashed with ValueError in _apt_pkg(): package does not exist" [High,Fix released] https://launchpad.net/bugs/816199
+
+ 15:12:04 <barry> hmm, i thought i uploaded the fix for 839588
+
+ 15:12:04 <bdmurray> review and merging of bugpattern branchs from Vadim
+
+ 15:12:04 <bdmurray> review of bug patterns merge proposal(s) from RedSingularity
+
+ 15:12:04 <bdmurray> wrote, tested and added a bzr plugin for bug pattern commits
+
+ 15:12:04 <bdmurray> blog post regarding bugpattern_written bzr plugin
+
+ 15:12:31 <bdmurray> porting of patch subscription script to bug bot, modification of process to add a comment and subscriber ubuntu-sponsors to debdiff attachments
+
+ 15:12:34 <bdmurray> research into using bug_supervisor advanced search parameter in the web user interface
+
+ 15:12:37 <bdmurray> modified / updated launchpad greasemonkey tagging script to work again (been broken for about a year)
+
+ 15:12:40 <bdmurray> ubuntu bug day no package bug participation
+
+ 15:12:43 <bdmurray> ubuntu bug squad meeting
+
+ 15:12:45 <bdmurray> done
+
+ 15:13:07 <cjwatson> FTBFS; 40+ so far this week.
+
+ 15:13:07 <cjwatson> Repeated attempts to get an ubuntu-defaults-image build to work on the livefs buildds.  Finally succeeded today so am unblocked on dealing with the publishing scripts; that's my next task.
+
+ 15:13:11 <cjwatson> Firefighting eglibc/apt breakage yesterday due to C.UTF-8 collation order change.
+
+ 15:13:15 <cjwatson> Arranged for oem-config et al to be on the USB images again.
+
+ 15:13:17 <cjwatson> Waiting for RT#47856 resolution to complete multiarch-translations.
+
+ 15:13:20 <cjwatson> ..
+
+ 15:13:43 <ev> - Very short week; at Linux Plumbers and vacation on Tuesday.
+
+ 15:13:43 <ev> - Catching up on emails. Coordinating installer testing with Gema of QA.
+
+ 15:13:43 <ev> - Slideshow merges.
+
+ 15:13:43 <ev> - Fixes to the wireless networking page when an AP disappears.
+
+ 15:13:44 <ev> - Progress on setting the wallpaper in the GDK3 world.
+
+ 15:13:47 <ev> (done)
+
+ 15:14:19 <stgraber> cjwatson: oh, indeed, nat64 could do the trick. I'll need to poke at it once I get the rest of the test setup working :)
+
+ 15:15:58 <slangasek> short week for me, what with being on vacation through Monday
+
+ 15:16:24 <slangasek> proposed an FFe for plymouth to get flicker-free boot enabled with lightdm; one-liner change, but could use some more testing from folks with different video hardware
+
+ 15:16:49 <mvo> I can test it with the free ati drivers if that helps
+
+ 15:16:50 <slangasek> (bug #849954)
+
+ 15:16:51 <ubottu> Launchpad bug 849954 in plymouth (Ubuntu Oneiric) "FFe: enable flicker-free boot with lightdm" [Medium,Incomplete] https://launchpad.net/bugs/849954
+
+ 15:16:56 <slangasek> mvo: that would be most welcome!
+
+ 15:17:44 <slangasek> also spent some time on a plane hacking on a startpar-upstart bridge, so that we can push a usable upstart into Debian
+
+ 15:17:59 <slangasek> ...and working on email backlog
+
+ 15:18:01 <slangasek> that's about it :)
+
+ 15:18:04 <slangasek> jhunt:
+
+ 15:18:11 <jhunt> Still finishing tests for Upstart job logging (necessitated 122 *new*
+
+ 15:18:11 <jhunt> tests so far!). Would be beneficial to have access to a system with NFS
+
+ 15:18:11 <jhunt> home directories. Merged code into Ubuntu branch and updated my
+
+ 15:18:11 <jhunt> "upstart-testing" PPA. Works, but with caveats: display manager doesn't
+
+ 15:18:11 <jhunt> initialize (who needs a GUI right? :), and there are minor problems with
+
+ 15:18:13 <jhunt> dbus and getty (currently investigating). One of the new tests has found
+
+ 15:18:16 <jhunt> a kernel bug. I've whipped up a test case and the fix looks relatively
+
+ 15:18:18 <jhunt> easy so I might have a go at that soon. Recreated problem on bug
+
+ 15:18:21 <jhunt> 818177. Tested with new kernel but no change. Trying to better
+
+ 15:18:23 <jhunt> understand the problem, but will need to talk to slangasek/cjwatson on
+
+ 15:18:26 <jhunt> this one.
+
+ 15:18:28 <jhunt> ❖
+
+ 15:18:35 <cjwatson> I'm afraid the last time I had NFS home directories anywhere was at job-2
+
+ 15:18:53 <cjwatson> (and good riddance)
+
+ 15:18:53 <jhunt> hey, me too! :)
+
+ 15:19:07 <mvo> vacation last week!
+
+ 15:19:07 <mvo> this week:
+
+ 15:19:07 <mvo> lots and lots and lots of mail catchup
+
+ 15:19:07 <mvo> aptdaemon: new bzr fixes snapshot reviewed/tested/uploaded
+
+ 15:19:07 <mvo> command-not-found-data update
+
+ 15:19:07 <mvo> software-center: debug database corruption issue again and hopefully fix threading race via thread specific xapiandb, review/merge lp:~mmcg069/software-center/submit-review-fixes, add simple get_title_from_html helper for the exhibits html, fix single item exhibits, show non-apps in exhibit lists as well, reenable plugins, add conflict for old oneconf, update example plugin, load plugins from the homedir as well, debug/fix exhibits banner re
+
+ 15:19:13 <mvo> ndering bug, include new default banner
+
+ 15:19:14 <mvo> apt: branch merges, cherry pick fix for sbuild breakage (lp: #816155), debug apt-ftparchive hang and fix it in lp:~mvo/apt/lucid-apt-ftparchive, cherry pick r2171 from lp:~donkult/apt/sid, fix double delete (thanks to cjwatson mostly) and upload new version
+
+ 15:19:19 <mvo> update-manager: debug/fix incorrect way of calling --with=python2, upload new version, branch merges
+
+ 15:19:22 <mvo> (EOF)
+
+ 15:19:23 <nullcore> i have an NFS system if you need access to it
+
+ 15:19:39 <nullcore> i use it for SELinux development, but i have a pristine setup as well that i could give you an account on
+
+ 15:19:56 <nullcore> sorry for interrupting
+
+ 15:20:04 <jhunt> nullcore: thanks - np :)
+
+ 15:21:30 <slangasek> I have plenty of NFS here, but homes? yick
+
+ 15:21:30 <barry> sadly i still use nfs on my nas
+
+ 15:22:09 <jhunt> well, nfs root would be good to start with.
+
+ 15:22:23 * jhunt wants a netapp :)
+
+ 15:22:30 <slangasek> heh, not sure nfs root is where I would start :)
+
+ 15:22:51 <slangasek> considering it's been in varying states of disrepair since upstart was introduced, I think
+
+ 15:23:25 * stgraber is glad LTSP switched away from nfs root a while ago ;)
+
+ 15:23:36 <slangasek> [TOPIC] burndown chartz
+
+ 15:23:46 <slangasek> [LINK] http://status.ubuntu.com/ubuntu-oneiric/canonical-foundations.html
+
+ 15:24:10 <slangasek> looks like we've got some accounting to do :)
+
+ 15:24:45 <slangasek> I'm going through this week to postpone workitems that we know should be postponed; please do the same for your own workitems
+
+ 15:25:03 <slangasek> so the release manager doesn't worry about all those features we're landing the day before release
+
+ 15:25:44 <slangasek> I may come knocking on doors individually to discuss workitems as needed
+
+ 15:25:52 <slangasek> [TOPIC] AOB
+
+ 15:25:58 <slangasek> anything else on your minds?
+
+ 15:26:20 * barry thanks cjwatson for the pointer to chdist
+
+ 15:26:21 <ScottK> Yes.
+
+ 15:26:25 <bdmurray> On a funny note I found some unity bugs filed about dash
+
+ 15:26:35 <ScottK> libnet-dns-perl apparently doesn't support IPv6.
+
+ 15:26:45 <ScottK> There's a patch on http://lists.amavis.org/pipermail/amavis-users/2011-June/000462.html
+
+ 15:26:46 <slangasek> bdmurray: errr?
+
+ 15:27:03 <bdmurray> well isn't party of unity called dash? ;-)
+
+ 15:27:06 <bdmurray> or the dash
+
+ 15:27:09 <slangasek> oh, heh
+
+ 15:27:10 <ScottK> Neither upstream nor the Debian maintainer are very active, so I was wondering if someone with a bit of Perl foo might see if we should get that in.
+
+ 15:27:29 <ScottK> (related to foundations-o-ipv6-healthcheck)
+
+ 15:27:32 <ScottK> ..
+
+ 15:27:49 <cjwatson> that looks like libnet-server-perl rather than libnet-dns-perl?
+
+ 15:28:12 <ScottK> Yes, sorry.
+
+ 15:29:06 <slangasek> any takers for a bit of perl?
+
+ 15:29:16 <cjwatson> I can take it
+
+ 15:29:17 <cjwatson> https://rt.cpan.org/Public/Bug/Display.html?id=33289
+
+ 15:29:29 <cjwatson> apparently it's already been applied in Debian svn
+
+ 15:29:32 <cjwatson> https://rt.cpan.org/Public/Bug/Display.html?id=67305
+
+ 15:29:35 <slangasek> [ACTION] cjwatson to get libnet-server-perl fixed for ipv6
+
+ 15:29:35 * meetingology cjwatson to get libnet-server-perl fixed for ipv6
+
+ 15:29:41 <slangasek> cjwatson: thanks
+
+ 15:29:45 <ScottK> cjwatson: Thanks.
+
+ 15:29:45 <cjwatson> so that's just "upload from svn" which is easy
+
+ 15:30:10 <ScottK> That's not what Debian Git users tell me.
+
+ 15:30:18 <ScottK> ;)
+
+ 15:30:41 * cjwatson used svn for long enough that he doesn't have that particular prejudice :)
+
+ 15:31:15 * slangasek has used git for long enough that he doesn't have that prejudice either ;)
+
+ 15:31:19 <cjwatson> heh, that too
+
+ 15:31:32 <slangasek> anything else?
+
+ 15:32:05 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

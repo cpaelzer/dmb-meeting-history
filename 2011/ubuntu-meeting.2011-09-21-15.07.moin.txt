@@ -1,0 +1,499 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:07:02 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-09-21-15.07.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' http://reports.qa.ubuntu.com/reports/foundations-bugs/canonical-foundations-old-in-progress-bug-tasks.html   (slangasek, 15:34:24)
+
+ *AOB
+
+
+
+Meeting ended at 15:56:16 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (77)
+ * mvo (37)
+ * ev (27)
+ * stgraber (23)
+ * ubottu (22)
+ * cjwatson (21)
+ * doko (7)
+ * barry (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:07:02 <slangasek> #startmeeting
+
+ 15:07:02 <meetingology> Meeting started Wed Sep 21 15:07:02 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:07:02 <meetingology> 
+
+ 15:07:02 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:07:04 * stgraber waves
+
+ 15:07:06 <slangasek> indeed it is!
+
+ 15:07:08 * slangasek waves
+
+ 15:07:08 <mvo> hi
+
+ 15:07:12 <barry> howdy
+
+ 15:08:01 <ev> hi
+
+ 15:08:01 <slangasek> bdmurray and jhunt are off today; one to a conference, one on holiday
+
+ 15:08:09 <slangasek> [TOPIC] lightning round
+
+ 15:08:13 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt mvo ev bdmurray slangasek)
+
+ 15:08:16 <slangasek> barry jhunt mvo slangasek ev stgraber bdmurray cjwatson doko
+
+ 15:08:26 <barry> somehow, i knew i'd win today! :)
+
+ 15:08:30 <barry> much work done on ppa:pythoneers/lts to provide python 2.7 (and other lp dependencies) in a ppa.  this is up and running with hand-off to the launchpad folks (emailed launchpad-dev).  bug 847514.  debian bug 622279 (py27 blockers).  extensive c api subvertpy code review (was a blocker).  python bug 13021 (reference leak).  gtimelog hacking (merge pitti branch, keypress eating diagnostics, etc.).  developer experience cop.  todo: finish
+
+ 15:08:30 <barry> up gtimelog 0.7, release and upload.  continue with oneiric ftbfs and debian py27 blockers.  done.
+
+ 15:08:33 <ubottu> Launchpad bug 847514 in python-debian (Ubuntu Oneiric) "Convert Xubuntu CD to dh_python2" [Wishlist,Fix released] https://launchpad.net/bugs/847514
+
+ 15:08:34 <ubottu> Debian bug 622279 in release.debian.org "transition: python-defaults (switching default: 2.6 -> 2.7)" [Normal,Open] http://bugs.debian.org/622279
+
+ 15:08:35 <ubottu> Launchpad bug 13021 in Ubuntu "Allow console logins in a more intuitive way?" [Wishlist,Fix released] https://launchpad.net/bugs/13021
+
+ 15:09:14 <mvo> jhunt is on vac, right? so its my turn
+
+ 15:09:18 <slangasek> mvo: yep
+
+ 15:09:20 <mvo> executive summary: lots of bugfixing work
+
+ 15:09:20 <mvo> software-center: debug/fix multiarch native/foreign hidding (#830508), discuss/prototype unity friendly review stats (lp:~mvo/software-center/review-stats-as-dbm-for-unity-with-best-regards), work with davmor2 on license-key tesitng, debug/fix crash on xubuntu (#854087), debug/fix software-center a-x-i db rebuild bug (#798632), fix db reopen bug when new stuff is added to the database (like via s-c-agent), do not log sensitive oauth token st
+
+ 15:09:20 <mvo> uff to the console, do add offer NoDisplay=true as add-to-launcher (#844837), fix UI issue when fetching for more reviews (#848480), fix installed view show/hide nonapps, debug/workaround silly gtk3 width-for-height management bug with gtk.Alignment, retire the gtk2 code into lp:~mvo/software-center/retire-gtk2, branch merges
+
+ 15:09:21 <mvo> apt: debug/fix broken private-ppa adding on 401 on https, debug/fix broken Translations-$lang fetching fallback, cherry pick fixes from the debian-sid branch
+
+ 15:09:24 <mvo> command-not-found: review/merge https://code.launchpad.net/~zkrynicki/command-not-found/fix-839609/+merge/75440
+
+ 15:09:27 <mvo> beta2: upgrade testing, ran head-first into cups hang #854490 and add some debug info
+
+ 15:09:29 <mvo> debug/fix gnome-codec-install multiarch issue (#851481)
+
+ 15:09:31 <mvo> aptdaemon: cherry-pick/review/upload new bzr snapshot to fix two high profile crashers (#812023, #846044)
+
+ 15:09:36 <mvo> misc: fixes in unattended-upgrades, apt-ddtp, apt-clone, fix some FTBFS
+
+ 15:10:13 <mvo> EOF
+
+ 15:10:17 <slangasek> mvo: did you see the recent report that trying to install a foreign-arch deb via s-c doesn't work?
+
+ 15:10:25 <slangasek> bug #854839
+
+ 15:10:27 <ubottu> Launchpad bug 854839 in software-center (Ubuntu) "Skype i386 fails to install on Oneiric 64bit" [Medium,Triaged] https://launchpad.net/bugs/854839
+
+ 15:10:37 <mvo> slangasek: meh, let me look
+
+ 15:11:15 <mvo> slangasek: aha, I think this is actually a bug in python-apts debfile handling
+
+ 15:11:23 <mvo> that should be trivial (famous last words ;)
+
+ 15:11:48 <mvo> its a downloaded deb
+
+ 15:11:53 <slangasek> yep
+
+ 15:12:29 <slangasek> are upgrade tests working better now with the cups change?
+
+ 15:12:52 <mvo> yes, one success around lunchtime so far
+
+ 15:13:05 <mvo> then I got sidetracked by unity and the need to share some review data with them
+
+ 15:13:13 <slangasek> great (the success, not the sidetracking) :)
+
+ 15:13:49 <mvo> but I will run the next one now
+
+ 15:14:07 <slangasek> cool
+
+ 15:14:10 <slangasek> my go
+
+ 15:14:15 <mvo> honestly I think this task should be taken over by QA officially, jibel is doing a better job then me anyway
+
+ 15:14:42 <slangasek> sure, it does fit better in QA... are the two of you duplicating effort right now?
+
+ 15:15:11 <mvo> I would not call it duplication, but we do both test upgrades
+
+ 15:15:22 * slangasek nods
+
+ 15:15:23 <mvo> probably using slightly different scenarios etc
+
+ 15:18:39 <slangasek> enabled flicker-free boot for lightdm (bug #849954); if you're still seeing boot-time flickering, please file bugs; found a race condition in shutdown when more than one dm is installed (like lightdm + gdm) that causes the spinning-dots-on-text issue, fixes staged for post-beta, but I also just saw the bug again here with the fixed packages so there's another race I haven't found; traipsing through plymouth code to try to find the bug
+
+ 15:18:40 <ubottu> Launchpad bug 849954 in plymouth (Ubuntu Oneiric) "FFe: enable flicker-free boot with lightdm" [Medium,Fix released] https://launchpad.net/bugs/849954
+
+ 15:18:45 <slangasek> ... loop that's still causing people to see segfaults, can't spot the bug and can't reproduce it, so if anybody else can and wants to be remote hands, let me know
+
+ 15:18:59 <mvo> flicker free++
+
+ 15:19:36 <stgraber> slangasek: I still saw flickering at boot time when plymouth started but I'm on dual-head so it's very likely the problem
+
+ 15:20:10 <barry> slangasek: boot-time flickering != login-time flickering, right?
+
+ 15:20:26 <slangasek> updates done for ca-certificates to fix a regression in openssl's ability to verify certificates (bug #854927), then spent yesterday scrambling to fix ca-certificates-java when this provoked deletion of libnss3 on the systems of users having -java installed (bug #855171, bug #855246)
+
+ 15:20:28 <ubottu> Launchpad bug 854927 in openssl (Ubuntu Oneiric) "c_rehash creating bogus links to ca-certificates.crt" [High,Triaged] https://launchpad.net/bugs/854927
+
+ 15:20:29 <ubottu> Launchpad bug 855171 in ca-certificates-java (Ubuntu) "libnss3.so went missing after upgrade" [Critical,Fix released] https://launchpad.net/bugs/855171
+
+ 15:20:30 <stgraber> slangasek: grub only starts on my laptop, then plymouth starts on both displays, the transition between the two causes a black screen on my laptop's monitor
+
+ 15:20:31 <slangasek> done
+
+ 15:20:31 <ubottu> Launchpad bug 855246 in ca-certificates-java (Ubuntu Oneiric) "ca-certificates 20110502+nmu1ubuntu3 (and ca-certificates-java 20110912ubuntu2): Exception in thread "main" java.security.ProviderException: Could not initialize NSS" [High,Fix released] https://launchpad.net/bugs/855246
+
+ 15:21:09 <slangasek> stgraber: right, single->dual head might always give a flicker... but can you test with the external monitor disconnected?
+
+ 15:21:27 <stgraber> slangasek: yep, will test that
+
+ 15:21:35 <slangasek> fwiw, *I'm* still getting a flicker there... dunno what it is
+
+ 15:21:43 <ev> - Fixed bug 838068 (APs going away when trying to query their properties)
+
+ 15:21:43 <ev> - Fixed the installer panel and ported to GTK3
+
+ 15:21:44 <ev> - Fixed setting the desktop wallpaper by writing a small C helper.
+
+ 15:21:44 <ev> - ISO and Wubi testing
+
+ 15:21:45 <ev> - Fixed bug 852054 (advanced partitioning link doesn't work)
+
+ 15:21:45 <ev> - Fixed bug 837406 (installer window sizing issue)
+
+ 15:21:45 <ev> - Fixed bug 848938 (online/offline handling in ubiquity)
+
+ 15:21:46 <ev> - Expenses for Plumbers and travel for UDS.
+
+ 15:21:46 <ev> - Fixed ubiquity tests and uploaded a new version.
+
+ 15:21:47 <ev> - Further discussion with Gema (QA) on installer bugs.
+
+ 15:21:47 <ev> - Fixed a bug in lupin that prevented a grub configuration being generated for
+
+ 15:21:47 <ev> wubi disk images.
+
+ 15:21:47 <ev> - Fixed biosdevname and libpci for Dell and OEM services.
+
+ 15:21:48 <ubottu> Launchpad bug 838068 in ubiquity (Ubuntu Oneiric) "ubiquity crashed with DBusException in call_blocking(): org.freedesktop.DBus.Error.UnknownMethod: Method "Get" with signature "ss" on interface "org.freedesktop.DBus.Properties" doesn't exist" [High,Fix released] https://launchpad.net/bugs/838068
+
+ 15:21:48 <ev> - Taught Wubi and lupin to create swap space for disk image installs.
+
+ 15:21:51 <ubottu> Launchpad bug 852054 in ubiquity (Ubuntu Oneiric) "During installation process: Clicking "advanced partitioning tool" won't open partitioning tool" [High,Fix released] https://launchpad.net/bugs/852054
+
+ 15:21:52 <ubottu> Launchpad bug 837406 in ubiquity (Ubuntu Oneiric) "installer dialogue buttons fall off bottom of the screen on netbooks with small displays" [High,Fix released] https://launchpad.net/bugs/837406
+
+ 15:21:53 <ubottu> Launchpad bug 848938 in ubiquity (Ubuntu Oneiric) ""Download updates" unavailable after connecting to WiFi" [Critical,Fix released] https://launchpad.net/bugs/848938
+
+ 15:22:18 <ev> did that get cuff off somewhere?
+
+ 15:22:24 <ev> should end with (done)
+
+ 15:22:55 <stgraber> ev: last line was "- Taught Wubi and lupin..."
+
+ 15:23:19 <ev> - Finally merged my Wubi test branch.
+
+ 15:23:21 <ev> - Fixed bug 848000 (Don't show the battery warning on desktops).
+
+ 15:23:22 <ubottu> Launchpad bug 848000 in ubiquity (Ubuntu) "Shouldn't show "should be plugged in" when on a desktop" [Low,Triaged] https://launchpad.net/bugs/848000
+
+ 15:23:22 <ev> (done)
+
+ 15:24:13 * slangasek plugs a battery in to his desktop
+
+ 15:24:35 <stgraber> - IPv6 testing
+
+ 15:24:36 <stgraber> - Switched from generating kvm instances to using LXC (so we can test on ARM)
+
+ 15:24:39 <stgraber> - Managed to get debian-installer running in a container
+
+ 15:24:41 <stgraber> - Implemented a basic test suite for netcfg
+
+ 15:24:44 <stgraber> - Now trying to figure out why one of the tests doesn't pass and will then have that code running daily
+
+ 15:24:47 <stgraber> - Next up is NM automated testing which should be a lot easier than netcfg
+
+ 15:24:52 <stgraber> - Worked around bug 838809 by restoring pre-oneiric behaviour of not starting open-iscsi when root is on iscsi and filed bug 850960 for the actual problem
+
+ 15:24:56 <stgraber> - Uploaded new friendly-recovery fixing quite a bunch of bugs
+
+ 15:24:58 <ubottu> Launchpad bug 838809 in open-iscsi (Ubuntu Oneiric) "authenticated and unauthenicated iscsi clients fails to complete boot" [High,Fix released] https://launchpad.net/bugs/838809
+
+ 15:24:59 <stgraber> - Quite a few more pre-beta freeze uploads (last minute seed change for Edubuntu and some bugfixes/translations update)
+
+ 15:25:02 <stgraber> - Starting poking at the ISO tracker code, trying to port it to Drupal 7 and get LP authentication working (while waiting for IPv6 test results)
+
+ 15:25:05 <ubottu> Launchpad bug 850960 in open-iscsi (Ubuntu) "iscsid tries to reconnect existing session at startup, failing to do so and hanging the system" [Undecided,New] https://launchpad.net/bugs/850960
+
+ 15:25:05 <stgraber> - TODO
+
+ 15:25:07 <stgraber> - Edubuntu ISO testing (haven't had a beta2 candidate yet, hopefully won't need much fixing)
+
+ 15:25:14 <stgraber> - Finish the automated IPv6 testing and push the code somewhere
+
+ 15:25:16 <stgraber> - Get WebLive up and running for Oneiric (both full sessions from edubuntu.org and single app export in software-center)
+
+ 15:25:20 <stgraber> - Still need to spend more time trying to get TPM working in a PPA
+
+ 15:25:22 <stgraber> (done)
+
+ 15:27:08 <slangasek> so no ISO tracker migration to django this cycle? :)
+
+ 15:27:34 <stgraber> I think everyone agrees that we shouldn't mess too much with the tracker for an LTS :)
+
+ 15:28:10 <slangasek> cjohnston:
+
+ 15:28:13 <slangasek> oops
+
+ 15:28:27 <stgraber> but if someone wants to rewrite it, we have quite a few nice specs that we worked on at the past 6 or so UDSes :)
+
+ 15:28:29 <slangasek> ah, we've lost cjwatson
+
+ 15:28:32 <slangasek> doko:
+
+ 15:28:35 <ev> he just sent me a text
+
+ 15:28:38 <ev> he's having ADSL problems
+
+ 15:28:51 <slangasek> ev: doh - thanks
+
+ 15:28:59 <doko> - ~110 uploads to fix ftbfs (still didn't catch cjwatson's karma ;)
+
+ 15:28:59 <doko> - sponsored ~20 ftbfs uploads
+
+ 15:28:59 <doko> - package removals for ftbfs
+
+ 15:28:59 <doko> - arm test rebuild did finish
+
+ 15:28:59 <doko> - binutils upload to fix regression with --as-needed/-flto and --fopenmp/-flto
+
+ 15:29:06 <ev> he's not sure if he'll be back for the meeting, but he has an engineer booked for the morn'
+
+ 15:30:13 <doko> (done)
+
+ 15:31:15 <slangasek> doko: I saw skaet asking for more info about the binutils upload; did you two come to an agreement about getting this in?
+
+ 15:32:00 <doko> slangasek, I did reply, but never got an answer
+
+ 15:32:07 <slangasek> ok
+
+ 15:33:02 <slangasek> [TOPIC] Bugs
+
+ 15:33:57 <slangasek> since Brian couldn't be here, he asked me to cover a few things with bugs
+
+ 15:34:20 <slangasek> we have another new report up tracking stale bugs that are marked "in progress":
+
+ 15:34:24 <slangasek> [LINK] http://reports.qa.ubuntu.com/reports/foundations-bugs/canonical-foundations-old-in-progress-bug-tasks.html
+
+ 15:34:49 <slangasek> defined as a bug that's been in progress more than a month
+
+ 15:34:57 <slangasek> cjwatson: hi there - http://reports.qa.ubuntu.com/reports/foundations-bugs/canonical-foundations-old-in-progress-bug-tasks.html
+
+ 15:35:24 <slangasek> cjwatson: you've just missed the lightning round; do you want to report now?
+
+ 15:36:41 <slangasek> maybe not :)
+
+ 15:36:58 <slangasek> so, in-progress bugs - I'd like us to take just a couple minutes to go through these quickly and see where they are
+
+ 15:37:08 <cjwatson> hi
+
+ 15:37:17 <cjwatson> sorry, was waiting for feedback in ... #ubuntu-release ;-)
+
+ 15:37:18 <slangasek> and see if they should be unassigned or set back to 'triaged' instead
+
+ 15:37:21 <cjwatson> some more FTBFS work
+
+ 15:37:21 <cjwatson> grub2: fixed missing licence declaration that broke hwmatch (850202)
+
+ 15:37:21 <cjwatson> curl/xmlrpc-c: helped out server team with adding udebs (831496)
+
+ 15:37:21 <cjwatson> os-prober: belatedly merged Surbhi's btrfs work (764893)
+
+ 15:37:21 <cjwatson> installer: translation updates; fixed some IPv6 bugs spotted by Stéphane; fixed failure to set up multiarch correctly (853738); fixed ubiquity test failures
+
+ 15:37:25 <cjwatson> lsb: fixed amd64 symlink bug spotted by Till (638450)
+
+ 15:37:27 <cjwatson> live-build: backported ext4 support for ARM team (803547)
+
+ 15:37:30 <cjwatson> xdeb: fixing up to work properly on oneiric; fixing various bugs that have crept in; merges; made multiarch code only trigger if multiarch is configured appropriately; trying to fix dependency resolver
+
+ 15:37:34 <cjwatson> ubuntu-archive-tools: sprucing up iso.qa posting support with the aim of adding auto-posting to cdimage
+
+ 15:37:37 <cjwatson> looking at creating InRelease files to reduce archive skew problems - apparently some security concerns though
+
+ 15:37:40 <cjwatson> switched to unity-2d; rather fewer desktop slowness problems now
+
+ 15:37:42 <cjwatson> having intermittent ADSL router problems; engineer visit scheduled for tomorrow morning
+
+ 15:37:46 <cjwatson> coming down with something; please only expect minimal supply of brainpower
+
+ 15:37:50 <cjwatson> ..
+
+ 15:38:16 <slangasek> cjwatson: thanks
+
+ 15:39:03 <slangasek> bug #341876 - ev, mpt assigned this to you and marked it in progress, is that accurate?
+
+ 15:39:04 <ubottu> Launchpad bug 341876 in ubiquity (Ubuntu) "[Feature Request] Setup WiFi" [Wishlist,In progress] https://launchpad.net/bugs/341876
+
+ 15:39:39 <ev> slangasek: it's done, fixing :)
+
+ 15:39:49 <slangasek> ok :)
+
+ 15:39:57 <cjwatson> I've set the three I know about back to Triaged
+
+ 15:40:09 <slangasek> bug #434173 - mvo?
+
+ 15:40:11 <ubottu> Launchpad bug 434173 in update-manager (Ubuntu Karmic) "[karmic] Regression from 9.04 in getting fully translated Ubuntu installation" [High,In progress] https://launchpad.net/bugs/434173
+
+ 15:40:13 <cjwatson> which is regrettably probably more accurate
+
+ 15:40:22 <slangasek> probably not in progress for karmic anymore, at least...
+
+ 15:40:30 <mvo> slangasek: I need to re-read this one
+
+ 15:40:38 <cjwatson> although bug 441941 is arguably generally done and should have individual failures filed as separate bugs, but it's a swamp of a bug ...
+
+ 15:40:40 <ubottu> Launchpad bug 441941 in grub2 (Ubuntu Maverick) "grub fails after running Windows" [High,In progress] https://launchpad.net/bugs/441941
+
+ 15:41:06 <slangasek> mvo: ok, take your time :)
+
+ 15:42:02 <slangasek> and the last one then is for jhunt; will check in with him later
+
+ 15:42:24 <slangasek> other bugs on bdmurray's radar:
+
+ 15:42:27 <slangasek> bug #839584
+
+ 15:42:28 <ubottu> Launchpad bug 839584 in ubuntu-meta (Ubuntu) "package ubuntu-desktop 1.242 failed to install/upgrade: ErrorMessage: dependency problems with unity-2d" [High,Confirmed] https://launchpad.net/bugs/839584
+
+ 15:42:34 <mvo> slangasek: I think i need to embed a copy of the check-language-support script
+
+ 15:42:53 * mvo puts it on his todo
+
+ 15:42:59 <slangasek> mvo: well, the immediate question is, is it really "in progress" or should we mark it as something more realistic like "triaged"
+
+ 15:44:19 <mvo> bug #839584 is a bit mysterious, I suspect its a failure in the apt ordering code actually which is pretty nasty
+
+ 15:44:20 <ubottu> Launchpad bug 839584 in ubuntu-meta (Ubuntu) "package ubuntu-desktop 1.242 failed to install/upgrade: ErrorMessage: dependency problems with unity-2d" [High,Confirmed] https://launchpad.net/bugs/839584
+
+ 15:44:21 <slangasek> mvo: the log in bug #839584 confuses me... it seems to be trying to configure ubuntu-desktop before installing the dependencies, which isn't supposed to happen
+
+ 15:44:26 <slangasek> right
+
+ 15:44:31 <mvo> exactly
+
+ 15:44:45 <slangasek> should we triage that over to apt?
+
+ 15:44:59 <mvo> we have in debian-experimental the result of SoC work in the ordering code that adds a extra verification step to ensure this does not happen
+
+ 15:45:32 <mvo> but there is regression risk here, I would not want to merge this just now (even though the new code had a good bunch of runs through various upgrade scenarios)
+
+ 15:45:44 <slangasek> right
+
+ 15:45:59 <slangasek> let's not rip out the package manager's guts post-beta ;)
+
+ 15:46:06 <mvo> exactly
+
+ 15:46:17 <mvo> I reassign to apt
+
+ 15:46:30 <slangasek> thanks
+
+ 15:46:32 <mvo> I will also try to reprodue with apt-clone
+
+ 15:46:51 <slangasek> next, bug #852128
+
+ 15:46:52 <ubottu> Launchpad bug 852128 in update-manager (Ubuntu) "Poor performance while "Calculating changes"" [Undecided,New] https://launchpad.net/bugs/852128
+
+ 15:47:00 <slangasek> mvo gets all the fun bugs
+
+ 15:47:15 <mvo> meh
+
+ 15:47:27 <slangasek> this one looks like it might be pretty easy to fix for oneiric, though...
+
+ 15:47:37 <slangasek> anyone *other* than mvo interested in having a look at it?
+
+ 15:48:02 <mvo> that is (again) a apt issue I think
+
+ 15:49:35 <slangasek> but an apt bug that doesn't require fiddling with resolver code.  Not the highest priority bug either, but if someone wants to take a swing at it, feel free
+
+ 15:49:37 <mvo> hm, or maybe not, I have look,
+
+ 15:50:02 <slangasek> last one: bug #839662
+
+ 15:50:03 <ubottu> Launchpad bug 839662 in man-db (Ubuntu) "package man-db 2.6.0.2-2 failed to install/upgrade: subprocess installed post-installation script returned error exit status 1" [Undecided,New] https://launchpad.net/bugs/839662
+
+ 15:50:14 <mvo> a non-apt bug, wooooh
+
+ 15:50:21 <slangasek> yes, merely a debconf bug :)
+
+ 15:50:39 <slangasek> cjwatson: is this error familiar?
+
+ 15:50:40 <slangasek> debconf: DbDriver "config": rename failed: Is a directory
+
+ 15:50:45 <cjwatson> huh, that's a new one on me
+
+ 15:52:03 <cjwatson> I suspect fs corruption, but have posted asking for more details
+
+ 15:52:16 <slangasek> ok
+
+ 15:52:19 <slangasek> thanks
+
+ 15:52:22 <slangasek> [TOPIC] AOB
+
+ 15:52:26 <slangasek> anything else?
+
+ 15:53:14 <slangasek> is anyone here seeing crash reports from plymouthd?
+
+ 15:53:36 <slangasek> we get plenty of duplicate reports, but I have no idea what the common element is :/
+
+ 15:54:47 <slangasek> ev, cjwatson: rickspencer3 was saying yesterday that he was having trouble installing from USB with the daily; was this a known issue (to you)?
+
+ 15:54:56 <ev> nope
+
+ 15:55:02 <ev> bug reports welcome
+
+ 15:55:06 * slangasek nods
+
+ 15:55:09 <slangasek> I'll circle around
+
+ 15:55:13 <ev> thanks
+
+ 15:56:16 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

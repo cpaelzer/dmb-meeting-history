@@ -1,0 +1,406 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Technical Board meeting, started by rbasak, 22 Aug at 19:02 &mdash; 19:46 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-08-22-19.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Action Items ===
+
+Discussion started by rbasak at 19:02.
+
+ * ''ACTION:'' seb128/amurray/sil200 to help drafting the snap-store Ubuntu-specific tracks usage  (rbasak, 19:23)
+ * ''ACTION:'' rbasak to draft a proposal of the DMB-proposed inactivity expiration policy for TB ratification  (rbasak, 19:24)
+ * ''ACTION:'' rbasak to follow up on finding consensus on question of test plans for third party apps  (rbasak, 19:26)
+ * ''ACTION:'' rbasak to open wider discussion on third-party repo policy  (rbasak, 19:27)
+ * ''ACTION:'' seb128 to follow up with SRU, AA, Release, Backporters and Security teams to document their membership process and link to it from https://wiki.ubuntu.com/TechnicalBoard#Team_Delegations  (rbasak, 19:28)
+
+=== Packages in the archive that download and run software from the Internet, and third-party repository requirements ===
+
+Discussion started by rbasak at 19:28.
+
+ * ''ACTION:'' vorlon to write up draft guidelines for packages in the archive that download from the Internet  (rbasak, 19:42)
+
+=== Scan the mailing list archive for anything we missed (standing item) ===
+
+Discussion started by rbasak at 19:43.
+
+ * No recent ML posts  (rbasak, 19:44)
+
+=== Check up on community bugs and techboard bugs ===
+
+Discussion started by rbasak at 19:44.
+
+ * No new bugs; existing bugs are all being handled through existing action items  (rbasak, 19:44)
+
+=== Select a chair for the next meeting (next from https://launchpad.net/~techboard/+members) ===
+
+Discussion started by rbasak at 19:45.
+
+ * Next chair will be seb128 with vorlon as backup  (rbasak, 19:45)
+
+=== AOB ===
+
+Discussion started by rbasak at 19:45.
+
+
+
+
+== Action items, by person ==
+
+ * amurray
+  * seb128/amurray/sil200 to help drafting the snap-store Ubuntu-specific tracks usage
+ * rbasak
+  * rbasak to draft a proposal of the DMB-proposed inactivity expiration policy for TB ratification
+  * rbasak to follow up on finding consensus on question of test plans for third party apps
+  * rbasak to open wider discussion on third-party repo policy
+ * seb128
+  * seb128/amurray/sil200 to help drafting the snap-store Ubuntu-specific tracks usage
+  * seb128 to follow up with SRU, AA, Release, Backporters and Security teams to document their membership process and link to it from https://wiki.ubuntu.com/TechnicalBoard#Team_Delegations
+ * vorlon
+  * vorlon to write up draft guidelines for packages in the archive that download from the Internet
+
+
+
+== People present (lines said) ==
+
+ * rbasak (87)
+ * vorlon (44)
+ * seb128 (14)
+ * meetingology (9)
+ * amurray (8)
+
+
+
+== Full log ==
+
+
+ 19:02 <rbasak> #startmeeting Technical Board
+
+ 19:02 <meetingology> Meeting started at 19:02:12 UTC.  The chair is rbasak.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 19:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 19:02 <rbasak> #topic Action Items
+
+ 19:02 * rbasak seb128/amurray/sil200 to help drafting the snap-store Ubuntu-specific tracks usage
+
+ 19:02 <rbasak> I've seen some text. Is that ready?
+
+ 19:04 <seb128> hum
+
+ 19:05 <seb128> do we need Ken to reply to your comments?
+
+ 19:05 <rbasak> There are some comments, and also I've seen a suggestion from timhm to drop the current use of the branches that auto-close.
+
+ 19:05 <rbasak> I pinged timhm but he's only back from PTO today.
+
+ 19:05 <vorlon> fwiw the text there is different than the original rationale for the ubuntu-YY.MM tracks
+
+ 19:05 <rbasak> I was going to ping Ken today but I found that he's out for a few days too
+
+ 19:06 <rbasak> > The complete channel name can be structured as three distinct parts separated by slashes:
+
+ 19:06 <rbasak> > <track>/<risk>/<branch>
+
+ 19:06 <vorlon> i.e. they weren't intended to be a committment to "bugfix+security only changes", they were only intended to be an escape hatch if there was a per-release regression due to integration issues
+
+ 19:06 <rbasak> Currently I believe we're using *branch*
+
+ 19:06 <rbasak> Which autocloses after 30 days
+
+ 19:06 <vorlon> ah
+
+ 19:07 <rbasak> "Requirement B: Ubuntu developers will be able to override and patch the package"
+
+ 19:07 <vorlon> yes, sorry, I assumed this was referring to the stuff we were currently using and second-guessed myself on track vs branch :)
+
+ 19:07 <rbasak> That would be fulfilled by the current use of the branch I think.
+
+ 19:07 <rbasak> And is sort of similar to the escape hatch rationale you mention but not quite the same.
+
+ 19:07 <seb128> the current use is to set our snap to follow stable/ubuntu-<xx.yy> right?
+
+ 19:07 <vorlon> right
+
+ 19:07 <seb128> so that means following stable
+
+ 19:08 <seb128> but what we would like is rather to follow a serie specific track
+
+ 19:08 <vorlon> "we would like" - who would like that and why?
+
+ 19:09 <seb128> like for GNOME 45 we should set mantic to follow 45/ stable
+
+ 19:09 <seb128> 45/stable
+
+ 19:09 <seb128> well, if the goal is to have a behaviour similar to what we have today with debs
+
+ 19:09 <rbasak> I think that would be fine
+
+ 19:10 <seb128> following latest/stable would mean mantic users would get GNOME 46 updates when those are flagged stable
+
+ 19:10 <rbasak> But it would need to be 45/stable/ubuntu-24.04 or similar
+
+ 19:10 <amurray> the reason I suggested tracks rather than branches is to avoid the issue of branches auto-closing - and the reason I put in the bug/security fixes only is to try and have the same expectation for snaps as debs from an end-users perspective
+
+ 19:10 <rbasak> So using <branch> like we already do, but also adding <track>.
+
+ 19:11 <rbasak> amurray: so I think the pushback from the store admins would be that this overloads the purpose of tracks and the idea that snaps are supposed to be distro-agnostic.
+
+ 19:11 <rbasak> AIUI, there was a similar resistance to using branches in this way, but it did end up happening.
+
+ 19:11 <rbasak> There's another important behaviour to keep in mind here.
+
+ 19:12 <rbasak> snapd can "track" firefox latest/stable/ubuntu-22.04 for example, but if that doesn't exist, then it just falls back to use "latest/stable" instead.
+
+ 19:12 <vorlon> 45 is not an Ubuntu version, of course.  If we are using tracks based on the versioning of the application upstream, that will cause more work on the Ubuntu side to keep track of the tracks; if we wanted consistency on the Ubuntu side to always use tracks such as ubuntu-23.10/stable (the current suggested text?) that puts more work on the snap publisher
+
+ 19:12 <rbasak> Replace "latest" with a track if you like.
+
+ 19:12 <rbasak> So we don't usually have to publish to the branch, so auto-closing isn't much of a concern in practice.
+
+ 19:13 <rbasak> If we used the escape hatch, _only then_ would we need to make sure we keep republishing within 30 days, or see about changing that feature.
+
+ 19:13 <vorlon> fwiw firefox has been using the branches
+
+ 19:13 <vorlon> as has subiquity
+
+ 19:13 <rbasak> On this machine I have:
+
+ 19:13 <rbasak> tracking:     latest/stable/ubuntu-22.04
+
+ 19:13 <vorlon> just in case anyone thought this was a vestigial feature
+
+ 19:14 <rbasak> Oh yes and my revno is different from the channels that are publicly visible.
+
+ 19:14 <amurray> yep but I thought there was pushback from the desktop team that they found it onerous that the branches autoclose
+
+ 19:14 <rbasak> To make progress with the doc in general, I suggest that we document what we're currently doing, and make sure that before we change what we're doing everyone involved reaches consensus first?
+
+ 19:15 <amurray> it sounds like we are choosing between two problems - either we use branches and that puts the burden on the publisher to keep publishing else they auto-close - or we use tracks which gets pushback from the store team..?
+
+ 19:15 <vorlon> amurray: well, I think that's a valid objection and maybe worth revisiting with the store team?  but for this discussion, wrt track naming I'll point out that a firefox upstream version would not be suitable for the track if you wanted it to be different for 22.04 and 23.04
+
+ 19:16 <vorlon> why would the store team push back on the use of tracks?
+
+ 19:17 <rbasak> AIUI, they don't want Ubuntu-specific tracks. The store is supposed to be distro-agnostic, so the tracks should be what makes sense to the upstream.
+
+ 19:17 <vorlon> ok
+
+ 19:17 <vorlon> then tracks are unsuitable for firefox
+
+ 19:18 <vorlon> because the differences between the snaps on the different branches right now are about base+content snap, not upstream version branches
+
+ 19:18 <rbasak> I don't mind how this is implemented, but I think that our base requirements are reasonable and the snap ecosystem needs to be able to figure out how to support them :-/
+
+ 19:19 <vorlon> the store team doesn't want to accomodate branches that don't auto-close, but nothing says that the publishers can't set up timers to auto-refresh those branches and keep them open
+
+ 19:20 <vorlon> but, as rbasak points out, the implementation is not really a TB question
+
+ 19:21 <vorlon> wrt this point on the agenda, it doesn't seem we're ready to close anything out?
+
+ 19:21 <rbasak> Agreed.
+
+ 19:21 <rbasak> But can we agree on next steps?
+
+ 19:21 <amurray> same
+
+ 19:21 <rbasak> I had a suggestion on that bove
+
+ 19:22 <vorlon> "document what we're doing" - +1 from me
+
+ 19:22 <seb128> +1
+
+ 19:22 <rbasak> Could someone who understands exactly what we're doing please take that action? :)
+
+ 19:23 <vorlon> I think seb128 is best positioned
+
+ 19:23 <seb128> alright :p
+
+ 19:23 <rbasak> OK so let's carry the action
+
+ 19:23 <rbasak> #action seb128/amurray/sil200 to help drafting the snap-store Ubuntu-specific tracks usage
+
+ 19:23 * meetingology seb128/amurray/sil200 to help drafting the snap-store Ubuntu-specific tracks usage
+
+ 19:23 * rbasak rbasak to draft a proposal of the DMB-proposed inactivity expiration policy for TB ratification
+
+ 19:24 <rbasak> I'll carry this over again
+
+ 19:24 <rbasak> #action rbasak to draft a proposal of the DMB-proposed inactivity expiration policy for TB ratification
+
+ 19:24 * meetingology rbasak to draft a proposal of the DMB-proposed inactivity expiration policy for TB ratification
+
+ 19:24 <rbasak> (I'm not aware for any reason for this to be a priority right now)
+
+ 19:24 * rbasak rbasak to follow up on finding consensus on question of test plans for third party apps
+
+ 19:24 <rbasak> Hmm. I don't remember this.
+
+ 19:25 <vorlon> IIRC there was a question about what should be required wrt test plans for seeded snaps, vs. the MIR requirements for autopkgtests
+
+ 19:26 <rbasak> Just found the logs
+
+ 19:26 <rbasak> OK looks like I knew the details once, so I'll carry that over and I don't think I'm blocked
+
+ 19:26 <rbasak> #action rbasak to follow up on finding consensus on question of test plans for third party apps
+
+ 19:26 * meetingology rbasak to follow up on finding consensus on question of test plans for third party apps
+
+ 19:26 * rbasak rbasak to restructure the third-party repo doc to make the status clearer
+
+ 19:26 <rbasak> This one's done I think?
+
+ 19:26 * rbasak rbasak to open wider discussion on third-party repo policy
+
+ 19:27 <rbasak> I started writing up a post for a call for wider discussion and feedback.
+
+ 19:27 <rbasak> I feel a little blocked on a comment from Ken in the doc. I intend to follow up with him his week or next week after he's back from PTO.
+
+ 19:27 <rbasak> #action rbasak to open wider discussion on third-party repo policy
+
+ 19:27 * meetingology rbasak to open wider discussion on third-party repo policy
+
+ 19:27 * rbasak seb128 to follow up with SRU, AA, Release, Backporters and Security teams to document their membership process and link to it from https://wiki.ubuntu.com/TechnicalBoard#Team_Delegations
+
+ 19:28 <seb128> carry over please
+
+ 19:28 <rbasak> #action seb128 to follow up with SRU, AA, Release, Backporters and Security teams to document their membership process and link to it from https://wiki.ubuntu.com/TechnicalBoard#Team_Delegations
+
+ 19:28 * meetingology seb128 to follow up with SRU, AA, Release, Backporters and Security teams to document their membership process and link to it from https://wiki.ubuntu.com/TechnicalBoard#Team_Delegations
+
+ 19:28 <rbasak> #topic Packages in the archive that download and run software from the Internet, and third-party repository requirements
+
+ 19:28 <rbasak> (vorlon)
+
+ 19:28 <vorlon> hi
+
+ 19:29 <vorlon> the reason I put this on the agenda was that I happened to just notice that the lutris package in multiverse downloads software from possibly arbitrary locations on the Internet to be run
+
+ 19:29 <vorlon> and I think that's bad and was going to dig into it to see just how bad and whether it should be thrown out of the archive
+
+ 19:30 <vorlon> and then I realized I didn't have a written policy on this stuff that I could point to
+
+ 19:30 <rbasak> I'm reminded of flashplugin-downloader or whatever it was called
+
+ 19:30 <rbasak> Also torbrowser-launcher
+
+ 19:30 <vorlon> flashplugin-downloader at least had the constraints that it would only download files with known hashes that were embedded in the packaging
+
+ 19:30 <rbasak> That one's in universe.
+
+ 19:31 <vorlon> the fact that it downloaded at install time rather than shipping in the package was a concession to redistribution constraints
+
+ 19:31 <amurray> hmm is this a slippery slope? we also have say emacs which can be configured to download emacs lisp packages from arbitrary locations
+
+ 19:31 <amurray> (just as an example)
+
+ 19:31 <rbasak> I was going to point at wget :-P
+
+ 19:31 <vorlon> heh
+
+ 19:31 <seb128> or you can download anything to install from a webbrowser...
+
+ 19:32 <rbasak> So, where's the line?
+
+ 19:32 <rbasak> Does being in multiverse make it OK?
+
+ 19:34 <amurray> does lutris do any sandboxing internally? perhaps if it did then that would lessen the risk here
+
+ 19:34 <vorlon> well lutris is effectively a package shipping a "store" for third-party games from the Internet
+
+ 19:35 <rbasak> Sounds like the flatpak package :-P
+
+ 19:35 <rbasak> (although it doesn't default to a store I don't think!)
+
+ 19:35 <rbasak> So snapd
+
+ 19:35 <vorlon> well, right, and clearly we have expectations about what the snapd package should present as a store :)
+
+ 19:36 <rbasak> One could argue that a user understands that installing lutris opts them in to a specific store
+
+ 19:36 <vorlon> the bit that irked me was actually watching it download a mame tarball from the Internet when we have mame as a deb
+
+ 19:37 <vorlon> rbasak: I don't think our users should be expected to assess the security design of every store someone puts in the Debian or Ubuntu archive as a deb and that we should have some common guidelines
+
+ 19:38 <vorlon> does lutris have cryptographic verification of the games it downloads from the Internet? is that based on ssl or on some sort of signing of a store payload? who manages that?  is there sandboxing? etc
+
+ 19:38 <rbasak> lutris is synced from Debian though?
+
+ 19:38 <amurray> common guidelines sound reasonable
+
+ 19:39 <rbasak> So while I understand your concern and would like to see improvement there, I'm not sure we could really be effective unless Debian is also doing it, so it seems like we would need consensus in Debian
+
+ 19:39 <rbasak> OTOH the other stuff involving third party requierements are mostly Ubuntu-specific differences
+
+ 19:40 <rbasak> Like we might as well document "if Debian do it then it's acceptable for Ubuntu by default because autosync" in our doc
+
+ 19:40 <vorlon> well even if there is a policy we'd likely be playing whack-a-mole for a while in either Debian or Ubuntu
+
+ 19:40 <vorlon> I would still like to see some documented principles of what we expect from packages in the Ubuntu archive
+
+ 19:40 <rbasak> I have no objection to having the TB endorse something like that.
+
+ 19:41 <vorlon> (btw lutris actually completely failed to download and install the game I was trying to get running on my kid's system, and I wound up grabbing a zip file of the DOS program and running it directly under dosbox :P)
+
+ 19:41 <rbasak> vorlon: would you like an action to write some guidelines?
+
+ 19:41 <vorlon> rbasak: sounds like you're suggesting .. ^ that :)
+
+ 19:41 <vorlon> yes
+
+ 19:42 <rbasak> #action vorlon to write up draft guidelines for packages in the archive that download from the Internet
+
+ 19:42 * meetingology vorlon to write up draft guidelines for packages in the archive that download from the Internet
+
+ 19:42 <rbasak> ^ that wording is deliberately open. You can figure out how to define the scope when you write it up :)
+
+ 19:42 <rbasak> Any further discussion on this topic?
+
+ 19:43 <vorlon> fwiw I think there's other historical precedent of e.g. disabling browser plugin stores by default in browsers
+
+ 19:43 <vorlon> or of disabling vendor auto-update mechanisms
+
+ 19:43 <rbasak> This will be quite slippery to define I think.
+
+ 19:43 <vorlon> all related :)
+
+ 19:43 <vorlon> yep. challenge accepted, thanks
+
+ 19:43 <rbasak> #topic Scan the mailing list archive for anything we missed (standing item)
+
+ 19:44 <rbasak> #info No recent ML posts
+
+ 19:44 <rbasak> #topic Check up on community bugs and techboard bugs
+
+ 19:44 <rbasak> #info No new bugs; existing bugs are all being handled through existing action items
+
+ 19:45 <rbasak> #topic Select a chair for the next meeting (next from https://launchpad.net/~techboard/+members)
+
+ 19:45 <rbasak> #info Next chair will be seb128 with vorlon as backpu
+
+ 19:45 <rbasak> #indo
+
+ 19:45 <rbasak> #undo
+
+ 19:45 <meetingology> Removing item from minutes: INFO
+
+ 19:45 <rbasak> #info Next chair will be seb128 with vorlon as backup
+
+ 19:45 <seb128> ack
+
+ 19:45 * vorlon nods
+
+ 19:45 <rbasak> #topic AOB
+
+ 19:46 <rbasak> Anything else from anyone?
+
+ 19:46 <vorlon> nothing here
+
+ 19:46 <rbasak> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

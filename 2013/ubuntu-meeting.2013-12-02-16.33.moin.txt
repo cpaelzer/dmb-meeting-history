@@ -1,0 +1,272 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 02 Dec at 16:33 &mdash; 17:06 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-12-02-16.33.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:33.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:02.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libphp-adodb.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/argyll.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libapache2-mod-nss.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libsocialweb.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libspring-java.html 
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (50)
+ * tyhicks (14)
+ * chrisccoulson (13)
+ * mdeslaur (11)
+ * jjohansen (7)
+ * sbeattie (6)
+ * meetingology (3)
+ * sarnold (2)
+ * ubottu (1)
+ * ogra_ (1)
+
+
+
+== Full Log ==
+
+
+ 16:33 <jdstrand> #startmeeting
+
+ 16:33 <meetingology> Meeting started Mon Dec  2 16:33:09 2013 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:33 <meetingology> 
+
+ 16:33 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:33 <jdstrand> The meeting agenda can be found at:
+
+ 16:33 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:33 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:33 <jdstrand> I'll go first
+
+ 16:33 <jdstrand> I'm on community this week
+
+ 16:33 <jdstrand> I've got another short week (off friday)
+
+ 16:33 <jdstrand> I need to catch up from last week-- I think I am not too bad at this point
+
+ 16:34 <jdstrand> mdeslaur: thanks for picking up the triage while I was out
+
+ 16:34 <mdeslaur> jdstrand: np!
+
+ 16:34 <jdstrand> there are a couple of updates I am eyeing
+
+ 16:34 <jdstrand> and a few work items
+
+ 16:34 <jdstrand> (I hope to upload a new apparmor-easyprof-ubuntu this week and write some image tests for it)
+
+ 16:35 <jdstrand> I've also got patch piloting
+
+ 16:35 <jdstrand> mdeslaur: you're up
+
+ 16:35 <mdeslaur> I'm in the happy place this week
+
+ 16:35 <mdeslaur> I have a few updates ready, but I've found issues with them, so they probably won't go out this week
+
+ 16:36 <mdeslaur> I'm currently still poking at getting rid of ruby1.8 from main for trusty
+
+ 16:36 <mdeslaur> and I'm patch piloting on wednesday
+
+ 16:36 <mdeslaur> I'll be picking up more CVE updates
+
+ 16:36 <mdeslaur> that's it from me
+
+ 16:36 <mdeslaur> sbeattie: you're up
+
+ 16:36 <sbeattie> I'm on apparmor again this week.
+
+ 16:36 <mdeslaur> Oh, and I'll spend time evaluating whether we can turn tlsv1.2 back on in openssl in trusty
+
+ 16:37 <sbeattie> I'll again be working on testing improvements, both for IPC and other things...
+
+ 16:37 <sbeattie> as well as some non-IPC related parser fixes.
+
+ 16:37 <sbeattie> which is pretty much it for me.
+
+ 16:37 <sbeattie> tyhicks: you're up
+
+ 16:37 <jdstrand> sbeattie: how is that coming?
+
+ 16:38 <sbeattie> slow going, but making progress.
+
+ 16:38 <jdstrand> what kind of coverage do we have for jj's patches?
+
+ 16:39 <jdstrand> rough estimate? what is the plan wrt those testing improvements and putting things in a ppa and in Ubuntu?
+
+ 16:40 <jdstrand> s/rough estimate\?/(rough estimate)/
+
+ 16:40 <jjohansen> jdstrand: good question I need to sit down and coordinate with sbeattie
+
+ 16:40 <jjohansen> jdstrand: there will be a new test kernel this week
+
+ 16:40 <jdstrand> ok
+
+ 16:40 <jjohansen> however I wouldn't recommend it as something everyone install
+
+ 16:41 * jjohansen checks to see if there is anymore hair to pull out
+
+ 16:42 * tyhicks goes
+
+ 16:42 <tyhicks> I'm catching up from last week
+
+ 16:42 <tyhicks> I ended up spending a little more time than expected last monday debugging apparmor_parser so I didn't get much time to look into enabling yama on touch
+
+ 16:42 <jdstrand> tyhicks: did you get to the bottom of the segfaults?
+
+ 16:43 <tyhicks> I've done the investigation and now need to backport a simple patch that enables stacking yama with other lsms
+
+ 16:43 <tyhicks> jdstrand: yes
+
+ 16:43 <jdstrand> cool
+
+ 16:43 <tyhicks> apparmor_parser doesn't really handle multiple rule types very well
+
+ 16:43 <tyhicks> well, it handles multiple rule types as far as parsing them
+
+ 16:43 <jdstrand> tyhicks: idr if we mentioned goldfish as part of the yama work, but can you include it?
+
+ 16:43 <tyhicks> but doesn't track them very well internally
+
+ 16:44 <tyhicks> it turns out that jj has some patches in the works that improves the situation
+
+ 16:44 <tyhicks> jdstrand: definitely
+
+ 16:44 <tyhicks> after that, I'll start benchmarking ecryptfs and dm-crypt on arm
+
+ 16:44 <tyhicks> (for the user data encryption blueprint)
+
+ 16:45 <tyhicks> that's it for me
+
+ 16:45 <tyhicks> jjohansen: you're up
+
+ 16:46 * jjohansen is working on apparmor this week, I'll be getting out the next test kernel, coordinating with sbeattie, and hopefully digging out some parser patches to coordinate with tyhicks on
+
+ 16:48 <jjohansen> I think thats it for /me sarnold your up
+
+ 16:50 <sarnold> I'm on triage this week, thanks mdeslaur for filling in last week :) I'm making a good dent in the backlog of unreviewed AppArmor patches, it'd be nice to finish reviewing all the previously outstanding patches, and there's a new MIR audit requested for bbswitch that I'd like to get to this week
+
+ 16:51 <sarnold> I think that's it for me, chrisccoulson, you're up :)
+
+ 16:51 <chrisccoulson> hi :)
+
+ 16:52 <jdstrand> jjohansen: oh, btw, is the goldfish patch in the goldfish kernel?
+
+ 16:52 <chrisccoulson> i'm finishing off bug 1214049 this week (hopefully by tomorrow or wed at the latest). i've started pushing bits to https://code.launchpad.net/~chrisccoulson/oxide/accelerated-rendering already
+
+ 16:52 <ubottu> bug 1214049 in Oxide "Support accelerated compositing" [High,In progress] https://launchpad.net/bugs/1214049
+
+ 16:52 <jjohansen> jdstrand: no not yet
+
+ 16:52 * jdstrand nod
+
+ 16:52 <jdstrand> s
+
+ 16:52 <chrisccoulson> i got the packaging for oxide done last week, although it did fail to build in a PPA. i've fixed a few build issues as a result of that (see the last few commits in https://code.launchpad.net/~oxide-developers/oxide/oxide.trunk)
+
+ 16:53 <jdstrand> chrisccoulson: what ppa are you using?
+
+ 16:53 <chrisccoulson> and i reviewed oSoMoN's navigation API work last week (https://code.launchpad.net/~osomon/oxide/navigation-api/+merge/196704/), which will land shortly
+
+ 16:54 <chrisccoulson> jdstrand, https://launchpad.net/~chrisccoulson/+archive/ppa for now. i didn't want to waste an arm builder until there was a successful build on i386/amd64
+
+ 16:54 <chrisccoulson> as the round-trip time is quite long ;)
+
+ 16:55 <chrisccoulson> i think that's me done
+
+ 16:55 <jdstrand> ack
+
+ 16:55 <jdstrand> chrisccoulson: istr you saying you had a particular ppa in mind for arm. which is that?
+
+ 16:55 <chrisccoulson> jdstrand, i can probably use https://launchpad.net/~canonical-arm-dev/+archive/ppa
+
+ 16:56 * jdstrand is 'Not allowed here'
+
+ 16:56 <chrisccoulson> ah :)
+
+ 16:56 <ogra_> jdstrand, want access ?
+
+ 16:56 <chrisccoulson> it does exist :)
+
+ 16:56 <jdstrand> chrisccoulson: I'm not sure what to suggest
+
+ 16:57 <jdstrand> sure, I'll take the access, but would it be better to use a public ppa so everyone can get their hands on it to test?
+
+ 16:57 <mdeslaur> can't we get a non-virtualized builder for oxide?
+
+ 16:57 <mdeslaur> s/builder/ppa/
+
+ 16:58 <jdstrand> I think we want daily builds for it too, but that is a slightly different topic
+
+ 16:58 <jdstrand> (however, those would also ideally be public)
+
+ 16:59 <chrisccoulson> who do we ask for a non-virtualized builder?
+
+ 17:00 <jdstrand> I would start with infinity
+
+ 17:00 <jdstrand> he may be the one to actually do the setup, but he might need some paperwork
+
+ 17:01 <jdstrand> chrisccoulson: is that something you plan on working on this week?
+
+ 17:01 <chrisccoulson> jdstrand, yeah, sure
+
+ 17:01 <jdstrand> cool, let's move on
+
+ 17:01 <jdstrand> chrisccoulson: did you have anything else?
+
+ 17:02 <chrisccoulson> jdstrand, no, i'm done now
+
+ 17:02 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:02 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:02 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:02 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libphp-adodb.html
+
+ 17:02 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/argyll.html
+
+ 17:02 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libapache2-mod-nss.html
+
+ 17:02 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libsocialweb.html
+
+ 17:02 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libspring-java.html
+
+ 17:02 <jdstrand> TOPIC] Miscellaneous and Questions
+
+ 17:03 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:06 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold, ChrisCoulson: thanks!
+
+ 17:06 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

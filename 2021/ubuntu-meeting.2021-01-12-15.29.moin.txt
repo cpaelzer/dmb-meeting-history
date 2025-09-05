@@ -1,0 +1,303 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status, 12 Jan at 15:29 &mdash; 15:56 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-01-12-15.29.log.html]]
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+The discussion about "current component mismatches" started at 15:30.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/m-r-package-team-mapping.html#pkg-ime 
+  * ''LINK:'' https://launchpadlibrarian.net/494338961/buildlog_ubuntu-groovy-amd64.command-not-found_20.10.1_BUILDING.txt.gz 
+  * ''LINK:'' https://launchpadlibrarian.net/515806097/buildlog_ubuntu-hirsute-amd64.command-not-found_20.10.1-1_BUILDING.txt.gz 
+  * ''LINK:'' https://salsa.debian.org/jak/command-not-found.git has the apt-file dependency for ages
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg 
+
+=== New MIRs ===
+The discussion about "New MIRs" started at 15:48.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir 
+
+=== Incomplete bugs / questions ===
+The discussion about "Incomplete bugs / questions" started at 15:49.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/lua5.4/+bug/1909665 
+
+=== Any other business? ===
+The discussion about "Any other business?" started at 15:55.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (83)
+ * didrocks (8)
+ * sarnold (6)
+ * doko (6)
+ * ubottu (5)
+ * jamespage (3)
+ * meetingology (3)
+ * ddstreet (2)
+ * didrocks999 (1)
+ * juliank (1)
+
+
+
+== Full Log ==
+
+
+ 15:29 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:29 <meetingology> Meeting started Tue Jan 12 15:29:32 2021 UTC.  The chair is cpaelzer. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:29 <meetingology> 
+
+ 15:29 <meetingology> Available commands: action commands idea info link nick
+
+ 15:29 <jamespage> o/
+
+ 15:29 <jamespage> good day
+
+ 15:29 <cpaelzer> yeah, same to all of you
+
+ 15:29 <doko> o/
+
+ 15:30 <cpaelzer> I'm ahead of the time - give everyone a bit to arrive
+
+ 15:30 <didrocks999> hey
+
+ 15:30 <ddstreet> o/
+
+ 15:30 <sarnold> good morning
+
+ 15:30 <cpaelzer> note: we had no previous action items except MIR reviews (which are handled separately)
+
+ 15:30 <cpaelzer> #topic current component mismatches
+
+ 15:30 <cpaelzer> this has a nice explosion today
+
+ 15:30 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:30 <jamespage> yeah wow
+
+ 15:30 <sarnold> wow
+
+ 15:31 <cpaelzer> while I did just today (as part of +1) fixed the build of gstreamer-plugins-bad1.0 I'm not otherwise attached to it
+
+ 15:31 <cpaelzer> didrocks: gstreamer sounds desktop'ish - do you have info what is going on here?
+
+ 15:31 <didrocks> absolutely not, but I will ping to know about it
+
+ 15:31 <cpaelzer> maybe it is just rygel or gstreamer-editing-services1.0 that added a dependency?
+
+ 15:31 <didrocks> could be rygel, indeed
+
+ 15:32 <didrocks> -bad was never meant to be in main anyway
+
+ 15:32 <cpaelzer> ok, we'll leave that part of mismatches for you to look for then
+
+ 15:32 <doko> synced by seb
+
+ 15:32 <didrocks> yep
+
+ 15:33 <cpaelzer> nex in line is libbpf, I've asked smb to prep that
+
+ 15:33 <cpaelzer> we have a stub by doko https://bugs.launchpad.net/ubuntu/+source/libbpf/+bug/1910576
+
+ 15:33 <ubottu> Launchpad bug 1910576 in libbpf (Ubuntu) "[MIR] libbpf (dependency of iproute2)" [High,Incomplete]
+
+ 15:33 <cpaelzer> I'm pre volunteering to do the review once available
+
+ 15:33 <doko> I assume we shouldn't try to work around libbpf
+
+ 15:34 <cpaelzer> not really, I think we should promote it
+
+ 15:34 <cpaelzer> it is quite useful and BPF seems to become only more popular - don't you think?
+
+ 15:34 <cpaelzer> unless smb does (after he's doen the pre-checks for filing it) want to bail out I'd plan for promoting it once through the MIR process
+
+ 15:35 <cpaelzer> oh
+
+ 15:35 <cpaelzer> I have failed to read the "n't"  in your post
+
+ 15:35 <cpaelzer> I think we agree :-)
+
+ 15:35 <cpaelzer> next is backupc - I have opened https://bugs.launchpad.net/ubuntu/+source/libbackuppc-xs-perl/+bug/1910262
+
+ 15:35 <ubottu> Launchpad bug 1910262 in libbackuppc-xs-perl (Ubuntu) "[MIR] libbackuppc-xs-perl" [Undecided,In progress]
+
+ 15:35 <cpaelzer> this is on security now
+
+ 15:36 <cpaelzer> sarnold: once there is any ETA it would be good to know if this can happen before hirsute FF
+
+ 15:36 <sarnold> cpaelzer: my initial thought is it is unlikely, we've got some backlog already
+
+ 15:36 <cpaelzer> :-/
+
+ 15:36 <cpaelzer> gladly we are  not creating 22.04 right now
+
+ 15:36 <sarnold> yes
+
+ 15:37 <cpaelzer> next are proper stubs now for https://bugs.launchpad.net/ubuntu/+source/needrestart/+bug/1907422
+
+ 15:37 <ubottu> Launchpad bug 1907422 in needrestart (Ubuntu) "[MIR] needrestart + dependencies" [Undecided,Incomplete]
+
+ 15:37 <cpaelzer> then a lot of usual suspects
+
+ 15:37 <cpaelzer> next new (for me) is moze -> abseil
+
+ 15:37 <cpaelzer> does that mean anything to any of your teams?
+
+ 15:38 <cpaelzer> oh it is mozc (too small on my screen)
+
+ 15:38 <cpaelzer> http://reqorts.qa.ubuntu.com/reports/m-r-package-team-mapping.html#pkg-ime
+
+ 15:39 <cpaelzer> is that inout of special characters liek libpinyin ?
+
+ 15:39 <doko> yeah, I already asked about pgk-ime, but didn't get a reply yet
+
+ 15:39 <cpaelzer> yeah for japanese
+
+ 15:40 <cpaelzer> didrocks: those inputs are sort of associated with Desktop usually (like the ongoing libpinyin MIR case) - would you ask around
+
+ 15:40 <didrocks> sure, will do
+
+ 15:40 <cpaelzer> mozc is also FTFBS https://launchpad.net/ubuntu/+source/mozc/2.26.4220.100+dfsg-2
+
+ 15:40 <cpaelzer> but in main since xenial
+
+ 15:41 <cpaelzer> tiff/libdeflate is beign worked on (killing the dependency) afaik
+
+ 15:41 <cpaelzer> command-not-found is the last new one that I see
+
+ 15:41 <cpaelzer> command-not-found -> apt-file ?
+
+ 15:42 <cpaelzer> https://launchpadlibrarian.net/494338961/buildlog_ubuntu-groovy-amd64.command-not-found_20.10.1_BUILDING.txt.gz
+
+ 15:42 <cpaelzer> https://launchpadlibrarian.net/515806097/buildlog_ubuntu-hirsute-amd64.command-not-found_20.10.1-1_BUILDING.txt.gz
+
+ 15:42 <cpaelzer> indeed it has grown
+
+ 15:42 <cpaelzer> Depends: apt-file (>= 3.0~exp1~), lsb-release, python3-apt, python3:any
+
+ 15:44 <cpaelzer> juliank: ^^ ?
+
+ 15:45 <cpaelzer> what am I overlooking
+
+ 15:45 <cpaelzer> https://salsa.debian.org/jak/command-not-found.git has the apt-file dependency for ages
+
+ 15:45 <cpaelzer> but the built pacakge does not
+
+ 15:46 * cpaelzer must stare the wrong way
+
+ 15:46 <cpaelzer> doko: it seems to be on fundations either way, can you take a todo to check on this ?
+
+ 15:46 <doko> yes
+
+ 15:46 <cpaelzer> ok if you have fun
+
+ 15:47 <cpaelzer> otherwise "Foundations"
+
+ 15:47 <cpaelzer> that closes -proposed
+
+ 15:47 <cpaelzer> next is
+
+ 15:47 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:47 <cpaelzer> nothing that we'd not have seen&discussed before IMHO
+
+ 15:47 <cpaelzer> gogin on unless anyone wants to stop me
+
+ 15:48 <juliank> cpaelzer: command-not-found should not have been synced, should be on sync blacklist
+
+ 15:48 <cpaelzer> ok, so a removal of the new version is the solution then
+
+ 15:48 <cpaelzer> if that is the case doko could you handle that?
+
+ 15:48 <cpaelzer> thanks for the feedback juliank
+
+ 15:48 <cpaelzer> #topic New MIRs
+
+ 15:49 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:49 <cpaelzer> <none>
+
+ 15:49 <sarnold> is it broken? :)
+
+ 15:49 <didrocks> haha
+
+ 15:49 <cpaelzer> which is good, I've seen some of you doing reviews
+
+ 15:49 <cpaelzer> thanks
+
+ 15:49 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:49 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:50 <cpaelzer> we've already mentioned deflate0 and libbpf and needrestart
+
+ 15:50 <cpaelzer> what is left is
+
+ 15:50 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/lua5.4/+bug/1909665
+
+ 15:50 <ubottu> Launchpad bug 1909665 in opencc (Ubuntu) "[MIR] ibus-libpinyin dependencies" [Undecided,Incomplete]
+
+ 15:51 <cpaelzer> there it is on desktop finalize this - AFAICS gunaner (reporter) is in touch with didrocks on that
+
+ 15:51 <cpaelzer> didrocks: can we leave it with you or do you need and help on that?
+
+ 15:51 <didrocks> cpaelzer: no, I think I’m good and things can take time, but should be fixable
+
+ 15:51 <cpaelzer> ok, next interesting one is https://bugs.launchpad.net/ubuntu/+source/raspberrypi-userland/+bug/1895137
+
+ 15:51 <ubottu> Launchpad bug 1895137 in rpi-eeprom (Ubuntu) "[MIR] rpi-eeprom; raspberrypi-userland" [Undecided,In progress]
+
+ 15:52 <cpaelzer> there waveform states that a PPA should have all that doko requested in the review
+
+ 15:52 <cpaelzer> doko: I think it is up to you to check if this indeed satisfied what you wanted
+
+ 15:52 <cpaelzer> if it does this might be ready for promotion then ?! *hope*
+
+ 15:53 <cpaelzer> doko: can you do that check and and resolve anything that is left open with waveform ?
+
+ 15:55 <doko> well, ok. I'll tell waveform to upload ...
+
+ 15:55 <cpaelzer> if that is the next step for you, sure
+
+ 15:55 <cpaelzer> that concludes this section
+
+ 15:55 <cpaelzer> #topic Any other business?
+
+ 15:55 <sarnold> none from me
+
+ 15:56 <cpaelzer> we still see things getting more busy as expected for this phase of the cycle
+
+ 15:56 <didrocks> nothing either
+
+ 15:56 <cpaelzer> nothing else
+
+ 15:56 <ddstreet> nope
+
+ 15:56 <cpaelzer> ok, have fun and remove .. uh fix ... packages ...
+
+ 15:56 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

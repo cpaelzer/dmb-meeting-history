@@ -1,0 +1,433 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 08 Aug at 14:33 &mdash; 15:00 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-08-08-14.33.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:34)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:34)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:39)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:48.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:48)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:48)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:49)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:51.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:51)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:51)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pull/33/files#diff-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5R881   (cpaelzer, 14:54)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues/35   (cpaelzer, 14:56)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:57.
+
+ * ''LINK:'' https://gitlab.freedesktop.org/libinput/libei will be a new dependency for Mutter 45 for Desktop so I'm letting y'all know that will be a rush and coming soon  (jbicha, 14:58)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (120)
+ * slyon (25)
+ * sarnold (13)
+ * eslerm (9)
+ * schopin (5)
+ * didrocks (3)
+ * meetingology (2)
+ * jbicha (2)
+ * bdrung (1)
+
+
+
+== Full log ==
+
+
+ 14:33 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:33 <meetingology> Meeting started at 14:33:07 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:33 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:33 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:33 <cpaelzer> glad to be back after the sprint
+
+ 14:33 <cpaelzer> I hope there was no panic here
+
+ 14:33 <slyon> It was pretty calm
+
+ 14:33 <cpaelzer> let us get the normal agenda points covered
+
+ 14:33 <cpaelzer> and then get to any open things left in AOB
+
+ 14:33 <cpaelzer> thanks slyon
+
+ 14:33 <cpaelzer> #topic current component mismatches
+
+ 14:33 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:34 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:34 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:34 <cpaelzer> mirespace still supposed to work on the MIR of the perl deps
+
+ 14:34 <cpaelzer> let me ping here again
+
+ 14:34 <slyon> Those look pretty usual, except for dnspython, which was resolved today and will go away.
+
+ 14:34 <cpaelzer> sorry for this overview not being readable again
+
+ 14:35 <cpaelzer> is it the same
+
+ 14:35 <slyon> Also, python-jsonschema is growing some more Recommends (cc jamespage)
+
+ 14:35 <cpaelzer> I do not remember python-jsonschema
+
+ 14:35 <cpaelzer> to python-rfc3987 and webcolors
+
+ 14:35 <cpaelzer> oh yeah
+
+ 14:35 <cpaelzer> good
+
+ 14:35 <cpaelzer> so it was not just my memory
+
+ 14:35 <sarnold> Tue 01 14:32:59 < slyon> python-jsonschema seems new, and needs to be looked at by the openstack team (cc jamespage)
+
+ 14:36 <cpaelzer> oh, so there was no reply since
+
+ 14:36 <cpaelzer> let me do the same ping on #openstack internally to ensure they see it
+
+ 14:36 <cpaelzer> might have been lost in the sprint
+
+ 14:37 <cpaelzer> done
+
+ 14:37 <slyon> TIL: interestingly the Recommends (as in python-jsonschema case) are not enforced by britney, so that package migrated, even though it has component mismatches
+
+ 14:37 <cpaelzer> that is ... unexpected
+
+ 14:38 <cpaelzer> did you talk last week about python-reportlab?
+
+ 14:38 <slyon> according to v_orlon this has been the case ever since
+
+ 14:38 <slyon> cpaelzer: yes. reportlab is going to be demoted this cycle (once the desktop team demoted the printing stack)
+
+ 14:38 <sarnold> heh, maybe https://bugs.launchpad.net/britney/+bug/1593148 ought to get a priority boost?
+
+ 14:38 <cpaelzer> ok, waiting for that then
+
+ 14:38 <cpaelzer> #topic New MIRs
+
+ 14:38 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> none
+
+ 14:38 <cpaelzer> wow
+
+ 14:38 <cpaelzer> nice
+
+ 14:38 <cpaelzer> for once!
+
+ 14:39 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:39 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:39 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:39 <cpaelzer> so slyon commented on s390x tools
+
+ 14:39 <eslerm> (from components, is rustc still an approved MIR?)
+
+ 14:39 <cpaelzer> eslerm:  it can only find and color one
+
+ 14:39 <cpaelzer> so it finds the old rustc
+
+ 14:39 <eslerm> thanks
+
+ 14:39 <cpaelzer> not the new cargo+rustc one
+
+ 14:40 <cpaelzer> ok I see that Mirespace worked on https://bugs.launchpad.net/ubuntu/+source/libmail-dmarc-perl/+bug/2023971 recently
+
+ 14:40 <cpaelzer> not ready yet but that update is expected
+
+ 14:40 <cpaelzer> what is https://bugs.launchpad.net/ubuntu/+source/dhcpcd/+bug/2019191 about ... ?
+
+ 14:40 <slyon> s390-tools is a heads-up for everybody. It will start to pull in vendored rust dependencies. And it was not super clear how to handle them from a MIR/security perspective. Do we need a new MIR?
+
+ 14:40 <slyon> cc schopin ^
+
+ 14:40 <slyon> cc fheimes ^
+
+ 14:40 <cpaelzer> hmm, we didn't add re-MIR in the past
+
+ 14:41 * schopin pops his head in.
+
+ 14:41 <cpaelzer> but this is a rather big change
+
+ 14:41 <cpaelzer> I think they can ask for acceptance and re-review on the old MIR bug
+
+ 14:41 <slyon> I created that bug, to have some starting point for a discussion
+
+ 14:41 <cpaelzer> but I'm not sure about it
+
+ 14:42 <slyon> sarnold: what's your perspective on packages in main pulling in new (vendored) dependencies?
+
+ 14:42 <cpaelzer> IMHO (and that really is opinion for now) - they should re-review, but we haven't put re-review of any kind in-process yet
+
+ 14:42 <slyon> would it be a normal package dependency, we would probably handle it through the component-mismatches process and have all of the dependencies MIRed
+
+ 14:43 <cpaelzer> mostly to avoid people getting things approved while trivial and then exploding complexity without ensuring quality and maintainability
+
+ 14:43 <sarnold> we normally assume that some reasonable amount of changes over time are just going to happen, and that's fine, but this sounds like it might be a pretty big set of changes. maybe we ought to try to use 'package churn' as a guide for our "re-review old packages" stretch goal?
+
+ 14:43 <cpaelzer> slyon: do they have to be vendored?
+
+ 14:43 <eslerm> this seems to be a meta package https://github.com/ibm-s390-linux/s390-tools
+
+ 14:43 <schopin> The MIR rules state that they do :)
+
+ 14:43 <slyon> cpaelzer: Probably yes. Those are rust crates
+
+ 14:44 <sarnold> .. and maybe at the birth of a new ecosystem is a good time to try to encourage 'good taste' in selecting which crates to vendor? not that we've got *that* much influence over upstream authors..
+
+ 14:44 <schopin> This specific upstream should be easier to work with than most.
+
+ 14:44 <sarnold> yeah
+
+ 14:45 <schopin> But then there's the issue of the *version* of the crates we want them to use.
+
+ 14:45 <cpaelzer> yep the rules were written with the ecosystem of the time in mind
+
+ 14:45 <slyon> So we basically ask for a new s390-tools MIR and will see what that brings (I expect lots of work, as those are big crates)
+
+ 14:45 <sarnold> and since the goal is to get it to compile with the new tools, today, on an oddball architecture, they'll have a very strong incentive to make sure it actually works in the places where rust feels weakest
+
+ 14:46 <cpaelzer> slyon: yes, that would be helpful I think
+
+ 14:46 <cpaelzer> let us continue for now
+
+ 14:46 <cpaelzer> and to close this section out, dhcpcd - is that the one you meant will resolve in a bit slyon?
+
+ 14:47 <slyon> no. I was talking about dnspython
+
+ 14:47 <cpaelzer> oh
+
+ 14:47 <cpaelzer> so laste ocmment on https://bugs.launchpad.net/ubuntu/+source/dhcpcd/+bug/2019191
+
+ 14:47 <sarnold> dhcpcd is probably waiting on tobias to replace non-fips-approved code with fips-approved-code
+
+ 14:47 <cpaelzer> yeah, thanks for cleaning up the assignment
+
+ 14:47 <cpaelzer> to make it clear who we wait on
+
+ 14:48 <slyon> (schopin I will tag bug #2030482 as rls-mm-incoming, so we can assign the MIR to somebody in the next ubuntu-meeting)
+
+ 14:48 <schopin> fair enough :)
+
+ 14:48 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:48 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:48 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:48 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:48 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:48 <slyon> Right. I should probably ping tobhe and/or bdrung about dhcpcd
+
+ 14:49 <cpaelzer> Internal link
+
+ 14:49 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:49 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:49 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:49 <eslerm> initial libmysofa MIR is in review. We need upstream followup to decide on promotion--reviewer on PTO. dropping libmysofa-utils from promotion would help. @seb128
+
+ 14:49 <eslerm> libwebm and nvme-stas MIRs are drafted and in review. likely to be published this week
+
+ 14:49 <eslerm> dasbus will be taken when nmve-stas is complete
+
+ 14:49 <eslerm> dotnet6 MIR s in progress
+
+ 14:49 <eslerm> Security's fdk-aac review is blocked downstream, Desktop may have an alternative package to promote
+
+ 14:50 <cpaelzer> that all sounds fine IMHO - thanks for the update. Anything else to add sarnold or anyone?
+
+ 14:50 <slyon> eslerm: do we get our ETA for rust/cargo today?
+
+ 14:50 <bdrung> slyon, i talked with tobhe yesterday. He will prepare the patches for using openssl that I can hopefully upload today or tomorrow.
+
+ 14:50 <slyon> bdrung: sounds great, thanks
+
+ 14:50 <cpaelzer> great, thanks for the info bdrung
+
+ 14:50 <eslerm> yes, cargo MIR draft is complete and in review as of today
+
+ 14:50 <sarnold> slyon: one better :) pfsmorigo has posted a review for review :) it's on us to take a look and iterate on it
+
+ 14:50 <cpaelzer> I was shuffling agenda items unintentionally
+
+ 14:51 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:51 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:51 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:51 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:51 <cpaelzer> as I posted https://github.com/canonical/ubuntu-mir/pull/31 can land now
+
+ 14:51 <cpaelzer> everyone that might later complain has approved
+
+ 14:51 <didrocks> \o/
+
+ 14:51 <cpaelzer> anyone wants to use the last change of stopping me?
+
+ 14:52 <cpaelzer> 3
+
+ 14:52 <cpaelzer> 2
+
+ 14:52 <sarnold> uhoh, is this the "supervillian transformation moment"? :)
+
+ 14:52 <cpaelzer> 1
+
+ 14:52 <cpaelzer> hehe
+
+ 14:52 <jbicha> is this AOB?
+
+ 14:52 <cpaelzer> no
+
+ 14:52 <slyon> not yet jbicha
+
+ 14:52 <cpaelzer> this is the issue/Pr section
+
+ 14:52 <cpaelzer> merged
+
+ 14:52 <cpaelzer> how about https://github.com/canonical/ubuntu-mir/pull/33 ?
+
+ 14:53 <cpaelzer> did we settle enough on this
+
+ 14:53 <cpaelzer> spelling is fixed
+
+ 14:53 <cpaelzer> and I thought most of the discussion should be in
+
+ 14:53 <cpaelzer> I'm context switching in this case ...
+
+ 14:54 <cpaelzer> didrocks: I think your comment is the only one I have not yet addressed
+
+ 14:54 <sarnold> the package build log note was a nice one
+
+ 14:54 <cpaelzer> oh actually I think I have added binary and source
+
+ 14:54 <cpaelzer> yes
+
+ 14:54 <cpaelzer> https://github.com/canonical/ubuntu-mir/pull/33/files#diff-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5R881
+
+ 14:54 <cpaelzer> didrocks: are you fine as well then?
+
+ 14:55 <didrocks> cpaelzer: that’s correct, I would have preferred we dig a little bit deeper in it: but TBH, no time for this… So good enough as is
+
+ 14:55 <cpaelzer> I didn't want to explode complexity
+
+ 14:55 <cpaelzer> PRs welcome :-P
+
+ 14:55 <cpaelzer> let us merge it then and anyone is free to extend at another day
+
+ 14:55 <cpaelzer> ok?
+
+ 14:55 <didrocks> understandable :)
+
+ 14:55 <sarnold> ack
+
+ 14:56 <cpaelzer> done
+
+ 14:56 <cpaelzer> then last new before AOB
+
+ 14:56 <cpaelzer> https://github.com/canonical/ubuntu-mir/issues/35
+
+ 14:56 <cpaelzer> I think this is a good topic to have
+
+ 14:56 <cpaelzer> but breaking the time we have
+
+ 14:56 <slyon> ^ This is something I was thinking about today.
+
+ 14:56 <cpaelzer> can we declare review and discussion homework until next week?
+
+ 14:56 <slyon> Not necessarily needed right now. But maybe everybody could have a look eventually and leave their comments
+
+ 14:57 <cpaelzer> I've added it to my "to review" list
+
+ 14:57 <cpaelzer> thanks for starting the thought
+
+ 14:57 <slyon> cc schopin, too ^
+
+ 14:57 <cpaelzer> #topic Any other business?
+
+ 14:57 <cpaelzer> jbicha: now :-)
+
+ 14:57 <cpaelzer> nothing from server this week btw
+
+ 14:58 <jbicha> https://gitlab.freedesktop.org/libinput/libei will be a new dependency for Mutter 45 for Desktop so I'm letting y'all know that will be a rush and coming soon
+
+ 14:58 <sarnold> mmm eis
+
+ 14:58 <cpaelzer> jbicha: what is your gut-feeling on quality of it?
+
+ 14:59 <cpaelzer> libEgg :-)
+
+ 14:59 <cpaelzer> thanks for the heads up
+
+ 14:59 <slyon> jbicha: we can usually do promotions post feature freeze. So as long as you can get your changes in (e.g. using FFe), we should still have some time. But that's for the heads-up!
+
+ 14:59 <cpaelzer> jbicha: you can file this asap even before the dependency is there
+
+ 14:59 <cpaelzer> so that we can start to review next week
+
+ 15:00 <cpaelzer> ok, anything else - or can we close?
+
+ 15:00 <slyon> thanks*
+
+ 15:00 <cpaelzer> 5
+
+ 15:00 <cpaelzer> 7
+
+ 15:00 <cpaelzer> 8
+
+ 15:00 <sarnold> nothing here
+
+ 15:00 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

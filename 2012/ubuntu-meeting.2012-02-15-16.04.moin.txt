@@ -1,0 +1,550 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:04:58 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-15-16.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+''LINK:'' https://launchpad.net/~jamesodhunt/+archive/upstart-job-logging PPA for  (jhunt, 16:09:40)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-upload-intermediary   (cjwatson, 16:30:50)
+
+ *Bugs
+
+ *AOB
+''LINK:'' https://wiki.ubuntu.com/PrecisePangolin/FeatureLanding   (cjwatson, 16:53:25)
+
+
+
+Meeting ended at 16:54:10 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (74)
+ * slangasek (53)
+ * stgraber (30)
+ * bdmurray (26)
+ * cjwatson (25)
+ * ubottu (15)
+ * jhunt (12)
+ * doko (7)
+ * meetingology (3)
+ * mvo (1)
+
+
+
+== Full Log ==
+
+
+ 16:04:58 <slangasek> #startmeeting
+
+ 16:04:58 <meetingology> Meeting started Wed Feb 15 16:04:58 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:04:58 <meetingology> 
+
+ 16:04:58 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:05:06 <slangasek> [TOPIC] Lightning round
+
+ 16:05:12 <slangasek> ev: sorry ;)
+
+ 16:05:15 <slangasek> $ echo $(shuf -e barry bdmurray cjwatson doko ev jhunt_ stgraber slangasek)
+
+ 16:05:18 <slangasek> ev doko jhunt_ barry stgraber slangasek bdmurray cjwatson
+
+ 16:05:22 <stgraber> ;)
+
+ 16:05:37 <slangasek> doko: do you want to go ahead while ev is tea-ing?
+
+ 16:07:13 <doko> ok
+
+ 16:07:38 <doko> - LinaroConnect last week, cumbersome way back home
+
+ 16:08:20 <doko> - forwarding GCC 4.7 upstream issues, another 4.6 test build (will hit precise this week)
+
+ 16:08:38 <doko> - started openjdk-6 security updates
+
+ 16:08:58 <doko> - eglibc fixes, thanks to cjwatson
+
+ 16:09:01 <doko> done
+
+ 16:09:40 <jhunt> Finished changes for bug 926468. Reworked early job logging code and
+
+ 16:09:40 <jhunt> combined both into upstart-1.4-0ubuntu7~jh in my
+
+ 16:09:40 <jhunt> https://launchpad.net/~jamesodhunt/+archive/upstart-job-logging PPA for
+
+ 16:09:40 <jhunt> testing prior to FF (if you're not running it, please install and !)
+
+ 16:09:43 <ubottu> Launchpad bug 926468 in upstart (Ubuntu Precise) "Stopping ssh with a logged in user causes init to spin at 100%" [High,In progress] https://launchpad.net/bugs/926468
+
+ 16:09:43 <jhunt> Investigating test failures on PPC+ARM*. Spent a little time looking at
+
+ 16:09:48 <jhunt> bug 931220/931584 with stgraber.
+
+ 16:09:49 <ubottu> Launchpad bug 931220 in lxc (Ubuntu) "lxc-start should get a close-all-fds option to avoid weird issues" [High,Fix released] https://launchpad.net/bugs/931220
+
+ 16:09:51 <jhunt> ♁
+
+ 16:09:57 <jhunt> ... and provide feedback that is :)
+
+ 16:10:16 <ev> back
+
+ 16:10:23 <stgraber> ev: go ahead
+
+ 16:10:24 <ev> apols for that
+
+ 16:10:26 <ev> okay, cheers
+
+ 16:10:44 <ev> - Lots and lots of work on the new Apport UI:
+
+ 16:10:44 <ev> - More work on matching the KDE frontend to the GTK changes.
+
+ 16:10:45 <ev> - Some bug fixes.
+
+ 16:10:45 <ev> - Handle errors better in the information collection thread.
+
+ 16:10:45 <ev> - Fix some issues around displaying multiple reports in one run.
+
+ 16:10:46 <ev> - Unit test the GTK+ frontend, complete with a pair of bug fixes.
+
+ 16:10:46 <ev> - Add KDE frontend unit tests, along with some more bug fixes.
+
+ 16:10:46 <ev> - Remove old GTK+ dialogs.
+
+ 16:10:47 <ev> - Put graphical tests under xvfb. Only use it if it's present.
+
+ 16:10:47 <ev> - Don't hardcode Ubuntu.
+
+ 16:10:55 <ev> - Move UI tests out of their respective modules, per pitti's request.
+
+ 16:10:55 <ev> - Bring apport-cli into the new threaded way of collection problem
+
+ 16:10:56 <ev> information. Update its calls to the UI backend.
+
+ 16:10:57 <ev> - Merge review with Martin in:
+
+ 16:10:57 <ev> https://code.launchpad.net/~ev/apport/whoopsie/+merge/92753
+
+ 16:11:10 <ev> - Lots and lots of work around whoopsie's security review:
+
+ 16:11:11 <ev> - Don't fail if there are no crash files (LP: #928735).
+
+ 16:11:11 <ev> - Do not attempt to load the control center panel UI from the build
+
+ 16:11:11 <ev> directory.
+
+ 16:11:12 <ev> - Check the return value of the open call in get_system_uuid.
+
+ 16:11:12 <ev> - Properly initialize libcrypt.
+
+ 16:11:12 <ev> - Check that the call to gcry_md_open succeeds.
+
+ 16:11:12 <ev> - Ensure that reading the SHA512 message digest succeeds.
+
+ 16:11:13 <ev> - Protect against changes to the message digest length creating a security
+
+ 16:11:13 <ev> vulnerability.
+
+ 16:11:28 <ev> - Check the returncode of setenv.
+
+ 16:11:28 <ev> - Use /var/lock/whoopsie instead of /tmp/.whoopsie-lock.
+
+ 16:11:29 <ev> - Future proof by using getrlimit instead of explicitly closing STD*.
+
+ 16:11:29 <ev> - Redirect stdin, stdout, and stderr to /dev/null.
+
+ 16:11:29 <ev> - Ensure strings created in update_to_crash_file are NUL-terminated.
+
+ 16:11:29 <ev> - Only process regular files in /var/crash.
+
+ 16:11:30 <ev> - Replace calls to *alloc with g_*alloc, which calls abort on failure.
+
+ 16:11:30 <ev> - Remove unused system_uuid pointer references.
+
+ 16:11:43 <ev> - Recover from being unable to get the system UUID.
+
+ 16:11:44 <ev> - Fix warnings in make check.
+
+ 16:11:44 <ev> - Initialize all of curl.
+
+ 16:11:44 <ev> - Redirect stderr to null in chgrp and chmod calls.
+
+ 16:11:45 <ev> - Set home directory to /nonexistent.
+
+ 16:11:45 <ev> - Enable libcrypt secure memory.
+
+ 16:11:57 <ev> - Put the lock file in /var/lock/whoopsie/.
+
+ 16:11:58 <ev> - Sanity check the CRASH_DB_URL environment variable.
+
+ 16:11:58 <ev> - Add some more tests for parse_report, along with data from Jamie
+
+ 16:11:58 <ev> Strandboge.
+
+ 16:11:58 <ev> - Check handling of embedded NUL bytes.
+
+ 16:11:59 <ev> - Verify that symlinks in /var/crash produce the correct error.
+
+ 16:11:59 <ev> - Verify that keys without values in reports produce an error message.
+
+ 16:11:59 <ev> - Ensure that the report does not start with a value.
+
+ 16:12:07 <ev> - Correctly identify a report without spaces as malformed.
+
+ 16:12:07 <ev> - Verify that directories in /var/crash produce the correct error.
+
+ 16:12:07 <ev> - Ensure that blank lines in a report are treated as errors.
+
+ 16:12:08 <ev> - Change the crash database URL to http://daisy.ubuntu.com :)
+
+ 16:12:08 <ev> - Ensure that carriage returns are escaped.
+
+ 16:12:08 <ev> - Do not start multiline values with a newline.
+
+ 16:12:14 <ev> - Check that a valid report has the exact expected contents.
+
+ 16:12:14 <ev> - MIR/security review with Jamie in:
+
+ 16:12:15 <ev> https://bugs.launchpad.net/ubuntu/+source/whoopsie-daisy/+bug/913694
+
+ 16:12:15 <ev> - Slideshow planning meeting with Christian and Dylan.
+
+ 16:12:15 <ev> - Meeting to understand Canonical UK pension scheme.
+
+ 16:12:16 <ubottu> Launchpad bug 913694 in whoopsie-daisy (Ubuntu) "[MIR] whoopsie-daisy" [Undecided,In progress]
+
+ 16:12:16 <ev> (done)
+
+ 16:12:56 <ev> I will need a freeze exception, but I'm buried in interview prep work, so I'll sort that later tonight
+
+ 16:13:01 <stgraber> - Networking
+
+ 16:13:01 <stgraber> - Waiting on SRU test results for ifenslave/vlan/bridge, I'm told I should have these later today
+
+ 16:13:04 <stgraber> - Got daily IPv6 testing ported to regular bridge-utils so it can run within a container (yeah, container in containers)
+
+ 16:13:07 <stgraber> - Arkose
+
+ 16:13:10 <stgraber> - Updated the Arkose cli tool to show all the new features, did some minor bugfixing of the python module, updated translations and released 1.5
+
+ 16:13:13 <stgraber> - Friendly-Recovery
+
+ 16:13:15 <stgraber> - Updated menu landed, all options are always displayed now and switch from read-only to read/write is done when selecting an option requiring it
+
+ 16:13:19 <stgraber> - Still working on a 'system information' option, should land later today or early tomorrow
+
+ 16:13:21 <stgraber> - LTSP
+
+ 16:13:24 <stgraber> - Improve ltsp-live for Edubuntu
+
+ 16:13:26 <stgraber> - Lots of changes happening upstream to get the new shiny stuff ready by Feature Freeze. Testers are still busy and I expect an upload very shortly before FF.
+
+ 16:13:30 <stgraber> - Merged nbd from unstable to get some fixes needed for LTSP.
+
+ 16:13:32 <stgraber> - I've also started cleaning up the maintainer scripts and will spend some time to deal with our current installer bugs (ltsp-client-builder udeb)
+
+ 16:13:35 <stgraber> - Upstart
+
+ 16:13:38 <stgraber> - Tried to figure out why some jobs sometimes inherit an extra fd (a socket in this case), tracked down to something around libldap/libnss-ldap/libnss affecting
+
+ 16:13:41 <stgraber> machines using libnss-ldap. This was breaking LXC's upstart job, now fixed in LXC by having lxc-start close the extra fds.
+
+ 16:13:44 <stgraber> - Containers
+
+ 16:13:46 <stgraber> - Uploaded a new LXC with reworked template and Serge's patch to have our consoles and ttys in /dev/lxc, fixing upgrade/dist-upgrade in LXC for good. (bug 927519))
+
+ 16:13:47 <ubottu> Launchpad bug 927519 in lxc (Ubuntu) "makedev fails to upgrade in lxc container with error 'Device or resource busy'" [Medium,Fix released] https://launchpad.net/bugs/927519
+
+ 16:13:49 <stgraber> - Updated shadow to add the new LXC consoles and ttys to securetty
+
+ 16:13:52 <stgraber> - Added a network-interface-container upstart job to ifupdown to simulate net-device-added for 'lo' in containers
+
+ 16:13:55 <stgraber> - Disable udevadm trigger --action=add in containers (bug 925122) - commited to the packaging branch, waiting on upstart to build on armel/armhf/powerpc.
+
+ 16:13:56 <ubottu> Launchpad bug 925122 in udev (Ubuntu) "container's udevadm trigger --add affects the host" [Medium,Fix committed] https://launchpad.net/bugs/925122
+
+ 16:13:58 <stgraber> - Other
+
+ 16:14:00 <stgraber> - Helped some friends of the LTTng project, sponsored the new LTTng2 stack (now in NEW) and filed the needed package removal bugs for the old broken stack
+
+ 16:14:03 <stgraber> - Will release pastebinit 1.3 later today, waiting for some extra translations at the moment
+
+ 16:14:06 <stgraber> (done)
+
+ 16:15:21 * slangasek runs out of breath reading ev's report
+
+ 16:15:50 <ev> hah
+
+ 16:16:15 <jhunt> ENOSPC over here! :)
+
+ 16:17:35 <slangasek> stgraber: huh, why does lxc need different names for its ttys?
+
+ 16:18:34 <stgraber> slangasek: lxc was bind mounting its ttys from outside the container to /dev/tty[1234] which is all fine, except when you deal with anything like udev/makedev/... which tries to move them, remove them, ...
+
+ 16:19:04 <stgraber> slangasek: so the easiest solution to fix it until we get a proper device namespace and can stop with the bind mounts was to use another location
+
+ 16:19:14 <slangasek> hmm, ok
+
+ 16:19:29 <slangasek> right, my turn
+
+ 16:19:33 <slangasek> * short week, was off Monday
+
+ 16:19:34 <slangasek> * interviewing
+
+ 16:19:34 <slangasek> * helping test/merge upstart fixes to be landed in precise today
+
+ 16:19:34 <slangasek> * resolvconf finagling
+
+ 16:19:34 <slangasek> * discussions about how to minimize future breakage from eglibc uploads
+
+ 16:19:36 <slangasek> * libnih1 uploaded for essential-ish pre-dependency issues
+
+ 16:19:38 <slangasek> * working with IS to get qemu-linaro situated to where it can be used as an emulated armel buildd running on top of a hardy VM
+
+ 16:19:41 <slangasek> * minor eglibc work
+
+ 16:19:44 <slangasek> * virtual sprint planning
+
+ 16:19:47 <slangasek> ..
+
+ 16:19:49 <slangasek> questions?
+
+ 16:20:22 <bdmurray> review of bug pattern merge proposals from Vadim Rutkovsky
+
+ 16:20:22 <bdmurray> fixing of SRU for bug 873424 after discussion with verifier
+
+ 16:20:23 <ubottu> Launchpad bug 873424 in update-manager (Ubuntu Oneiric) "ask me later fails" [Medium,Fix committed] https://launchpad.net/bugs/873424
+
+ 16:20:24 <bdmurray> test and fix for bug 901381 regarding ubiquity's apport behavior
+
+ 16:20:26 <ubottu> Launchpad bug 901381 in ubiquity (Ubuntu) "excepthook in gtk_ui.py should write a crash report instead of calling ubuntu-bug" [High,Fix released] https://launchpad.net/bugs/901381
+
+ 16:20:36 <bdmurray> triage of bug 922330 regarding wubi installing precise
+
+ 16:20:36 <bdmurray> fixed lp_buttontags to make tagging bugs easier
+
+ 16:20:36 <bdmurray> modifications to lp-grab-attachments to download bugs about a project
+
+ 16:20:37 <ubottu> Launchpad bug 922330 in Wubi "Wubi.exe from 11.10 official CD installs 12.04 snapshot if CD not available" [Medium,Won't fix] https://launchpad.net/bugs/922330
+
+ 16:20:54 <bdmurray> updated bugsquad tags to include new ubiquity bug tags
+
+ 16:20:55 <bdmurray> research into and fixing of universe packages assigned to the foundations team in the package to team mapping
+
+ 16:20:57 <bdmurray> upload of update-manager to lucid-proposed which adds in apport package hook
+
+ 16:21:00 <bdmurray> fixed bug 878335 regarding moving bugs to grub-installer from ubiquity
+
+ 16:21:01 <bdmurray> creation of packageset recent package bug graphs
+
+ 16:21:02 <ubottu> Launchpad bug 878335 in apport (Ubuntu) "ubiquity source package hook should move more bugs to grub-installer" [Medium,In progress] https://launchpad.net/bugs/878335
+
+ 16:21:07 <bdmurray> ⌁
+
+ 16:22:00 <cjwatson> Interviewing.
+
+ 16:22:00 <cjwatson> Another try at fixing ports installs (bug 919356).
+
+ 16:22:00 <cjwatson> Investigation of fixes for glibc 2.15 regressions.
+
+ 16:22:02 <ubottu> Launchpad bug 919356 in choose-mirror (Ubuntu) "Default hostname needed for PowerPC" [Medium,Fix released] https://launchpad.net/bugs/919356
+
+ 16:22:12 <cjwatson> Added a mock GResolver to the ubiquity test suite to make it more reliable in various contexts (the powerpc build, stgraber's LXC setup).  Would have been much quicker except that https://bugzilla.gnome.org/show_bug.cgi?id=669847 meant I had to do this in C.
+
+ 16:22:14 <ubottu> Gnome bug 669847 in gio "GSimpleAsyncResult introspection annotates methods as functions; unusable for creating results for errors" [Normal,Unconfirmed]
+
+ 16:22:16 <cjwatson> Clearing out http://lintian.ubuntuwire.org/tags/preinst-uses-dpkg-maintscript-helper-without-predepends.html.  Very slow and tedious, but everything is uploaded or has patches in a BTS somewhere now.
+
+ 16:22:20 <cjwatson> Made a pass through some outstanding team work items with Steve and postponed a few.
+
+ 16:22:23 <cjwatson> Tested transfer speed between cdimage and ftpmaster for foundations-p-image-build-pipeline.
+
+ 16:22:26 <cjwatson> Reorganised the ubiquity test suite to be able to run in a DEP-8-compliant package tester (i.e. testing the installed version of the package).
+
+ 16:22:29 <cjwatson> Working on a refactoring of how ubiquity removes about-to-be-copied files from the target system that fixes a slew of bugs and is more testable.
+
+ 16:22:32 <cjwatson> ..
+
+ 16:23:04 <jhunt> cjwatson: have we got the infrastructure to run DEP-8 tests yet?
+
+ 16:23:36 <cjwatson> autopkgtest exists; I don't know its current status, and we don't yet have it set up in a datacentre machine or anything
+
+ 16:23:57 <cjwatson> in theory should be a simple matter of sysadmin
+
+ 16:24:15 <jhunt> great as I'd like to be able to run the upstart tests in this way too.
+
+ 16:24:36 <cjwatson> You should be able to give autopkgtest a spin locally if you have time :)
+
+ 16:25:03 <slangasek> stgraber: this udev change would more than slow the boot, it would prevent events from being triggered entirely... this requires a versioned dep on upstart.
+
+ 16:25:31 <cjwatson> I admit I didn't actually try it out, merely ran the test in the appropriate environment under strace to ensure that it was testing the installed system and read the spec for the control file very carefully
+
+ 16:25:52 <jhunt> cjwatson: ok, ta.
+
+ 16:26:06 <slangasek> is the QA team involved with the autopkgtest discussions?
+
+ 16:26:11 <stgraber> slangasek: indeed, I'll add the versioned dep.
+
+ 16:26:51 <cjwatson> slangasek: there were QA people present at the appropriate UDS sessions, and jibel has a work item that came out of that; can't speak for after that
+
+ 16:27:01 <slangasek> stgraber: please check that such a versioned dep doesn't cause upgrade problems, too...
+
+ 16:27:29 <slangasek> cjwatson: ok
+
+ 16:28:11 <slangasek> cjwatson: just wondering if this is something that should be set up to run as part of the QA lab
+
+ 16:30:39 <cjwatson> eventually, yes; the blueprint calls for initial metadata to be added to a few key packages, and for something to be written that's able to feed it into a putative "should this be allowed to migrate from -proposed" tool
+
+ 16:30:48 * slangasek nods
+
+ 16:30:50 <cjwatson> https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-upload-intermediary
+
+ 16:31:45 <slangasek> any other questions?
+
+ 16:32:30 <slangasek> [TOPIC] Bugs
+
+ 16:33:29 <bdmurray> I've run across a couple this week worth discussing
+
+ 16:33:46 <bdmurray> Is bug 930304 something our team should fix?
+
+ 16:33:47 <ubottu> Launchpad bug 930304 in eglibc (Ubuntu) "gdm is attempted to be reloaded even when not runnning" [Medium,Triaged] https://launchpad.net/bugs/930304
+
+ 16:34:01 <slangasek> yes
+
+ 16:34:22 <bdmurray> okay
+
+ 16:34:28 <slangasek> I'll probably wind up doing that one with my Debian eglibc committer hat
+
+ 16:34:39 <slangasek> (feel free to assign to me)
+
+ 16:34:51 <doko> ohh, nice =)
+
+ 16:35:17 <bdmurray> regarding bug 818760 should the timeout be increased or might it be something with the server?
+
+ 16:35:18 <ubottu> Launchpad bug 818760 in update-manager (Ubuntu) "update-manager crashed with timeout in readline(): timed out" [High,Confirmed] https://launchpad.net/bugs/818760
+
+ 16:35:33 <bdmurray> uri=urllib2.urlopen(req, timeout=20)
+
+ 16:35:34 <cjwatson> in principle it's always possible for network communication to fail for all kinds of reasons
+
+ 16:35:41 <bdmurray> from the traceback
+
+ 16:36:04 <cjwatson> u-m has to cope somehow without crashing
+
+ 16:36:26 <cjwatson> and preferably without stalling the UI forever while it tries to talk through a firewall that's dropping all its outbound packets, say
+
+ 16:37:17 <slangasek> right, so it needs to be fixed to not crash
+
+ 16:37:58 <bdmurray> got it
+
+ 16:39:37 <bdmurray> bug 926581 - that should have tasks for the meta package or the package manager?
+
+ 16:39:39 <ubottu> Launchpad bug 926581 in msttcorefonts (Ubuntu) "eula not shown when installed via restricted-extras" [High,Triaged] https://launchpad.net/bugs/926581
+
+ 16:39:46 <mvo> (fwiw, this stuff should be running in a thread already, but indeed, it should not crash)
+
+ 16:40:46 <ev> ah, debconf. Can we set fire to it yet?
+
+ 16:40:54 <cjwatson> :-P
+
+ 16:41:12 <ev> :D
+
+ 16:41:15 <slangasek> no, but feel free to fix its protocol ;)
+
+ 16:41:26 <cjwatson> what's the protocol-level problem here?
+
+ 16:41:31 <slangasek> here? none
+
+ 16:41:40 <ev> sure, I'll just make it NOP every instruction
+
+ 16:41:43 <slangasek> but I was offering ev productive outlets for his anger ;)
+
+ 16:42:35 <ev> give me the source code to dpkg and hook me to a turbine. I'll power London with my rage. ;)
+
+ 16:42:40 <slangasek> bdmurray: seems like a synaptic problem
+
+ 16:42:59 <bdmurray> and software-center (that's what I tested)
+
+ 16:43:17 <bdmurray> er, not software-center
+
+ 16:43:20 <bdmurray> okay, thanks!
+
+ 16:43:23 <slangasek> oh
+
+ 16:43:27 <slangasek> sorry, read to fast
+
+ 16:43:35 <slangasek> I read comment 3 but didn't digest 4
+
+ 16:44:02 <bdmurray> well my grammar didn't help I'm sure
+
+ 16:44:45 <slangasek> that's a puzzling one
+
+ 16:44:52 <slangasek> anyone want to take a closer look at it?
+
+ 16:46:24 <slangasek> well, I'll have a peek then
+
+ 16:46:40 <slangasek> bdmurray: any other bugs?
+
+ 16:47:22 <bdmurray> just wubi bug 862003
+
+ 16:47:23 <ubottu> Launchpad bug 862003 in Wubi "wubi installs successfully but ends in 'permission denied' error due to the presence of a virtual or readonly drive; this only happens running wubi.exe standalone i.e. when installing using the tar.xz preinstalled image" [High,Triaged] https://launchpad.net/bugs/862003
+
+ 16:48:48 <cjwatson> ... how's that Windows hire going? ;-)
+
+ 16:49:11 <slangasek> ... workin' on it
+
+ 16:49:16 <slangasek> add that bug to the queue :P
+
+ 16:49:58 <bdmurray> I'll have to make a queue but okay
+
+ 16:50:12 <slangasek> [TOPIC] AOB
+
+ 16:50:15 <slangasek> anything else?
+
+ 16:51:20 <ev> filing a freeze exception for the crash database stuff as mentioned above
+
+ 16:51:30 <ev> not a lot more work, just more than I think I'll manage tonight
+
+ 16:52:01 <cjwatson> the freeze is actually 2100 tomorrow, I believe
+
+ 16:52:22 <ev> yay, that buys me a bit more time
+
+ 16:52:26 <slangasek> :)
+
+ 16:52:42 <ev> should I request an exception, just in case, or is mentioning it here enough to make the release team aware that I'm cutting it close?
+
+ 16:53:02 <slangasek> it's already on Kate's list
+
+ 16:53:11 <slangasek> as a "late-landing change"
+
+ 16:53:25 <cjwatson> https://wiki.ubuntu.com/PrecisePangolin/FeatureLanding
+
+ 16:53:29 <slangasek> yep
+
+ 16:53:50 <ev> wow, hyper-organized
+
+ 16:53:58 <ev> cheers guys
+
+ 16:54:10 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

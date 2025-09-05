@@ -1,0 +1,618 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:03:28 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-29-16.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Bugz
+
+ *Patch piloting
+
+ *AOB
+
+
+
+Meeting ended at 16:56:24 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (58)
+ * infinity (56)
+ * bdmurray (30)
+ * ubottu (28)
+ * ogra_ (25)
+ * doko (24)
+ * stgraber (21)
+ * jodh (19)
+ * mvo (9)
+ * barry (7)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:03:28 <slangasek> #startmeeting
+
+ 16:03:28 <meetingology> Meeting started Wed Feb 29 16:03:28 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:03:28 <meetingology> 
+
+ 16:03:28 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:38 <slangasek> [TOPIC] Lightning round
+
+ 16:04:47 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity)
+
+ 16:04:50 <slangasek> infinity barry stgraber ogra bdmurray slangasek doko jodh ev
+
+ 16:04:58 <slangasek> infinity: looks like you get to go first for your first Foundations meeting :)
+
+ 16:05:11 <infinity> Fiiiine.
+
+ 16:05:13 <doko> ohh man, this list is long ...
+
+ 16:05:14 <infinity> Worked on this week: - cdimage and debian-cd tweaks for ARM images and kubuntu-active - helped with general release management and queue management - filed tickets with IS for buildd precise upgrades - looked at fpc on armhf a bit more
+
+ 16:05:18 <infinity> Upcoming work: - need to chase down status of gnat on armhf with Linaro - more work on livefs-in-soyuz (rewriting from memory) - need to find time to debug the root cause of the qtwebkit-source FTBFS - finish the fpc on armhf port - dodge doko's attempts to dump the entire C toolchain on me - possibility of a (short) emergency VAC for personal reasons
+
+ 16:05:23 <infinity> Gah.
+
+ 16:05:26 <infinity> irrsi, damn you and your hatred of leading whitespace.
+
+ 16:05:44 <infinity> irssi, too.
+
+ 16:05:48 <infinity> Let's try that harder.
+
+ 16:05:50 <infinity> Worked on this week:
+
+ 16:05:51 <infinity> - cdimage and debian-cd tweaks for ARM images and kubuntu-active
+
+ 16:05:51 <infinity> - helped with general release management and queue management
+
+ 16:05:51 <infinity> - filed tickets with IS for buildd precise upgrades
+
+ 16:05:53 <infinity> - looked at fpc on armhf a bit more
+
+ 16:05:56 <infinity> Upcoming work:
+
+ 16:05:58 <infinity> - need to chase down status of gnat on armhf with Linaro
+
+ 16:06:00 <infinity> - more work on livefs-in-soyuz (rewriting from memory)
+
+ 16:06:03 <infinity> - need to find time to debug the root cause of the qtwebkit-source FTBFS
+
+ 16:06:05 <infinity> - finish the fpc on armhf port
+
+ 16:06:08 <infinity> - dodge doko's attempts to dump the entire C toolchain on me
+
+ 16:06:11 <infinity> - possibility of a (short) emergency VAC for personal reasons
+
+ 16:06:13 <infinity> There.
+
+ 16:06:30 <doko> infinity, qtwebkit ... this is the linker needing too much memory, afaics
+
+ 16:06:41 <infinity> doko: Yes, but why?
+
+ 16:07:05 <doko> because it's an insane amount of code?
+
+ 16:07:15 <infinity> doko: It's the same amount of code on other arches. :P
+
+ 16:07:27 <slangasek> it was running out of memory on other arches too, before tweaking?
+
+ 16:07:31 <infinity> doko: Including armel, which doesn't have the issue.
+
+ 16:07:47 <doko> infinity, yes, and webkit ftbfs on powerpc for the same reason
+
+ 16:07:56 <infinity> So, I dunno.  We'll see.  Maybe it can just be tweaked a bit, or maybe the linker on armhf is doing something dumb.
+
+ 16:08:42 <barry> infinity: all done?
+
+ 16:08:49 <infinity> barry: Go nuts.
+
+ 16:09:03 * barry can't go where he already is, but...
+
+ 16:09:09 <infinity> Go nutser.
+
+ 16:09:11 <barry> bugs investigated, fixed, sponsored: bug 903126 (smc ftbfs), bug 903121 (crystalspace ftbfs), bug 27520 (cron multiple SRUs), bug 828731 (kexec-tools multiple SRUs), bug 848915 (update-manager without $DISPLAY), bug 556293 (apt global proxy), bug 942408 (python-support not cleaning up after upgrade).  Sync'd wadllib 1.3.0-1.  Also worked on Python issue 13703 (hash collision security issue) and Python 2.6.8rc1 released.  To do: +1maint,
+
+ 16:09:11 <barry> look at a few more bugs from my list, and prepping for Pycon next week.  ∞
+
+ 16:09:16 <ubottu> Launchpad bug 903126 in smc (Debian) "smc 1.9-4ubuntu1 fails to build with cegui-mk2 0.7.5-7" [Unknown,New] https://launchpad.net/bugs/903126
+
+ 16:09:17 <ubottu> Launchpad bug 903121 in crystalspace (Ubuntu) "crystalspace 1.4.0+dfsg-4ubuntu2 fails to build with cegui-mk2 0.7.5-7" [Medium,Triaged] https://launchpad.net/bugs/903121
+
+ 16:09:18 <ubottu> Launchpad bug 27520 in cron (Ubuntu Lucid) "cron daemon caches user-non-existent lookup results, causing "ORPHAN" message and skipping jobs for all LDAP/NIS-defined users" [Medium,Fix committed] https://launchpad.net/bugs/27520
+
+ 16:09:19 <ubottu> Launchpad bug 828731 in kexec-tools (Ubuntu Natty) "kdump functionality not working as expected when /boot is a separate partition" [Medium,In progress] https://launchpad.net/bugs/828731
+
+ 16:09:20 <ubottu> Launchpad bug 848915 in update-manager (Ubuntu Precise) "cryptic traceback when running update-manager w/no X $DISPLAY" [High,Triaged] https://launchpad.net/bugs/848915
+
+ 16:09:58 <stgraber> - Networking
+
+ 16:09:58 <stgraber> - Blogged about the changes to DNS in 12.04: http://www.stgraber.org/2012/02/24/dns-in-ubuntu-12-04/
+
+ 16:10:01 <stgraber> - Tested and applied patch to fix netcfg's dns-nameservers handling (bug 932275)
+
+ 16:10:02 <ubottu> Launchpad bug 932275 in ifupdown (Ubuntu) "Bogus or no nameserver information written to /etc/network/interfaces" [High,Triaged] https://launchpad.net/bugs/932275
+
+ 16:10:04 <stgraber> - TPM
+
+ 16:10:06 <stgraber> - Fixed bug 934799 so that trousers now installs properly
+
+ 16:10:07 <ubottu> Launchpad bug 934799 in trousers (Ubuntu) "trousers start script has exit status 137" [Undecided,Fix released] https://launchpad.net/bugs/934799
+
+ 16:10:09 <stgraber> - Installer
+
+ 16:10:11 <stgraber> - Last minute fixes of the installer slideshows (all flavours) and uploaded for beta1
+
+ 16:10:14 <stgraber> - Fixed bug 898278 and bug 936115 in ubiquity.
+
+ 16:10:16 <ubottu> Launchpad bug 898278 in ubiquity (Ubuntu Precise) "Upgrade menu option should not appear for old releases" [High,Fix released] https://launchpad.net/bugs/898278
+
+ 16:10:17 <stgraber> - Tracked down bug 939450 to a gtk regression
+
+ 16:10:18 <ubottu> Launchpad bug 936115 in ubiquity (Ubuntu Precise) "ubiquity crashed with TypeError in partman_popup(): popup() takes exactly 7 arguments (6 given)" [High,Fix released] https://launchpad.net/bugs/936115
+
+ 16:10:19 <ubottu> Launchpad bug 939450 in ubiquity (Ubuntu Precise) "ubiquity crashed with TypeError: argument of type 'NoneType' is not iterable in ubi-partman.py" [High,Triaged] https://launchpad.net/bugs/939450
+
+ 16:10:19 <stgraber> - Uploaded a workaround for bug 645449 that in turn caused bug 942560, now woking on the right way of fixing this ...
+
+ 16:10:23 <stgraber> - Also started debugging bug 940908 but it's lower priority than the other one
+
+ 16:10:25 <ubottu> Launchpad bug 645449 in ubiquity (Ubuntu Precise) "Ubiquity hangs at Keyboard layout if you use keyboard to navigate / select" [High,Fix released] https://launchpad.net/bugs/645449
+
+ 16:10:26 <stgraber> - Noticed during ISO testing that Wubi in Edubuntu doesn't allow me to install it (only offer the "reboot to live environment" option), apparently caused by broken free space calculation
+
+ 16:10:26 <ubottu> Launchpad bug 942560 in ubiquity (Ubuntu) "keyboard layout screen - Keyboard navigation broken" [High,Triaged] https://launchpad.net/bugs/942560
+
+ 16:10:27 <ubottu> Launchpad bug 940908 in ubiquity (Ubuntu Precise) "Keyboard layout not set on persistent USB image" [High,Confirmed] https://launchpad.net/bugs/940908
+
+ 16:10:30 <stgraber> - Containers
+
+ 16:10:32 <stgraber> - Some more Ubuntu server guide review for the LXC section
+
+ 16:10:35 <stgraber> - Fixed some more bugs in the Ubuntu LXC template to do with sudo group in older releases.
+
+ 16:10:38 <stgraber> - Other
+
+ 16:10:40 <stgraber> - Wrote a new queuebot, currently running in #ubuntu-release
+
+ 16:10:43 <stgraber> (done)
+
+ 16:10:49 <doko> infinity, ftbfs on armel too
+
+ 16:11:02 <slangasek> barry: I assigned you a couple of triaged bugs on update-manager that looked like easy wins; do you think you could get to those this week?
+
+ 16:11:17 <infinity> doko: Only due to a broken .symbols file.
+
+ 16:11:18 <barry> slangasek: yep, their on my list for this week
+
+ 16:11:20 <infinity> doko: The link succeeds.
+
+ 16:11:22 <slangasek> cheers
+
+ 16:11:41 <jodh> Worked on fix for bug 940290 (updating tests atm...) Investigating bug
+
+ 16:11:41 <jodh> 883618 - looks like "something" is calling an xdg-* command or possibly
+
+ 16:11:41 <jodh> /usr/share/acpi-support/screenblank, but tricky to pin this down due to
+
+ 16:11:41 <jodh> the time taken to perform the upgrade. Wishing we had opengrok to help
+
+ 16:11:42 <ubottu> Launchpad bug 940290 in upstart "console log consumes fds upon job restart/respawn" [Medium,Confirmed] https://launchpad.net/bugs/940290
+
+ 16:11:44 <jodh> track this down. :). Did some investigation on bug 935296 and
+
+ 16:11:45 <ubottu> Launchpad bug 935296 in java-atk-wrapper (Ubuntu Precise) "java-atk-wrapper prevents java applications from starting" [High,Confirmed] https://launchpad.net/bugs/935296
+
+ 16:11:47 <jodh> established bug is with AT-SPI/ATK.
+
+ 16:11:51 <jodh> ⌛
+
+ 16:12:03 <barry> slangasek: if you have a preference for priority, pvtmsg me your list
+
+ 16:13:36 <slangasek> barry: ack
+
+ 16:13:38 <slangasek> ogra_: you're up
+
+ 16:13:47 <ogra_> jodh, is serial console support still on your list ?
+
+ 16:13:57 <ogra_> done:
+
+ 16:13:57 <ogra_> * started researching why ubiquity kde bits end up on ac100 images
+
+ 16:13:57 <ogra_> * look into bug #924018 (Preseeding doesn't work with oem-config) ... made sure preseed values get applied at all, now on to why oem-config doesnt pick up
+
+ 16:13:57 <ogra_> * tried to spend a little time with bug #747229 (screen color change when oem-config-remove runs in serial consoles)
+
+ 16:13:58 <ogra_> * closed a handfull of bugs in the "rotting ubuntu-arm bugs" list, ongoing process
+
+ 16:14:00 <ogra_> * started researching why the keyboard selection gets completely skipped in oem-config in some preinstalled images (bug #925482)
+
+ 16:14:00 <ubottu> Launchpad bug 924018 in ubiquity (Ubuntu) "Preseeding doesn't work with oem-config" [Medium,Confirmed] https://launchpad.net/bugs/924018
+
+ 16:14:02 <ubottu> Launchpad bug 747229 in ubiquity (Ubuntu Precise) "weird color change during oem-config debconf package removal step in serial installs" [Medium,Confirmed] https://launchpad.net/bugs/747229
+
+ 16:14:03 <ubottu> Launchpad bug 925482 in ubiquity (Ubuntu Precise) "no keboard selection offered in oem-config on precise ac100 images" [High,New] https://launchpad.net/bugs/925482
+
+ 16:14:03 <ogra_> * did general image testing for omap4 and ac100 as well as typical milestone paperwork (tech preview wiki, manifest etc)
+
+ 16:14:06 <ogra_> todo:
+
+ 16:14:08 <ogra_> * fix whatever causes the kde bits to show up
+
+ 16:14:10 <ogra_> * more oem-config bugwork
+
+ 16:14:12 <ogra_> * stopwatch initrdless boot
+
+ 16:14:14 <ogra_> * look across the armel ftbfs list
+
+ 16:14:16 <ogra_> ..
+
+ 16:14:36 <infinity> ogra_: Which kde bits?
+
+ 16:14:59 <ogra_> infinity, well, ubiquity-frontend-kde and all its deps end up on the ac100 images
+
+ 16:15:34 <ogra_> not sure why ... but its pretty visible since akonadi is the first app in the unity app lens now :P
+
+ 16:15:49 <ogra_> they also dont get removed
+
+ 16:15:51 <ogra_> ..
+
+ 16:15:57 <bdmurray> bug triage of iso-testing bug reports
+
+ 16:15:57 <bdmurray> bug triage of update-manager bug reports
+
+ 16:15:59 <bdmurray> discussion with mvo regarding NvidiaDetection and datadir and distribution upgrades (fixed)
+
+ 16:16:02 <infinity> ogra_: I'll poke at it, it's my code breaking. :P
+
+ 16:16:09 <ogra_> you sure ?
+
+ 16:16:13 <infinity> *nod*
+
+ 16:16:17 <bdmurray> modifications to the bug pattern for bug 541595 to avoid incorrect dupication
+
+ 16:16:18 <jodh> ogra_: it's in there somewhere. I'll see if I can sift it slightly
+
+ 16:16:18 <jodh> closer to the surface.
+
+ 16:16:18 <jodh> 
+
+ 16:16:18 <jodh> 
+
+ 16:16:19 <ubottu> Launchpad bug 541595 in dpkg (Ubuntu) "[Master] package failed to install/upgrade: package is already installed and configured" [High,Confirmed] https://launchpad.net/bugs/541595
+
+ 16:16:21 <bdmurray> bug bot fix for no package bugs without a SourcePackage line in the bug description
+
+ 16:16:24 <bdmurray> wrote launchpadlib code to show the 20 hottest bugs about packages to which the foundations team is subscribed
+
+ 16:16:27 <bdmurray> blog post regarding recent package bug tasks charts
+
+ 16:16:33 <ogra_> infinity, i was suspecting ac100-tarball-installer vs jasper
+
+ 16:16:42 <bdmurray> experimentation with recent package bug tasks and showing duplicate bugs
+
+ 16:16:43 <bdmurray> experimented with recent bug tasks graph changes (periods show 1-7 and 8-14)
+
+ 16:16:46 <bdmurray> created a bugs receiving duplicates chart
+
+ 16:16:52 <bdmurray> troubleshooting an mdadm recovery issue - bug 925280
+
+ 16:16:52 <bdmurray> push ubiquity apport package hook modifications to fix bug 874727
+
+ 16:16:53 <bdmurray> call with evan regarding crash database
+
+ 16:16:53 <ubottu> Launchpad bug 925280 in mdadm (Ubuntu) "Software RAID fails to rebuild after testing degraded cold boot" [Medium,Confirmed] https://launchpad.net/bugs/925280
+
+ 16:16:55 <ubottu> Launchpad bug 874727 in apport (Ubuntu Precise) "media error bug report blocking is incomplete" [High,Fix released] https://launchpad.net/bugs/874727
+
+ 16:17:02 <bdmurray> ␗
+
+ 16:17:07 <slangasek> bdmurray: hmm, is there more than one "already installed and configured" bug, or was the bug pattern duping things that were altogether unrelated?
+
+ 16:17:36 <doko> infinity, both the bfd and the gold linker fail to link this
+
+ 16:17:36 <bdmurray> slangasek: no, not altogether unrelated - just a bit overzealous
+
+ 16:18:01 <bdmurray> slangasek: it was a small number of incorrect dupes and I fixed the most recent ones
+
+ 16:18:09 <slangasek> ok
+
+ 16:18:15 <infinity> doko: Ahh, I hadn't tested with gold yet (though I note that the build is attempting to use gold and failing to do so... Do we not carry the --with-ld GCC patch?)
+
+ 16:19:02 <doko> infinity, use -B/usr/lib/gold-ld to use gold
+
+ 16:19:13 <doko> /usr/bin/ld: fatal error: libQtWebKit.so.4.9.0: mmap: failed to allocate 4275704736 bytes for output file: Cannot allocate memory
+
+ 16:19:13 <doko> collect2: ld returned 1 exit status
+
+ 16:20:01 <slangasek> bdmurray: I don't think I've seen this hottest-bugs list yet - anything interesting there?
+
+ 16:20:57 <slangasek> * worked on:
+
+ 16:20:57 <slangasek> * ARM team hand-off
+
+ 16:20:57 <slangasek> * driving discussion with Debian about upstart
+
+ 16:20:57 <slangasek> * beta-1 tending
+
+ 16:20:57 <slangasek> * NFS fixes (bug #939232)
+
+ 16:20:59 <ubottu> Launchpad bug 939232 in libnfsidmap (Ubuntu) "nfs mount fails and rpc.idmapd fails" [Medium,Fix released] https://launchpad.net/bugs/939232
+
+ 16:21:00 <slangasek> * resolvconf: cope with historically broken netcfg. (bug #932275)
+
+ 16:21:00 <ubottu> Launchpad bug 932275 in ifupdown (Ubuntu) "Bogus or no nameserver information written to /etc/network/interfaces" [High,Triaged] https://launchpad.net/bugs/932275
+
+ 16:21:02 <slangasek> * upload activity-log-manager to fix an upgrade issue (bug #939842)
+
+ 16:21:03 <ubottu> Launchpad bug 939842 in activity-log-manager (Ubuntu) "package activity-log-manager-control-center 0.9.1-0ubuntu2 failed to install/upgrade: trying to overwrite '/etc/dbus-1/system.d/com.ubuntu.WhoopsiePreferences.conf', which is also in package whoopsie 0.1.10" [Undecided,Fix released] https://launchpad.net/bugs/939842
+
+ 16:21:04 <slangasek> * upcoming:
+
+ 16:21:07 <slangasek> * planning finalized for virtual sprint (Mar 19-21)
+
+ 16:21:09 <bdmurray> slangasek: that's for later!  the hottest bug is twice as hot as the 2nd hottest and we should sort it out
+
+ 16:21:10 <slangasek> (done)
+
+ 16:21:32 <infinity> ogra_: Definitely my bug.  Fixing.
+
+ 16:22:06 <slangasek> bdmurray: ok :)
+
+ 16:22:10 <doko> - integrated icedtea-web pages upstream, update package to current 1.2 branch
+
+ 16:22:10 <doko> - update and integrate cjk font patches into openjdk-6 and -7
+
+ 16:22:10 <doko> - investigate test suite hang in openjdk-6, ix86 only, for now just disable the tests
+
+ 16:22:10 <doko> - gcc-4.6.3~rc1 packaging
+
+ 16:22:10 <doko> - prepare gcc-linaro updates based on the existing 2012.02 release
+
+ 16:22:11 <doko> - cherry pick gcc-linaro ARM patches from Linaro
+
+ 16:22:15 <doko> - help janimo to investigate the chromium build failure on armhf
+
+ 16:22:17 <doko> - investigate and forward some general gcc-4.6 ICEs (ppl, webkit)
+
+ 16:22:19 <doko> - investigate qtwebkit-source build failures on ARM
+
+ 16:22:21 <doko> - prepare eglibc debian merge (libc6-dbg multiarch installability for non-ARM)
+
+ 16:22:23 <doko> - dump eglibc on adconrad, do it right!
+
+ 16:22:24 <doko> (done, but still dumping ;)
+
+ 16:22:27 * slangasek eyes the snow
+
+ 16:23:35 * infinity doesn't see anyone named adconrad.
+
+ 16:23:56 <slangasek> heh
+
+ 16:24:24 <slangasek> and jodh went and ev is on the list but is at conference today
+
+ 16:24:26 <doko> that's a fake dump so that you are not prepared for the real one ;-P
+
+ 16:24:48 <slangasek> [TOPIC] Bugz
+
+ 16:25:38 <bdmurray> so our hottest bug is bug 659438
+
+ 16:25:39 <ubottu> Launchpad bug 659438 in apt (Ubuntu) "Installation/Removal fails because of package which could not be located (failure in apt.Cache.required_download)" [High,Triaged] https://launchpad.net/bugs/659438
+
+ 16:26:19 <bdmurray> I believe there is some bug status confusion on it
+
+ 16:26:21 <infinity> bdmurray: And if it didn't OOPS LP, we could look at it.
+
+ 16:26:34 <slangasek> it worked for me
+
+ 16:26:49 <infinity> Three timeouts in a row for me.
+
+ 16:26:52 <infinity> Oh well.
+
+ 16:26:56 <bdmurray> use +text
+
+ 16:27:02 <bdmurray> if you want the gist of it
+
+ 16:27:11 <infinity> Ahh, it just rendered on the fourth go.
+
+ 16:27:32 <ogra_> hmm, some dupes there
+
+ 16:28:09 <bdmurray> only dupe 903269 has apport data and is from precise
+
+ 16:28:56 <slangasek> I wonder if we should just set that as the master bug
+
+ 16:30:52 <bdmurray> It might also be that its the same traceback but a different bug
+
+ 16:31:04 <slangasek> could be
+
+ 16:31:33 <infinity> ogra_: (Fix committed and uploaded, BTW)
+
+ 16:31:47 <ogra_> merci !
+
+ 16:31:58 * ogra_ strikes it off his todo
+
+ 16:32:10 <slangasek> bdmurray: followed up on the bug and dropped the "fix committed"
+
+ 16:32:17 <slangasek> er no
+
+ 16:32:22 <slangasek> attempted to, but now I've hit an lp timeout ;)
+
+ 16:32:43 <slangasek> bdmurray: I'll try to follow up on that asynchronously then.  what else do you have for bugs?
+
+ 16:33:25 <slangasek> ok that's way too much white stuff falling from the sky
+
+ 16:33:26 <bdmurray> bug 941922 - I couldn't decide how important that should be
+
+ 16:33:30 <ubottu> Launchpad bug 941922 in update-manager (Ubuntu) "do-release-upgrade races puppet for file contents" [Undecided,New] https://launchpad.net/bugs/941922
+
+ 16:34:23 <slangasek> bdmurray: hmm, I'd say medium at most
+
+ 16:35:02 <slangasek> seems like people using puppet should be disabling it during a dist-upgrade, no?
+
+ 16:35:17 <infinity> I'm inclined to say that automagic configuration management and package managers just plain can't run concurrently.
+
+ 16:35:35 <stgraber> the definitely should turn off puppet or any other configuration management tool during upgrade
+
+ 16:35:44 <stgraber> *they
+
+ 16:35:47 <infinity> Not sure if that's something that should be fixed in apt/dpkg/rpm/etc/etc, or just in puppet (or in the minds of admins)
+
+ 16:35:54 <mvo> bdmurray: about #659438> do the reproduce steps actually work?
+
+ 16:36:31 <bdmurray> mvo: the test case in that?  I haven't tried that yet but can today.
+
+ 16:36:45 <ogra_> stgraber, well, as ugly as it is, then there should probably a debconf note telling them
+
+ 16:36:45 <mvo> we *could* turn off pupett automatically before the upgrade if that is something that people want, I'm just not sure that this is uncontroversial
+
+ 16:37:24 <mvo> bdmurray: that would be great, TBH the instruction does not look correct to me but I may be wrong about it
+
+ 16:37:29 <ogra_> (like we do on libc upgrades)
+
+ 16:37:34 <infinity> mvo: Sure, you could do it in a high level tool like update-manager, but that still feels like it's broken for low-level package management.
+
+ 16:37:49 * mvo nods at infinity
+
+ 16:38:03 <infinity> mvo: Maybe what this really wants is puppet shipping an apt-utils hook that turns itself off and on.
+
+ 16:38:15 <slangasek> that sounds sane to me
+
+ 16:38:15 <infinity> mvo: Still doesn't cover the dpkg case, but it covers most everything else.
+
+ 16:38:57 <mvo> infinity: good point, that sounds like the best way forward, dpkg::{pre,post}-invoke
+
+ 16:39:05 * infinity nods.
+
+ 16:39:27 <slangasek> so we can reassign it to puppet and let the server team decide the severity? :)
+
+ 16:39:30 <infinity> And a dependency on apt-utils, so it works.  (or is apt-utils no longer required for dpkg::-invoke hooks?)
+
+ 16:39:56 <mvo> the invoke hooks should work without apt-utils
+
+ 16:40:00 <infinity> Oh, shiny.
+
+ 16:40:05 <infinity> Even better, then.
+
+ 16:40:17 <infinity> Feels like the cleanest solution to me, short of doing it at the dpkg level.
+
+ 16:40:21 * mvo tries to think of a reason why it wouldn't but fails and gets more tea to keep the engine running
+
+ 16:40:28 <slangasek> mvo, infinity: one of you want to reassign to puppet with that explanation?
+
+ 16:40:35 <jodh> What about the case where an admin runs do-release-upgrade by
+
+ 16:40:36 <jodh> mistake? Wouldn't it be better to have the command print a warning an
+
+ 16:40:36 <jodh> exit until admins intervene to manually switch off puppet/cfengine/bcfg2/etc?
+
+ 16:40:36 <jodh> 
+
+ 16:40:45 <jodh> s/an/and/
+
+ 16:41:08 <slangasek> jodh: if you run "do-release-upgrade" by mistake, you get to keep both pieces
+
+ 16:41:28 <infinity> jodh: Well, with the apt hook solution, there's no real need for warning.  puppet just gets disabled (and re-enabled) every time apt runs.
+
+ 16:41:28 <slangasek> we're not responsible for our users hiring minimally competent sysadmins ;)
+
+ 16:41:31 <mvo> jodh: if we go with the suggestion from infinity that would be fine because puttet would shutdown when dpkg is invoked by apt which it should. and if at this point it was still a mistake there are more problems :)
+
+ 16:42:34 <infinity> slangasek: I can follow up on the bug post-meeting, since mvo seems to have remained silent. :P
+
+ 16:42:41 <slangasek> infinity: thanks :-)
+
+ 16:42:52 <mvo> infinity: I was about to say that I can do it but you deserve credit for the plan so … ;)
+
+ 16:43:00 <slangasek> bdmurray: any more?
+
+ 16:43:13 <jodh> If a system is being managed by puppet, is it ever valid to run
+
+ 16:43:13 <jodh> do-release-upgrade though?
+
+ 16:43:13 <jodh> 
+
+ 16:43:25 <bdmurray> bug 942030
+
+ 16:43:26 <ubottu> Launchpad bug 942030 in ubiquity (Ubuntu) "'Take a photo' preview pane not showing live preview" [High,Confirmed] https://launchpad.net/bugs/942030
+
+ 16:43:55 <infinity> jodh: Sure.
+
+ 16:44:33 <infinity> jodh: d-r-u is just a flimsy wrapper around apt.  In the best case (ie: if we don't have horrible bugs we're hiding and working around in update-manager), it literally does nothing but install and remove packages. :P
+
+ 16:44:38 <stgraber> bdmurray: I guess I'll take that one once I'm done with the keyboard stuff then, will need to figure out a way to expose a webcam to kvm ;)
+
+ 16:44:52 <infinity> jodh: And if "running apt" is an invalid thing for puppet users to do, there's a problem.
+
+ 16:44:52 <bdmurray> heh
+
+ 16:45:38 <bdmurray> that's all then
+
+ 16:47:55 <slangasek> [TOPIC] Patch piloting
+
+ 16:48:01 <slangasek> just as dholbach leaves ;)
+
+ 16:48:13 <barry> :)
+
+ 16:48:27 <infinity> Well timed.
+
+ 16:48:43 <infinity> I know I missed my last pilot session due to connectivity issues while I was at Connect. :/
+
+ 16:49:00 <slangasek> just to reiterate... we need to make sure patch piloting is happening, to keep contributions flowing in
+
+ 16:49:09 <slangasek> our track record on this has not been great
+
+ 16:49:43 <slangasek> if circumstances prevent you from piloting on your assigned day (because it overlaps with a conference for example), by all means swap days
+
+ 16:50:04 <slangasek> doko: looks like you're scheduled to patch pilot tomorrow - is that going to work ok?
+
+ 16:50:21 <doko> urgh
+
+ 16:50:32 <doko> yeah, will try to start early
+
+ 16:51:02 <bdmurray> regarding patches I also wanted to mention https://bugs.launchpad.net/~foundations-bugs/+patches
+
+ 16:53:01 <slangasek> bdmurray: do you know if that list is going up/down?
+
+ 16:54:18 <bdmurray> slangasek: I would guess up but don't have numbers right in front of me
+
+ 16:54:31 <slangasek> that's a good list of bugs for folks to draw on as well when patch piloting, anyway - probably a lot of these (particularly the older ones) should have the patch tag dropped because they don't really fix the bug
+
+ 16:54:49 <slangasek> maybe stgraber wants to review the patch in bug #20420 :)
+
+ 16:54:51 <ubottu> Launchpad bug 20420 in netcfg (Ubuntu) "default to wired network interface if connected" [Wishlist,Confirmed] https://launchpad.net/bugs/20420
+
+ 16:55:34 <slangasek> any other concerns on patch piloting?
+
+ 16:55:49 <slangasek> [TOPIC] AOB
+
+ 16:55:57 <slangasek> or other business?
+
+ 16:56:24 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

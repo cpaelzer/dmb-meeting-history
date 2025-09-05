@@ -1,0 +1,358 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 17 Aug at 15:01 &mdash; 15:52 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-08-17-15.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:01.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-17-aug-2023/   (juliank, 15:02)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:14.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:14)
+ * ''LINK:'' https://warthogs.atlassian.net/browse/FR-5133   (vorlon, 15:29)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:34.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:34)
+
+=== AOB ===
+
+Discussion started by juliank at 15:34.
+
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:35.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:35)
+
+=== AOB ===
+
+Discussion started by juliank at 15:47.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (60)
+ * vorlon (42)
+ * slyon (9)
+ * pushkarnk (4)
+ * bdrung (4)
+ * schopin (4)
+ * bdmurray (3)
+ * danilogondolfo (3)
+ * ginggs (3)
+ * meetingology (2)
+ * ogayot (2)
+ * mclemenceau_ (1)
+ * dbungert (1)
+ * xypron (1)
+ * mateus-morais (1)
+ * enr0n (1)
+ * liushuyu (1)
+
+
+
+== Full log ==
+
+
+ 15:01 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started at 15:01:47 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <juliank> #topic Lightning rounds
+
+ 15:02 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-17-aug-2023/
+
+ 15:02 <juliank> let's take our usual minutes to read and um ugh finish writing I guess
+
+ 15:02 <mclemenceau_> o/
+
+ 15:03 <slyon> o/
+
+ 15:06 <pushkarnk> o/
+
+ 15:09 <juliank> Is the channel topic some joke?
+
+ 15:09 * juliank just noticed it is "Outstanding mailing list requests to assign"
+
+ 15:11 <bdmurray> bdrung: Have you considered talking about how you are using bugpatterns and search-bugs?
+
+ 15:11 <juliank> Hooray thanks dbungert
+
+ 15:12 <juliank> weird stuff
+
+ 15:12 <juliank> :D
+
+ 15:12 <pushkarnk> ::)
+
+ 15:12 <bdrung> bdmurray, no, but this would fit in a lightning talk
+
+ 15:14 <juliank> #topic Release incoming bugs
+
+ 15:14 <juliank> let's continue
+
+ 15:14 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:14 <juliank> bug 2031172
+
+ 15:15 <juliank> uh
+
+ 15:15 <juliank> wrong list
+
+ 15:15 <juliank> s/list/line/
+
+ 15:15 <juliank> bug 2031421
+
+ 15:15 <slyon> I think danilogondolfo did investigate this already a bit? ^
+
+ 15:16 <danilogondolfo> I started investigating this one, I can reproduce the problem but I'm still not sure what is happening
+
+ 15:16 <slyon> we should probably take it and tag it foundations-todo
+
+ 15:16 <juliank> ack
+
+ 15:16 * slyon doing
+
+ 15:16 <juliank> bug 2029148 seems like a desktop thing
+
+ 15:17 <juliank> (it's here because it also has an ubuntu-meta task, but that seems not really right)
+
+ 15:17 <juliank> but let's skip it for now
+
+ 15:17 <juliank> bug 2031020
+
+ 15:17 <slyon> We can discuss this during proposed-migration ^
+
+ 15:18 <slyon> I mis-tagged it (and already removed the tag)
+
+ 15:18 <juliank> ack
+
+ 15:18 <juliank> bug 2031420
+
+ 15:18 <juliank> this one makes no sense
+
+ 15:19 <juliank> oh maybe it does?
+
+ 15:19 <juliank> /etc/grub.d/10_linux is a conffile
+
+ 15:19 <juliank> memtest86+ doesn't depend on grub-common
+
+ 15:19 <juliank> it can get configured after unpackging grub-common
+
+ 15:19 <juliank> but the conffile will only be moved in place during configuration?
+
+ 15:24 <juliank> bug 2017401
+
+ 15:24 <bdmurray> It looks like the server team is on that
+
+ 15:25 <vorlon> we should take it, unattended-upgrades is our package
+
+ 15:25 <juliank> I don't think there's anything actionable there
+
+ 15:26 <vorlon> yes there is
+
+ 15:26 <juliank> what?
+
+ 15:26 <vorlon> unattended-upgrades should be adjusted to not ignore the user's configuration of automatic reboots when livepatch is present
+
+ 15:26 <juliank> how is that related to automatic reboots?
+
+ 15:27 <juliank> oh
+
+ 15:27 <juliank> but that's not what the livepatch people and product team want afaict
+
+ 15:27 <vorlon> if a user configures livepatch and configures automatic reboots, we should honor the user's intent
+
+ 15:28 <vorlon> even though it is IMHO pointless
+
+ 15:28 <juliank> but how
+
+ 15:28 <vorlon> there is an example given in the bug log of a case where a livepatch became available before the deb was available via unattended-upgrades
+
+ 15:28 <juliank> we must not touch reboot-required essentially because then the stuff goes wrong
+
+ 15:29 <bdrung> It would be useful to differentiate between "reboot required" and "reboot useful"
+
+ 15:29 <vorlon> ok now you're talking implementation details ;)
+
+ 15:29 <vorlon> yes I've spun out a jira card about that
+
+ 15:29 <juliank> what we talked about and had agreement on is not surfacing reboot requirements if livepatched
+
+ 15:29 <vorlon> to consider for the 24.04 roadmap
+
+ 15:29 <vorlon> https://warthogs.atlassian.net/browse/FR-5133
+
+ 15:30 <juliank> that IMO also extends to automatic reboots
+
+ 15:30 <juliank> that's also not something owned by foundations
+
+ 15:30 <vorlon> juliank: well, I wasn't consulted wrt that agreement and am asking that it be reevaluated :)
+
+ 15:30 <juliank> the livepatch messaging and update messaging is owned by pro client verym uch
+
+ 15:31 <juliank> vorlon: hmm you were in the room where we discussed all the livepatch and update messaging with pro client
+
+ 15:32 <juliank> Can we setup a quick meeting with pro, livepatch and us to figure the right answer out?
+
+ 15:32 <vorlon> I'm not saying that we should be setting the reboot-required flag for this, I'm saying that the auto-reboot should still happen when the user has requested it
+
+ 15:32 <juliank> I think the auto-reboot should only happen if specifically configured to also reboot despite being livepatched
+
+ 15:32 <juliank> or livepatched too long ago ;)
+
+ 15:33 <juliank> other releases are empty
+
+ 15:34 <juliank> #topic Team proposed-migration report
+
+ 15:34 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:34 <juliank> #topic AOB
+
+ 15:35 <juliank> uh
+
+ 15:35 <juliank> #topic Team proposed-migration report
+
+ 15:35 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:36 <vorlon> nice list today
+
+ 15:36 * schopin feels guilty about that...
+
+ 15:36 <slyon> First one (python-reportlab) just needs to be demoted by an AA
+
+ 15:36 <vorlon> then I'll take it
+
+ 15:37 <vorlon> tpm2-tss in progress by slyon - carry over?
+
+ 15:37 <slyon> yes please.
+
+ 15:37 <vorlon> vim: danilogondolfo?
+
+ 15:37 <danilogondolfo> I have a card to work on the vim one this pulse
+
+ 15:37 <slyon> I have a workaround in place for tpm2-tss, but it's ugly. The proper fix is actively being worked on by Debian and upstream
+
+ 15:37 <vorlon> db5.3: sil2100
+
+ 15:38 <vorlon> libregexp-pattern-license-perl: bdrung?
+
+ 15:38 <bdrung> okay
+
+ 15:38 <vorlon> curl vs openssl: bdmurray?
+
+ 15:38 <vorlon> gnutls28: dbungert?
+
+ 15:38 <dbungert> ack for gnutls28
+
+ 15:39 <vorlon> that's gnutls28 autopkgtest regressions with new openssl, cute
+
+ 15:39 <vorlon> ginggs_: can you take the rest of the openssl autopkgtest regressions? (except petsc I'll follow up on that one)
+
+ 15:39 <ginggs> sure
+
+ 15:40 <vorlon> binutils: xypron?
+
+ 15:40 <xypron> ok
+
+ 15:40 <vorlon> python-dateutil: juliank?
+
+ 15:40 <bdmurray> ack
+
+ 15:40 <juliank> ack
+
+ 15:40 <vorlon> juliank: sorry, let's make that tzdata since there are other autopkgtest regressions to look at besides python-dateutil
+
+ 15:41 <vorlon> curl: mateus-morais?
+
+ 15:41 <juliank> ack
+
+ 15:41 <mateus-morais> ack
+
+ 15:41 <vorlon> cron: enr0n?
+
+ 15:41 <enr0n> vorlon: ack
+
+ 15:41 <bdrung> python-dateutil 2.7.3-3 fixed the tzdata failure
+
+ 15:41 <vorlon> eh python-dateutil vs mailman3 has overlap with both tzdata and curl; I'll just take a look at this one
+
+ 15:42 <vorlon> sudo: ogayot?
+
+ 15:42 <danilogondolfo> sudo seems to be passing the tests on armhf now
+
+ 15:42 <vorlon> mdadm: pushkarnk?
+
+ 15:42 <pushkarnk> vorlon: ack
+
+ 15:42 <vorlon> fontconfig: schopin?
+
+ 15:42 <schopin> ack
+
+ 15:42 <ginggs> vorlon: why was mdadm not built on i386
+
+ 15:42 <ginggs> or rather, why was it ever?
+
+ 15:43 <vorlon> schopin: or do you want to take glibc and I'll give fontconfig to liushuyu :)
+
+ 15:43 <schopin> Oh if he wants glibc I'll give it to him :D
+
+ 15:43 <schopin> But yeah that sounds reasonable.
+
+ 15:43 <ogayot> vorlon: I can try but I'll be off starting tomorrow.
+
+ 15:44 <vorlon> ogayot: ok if you don't get it done then we'll pick it up next week
+
+ 15:44 <vorlon> fontconfig: liushuyu
+
+ 15:45 <ogayot> vorlon: ack, thanks!
+
+ 15:45 <vorlon> glibc: schopin:
+
+ 15:45 <vorlon> and I think everyone has something now
+
+ 15:45 <vorlon> ginggs: mdadm has fallen out of the whitelist, I've run binary removals to clean it up
+
+ 15:45 <liushuyu> vorlon: understood
+
+ 15:46 <vorlon> pushkarnk: so you can take sudo from ogayot if he doesn't get it done
+
+ 15:46 <pushkarnk> sure
+
+ 15:46 <vorlon> sphinx to vpa1977
+
+ 15:46 <vorlon> and ubiquity to mwhudson
+
+ 15:47 <vorlon> and that's everyone and all the packages
+
+ 15:47 <vorlon> juliank:
+
+ 15:47 <juliank> thanks vorlon
+
+ 15:47 <juliank> #topic AOB
+
+ 15:47 <juliank> any other business?
+
+ 15:48 <juliank> it's hot here, I should really turn on the portable AC
+
+ 15:52 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

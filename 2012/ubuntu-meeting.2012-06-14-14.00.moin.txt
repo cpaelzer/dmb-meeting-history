@@ -1,0 +1,663 @@
+#title #ubuntu-meeting: Ubuntu 12.04.1 team meeting
+
+Meeting started by stgraber at 14:00:13 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-06-14-14.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Action items review
+''LINK:'' https://lists.ubuntu.com/archives/ubuntu-release/2012-May/001276.html   (skaet, 14:03:28)
+
+ *Review of upcoming deadlines
+
+ *Quick look through the current bug lists, checking for progress
+''LINK:'' https://jenkins.qa.ubuntu.com/view/Precise/view/All%20Precise/ <-- link to precise daily run results.  (skaet, 14:12:06)
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/972537   (stokachu, 14:16:29)
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/apt/+bug/226780   (stokachu, 14:16:39)
+''LINK:'' http://people.canonical.com/~jamespage/server-sru/precise-sru.html   (jamespage, 14:23:47)
+''ACTION:'' arges to work on a 12.04.1 bug report, showing targeted bugs and information on status in development release, patches attached and branches linked  (stgraber, 14:26:56)
+
+ *Round table
+''LINK:'' http://status.ubuntu.com/ubuntu-quantal/group/topic-quantal-release-sru-and-12.04.1.html   (skaet, 14:46:24)
+
+ *AOB
+
+
+
+Meeting ended at 15:00:01 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * arges to work on a 12.04.1 bug report, showing targeted bugs and information on status in development release, patches attached and branches linked
+
+
+
+== Action items, by person ==
+
+ * arges
+ ** arges to work on a 12.04.1 bug report, showing targeted bugs and information on status in development release, patches attached and branches linked
+
+
+
+== People present (lines said) ==
+
+ * stokachu (65)
+ * stgraber (65)
+ * xnox (55)
+ * seb128 (37)
+ * ubottu (18)
+ * arges (17)
+ * skaet (15)
+ * jamespage (11)
+ * jibel (8)
+ * meetingology (4)
+
+
+
+== Full Log ==
+
+
+ 14:00:13 <stgraber> #startmeeting Ubuntu 12.04.1 team meeting
+
+ 14:00:13 <meetingology> Meeting started Thu Jun 14 14:00:13 2012 UTC.  The chair is stgraber. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:00:13 <meetingology> 
+
+ 14:00:13 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 14:00:20 * jibel waves
+
+ 14:00:54 <stgraber> #topic Action items review
+
+ 14:01:10 <stgraber> "stgraber to setup wiki page for the team, send initial meeting notes, update calendar entry"
+
+ 14:01:21 <stgraber> DONE and spammed everyone about it :)
+
+ 14:01:26 <stgraber> "xnox to prepare a target list for fs stack for 12.04.1"
+
+ 14:01:36 <stgraber> "xnox to liase with ballons, gema and jibel w.r.t. fs/storage testing"
+
+ 14:01:38 <stgraber> xnox: ^
+
+ 14:01:51 <xnox> I have a list of things for 12.04.1 to discuss (typing it up now)
+
+ 14:02:07 <xnox> liasing with QA people, postponed due to python sprint. Still a todo.
+
+ 14:02:22 * xnox carry on, while I'm preparing a short paragraph about fs stuff
+
+ 14:02:28 <stokachu> stgraber: i dont see that email about wiki page
+
+ 14:02:43 <stgraber> stokachu: it was sent to ubuntu-devel and ubuntu-release
+
+ 14:03:05 <stgraber> The wiki page is: https://wiki.ubuntu.com/PrecisePangolin/12.04.1
+
+ 14:03:18 <stgraber> "skaet to get an update on the status of daily QA testing of whether these are all being run still in jenkins, and where to find the results."
+
+ 14:03:21 <stgraber> skaet: ^
+
+ 14:03:28 <skaet> https://lists.ubuntu.com/archives/ubuntu-release/2012-May/001276.html
+
+ 14:03:35 <stokachu> thanks
+
+ 14:03:52 <skaet> yes they are being run in jenkin
+
+ 14:04:07 <skaet> talked to jibel about it after the meeting.
+
+ 14:04:20 <skaet> continue on and I'll paste the link
+
+ 14:04:26 <skaet> ..
+
+ 14:04:28 <stgraber> ok, thanks
+
+ 14:04:45 <stgraber> #topic Review of upcoming deadlines
+
+ 14:05:32 <stgraber> The first deadline listed for 12.04.1 is on the 2nd of August, so nothing to be extremely worried about just yet.
+
+ 14:05:37 <seb128> do we need to get the channel topic changed this way? it's taking 5 lines of backlog every time and making the meeting log hard to follow
+
+ 14:05:56 <arges> o/  what would be the timeframe to get things uploaded into -proposed for it to land in main by then
+
+ 14:06:34 <stgraber> seb128: I don't particularly like it, but I kind of like meetingology doing the meeting notes, so I have to live with it ;)
+
+ 14:07:58 <seb128> arges, https://wiki.ubuntu.com/PrecisePangolin/ReleaseSchedule has the schedule
+
+ 14:08:12 <seb128> arges, early august
+
+ 14:08:12 <arges> seb128, gotcha
+
+ 14:08:19 <stgraber> arges: https://wiki.ubuntu.com/PointReleaseProcess gives some more details on that but assuming you can make sure the SRU gets verified as soon as it lands, anything that lands before August should be good, after that, it's going to get trickier
+
+ 14:08:51 <arges> ok thanks
+
+ 14:09:48 <stgraber> #topic Quick look through the current bug lists, checking for progress
+
+ 14:09:59 <stokachu> == Are definitely ready for 12.04.1 ==
+
+ 14:09:59 <stokachu> ----
+
+ 14:09:59 <stokachu> || '''bug''' || '''summary''' || '''notes''' ||
+
+ 14:09:59 <stokachu> || [[http://pad.lv/922514|922514]] || convert package to multiarch || Verify package is in 12.04 ||
+
+ 14:09:59 <stokachu> == Needs love ==
+
+ 14:09:59 <stokachu> ----
+
+ 14:09:59 <stokachu> || [[http://pad.lv/977952|977952]] || multiarch libonoboui  || Needs SRU ||
+
+ 14:10:00 <stokachu> || [[http://pad.lv/977959|977959]] || multiarch libgnome    || Upstream work started, needs more tlc ||
+
+ 14:10:00 <stokachu> || [[http://pad.lv/977940|977940]] || multiarch gnome-vfs   || Needs SRU, acceptance for Precise series ||
+
+ 14:10:01 <stokachu> || [[http://pad.lv/977964|977964]] || multiarch libart-lgpl || Upstream work complete, needs SRU ||
+
+ 14:10:01 <stokachu> || [[http://pad.lv/977966|977966]] || multiarch orbit2      || This is in -proposed, setting 12.04.1 milestone for tracking ||
+
+ 14:10:02 <stokachu> || [[http://pad.lv/890928|890828]] || multiarch libxkbfile  || Needs completed SRU (test case, regression potential) ||
+
+ 14:10:06 <ubottu> Launchpad bug 922514 in libgnomeui (Ubuntu) "<libglade> libgnome.so: cannot open shared object file" [High,Fix released]
+
+ 14:10:09 <ubottu> Launchpad bug 977952 in libbonoboui (Ubuntu Precise) "Please transition libbonoboui to multi-arch" [Medium,Triaged]
+
+ 14:10:10 <ubottu> Launchpad bug 977959 in libgnome (Ubuntu) "Please transition libgnome to multi-arch" [Wishlist,Triaged]
+
+ 14:10:11 <ubottu> Launchpad bug 977940 in gnome-vfs (Ubuntu) "Please transition gnome-vfs to multi-arch" [Undecided,In progress]
+
+ 14:10:12 <ubottu> Launchpad bug 977964 in libart-lgpl (Ubuntu) "Please transition libart-lgpl to multi-arch" [Undecided,Confirmed]
+
+ 14:10:13 <ubottu> Launchpad bug 977966 in orbit2 (Debian) "Please transition orbit2 to multi-arch " [Unknown,New]
+
+ 14:10:14 <ubottu> Launchpad bug 890928 in libxkbfile (Ubuntu Precise) "When trying to install libxkbfile1:i386 the pkg manager asks to remove too many important packages [Multi-arch]" [Low,Fix committed]
+
+ 14:10:37 <stokachu> || [[http://pad.lv/859512|859512]] || multiarch libdbusmenu || This is released, however, bug indicates it is incomplete ||
+
+ 14:10:38 <stokachu> == Incomplete but needs consideration ==
+
+ 14:10:38 <stokachu> || [[http://pad.lv/977947|977947]] || multiarch libbonobo   || Needs update ||
+
+ 14:10:38 <stokachu> || [[http://pad.lv/932860|932860]] || multiarch appmenu-gtk || Still contains packaging issues, needs more time to investigate ||
+
+ 14:10:38 <stokachu> || [[http://pad.lv/919298|919298]] || unity-greeter crashes if no user account shown || Partial fix applied to quantal, needs precise nomination and a completed fix ||
+
+ 14:10:39 <ubottu> Launchpad bug 859512 in libdbusmenu (Ubuntu) "Please convert libdbusmenu to multiarch" [Medium,Fix released]
+
+ 14:10:43 <ubottu> Launchpad bug 977947 in libbonobo (Ubuntu Quantal) "Please transition libbonobo to multi-arch" [Medium,Triaged]
+
+ 14:10:44 <ubottu> Launchpad bug 932860 in AppMenu GTK+ "Broken (or missing) multiarch support" [Low,Confirmed]
+
+ 14:10:45 <ubottu> Launchpad bug 919298 in unity-greeter (Ubuntu) "Crashes if no user account shown" [Low,Fix released]
+
+ 14:11:34 <stokachu> i've set some bugs to be nominated for precise, when that happens ill target 12.04.1 milestone
+
+ 14:11:49 <stgraber> ok, let me quickly accept the nomination then
+
+ 14:12:06 <stokachu> the last 3 need more work than the rest and could possibly be rejected for 12.04.1
+
+ 14:12:06 <skaet> https://jenkins.qa.ubuntu.com/view/Precise/view/All%20Precise/  <-- link to precise daily run results.
+
+ 14:12:20 * xnox 0/ ready with the fs plan for a discussion on how sensible it is, probably towards the end of the meeting, before AOB
+
+ 14:13:14 <stgraber> stokachu: nominations accepted
+
+ 14:13:26 <stokachu> stgraber: thanks, ill go through and target milestones after meeting
+
+ 14:13:57 <arges> stgraber, stokachu : i can help with the targeting too
+
+ 14:14:03 <seb128> stokachu, you probably want appmenu-gtk multiarched, that's an issue coming frequently in user comments and bugs
+
+ 14:14:15 <seb128> stokachu, i.e better to not reject it if possible
+
+ 14:14:36 <stokachu> seb128: ok, ill add that to my priority list to get fixed
+
+ 14:14:44 <stokachu> i think its *half* complete
+
+ 14:14:53 <stgraber> any other bugs that aren't on the current lists and should be worked on for 12.04.1?
+
+ 14:14:53 <seb128> stokachu, thanks
+
+ 14:15:21 <seb128> stgraber, stokachu: on multiarch issue I think somebody should check on bug #885492, gnome-keyring
+
+ 14:15:21 <stokachu> yes ive got three more
+
+ 14:15:23 <ubottu> Launchpad bug 885492 in gnome-keyring (Ubuntu) "p11-kit: couldn't load module: /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so" [Undecided,Confirmed] https://launchpad.net/bugs/885492
+
+ 14:15:23 <stokachu> just came in
+
+ 14:15:25 <seb128> that seems to come often as well
+
+ 14:15:42 <stokachu> seb128: ill get that added to list
+
+ 14:15:45 <seb128> thanks
+
+ 14:15:51 <stokachu> im supposed to be finishing up the multiarch stuff
+
+ 14:16:28 <stokachu> So i havent actually reviewed these ones yet, they just came in
+
+ 14:16:29 <stokachu> https://bugs.launchpad.net/ubuntu/+source/lightdm/+bug/972537
+
+ 14:16:31 <ubottu> Launchpad bug 972537 in lightdm (Ubuntu) "lightdm doesn't allow expired passwords" [Undecided,Confirmed]
+
+ 14:16:39 <stokachu> https://bugs.launchpad.net/ubuntu/+source/apt/+bug/226780
+
+ 14:16:40 <ubottu> Launchpad bug 226780 in apt (Ubuntu) "apt-key net-update does not obey APT::Acquire::http::Proxy" [Medium,Triaged]
+
+ 14:16:56 <stokachu> the second one i need to backport the timeout in apt-key
+
+ 14:17:07 <stgraber> stokachu: let me know if you need review and sponsoring to quantal and precise-proposed
+
+ 14:17:24 <stokachu> oh wait different bug
+
+ 14:17:47 <stokachu> stgraber: this bug https://bugs.launchpad.net/ubuntu/+source/apt/+bug/226780 needs nomination approval
+
+ 14:17:48 <ubottu> Launchpad bug 226780 in apt (Ubuntu) "apt-key net-update does not obey APT::Acquire::http::Proxy" [Medium,Triaged]
+
+ 14:17:50 <arges> stgraber, for these bugs, whats the best way to get your attention for review/sponsoring?
+
+ 14:17:51 <stgraber> stokachu: that lightdm seems pretty annoying for corporate deployments, sounds like a good candidate for the point release indeed
+
+ 14:18:41 <stgraber> arges: easiest way is to ping me on IRC, you can also go through the official sponsoring process but as I'm interested in these bugs anyway, I'm happy to do the review directly
+
+ 14:19:12 <stokachu> stgraber: could you approve the lightdm for precise as well?
+
+ 14:19:22 <arges> stgraber, ok thanks.
+
+ 14:19:57 <seb128> stokachu, I approved it
+
+ 14:20:09 <stokachu> thanks seb128
+
+ 14:20:10 <stgraber> I'm guessing seb128, smoser, NCommander and jamespage can also help with the uploads
+
+ 14:20:47 <jamespage> stgraber, yep
+
+ 14:20:49 <seb128> what uploads?
+
+ 14:20:52 <seb128> sponsoring you mean?
+
+ 14:21:05 <stokachu> yea me and arges would need sponsors
+
+ 14:21:08 <stgraber> seb128: yes, review + sponsoring of the changes stokachu and arges are working on
+
+ 14:21:11 <seb128> oh
+
+ 14:21:21 <seb128> yeah, feel free to ping me for any desktop upload
+
+ 14:21:27 <stokachu> could i kindly ask sponsors to monitor the 12.04.1 milestone :D
+
+ 14:21:36 <seb128> or just subscribe ubuntu-sponsors, I review the queue regularly for desktop uploads
+
+ 14:21:53 <stokachu> seb128: ok ill have 2 bugs for you soon as I talk to a coworker
+
+ 14:21:59 <seb128> stokachu, great
+
+ 14:22:39 <stgraber> would probably be nice if we could have a report of the 12.04.1 milestone listing all the bugs that have one of "patch attached", "branch linked", "fixed in development release"
+
+ 14:23:03 <stokachu> arges: ^
+
+ 14:23:06 <stokachu> :D
+
+ 14:23:22 <stgraber> that'd basically list most "easy" bugs that are just waiting for someone to cherry-pick and upload (or just sponsor if it's a debdiff/packaging branch)
+
+ 14:23:29 <stokachu> agreed
+
+ 14:23:44 <jamespage> stgraber, we've been using a SRU report for the server team packages that could be extended todo that
+
+ 14:23:47 <jamespage> http://people.canonical.com/~jamespage/server-sru/precise-sru.html
+
+ 14:23:52 <arges> stokachu, ack
+
+ 14:24:21 <jamespage> ATM its just used for assessing candidates and monitoring SRU progress
+
+ 14:24:36 <xnox> sponsorship page has (sru) tags, but not sure if it lists 12.04.1 explicitly
+
+ 14:25:09 <stgraber> xnox: right, and it assumes that someone subscribed sponsor to it, which isn't always the case when the bug is fixed in quantal but not in precise-updates
+
+ 14:25:21 <xnox> i see
+
+ 14:25:39 <stokachu> i wish we had 1 application to generate all these reports :D
+
+ 14:25:46 <stgraber> so can anyone take an action of getting some basic report for 12.04.1 online?
+
+ 14:25:52 <stokachu> xmarks laughs at me during bookmark s yncs
+
+ 14:26:03 <stokachu> stgraber: i think arges agreed to do it
+
+ 14:26:16 <arges> stokachu, ssh don't tell everybody....  ok i'll do it
+
+ 14:26:19 <xnox> stokachu: ultimate-debian-database has a lot of queriable bugs. maybe ubuntuwire can be consulted in those.
+
+ 14:26:46 <stokachu> xnox: sounds good to me :D
+
+ 14:26:56 <stgraber> #action arges to work on a 12.04.1 bug report, showing targeted bugs and information on status in development release, patches attached and branches linked
+
+ 14:26:56 * meetingology arges to work on a 12.04.1 bug report, showing targeted bugs and information on status in development release, patches attached and branches linked
+
+ 14:27:11 <skaet> :)
+
+ 14:27:23 <xnox> arges: now even google will now you are doing this =) by scaping meetingology logs
+
+ 14:27:29 <arges> oh noes
+
+ 14:27:40 <arges> yea, i have some scripts / pages i can adapt to do this
+
+ 14:28:45 <stgraber> #topic Round table
+
+ 14:28:56 <stgraber> stgraber@castiana:~$ echo $(shuf -e NCommander seb128 stgraber stokachu arges jibel skaet smoser jamespage xnox)
+
+ 14:28:59 <stgraber> stokachu smoser jibel seb128 NCommander arges jamespage xnox skaet stgraber
+
+ 14:29:11 <stgraber> stokachu: you win!
+
+ 14:29:14 <stokachu> yay!
+
+ 14:29:16 * xnox is confused what is round table?
+
+ 14:29:24 <stokachu> xnox: was gonna ask the same thing LOL
+
+ 14:29:48 <xnox> stokachu: apparently it's like spin the wheel, cause you won!
+
+ 14:29:52 <seb128> stokachu, you are first, you figure it out!
+
+ 14:30:02 <stgraber> hehe, right. skaet suggested we have a quick roundtable to know what people have been up to regarding 12.04.1/SRU work for the past two weeks
+
+ 14:30:07 <seb128> stokachu, make something good from it ;-)
+
+ 14:30:22 * xnox shall talk about fs stuff then?!
+
+ 14:30:24 <stokachu> ha.. first things first.. i wore pants today
+
+ 14:30:45 <seb128> is that unusual? don't feel like you have to get overdressed for those meetings :p
+
+ 14:31:15 <stgraber> so if you need help with somehting you're working on for 12.04.1, it's the right time to ask ;)
+
+ 14:31:28 <stgraber> xnox: yep, that'd be the right time to mention that
+
+ 14:31:31 <stokachu> We (SEG) have a pretty good idea of what needs SRU's and those that need more attention to get into SRU state. Once we have a compiled list for target milestone we will triage out the work to rest of team to get handled
+
+ 14:31:54 <stokachu> Right now multi-arch is our biggest workload for 12.04.1
+
+ 14:31:59 <stokachu> done
+
+ 14:32:10 <stgraber> smoser:
+
+ 14:32:57 <stgraber> hmm, haven't seen him in the meeting actually
+
+ 14:32:58 <stgraber> jibel:
+
+ 14:33:14 <jibel> hi
+
+ 14:33:33 <jibel> watching daily jobs, no failure with the images itselfs
+
+ 14:33:43 <jibel> re-ran failed jobs for i386 and they passed. connection to bazaar failed.
+
+ 14:34:21 <jibel> there is an issue on universe upgrade that will need to investigate. It fails from time to time and saw the same failure reported by the community
+
+ 14:34:35 <jibel> that's all from me
+
+ 14:34:35 <jibel> ..
+
+ 14:35:03 <stgraber> seb128:
+
+ 14:35:24 <seb128> we are looking at the user feedback and trying to address top issues from bugs reports and whoopsie
+
+ 14:35:50 <seb128> GNOME 3.4.2 updates are mostly in, there is no formal 3.4.3 planned so at this point we mostly cherry pick fixes
+
+ 14:36:06 <seb128> if you have any bugs that we should look at which is not milestoned let me know
+
+ 14:36:31 <seb128> otherwise we have steady flow on fixes uploaded, SRU team is having an hard time to review things in time
+
+ 14:36:46 <seb128> they had a meeting this week and say they should address that though so let's see
+
+ 14:36:47 <seb128> ..
+
+ 14:37:04 <stgraber> NCommander:
+
+ 14:38:09 <stgraber> arges:
+
+ 14:38:38 <arges> Working with SEG/stokachu to identify relevant bugs for 12.04.1, helping target bugs.
+
+ 14:38:44 <arges> ..
+
+ 14:38:46 * xnox wonders if stgraber is running a timeout stopwatch
+
+ 14:38:58 <stgraber> jamespage:
+
+ 14:39:05 <jamespage> Refactored the Server SRU reporting to be series centric - http://people.canonical.com/~jamespage/server-sru/precise-sru.html
+
+ 14:39:13 <jamespage> 12.04.1 progress will also be discussed at the weekly server team meeting to monitor progress and discuss anything thats stuck.
+
+ 14:39:22 <arges> las
+
+ 14:39:25 <arges> whoops
+
+ 14:39:45 <jamespage> zul has been working on the first set of SRU's for openstack components
+
+ 14:40:04 <jamespage> and I've been nudging through a few SRU's myself...
+
+ 14:40:12 <jamespage> ..
+
+ 14:40:29 <stgraber> xnox:
+
+ 14:40:41 <xnox> I have been pondering what to do with various fs packages to make
+
+ 14:40:42 <xnox> 12.04.1 more stable/supportable release for the next 5 years.
+
+ 14:40:42 <xnox> FS updates plan for 12.04.1
+
+ 14:40:42 <xnox> * e2fsprogs 1.42-1ubuntu2 -> 1.42.4-3ubuntu1 (same as quantal)
+
+ 14:40:42 <xnox> ** http://pad.lv/978012
+
+ 14:40:42 <xnox> Stable SRUable micro point release, fixing importnant bugs and regressions
+
+ 14:40:44 <ubottu> Launchpad bug 978012 in e2fsprogs (Ubuntu Quantal) "Please merge now available e2fsprogs 1.42.4-2 (main) from Debian unstable (main)" [High,In progress]
+
+ 14:40:44 <xnox> * mdadm 3.2.3-2ubuntu1 -> 3.2.5-1ubuntu1 (not done yet)
+
+ 14:40:46 <xnox> ** no bug number yet
+
+ 14:40:48 <xnox> Stable SRUable micro point release, fixing regressions.
+
+ 14:40:50 <xnox> Fixing packaging mistakes which left out: allowing to use
+
+ 14:40:52 <xnox> isw (intel martrix raid) and ddf (standard raid) in udev rules,
+
+ 14:40:54 <xnox> shipping required mdmon unitility for isw, settling events to
+
+ 14:40:56 <xnox> prevent boot timeouts and droping into initramfs.
+
+ 14:40:58 <xnox> * btrfs-progs
+
+ 14:41:02 <xnox> Will *not* get an SRU all the way from 20100601->20120328
+
+ 14:41:04 <xnox> I do want to provide a backport.
+
+ 14:41:06 <xnox> Will fix SRU like bugs which prevent booting without dropping
+
+ 14:41:08 <xnox> into initramfs shell.
+
+ 14:41:10 <xnox> * lvm2
+
+ 14:41:12 <xnox> May need SRU to fix some bugs, didn't check the list of open bugs yet.
+
+ 14:41:14 <xnox> Any others, that I am missing which potentially have 12.04.1
+
+ 14:41:16 <xnox> worthly stuff? Let me know, by subscribing me to the bugs on
+
+ 14:41:18 <xnox> launchpad. Is this minimal enough for SRU? I do not want this to
+
+ 14:41:20 <xnox> be treated as MRE or anything on-going.
+
+ 14:41:22 <xnox> discuss =)
+
+ 14:41:24 <xnox> ..
+
+ 14:41:26 <xnox> any questions?!
+
+ 14:41:28 <xnox> =)
+
+ 14:42:09 <stokachu> xnox: in 20 words or less can you describe the increasing velocity of a flying elephant against highwinds and in the winter?!?
+
+ 14:42:40 <xnox> stokachu: it's fairly constant
+
+ 14:42:47 <stokachu> nice!
+
+ 14:43:02 <skaet> :)
+
+ 14:43:17 <stgraber> xnox: I'll need to look, but I believe the new iscsi stack fixes some pretty nasty bugs we had in oneiric and precise (when your root fs is on iscsi)
+
+ 14:43:45 * xnox takes a note to look into iscsi stack
+
+ 14:43:57 <stgraber> xnox: I worked around these in oneiric (by not starting the iscsi client daemon when / is on iscsi) but remember seeing bug activity that the new upstream fixes that and we should now be able to start the daemon without lossing access to /
+
+ 14:43:58 <xnox> well fedora shipped the 'new' scsi / kernel stack
+
+ 14:45:03 * xnox wonders if iscsi is server's team responsibility or the foundations. me knows little about iscsi, unless I have to dive into that....
+
+ 14:45:27 <stgraber> xnox: the workaround was for bug 838809 and that caused bug 961114
+
+ 14:45:30 <ubottu> Launchpad bug 838809 in open-iscsi (Ubuntu Oneiric) "authenticated and unauthenicated iscsi clients fails to complete boot" [High,Fix released] https://launchpad.net/bugs/838809
+
+ 14:45:31 <ubottu> Launchpad bug 961114 in open-iscsi (Ubuntu) "iscsid fails to reopen a connection established by iscsistart" [Undecided,Confirmed] https://launchpad.net/bugs/961114
+
+ 14:45:37 <xnox> stgraber: thanks.
+
+ 14:46:03 <stgraber> xnox: it's kind of blurry, IIRC server is doing the testing but for these bugs at least, I ended up being the one to work on them (so foundations)
+
+ 14:46:18 <stgraber> ..
+
+ 14:46:19 <stgraber> skaet:
+
+ 14:46:21 <jamespage> stgraber, I think I worked with you on that one
+
+ 14:46:24 <skaet> grouped all the 12.04.1 blueprints I could find together at:
+
+ 14:46:24 <skaet> #link http://status.ubuntu.com/ubuntu-quantal/group/topic-quantal-release-sru-and-12.04.1.html
+
+ 14:46:24 <skaet> so we can monitor as we approach this point release.  If you know of one missed, not on the list, please let me know (or add it directly ;) ).
+
+ 14:46:24 <skaet> Started discussions off with stable release team on ways we can start to tame the backlog on the SRU pe
+
+ 14:46:24 <skaet> nding,  which overlaps with this a bit, but is solving a bigger problem.
+
+ 14:46:26 <skaet> ..
+
+ 14:46:32 <jamespage> xnox, I have some scripts that might help with testing
+
+ 14:47:04 <stgraber> stgraber:
+
+ 14:47:18 * xnox jamespage:  yes please
+
+ 14:47:31 <stgraber> I've mostly been helping doing sru verification, looking at any >= 7 days item in the queue and trying to follow the testcases to get the in -updates
+
+ 14:47:55 <stgraber> that's been working quite well, unblocking quite a few SRUs. It's really painful for these that were pushed before the test case became a requirement though
+
+ 14:48:16 <stokachu> could we get help from QA on the SRU test cases portion?
+
+ 14:48:53 <xnox> stokachu: as far as I know QA does QA of the development release / automatation. not SRUs.
+
+ 14:49:02 <stgraber> there are also a few that seem to be stuck as nobody can actually confirm that they work. IIRC one is a bug that pretty much never happens (weird race condition) and another bug requires a new build of gfxboot + media in a weird language to check that the fix works (problem being, the language in question was never mentioned in the bug)
+
+ 14:49:29 <stokachu> xnox: that makes me sad
+
+ 14:49:30 <seb128> whoever fixed the bug probably has that info?
+
+ 14:49:33 <stgraber> jibel: can you maybe comment on what QA is doing/planning to do for 12.04.1?
+
+ 14:49:56 <seb128> well I don't think we have so many SRUS that we need QA help
+
+ 14:50:10 <seb128> it usually takes 5 minutes to follow the verification steps
+
+ 14:50:20 <stgraber> seb128: in gfxboot's case, no, because the "fix" is a LP translation refresh done by cjwatson, we need the reporter to re-test in their environment
+
+ 14:50:22 <seb128> I tend to do the desktop ones and we never got blocked so far
+
+ 14:50:55 <xnox> well precise daily images are being spinned and tested, as far as I know.
+
+ 14:51:11 <stgraber> xnox: not with -proposed
+
+ 14:51:13 <stokachu> tested as far as just installation and booting?
+
+ 14:52:34 <jibel> we do install testing of dailies, daily upgrade testing, we will do milestone testing for Ubuntu and can help with SRU verification on demand.
+
+ 14:52:47 <stokachu> sweet thanks jibel
+
+ 14:53:19 <stgraber> #topic AOB
+
+ 14:53:36 <stgraber> First thing, does this meeting format work for you?
+
+ 14:53:53 <stokachu> works4me
+
+ 14:54:06 <xnox> needs more funny jokes
+
+ 14:54:14 <stokachu> lol
+
+ 14:54:34 <stgraber> xnox: well, you have two weeks to write some down ;)
+
+ 14:54:39 <seb128> stgraber, https://lists.ubuntu.com/archives/ubuntu-translators/2012-April/005367.html
+
+ 14:55:00 <skaet> fine for me.
+
+ 14:55:05 <seb128> stgraber, that's the gfxboot bug
+
+ 14:55:23 <seb128> stgraber, we should probably apply the "diff looks sane, no visible regression" rule for it
+
+ 14:55:55 <stgraber> seb128: cool! with that it should be pretty easy to test. Yeah, that was my fallback option, just ensure that the diff is indeed just a translation refresh and mark it verification-done
+
+ 14:55:58 <seb128> stgraber, the meeting format works for me as well
+
+ 14:56:12 <arges> yes
+
+ 14:56:48 <stokachu> anyone considered transifex.net for localization on Ubuntu?
+
+ 14:57:05 <seb128> stokachu, do you keep the list of bugs you want to see fixed somewhere? or do you just milestone them the standard way?
+
+ 14:57:18 <stokachu> seb128: so far we've milestoned them
+
+ 14:57:19 <seb128> stokachu, no, we have launchpad translations
+
+ 14:57:34 <seb128> stokachu, why would we change for something less integrated to ubuntu?
+
+ 14:57:35 <xnox> stokachu: we have launchpad rossetta translations which are shared translations from all open-source projects with compatible licenses
+
+ 14:57:40 <stokachu> seb128: arges will have a report generated of the ones that need to be completed and those waiting on sponsorship etc
+
+ 14:57:50 <seb128> stokachu, ok
+
+ 14:57:53 <stgraber> I'll update the wiki and send the minutes to ubuntu-devel and ubuntu-release. If you have anything else to discuss before our next meeting, use the ubuntu-release mailing list.
+
+ 14:58:13 <xnox> stokachu: but launchpad generates languages statistics like that
+
+ 14:58:20 <stokachu> ah cool
+
+ 14:58:31 <arges> yup,
+
+ 14:58:37 <xnox> and it's not sponsorship, but approval needed, updated translations, released
+
+ 14:59:00 <stokachu> cool, simple enough :D
+
+ 14:59:13 * arges writes that in his copy book.
+
+ 14:59:18 <xnox> stokachu: launchpad is the only thing that suggest translations from other packages such that you get a consistent translation across the whole desktop.
+
+ 14:59:34 <xnox> ..
+
+ 14:59:38 <xnox> AAOB?
+
+ 14:59:56 <stgraber> well, we're out of time. Thanks everyone for attending and see you all in two weeks!
+
+ 15:00:01 <stgraber> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

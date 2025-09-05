@@ -1,0 +1,541 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 02 Sep at 15:00 &mdash; 15:44 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-09-02-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:00.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:11.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:11)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:23.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:24)
+ * ''LINK:'' https://irclogs.ubuntu.com/2021/08/26/%23ubuntu-meeting.html#t15:32   (bdmurray, 15:25)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:40.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (67)
+ * doko (31)
+ * sil2100 (28)
+ * ubottu (20)
+ * dbungert (20)
+ * jawn-smith (17)
+ * schopin (13)
+ * juliank (13)
+ * waveform (11)
+ * ginggs (10)
+ * xypron (5)
+ * meetingology (2)
+ * mclemenceau_ (2)
+ * alexghiti (2)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:13 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:00 <sil2100> o/
+
+ 15:00 <schopin> o/
+
+ 15:00 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert xypron ginggs schopin)
+
+ 15:00 <mclemenceau_> o/
+
+ 15:00 <bdmurray> what is alexandre's irc nick?
+
+ 15:01 <juliank> afk for a bit
+
+ 15:01 <schopin> alexghiti: ^
+
+ 15:01 <bdmurray> anyway he'll go last
+
+ 15:01 <bdmurray> bdmurray schopin ginggs doko xypron slyon dbungert jawn-smith waveform sil2100 juliank vorlon mwhudson
+
+ 15:01 <bdmurray> testing of Error Tracker in PS5
+
+ 15:01 <bdmurray> Intel IoT discussions
+
+ 15:01 <bdmurray> FF exception reviews and clean up of some old ones
+
+ 15:01 <bdmurray> updated meta-release file, raspi json file on changelogs.u.c
+
+ 15:01 <bdmurray> built an UC20 dangerous-stable image for IoT project
+
+ 15:01 <bdmurray> created a JJ release schedule in discourse
+
+ 15:01 <bdmurray> updated code with generates the release schedule with new events
+
+ 15:01 <bdmurray> reported LP: #1942120 regarding cassandra charm update
+
+ 15:01 <bdmurray> bumped size of server images for impish for paride
+
+ 15:01 <ubottu> Launchpad bug 1942120 in Cassandra Juju Charm "Please update cassandra-charm with the latest charm-helpers" [Undecided, New] https://launchpad.net/bugs/1942120
+
+ 15:01 <bdmurray> discovered an issue with the Launchpad retracers on porter-i386
+
+ 15:01 <bdmurray> submitted an RT regarding updating ubuntu-keyring
+
+ 15:01 <bdmurray> updated ubuntu-keyring on porter-i386
+
+ 15:01 <bdmurray> retracing of failed retraces
+
+ 15:01 <bdmurray> ✔ done
+
+ 15:02 <schopin> * glibc/systemd fun:
+
+ 15:02 <bdmurray> schopin:
+
+ 15:02 <schopin> + worked on LP: #1940635 until it was finally solved by mwhudson
+
+ 15:02 <ubottu> Launchpad bug 1940635 in netplan.io (Ubuntu) "systemd-networkd failing to acquire a DHCP6 lease from dnsmasq on armhf" [Undecided, Confirmed] https://launchpad.net/bugs/1940635
+
+ 15:02 <schopin> + Checked if LP: #1942113 could be related to the armhf autopkgtest image building bug.
+
+ 15:02 <ubottu> Launchpad bug 1942113 in systemd (Ubuntu) "systemd unit test regression in autopkgtest (oomd-utils)" [Undecided, New] https://launchpad.net/bugs/1942113
+
+ 15:02 <schopin> It isn't, as it seems related to cgroup/lxd interaction?
+
+ 15:02 <schopin> * Investigated FTBFS for libuv1 (LP: #1939707)
+
+ 15:02 <ubottu> Launchpad bug 1939707 in libuv1 (Ubuntu) "FTBFS on impish" [Undecided, In Progress] https://launchpad.net/bugs/1939707
+
+ 15:02 <schopin> -> Aliasing/LTO issue, patch sent to Debian
+
+ 15:02 <schopin> (done)
+
+ 15:03 <bdmurray> ginggs:
+
+ 15:03 <juliank> o/
+
+ 15:03 <ginggs> * got an FFe for strace and uploaded
+
+ 15:03 <ginggs> * +1 Maintenance
+
+ 15:03 <ginggs> - sync'd git-remote-hg
+
+ 15:03 <ginggs> - got haskell-ghc-lib-parser to build on arm64 and armhf, should unblock stylish-haskell, but still needs removal on riscv64 and s390x (LP: #1937070)
+
+ 15:03 <ginggs> - found intel-ipsec-mb needed a transition, rebuild stress-ng and dpdk
+
+ 15:03 <ubottu> Launchpad bug 1937070 in stylish-haskell (Ubuntu) "please RM stylish-haskell binaries on riscv64 and s390x" [Undecided, New] https://launchpad.net/bugs/1937070
+
+ 15:03 <ginggs> - sync'd mpi4py
+
+ 15:03 <ginggs> - various poking at autopkgtests
+
+ 15:03 <ginggs> done
+
+ 15:04 <bdmurray> ginggs: I'd uploaded intel-ipsec-mb so thanks
+
+ 15:04 <bdmurray> doko:
+
+ 15:04 <doko> - updated the GCC native and cross builds, fixing ftbfs, now ready to migrate
+
+ 15:04 <doko> - started with Python updates, 3.10, 3.9, 3.8 and 3.6, first uploads to impish, then preparing backp
+
+ 15:04 <doko> orts
+
+ 15:04 <doko> - follow-up meeting for x86-64-v2
+
+ 15:04 <doko> (done)
+
+ 15:05 <xypron> Currently I am working on fixing bugs in shim and upstreaming what is needed for secure boot on RISC-V for U-Boot, shim, GRUB.
+
+ 15:05 <xypron> <done>
+
+ 15:05 <dbungert> * curl vs alertmanager-irc-relay - doesn't appear curl related.  go 1.16 build
+
+ 15:05 <dbungert> of altertmanager on ppc64el fails regardless. go1.17 fine. LP: #1941791 filed,
+
+ 15:05 <dbungert> hint MP merged.
+
+ 15:05 <ubottu> Launchpad bug 1941791 in alertmanager-irc-relay (Ubuntu) "FTBFS on ppc64el with go 1.16" [Undecided, New] https://launchpad.net/bugs/1941791
+
+ 15:05 <dbungert> * curl vs rust-curl-sys - identified that gcc-10 is fine.  Added a hint, but
+
+ 15:05 <dbungert> vorlon observed that there was a yet-newer gcc-11, which works.
+
+ 15:05 <dbungert> * wsl vs subiquity - help wsl team debug test automation issues with their
+
+ 15:05 <dbungert> proposed system-setup starter branch for subiquity
+
+ 15:05 <dbungert> * curl vs vip-manager - new glibc not at fault, can't reproduce locally, new
+
+ 15:05 <dbungert> systemd doesn't help.  hint MP filed. LP: #1942375
+
+ 15:05 <ubottu> Launchpad bug 1942375 in vip-manager (Ubuntu) "autopkgtest failure on armhf" [Undecided, New] https://launchpad.net/bugs/1942375
+
+ 15:05 <dbungert> * curtin apt-python - put together a simpler starting MP that should be happier
+
+ 15:05 <dbungert> with arbitrary python-apt versions.  If this is OK, can merge rest of code to
+
+ 15:05 <dbungert> this.
+
+ 15:05 <dbungert> * subiquity and gpgpu drivers - read existing spec, start on implementation.
+
+ 15:05 <dbungert> First step is a requested change to improve the pubsub functionality, as I
+
+ 15:05 <dbungert> expect to use it as part of implementation.  That part is done, just pending
+
+ 15:05 <dbungert> integration test then will submit MP.
+
+ 15:05 <dbungert> (done)
+
+ 15:06 <jawn-smith> * Re-write ubuntu-image in Go:
+
+ 15:06 <jawn-smith> * Populate/Prepare partitions PR merged!
+
+ 15:06 <jawn-smith> * Fix packages that FTBFS with Go 1.17
+
+ 15:06 <jawn-smith> * Fixes uploaded and upstreamed for
+
+ 15:06 <jawn-smith> * LP: #1942131
+
+ 15:06 <ubottu> Launchpad bug 1942131 in golang-github-ajg-form (Ubuntu) "golang-github-ajg-form FTBFS with go 1.17" [Low, Fix Committed] https://launchpad.net/bugs/1942131
+
+ 15:06 <jawn-smith> * LP: #1942255
+
+ 15:06 <ubottu> Launchpad bug 1942255 in golang-github-urfave-cli-v2 (Ubuntu) "FTBFS with Go 1.17" [Undecided, Fix Committed] https://launchpad.net/bugs/1942255
+
+ 15:06 <jawn-smith> * Thanks mwhudson for the sponsorship!
+
+ 15:06 <jawn-smith> * Bugs created but not fixed:
+
+ 15:06 <jawn-smith> * LP: #1942226 (trivial fix, but is anyone doing Android development on armhf?)
+
+ 15:06 <ubottu> Launchpad bug 1942226 in golang-android-soong (Ubuntu) "FTBFS on armhf with Go 1.17" [Undecided, New] https://launchpad.net/bugs/1942226
+
+ 15:06 <jawn-smith> * LP: #1942239 (way behind upstream which does build with 1.17, recommend waiting for Debian to pull in upstream changes)
+
+ 15:06 <ubottu> Launchpad bug 1942239 in golang-github-bmatcuk-doublestar (Ubuntu) "FTBFS with Go >= 1.16" [Undecided, New] https://launchpad.net/bugs/1942239
+
+ 15:06 <jawn-smith> * Openssh proposed-migration                                                                                              * Pretty sure I have narrowed this down to the weirdness we're seeing on armhf autopkgtests
+
+ 15:06 <jawn-smith> * Have recreated locally, running more tests now
+
+ 15:06 <jawn-smith> * Attempting to recreate LP: #1940400 but have been unable to.
+
+ 15:06 <ubottu> Launchpad bug 1940400 in linux-firmware-raspi2 (Ubuntu Bionic) "Pi 4B 2GB boot failure" [Critical, Confirmed] https://launchpad.net/bugs/1940400
+
+ 15:06 <jawn-smith> [done]
+
+ 15:07 <bdmurray> waveform:
+
+ 15:07 <waveform> * Uploaded fix for boot failures of Pi 4 2GB rev 1.4 (LP: #1940400)
+
+ 15:07 <waveform> * Attempted to replicate Pi netboot failure (reported on IRC)
+
+ 15:07 <waveform> * Further investigation of fixes for Pi USB storage failures (LP: #1930629)
+
+ 15:07 <waveform> * Worked on sense-emu packaging for debian (conversion of native->quilt for sense-emu)
+
+ 15:07 <waveform> * Worked on storage customization posts for Pi images (LVM conversion)
+
+ 15:07 <waveform> * Pi meetings
+
+ 15:07 <ubottu> Launchpad bug 1930629 in linux-raspi (Ubuntu Impish) "Raspberry pi 4 USB controller randomly crashes" [Undecided, Confirmed] https://launchpad.net/bugs/1930629
+
+ 15:07 <waveform> * Subscribed to ubuntu-announce ;)
+
+ 15:07 <waveform> (done)
+
+ 15:07 <bdmurray> lol
+
+ 15:07 <sil2100> +1!
+
+ 15:07 <sil2100> * SRU reviews and releases
+
+ 15:07 <sil2100> * TB meeting
+
+ 15:07 <sil2100> * Ubuntu Core discussions
+
+ 15:07 <sil2100> * Finalized the 20.04.3 release.
+
+ 15:07 <sil2100> - Cleanup tasks, re-enabled dailies, restored mainfests
+
+ 15:07 <sil2100> - Updated point-release procedures, cleaning up irrelevant points
+
+ 15:07 <sil2100> - Prepared informational pop-up for deprecated legacy images
+
+ 15:07 <sil2100> * Work on simplestream support on cdimage, working on tests
+
+ 15:07 <sil2100> * Reviewed another PR for ubuntu-image golang rewrite from William
+
+ 15:07 <sil2100> * Discussed future roadmap for ubuntu-image
+
+ 15:07 <sil2100> * Discussed some image customization tooling and road forward
+
+ 15:08 <sil2100> * ESM britney:
+
+ 15:08 <sil2100> - Improved slightly the britney invocation mechanics, fixed locking
+
+ 15:08 <sil2100> - Added feature request from security team to also export the .yaml files
+
+ 15:08 <sil2100> * Uploading images for xilings to platform/ on lillypilly
+
+ 15:08 <sil2100> * Investigating build failure of the glm package
+
+ 15:08 <sil2100> * Paperwork for a common foundations misc automation instance
+
+ 15:08 <sil2100> * Netplan sync-up
+
+ 15:08 <sil2100> * Preparation for another point-release
+
+ 15:08 <sil2100> * Grading homework
+
+ 15:08 <sil2100> * Onboarding Alexandre \o/
+
+ 15:08 <sil2100> * Reviewing and merging core20/core18 PRs for dpkg.yaml generation
+
+ 15:08 <sil2100> * Some more work on UC22 builds
+
+ 15:08 <sil2100> - Working on some process update propositions for making bootstrapping better
+
+ 15:08 <sil2100> (done)
+
+ 15:08 <juliank> * EFI boot management stuff
+
+ 15:08 <juliank> * sponsored fwupd
+
+ 15:08 <juliank> * uploaded grub2, currently FTBFS in a test? (LP: #1933826)
+
+ 15:08 <ubottu> Launchpad bug 1933826 in grub2 (Ubuntu Impish) "default file permissions on bootloader configuration" [Undecided, Fix Committed] https://launchpad.net/bugs/1933826
+
+ 15:08 <juliank> * autopkgtest cloud handover stuff
+
+ 15:08 <juliank> (done)
+
+ 15:09 <bdmurray> juliank: which release was fwupd sponsored for?
+
+ 15:09 <juliank> bionic!
+
+ 15:09 <bdmurray> okay, so its already been approved
+
+ 15:09 <bdmurray> vorlon might not be about yet
+
+ 15:09 <bdmurray> so alexghiti its your turn
+
+ 15:10 <alexghiti> * Onboarding
+
+ 15:10 <alexghiti> (done)
+
+ 15:10 <schopin> \o/
+
+ 15:10 <bdmurray> well welcome alexghiti
+
+ 15:10 <bdmurray> any other questions on status?
+
+ 15:11 <bdmurray> #topic Release Incoming Bugs
+
+ 15:11 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:11 <bdmurray> bug 1876034
+
+ 15:11 <ubottu> Bug 1876034 in command-not-found (Ubuntu) "apt update crashes with 'KeyError: 'suite'' in cnf-update-db if index compression is enabled" [Medium, Confirmed] https://launchpad.net/bugs/1876034
+
+ 15:11 <bdmurray> we were trying to sort out how widespread this issue might be
+
+ 15:12 <bdmurray> juliank says that c-n-f isn't installed by default so ...
+
+ 15:12 <bdmurray> but there is a patch
+
+ 15:12 <juliank> I still wanna fix it
+
+ 15:12 <juliank> :D
+
+ 15:13 <bdmurray> I'm +1 for fixing it
+
+ 15:13 <mclemenceau_> let's card it then
+
+ 15:13 <juliank> I did not comment on the patch last week, sigh
+
+ 15:13 <bdmurray> okay, moving on
+
+ 15:14 <bdmurray> bug 1923335
+
+ 15:14 <ubottu> Bug 1923335 in plymouth (Ubuntu) "[i915] At shutdown the spinner logo disappears and a second later it comes back frozen for a while (in kernel 5.11 and later)" [Medium, In Progress] https://launchpad.net/bugs/1923335
+
+ 15:15 <bdmurray> It looks like the desktop team has it in hand
+
+ 15:15 <juliank> hooray
+
+ 15:15 <bdmurray> oh, but it needs sponsoring
+
+ 15:15 <bdmurray> can somebody do that?
+
+ 15:17 <bdmurray> bug 1940011
+
+ 15:17 <ubottu> Bug 1940011 in update-notifier (Ubuntu) "Reduce cron spam from weekly update-notifier-common" [Undecided, New] https://launchpad.net/bugs/1940011
+
+ 15:19 <bdmurray> I'm not certain that's something we'd want to fix
+
+ 15:20 <bdmurray> We want the emails to show up right?
+
+ 15:20 <bdmurray> I'll double check that after the meeting but we'll probably drop that tag
+
+ 15:20 <bdmurray> bug 1940400
+
+ 15:20 <ubottu> Bug 1940400 in linux-firmware-raspi2 (Ubuntu Bionic) "Pi 4B 2GB boot failure" [Critical, Confirmed] https://launchpad.net/bugs/1940400
+
+ 15:21 <sil2100> Guess that one is the bug that waveform was working on? Or is it different?
+
+ 15:21 <waveform> sil2100, correct
+
+ 15:21 <bdmurray> and its already carded
+
+ 15:22 <bdmurray> rls-hh-incoming is empty
+
+ 15:22 <bdmurray> so is rls-ff-incoming
+
+ 15:23 <bdmurray> #topic Team proposed-migration report
+
+ 15:24 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:24 <bdmurray> doko: ?
+
+ 15:24 <doko> no vorlon?
+
+ 15:24 <doko> boost1.74, we had assigned that last week ...
+
+ 15:24 <bdmurray> doesn't seem like it.
+
+ 15:25 <jawn-smith> I think that was mwhudson
+
+ 15:25 <doko> ok, I'll ping him
+
+ 15:25 <bdmurray> actually it was steve
+
+ 15:25 <doko> ahh, ok
+
+ 15:25 <bdmurray> https://irclogs.ubuntu.com/2021/08/26/%23ubuntu-meeting.html#t15:32
+
+ 15:25 <doko> e2fsprogs is old as well
+
+ 15:26 <doko> xypron?
+
+ 15:27 <doko> glibc has a blocking bug: https://bugs.launchpad.net/ubuntu/+source/docker.io/+bug/1942276
+
+ 15:27 <ubottu> Launchpad bug 1942276 in glibc (Ubuntu) "glibc 2.34 upgrade will break some essential services" [High, New]
+
+ 15:28 <doko> vip-manager is new. any volunteers?
+
+ 15:28 <bdmurray> dbungert has a hint for that
+
+ 15:28 <dbungert> ^
+
+ 15:28 <bdmurray> I'll look at that after the meeting
+
+ 15:28 <doko> systemd?
+
+ 15:29 <doko> schopin?
+
+ 15:29 <xypron> e2fsprogs  1.46.3-1ubuntu3 is in ppa:xypron/merge-from-debian”
+
+ 15:30 <schopin> I don't really know where we're at with systemd. There's been new uploads by mwhudson this week.
+
+ 15:30 <doko> ok, I'll ping mwhudson about systemd then
+
+ 15:31 <doko> glib2.0 and pango1.0 trigger some golang-* tests
+
+ 15:31 <bdmurray> I'm restarting aptdaemon b/c it timed out
+
+ 15:31 <schopin> I don't recall looking at the non-armhf regressions
+
+ 15:31 <doko> these packages are shared with desktop
+
+ 15:32 <doko> any volunteers?
+
+ 15:32 <jawn-smith> o/
+
+ 15:32 <doko> ta
+
+ 15:32 <doko> sphinx/listparser ?
+
+ 15:32 <doko> armhf only
+
+ 15:32 <waveform> I'll take that
+
+ 15:32 <xypron> In 1939409 bug it says there is a new Debian e2fsprogs 1.46.4, so how should we proceed?
+
+ 15:32 <ginggs> lisparser regressed in release
+
+ 15:32 <doko> apt, juliank ?
+
+ 15:33 <juliank> yes
+
+ 15:33 <doko> might be the new devscripts, so please take this as well
+
+ 15:33 <doko> netplan.io?
+
+ 15:33 <schopin> I'll take that
+
+ 15:34 <doko> cross-toolchain-base is mine
+
+ 15:34 <doko> squashfs-tools/snapd?
+
+ 15:34 <dbungert> I still need one
+
+ 15:35 <bdmurray> ginggs: so what should happen with listparser?
+
+ 15:35 <doko> dbungert, snapd?
+
+ 15:35 <dbungert> ack
+
+ 15:35 <ginggs> bdmurray: force-reset-test i think
+
+ 15:35 <doko> dbus? unknown version, maybe just a retry
+
+ 15:36 <xypron> sponsor for e2fsprogs requested in LP #1939409
+
+ 15:36 <ubottu> Launchpad bug 1939409 in e2fsprogs (Ubuntu) "e2fsprogs 1.46.3-1 on architecture s390x fails in test f_baddotdir" [Medium, In Progress] https://launchpad.net/bugs/1939409
+
+ 15:37 <jawn-smith> I'll take dbus
+
+ 15:37 <doko> kopanocore/armhf? I just retried that
+
+ 15:38 <doko> and then systemd again ...
+
+ 15:40 <bdmurray> okay, thanks doko
+
+ 15:40 <bdmurray> #topic AOB
+
+ 15:40 <bdmurray> Monday is a US holiday
+
+ 15:42 <waveform> I'll be out Monday as well
+
+ 15:44 <bdmurray> okay, thanks everybody
+
+ 15:44 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

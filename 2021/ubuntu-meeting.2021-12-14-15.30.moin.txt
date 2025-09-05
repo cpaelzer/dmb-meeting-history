@@ -1,0 +1,343 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 14 Dec at 15:30 &mdash; 16:02 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-12-14-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 15:32.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:32)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/python-requests-toolbelt/+bug/1751093   (cpaelzer, 15:35)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:48.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:48)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/dh-elpa/+bug/1951066/comments/7   (cpaelzer, 15:50)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libio-interactive-perl/+bug/1951067   (cpaelzer, 15:50)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/glusterfs/+bug/1950321   (cpaelzer, 15:50)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:53.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:53)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:58.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (101)
+ * slyon (16)
+ * sarnold (11)
+ * jamespage (6)
+ * ubottu (5)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:57 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:30 <cpaelzer> ping for MIR team meeting: slyon sarnold jamespage didrocks (ddstreet doko)
+
+ 15:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:31 <slyon> o/
+
+ 15:32 <cpaelzer> I had 3 minutes to prepare this today, please speak up if I go too fast :-)
+
+ 15:32 <cpaelzer> #topic Review of previous action items
+
+ 15:32 <cpaelzer> none
+
+ 15:32 <cpaelzer> #topic current component mismatches
+
+ 15:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:32 <cpaelzer> I see four new cases there
+
+ 15:32 <cpaelzer> some mentioned last week, but we missed jamespage who had a conflict at the time
+
+ 15:33 <cpaelzer> first is pysqml2 -> responses/pytohn-response
+
+ 15:33 <cpaelzer> that is openstack
+
+ 15:33 <cpaelzer> we asked jamespage to have a look last week
+
+ 15:33 <cpaelzer> see https://ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-12-07-15.30.log.html#l-32
+
+ 15:33 <cpaelzer> jamespage: any update on that what we should expect (MIR requests, uploads to drop the dependencies, ...) ?
+
+ 15:34 <cpaelzer> ... give jamespage some time to see the pings ... :-)
+
+ 15:34 <slyon> I investigated jeepney a bit, it switched to a new dh-python (using flint build system), that picks up the test-depends for some reason, that probably needs to be fixed in dh-python or flint.
+
+ 15:34 <cpaelzer> yeah slyon jeepney was https://ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-12-07-15.30.log.html#l-29
+
+ 15:35 <cpaelzer> slyon: can we consider this to be "with foundations" whatever the final resolution will be?
+
+ 15:35 <cpaelzer> next is dnspython->python-requests-toolbelt
+
+ 15:35 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/python-requests-toolbelt/+bug/1751093
+
+ 15:35 <ubottu> Launchpad bug 1751093 in python-requests-toolbelt (Ubuntu) "[MIR] python-requests-toolbelt" [Undecided, Fix Released]
+
+ 15:35 <slyon> Yes.. I guess, as jeepney is a foundations package and is the culprit here :)
+
+ 15:36 <cpaelzer> ok slyon
+
+ 15:36 <cpaelzer> that toolbelt has an agreed MIR from the past
+
+ 15:36 <cpaelzer> but the package that needs it now is dnspython (=foundations)
+
+ 15:36 <cpaelzer> this might be a "no new process, but a new owner" case to be discussed between Openstack and Foundations
+
+ 15:37 <cpaelzer> but we will need jamespage to be around and discuss that
+
+ 15:37 <cpaelzer> :-/
+
+ 15:37 <slyon> ack
+
+ 15:37 <cpaelzer> ok, just heard jamespage is unavailable again :-/
+
+ 15:37 <cpaelzer> this has to wait for january then
+
+ 15:37 <cpaelzer> finally suitesparse
+
+ 15:38 <sarnold> I'm a bit surprised that's in main
+
+ 15:38 <cpaelzer> which sone sarnold, suitesparse ?
+
+ 15:38 <cpaelzer> depending on some suitesparece-graphblas now
+
+ 15:38 <cpaelzer> didrocks isn't around and it is a desktop package
+
+ 15:39 <cpaelzer> I feel the end of year phase might already have begun :-/
+
+ 15:39 <jamespage> o/
+
+ 15:39 <cpaelzer> hi jamespage
+
+ 15:39 <jamespage> sorry I'm a little late
+
+ 15:39 <cpaelzer> np, can you give the backscroll a look for the caes we highlighted you pelase?
+
+ 15:39 <cpaelzer> we'll give you some time to read and answer to those ...
+
+ 15:40 <sarnold> yeah, I'm skimming through the reverse-depends src:suitesparse, and it all looks like more math packages, hehe
+
+ 15:41 <cpaelzer> sarnold: it is libreoffice -> lp-solve -> suitesparse
+
+ 15:41 <sarnold> cpaelzer: aha!
+
+ 15:41 <jamespage> pysaml2 - I have an update prepared for that to drop responses (test dependency) and repoze.who (optional runtime dep) to avoid main inclusion
+
+ 15:42 <cpaelzer> ok on pysaml2 then
+
+ 15:42 <cpaelzer> how about python-requests-toolbelts jamespage
+
+ 15:42 <cpaelzer> could we just re-promote this as-is or do you want/need to re-discuss ownership of it with foundations?
+
+ 15:45 <cpaelzer> hello ... ? :-)
+
+ 15:45 <jamespage> yep - looking
+
+ 15:46 <cpaelzer> ok, in that case I can wait
+
+ 15:46 <jamespage> re-promote after a quick hygene check on it
+
+ 15:46 <jamespage> I'll double check it
+
+ 15:46 <cpaelzer> slyon: would you be ok to do the re-check before promotion then?
+
+ 15:46 <cpaelzer> oh
+
+ 15:46 <cpaelzer> even better jamespage
+
+ 15:47 <slyon> thanks jamespage!
+
+ 15:47 <cpaelzer> updated https://bugs.launchpad.net/ubuntu/+source/python-requests-toolbelt/+bug/1751093 accordingly
+
+ 15:48 <ubottu> Launchpad bug 1751093 in python-requests-toolbelt (Ubuntu) "[MIR] python-requests-toolbelt" [Undecided, Fix Released]
+
+ 15:48 <cpaelzer> #topic New MIRs
+
+ 15:48 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:48 <cpaelzer> two real new cases
+
+ 15:48 <cpaelzer> and one almost done dh-elpa
+
+ 15:48 <cpaelzer> let us start on that one
+
+ 15:48 <cpaelzer> the upload resolved the open TODOs right slyon ?
+
+ 15:48 <cpaelzer> and Desktop agreed to own it
+
+ 15:48 <slyon> exactly. And I coordinated with ~desktop that they are taking ownership
+
+ 15:49 <cpaelzer> "new" state suggests a review, but I think we do not need another one
+
+ 15:49 <cpaelzer> slyon: you can ask Desktop to now really subscribe
+
+ 15:49 <slyon> Yeah I didn't want to self-ACK this
+
+ 15:49 <cpaelzer> slyon: any once done get in touch with an AA to promote it
+
+ 15:49 <slyon> okay, will do.
+
+ 15:49 <cpaelzer> I see, I ahve taken a look and will give the ack
+
+ 15:50 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/dh-elpa/+bug/1951066/comments/7
+
+ 15:50 <ubottu> Launchpad bug 1951066 in dh-elpa (Ubuntu) "[MIR] dh-elpa" [Undecided, New]
+
+ 15:50 <cpaelzer> real new cases
+
+ 15:50 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libio-interactive-perl/+bug/1951067
+
+ 15:50 <ubottu> Launchpad bug 1951067 in libio-interactive-perl (Ubuntu) "[MIR] libio-interactive-perl" [Undecided, New]
+
+ 15:50 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/glusterfs/+bug/1950321
+
+ 15:50 <ubottu> Launchpad bug 1950321 in glusterfs (Ubuntu) "[MIR] glusterfs" [Undecided, New]
+
+ 15:50 <cpaelzer> glusterfs is ours and libiop is slyon
+
+ 15:51 <cpaelzer> my suggestion would be: 1. sarnold does a security review 2. slyon reviews glusterfs 3. I review libio (to avoid self-acks)
+
+ 15:51 <slyon> so shall we review each other's?
+
+ 15:51 <slyon> sounds good
+
+ 15:52 <cpaelzer> so we keep sarnold off MIR reviews but trading for getting security reviews to happen which is a regular topic I nudge him and now also his team :-)
+
+ 15:52 <sarnold> :)
+
+ 15:52 <cpaelzer> consider it my christmas present from you sarnold
+
+ 15:52 <sarnold> lol
+
+ 15:52 <cpaelzer> slyon: I assigned the other two to us
+
+ 15:52 <slyon> ack
+
+ 15:53 <cpaelzer> anyway I'll stop bashing on security-reviews while OTOH I also can not overstate how much many teams are dependent on getting them soon'ish
+
+ 15:53 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:53 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:54 <cpaelzer> last updates int he last 7 days
+
+ 15:54 <cpaelzer> raqm between slyon and didrocks
+
+ 15:54 <cpaelzer> now on waveform to enhance the package to be ready
+
+ 15:54 <slyon> hm, dave put some reasons why the enhancement might not be needed
+
+ 15:55 <cpaelzer> hmm, I need to read it mor thoroughly then ...
+
+ 15:55 <cpaelzer> indeed
+
+ 15:56 <cpaelzer> it is re-assigned to didrocks to have a look again
+
+ 15:56 <cpaelzer> but it might be january until that happens
+
+ 15:56 <cpaelzer> the other incomplete is ledmon which I re-reviewed today
+
+ 15:56 <slyon> thanks for that cpaelzer!
+
+ 15:56 <cpaelzer> this case is a victim of the evolution of our MIR process
+
+ 15:57 <cpaelzer> I reviewed it 3 years back and found a few issues, it took a lot of time and recently found founations as owner
+
+ 15:57 <cpaelzer> but after all the time I did a re-review
+
+ 15:57 <cpaelzer> and todays rules and tests found more
+
+ 15:57 <cpaelzer> so I beg your pardon sil2100 as this is back on you / your team to resolve
+
+ 15:57 <cpaelzer> but once done it can be promoted, no extra round through security review for that one
+
+ 15:57 <cpaelzer> that is it in this list
+
+ 15:58 <cpaelzer> #topic Any other business?
+
+ 15:58 <slyon> nothing
+
+ 15:58 <sarnold> this is my last tuesday of the year
+
+ 15:58 <cpaelzer> I already said that I started to request more time from security for these reviews, but it seems everone wants more time from them :-/
+
+ 15:59 <cpaelzer> I'd ask every team waiting to regularly kindly nidge them to make it clear how dependent we are on it
+
+ 15:59 <sarnold> so very true :(
+
+ 15:59 <cpaelzer> now to a better topic
+
+ 15:59 <cpaelzer> as sarnold said, this likely is the last tuesday for many
+
+ 15:59 <slyon> indeed
+
+ 15:59 <cpaelzer> until probably the 4th of January 2022
+
+ 15:59 <cpaelzer> doko is the meeting owner, only he can do group-cancel
+
+ 16:00 <sarnold> will enough change between then and now to justify a meeting on the 4th?
+
+ 16:00 <cpaelzer> but I'd say we all skip the next two (21st & 27th december) and meet again in January
+
+ 16:00 <cpaelzer> sarnold: yes there will be things changing
+
+ 16:01 <cpaelzer> there will be a lot of activity by hobby debian maintainers over this phase (usually there is) which triggers plenty of good and odd auto-syncs
+
+ 16:01 <sarnold> okay, cool. 7:30 am as my first welcome back to work is a bit much, it'd be nice if there's at least a reason for it and not a quickie "looks like nothing changed" :) hehe
+
+ 16:01 <cpaelzer> that will be seen in proposed and needs someone to handle them
+
+ 16:01 <sarnold> oh, makes sense
+
+ 16:01 <cpaelzer> and I need to remind you right when your year starts that we are all blocked on security reviews
+
+ 16:01 <cpaelzer> :-P
+
+ 16:01 <cpaelzer> I need to get to the next meeting
+
+ 16:02 <slyon> So see you all in January!
+
+ 16:02 <cpaelzer> yeah, see you
+
+ 16:02 <sarnold> I've got something peniciled in for right after the viewing of "Dinner For One"
+
+ 16:02 <cpaelzer> thank you all for a great year
+
+ 16:02 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,620 @@
+#title #ubuntu-meeting: Ubuntu Server Team Meeting
+
+Meeting started by smoser at 16:01:07 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-06-16.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Review ACTION points from previous meeting
+
+ *Precise Development
+''LINK:'' http://status.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html   (smoser, 16:10:01)
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/openmpi/+bug/889644/comments/2 says it's in progress on Debian  (rbasak, 16:10:22)
+
+ *Ubuntu Server Team Events
+''LINK:'' http://www.socallinuxexpo.org   (SpamapS, 16:26:30)
+
+ *Weekly Updates & Questions for the QA Team (hggdh)
+
+ *Weekly Updates & Questions for the Kernel Team (smb)
+
+ *Weekly Updates & Questions regarding Ubuntu ARM Server (NCommander)
+
+ *Weekly Updates & Questions from the Ubuntu Community
+
+ *Open Discussion
+
+
+
+Meeting ended at 16:41:34 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * Daviey (72)
+ * smoser (56)
+ * ubottu (29)
+ * SpamapS (20)
+ * hallyn (20)
+ * zul (16)
+ * smb (14)
+ * rbasak (11)
+ * RoAkSoAx (9)
+ * hggdh (5)
+ * adam_g (4)
+ * koolhead11 (4)
+ * lynxman (3)
+ * meetingology (3)
+ * lag (2)
+ * utlemming (2)
+ * Ursinha (1)
+ * robbiew (1)
+
+
+
+== Full Log ==
+
+
+ 16:01:07 <smoser> #startmeeting Ubuntu Server Team Meeting
+
+ 16:01:07 <meetingology> Meeting started Tue Dec  6 16:01:07 2011 UTC.  The chair is smoser. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:01:07 <meetingology> 
+
+ 16:01:07 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:07 <RoAkSoAx> o/
+
+ 16:01:09 <lynxman> o/
+
+ 16:01:10 <smoser> there we go
+
+ 16:01:15 <RoAkSoAx> lol
+
+ 16:01:16 <smoser> Review ACTION points from previous meeting
+
+ 16:01:20 <smoser> TOPIC: Review ACTION points from previous meeting
+
+ 16:01:28 <smoser> #TOPIC Review ACTION points from previous meeting
+
+ 16:01:36 <smoser> agenda shows none
+
+ 16:01:37 <smoser> do we have any?
+
+ 16:01:50 <Ursinha> no
+
+ 16:02:06 <zul> hilo
+
+ 16:02:23 <Daviey> lets go.
+
+ 16:02:36 <smoser> #topic Precise Development
+
+ 16:02:41 <Daviey> bug 883988: zul ?
+
+ 16:02:43 <ubottu> Launchpad bug 883988 in glance (Ubuntu Precise) "db migration failing when upgrading glance - trying to create existing tables" [High,Confirmed] https://launchpad.net/bugs/883988
+
+ 16:02:53 <Daviey> I believe that was confirmed to still be an issue?
+
+ 16:03:01 <zul> Daviey: yeah ill have a look
+
+ 16:03:17 <Daviey> zul: rocking, you'll be able to update in next weeks meeting?
+
+ 16:03:30 <zul> da
+
+ 16:03:31 <Daviey> bug 893926: No hurry, up for grabs.
+
+ 16:03:33 <ubottu> Launchpad bug 893926 in eucalyptus (Ubuntu) "Contains traces of UEC" [High,New] https://launchpad.net/bugs/893926
+
+ 16:03:44 <Daviey> bug 855030
+
+ 16:03:45 <SpamapS> just a general call out, please test MySQL 5.5 as its build is quite different and we've already missed a few subtle things.
+
+ 16:03:45 <ubottu> Launchpad bug 855030 in nova (Ubuntu Precise) "Encountering sporadic AMQPChannelException" [High,Triaged] https://launchpad.net/bugs/855030
+
+ 16:04:06 <SpamapS> like.. the fact that the client programs are statically linked to libmysqlclient. :-P
+
+ 16:04:16 <Daviey> SpamapS: great.. lets go through the bugs first?
+
+ 16:04:28 <Daviey> zul: ^^ Have you heard anything
+
+ 16:04:29 <Daviey> ?
+
+ 16:04:44 <zul> Daviey: no
+
+ 16:04:48 <Daviey> k
+
+ 16:05:05 <Daviey> bug 881903: hallyn, blocked on a new upstream version... you were investigating iirc?
+
+ 16:05:07 <ubottu> Launchpad bug 881903 in lxc (Ubuntu) "lxc-fedora template is broken" [Medium,Incomplete] https://launchpad.net/bugs/881903
+
+ 16:05:23 <hallyn> it's near top of my list to do
+
+ 16:05:27 <hallyn> but not at the top
+
+ 16:05:32 <Daviey> cool
+
+ 16:05:35 <hallyn> Daviey: that really is low prio...
+
+ 16:05:53 <Daviey> hallyn: Yeah, it's really a marker for a "New upstream version" i think.
+
+ 16:06:01 <hallyn> fair
+
+ 16:06:12 <Daviey> bug 888124: jamespage ?
+
+ 16:06:13 <hallyn> good news though, lxc reboot patchset is making progress
+
+ 16:06:14 <ubottu> Launchpad bug 888124 in excalibur-logkit (Ubuntu) "excalibur-logkit version 2.0-8 failed to build with openjdk-7" [Medium,In progress] https://launchpad.net/bugs/888124
+
+ 16:06:15 <SpamapS> Daviey: lag fail. ;)
+
+ 16:06:22 <smoser> hallyn, woot!
+
+ 16:06:37 <Daviey> hallyn: woot
+
+ 16:06:49 <lag> SpamapS: Why do I always get the blame?
+
+ 16:06:55 <Daviey> bug 607039: Up for grabs, experience of NFS probably required.
+
+ 16:06:56 <ubottu> Launchpad bug 607039 in nfs-utils (Ubuntu) "NFS4 automount using replicated servers doesn't work" [Medium,New] https://launchpad.net/bugs/607039
+
+ 16:07:01 <Daviey> lag: because you are a plum.
+
+ 16:07:16 <lag> Daviey: :)
+
+ 16:07:25 <Daviey> bug 894713: defer to kernel section.
+
+ 16:07:26 <ubottu> Launchpad bug 894713 in xen (Ubuntu) "xend init script should modprobe xen_gntdev" [Medium,In progress] https://launchpad.net/bugs/894713
+
+ 16:07:40 <smb> Daviey, Just found the bug again today
+
+ 16:07:44 <smb> Am on it
+
+ 16:07:48 <Daviey> smb: Rocking!
+
+ 16:07:56 <Daviey> bug 833499: zul ?
+
+ 16:08:01 <ubottu> Launchpad bug 833499 in OpenStack Compute (nova) "virt/disk.py unconditionally inserts public_keys into /root/.ssh/authorized_keys" [Low,Triaged] https://launchpad.net/bugs/833499
+
+ 16:09:00 <zul> ill take it as well
+
+ 16:09:06 <smb> Daviey, and bug 607039 is still nearly solved. I think I asked something last and did not notice an update. But lately I seem to have problems with my filtering and lp mail
+
+ 16:09:08 <ubottu> Launchpad bug 607039 in nfs-utils (Ubuntu) "NFS4 automount using replicated servers doesn't work" [Medium,New] https://launchpad.net/bugs/607039
+
+ 16:09:27 <hallyn> eh?  didn't smb have an update on that?
+
+ 16:09:34 <Daviey> bug 889644: Being worked on in Debian, volunteer to investigate / ping?
+
+ 16:09:36 <ubottu> Launchpad bug 889644 in openmpi (Ubuntu) "Please update OpenMPI to the 1.5 upstream version" [Wishlist,Confirmed] https://launchpad.net/bugs/889644
+
+ 16:09:48 <smoser> for those following along at home, Daviey is walking down the list at http://status.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html
+
+ 16:09:49 <Daviey> smb: Oh, didn't know you were kicking NFS.. great
+
+ 16:09:52 <Daviey> hallyn: were you also?
+
+ 16:10:01 <smoser> #link http://status.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html
+
+ 16:10:08 <hallyn> not since smb looked at it
+
+ 16:10:22 <rbasak> https://bugs.launchpad.net/ubuntu/+source/openmpi/+bug/889644/comments/2 says it's in progress on Debian
+
+ 16:10:24 <Daviey> super
+
+ 16:10:27 <rbasak> No idea about status though
+
+ 16:10:33 <Daviey> rbasak: Fancy investigating?
+
+ 16:10:42 <rbasak> OK, I'll ping the maintainer again
+
+ 16:10:48 <Daviey> great.
+
+ 16:10:54 <Daviey> bug 887186: RoAkSoAx ?
+
+ 16:10:55 <ubottu> Launchpad bug 887186 in orchestra (Ubuntu) "squid proxy big and small buckets not functioning correctly" [Undecided,New] https://launchpad.net/bugs/887186
+
+ 16:11:21 <RoAkSoAx> Daviey: i haven't look at it yet. this week though
+
+ 16:11:24 <Daviey> bug 893134: zul
+
+ 16:11:26 <ubottu> Launchpad bug 893134 in swift (Ubuntu) "swauth required for auth in diablo" [Undecided,Confirmed] https://launchpad.net/bugs/893134
+
+ 16:11:27 <Daviey> RoAkSoAx: cool
+
+ 16:11:34 <zul> done
+
+ 16:11:35 <RoAkSoAx> Daviey: but given the change between squid and squid3 I don't think that bug will apply again
+
+ 16:11:49 <Daviey> RoAkSoAx: sounds good
+
+ 16:11:53 <Daviey> rbasak: bug 858878 ?
+
+ 16:11:55 <ubottu> Launchpad bug 858878 in cobbler (Ubuntu Precise) "lack of csrf protection in cobbler-web" [High,Triaged] https://launchpad.net/bugs/858878
+
+ 16:12:03 <Daviey> isn't that fixed?
+
+ 16:12:07 <zul> yes
+
+ 16:12:11 <rbasak> I'm a bit confused about the status of this now
+
+ 16:12:16 <rbasak> It needs an SRU too, doesn't it?
+
+ 16:12:20 <zul> yes
+
+ 16:12:34 <rbasak> But it contains many other fixes, which are we backporting?
+
+ 16:12:41 <Daviey> rbasak: can you update the precise task?
+
+ 16:13:05 <Daviey> rbasak: Are they they all sec' fixes?
+
+ 16:13:26 <rbasak> what do you mean by update the precise task?
+
+ 16:13:53 <Daviey> bug 862558: adam_g - deprecated bug for precise?
+
+ 16:13:55 <ubottu> Launchpad bug 862558 in cobbler-enlist (Ubuntu Precise) "cobbler-enlist is not checking for return codes enough" [High,Triaged] https://launchpad.net/bugs/862558
+
+ 16:14:04 <Daviey> rbasak: Looks like the bug task is still open for precise?
+
+ 16:14:08 <adam_g> Daviey: yeah
+
+ 16:14:13 <Daviey> rbasak: as in, not fixed
+
+ 16:14:33 <rbasak> ah
+
+ 16:14:57 <Daviey> adam_g: bug 868488 , looking good in precise development?
+
+ 16:14:59 <ubottu> Launchpad bug 868488 in cobbler-enlist (Ubuntu) "Cobbler dns name of node needs to match system name" [High,Triaged] https://launchpad.net/bugs/868488
+
+ 16:15:16 <adam_g> Daviey: yup, as soon as the new rewrite lands that'll be fixed
+
+ 16:15:16 <Daviey> adam_g: Might be a good idea to mark those Invalid if irrelvant.
+
+ 16:15:22 <adam_g> ill do that
+
+ 16:15:32 <Daviey> bug 871278, zul ?
+
+ 16:15:34 <ubottu> Launchpad bug 871278 in nova (Ubuntu Precise) "Cannot attach volumes to instances if tgt is used" [High,In progress] https://launchpad.net/bugs/871278
+
+ 16:15:38 <rbasak> something might have got lost in the branch merge, I'll track it down
+
+ 16:15:40 <zul> this week
+
+ 16:15:45 <Daviey> rbasak: rocking
+
+ 16:15:57 <Daviey> zul: have i heard that before? :)
+
+ 16:16:04 <rbasak> will it be sufficient to SRU the patch for the CSRF fix only?
+
+ 16:16:08 <zul> Daviey: not this week :)
+
+ 16:16:16 <Daviey> bug 875262: I think koolhead really needs some help with this, anyone jumping in?
+
+ 16:16:17 <ubottu> Launchpad bug 875262 in php5 (Ubuntu Oneiric) "PHP Startup: Unable to load dynamic library '/usr/lib/php5/20090626+lfs/sqlite.so'" [High,Confirmed] https://launchpad.net/bugs/875262
+
+ 16:16:37 <Daviey> rbasak: we'll talk about it after the meeting, slightly different process for sec' fixes.
+
+ 16:16:44 <rbasak> ok
+
+ 16:16:53 <zul> Daviey: if i can trade the tgt one with someone else then maybe ;)
+
+ 16:17:03 <SpamapS> I can take a look at the php bug w/ koolhead
+
+ 16:17:11 <Daviey> SpamapS: rock star!
+
+ 16:17:19 <Daviey> SpamapS: talking of which, how is bug 887410? :)
+
+ 16:17:21 <ubottu> Launchpad bug 887410 in apache2 (Ubuntu Precise) "plymouth ask-for-passphrase" [Medium,Incomplete] https://launchpad.net/bugs/887410
+
+ 16:17:32 <koolhead11> SpamapS: am absolute n00b i would admit
+
+ 16:17:38 <SpamapS> I think its a simple fix, will update it to Triaged
+
+ 16:17:41 <Daviey> super
+
+ 16:17:49 <Daviey> bug 890362, zul ?
+
+ 16:17:50 <ubottu> Launchpad bug 890362 in nova (Ubuntu) "Should glance user's shell be /bin/false?" [Medium,Confirmed] https://launchpad.net/bugs/890362
+
+ 16:18:05 <zul> today
+
+ 16:18:06 <Daviey> bug 891433, utlemming ?
+
+ 16:18:08 <ubottu> Launchpad bug 891433 in squid3 (Ubuntu) "squid3 miss_access bug, fix not included in LTS" [Medium,Confirmed] https://launchpad.net/bugs/891433
+
+ 16:18:13 * SpamapS will be unavailable for the next few minutes
+
+ 16:18:47 <Daviey> SpamapS: cool
+
+ 16:18:49 <utlemming> its done
+
+ 16:19:01 <Daviey> bug 876768, hallyn - i sync'd but didn't close the bug.. everything looking good?
+
+ 16:19:03 <ubottu> Launchpad bug 876768 in Ubuntu "[needs-packaging] netcf" [Wishlist,In progress] https://launchpad.net/bugs/876768
+
+ 16:19:03 <utlemming> The merge request will go through once my build is done
+
+ 16:19:12 <Daviey> utlemming: can you update the bug task please?
+
+ 16:19:18 <Daviey> ah, cool.
+
+ 16:19:46 <hallyn> Daviey: oh, i suppose so - haen't tried it since then
+
+ 16:19:52 <Daviey> bug 891977: untouched since last week, i have a PPA package which fixes - but not yet merged.
+
+ 16:19:54 <ubottu> Launchpad bug 891977 in cobbler (Ubuntu) "cobbler-web package still contain traces of Ubuntu branding" [Undecided,New] https://launchpad.net/bugs/891977
+
+ 16:19:55 <hallyn> Daviey: there were a few bug requests from deiban already :)
+
+ 16:20:01 <Daviey> hallyn: eek!
+
+ 16:20:09 <hallyn> s'ok, i think they're hooking it into libvirt
+
+ 16:20:10 <hallyn> win
+
+ 16:20:17 <Daviey> RoAkSoAx: bug 898838 ?
+
+ 16:20:18 <ubottu> Launchpad bug 898838 in cobbler (Ubuntu) "Use chain.c32 rather than LOCALBOOT -1" [Undecided,New] https://launchpad.net/bugs/898838
+
+ 16:20:38 <Daviey> and RoAkSoAx: bug 898840
+
+ 16:20:40 <ubottu> Launchpad bug 898840 in cobbler (Ubuntu) "'default' preseed should be enlister" [Undecided,New] https://launchpad.net/bugs/898840
+
+ 16:21:04 <Daviey> Whilst RoAkSoAx is typing, any other bugs we should be working on?
+
+ 16:21:10 <RoAkSoAx> Daviey: taking care of this week
+
+ 16:21:14 <RoAkSoAx> taking care of them this week
+
+ 16:21:26 <Daviey> < SpamapS> just a general call out, please test MySQL 5.5 as its build is quite different and we've already missed a few subtle things.
+
+ 16:21:28 <RoAkSoAx> Daviey: bug #900349
+
+ 16:21:29 <ubottu> Launchpad bug 900349 in Ubuntu "[needs-packaging] gfs2-utils" [Wishlist,Confirmed] https://launchpad.net/bugs/900349
+
+ 16:21:29 <adam_g> Daviey: i think we might want to track bug #900553 tho i think it might be resolved with the pending merge
+
+ 16:21:31 <ubottu> Launchpad bug 900553 in keystone (Ubuntu) "Any user can manage the keystone database via keystone-manage" [Undecided,New] https://launchpad.net/bugs/900553
+
+ 16:21:31 <Daviey> < SpamapS> like.. the fact that the client programs are statically linked to libmysqlclient. :-P
+
+ 16:21:44 <RoAkSoAx> Daviey: sitting in the new queue, then I'll request MIR for it
+
+ 16:22:05 <Daviey> awesome!
+
+ 16:22:48 <Daviey> Nobody working on anything not listed?
+
+ 16:23:05 <hallyn> working on SRUs today...
+
+ 16:23:20 <RoAkSoAx> Daviey: on powernap today
+
+ 16:23:20 <Daviey> \o/
+
+ 16:23:22 <hallyn> sorry SpamapS
+
+ 16:23:27 <koolhead11> testing keystone from zul PPA
+
+ 16:23:47 <Daviey> (BTW, if anyone else wants to drive the development roundtable - please offer yourself. :)
+
+ 16:23:53 <Daviey> smoser: move on?
+
+ 16:23:56 <smoser> #topic Ubuntu Server Team Events
+
+ 16:24:39 <smoser> anyone?
+
+ 16:24:43 <smoser> i dont hae anything.
+
+ 16:24:45 <smoser> so ...
+
+ 16:24:45 <smoser> 5
+
+ 16:24:48 <smoser> 4
+
+ 16:24:49 <smoser> 3
+
+ 16:24:51 <smoser> 2
+
+ 16:24:52 <smoser> 1
+
+ 16:24:54 <koolhead11> i might
+
+ 16:25:05 <koolhead11> go to a college tech week this month
+
+ 16:25:10 <Daviey> robbiew will be in Boston shortly for, erm
+
+ 16:25:24 <robbiew> LISA
+
+ 16:25:35 <hallyn> oh, fun
+
+ 16:25:36 <Daviey> thassim
+
+ 16:25:37 <hallyn> one of my favs
+
+ 16:25:51 <SpamapS> sorry I'm back
+
+ 16:25:55 <SpamapS> SCALE!
+
+ 16:25:56 <Daviey> So be there if you are groovy.
+
+ 16:26:01 <SpamapS> Feb 20, Los Angeles
+
+ 16:26:06 <Daviey> SpamapS: never, ever, be sorry for being back :)
+
+ 16:26:08 <SpamapS> err
+
+ 16:26:09 <SpamapS> Jan 20
+
+ 16:26:10 <SpamapS> haha
+
+ 16:26:30 <SpamapS> http://www.socallinuxexpo.org
+
+ 16:26:52 <Daviey> rocking
+
+ 16:26:54 <SpamapS> There will be a Juju charm school on Friday, and Jorge and I are presenting.
+
+ 16:26:57 <zul> budapest next month
+
+ 16:27:06 <SpamapS> zul: thats not open to the public though
+
+ 16:27:19 <zul> SpamapS: it could be :)
+
+ 16:27:30 <SpamapS> BUT, if you are going to be in Budapest, we'll certainly come have a beer with you!
+
+ 16:27:34 <smoser> ok
+
+ 16:27:37 <smoser> enough batter
+
+ 16:27:39 <smoser> moving on
+
+ 16:27:39 <smoser> #topic Weekly Updates & Questions for the QA Team (hggdh)
+
+ 16:27:45 * SpamapS feels the coffee kicking in
+
+ 16:27:54 <smoser> hggdh, ?
+
+ 16:28:02 <smoser> anyone have anything for the man the myth the legend ?
+
+ 16:28:32 <hallyn> yes
+
+ 16:28:41 <hallyn> hggdh: did you ever fix your problem yesterday with kvm?
+
+ 16:29:02 <hallyn> if not, can you open a bug?
+
+ 16:29:16 <hallyn> it sounded scary...
+
+ 16:29:50 <hggdh> here
+
+ 16:30:02 <hggdh> no news from QA
+
+ 16:30:28 <hggdh> hallyn: no, I did not. It flatly refuses to work, and no logs are generated
+
+ 16:30:35 <hggdh> I will open a bug on it
+
+ 16:30:37 <hggdh> ..
+
+ 16:30:48 <hallyn> thx
+
+ 16:30:54 <smoser> #topic Weekly Updates & Questions for the Kernel Team (smb)
+
+ 16:30:57 <smoser> wooh
+
+ 16:30:58 <smb> Nothing in particular. Some info in bug 607039 may be interesting in general. At least I did find out new things. :)
+
+ 16:30:59 <ubottu> Launchpad bug 607039 in nfs-utils (Ubuntu) "NFS4 automount using replicated servers doesn't work" [Medium,New] https://launchpad.net/bugs/607039
+
+ 16:31:03 <smb> bah
+
+ 16:31:06 <smb> wrong one...
+
+ 16:31:17 <smb> bug 886521
+
+ 16:31:20 <ubottu> Launchpad bug 886521 in linux (Ubuntu Oneiric) "CONFIG_XEN_PLATFORM_PCI should be "y" when building 3.1 kernel" [Medium,Fix committed] https://launchpad.net/bugs/886521
+
+ 16:31:26 <smb> yes that was the one
+
+ 16:31:49 <smoser> alexbligh has some more fun bugs for you to read, bug 900799
+
+ 16:31:50 <ubottu> Launchpad bug 900799 in cloud-initramfs-tools (Ubuntu) "Cloud images on kvm use wrong disks" [Undecided,New] https://launchpad.net/bugs/900799
+
+ 16:31:51 <smb> otherwise smoser, what do you have for me today :)
+
+ 16:32:04 <smoser> he likes to do silly things, like attach the same disk to 2 different buses.
+
+ 16:32:33 <smoser> so, smb please take a read at that.
+
+ 16:32:37 <smb> Which is the thing xen does sort of
+
+ 16:32:49 <smoser> sort of... although he points out that it might be more difficult.
+
+ 16:33:07 <smoser> as in xen, you can compleletely ignore the emulated if you have the xen_pv
+
+ 16:33:08 <smb> yeah, agreed
+
+ 16:33:22 <smoser> but in kvm, you can't copletely ignore the scsi bus if you have virtio devices.
+
+ 16:33:31 <smoser> so, its fun.
+
+ 16:33:33 <smb> I guess he wants to do something like that under kvm
+
+ 16:33:37 <smoser> right.
+
+ 16:33:41 <smb> Not that I think it is supported
+
+ 16:33:42 <smoser> s/wants to/does do/
+
+ 16:33:53 <smoser> and wants you to support it
+
+ 16:33:54 <smoser> :)
+
+ 16:33:57 <smoser> anyway.
+
+ 16:34:06 <smoser> thats all i've got
+
+ 16:34:36 <smoser> #topic Weekly Updates & Questions regarding Ubuntu ARM Server (NCommander)
+
+ 16:34:36 * smb is so ... whatever
+
+ 16:35:45 <Daviey> heh
+
+ 16:36:42 <smoser> NCommander, ?
+
+ 16:37:56 <smoser> #topic Weekly Updates & Questions from the Ubuntu Community
+
+ 16:38:35 <smoser> anyone have anything here ?
+
+ 16:38:46 <lynxman> nothing on my side o/
+
+ 16:38:52 <smoser> ok. i fyou happen to have something, you can fit it into open discussion
+
+ 16:38:57 <smoser> #topic Open Discussion
+
+ 16:39:40 <smoser> anyone have anythign for open discussion ?
+
+ 16:39:52 <Daviey> Not here... :)
+
+ 16:39:58 <smoser> if not, then we're dangerously close to finishing
+
+ 16:40:06 <SpamapS> just a general call out, please test MySQL 5.5 as its build is quite different and we've already missed a few subtle things.
+
+ 16:40:09 <zul> wait....wait....i got nothing
+
+ 16:40:09 * SpamapS repeats
+
+ 16:40:22 <zul> SpamapS:  like what?
+
+ 16:40:25 <lynxman> a pony would be nice
+
+ 16:40:34 <smoser> anyone got any recent zul sitings ?
+
+ 16:40:43 <smoser> ok.
+
+ 16:40:46 <smoser> then here we go
+
+ 16:40:48 <SpamapS> smoser: he's hibernating
+
+ 16:40:55 <smoser> mdeslaur had my favorites.
+
+ 16:41:01 <smoser> #Announce next meeting date and time
+
+ 16:41:30 <smoser> Tuesday 2011-12-13 at 1600 UTC - #ubuntu-meeting
+
+ 16:41:34 <smoser> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

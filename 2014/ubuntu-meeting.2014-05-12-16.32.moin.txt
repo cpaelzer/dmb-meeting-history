@@ -1,0 +1,248 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 12 May at 16:32 &mdash; 16:55 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-05-12-16.32.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 16:33.
+
+
+=== Review of any previous action items ===
+The discussion about "Review of any previous action items" started at 16:33.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:33.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 16:54.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/nss-pam-ldapd.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/openjdk-6.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/shibboleth-sp2.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libcgi-application-perl.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/encfs.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 16:54.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * mdeslaur (49)
+ * sarnold (10)
+ * sbeattie (10)
+ * jjohansen (7)
+ * tyhicks (6)
+ * doko (3)
+ * ubottu (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:32 <mdeslaur> #startmeeting
+
+ 16:32 <meetingology> Meeting started Mon May 12 16:32:49 2014 UTC.  The chair is mdeslaur. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:32 <meetingology> 
+
+ 16:32 <meetingology> Available commands: action commands idea info link nick
+
+ 16:32 <mdeslaur> The meeting agenda can be found at:
+
+ 16:32 <mdeslaur> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:33 <mdeslaur> [TOPIC] Announcements
+
+ 16:33 <mdeslaur> Thanks to the following contributors for their help on security updates last week:
+
+ 16:33 <mdeslaur> Otto Kekäläinen (otto) provided debdiffs for trusty for mariadb-5.5 (LP: #1313187)
+
+ 16:33 <mdeslaur> James Page (jamespage) provided a debdiff for trusty for mysql-5.6 (LP: #1313566)
+
+ 16:33 <mdeslaur> Reinhard Tartler (siretart) provided an updated libav package for trusty (LP: #1277173)
+
+ 16:33 <mdeslaur> Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)
+
+ 16:33 <ubottu> Launchpad bug 1313187 in mariadb-5.5 (Ubuntu Utopic) "USN-2170-1: MySQL vulnerabilities also applies to MariaDB" [Undecided,Fix released] https://launchpad.net/bugs/1313187
+
+ 16:33 <ubottu> Launchpad bug 1313566 in mysql-5.6 (Ubuntu Utopic) "mysql 5.6.17 security update tracking bug" [High,Fix released] https://launchpad.net/bugs/1313566
+
+ 16:33 <ubottu> Launchpad bug 1277173 in libav (Ubuntu) "February 2014 libav security tracking bug" [High,Fix committed] https://launchpad.net/bugs/1277173
+
+ 16:33 <mdeslaur> [TOPIC] Review of any previous action items
+
+ 16:33 <mdeslaur> none
+
+ 16:33 <mdeslaur> [TOPIC] Weekly stand-up report
+
+ 16:33 <mdeslaur> I'll go first
+
+ 16:33 <mdeslaur> I'm in the happy place this week.
+
+ 16:33 <mdeslaur> I'm working on some updates, and I'll probably be doing the embargoed issue tomorrow
+
+ 16:33 <mdeslaur> I also have to review blueprints
+
+ 16:34 <mdeslaur> and I'm going to plan a meeting to go through them with the rest of you tomorrow
+
+ 16:34 <mdeslaur> quite possibly around this time
+
+ 16:34 <mdeslaur> well, a half hour later
+
+ 16:34 <mdeslaur> that's it from me, sbeattie, you're up
+
+ 16:35 <sbeattie> I'm working on compiler hardening stuff again; I'm currently looking through the test results for gcc-4.9 for enabling -fstack-protector-strong by default and fixing the way -Wformat and -Wformat-security were being enabled.
+
+ 16:36 <sbeattie> Things on that front are looking good and I'll probably hand off those patches to doko later today.
+
+ 16:36 <mdeslaur> sbeattie: cool!
+
+ 16:36 <sbeattie> Getting -pie by default for amd64 is looking trickier and will take some more time.
+
+ 16:36 <mdeslaur> sbeattie: trickier in what way?
+
+ 16:37 <doko> sbeattie, does this mean I get fixes for the testsuite? ;p
+
+ 16:37 <sbeattie> Defining specs for per-arch where gcc treats i386/amd64 as the same arch is non-obvious/
+
+ 16:37 <mdeslaur> sbeattie: hrm...what about the idea of conditionally patching it based on arch?
+
+ 16:38 <sbeattie> doko: not immediately, but yes, I intend to look at those, too; the patches I have reduce the number of failures by a few.
+
+ 16:38 <mdeslaur> or is that painful for cross-compilation or something?
+
+ 16:38 <doko> is -fpie already decided?
+
+ 16:39 <sbeattie> It makes it harder to avoid enabling -pie for -m32 case
+
+ 16:39 <mdeslaur> doko: for amd64, pretty much yeah
+
+ 16:40 * doko sees python and cc1 performans going down :-/
+
+ 16:41 <mdeslaur> doko: buy a faster machine!
+
+ 16:41 <sbeattie> doko: well, once we have a patch to do that, we can see the impact, if it's bad there than we can revisit and/or disable for just those.
+
+ 16:42 <sbeattie> anyway. I still need to investigate mod_apparmor and track down some QRT issues with ppc64el this week.
+
+ 16:42 <sbeattie> And I guess review blueprints, too.
+
+ 16:42 <sbeattie> That's it for me. tyhicks?
+
+ 16:43 <tyhicks> I'm wrapping up the dbus merge from debian testing
+
+ 16:44 <mdeslaur> ah, right, I probably should tackle some merges too
+
+ 16:44 <tyhicks> there's a new test-dbus.py failure (running make check) that I need to make sure isn't caused by the new apparmor mediation patches
+
+ 16:45 <tyhicks> then it is back to kdbus (I let the merge and some apparmor testing jump in front of my planned kdbus work from last week)
+
+ 16:45 <tyhicks> I also need to review blueprints and prepare for the sprint this week, since I'm out next week
+
+ 16:45 <tyhicks> that's it for me
+
+ 16:45 <tyhicks> jjohansen: you're up
+
+ 16:46 <jjohansen> I am working on apparmor this week. I need to spend some time looking at the upstream cross rename patches, there is a reported regression in apparmor with them.
+
+ 16:46 <jjohansen> I need to finish testing the patchset I have for upstream this week so it can land in time for the next kernel merge window.
+
+ 16:46 <jjohansen> Hopefully there will be more feedback on the bugs I was poking at last week so I can continue looking at them while the are fresh in my mind
+
+ 16:46 <jjohansen> There are some outstanding patches I that need to be reviewed on the mailing lists
+
+ 16:46 <jjohansen> bp to look at
+
+ 16:46 <jjohansen> and then it will be back to finishing up one of my outstanding patch queues so that it can be kicked out for review
+
+ 16:47 <mdeslaur> yay
+
+ 16:48 <sarnold> \o/
+
+ 16:48 <jjohansen> I think that is it for me, sarnold you're up
+
+ 16:48 <sarnold> I'm on triage this week
+
+ 16:48 <sarnold> I have an emargoed update this week
+
+ 16:49 <sarnold> and I've gotten the test-django script to only 7 instead of 8 failures on trusty, so.. 86% left to go there, I guess
+
+ 16:49 <mdeslaur> sarnold: heh, nice. did you get it working with the other apache thingy?
+
+ 16:49 <mdeslaur> mod_wsgi
+
+ 16:49 <sarnold> mdeslaur: that was the one success :)
+
+ 16:50 <mdeslaur> cool :)
+
+ 16:50 <sarnold> mdeslaur: now just to figure out why the other seven still don't play along with mod_wsgi -- they might still be faults in configuration or those tests may also need more modification
+
+ 16:50 <mdeslaur> sarnold: apache 2.4 moved some stuff around, and required a few more modules
+
+ 16:51 <sarnold> it might be simple (django changed some of the routing API, but those changes were easy to adapt..)
+
+ 16:51 <mdeslaur> a lot of the other qrt scripts needed adjustments
+
+ 16:51 <mdeslaur> it may be related to that
+
+ 16:51 <sarnold> mdeslaur: yeah, the auth changes required a bit of fiddling too, but at least it lines up exactly with django's change to wsgi as well..
+
+ 16:53 <sarnold> it's been more work than I first expected. :)
+
+ 16:53 <sarnold> mdeslaur: back to you :)
+
+ 16:53 <mdeslaur> sarnold: that's why I gave it to you instead of doing it myself :)
+
+ 16:53 <mdeslaur> slacker++
+
+ 16:54 <mdeslaur> [TOPIC] Highlighted packages
+
+ 16:54 <mdeslaur> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:54 <mdeslaur> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:54 <mdeslaur> http://people.canonical.com/~ubuntu-security/cve/pkg/nss-pam-ldapd.html
+
+ 16:54 <mdeslaur> http://people.canonical.com/~ubuntu-security/cve/pkg/openjdk-6.html
+
+ 16:54 <mdeslaur> http://people.canonical.com/~ubuntu-security/cve/pkg/shibboleth-sp2.html
+
+ 16:54 <mdeslaur> http://people.canonical.com/~ubuntu-security/cve/pkg/libcgi-application-perl.html
+
+ 16:54 <mdeslaur> http://people.canonical.com/~ubuntu-security/cve/pkg/encfs.html
+
+ 16:54 <mdeslaur> [TOPIC] Miscellaneous and Questions
+
+ 16:54 <mdeslaur> Does anyone have any other questions or items to discuss?
+
+ 16:55 <mdeslaur> zzzz
+
+ 16:55 <mdeslaur> Thanks everyone!
+
+ 16:55 <mdeslaur> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

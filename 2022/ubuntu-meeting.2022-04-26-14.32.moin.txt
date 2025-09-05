@@ -1,0 +1,206 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 26 Apr at 14:32 &mdash; 14:41 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-04-26-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:33)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:35.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:35)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nullboot/+bug/1965115   (cpaelzer, 14:35)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:36.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:37)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:40.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (50)
+ * sarnold (8)
+ * slyon (7)
+ * joalif (3)
+ * meetingology (2)
+ * didrocks (2)
+ * ubottu (1)
+
+
+
+== Full log ==
+
+
+ 14:32 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:18 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:32 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:32 <cpaelzer> didrocks: joalif: slyon: sarnold: (all already here) o/
+
+ 14:32 <cpaelzer> jamespage: ping for MIR meeting
+
+ 14:32 <cpaelzer> no previous action items to check
+
+ 14:33 <cpaelzer> let us see if the kinetic kudu already fills up any of our work queues
+
+ 14:33 <cpaelzer> #topic current component mismatches
+
+ 14:33 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <cpaelzer> only known false-positives
+
+ 14:33 <sarnold> z3 is kinda real-positive, though, right?
+
+ 14:33 <slyon> I investigated llvm-toolchain-13 -> z3.
+
+ 14:34 <cpaelzer> sarnold: yes but we pinged foundations on it already
+
+ 14:34 <slyon> llvm-13 is being pulled in by the new rustc MIR
+
+ 14:34 <slyon> it was excluded before. And then we have llvm-13 -> llvm-13-dev -> libz3-dev dependencies
+
+ 14:34 <slyon> so it's real, and Simon already had been looking into it
+
+ 14:35 <cpaelzer> for our screening I consider this "handled by the owner" and we can wait for it to resolve
+
+ 14:35 <slyon> ack
+
+ 14:35 <cpaelzer> FYI - we intend to try to re-tackle ipmitool MIR, so this long running visitor in mismatches might be gone at the end of 22.10
+
+ 14:35 <sarnold> \o/
+
+ 14:35 <cpaelzer> #topic New MIRs
+
+ 14:35 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:35 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:35 <cpaelzer> nullboot by juliank
+
+ 14:35 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/nullboot/+bug/1965115
+
+ 14:35 <ubottu> Launchpad bug 1965115 in nullboot (Ubuntu) "[MIR] nullboot" [Undecided, New]
+
+ 14:36 <cpaelzer> looks like this was waiting for jamym to close to be finalized and directed at us
+
+ 14:36 <cpaelzer> needs a reviewer, anyone not busy with the roadmap sprint at the moment?
+
+ 14:36 <joalif> I can look at it
+
+ 14:36 <cpaelzer> thank you, assigned
+
+ 14:36 <joalif> ok
+
+ 14:36 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:36 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:37 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:37 <cpaelzer> no updates since last week
+
+ 14:37 <cpaelzer> the rustc related mdevtl which is on place #3 will come back next cycle as real MIR
+
+ 14:37 <cpaelzer> well it is in main, but I'll bring thes rust-mir-rules up again
+
+ 14:37 <cpaelzer> to be able to switch to the new version
+
+ 14:38 <cpaelzer> ok, good for now - going on
+
+ 14:38 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:38 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> sarnold: now that the release spike is done, might I ask how these remaining ones look?
+
+ 14:38 <cpaelzer> telegraf is next by order of milestones
+
+ 14:38 <cpaelzer> ccid/opensc/pcsc-lit is a security item anyway
+
+ 14:39 <cpaelzer> I know people in CPC that would love to get vulkan-tools done (I need to tell them how to prioritize them)
+
+ 14:39 <sarnold> cpaelzer: we haven't started anything new in the last week, we've been cleaning up loose ends all over the place; but the good news is, now we've got more people who've done one already :)
+
+ 14:39 <cpaelzer> \o/
+
+ 14:39 <sarnold> I'm unlikely to start in on another one in the next week though
+
+ 14:39 <cpaelzer> so can I ask to get eyes on telegraf soon'ish please?
+
+ 14:39 <sarnold> it'll be next, anyway :)
+
+ 14:39 <cpaelzer> use your new people :-)
+
+ 14:39 <sarnold> poor little guy has been on the queue for a whilke..
+
+ 14:40 <cpaelzer> next is great, but what I mean is not beeing "next" in October :-)
+
+ 14:40 <sarnold> *nod*
+
+ 14:40 <cpaelzer> thanks
+
+ 14:40 <cpaelzer> I'll talk to CPC about the prio of vulkan-tools
+
+ 14:40 <cpaelzer> that probably will need to go up in priop as well
+
+ 14:40 <cpaelzer> otherwise I'm happy on this list
+
+ 14:40 <cpaelzer> #topic Any other business?
+
+ 14:40 <sarnold> none here
+
+ 14:41 <slyon> no
+
+ 14:41 <joalif> nope
+
+ 14:41 <didrocks> nothing either
+
+ 14:41 <cpaelzer> fast and efficient (10 of 30 minutes) - I like that part of the ubuntu dev cycle
+
+ 14:41 <cpaelzer> no extra topic
+
+ 14:41 <cpaelzer> thank you all!
+
+ 14:41 <slyon> thank you cpaelzer, all!
+
+ 14:41 <didrocks> thanks all, cpaelzer!
+
+ 14:41 <cpaelzer> it will get busier for sure
+
+ 14:41 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

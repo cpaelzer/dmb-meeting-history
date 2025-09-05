@@ -1,0 +1,486 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:02:23 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-11-09-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' http://reports.qa.ubuntu.com/reports/kernel-bugs/reports/rls-p-tracking-bugs.html   (slangasek, 16:30:25)
+
+ *AOB
+
+
+
+Meeting ended at 16:53:39 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (66)
+ * cjwatson (39)
+ * jhunt (30)
+ * ev (25)
+ * stgraber (21)
+ * bdmurray (16)
+ * ubottu (10)
+ * barry (4)
+ * meetingology (3)
+ * jrgifford (1)
+
+
+
+== Full Log ==
+
+
+ 16:02:23 <slangasek> #startmeeting
+
+ 16:02:23 <meetingology> Meeting started Wed Nov  9 16:02:23 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:02:23 <meetingology> 
+
+ 16:02:23 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:02:51 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt ev bdmurray slangasek)
+
+ 16:02:54 <slangasek> bdmurray stgraber barry jhunt ev cjwatson doko slangasek
+
+ 16:02:58 <slangasek> ah, topic first :P
+
+ 16:03:04 <slangasek> [TOPIC] lightning round
+
+ 16:03:06 <slangasek> and go :)
+
+ 16:03:22 <ev> whoops, missed that.  Who am I after?
+
+ 16:03:30 <cjwatson> ev: jhunt
+
+ 16:03:34 <ev> cool, thanks
+
+ 16:03:42 <bdmurray> Attended UDS P in Orlando Florida
+
+ 16:03:43 <bdmurray> updating blueprints with notes from UDS Precise
+
+ 16:03:43 <bdmurray> investigation into bug 882255 regarding passwordless login and changing of password
+
+ 16:03:45 <ubottu> Launchpad bug 882255 in gnome-control-center (Ubuntu) "No administrative actions possible (password refused) after enabling passwordless login" [High,Triaged] https://launchpad.net/bugs/882255
+
+ 16:03:45 <bdmurray> added lp_work_item_editor to firefox-lp-improvements
+
+ 16:03:54 <bdmurray> uploaded new version of firefox-lp-improvements
+
+ 16:03:54 <bdmurray> review of Oneiric nominations for foundations packages
+
+ 16:03:54 <bdmurray> update bug bot to deal with bugs with gzipped attachments better
+
+ 16:03:54 <bdmurray> wrote bug bot function to comment on no package bug reports
+
+ 16:04:04 <bdmurray> done
+
+ 16:04:19 <stgraber> - UDS last week
+
+ 16:04:19 <stgraber> - Looked a bit at bug 876829 (few patches around, none really fixing the issue) and bug 823366 (need to do some testing)
+
+ 16:04:23 <stgraber> - Testing tracker work
+
+ 16:04:23 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Triaged] https://launchpad.net/bugs/876829
+
+ 16:04:24 <ubottu> Launchpad bug 823366 in ifenslave-2.6 (Ubuntu) "bond_primary is ignored in /etc/network/interfaces" [Undecided,Incomplete] https://launchpad.net/bugs/823366
+
+ 16:04:25 <stgraber> - http://91.189.93.73 is usually up to date with what's in the branch
+
+ 16:04:28 <stgraber> - Secured the XML-RPC API (authentication using a login on the website + a key in the user profile)
+
+ 16:04:31 <stgraber> - Initial work on notifications
+
+ 16:04:33 <stgraber> - Changed theme to gain more screen space
+
+ 16:04:36 <stgraber> - Merged initial report from Jean-Baptiste
+
+ 16:04:38 <stgraber> - Update schema and API to support multiple result per user with link to hardware profile and a note with each build (rebuild reason)
+
+ 16:04:41 <stgraber> - Improved migration/upgrade scripts
+
+ 16:04:44 <stgraber> - Played a bit trying to get upstart:i386 to install on my laptop, uploaded most of its dependencies to my PPA but still won't work. Will poke slangasek :)
+
+ 16:04:47 <stgraber> - TODO
+
+ 16:04:49 <stgraber> - Get a test environment for bug 823366
+
+ 16:04:52 <stgraber> - Get a test environment for iscsi, then look at the open-iscsi merge (hopefully fixing a few bugs in the process)
+
+ 16:04:55 <stgraber> - Continue testing tracker work, now working on finishing the user UI and notifications
+
+ 16:04:58 <stgraber> - Make sure all my blueprints are up to date on LP (should be) and cleanup the work items list a bit
+
+ 16:05:01 <stgraber> (done)
+
+ 16:07:25 <barry> since uds-p: merged claws, claws-plugins patches from official PPA; bug 884890; working on blueprints; start investigating python 3 for update manager and python-dbus; done.
+
+ 16:07:25 <barry> 
+
+ 16:07:26 <ubottu> Launchpad bug 884890 in python-tz (Ubuntu) "Failure to instantiate timezones with well-known names in 12.04" [High,Fix released] https://launchpad.net/bugs/884890
+
+ 16:08:48 <slangasek> jhunt: you're up
+
+ 16:08:50 <jhunt> UDS last week (still recovering!). This week have worked on updating the
+
+ 16:08:50 <jhunt> cookbook and going the bugs (had some significant contributions from the
+
+ 16:08:50 <jhunt> community which is great!!) Worked on a fix for bug 829980 - currently
+
+ 16:08:50 <jhunt> awaiting feedback on my ppa build from users with "dodgy" battery
+
+ 16:08:50 <jhunt> hardware. Plan then to merge pad data -> blueprints, and finish rework
+
+ 16:08:52 <jhunt> on job logging.
+
+ 16:08:53 <ubottu> Launchpad bug 829980 in upstart (Ubuntu) "upstart-udev-bridge eats 100% cpu calling dbus_message_iter_append_basic()" [Medium,In progress] https://launchpad.net/bugs/829980
+
+ 16:08:55 <jhunt> ⟌
+
+ 16:09:00 <jhunt> soz - didn't see the end marker :)
+
+ 16:09:45 <ev> - Getting back up to speed after UDS.  Filed expenses, filled out the survey.
+
+ 16:09:45 <ev> - Discussion with Robert around the replacement Launchpad OOPS system he's
+
+ 16:09:46 <ev> building, using Cassandra as a backend.  Set up a call with him to brain
+
+ 16:09:46 <ev> dump the results of our UDS discussions on the crash DB for Thursday night.
+
+ 16:09:46 <ev> - Helping someone from the XMBC team get ubiquity working on their stripped
+
+ 16:09:47 <ev> down live CD.
+
+ 16:09:47 <ev> - Blueprints and workitems drafting.
+
+ 16:09:47 <ev> - Trying to get an apport-retracer instance up and running in the Canonicloud.
+
+ 16:09:48 <ev> - Looking at AMQP vs Cassandra's asynchronous triggers as a way of triggering
+
+ 16:09:48 <ev> retraces of submitted crashes.
+
+ 16:09:48 <ev> (done)
+
+ 16:10:01 <slangasek> jhunt: understandable, since he cheesed out and didn't use unicode :)
+
+ 16:10:13 <jhunt> tsk tsk!
+
+ 16:10:48 <slangasek> ev: what's XMBC expand to?
+
+ 16:10:56 <ev> xbox media center
+
+ 16:11:00 <ev> XMBC*
+
+ 16:11:07 <ev> err XBMC
+
+ 16:11:11 <slangasek> ah, ok
+
+ 16:11:15 <ev> apparently I just cannot type that acronym
+
+ 16:11:43 <cjwatson> Getting the +1 maintenance team going: this month it's me, mterry, and cyphermox once he gets back from vacation.
+
+ 16:11:46 <cjwatson> Lots of build fixes and transitions and the like.  Broke cmake/armel (not my fault!), analysed and reported the compiler bug that broke it, and worked around it.  Broke yelp and fixed it.
+
+ 16:11:51 <cjwatson> Patch pilot on Tuesday morning.
+
+ 16:11:53 <cjwatson> Fixed casper bug 882308 by request of OEM^WPES.
+
+ 16:11:56 <ubottu> Launchpad bug 882308 in casper (Ubuntu Oneiric) "Choosing simplified chinese in isolinux menu causes corrupted characters and untranslated installer" [High,In progress] https://launchpad.net/bugs/882308
+
+ 16:11:56 <cjwatson> Experimenting with multiarch cross-building.  I at least seem to have a usable chroot now and have fixed a few packages as a result.
+
+ 16:11:59 <cjwatson> We almost have the new stonking cdimage master machine!  Working with IS on getting it set up properly, and doing some preparatory work on antimony.
+
+ 16:12:03 <cjwatson> Drafted foundations-p-image-build-pipeline.  Three or so more to do.
+
+ 16:12:05 <cjwatson> --
+
+ 16:13:09 <slangasek> ah, and doko's off this week, so it's just me
+
+ 16:14:41 <slangasek> halfway through my own blueprint drafting
+
+ 16:14:41 <slangasek> upgraded to precise this week, have started reporting bugs
+
+ 16:14:41 <slangasek> filed bugs for the various unity2d inconveniences I hadn't gotten around to reporting before
+
+ 16:14:41 <slangasek> merged console-setup, will try to forward some changes upstream later to reduce our delta
+
+ 16:14:41 <slangasek> merged user-setup
+
+ 16:14:42 <slangasek> pushed a patch to sbuild so that it understands multiarch build-dep syntax
+
+ 16:14:42 <slangasek> worked on checking the multiarch cross-buildability of a few packages in the base system
+
+ 16:14:43 <slangasek> got bored with that and decided to go straight for qt4-x11 instead; pushed a bunch of M-A patches
+
+ 16:14:43 <slangasek> (done)
+
+ 16:15:20 <slangasek> anyone have questions?
+
+ 16:16:28 <slangasek> [TOPIC] Bugs
+
+ 16:16:44 <slangasek> bdmurray: anything of interest from your side?
+
+ 16:17:11 <bdmurray> Only one bug 834516 which you've touched recently
+
+ 16:17:13 <ubottu> Launchpad bug 834516 in user-setup (Ubuntu) "Encryped home directory selected but not encrypted" [High,New] https://launchpad.net/bugs/834516
+
+ 16:18:05 <slangasek> cjwatson, ev, stgraber: have you seen any other reports of that issue?
+
+ 16:19:09 <stgraber> not that I can remember.
+
+ 16:20:21 <cjwatson> nor I
+
+ 16:20:35 <bdmurray> I don't see "Cannot get ecryptfs version" in any ubiquity bug report log files
+
+ 16:20:51 <slangasek> huh
+
+ 16:21:03 <cjwatson> although it rings a bell, I think I remember fixing something similar
+
+ 16:21:22 <bdmurray> InstallationMedia: Ubuntu 11.10 "Oneiric Ocelot" - Alpha amd64 (20110817)
+
+ 16:21:40 <slangasek> oh, it was installed from an alpha?  should we close this out as fixed?
+
+ 16:22:18 <bdmurray> Well should ubiquity have stopped at that point?
+
+ 16:22:22 <cjwatson> hm, I was thinking of bug 820460 which was different
+
+ 16:22:25 <ubottu> Launchpad bug 820460 in user-setup (Ubuntu Oneiric) "User not created with encrypted home partition: user-setup exit code 32" [Critical,Fix released] https://launchpad.net/bugs/820460
+
+ 16:22:37 <jrgifford> there was this bug, which is the exact opposite. - bug #840570
+
+ 16:22:38 <ubottu> Launchpad bug 840570 in ubiquity (Ubuntu) "Forced to encrypt my home directory during Oneric install" [Undecided,New] https://launchpad.net/bugs/840570
+
+ 16:23:43 <slangasek> heh
+
+ 16:24:23 <slangasek> stgraber: do you think you could follow up on this and see what the source of that error message is?  I'll bet it was a problem with the actual kernel during the alpha and should be closed
+
+ 16:24:49 <bdmurray> I mean it seems wrong to me for the installation to have proceeded even though ecryptfs wasn't available.
+
+ 16:24:56 <stgraber> slangasek: yep, I can do that
+
+ 16:24:57 <cjwatson> hmm
+
+ 16:25:13 <cjwatson> we || true the adduser call I think because it's possible that the user might already exist in some contenxts
+
+ 16:25:16 <cjwatson> *contexts
+
+ 16:25:23 <slangasek> bdmurray: ah, true
+
+ 16:25:40 <cjwatson> I agree that we shouldn't proceed if it's clearly broken; we just need to be careful not to go too far the other way
+
+ 16:25:46 <slangasek> so we shouldn't just close the bug anyway, we ought to communicate the missing encryption to the user
+
+ 16:25:51 <slangasek> stgraber: still yours if you want it :)
+
+ 16:26:47 <cjwatson> (that || true is very old; I think it may date back to base-config)
+
+ 16:27:02 <cjwatson> it's in r1 of user-setup
+
+ 16:27:49 <stgraber> slangasek: I can certainly add that to my low priority list :) If we skip the user creation, we should at least show a warning I'd think
+
+ 16:29:09 <slangasek> stgraber: I think it's a high urgency to confirm that the underlying issue is fixed in the final release, and low urgency (but not low priority) to not silently skip encryption
+
+ 16:30:07 <stgraber> slangasek: sounds good
+
+ 16:30:25 <slangasek> [LINK] http://reports.qa.ubuntu.com/reports/kernel-bugs/reports/rls-p-tracking-bugs.html
+
+ 16:30:41 <slangasek> I think this link has been passed around; hopefully everyone has seen it
+
+ 16:31:04 <ev> fancy pant
+
+ 16:31:04 <ev> s
+
+ 16:31:28 <slangasek> this is the list of bugs that I've committed you to fix for the release so far :P
+
+ 16:32:15 <slangasek> there are 33 tasks on there for foundations... which is high, but I don't see any bugs on that list that I think are ok for us to ship with
+
+ 16:32:32 <slangasek> if you disagree you can argue it :), but I'd much rather we focus on getting them fixed
+
+ 16:33:04 <slangasek> since this is an LTS and we're emphasizing quality, the list reflects that
+
+ 16:33:10 <barry> slangasek: is there a difference between "Canonical Foundations Team" and "Ubuntu Foundations Team"?
+
+ 16:33:44 <slangasek> barry: two different teams in launchpad, the latter includes some community folks
+
+ 16:33:55 * barry nods
+
+ 16:34:45 <slangasek> so the challenge I'd like to set for the team is to get 20 of those bugs fixed by the end of the year
+
+ 16:35:00 <slangasek> no reason to wait until after FF to start fixing them :)
+
+ 16:35:09 <slangasek> what do you think?
+
+ 16:36:08 <cjwatson> it can't hurt to try; do you have the current set recorded somewhere so that tracking won't be thrown off by additions?
+
+ 16:36:23 <slangasek> not yet, but I'll snapshot it today
+
+ 16:36:56 <slangasek> there are a lot of installer bugs on there to go around, fwiw
+
+ 16:37:17 <slangasek> so anyone who isn't already familiar with the installer and would like to learn more, now's your chance :)
+
+ 16:37:36 <jhunt> those two plymouth bugs are the same issue. Would it make sense to make one a dup of another?
+
+ 16:38:24 <jhunt> only reason I say that being some folks have expressed the view that they don't get notified of changes to the bug their bug is a dup of.
+
+ 16:38:49 <slangasek> I don't remember why they wound up split
+
+ 16:39:17 <slangasek> I think it was because the issue was rereported (849414) in a later release than when we thought we'd fixed it
+
+ 16:39:30 <slangasek> jhunt: if you merge them, please make sure the bug description of the master says something sensible :)
+
+ 16:39:42 <jhunt> slangasek: righto.
+
+ 16:39:47 <slangasek> (e.g., reproduce instructions)
+
+ 16:40:14 <slangasek> cjwatson: that reminds me... is there anything other than ^C that would generate SIGINT on console?
+
+ 16:40:31 <cjwatson> some random keycode or other with the console in raw mode
+
+ 16:40:41 <slangasek> heh
+
+ 16:41:18 <slangasek> just trying to figure out if the bodgy SIGINT handler in the plymouth theme really does explain all the problems we've seen, or if as upstream says there's some other issue
+
+ 16:41:20 <cjwatson> much like, er is it Enter?, turns into SIGQUIT
+
+ 16:41:21 <jhunt> slangasek: I've got a systemtap script that logs all SIGINTs system wide if anyone has a system that actually exhibits the plymouth failure on those bugs.
+
+ 16:41:37 <slangasek> jhunt: \o/
+
+ 16:42:04 <slangasek> jhunt: we should probably take upstream's advice and nix the SIGINT handler anyway, and then see if the problem goes away
+
+ 16:42:10 <jhunt> Taking a closer look at the sigint handler, it *does* look safe which is even more mysterious. The only way I've managed to recreate the issue is to fire SIGINTs at plymouthd semi-randomly.
+
+ 16:42:41 <jhunt> right. All the plugins have the same code seemingly (copy'n'paste.. ? :)
+
+ 16:42:50 <slangasek> :)
+
+ 16:43:36 <jhunt> I'm just not sure what the implications of removing that handler are for the plugins - it's not as if the handlers aren't doing anything.
+
+ 16:43:38 <cjwatson> I don't agree that all of them are safe
+
+ 16:44:02 <cjwatson> looking at the script handler as an arbitrary example, it frees memory in a signal handler, which is unsafe
+
+ 16:44:05 <slangasek> the implication is that ^C does nothing, which seems reasonable anyway
+
+ 16:44:15 <slangasek> and consistent with the other themes
+
+ 16:44:51 <jhunt> are you sure? I was thrown off track initially as the handlers themselves do dangerous things like modifying linked lists. *But* the handlers are not called when the signal arrives - they are called on the next main loop iteration.
+
+ 16:44:59 <cjwatson> oh, except that the signal handler doesn't work that way
+
+ 16:45:06 <cjwatson> you're right, I missed the indirection through the event loop
+
+ 16:45:07 <jhunt> so, in principle it *should* be perfectly safe.
+
+ 16:45:20 <jhunt> yeah - it's a mare of code layers.
+
+ 16:45:47 <cjwatson> well
+
+ 16:45:51 <jhunt> all the handlers do is write the signal number through a pipe and return.
+
+ 16:45:52 <cjwatson> ply_write calls assert
+
+ 16:46:09 <cjwatson> assert is not async-signal-safe
+
+ 16:46:16 <jhunt> oooh!
+
+ 16:46:16 <cjwatson> although that should only actually matter if the assert fails, I think
+
+ 16:46:29 <cjwatson> and if that happened then it would fall over anyway
+
+ 16:46:29 <slangasek> well, we do have failing asserts in some of the reports
+
+ 16:46:52 <jhunt> frankly, I wish there were more asserts ther. No alloc calls are ever checked if I recall.
+
+ 16:47:17 <jhunt> however, they would segv fast I'd hope as the address is immediately dereferenced
+
+ 16:47:30 * slangasek nods
+
+ 16:47:34 <jhunt> hope not being a word I like to use in combo with programming... :)
+
+ 16:47:39 <slangasek> ok, we can chew on that more offline :)
+
+ 16:47:42 <slangasek> [TOPIC] AOB
+
+ 16:47:44 <jhunt> right
+
+ 16:47:45 <slangasek> anything else?
+
+ 16:47:54 * cjwatson tries to find the list of async-signal-safe functions; I keep losing it
+
+ 16:48:08 <jhunt> can anyone offer any thoughts on bug 861268?
+
+ 16:48:09 <ubottu> Launchpad bug 861268 in nvidia-graphics-drivers (Ubuntu) "text corruption in terminals (xterm, urxvt) and emacs" [Undecided,Incomplete] https://launchpad.net/bugs/861268
+
+ 16:48:36 <slangasek> jhunt: did you not manage to pin down the X guys at UDS?
+
+ 16:48:45 <slangasek> or did they tell you "oh yeah, binary driver, not our problem"? :)
+
+ 16:49:02 <cjwatson> oh, there we go, it's buried in http://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_04
+
+ 16:49:06 <bdmurray> Looking at recent ubiquity bugs some seem to be about Natty.  I wonder if people are installing it thinking it is the latest.  Or if commenting on them and pointing them to 11.10 makes sense.
+
+ 16:49:17 <jhunt> slangasek: semi - I spoke to Chris who thought it could relate to the nvidia driver, but the nouveau driver behaves in the same way.
+
+ 16:49:22 <cjwatson> send() and write() are async-signal-safe, so I've got nothing else that would break in that way
+
+ 16:49:47 <ev> bdmurray: please point them at 11.10
+
+ 16:49:53 <slangasek> +1
+
+ 16:49:54 <ev> we don't fix bugs in non-LTS releases post-release
+
+ 16:49:58 <jhunt> cjwatson: I've got some tools and scripts that we can use to try and pin this down. Might be worth a bit of pair-debugging?
+
+ 16:50:03 <ev> for ubiquity, that is
+
+ 16:50:11 <cjwatson> jhunt: yep, not that I can reproduce it myself
+
+ 16:50:14 <bdmurray> well so if the same bug happens in 11.10 they'll be at the same place though
+
+ 16:50:17 <cjwatson> ev: well, except for when we do, but yeah :)
+
+ 16:50:32 <cjwatson> I think we'll want to do more post-release fixing given the existence and advertisement of live-build
+
+ 16:50:54 <cjwatson> but sure, it's good to make sure that the bugs are current ...
+
+ 16:50:57 <ev> I think testing the latest release is a reasonable first pass at triaging
+
+ 16:51:00 <ev> indeed
+
+ 16:51:49 <jhunt> cjwatson: signal(7) also lists async safe calls.
+
+ 16:52:07 <ev> tmux is made of awesome
+
+ 16:52:30 <cjwatson> jhunt: ah yes, thanks
+
+ 16:52:42 <cjwatson> I always look for it in the base-definitions section of POSIX and it's not there
+
+ 16:52:59 <jhunt> ev: +100
+
+ 16:53:39 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

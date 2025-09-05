@@ -1,0 +1,265 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by sarnold, 12 Sep at 14:32 &mdash; 15:09 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-09-12-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by sarnold at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (sarnold, 14:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (sarnold, 14:32)
+
+=== New MIRs ===
+
+Discussion started by sarnold at 14:35.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (sarnold, 14:35)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/rustc/+bug/1957932   (sarnold, 14:36)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libde265/+bug/2004449   (sarnold, 14:51)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by sarnold at 14:54.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (sarnold, 14:54)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/aom/+bug/2004442 -- changed roughly a week ago, "integration of the test suite" link on salsa  (sarnold, 14:55)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/pappl-retrofit/+bug/2031814 -- has some outstanding TODOs for Till, he's at a conference and unlikely to have made progress -- I think I saw conversation elsewhere suggesting this might be stalled for the release?  (sarnold, 14:56)
+
+=== Process/Documentation improvements ===
+
+Discussion started by sarnold at 14:56.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (sarnold, 14:56)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (sarnold, 14:56)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by sarnold at 15:00.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (sarnold, 15:00)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (sarnold, 15:00)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (sarnold, 15:01)
+
+=== Any other business? ===
+
+Discussion started by sarnold at 15:06.
+
+
+
+
+== People present (lines said) ==
+
+ * sarnold (65)
+ * eslerm (12)
+ * liushuyu (10)
+ * didrocks (3)
+ * meetingology (2)
+ * schopin (2)
+ * joalif (1)
+ * dviererbe (1)
+
+
+
+== Full log ==
+
+
+ 14:32 <sarnold> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:01 UTC.  The chair is sarnold.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:32 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:32 <sarnold> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:32 <joalif> o/
+
+ 14:32 <sarnold> #topic current component mismatches
+
+ 14:32 <sarnold> Mission: Identify required actions and spread the load among the teams
+
+ 14:32 <sarnold> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <sarnold> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <sarnold> the pydantic mir is an old-style multiple package in one bug ..
+
+ 14:34 <sarnold> aha, it looks like that's stalled on jamespage's crew to solve some required TODOs before it'll be assigned to security team
+
+ 14:35 <sarnold> I think nothing else here needs investigation?
+
+ 14:35 <eslerm> o/
+
+ 14:35 <sarnold> #topic New MIRs
+
+ 14:35 <sarnold> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:35 <sarnold> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:36 <sarnold> https://bugs.launchpad.net/ubuntu/+source/rustc/+bug/1957932
+
+ 14:37 <sarnold> I think I agree with the conclusion, that rustc is ready for promotion. I believe it just needs an AA to tend to it,
+
+ 14:37 <eslerm> AA?
+
+ 14:37 <sarnold> archive admin
+
+ 14:37 <eslerm> ty
+
+ 14:38 <liushuyu> However Cargo requires http-parser and libgit2 to be promoted as well
+
+ 14:38 <sarnold> hrmph.
+
+ 14:38 <sarnold> you're right.
+
+ 14:38 <sarnold> I had a long conversation with eslerm about that yesterday, even.
+
+ 14:38 <eslerm> I have been relaying our conversation with liushuyu
+
+ 14:39 <liushuyu> RE: patch development: Foundations can take on the task of developing non-complicated patches. For non-trivial patches, we will need to annoy the libgit2 upstream to switch to a better alternative
+
+ 14:39 <liushuyu> Or you know, pressure the Cargo upstream to drop libgit2 altogether
+
+ 14:40 <sarnold> if you're positive you can be annoying enough to encourage them to switch to an alternative in such a fashion that we can backport the solution to all the releases that require a rust compiler...
+
+ 14:41 <liushuyu> gitoxide has a very high MSRV (Minimum Supported Rust Version), so that will be a disaster I could see
+
+ 14:42 <liushuyu> Making libgit2 to switch to llhttp might be a easier version of the outcome for us
+
+ 14:44 <sarnold> my guess is that'll be impossible: libgit2 is a pure C library. llhttp is a typescript package. *someone* would need to write a shim layer to let you call nodejs from within C, like Lua. that sounds like the least fun project I can imagine this early in the morning.
+
+ 14:45 <liushuyu> sarnold: llhttp is C. The TypeScript part is the binding
+
+ 14:46 <liushuyu> If you look at the npmjs.com files, llhttp contains a WASM module produced by Emscripten
+
+ 14:46 <sarnold> lol that's hilarious
+
+ 14:46 <sarnold> 68% binding ..
+
+ 14:46 <liushuyu> sarnold: That is the normal per modern JavaScript ecosystem
+
+ 14:47 <sarnold> liushuyu: alright, well, if you're convinced that it'd be easier to replace http-parse with llhttp when we need to do a security update, that's also an option. probably one that we'd want to run through the SRU process, so that'd require building it in a ppa with only -security configured
+
+ 14:47 <liushuyu> I mean, you can also upload Rust projects this way to npmjs.com
+
+ 14:48 <liushuyu> sarnold: well at least that's what I think. Because switching to gitoxide means backporting a very new Rust compiler to older series (more error-prone)
+
+ 14:50 <sarnold> alright, I added a quick summary of this to the bug, I think we can move on with the assumption that rust ought to be promoted by an AA
+
+ 14:51 <sarnold> https://bugs.launchpad.net/ubuntu/+source/libde265/+bug/2004449
+
+ 14:52 <eslerm> \o/ thanks sarnold and liushuyu
+
+ 14:53 <sarnold> libde265 appears to have some outstanding required TODOs; vpa1977, can you track down the work still needed for https://bugs.launchpad.net/ubuntu/+source/libde265/+bug/2004449 ? or someone else on foundations?
+
+ 14:54 <sarnold> #topic Incomplete bugs / questions
+
+ 14:54 <sarnold> Mission: Identify required actions and spread the load among the teams
+
+ 14:54 <sarnold> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:54 <sarnold> http-parser change was me added notes
+
+ 14:55 <sarnold> https://bugs.launchpad.net/ubuntu/+source/aom/+bug/2004442 -- changed roughly a week ago, "integration of the test suite" link on salsa
+
+ 14:56 <sarnold> https://bugs.launchpad.net/ubuntu/+source/pappl-retrofit/+bug/2031814 -- has some outstanding TODOs for Till, he's at a conference and unlikely to have made progress -- I think I saw conversation elsewhere suggesting this might be stalled for the release?
+
+ 14:56 <sarnold> everything else is later still
+
+ 14:56 <sarnold> #topic Process/Documentation improvements
+
+ 14:56 <sarnold> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:56 <sarnold> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:56 <sarnold> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:57 <eslerm> from the last section, we may need to ping for a dotnet6 status update
+
+ 14:58 <sarnold> dviererbe: any thoughts on dotnet6? you're the last one on the bug :) https://bugs.launchpad.net/ubuntu/+source/dotnet6/+bug/2023531
+
+ 14:58 <dviererbe> there is unfortunately no change :/
+
+ 14:58 <sarnold> re: github issues, it looks like there hasn't been much feedback on the new pull request; thanks for giving it a look eslerm. I propose we only mention that we ought to read and give feedback.
+
+ 15:00 <sarnold> alright, I annoyed a bunch of people on the bug :)
+
+ 15:00 <sarnold> #topic MIR related Security Review Queue
+
+ 15:00 <sarnold> Mission: Check on progress, do deadlines seem doable?
+
+ 15:00 <sarnold> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 15:00 <sarnold> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:00 <sarnold> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:00 <sarnold> Internal link
+
+ 15:00 <sarnold> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:00 <sarnold> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:01 <sarnold> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:01 <sarnold> we've got some conversations in flight with libmysofa upstream, I understand it's been Very Quiet upstream for a few months, no replies to our earlier emails. I'd like us to consider a future with libmysofa not being ACKd
+
+ 15:01 <eslerm> s390-tools is no longer in the security queue https://bugs.launchpad.net/ubuntu/+source/s390-tools/+bug/2030482
+
+ 15:03 <sarnold> heh, I wonder why vor_lon assigned it to schopin? we can still try to get someone on the security team to start in on reviewing it, but there's no denying that between 360s and sprints we're unable to take on large new undertakings
+
+ 15:03 <eslerm> it wasn't ever officially in Security's queue*
+
+ 15:03 <sarnold> yeah, that makes sense
+
+ 15:04 <sarnold> no notes on the jira ticket about it being reassigned
+
+ 15:04 <schopin> might be a procedural mixup, IIRC we mentioned the bug a couple of weeks ago in our triage meeting.
+
+ 15:04 <eslerm> this might be a case where missing beta freeze is o-k, since the package has been in main before
+
+ 15:04 <sarnold> yeah
+
+ 15:05 <eslerm> yeah, iirc Christian asked that I look for security volunteers last week
+
+ 15:05 <sarnold> and you did :) but .. 360s. sprint. $otherobligations.
+
+ 15:05 <sarnold> schopin: heh, that sounds pretty plausible. could you investigate and assign that to security when you've done whatever needs to be done? :)
+
+ 15:06 <sarnold> #topic Any other business?
+
+ 15:06 <sarnold> (there's no denying that christian runs a tighter meeting, heh)
+
+ 15:06 <schopin> sarnold: will do. It's not yet in a full MIR review state, but the security-relevant bits are already there, hence my initial ask for starting that in parallel.
+
+ 15:07 <sarnold> schopin: aha, cool, thanks
+
+ 15:07 <eslerm> I will find a volunteer to review this at next weeks sprint :)
+
+ 15:07 <didrocks> o/ (seeing no hilight, so assuming no tasks? \o/)
+
+ 15:07 <sarnold> my only other business is that the security team is sprinting next week, I may not make that one; and then I have some PTO and won't make the next few meetings. eslerm should be well-positioned to handle security team requests :)
+
+ 15:08 <sarnold> hey didrocks :) only to review the new pull request
+
+ 15:08 <didrocks> ack
+
+ 15:09 <sarnold> alright, if that's it..
+
+ 15:09 <eslerm> thanks Seth, all o/
+
+ 15:09 <sarnold> thanks eslerm, liushuyu, dviererbe, schopin, didrocks, joalif :)
+
+ 15:09 <didrocks> thanks sarnold, all! :)
+
+ 15:09 <sarnold> (I hope that's it)
+
+ 15:09 <sarnold> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

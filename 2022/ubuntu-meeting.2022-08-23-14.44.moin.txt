@@ -1,0 +1,349 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by didrocks, 23 Aug at 14:44 &mdash; 15:12 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-08-23-14.44.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by didrocks at 14:44.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (didrocks, 14:44)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (didrocks, 14:44)
+
+=== New MIRs ===
+
+Discussion started by didrocks at 15:00.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (didrocks, 15:01)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/stoken/+bug/1986592   (didrocks, 15:01)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by didrocks at 15:03.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (didrocks, 15:03)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/lua5.4/+bug/1909665 had something ten days ago  (sarnold, 15:04)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by didrocks at 15:06.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (didrocks, 15:06)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (didrocks, 15:06)
+
+=== Any other business? ===
+
+Discussion started by didrocks at 15:11.
+
+
+
+
+== People present (lines said) ==
+
+ * didrocks (86)
+ * slyon (17)
+ * sarnold (16)
+ * ubottu (8)
+ * jbicha (8)
+ * joalif (3)
+ * ginggs (3)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:44 <didrocks> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:44 <meetingology> Meeting started at 14:44:07 UTC.  The chair is didrocks.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:44 <didrocks> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 14:44 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:44 <didrocks> #topic current component mismatches
+
+ 14:44 <didrocks> Mission: Identify required actions and spread the load among the teams
+
+ 14:44 <didrocks> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:44 <didrocks> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:44 <joalif> o/
+
+ 14:44 <slyon> -release is all known
+
+ 14:45 <didrocks> c-m looks ok, c-m-p less
+
+ 14:45 <didrocks> lintian blocked on proposed due to all perl things
+
+ 14:45 <slyon> lintian ones were actually done and are ready for review
+
+ 14:45 <ginggs> o/ that's LP: #1980662
+
+ 14:45 <ubottu> Launchpad bug 1980662 in lintian (Ubuntu) "[MIR] lib*-perl for lintian 2.115" [Undecided, Confirmed] https://launchpad.net/bugs/1980662
+
+ 14:46 <slyon> i investigated inetutils, too. I think it needs AA action. I put all my findings in bug #1980663
+
+ 14:46 <ubottu> Bug 1980663 in netkit-telnet (Ubuntu) "[MIR] false-positives, do not promote" [Undecided, Triaged] https://launchpad.net/bugs/1980663
+
+ 14:46 <sarnold> slyon: oh nice work tracking down inetutils
+
+ 14:46 <ginggs> i'm hoping there's still time for reviewing a couple of perl packages before FF
+
+ 14:46 <jbicha> feel free to demote gnome-todo now
+
+ 14:46 <slyon> maybe cpaelzer could have a look at that inetutils vs netkit-telnet ^ once he's back
+
+ 14:46 <didrocks> yeah
+
+ 14:47 <didrocks> slyon: you are the requester for the perl ones, I think that means apart from lintian, you can’t have a look at some others?
+
+ 14:47 <slyon> didrocks: I think we left libwacom vs python libevdev for you/desktop to investigate
+
+ 14:47 <slyon> didrocks: yes it would be good to have another team to review those foundations MIRs
+
+ 14:47 <didrocks> slyon: ah, the rest of perl ones are all dealt with? I see a lot of New on bug #1980662
+
+ 14:47 <ubottu> Bug 1980662 in lintian (Ubuntu) "[MIR] lib*-perl for lintian 2.115" [Undecided, Confirmed] https://launchpad.net/bugs/1980662
+
+ 14:48 <didrocks> ok, I can take 2, the 2 other for joalif?
+
+ 14:48 <slyon> yes, that's all of them. ginggs did a great job with that
+
+ 14:48 <didrocks> it won’t be in time for FF, I must say
+
+ 14:48 <joalif> ok
+
+ 14:48 <didrocks> joalif: taking the first 2 ones, assigning you the 2 others?
+
+ 14:49 <didrocks> (done)
+
+ 14:49 <didrocks> looking at bug #1980663
+
+ 14:49 <ubottu> Bug 1980663 in netkit-telnet (Ubuntu) "[MIR] false-positives, do not promote" [Undecided, Triaged] https://launchpad.net/bugs/1980663
+
+ 14:49 <ginggs> didrocks: np, i can request an FFe for Lintian if the MIRs are approved
+
+ 14:50 <didrocks> ack, thanks ginggs :)
+
+ 14:50 <didrocks> slyon: I would deal with the demotion/promotion for *telnet* tomorrow
+
+ 14:50 <didrocks> if no other AA beats me to it :p
+
+ 14:50 <slyon> sounds good, thanks didrocks
+
+ 14:51 <didrocks> and as you say, that left libwacom -> python-libevdev
+
+ 14:51 <didrocks> jbicha: do you mind looking at it from a desktop perspective? ^
+
+ 14:52 <didrocks> I’m happy to open the bug and assign it to you otherwise as a reminder :p
+
+ 14:52 <jbicha> yeah, I just need to talk to Timo about it
+
+ 14:52 <didrocks> ack, letting this in your hands
+
+ 14:52 <didrocks> on bug #1979121, it seems an ACK, any objection?
+
+ 14:52 <ubottu> Bug 1979121 in webp-pixbuf-loader (Ubuntu) "[MIR] webp-pixbuf-loader" [Low, In Progress] https://launchpad.net/bugs/1979121
+
+ 14:53 <slyon> didrocks: I agree
+
+ 14:54 <sarnold> the requested todo was autopkgtests, those appear to have been added, right?
+
+ 14:54 <slyon> so the status is probably correct "In Progress". is it already pulled in as a dependency?
+
+ 14:54 <didrocks> yeah, I was wondering about the second part of the required TODO
+
+ 14:54 <didrocks> - consider adding a set of "known content" webp pictures that you can
+
+ 14:54 <didrocks> compare against expected results in the way the gnome thumbnailer will
+
+ 14:54 <didrocks> use them (details see below).
+
+ 14:54 <jbicha> eog -proposed depends on webp-pixbuf-thumbnailer now
+
+ 14:55 <didrocks> jbicha: do you know if those were added?
+
+ 14:55 <jbicha> didrocks: is this it? https://salsa.debian.org/multimedia-team/webp-pixbuf-loader/-/blob/debian/latest/debian/tests/determinism-test
+
+ 14:55 <didrocks> ack, there were 2 parts in the autopgktests, the intial testsuite and this addition
+
+ 14:55 <didrocks> nice, ok, I’ll handle the promotion (tomorrow too)
+
+ 14:55 <didrocks> moving on to lerc
+
+ 14:56 <didrocks> it seems to be blocked on https://bugs.launchpad.net/ubuntu/+source/lerc/+bug/1977551/comments/9
+
+ 14:56 <ubottu> Launchpad bug 1977551 in lerc (Ubuntu) "[MIR] lerc" [Undecided, In Progress]
+
+ 14:56 <sarnold> that determinism test lookis like it's still missing from https://launchpad.net/ubuntu/+source/webp-pixbuf-loader/0.0.5-5
+
+ 14:56 <didrocks> jbicha: sarnold is correct, it’s not in ubuntu yet
+
+ 14:57 <didrocks> so I guess you need to upload this before we promote it
+
+ 14:57 <didrocks> added the 28 of June
+
+ 14:57 <didrocks> last upload was the 26
+
+ 14:58 <didrocks> so I guess on webp-pixbuf-loader, ack under the condition new version is upload
+
+ 14:58 <didrocks> and lerc needs some desktop work still, at least answering latest comments
+
+ 14:58 <jbicha> sarnold: the webp-pixbuf-loader autopkgtest was already updated in kinetic: https://autopkgtest.ubuntu.com/packages/w/webp-pixbuf-loader/kinetic/amd64
+
+ 14:59 * didrocks downloads the source package, will be quicker
+
+ 14:59 <sarnold> jbicha: hmm; the "diff from 0.0.5-2ubuntu1 (in Ubuntu) to 0.0.5-5" link on launchpad http://launchpadlibrarian.net/610400206/webp-pixbuf-loader_0.0.5-2ubuntu1_0.0.5-5.diff.gz  ...
+
+ 14:59 <didrocks> ack, there is a debian/tests/determinism-test
+
+ 15:00 <jbicha> yes, we applied the change before Debian did :)
+
+ 15:00 <sarnold> YAY
+
+ 15:00 <sarnold> sorry for the trouble; I didn't see it in the launchpad diff..
+
+ 15:00 <didrocks> ok, so lerc, to be investigated by desktop
+
+ 15:00 <didrocks> ack on webp-pixbuf-loader
+
+ 15:00 <didrocks> moving on
+
+ 15:00 <didrocks> done for c-m
+
+ 15:00 <didrocks> the rest looks already known
+
+ 15:00 <didrocks> #topic New MIRs
+
+ 15:01 <didrocks> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:01 <didrocks> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:01 <didrocks> https://bugs.launchpad.net/ubuntu/+source/stoken/+bug/1986592
+
+ 15:01 <ubottu> Launchpad bug 1986592 in openconnect (Ubuntu) "[MIR] network-manager-openconnect, openconnect, python-mechanize, stoken" [Undecided, Incomplete]
+
+ 15:01 <slyon> I think both of those new MIRs are still under discussion with sarnold
+
+ 15:02 <didrocks> ack, I see this has indeed been discussed
+
+ 15:02 <didrocks> leaving them to New for now?
+
+ 15:02 <sarnold> yeah
+
+ 15:02 <didrocks> ack
+
+ 15:02 <jbicha> didrocks: for lerc, we just need to enable it on i386, right? is that something you wnat to do?
+
+ 15:02 <didrocks> good luck sarnold :)
+
+ 15:02 <sarnold> without an owning team there's not a whole lot for us to discuss there imho
+
+ 15:02 <didrocks> jbicha: I think you need to check that with steve, I don’t have the bandwith/knowledge for this
+
+ 15:02 <didrocks> sarnold: agreed
+
+ 15:03 <didrocks> jbicha: then, once all sorted, feel free to ping me for a last look/AA work
+
+ 15:03 <jbicha> got it, thanks
+
+ 15:03 <didrocks> #topic Incomplete bugs / questions
+
+ 15:03 <didrocks> Mission: Identify required actions and spread the load among the teams
+
+ 15:03 <didrocks> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:03 <didrocks> I saw that desktop retracted gnome-console
+
+ 15:04 <didrocks> the rest looks even older, am I missing anything?
+
+ 15:04 <sarnold> https://bugs.launchpad.net/ubuntu/+source/lua5.4/+bug/1909665 had something ten days ago
+
+ 15:04 <ubottu> Launchpad bug 1909665 in lua5.4 (Ubuntu) "[MIR] ibus-libpinyin dependencies" [Low, Incomplete]
+
+ 15:05 <didrocks> yeah, not discussed in last week no quorum meeting?
+
+ 15:05 <slyon> lua5.4 was assigned to the server team and Incomplete status
+
+ 15:05 <slyon> which is the correct state for now IMO
+
+ 15:05 <slyon> It needs a proper MIR template, if it should be included/reviewed
+
+ 15:06 <didrocks> that’s my understanding too
+
+ 15:06 <didrocks> ok, moving on then
+
+ 15:06 <didrocks> #topic MIR related Security Review Queue
+
+ 15:06 <didrocks> Mission: Check on progress, do deadlines seem doable?
+
+ 15:06 <didrocks> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:06 <didrocks> Internal link
+
+ 15:06 <didrocks> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:06 <didrocks> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:06 <didrocks> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:06 <slyon> didrocks: OTHO... it might just be a lua5.3 -> lua5.4 version bump... not sure how we handled those in the past?
+
+ 15:07 <didrocks> slyon: depends on how big is the transition, it should be staged in proposed anyway, but normally if the changes were okish, no need for a new MIR
+
+ 15:08 <didrocks> but it seems this got some discussion with Christian and I don’t think it’s realistic to handle it ourself without context before FF, so better for next week (and we have already quite some MIR work assigned)
+
+ 15:08 <slyon> ACK
+
+ 15:08 <didrocks> sarnold: the stage is yours, you had quite some assignements recently
+
+ 15:08 <sarnold> aye, and mark and spyros have been doing a *lot* of work on this backlog :)
+
+ 15:08 <didrocks> but you take all the credit :p
+
+ 15:08 <didrocks> (and the blame…)
+
+ 15:08 <sarnold> nullboot is still at risk, it's challenging topic and we assigned it to the guy who wrote it for review, and there's apparently a goal for it all to go away anyway.. heh
+
+ 15:09 <sarnold> didrocks: very much so! I'd say I've got management potential written all over me..
+
+ 15:09 <didrocks> hum
+
+ 15:09 <didrocks> ahah
+
+ 15:10 <didrocks> ok on nullboot, for the rest, I think FF is too close, but the goal for this cycle are still doable?
+
+ 15:10 <sarnold> and we've got some discussion with legal and foundations about the releative risks of 4-clause bsd vs gpl  compared against a relatively immature sasl library
+
+ 15:10 <sarnold> I may have to be rude to my teammates today and tomorrow but mdevctl in the next two days seems plausible enough, yeah, heh
+
+ 15:10 <didrocks> sounds like good news, thanks sarnold and keep up the (hem) pressure :p
+
+ 15:11 * sarnold cracks the whipe
+
+ 15:11 <didrocks> :)
+
+ 15:11 <didrocks> #topic Any other business?
+
+ 15:11 <sarnold> nothing I can think of that needs to happen this week, heh
+
+ 15:11 <joalif> nothing fom me
+
+ 15:11 <slyon> nothing here
+
+ 15:11 <didrocks> (nothing from me at least, just back this morning from holidays and a lot of backlogs + FF work, hence probably the post-FF review for the perl things)
+
+ 15:12 <didrocks> sounds good, so, thanks a lot everyone, and back to FF rush :p
+
+ 15:12 <didrocks> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

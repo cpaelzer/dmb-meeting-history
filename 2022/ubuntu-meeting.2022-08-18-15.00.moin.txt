@@ -1,0 +1,436 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 18 Aug at 15:00 &mdash; 16:07 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-08-18-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by jawn-smith at 15:01.
+
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:10.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:10)
+ * ''LINK:'' https://lists.debian.org/debian-devel/2022/08/msg00078.html   (ogayot, 15:19)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:23)
+
+=== Team proposed-migration report ===
+
+Discussion started by jawn-smith at 15:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:32)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:44.
+
+ * ''LINK:'' https://merges.ubuntu.com/main.html?query=foundations-bugs&showProposed=false&showMergeNeeded=true   (slyon, 15:44)
+
+
+
+== People present (lines said) ==
+
+ * slyon (60)
+ * vorlon (41)
+ * jawn-smith (38)
+ * bdmurray (8)
+ * ubottu (8)
+ * bdrung_ (6)
+ * doko (5)
+ * mclemenceau (4)
+ * sil2100 (4)
+ * waveform (3)
+ * schopin (3)
+ * meetingology (2)
+ * xypron (2)
+ * juliank (2)
+ * ogayot (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:45 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <slyon> o/
+
+ 15:01 <jawn-smith> #topic Lightning Round
+
+ 15:01 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-18-august-2022/30050/6
+
+ 15:01 <jawn-smith> Let's all take our usual few minutes to read and ask questions
+
+ 15:02 <bdmurray> Maybe it shouldn't be called lightning round - perhaps speed reading round?
+
+ 15:03 <jawn-smith> Whoever can actually edit the wiki could fix the script
+
+ 15:03 <bdmurray> "seems freaky" is scary
+
+ 15:06 <bdmurray> I have 0 questions
+
+ 15:06 <bdrung_> vorlon, you did a full SRU rotation, but sadly apport is still waiting.
+
+ 15:06 <vorlon> bdrung_: only so many hours in a day
+
+ 15:07 <vorlon> bdrung_: I don't recall apport being one I skipped over due to the bugs being incomplete. I guess I'll get to look at it tomorrow?
+
+ 15:07 <vorlon> dbungert: learning more about debian-cdimage> my condolences
+
+ 15:07 <bdrung_> I filled out the bugs that needed work.
+
+ 15:08 <bdrung_> grep-merges looks like a interesting tool to use.
+
+ 15:10 <jawn-smith> #topic Release incoming bugs
+
+ 15:10 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <vorlon> waveform: and thanks for the analysis of the unattended-upgrades service
+
+ 15:10 <vorlon> (I think this points us towards replacing it with a very small shell script :)
+
+ 15:11 <jawn-smith> bug 1986775
+
+ 15:11 <waveform> vorlon, actually I'm not so sure given the necessity to watch logind for PrepareForShutdown which seems to be one of the seriously important things the current script does to avoid hangs on shutdown
+
+ 15:11 <ubottu> Bug 1986775 in schroot (Ubuntu) "schroot 1.6.12-2 incompatible with sbuild-launchpad-chroot" [High, Triaged] https://launchpad.net/bugs/1986775
+
+ 15:12 <vorlon> waveform: ah
+
+ 15:15 <jawn-smith> This appears to need fixing in sbuild-launchpad-chroot rather than schroot, as the schroot change addresses a CVE
+
+ 15:17 <jawn-smith> The action appears to be talking to the DM about not having the preinst die in this scenario
+
+ 15:17 <jawn-smith> so let's card that
+
+ 15:18 <jawn-smith> mclemenceau: do you mind creating a card?
+
+ 15:18 <mclemenceau> will do ;)
+
+ 15:18 <jawn-smith> Thanks!
+
+ 15:18 <jawn-smith> bug 1986796
+
+ 15:18 <ubottu> Bug 1986796 in linux-firmware (Ubuntu) "amd64-microcode conflicts with linux-firmware" [High, Triaged] https://launchpad.net/bugs/1986796
+
+ 15:19 <ogayot> https://lists.debian.org/debian-devel/2022/08/msg00078.html
+
+ 15:19 <vorlon> not-for-us
+
+ 15:20 <vorlon> (the amd64-microcode bug)
+
+ 15:20 <jawn-smith> Excellent
+
+ 15:20 <jawn-smith> bug 1981109
+
+ 15:20 <ubottu> Bug 1981109 in modemmanager (Ubuntu) "server image pulls in ModemManager via fwupd, consumes 25MiB RAM in every container" [High, Triaged] https://launchpad.net/bugs/1981109
+
+ 15:20 <jawn-smith> Still with desktop and still nothing for us to do?
+
+ 15:21 <vorlon> that's actually an SRU of livecd-rootfs now
+
+ 15:22 <vorlon> which is unblocked now after kinetic verification and I think has a card already
+
+ 15:22 <jawn-smith> Excellent
+
+ 15:22 <jawn-smith> backing up to bug 1986796
+
+ 15:22 <ubottu> Bug 1986796 in linux-firmware (Ubuntu) "amd64-microcode conflicts with linux-firmware" [High, Triaged] https://launchpad.net/bugs/1986796
+
+ 15:22 <jawn-smith> We had some discussion offline and agreed that this does need an update to the amd64-microcode package, so let's create a card
+
+ 15:23 <mclemenceau> on it
+
+ 15:23 <jawn-smith> Thanks!
+
+ 15:23 <jawn-smith> That's it for kk
+
+ 15:23 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:24 <jawn-smith> bug 1985253
+
+ 15:24 <ubottu> Bug 1985253 in ubuntu-release-upgrader (Ubuntu) "In a new 20.04 LXD container, do-release-upgrade crashes as lspci cannot be found" [High, Confirmed] https://launchpad.net/bugs/1985253
+
+ 15:25 <jawn-smith> bdmurray: The title seems to have changed to indicate this might be a focal issue instead?
+
+ 15:26 <bdmurray> jawn-smith: its an issue with jammy b/c the release upgrade process downloads a tarball
+
+ 15:26 <jawn-smith> ah of course
+
+ 15:26 <schopin> oh, regression from my nvidia patch
+
+ 15:27 <bdmurray> it just needs a try except probably
+
+ 15:27 <jawn-smith> Okay if it's a regression in something we worked let's card that
+
+ 15:27 <mclemenceau> Ok
+
+ 15:28 <jawn-smith> bug 1985054
+
+ 15:28 <ubottu> Bug 1985054 in ubiquity (Ubuntu) "nvidia-settings no longer preinstalled with NVidia drivers in offline mode" [Medium, Confirmed] https://launchpad.net/bugs/1985054
+
+ 15:29 <sil2100> Yeah, we discovered this during 22.04.1 testing
+
+ 15:29 <sil2100> Not sure if it happens in online install
+
+ 15:29 <sil2100> Offline for sure
+
+ 15:29 <jawn-smith> Can we create a card to investigate if it happens with online install?
+
+ 15:29 <jawn-smith> and to fix it I suppose
+
+ 15:30 <sil2100> I'd say +1 on that
+
+ 15:30 <mclemenceau> ok carding
+
+ 15:30 <jawn-smith> Perfect, thank you
+
+ 15:31 <jawn-smith> bug 1981721 is still waiting, nothing for us to do.
+
+ 15:31 <ubottu> Bug 1981721 in netplan.io (Ubuntu) "dual port SRIOV NIC with 64 VFs per PF  is not configured with switchdev eswitch mode" [Undecided, New] https://launchpad.net/bugs/1981721
+
+ 15:31 <slyon> yes. let's skip that one, we didn't get an update/reproducer, yet.
+
+ 15:31 <jawn-smith> ff is empty \o/
+
+ 15:31 <jawn-smith> #topic Team proposed-migration report
+
+ 15:32 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:32 <jawn-smith> vorlon:
+
+ 15:33 <vorlon> let's see! kind of a long list today
+
+ 15:33 <vorlon> ubuntu-meta: desktop
+
+ 15:33 <vorlon> lintian: in-progress MIR LP: #1980662 appears to be in ginggs hands
+
+ 15:33 <ubottu> Launchpad bug 1980662 in lintian (Ubuntu) "[MIR] lib*-perl for lintian 2.115" [Undecided, Confirmed] https://launchpad.net/bugs/1980662
+
+ 15:33 <vorlon> mutt: gsasl, MIR, discussed earlier; assigned to jawn-smith
+
+ 15:34 <vorlon> gcc-defaults: appears to be blocked by glibc migration so nothing to do there specifically
+
+ 15:35 <vorlon> libuv1: this is left with enr0n
+
+ 15:35 <vorlon> and then wow, everything after that is new since last week
+
+ 15:36 <vorlon> python3-stdlib-extensions: sounds like ginggs will be looking at this
+
+ 15:36 <vorlon> psycopg2 ftbfs.  bdrung_ can you look at this?
+
+ 15:36 <bdrung_> yes
+
+ 15:37 <vorlon> cmake blocking python3-defaults; probably an infrastructure issue and autopkgtests just need retried.  bdmurray can you take this?
+
+ 15:37 <bdmurray> yes
+
+ 15:37 <vorlon> grub2 depends on grub2-unsigned depends on grub2-signed which is missing builds, sounds like an AA problem, I'll take it
+
+ 15:38 <vorlon> by which I mean I'll click 'accept' right now
+
+ 15:38 <vorlon> polib blocking python3-defaults: waveform ?
+
+ 15:38 <waveform> ack
+
+ 15:38 <vorlon> actually let me take that back
+
+ 15:39 <vorlon> ginggs will retry the python3-defaults autopkgtests as a group
+
+ 15:39 <vorlon> so we'll skip the lot of these, scanning
+
+ 15:39 <bdrung_> probably ubuntu-release-upgrader is the next
+
+ 15:40 <schopin> it's python3-defaults related
+
+ 15:40 <vorlon> that was also python3-defaults related, so we'll wait to see what shakes out
+
+ 15:40 <vorlon> glibc
+
+ 15:41 <vorlon> mwhudson has been working on these and hasn't specifically asked for any help, but if someone is inclined to dig in we might get it done faster
+
+ 15:41 <schopin> I'm working on it as well
+
+ 15:41 <doko> I'll also look into these
+
+ 15:41 <vorlon> thanks
+
+ 15:41 <vorlon> libipc-run-perl: autopkgtest regressions. waveform ?
+
+ 15:41 <waveform> okay
+
+ 15:42 <vorlon> netkit-telnet: some component-mismatches that need resolved. xypron can you take this?
+
+ 15:42 <vorlon> netkit-telnet + inetutils both now depend on packages in universe
+
+ 15:42 <slyon> I'd like to take netkit-telnet as that's a component-mismatch and MIR related
+
+ 15:43 <slyon> already had a brief look at it after the last MIR meeting
+
+ 15:43 <slyon> it's a new transitional package causing this
+
+ 15:43 <vorlon> ok
+
+ 15:43 <vorlon> netkit-telnet + inetutils: slyon
+
+ 15:43 <vorlon> gnutls28: i386 autopkgtest failure; sil2100 ?  (and feel free to poke me if you have questions)
+
+ 15:44 <vorlon> and finally libtype-tiny-perl: xypron ?
+
+ 15:44 <vorlon> and that's it
+
+ 15:44 <xypron> I can give it a try
+
+ 15:44 <vorlon> xypron: thanks
+
+ 15:44 <vorlon> jawn-smith: back to you
+
+ 15:44 <jawn-smith> #topic AOB
+
+ 15:44 <slyon> doko:
+
+ 15:44 <slyon> #link https://merges.ubuntu.com/main.html?query=foundations-bugs&showProposed=false&showMergeNeeded=true
+
+ 15:45 <bdmurray> In addition to creating a card, the bug should be targetted for the relevant release and the rls-**-incoming tag should be removed
+
+ 15:45 <doko> we have around 50 packages
+
+ 15:45 <bdrung_> i saw apport_python_hook.py in the stack trace of the failed ubuntu-release-upgrader autopkgtest.
+
+ 15:45 <doko> so that would be 3-4 for everyone to merge
+
+ 15:46 <doko> dbus: waveform
+
+ 15:47 <slyon> console-setup, doko
+
+ 15:47 <doko> console-setup: doko
+
+ 15:50 <slyon> libsigsegv, alex-ghiti/bdrung
+
+ 15:50 <slyon> findutils, sil2100
+
+ 15:50 <slyon> procps, slyon
+
+ 15:50 <slyon> packagekit, bdmurray
+
+ 15:51 <slyon> plymouth => desktop team
+
+ 15:51 <slyon> cron, sil2100
+
+ 15:51 <slyon> tzdata, schopin
+
+ 15:52 <slyon> u-boot, waveform
+
+ 15:52 <slyon> cdebconf, doko
+
+ 15:52 <slyon> socat, juliank
+
+ 15:53 <slyon> sysvinit, ogayot
+
+ 15:53 <slyon> advancecomp, sil2100
+
+ 15:53 <slyon> rustc, schopin
+
+ 15:54 <slyon> lsb, doko
+
+ 15:54 <vorlon> lsb, vorlon
+
+ 15:54 <slyon> err... lsb, vorlon
+
+ 15:55 <slyon> user-setup, slyon
+
+ 15:55 <slyon> pexpect, waveform
+
+ 15:56 <slyon> osprober, ogayot
+
+ 15:56 <slyon> bash, doko
+
+ 15:56 <slyon> u-boot-menu, xypron
+
+ 15:57 <slyon> avahi, ginggs
+
+ 15:57 <slyon> busybox, jawn-smith
+
+ 15:58 <slyon> xfsprogs, juliank
+
+ 15:58 <xypron> mokutil: xypron
+
+ 15:58 <slyon> systemd, enr0n
+
+ 15:58 <slyon> gmp, doko
+
+ 15:58 <slyon> keyutils, ogayot
+
+ 15:58 <slyon> gdb, doko
+
+ 15:59 <slyon> rhash, mwhudson
+
+ 15:59 <juliank> bdmurray: I trade you socat for packagekit
+
+ 15:59 <slyon> openssl, schopin
+
+ 15:59 <slyon> mdadm, ginggs
+
+ 15:59 <slyon> netplan.io, slyon
+
+ 15:59 * juliank likes package stuff
+
+ 16:00 <slyon> lvm2, waveform
+
+ 16:00 <slyon> kmod, slyon
+
+ 16:00 <slyon> valgrind, mwhudson
+
+ 16:01 <slyon> zlib, vorlon
+
+ 16:01 <bdmurray> I'm not sure I'll get to any merges.
+
+ 16:01 <slyon> libvpx, schopin
+
+ 16:01 <slyon> adduser, bdrung
+
+ 16:02 <slyon> util-linux, mwhudson
+
+ 16:02 <slyon> usrmerge, slyon
+
+ 16:03 <slyon> libdebian-installer, ginggs
+
+ 16:03 <slyon> acpid, xypron
+
+ 16:04 <slyon> unattended-upgrades, bdmurray
+
+ 16:04 <slyon> (or waveform)
+
+ 16:05 <slyon> golang-1.18, jawn-smith
+
+ 16:05 <slyon> unzip, xypron
+
+ 16:06 <slyon> dmraid, slyon
+
+ 16:06 <slyon> cryptsetup, bdrung
+
+ 16:06 <slyon> m4, doko
+
+ 16:06 <slyon> diffutils, ginngs
+
+ 16:06 <slyon> sudo, bdrung
+
+ 16:06 <slyon> pam, vorlon
+
+ 16:06 <slyon> That's all of the list :)
+
+ 16:07 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

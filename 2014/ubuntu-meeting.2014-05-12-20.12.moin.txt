@@ -1,0 +1,418 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 12 May at 20:12 &mdash; 20:51 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-05-12-20.12.log.html]]
+
+
+
+== Meeting summary ==
+
+=== action review ===
+The discussion about "action review" started at 20:12.
+
+
+=== MRE review ===
+The discussion about "MRE review" started at 20:15.
+
+  * ''HELP:''   (pitti, 20:47)
+  * ''ACTION:'' pitti to follow up with Maarten wrt. mesa MRE
+
+=== community bugs ===
+The discussion about "community bugs" started at 20:48.
+
+
+=== AOB ===
+The discussion about "AOB" started at 20:49.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items, by person ==
+
+ * pitti
+  * pitti to follow up with Maarten wrt. mesa MRE
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (93)
+ * infinity (63)
+ * mdeslaur (13)
+ * meetingology (5)
+ * ubottu (4)
+
+
+
+== Full Log ==
+
+
+ 20:12 <pitti> #startmeeting
+
+ 20:12 <meetingology> Meeting started Mon May 12 20:12:26 2014 UTC.  The chair is pitti. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:12 <meetingology> 
+
+ 20:12 <meetingology> Available commands: action commands idea info link nick
+
+ 20:12 <pitti> (not that we have much of an agenda..)
+
+ 20:12 <pitti> #topic action review
+
+ 20:12 <pitti> can you help me out here? last report is from Apr 14, without loose ends
+
+ 20:13 <pitti> except "slangasek to work with SRU team to get a list of how the provisional MREs have/haven't been used ", but that now went to mail
+
+ 20:13 <pitti> was there anything from two weeks ago?
+
+ 20:13 <infinity> I think that's about the only outstanding thing we have.
+
+ 20:13 <mdeslaur> I don't believe we had anything further
+
+ 20:13 <infinity> That and the meeting time.
+
+ 20:14 <pitti> there's also sabdfl's "matters approaching", but that rather sounds like taking some good time of thinking and replying by mail; objections?
+
+ 20:15 <mdeslaur> nope
+
+ 20:15 <infinity> Yeah, I don't think we'll get anywhere discussing that via IRC just yet.
+
+ 20:15 <pitti> #topic MRE review
+
+ 20:15 <infinity> Some folks will be having heated debates about that in Malta soon.
+
+ 20:15 <infinity> (The sabdfl thing, not MREs)
+
+ 20:16 <pitti> so, TBH I don't feel like interactively discussing every single one, but we shoudl talk a bit about "in vs. out" criteria
+
+ 20:17 <pitti> for all except LibO it's not quite clear whether the "new errors reported" were actual regressions or people just happened to send the first report on the update
+
+ 20:17 <infinity> Right, and I think we need to know that.
+
+ 20:17 <pitti> but that's hard to automate, I guess we can just ask for a list and do some spot-checks
+
+ 20:18 <infinity> If it's a regresison, it's interesting, though we also expect, I think, that MRE's might introduce new bugs (new code has new bugs), and that needs to also be weighed against responsiveness of the people responsible for the MRE in responding to those.
+
+ 20:18 <infinity> We don't *want* them to introduce new bugs, but we may have to be realists too.
+
+ 20:18 <mdeslaur> is there anything in the list that sticks out?
+
+ 20:19 <pitti> at least it seems that the entries on https://wiki.ubuntu.com/StableReleaseUpdates/MicroReleaseExceptions/ProvisionalStatus have all actually been used in practice
+
+ 20:19 <pitti> but that is perhaps only packages which actually *have* been updated; it's by far not the complete one from https://wiki.ubuntu.com/StableReleaseUpdates/MicroReleaseExceptions
+
+ 20:19 <pitti> e. g. firefox is missing, and we update that all the time
+
+ 20:19 <pitti> ah sorry, no, these are *just* the provisional ones
+
+ 20:20 <infinity> The only thing that immediately jumps out at me is mesa, and it the stickiest one from the POV of "we need this for HWE" and "we know it's going to occasionally introduce new bugs".
+
+ 20:21 <pitti> e. g. bug 1316988 doesn't look like a regression
+
+ 20:21 <ubottu> bug 1316988 in openvswitch (Ubuntu) "openvswitch-datapath-dkms 1.4.6-0ubuntu1.12.04.2: openvswitch kernel module failed to build" [Undecided,Confirmed] https://launchpad.net/bugs/1316988
+
+ 20:21 <pitti> infinity: yeah, that's pretty much the only one which makes me nervous, too
+
+ 20:21 <pitti> the OpenStack bits generally seem to keep their "we don't break stuff" promise
+
+ 20:22 <infinity> Well, the openstack bits also get installed on machines without errors submissions, so we're relying on manual LP bug submissions there.
+
+ 20:22 <pitti> e. g. ceph, heat, neutron etc. look exemplary
+
+ 20:22 <pitti> ah right
+
+ 20:22 <mdeslaur> oh, right
+
+ 20:22 <infinity> Which is, eg, why vlc looks so bad.  Lots of people use it, and all those people are on desktops with automagic error submission.
+
+ 20:22 <infinity> But I suspect almost none of the vlc errors are regressions in VLC.  I'd have to go hunting to confirm that, mind you.
+
+ 20:22 * pitti looks at bug 1189909
+
+ 20:22 <ubottu> bug 1189909 in neutron "dhcp-agent does always provide IP address for instances with re-cycled IP addresses." [Undecided,In progress] https://launchpad.net/bugs/1189909
+
+ 20:23 <pitti> I can't be sure, but at least there's no comment that suggests a regression
+
+ 20:23 <infinity> FWIW, openvswitch is also an HWE issue.  They're backporting new versions to be compatible with HWE kernels.
+
+ 20:23 <mdeslaur> multimedia stuff crashes all over, it would probably be hard to figure out what are actually regressions
+
+ 20:24 <infinity> At the time, we argued that making the old version build would be preferable, but there were claims this ranged from difficult to impossible.
+
+ 20:25 <pitti> infinity: yeah, "new errors reported: 183" is almost surely because we dno't offer the LTS->LTS upgrade before releaseing the .1
+
+ 20:25 <infinity> #1316988 isn't a package regression, though, it's just a user who removed their headers.
+
+ 20:25 <pitti> infinity: right
+
+ 20:26 <infinity> So, none of this jumps out at me as either people who don't need their MRE (they're all being used) or people who are abusing them.
+
+ 20:26 <pitti> so, so far we don't really have proof that anything actually regressed (except for LibO, I didn't go through all these bugs yet)
+
+ 20:26 <pitti> and I'd rather do that ^ off-meeting
+
+ 20:26 <infinity> Other than LibreOffice, which is scary as crap.
+
+ 20:27 <pitti> yes, but this is also one of these packages which get bug reports all the time :)
+
+ 20:27 <infinity> But for mesa, I'd like to perhaps hunt down the desktop team and get some formal commitment from them for regression tracking.
+
+ 20:27 <infinity> Since I don't think we can ask them to stop updating mesa, but we don't want to blow up OpenGL desktops like GNOME and Unity.
+
+ 20:27 <pitti> bug 1134974
+
+ 20:27 <ubottu> bug 1134974 in mesa (Ubuntu) "compiz and other display misbehavior on HD4000 after xatracker/mesa components upgraded to 9.0.2-0ubuntu0.1" [Undecided,New] https://launchpad.net/bugs/1134974
+
+ 20:28 <pitti> that almost surely is a regression
+
+ 20:28 <mdeslaur> hrm
+
+ 20:28 <pitti> mesa | 9.0-0ubuntu1     | quantal          | source
+
+ 20:28 <pitti> mesa | 9.0.3-0ubuntu0.4 | quantal-updates  | source
+
+ 20:29 <pitti> and downgrading to 9.0-0ubuntu1 fixed this
+
+ 20:29 <pitti> so, one piece of (bad) proof
+
+ 20:29 * pitti chuckles at bug 1070178
+
+ 20:29 <ubottu> bug 1070178 in mesa (Ubuntu) "plz hlp compiz note working " [Undecided,New] https://launchpad.net/bugs/1070178
+
+ 20:30 <infinity> ...
+
+ 20:30 <pitti> but #1134974 is worrying -- it didn't get any triage etc.
+
+ 20:31 <infinity> Right.  And it stops mattering in 4 days, but I don't want this to be a pattern.  Those bugs need to be looked at.
+
+ 20:31 <pitti> and TBH for LTSes we have the backported stacks now, and for non-LTSes, who bothers -- do we really have OEM customers on 9-month releases? that sounds scary
+
+ 20:32 <pitti> so my gut feeling is that we need to inspect the LibO bugs further, revert the mesa one for the time being, and turn the others into "approved" ones
+
+ 20:32 <pitti> mdeslaur, infinity: WDYT?
+
+ 20:32 <infinity> pitti: The backport stacks have the same issue.  How do you think they come to exist? :P
+
+ 20:33 <infinity> libgl1-mesa-dri-lts-quantal:
+
+ 20:33 <infinity> Installed: (none)
+
+ 20:33 <infinity> Candidate: 9.0.3-0ubuntu0.4~precise1
+
+ 20:33 <pitti> infinity: yes, but they don't affect existing systems
+
+ 20:33 <infinity> No, it's possible 9.0.3 fixed that bug (it was reported against 9.0.2), but no one's looked at it to see.
+
+ 20:33 <infinity> s/No/Now/
+
+ 20:33 <pitti> if you install from a X.Y.2 image and have a broken system right away, that's much less of a pain than breaking a running productino system
+
+ 20:33 <infinity> pitti: They absolutely can affect existing systems.
+
+ 20:33 <mdeslaur> pitti: by revert, you mean revoke it's status?
+
+ 20:33 <infinity> pitti: If you installed with an lts-q stack with mesa 9.0 and upgraded to a newer backport of the stack, boom.
+
+ 20:34 <pitti> infinity: yes, and I want this to stop (as that's the MRE, isn't it?)
+
+ 20:34 <pitti> the backported stacks have parallel packages
+
+ 20:34 <infinity> pitti: Erm.  I think we're talking past each other?
+
+ 20:35 <pitti> as to what backported kernels and X.orgs do, they probably break loads of machines; but dist-upgrade won't automatically get those on existing systems
+
+ 20:35 <infinity> pitti: If we revoke the MRE for mesa, we're revoking it for backport stacks too.
+
+ 20:35 <infinity> pitti: Precise users would have absolutely gotten this breakage automatically.
+
+ 20:35 <pitti> infinity: how so? linux/xorg/etc. don't have an MRE either, and get backported
+
+ 20:35 <pitti> infinity: yes, *this* breakage from the bug above (when they upgrade precise to quantal-updates)
+
+ 20:35 <pitti> that's what I'd like to stop :)
+
+ 20:35 <infinity> pitti: mesa-lts-q started out in the "good" version and was later updated to match Q's new version.
+
+ 20:36 <pitti> infinity: ah, because the newer upstream release was backported again?
+
+ 20:36 <pitti> yes, that'd be the MRE again
+
+ 20:36 <infinity> Anyhow, we do new mesa microreleases for HWE reasons too.  Waiting 6 months for a new backport stack doesn't help.
+
+ 20:37 <infinity> I don't think rejecting it outright is the answer, I think the answer is a better bug triage/followup commitment.
+
+ 20:37 <infinity> There's been no activity on that bug from the desktop team, nor any piling on "me toos" since 9.0.3 was released.
+
+ 20:37 <pitti> well, in order to avoid regressions, you'd have to test on all hw of teh world
+
+ 20:37 <infinity> My guess is that 9.0.3 fixed it, but we have no way to know, cause no one's bothered to look.
+
+ 20:37 <pitti> triaging bugs after releaseing to -updates is important, but then the damage is done already
+
+ 20:37 <pitti> *nod*
+
+ 20:38 <infinity> But, if you want to go the more conservative route here, you're an ex-desktopper, you probably have a better handle on what'll work.
+
+ 20:38 <pitti> well, it never really worked
+
+ 20:38 <infinity> Heh.
+
+ 20:38 <pitti> it's an eternal conflict between OEM always wanting teh latest and greatest and existing installs
+
+ 20:38 <pitti> (and not having an OEM archive to go on top of that)
+
+ 20:39 <infinity> I think about 99% of the things we do in the name of HWE are crazy, but we have to make some concessions for people who insist on buying new computers.
+
+ 20:39 <mdeslaur> were those mesa srus done for oem's benefit, or where they to correct issues people were having?
+
+ 20:39 <infinity> I doubt it was for OEM.
+
+ 20:39 <infinity> Other than the part where OEM likes the latest crack.
+
+ 20:40 <infinity> But bringing in mlankhorst to the discussion would be helpful.
+
+ 20:40 <pitti> of course we also have -backports now which is enabled by default, so maybe that'd be a better route for these cases
+
+ 20:40 <infinity> pitti: Enabled, but you don't install from it.
+
+ 20:40 <infinity> pitti: Which, from an HWE perspective, is useless, and from a bugfixing perspective, is almost also so.
+
+ 20:41 <pitti> infinity: right, but we own our installer, so there's little which keeps the installer from picking mesa from -backports
+
+ 20:41 <pitti> but that again of course only works for the first update
+
+ 20:41 <pitti> every subsequent one will again break existing machines
+
+ 20:41 <pitti> so, back to square #1
+
+ 20:42 <pitti> but still, from a community/TB POV this is a fail
+
+ 20:42 <infinity> Right, I think we need to have a chat with Maarten, see why they think they need this MRE, if there's any way it can be done more safely, and if not, drop the whole thing.
+
+ 20:43 <infinity> I'll note a new micro-release of mesa landed in trusty-proposed 9h ago. :P
+
+ 20:43 <pitti> yay
+
+ 20:43 <mdeslaur> heh
+
+ 20:43 <pitti> ack, so we need a follow  up with the desktop team here
+
+ 20:43 <pitti> I'll do that, as a bit of an apology for missing the last few meetings
+
+ 20:43 <infinity> Shiny.
+
+ 20:44 * pitti pitti to follow up with Maarten wrt. mesa MRE
+
+ 20:44 <infinity> Feel free to miss more in the future, if it leads to you taking all the actions.
+
+ 20:44 <pitti> can we review the LibO bugs offline and respond to the mail?
+
+ 20:44 <infinity> Yeah, I think LibO is too heavy to dive into on IRC.
+
+ 20:44 <pitti> and any objections for the other provisional MREs to become blessed ones?
+
+ 20:44 <mdeslaur> not from me
+
+ 20:45 <infinity> And also doesn't have the "HWE" excuse going for it, so if it turns out to just completely suck, I doubt anyone would argue dropping the MRE.
+
+ 20:45 <infinity> I'm fine with the rest of the list.
+
+ 20:45 <pitti> ack
+
+ 20:45 <infinity> Maybe a quick scan through VLC crashes would be fun, but I bet it's mostly in underlying libraries and random corrupt media files, etc.
+
+ 20:45 <pitti> #agreed promote provisional MREs except LibO and mesa to permanent ones
+
+ 20:45 <infinity> Video playback software sucks.
+
+ 20:45 <pitti> (meh, neither all-caps nor #-ed ones work; go meetingology)
+
+ 20:46 <pitti> ah, right
+
+ 20:46 <pitti> I smell a volunteer
+
+ 20:46 <pitti> (I'll do the LibO ones in exchange)
+
+ 20:46 <infinity> Yeah, I'll have a hunt through a sampling of VLC crashes to confirm (or not) my suspicions there.
+
+ 20:46 * pitti infinity to review the vlc MRE bugs
+
+ 20:46 * pitti pitti to review the LibO MRE bugs
+
+ 20:47 <infinity> Did meetingology give up on life?
+
+ 20:47 <mdeslaur> meetingology: wake up
+
+ 20:47 <meetingology> mdeslaur: Error: "wake" is not a valid command.
+
+ 20:47 <pitti> #halp
+
+ 20:48 <infinity> Oh, that should be "#action <blah>"
+
+ 20:48 <pitti> I get nothign back in privmsg
+
+ 20:48 <infinity> #action pitti to follow up with Maarten wrt. mesa MRE
+
+ 20:48 * meetingology pitti to follow up with Maarten wrt. mesa MRE
+
+ 20:48 <infinity> Etc.
+
+ 20:48 <pitti> yes, but #agreed didn't work either
+
+ 20:48 <pitti> anyway, I don't really use that; the real IRC log is fine
+
+ 20:48 <infinity> Heh.
+
+ 20:48 <pitti> #topic community bugs
+
+ 20:48 <pitti> zarro
+
+ 20:49 <infinity> Our community is bug-free?
+
+ 20:49 <pitti> nothing new on the ML either
+
+ 20:49 <pitti> I privmsg'ed kees about meeting time
+
+ 20:49 <pitti> #topic AOB
+
+ 20:49 <pitti> nothing from me; infinity, mdeslaur?
+
+ 20:50 <pitti> 10
+
+ 20:50 <mdeslaur> nope
+
+ 20:50 <pitti> 5
+
+ 20:50 <infinity> I'm good.
+
+ 20:50 <pitti> 0 :)
+
+ 20:50 <pitti> great
+
+ 20:50 <infinity> Not like we have quorum anyway. :P
+
+ 20:50 <pitti> so, c'est l'heure de dormier
+
+ 20:50 <pitti> thanks and good night! will do the reporting stuff tomorrow morning
+
+ 20:51 <mdeslaur> thanks pitti, infinity!
+
+ 20:51 <pitti> err, "dormir"
+
+ 20:51 <pitti> français est trop difficile
+
+ 20:51 <pitti> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

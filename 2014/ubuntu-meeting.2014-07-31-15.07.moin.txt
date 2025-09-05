@@ -1,0 +1,768 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 31 Jul at 15:07 &mdash; 15:47 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-07-31-15.07.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:07.
+
+
+=== Upstart cgroup support ===
+The discussion about "Upstart cgroup support" started at 15:24.
+
+  * ''LINK:'' http://people.canonical.com/~jhunt/upstart/upstart-states-old.png 
+  * ''LINK:'' http://people.canonical.com/~jhunt/upstart/upstart-states-new.png 
+
+=== AOB ===
+The discussion about "AOB" started at 15:42.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jodh (142)
+ * xnox (46)
+ * slangasek (40)
+ * bdmurray (30)
+ * sil2100 (21)
+ * stgraber (17)
+ * robru (15)
+ * bhuey (14)
+ * doko (9)
+ * ubottu (9)
+ * barry (8)
+ * meetingology (4)
+
+
+
+== Full Log ==
+
+
+ 15:07 <xnox> #startmeeting
+
+ 15:07 <meetingology> Meeting started Thu Jul 31 15:07:43 2014 UTC.  The chair is xnox. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:07 <meetingology> 
+
+ 15:07 <meetingology> Available commands: action commands idea info link nick
+
+ 15:07 <bhuey> don't know what the procedure is...
+
+ 15:07 <xnox> #topic Lightning round
+
+ 15:08 <bhuey> go ?
+
+ 15:08 <bhuey> Last week
+
+ 15:08 <bhuey> -change direction and abandoned the security update to 7u55-2.4.7
+
+ 15:08 <bhuey> -merged debian package 7u65-2.5.1 to ubuntu utopic, merged differences into this package
+
+ 15:08 <bhuey> -backported it to 12.04, 14.04 and utopic, this went well except for 12.04
+
+ 15:08 <bhuey> This week
+
+ 15:08 <bhuey> -posted test differences between various openjdk versions for regression analysis
+
+ 15:08 <bhuey> -struggling to deal with 'quotes' in a call to 'configure' in the build/ directory and wondering why the build system is reverting Matthias's patches
+
+ 15:08 <bhuey> -continued to debug the above
+
+ 15:08 <bhuey> -get familiar with debian version 3 packaging
+
+ 15:08 <bhuey> done
+
+ 15:08 <bhuey> ...
+
+ 15:08 <xnox> $ shuf -e jodh robru sil2100 xnox barry bmurray doko stgraber
+
+ 15:08 <xnox> xnox
+
+ 15:08 <xnox> barry
+
+ 15:08 <xnox> jodh
+
+ 15:08 <xnox> robru
+
+ 15:08 <xnox> sil2100
+
+ 15:08 <xnox> bmurray
+
+ 15:08 <xnox> doko
+
+ 15:09 <xnox> stgraber
+
+ 15:09 <xnox> not as fancy.
+
+ 15:09 <xnox> ..
+
+ 15:09 <bhuey> whoops
+
+ 15:09 <xnox> * usb-creator - formating fixes uploaded
+
+ 15:09 <xnox> * mega-transition helping out tie up loose ends
+
+ 15:09 <xnox> * llvm 3.5 - fixed powerpc build (committed upstream) and fixed
+
+ 15:09 <xnox> ppc64el packaging (accepted in debian). Will switch default to 3.5
+
+ 15:09 <xnox> after alpha2 freeze block is lifted. That will make temporary add
+
+ 15:09 <xnox> 3.5 & 3.4 in main, until next mesa update.
+
+ 15:09 * jodh wonders who 'not as fancy' is :)
+
+ 15:09 <xnox> * uploaded ubuntukylin-meta seating in NEW, but proper further seed
+
+ 15:09 <xnox> setup is still needed.
+
+ 15:09 <xnox> * exit interview, and HRy things.
+
+ 15:09 <xnox> * working on porting more lazr.* things to python3
+
+ 15:09 <xnox> * sent rebased apt-ftpmaster generate contents only patch to mvo on
+
+ 15:09 <xnox> BTS. (To enable for it to be used, will need further patch to cronscripts)
+
+ 15:09 <xnox> TODO:
+
+ 15:09 <xnox> * complete more systemd/startpar tasks
+
+ 15:09 <xnox> * complete lazr.*/launchpadlib ports
+
+ 15:09 <xnox> ..
+
+ 15:09 <xnox> barry: =)
+
+ 15:09 <xnox> jodh: oh just a comment. as in it's not a one liner as it usually pasted around here.
+
+ 15:10 <jodh> xnox: yeah, I'm just being silly.
+
+ 15:10 <barry> phone: system-image 2.3.1.  smoke test crash investigation (LP: #1349478).  discussing jani's branches.  other stuff.
+
+ 15:10 <ubottu> Launchpad bug 1349478 in Ubuntu system image "/usr/sbin/system-image-dbus:sqlite3.OperationalError:_check_for_update:emit_signal:UpdateAvailableStatus:__init__:__enter__:_cursor" [High,In progress] https://launchpad.net/bugs/1349478
+
+ 15:10 <barry> debuntu: zope stack (all squared away now!).  gunicorn py3 package support (debian bug #756057).  testing pyvenv/virtualenv from trusty PPA.
+
+ 15:10 <ubottu> Debian bug 756057 in gunicorn "gunicorn: Support Python 3" [Normal,Open] http://bugs.debian.org/756057
+
+ 15:10 <xnox> jodh: and it didn't suffly much, did it?!
+
+ 15:10 <barry> other: dealing w/various hardware issues.  other discussions on various other topics.
+
+ 15:10 <barry> ..
+
+ 15:11 <jodh> * upstart
+
+ 15:11 <barry> jodh: =)
+
+ 15:11 <jodh> *** upstart 1.13.1-0ubuntu2 upload to fix cgmanager tests.
+
+ 15:11 <jodh> * system-image
+
+ 15:11 <jodh> * Spent most of the week learning about how system image builds
+
+ 15:11 <jodh> (ongoing :)
+
+ 15:11 <jodh> * Working with mvo, cjwatson and stgraber on setting up new images.
+
+ 15:11 <jodh> Γ
+
+ 15:11 <xnox> barry: gunicorn python3 \o/
+
+ 15:11 <xnox> the all prepared robru is next =)
+
+ 15:11 <barry> xnox: yep, have github pull req pending for debian maintainer.  should hopefully land soonish
+
+ 15:11 <robru> * landings, landings, landings, landings!
+
+ 15:11 <robru> * fixed up qtcompositor landing in ubuntu-system-settings
+
+ 15:11 <robru> * learned all about Jasmine unittesting framework for JS -- very nice!
+
+ 15:11 <robru> * wrote vast amounts of unit test code for both CI Train Silo Dashboard and NFSS Web UI
+
+ 15:11 <robru> * attended GUADEC -- saw many talks and took lots of notes
+
+ 15:11 <robru> * Several CI Vanguard shifts
+
+ 15:11 <robru> * stopped some bits of CI Train from hard-coding spreadsheet column indexes, allowing greater
+
+ 15:11 <robru> flexibility to change the spreadsheet in the future (in preparation for RTM)
+
+ 15:11 <robru> * vast simplification of CI Train spreadsheet, dropping all stupid "silo tabs" and streamlinin
+
+ 15:11 <robru> g the testing:done? setting into the pending tab, which will make the spreadsheet much easier
+
+ 15:11 <robru> to navigate when RTM doubles the number of silos we have.
+
+ 15:11 <robru> * various minor pre-RTM preparatory fixes & changes in CI Train
+
+ 15:11 <robru> * 99 commits against the CI Train silo dashboard page. yikes! (many many many small tweaks and
+
+ 15:11 <robru> iterations, and increases in test coverage).
+
+ 15:12 <xnox> awesome!
+
+ 15:12 <xnox> robru: sil2100: has ci-train been tested / dry-run against rtm on dogfood?
+
+ 15:13 <sil2100> xnox: doing it all the time ;)
+
+ 15:13 <xnox> sil2100: awesome.
+
+ 15:13 <xnox> sil2100: you are next! =)
+
+ 15:13 * slangasek waves belatedly
+
+ 15:13 <sil2100> xnox: just got blocked by some firewall blockings, but now I'm unblocked again, webops helped out
+
+ 15:13 <robru> xnox, sil2100 has taken charge of the ci train core. I'm mostly working on the periphery, like the dashboard and queuebot.
+
+ 15:13 <xnox> #chair slangasek
+
+ 15:13 <meetingology> Current chairs: slangasek xnox
+
+ 15:13 <sil2100> o/
+
+ 15:13 <sil2100> - Landing team work, landing e-mails, landing coordination - standard stuff
+
+ 15:13 <sil2100> - Pushing on promotion and TRAINCON-0 issues
+
+ 15:13 <sil2100> - CI Train maintenance and features:
+
+ 15:13 <sil2100> * Decoupling prod from preprod, now for testing preprod custom branches can be used
+
+ 15:13 <sil2100> * Small enablements related to the modified spreadsheet
+
+ 15:13 <sil2100> * Continuing work on enabling other distributions (ubuntu-rtm)
+
+ 15:13 <sil2100> - More firewall holes needed in our prodstack instance
+
+ 15:13 <sil2100> - More complex silo configuration handling
+
+ 15:14 <sil2100> - Many many corner cases where ubuntu was still considered instead of selected distro
+
+ 15:14 <sil2100> * Test landing of indicator-location to ubuntu-rtm (in progress)
+
+ 15:14 <sil2100> * Prepared branch with 'retry failed jobs'
+
+ 15:14 <sil2100> * Add additional twin upload projects
+
+ 15:14 <sil2100> * No time to finish work on auto-merge-clean
+
+ 15:14 <sil2100> - Work on defining TRAINCON-0 formal rules
+
+ 15:14 <sil2100> - Packaging advice for some upstream developers
+
+ 15:14 <sil2100> - Documenting the TRAINCON-0 incident
+
+ 15:14 <sil2100> - Playing around with some hardware
+
+ 15:14 <sil2100> done
+
+ 15:14 <bdmurray> this covers about 2 weeks for me since I was on holiday last thursday
+
+ 15:14 <bdmurray> updated errors for assets.ubuntu.com to r486
+
+ 15:14 <bdmurray> testing of errors frontend change to filter on pkg_arch
+
+ 15:14 <bdmurray> submitted RT to have errors frontends updated and errors_static_url modified
+
+ 15:15 <bdmurray> setup logrotation for the daisy, errors frontends and pushed to the daisy and errors charms
+
+ 15:15 <bdmurray> updated daisy retracer to keep core dumps when retracing and save crash files in certain situations
+
+ 15:15 <bdmurray> submitted rt to have retracers updated to r504
+
+ 15:15 <bdmurray> updated RT 72977 regarding errors log rotation
+
+ 15:15 <bdmurray> submitted RT 73492 regarding updating the daisy frontends to r498
+
+ 15:15 <bdmurray> updated daisy bucket code to pass architecture to bucketversionscount
+
+ 15:15 <bdmurray> push bzr changes for daisy to increment arch counters
+
+ 15:15 <bdmurray> created some armhf retrace success failures graphs in graphite
+
+ 15:15 <bdmurray> submitted RT to add more retracers for errors
+
+ 15:15 <bdmurray> pinged a webop to run import-user-packages cron job (they said it worked but still nothing in the ColumnFamily)
+
+ 15:15 <bdmurray> manually ran import_user_packages to the temp DSE ring database
+
+ 15:15 <bdmurray> research into recoverable problem bucket grouping upstart and url-dispatcher issues
+
+ 15:15 <bdmurray> discovered and reported apport bug 1349579
+
+ 15:15 <ubottu> bug 1349579 in apport (Ubuntu) "whoopsie-upload-all uses an incorrect assumption regarding what to upload" [Undecided,Fix released] https://launchpad.net/bugs/1349579
+
+ 15:15 <bdmurray> submitted merge proposal fixing apport bug 1329520
+
+ 15:15 <ubottu> bug 1329520 in apport (Ubuntu) "whoopsie-upload-all crashes while processing crash file" [High,Fix released] https://launchpad.net/bugs/1329520
+
+ 15:15 <bdmurray> investigation into SystemImageInfo not appearing in apport .crash files on the phone
+
+ 15:15 <bdmurray> uploaded new version of apport to utopic which will properly gather SystemImageInfo
+
+ 15:15 <bdmurray> uploaded new version of whoopsie to upotic that will send SystemImageInfo to errors
+
+ 15:15 <bdmurray> tested whoopsie bug 1320988 regarding online / offline connectivity
+
+ 15:15 <ubottu> bug 1320988 in whoopsie (Ubuntu) "whoopsie did not become on-line after connecting to wifi" [High,Confirmed] https://launchpad.net/bugs/1320988
+
+ 15:15 <bdmurray> investigation into whoopsie bug 1340604
+
+ 15:15 <ubottu> bug 1340604 in whoopsie (Ubuntu) "[phone] crash files are only uploaded on boot when not running in the foreground" [Undecided,New] https://launchpad.net/bugs/1340604
+
+ 15:15 <bdmurray> reported apport bug 1347009 regarding retraced crashes missing stacktrace
+
+ 15:15 <ubottu> bug 1347009 in Daisy "apport-retrace occassionally creates a retraced report without a stacktrace" [Low,Triaged] https://launchpad.net/bugs/1347009
+
+ 15:15 <bdmurray> research into duplicates for ubuntu-release-upgrader bug 1347721
+
+ 15:15 <ubottu> bug 1347721 in apt (Ubuntu Trusty) "Saucy -> Trusty upgrade failed: procps fails to configure" [High,Triaged] https://launchpad.net/bugs/1347721
+
+ 15:15 <bdmurray> ✔ done
+
+ 15:16 <doko> - GCC default set to 4.9
+
+ 15:16 <doko> - update of cross toolchains
+
+ 15:16 <doko> - openjdk-7 mentoring and fixes
+
+ 15:16 <doko> - clean up component mismatches, dep-waits, ftbfs in main, three days of nagging and fixing
+
+ 15:16 <doko> - packaging review of some third party software
+
+ 15:16 <doko> - updated tightvnc, updated tigervnc (at least it built for arm64 and ppc64el)
+
+ 15:16 <doko> - twisted transition (ubuntu-sso-client still unfixed)
+
+ 15:16 <doko> - arm64 toolchain discussion
+
+ 15:16 <doko> (done)
+
+ 15:17 <stgraber> Was on vacation last week.
+
+ 15:17 <stgraber> E-mail and IRC catchup on Monday mostly.
+
+ 15:17 <stgraber> Helped with some code reviews, discussions, ... wrt ubuntu core system-image.
+
+ 15:17 <stgraber> Got an initial system-image published for ubuntu-core.
+
+ 15:17 <stgraber> Discussed partitioning plan for new touch devices.
+
+ 15:17 <stgraber> Fixed some LXC CI issues.
+
+ 15:17 <stgraber> Recorded a video on running GUI apps inside LXC: https://www.youtube.com/watch?v=QYsj9LEqxXk
+
+ 15:17 <stgraber> Poked some more at running Unity8 inside LXC.
+
+ 15:17 <stgraber> Some more LXC-related discussions (conference planning, ...)
+
+ 15:17 <stgraber> Discussed some of our NetworkManager patches.
+
+ 15:17 <stgraber> Fixed a couple of configuration issues with the ISO tracker related to alpha-2, 14.04.1 and 12.04.5.
+
+ 15:17 <stgraber> (DONE)
+
+ 15:19 <xnox> slangasek: your turn =) and take over chairing =)
+
+ 15:19 <slangasek> hmm :)
+
+ 15:20 <slangasek> * working with bhuey on prepping openjdk security update
+
+ 15:20 <slangasek> * discussions around the 'init' package and systemd-sysv to unblock new images using systemd from the start
+
+ 15:20 <slangasek> * tracking crash retracing success on the phones; working with bdmurray et al. to get any blocking issues fixed in advance of RTM
+
+ 15:20 <slangasek> * performance reviews
+
+ 15:20 <slangasek> * helped move forward some HWE SRUs related to a server engagement
+
+ 15:20 <slangasek> * helped with getting out of TRAINCON-0 on Monday
+
+ 15:21 <slangasek> * next week: joining a cloud team sprint (as is Colin), so expect limited availability
+
+ 15:21 <slangasek> * the week after: on vacation
+
+ 15:22 <slangasek> bdmurray: on the errors.u.c side, when do you expect we'll have the per-image view available?
+
+ 15:22 <bdmurray> slangasek: what was the final answer for the counter?
+
+ 15:23 <slangasek> bdmurray: ah, in scrollback, let's iron that out after the meeting?
+
+ 15:23 <bdmurray> slangasek: okay, it shouldn't take too long to add
+
+ 15:23 <slangasek> any other questions over status?
+
+ 15:24 <slangasek> [TOPIC] Upstart cgroup support
+
+ 15:25 <slangasek> forgot to do an in-depth topic for last week's meeting... remembered this week :)
+
+ 15:25 <jodh> Thanks Steve. Everyone sitting comfortably?
+
+ 15:25 <slangasek> so jodh will talk a bit about the work he did to implement cgroup support into upstart
+
+ 15:25 <jodh> Today, I'm going to give a brief [1] talk about cgroup support in upstart
+
+ 15:25 <jodh> and some of the challenges we faced. This may go some way in explaining
+
+ 15:25 <jodh> the seemingly never-ending upstart async branch updates I've given in
+
+ 15:25 <jodh> the past in this meeting :-)
+
+ 15:25 <jodh> = Intro =
+
+ 15:25 <jodh> As of version 1.13, Upstart supports cgroups. By "support", I mean "has
+
+ 15:25 <jodh> the ability to place job processes into one or more cgroups" (for
+
+ 15:25 <jodh> service resource control). It does _not_ mean that Upstart uses cgroups
+
+ 15:25 <jodh> to mop up the mess if a service ends badly (process supervision).
+
+ 15:25 <jodh> = The cgroup Stanza =
+
+ 15:26 <jodh> After thrashing out the design with stgraber, slangasek and hallyn
+
+ 15:26 <jodh> (http://upstart.ubuntu.com/wiki/Cgroup), we added support to parse a new
+
+ 15:26 <jodh> "cgroup" stanza that a job can specify. The final syntax is extremely
+
+ 15:26 <jodh> clean and praise goes to stgraber for realising how simple we could make
+
+ 15:26 <jodh> it!) Here's a summary of the behaviour:
+
+ 15:26 <jodh> - If not specified, the job processes are not placed into (any new)
+
+ 15:26 <jodh> cgroups.
+
+ 15:26 <jodh> - If a job specifies a cgroup stanza, that job cannot legitimately start
+
+ 15:26 <jodh> until the cgroup manager itself is running. To handle this, we added a new
+
+ 15:26 <jodh> initctl command ("notify-cgroup-manager-address") which the
+
+ 15:26 <jodh> cgmanager.conf job itself calls in post-start to notify upstart where
+
+ 15:26 <jodh> to find cgmanager :-)
+
+ 15:26 <jodh> - If specified, *all* job processes are put into the specified cgroup(s).
+
+ 15:26 <jodh> - If specified as "cgroup <controller>" ("cgroup cpuset" for example),
+
+ 15:26 <jodh> Upstart will add the job to a job-specific cgroup whose value will be
+
+ 15:26 <jodh> "$UPSTART_JOB-$UPSTART_INSTANCE".
+
+ 15:26 <jodh> - If specified as "cgroup cpuset foo 12", Upstart will place the job
+
+ 15:26 <jodh> processes into the implicit job-specific cpuset cgroup and set
+
+ 15:26 <jodh> "foo=bar" in that group.
+
+ 15:26 <jodh> - If specified as "cgroup cpuset hello foo 12", Upstart will place the
+
+ 15:26 <jodh> job into a the cpuset cgroup called "hello" and set "foo=12" in that
+
+ 15:26 <jodh> group. If "hello" does not exist, it will be created. This allows
+
+ 15:26 <jodh> multiple different jobs to enter the same cgroup if desired.
+
+ 15:26 <jodh> - The cgroup name ("hello" in the example above) can also contain variables:
+
+ 15:26 <jodh> "cgroup cpuset db/$foo/$bar-$baz".
+
+ 15:26 <jodh> - You can also get at the cgroup that Upstart would create on behalf of
+
+ 15:26 <jodh> the job using the magic $UPSTART_CGROUP variable (note that this is
+
+ 15:26 <jodh> _not_ an environment variable and is only valid within a cgroup
+
+ 15:26 <jodh> stanza). For example: "cgroup cpuset db/$UPSTART_CGROUP".
+
+ 15:26 <jodh> So far so good.
+
+ 15:27 <jodh> Since there is already an excellent cgroup manager available, and since
+
+ 15:27 <jodh> we try to avoid adding extra complexity to PID 1, we opted to avoid
+
+ 15:27 * slangasek waits for the footnote to resolve
+
+ 15:27 <jodh> re-inventing the wheel by having cgmanager(8) handle the actual cgroup
+
+ 15:27 <jodh> operations. So, when Upstart starts a job that specified a cgroup
+
+ 15:27 <jodh> stanza, it needs to do the following:
+
+ 15:27 <jodh> - Connect to cgmanager.
+
+ 15:27 <jodh> - Ask cgmanager to create the cgroup(s).
+
+ 15:27 <jodh> - Ask cgmanager to move the specified process(es) into a cgroup.
+
+ 15:27 <jodh> - Ask cgmanager to set apply a particular setting to a cgroup.
+
+ 15:27 <jodh> However, there's a problem with the above. What if cgmanager hung?
+
+ 15:27 <jodh> We'll come back to this, but first I need to explain how Upstart spawns
+
+ 15:27 <jodh> a job.
+
+ 15:27 <jodh> = Async spawning =
+
+ 15:27 <jodh> == Historical synchronous spawning ==
+
+ 15:27 <jodh> Upstart used to do the following when wishing to start a new job process:
+
+ 15:27 <jodh> 1) Create a pipe.
+
+ 15:27 <jodh> 2) fork itself.
+
+ 15:27 <jodh> 3) Have the child do all necessary setup such as dropping privileges,
+
+ 15:27 <jodh> closing fds, switching apparmor profiles, etc. Then:
+
+ 15:27 <jodh> - If the child finished its setup successfully it simply exec'd the
+
+ 15:27 <jodh> relevant program specified in the job .conf file for the job process
+
+ 15:27 <jodh> in question).
+
+ 15:27 <jodh> - But if the setup failed, the child wrote a status message back up to
+
+ 15:27 <jodh> the parent (PID 1) explaining what went wrong, and then exited.
+
+ 15:27 <jodh> 4) All the time the child wass doing setup, PID 1 was doing a _blocking
+
+ 15:27 <jodh> read_ on its end of the pipe. This implies that no operation in the
+
+ 15:27 <jodh> child setup phase could block, since if it could block, it would also
+
+ 15:27 <jodh> block PID 1, and thus DoS the system.
+
+ 15:27 <jodh> As a result, we couldn't call cgmanager from PID 1 directly, since that
+
+ 15:27 <jodh> could lead to a DoS, but we couldn't call it from the child _either_.
+
+ 15:28 <jodh> == Brave New World ==
+
+ 15:28 <jodh> The solution was to change the way in which Upstart spawns. In the new
+
+ 15:28 <jodh> world, Upstart still creates the pipe but doesn't do a blocking read; it
+
+ 15:28 <jodh> just adds the fd for the read end of the pipe to a queue and waits for
+
+ 15:28 <jodh> some notification from the child. So we now have asynchronous child
+
+ 15:28 <jodh> spawning. To achieve this, we had to increase the number of states the
+
+ 15:28 <jodh> job can be, since there is now a distinction between:
+
+ 15:28 <jodh> - "the job process has been spawned successfully"
+
+ 15:28 <jodh> - "the job process is _being_ spawned" (but we don't know what the outcome is yet).
+
+ 15:28 <jodh> Here is the old state transition diagram:
+
+ 15:28 <jodh> http://people.canonical.com/~jhunt/upstart/upstart-states-old.png
+
+ 15:28 <jodh> And here's the new one:
+
+ 15:28 <jodh> http://people.canonical.com/~jhunt/upstart/upstart-states-new.png
+
+ 15:28 <jodh> However, that only solved half the problem - since Upstart was now
+
+ 15:28 <jodh> spawning asynchronously, the design meant that the order in which child
+
+ 15:28 <jodh> notifications could arrive became non-deterministic since either of the
+
+ 15:28 <jodh> following could happen "first":
+
+ 15:28 <jodh> - child exits and Upstart is notified via waitid().
+
+ 15:28 <jodh> - child pipe closes or has data written to it and is notified by select().
+
+ 15:28 <jodh> This needed careful handling since *both* those operations could update
+
+ 15:28 <jodh> the job state, but we didn't want the state to be "double-bumped".
+
+ 15:28 <jodh> In summary, adding the new async spawning feature was quite a challenge
+
+ 15:28 <jodh> with xnox and I gaining a few grey hairs in the process (his don't show!
+
+ 15:28 <jodh> Errm... ;-)
+
+ 15:28 <jodh> = Test Suite =
+
+ 15:28 <jodh> Since the new states and the new async nature of spawning meant that a
+
+ 15:28 <jodh> large chunk of the (large!) set of Upstart tests suddently broke. Hence,
+
+ 15:28 <jodh> it took lots of careful reviewing of both the code and all the required
+
+ 15:28 <jodh> test changes to resolve this new feature.
+
+ 15:28 <jodh> = Stateful re-exec =
+
+ 15:29 <jodh> This needed updating to handle the new cgroup stanza data. But we also
+
+ 15:29 <jodh> needed to consider scenarios like this:
+
+ 15:29 <jodh> - PID 1 starts a job process asynchronously.
+
+ 15:29 <jodh> - child takes "a long time" to setup.
+
+ 15:29 <jodh> - PID 1 is restarted.
+
+ 15:29 <jodh> Post-re-exec, PID 1 needs to know to keep track of the outstanding child
+
+ 15:29 <jodh> setup operations it is (asynchronously) waiting on. To handle this, we
+
+ 15:29 <jodh> added a new JobProcessData object to store the transitory child setup
+
+ 15:29 <jodh> meta-data (which gets discarded once the child has either died or
+
+ 15:29 <jodh> responded down the pipe).
+
+ 15:29 <jodh> = Cgroup Operations =
+
+ 15:29 <jodh> With the advent of async spawning, the child now makes all necessary
+
+ 15:29 <jodh> calls on the cgmanager with PID 1 being completely immune to any issues
+
+ 15:29 <jodh> that that may entail. In fact, aside from storing the parsed cgroup
+
+ 15:29 <jodh> stanza data, all PID 1 does is store the address of cgmanager!
+
+ 15:29 <jodh> = Conclusion =
+
+ 15:29 <jodh> The final result is an extremely clean and safe design. By introducing
+
+ 15:29 <jodh> async spawning we were also able to make Upstart fully immune to the
+
+ 15:29 <jodh> child blocking PID 1 (there used to be a couple of areas that
+
+ 15:29 <jodh> theoretically could cause issues on a mis-configured system).
+
+ 15:29 <jodh> ---
+
+ 15:29 <jodh> [1] - FTR, I'm using ev's definition of 'brief' :-)
+
+ 15:29 * jodh grumbles over whitespace damage....
+
+ 15:29 <jodh> A non-garbled version: http://paste.ubuntu.com/7915372/
+
+ 15:29 <slangasek> heh
+
+ 15:31 <slangasek> jodh: so, http://people.canonical.com/~jhunt/upstart/upstart-states-new.png is the state diagram for what's implemented now in 1.13?
+
+ 15:31 <jodh> slangasek: yep - I need to refresh the cookbook with that.
+
+ 15:32 <xnox> (also pretified the graph in graphviz for vertical top/down layout)
+
+ 15:32 <xnox> vs previously "optimal" graph
+
+ 15:32 <jodh> xnox: yeah, that's much improved, thanks! :)
+
+ 15:32 <slangasek> still just the single error path, though; couldn't you have made it more complicated? ;)
+
+ 15:33 <barry> jodh: very interesting!  is there a timeout after which the child is just considered hung, and does upstart do anything about that state?
+
+ 15:34 <jodh> barry: no - no timeout.
+
+ 15:34 <xnox> barry: it just gets stuck in e.g. "starting/pre-starting" state.
+
+ 15:34 <jodh> barry: if the child hangs, the state will reflect that if you run 'initctl status $job'.
+
+ 15:34 <xnox> (or some such, can't remember exact names of the spawning state"
+
+ 15:34 <xnox> )
+
+ 15:35 <barry> gotcha
+
+ 15:35 * slangasek nods
+
+ 15:35 <slangasek> if the job never gets around to starting, it's not init's job to fix it ;)
+
+ 15:36 <slangasek> jodh: do we have people using the cgroup support in anger yet?
+
+ 15:36 <jodh> barry: If a job does hang though, you may get something useful in cgmanagers log (assuming you've set cgmanager_opts= in /etc/init/cgmanager.conf).
+
+ 15:37 <jodh> slangasek: I don't think so actually. I checked on a recent touch image and I can't see any evidence of it being used yet. We need to poke ted! :)
+
+ 15:37 <slangasek> jodh: has ted been poked about this yet?
+
+ 15:37 <slangasek> if not, then yes, yes you do ;)
+
+ 15:38 <jodh> slangasek: not by me directly. I added him to https://code.launchpad.net/~jamesodhunt/ubuntu/utopic/cgmanager/enable-upstart-cgroup-support/+merge/227209 so he should be aware of it.
+
+ 15:39 <xnox> slangasek: i'll poke ted about it.
+
+ 15:39 <slangasek> xnox: ok, thanks
+
+ 15:39 <jodh> let's all poke ted. err...
+
+ 15:40 <slangasek> any other questions about cgroups in upstart?
+
+ 15:42 <slangasek> jodh: thanks for presenting!
+
+ 15:42 <slangasek> [TOPIC] AOB
+
+ 15:42 <bdmurray> slangasek: I was thinking maybe you and stgraber could discuss bug 1314616?
+
+ 15:42 <ubottu> bug 1314616 in bitcoin (Ubuntu) "[SRU] bitcoin to be maintained upstream in PPA: Replace distro archive "bitcoin" bitcoin with an empty dummy package" [Undecided,Confirmed] https://launchpad.net/bugs/1314616
+
+ 15:42 <slangasek> oh no
+
+ 15:43 <stgraber> oh, that again?
+
+ 15:43 <slangasek> stgraber: I had explicitly told them to submit an SRU to disable the daemon on upgrade
+
+ 15:43 <slangasek> stgraber: and you are apparently not happy with the proposed solution
+
+ 15:43 <stgraber> slangasek: I'm not?
+
+ 15:43 <slangasek> stgraber: so yes, we should talk, but probably not during the meeting :-)
+
+ 15:43 <slangasek> stgraber: that's what I heard!
+
+ 15:44 <bdmurray> there was an email to ubuntu-devel about it earlier this month
+
+ 15:44 <slangasek> anyway, maybe we talk on #ubuntu-devel after the meeting?
+
+ 15:44 <stgraber> slangasek: I think I was just unhappy that the reporter tried to get us to do things without going through the proper SRU process
+
+ 15:44 <slangasek> ah :-)
+
+ 15:45 <stgraber> slangasek: I don't care about the package itself and am perfectly happy to have it die one way or another :)
+
+ 15:45 <slangasek> ok then!
+
+ 15:45 <slangasek> anything else to discuss on this fine summer day?
+
+ 15:46 <stgraber> I mostly complained to the reporter when he started nagging me as the current patch pilot to do something which needed discussion with the SRU team. Now that the SRU team has clearly been informed of it, someone should just sponsor a debdiff and be done with it.
+
+ 15:46 * slangasek nods
+
+ 15:47 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

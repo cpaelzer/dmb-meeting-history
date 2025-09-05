@@ -1,0 +1,364 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 13 Feb at 16:03 &mdash; 16:24 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-02-13-16.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:04.
+
+
+=== UDS ===
+The discussion about "UDS" started at 16:19.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:23.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * xnox (32)
+ * slangasek (26)
+ * stgraber (20)
+ * barry (17)
+ * bdmurray (14)
+ * cjwatson (13)
+ * doko (12)
+ * ubottu (10)
+ * jodh (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:03 <slangasek> #startmeeting
+
+ 16:03 <meetingology> Meeting started Thu Feb 13 16:03:59 2014 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:03 <meetingology> 
+
+ 16:03 <meetingology> Available commands: action commands idea info link nick
+
+ 16:04 * stgraber waves
+
+ 16:04 <slangasek> [TOPIC] Lightning round
+
+ 16:04 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson xnox stokachu)
+
+ 16:04 <slangasek> jodh xnox stokachu barry bdmurray doko stgraber cjwatson slangasek
+
+ 16:05 <jodh> * core-1311-upstart-roadmap:
+
+ 16:05 <jodh> - async spawn: Finished reworking job_process tests for async
+
+ 16:05 <jodh> (job+event to go...)
+
+ 16:05 <jodh> * upstart:
+
+ 16:05 <jodh> - re-reviewed lp:~cameronnemo/upstart/ipv6.
+
+ 16:05 <jodh> * misc:
+
+ 16:05 <jodh> - having fun with gmail migration :)
+
+ 16:05 <jodh> 𐏁
+
+ 16:05 <xnox> * uploaded gnome-session/gsettings/unity upstart session jobs to
+
+ 16:05 <xnox> transition & support ubuntu- and gnome-settings-daemons.
+
+ 16:05 <xnox> * click chroot session support patch proposed
+
+ 16:05 <xnox> * working on finishing dmraid/mdadm transition (needs one more patch
+
+ 16:05 <xnox> to hw-detect and should be good to go). Intel raids are always
+
+ 16:05 <xnox> resyncing after reboot... not good.
+
+ 16:05 <xnox> - is it typical for ubuntu mdadm to resync on each boot?!
+
+ 16:05 <xnox> * finished patches for phablet-test-run to support python2&3
+
+ 16:05 <xnox> * updated bugs in patches to auopilot to dynamicaly detect resolution
+
+ 16:05 <xnox> * make merge proposals to drop dbus-x11 from touch
+
+ 16:05 <xnox> * initiated discussions to drop a load of gstreamer dependencies off
+
+ 16:05 <xnox> the touch image (laney has priliminary gstreamer split ready)
+
+ 16:05 <xnox> * proposed in debian sendsigs to not kill processes that start with "@"
+
+ 16:05 <xnox> * wrote patch to unity-greeter to dynamically generate logo on the
+
+ 16:05 <xnox> login screen (sick of 13.10 string). Ditto in progress for "About
+
+ 16:06 <xnox> this computer" screen. (design don't have time to update this stock
+
+ 16:06 <xnox> images timely, and it's poor use of their time)
+
+ 16:06 <xnox> * experimenting with trying to get qt build with gtk3 theming (instead
+
+ 16:06 <xnox> of gtk2)
+
+ 16:06 <xnox> 
+
+ 16:06 <xnox> ..
+
+ 16:06 * xnox is off tomorrow.
+
+ 16:06 <barry> xnox: what's going to happen with dbus-daemon (part of dbus-x11 iirc).  also, when will p-t-r support for py2&3 land?
+
+ 16:06 <stgraber> xnox: none of my servers using mdadm never resynced on reboot. They do a resync once a month though by default.
+
+ 16:07 <barry> *dbus-launch
+
+ 16:07 <xnox> barry: dbus-daemon is not part of dbus-x11 and will stay.
+
+ 16:08 <xnox> barry: dbus-launch will be gone, as nothing is using it.
+
+ 16:08 <xnox> barry: if there is something using, it better declare a dependency on it =) or use other means e.g. dbus-daemon.
+
+ 16:08 <barry> xnox: we'll have to figure something out for the ap tests.  iirc, several autopilot tests depend on it
+
+ 16:09 <barry> (at least i've had to install/b-d on dbus-x11 to get some tests to work)
+
+ 16:09 <barry> xnox: yes, exactly.  some packages are missing b-d/deps on dbus-x11 :(
+
+ 16:09 <xnox> barry: they shouldn't.... as autopilot provides a bus.
+
+ 16:10 <xnox> barry: dbus-launch is not useful on touch, since it pulls in libx11-6....
+
+ 16:10 <barry> xnox: yeah, just saying.   i guess any problems will make themselves evident soon enough ;)
+
+ 16:10 <slangasek> barry, xnox: I think at the sprint I asked for a write-up of the revised game plan for autopilot python3... did that get written down?  Would really like to be able to track the progress here :)
+
+ 16:11 <barry> slangasek: i didn't.  but yes, once i figure out this upgrading problem, i'll get back to that :/
+
+ 16:11 <slangasek> stokachu: hi, anything for us this week?
+
+ 16:11 <slangasek> barry: ok
+
+ 16:12 <slangasek> barry: hopefully you have good notes, so the details don't go stale :)
+
+ 16:12 <slangasek> barry: your turn
+
+ 16:12 <xnox> slangasek: so autopilot got released \o/
+
+ 16:12 <barry> system-image: LP: #1277589 - very perplexing and difficult to reproduce, but progress is being made (i don't have a root cause yet, but i'll soon be capturing more debugging information via LP: #1279056).
+
+ 16:12 <ubottu> Launchpad bug 1277589 in ubuntu-download-manager ""FileNotFoundError: /var/lib/system-image/blacklist.tar.xz"" [Critical,Confirmed] https://launchpad.net/bugs/1277589
+
+ 16:12 <ubottu> Launchpad bug 1279056 in Ubuntu system image "All SignatureErrors should include the checksums and file paths of the offending files" [High,In progress] https://launchpad.net/bugs/1279056
+
+ 16:12 <barry> debuntu: general py34 ftbfs work.  enum34 0.9.20-1 and 0.9.21-1.  looked into m2crypto ftbfs.  genshi 0.7 for python 3.4.  libvigraimpex 1.10.0+dfsg-3ubuntu1. nose 1.3.0-3.  LP: #1277670.
+
+ 16:12 <ubottu> Launchpad bug 1277670 in pyruntest "FTBFS in trusty due to test failure" [Undecided,New] https://launchpad.net/bugs/1277670
+
+ 16:12 <xnox> slangasek: thus we can be staging upgrade to autopilot to do re-exec with matching phablet-tools.
+
+ 16:12 <barry> autopilot py3 work - ongoing; LP: #1277630; unity noimport branch (test for /usr/bin/window-mocker3)
+
+ 16:12 <ubottu> Launchpad bug 1277630 in autopilot (Ubuntu) "Cannot run autopilot's own autopilot tests" [Undecided,New] https://launchpad.net/bugs/1277630
+
+ 16:12 <barry> random: recovering from disk failure. dmb meeting.  reporting and working around unity/hud/ibus bugs that broke emacs keybindings (c-space and alt in two separate changes/bugs).
+
+ 16:12 <barry> done
+
+ 16:13 <bdmurray> +1 maintenance work
+
+ 16:13 <bdmurray> fixed a build failure with moodle
+
+ 16:13 <bdmurray> submitted debian bug 737908 re moodle
+
+ 16:13 <bdmurray> mentored arges regarding SRU team work
+
+ 16:13 <bdmurray> merged mpt's error branches
+
+ 16:13 <bdmurray> tested retracing core dumps from swift
+
+ 16:13 <ubottu> Debian bug 737908 in moodle "moodle: ftbfs source due to incorrect path for /var/lib/moodle" [Important,Fixed] http://bugs.debian.org/737908
+
+ 16:13 <xnox> stgraber: thanks. so it must be me here. And you do incremental mdadm assembly as is the default? (you don't override udev rules / initramfs)
+
+ 16:13 <bdmurray> tested submission of kernel oops to errors
+
+ 16:13 <bdmurray> preparing backfill job rls:srcpkg:version crash counters
+
+ 16:13 <bdmurray> setup errors in canonistack again :-(
+
+ 16:13 <bdmurray> resolved apt-clone bug 1254447 regarding adding files it shouldn't
+
+ 16:13 <bdmurray> uploaded new version of apt-clone to trusty
+
+ 16:13 <ubottu> bug 1254447 in ubuntu-release-upgrader (Ubuntu) "Upgrade to 13.10 crashes because of hidden file" [High,Confirmed] https://launchpad.net/bugs/1254447
+
+ 16:13 <bdmurray> package to team mapping work (using old MIR reports)
+
+ 16:13 <bdmurray> worked with colleagues in Portland
+
+ 16:13 <slangasek> barry: ah, do you have a bug # for the ibus bug?  I was quite surprised to have Ctrl-space here brining up the ibus menu on me, and solved this by killing ibus ;)
+
+ 16:13 <bdmurray> ✔ done
+
+ 16:14 <doko> portland beer event?
+
+ 16:14 <stgraber> xnox: right, my setup is default Ubuntu (12.04 though)
+
+ 16:14 <xnox> stgraber: thanks.
+
+ 16:14 <doko> - MIR's
+
+ 16:14 <doko> - build separate gccgo-4.9
+
+ 16:14 <doko> - python build fixes, besides some autopkg test failures we should be ready for 3.4 as the default
+
+ 16:14 <doko> - look at the gcc ftbfs on powerpc, found issue, and fixed
+
+ 16:14 <doko> - gdb update
+
+ 16:14 <doko> - worked with reportlab upstream on the 3.0 issues and packages (although nobody
+
+ 16:14 <doko> did get in contact with hplip upstream to port to python3)
+
+ 16:14 <doko> (done)
+
+ 16:14 <stgraber> system-image:
+
+ 16:14 <stgraber> - Finally merged the porter branch into the server
+
+ 16:14 <stgraber> - Wrote a bunch more tests (back to 100% code coverage)
+
+ 16:14 <stgraber> - Blogged about setting up your server: https://www.stgraber.org/2014/02/11/your-own-ubuntu-touch-image-server/
+
+ 16:14 <stgraber> - Talked with PES on some of their proposed addition and how to change them so they can be merged
+
+ 16:14 <stgraber> LXC:
+
+ 16:14 <barry> slangasek: will search for it, but there are two solutions.  recommended: run ibus-setup; what i did: apt-get purge ibus && reboot :)
+
+ 16:14 <stgraber> - rc1 is this week, so rushing any remaining feature in. Final release is still planned for next week, just ahead of Feature Freeze.
+
+ 16:14 <stgraber> - We got overlayfs now allowed for unprivileged containers (gives us, cloning, snapshots and lxc-start-ephemeral), I'll spend some time porting arkose to this so it runs entirely unprivileged too
+
+ 16:14 <stgraber> - Blogged about running Google Chrome (and any other software really) in an unprivileged container: https://www.stgraber.org/2014/02/09/lxc-1-0-gui-in-containers/
+
+ 16:14 <stgraber> - Working on the LXC 1.0 release announcement (trying not to forget anything while keeping it short, pretty difficult...)
+
+ 16:14 <stgraber> - Went through most of our coverity issues, sent a bunch of fixes for those. Same with all bug reports.
+
+ 16:14 <stgraber> - Added a new aufs backingstore driver (for privileged containers only).
+
+ 16:14 <barry> doko: \o/
+
+ 16:14 <stgraber> - Fixed a couple of bugs with the pre-generated templates (the biggest one being a lack of /dev/shm).
+
+ 16:14 <stgraber> - Wrote some more tests (including regression testing for the lxc-autostart issue which cyphermox had to patch last week).
+
+ 16:15 <stgraber> Other:
+
+ 16:15 <stgraber> - Fixed a couple of issues with samba, I can now get a Domain Controller online!
+
+ 16:15 <stgraber> (DONE)
+
+ 16:15 <cjwatson> Spent most of the week adding HTTPS support to d-i.  This is now code-complete, although there are still some landings to finish off, and we'll probably want to backport it to precise.  This has involved:
+
+ 16:15 <cjwatson> * Fixing up base-installer/debootstrap to avoid blowing up when encountering %-encoded characters in wget output;
+
+ 16:15 <slangasek> doko: we do not deny that there was beer!
+
+ 16:15 <cjwatson> * Fixing fetch-url to handle GNU wget's different no-such-file output and invocation
+
+ 16:15 <cjwatson> * Moving /usr/bin/wget.gnu to /usr/bin/wget in wget-udeb
+
+ 16:15 <cjwatson> * Adding HTTPS support to fetch-url, kickseed, choose-mirror, base-installer, and apt-setup
+
+ 16:15 <cjwatson> * Building wget-udeb into d-i images, and adding an SSL_CERTS local configuration variable there
+
+ 16:15 <cjwatson> * Installing apt-transport-https and ca-certificates at the end of debootstrap when installing from HTTPS
+
+ 16:15 <cjwatson> OpenSSH 6.5p1 packaging.
+
+ 16:15 <cjwatson> Rebootstrapped freebsd-{buildutils,glue,libs}, since there was another package stuck in -proposed that needed freebsd-libs.
+
+ 16:15 <cjwatson> ..
+
+ 16:15 <barry> slangasek: LP: #1278511
+
+ 16:15 <ubottu> Launchpad bug 1278511 in ibus (Ubuntu) "CTRL-Space no longer works under Unity" [High,Confirmed] https://launchpad.net/bugs/1278511
+
+ 16:16 <xnox> doko: hplip is in progress, no? https://bugs.launchpad.net/hplip/+bug/1275353
+
+ 16:16 <ubottu> Launchpad bug 1275353 in HPLIP "Make HPLIP working with Python 3" [Wishlist,In progress]
+
+ 16:16 <barry> probably a dupe: LP: #1278569
+
+ 16:16 <ubottu> Launchpad bug 1278569 in ibus (Ubuntu) "ibus breaks emacs24 control-space keybinding" [Undecided,New] https://launchpad.net/bugs/1278569
+
+ 16:16 <barry> (and the other one that hurt me: LP: #1108064)
+
+ 16:16 <ubottu> Launchpad bug 1108064 in unity (Ubuntu) "HUD messes up application's Alt key bindings" [Undecided,Confirmed] https://launchpad.net/bugs/1108064
+
+ 16:16 <doko> xnox, ahh, I didn't see that. last time I pinged till was at the sprint
+
+ 16:18 <slangasek> * a lot of customer-related calls this week
+
+ 16:18 <slangasek> * doing some work with CTS to document interop matrix issues for NFSv4+Kerberos
+
+ 16:18 <slangasek> * working on getting the job req together for a new Java maintainer role
+
+ 16:18 <slangasek> * time-consuming Debian TC discussions :)
+
+ 16:18 <slangasek> * spent some time with the DebConf team trying to bootstrap a summit environment, to evaluate it for DebConf14
+
+ 16:18 <slangasek> * driving my outstanding merges back down to zero
+
+ 16:18 <slangasek> (done)
+
+ 16:18 <slangasek> other questions?
+
+ 16:19 <slangasek> [TOPIC] UDS
+
+ 16:20 <slangasek> hopefully everyone's seen the announcement mail, next vUDS is coming up on March 11
+
+ 16:20 <cjwatson> merges at zero haha I wish
+
+ 16:20 <doko> merges at zero?
+
+ 16:21 <cjwatson> 16:18 <slangasek>  * driving my outstanding merges back down to zero
+
+ 16:21 <doko> ahh, his ...
+
+ 16:21 <slangasek> so please start thinking about what you want to discuss next month, and registering/targeting blueprints
+
+ 16:22 <slangasek> cjwatson: well... not counting the grub package ;)
+
+ 16:23 <cjwatson> yeah well
+
+ 16:23 <slangasek> [TOPIC] AOB
+
+ 16:23 <slangasek> anything else?
+
+ 16:24 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

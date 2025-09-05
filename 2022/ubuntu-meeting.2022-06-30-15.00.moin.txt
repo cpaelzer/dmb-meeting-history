@@ -1,0 +1,402 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 30 Jun at 15:00 &mdash; 15:57 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-06-30-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by jawn-smith at 15:00.
+
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:11.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:11)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:21)
+
+=== Team proposed-migration report ===
+
+Discussion started by jawn-smith at 15:28.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:28)
+ * ''LINK:'' https://tracker.debian.org/pkg/pytest shows a lot of regressions  (bdrung, 15:42)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:42.
+
+ * ''LINK:'' https://git.launchpad.net/ubiquity?h=master => tags and jammy branch are missing.  (xnox, 15:50)
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (90)
+ * xnox (15)
+ * slyon (14)
+ * schopin (11)
+ * ginggs (7)
+ * doko (6)
+ * ubottu (5)
+ * bdrung (5)
+ * ogayot (4)
+ * enr0n (3)
+ * waveform (3)
+ * meetingology (2)
+ * sil2100 (2)
+ * mclemenceau (2)
+ * juliank (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:41 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <ogayot> o/
+
+ 15:00 <juliank> o/
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <jawn-smith> #topic Lightning Round
+
+ 15:01 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundation-team-updates-thursday-30-june-2022/29123/10
+
+ 15:01 <jawn-smith> Let's all take a few minutes to read and ask questions
+
+ 15:01 <jawn-smith> sil2100: It says you reviewed the --until/--thru PR
+
+ 15:01 <jawn-smith> should I merge it?
+
+ 15:02 <sil2100> Aaaah, didn't press the button
+
+ 15:02 <ginggs> jawn-smith: i saw your libdigidoc fix, that package is orphaned in debian (QA maintained).  if you're interested in getting an upload into debian, i'd be happy to sponsor
+
+ 15:02 <sil2100> jawn-smith: done now o/
+
+ 15:03 <jawn-smith> ginggs, sil2100 thanks! I did submittodebian the patch I created
+
+ 15:03 <schopin> libdigidoc? Isn't that obsoleted upstream too?
+
+ 15:03 <jawn-smith> should it be removed from Debian/Ubuntu then?
+
+ 15:04 <schopin> I'd be all for it, but that's mostly because I get spammed any time someone clicks the rebuild button on LP as I'm TIL
+
+ 15:04 <jawn-smith> well, now I'm TIL :)
+
+ 15:04 <schopin> \o/
+
+ 15:05 <jawn-smith> No reverse dependencies...
+
+ 15:05 <mclemenceau> o/
+
+ 15:05 <jawn-smith> Okay I'll investigate filing a removal bug as part of my +1 shift this week
+
+ 15:06 <schopin> Have a look at my initial RM bug, there should be some pointers there.
+
+ 15:06 <ginggs> libdigidoc-tools might still be useful
+
+ 15:07 <jawn-smith> I'll have a look this afternoon
+
+ 15:07 <jawn-smith> and ping ginggs if we decide it should stay, then we can remove the diff from Debian
+
+ 15:07 <jawn-smith> Any other questions?
+
+ 15:08 <slyon> enr0n: I didn't receive this oomd email, is it stuck in moderation?
+
+ 15:08 <enr0n> slyon: oof, possibly, let me check the list archive
+
+ 15:09 <enr0n> This one I think: https://lists.ubuntu.com/archives/ubuntu-devel/2022-June/042159.html
+
+ 15:10 <jawn-smith> The missing email has been found
+
+ 15:10 <slyon> thx, it went through after all :)
+
+ 15:10 <jawn-smith> Any other questions?
+
+ 15:11 <jawn-smith> #topic Release incoming bugs
+
+ 15:11 <jawn-smith> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 15:11 <jawn-smith> bug 1980348
+
+ 15:11 <ubottu> Bug 1980348 in gcc-12 (Ubuntu) "gcc ftbfs in kinetic (crypt.h not found in 32bit libsanitizer build)" [High, Confirmed] https://launchpad.net/bugs/1980348
+
+ 15:12 <jawn-smith> gcc is kinda important
+
+ 15:12 <doko> I figured that out an hour ago
+
+ 15:12 <doko> just closing
+
+ 15:12 <jawn-smith> oh excellent
+
+ 15:12 <jawn-smith> Thanks!
+
+ 15:12 <jawn-smith> Are you closing for both gcc-10 and gcc-12?
+
+ 15:14 <jawn-smith> Sounds like it's still building for both, so we'll discuss it next week if it comes back
+
+ 15:14 <jawn-smith> bug 1980195
+
+ 15:14 <ubottu> Bug 1980195 in apport (Ubuntu) "ubuntu desktop (canary) ISO & apport-collect, ubuntu-bug fail to run" [Undecided, New] https://launchpad.net/bugs/1980195
+
+ 15:14 <jawn-smith> Looks like a potential dependency/import issue?
+
+ 15:14 <jawn-smith> bdrung: Do you have an opinion?
+
+ 15:15 <bdrung> jawn-smith, that was a regression in apport, but already fixed with the latest kinetic version
+
+ 15:16 <jawn-smith> Excellent, thanks. Can you close the LP bug please?
+
+ 15:16 <bdrung> i'll do the paperwork and close it
+
+ 15:16 <jawn-smith> Thanks!
+
+ 15:16 <ginggs> could we have a look at LP: #1979297 and see if it's something we want carded please?
+
+ 15:16 <ubottu> Launchpad bug 1979297 in pyopencl (Ubuntu) "pyopencl: please RM riscv64 binaries" [Undecided, Incomplete] https://launchpad.net/bugs/1979297
+
+ 15:17 <jawn-smith> xypron: Thoughts on carding this?
+
+ 15:21 <jawn-smith> We've agreed to let the removal go ahead, and therefore this does not need a card
+
+ 15:21 <jawn-smith> That's it for kk
+
+ 15:21 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:21 <jawn-smith> bug 1979951
+
+ 15:21 <ubottu> Bug 1979951 in netplan.io (Ubuntu) "127.0.0.1/::1 removed from loopback interface if you configure extra IPs on lo (r104 regression/behaviour change)" [High, Confirmed] https://launchpad.net/bugs/1979951
+
+ 15:21 <slyon> I tagged that one
+
+ 15:21 <jawn-smith> Is filed against both netplan.io and systemd
+
+ 15:22 <slyon> it's a regression, probably introduced by netplan switching to the "networkctl reload" command (instead of hard restart of sd-networkd)
+
+ 15:22 <slyon> I think we should double check the situation on NetworkManager vs sd-networkd backends
+
+ 15:22 <jawn-smith> Based on your last comment it seems this should be fixed in systemd, not netplan.io? Or do both need work?
+
+ 15:22 <slyon> and then probably apply the upstream fix to systemd that's mentioned in the bug
+
+ 15:22 <slyon> most probably systemd only
+
+ 15:22 <slyon> so +1 for carding it
+
+ 15:22 <jawn-smith> enr0n: Do you have the bandwidth to look into this?
+
+ 15:23 <enr0n> jawn-smith: Yeah I should now
+
+ 15:23 <jawn-smith> Okay so let's card it since someone has bandwidth to look into it. mclemenceau do you mind doing the carding?
+
+ 15:24 <mclemenceau> Ok
+
+ 15:24 <schopin> Do we want proper lo support in netplan, too? It does seem kinda hacky to use the ethernet type for it?
+
+ 15:24 <slyon> schopin: we have a feature-request/bug report about "dummy" devices, which would be a better match for loopback
+
+ 15:24 <slyon> we'll get to that eventually
+
+ 15:25 <xnox> it would help with default resolved configs of dns too.
+
+ 15:25 <schopin> nice, thanks :)
+
+ 15:25 <xnox> (to set that on lo)
+
+ 15:25 <jawn-smith> Okay excellent. It will be carded and the priority can be figured out in the future
+
+ 15:25 <jawn-smith> bug 1978125
+
+ 15:25 <ubottu> Bug 1978125 in apt (Ubuntu Jammy) "apt ignoring pin/block/hold files in preferences.d for snapd" [Undecided, In Progress] https://launchpad.net/bugs/1978125
+
+ 15:25 <jawn-smith> we discussed this last week but I don't remember where we landed
+
+ 15:25 * jawn-smith reads logs
+
+ 15:25 <schopin> carded already
+
+ 15:26 <jawn-smith> Okay so let's just remove the tag from the LP bug
+
+ 15:26 <jawn-smith> I'll do that real quick
+
+ 15:26 <ogayot> in iproute2, dummy and loopback type both exist
+
+ 15:26 <jawn-smith> tag removed
+
+ 15:27 <jawn-smith> rls-ii is empty
+
+ 15:27 <jawn-smith> rls-ff only has the 127.0.0.1 bug
+
+ 15:28 <jawn-smith> #topic Team proposed-migration report
+
+ 15:28 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:28 <jawn-smith> no v_orlon today so I'll do this
+
+ 15:28 <jawn-smith> ubuntu-meta is still with desktop
+
+ 15:29 <slyon> we should probably ignore the systemd failures, as we've uploaded v251 today and all systemd related tests are currently re-run
+
+ 15:29 <jawn-smith> python3-stdlib-extensions was with doko I believe
+
+ 15:29 <jawn-smith> Any updates?
+
+ 15:30 <jawn-smith> slyon: ack, thanks. Will ignore systemd
+
+ 15:31 <jawn-smith> doko will look at python-bayespy and bdrung will look at apport. Thanks!
+
+ 15:31 <jawn-smith> usb-creator is waiting on an MIR
+
+ 15:31 <jawn-smith> mutt is also waiting on an MIR (which is waiting on security)
+
+ 15:31 <jawn-smith> systemd, skip
+
+ 15:31 <doko> is anybody working on these MIRs?
+
+ 15:31 <ginggs> i think python-bayespy just needs a retry with the new version
+
+ 15:32 <slyon> doko: yes, those are in progress
+
+ 15:32 <doko> ta
+
+ 15:32 <jawn-smith> doko: Yes, at least the two mutt related MIRs are waiting on security review
+
+ 15:33 <schopin> alexghiti is the one driving them from our side
+
+ 15:33 <jawn-smith> openssl
+
+ 15:33 <schopin> on it
+
+ 15:33 <jawn-smith> schopin: hooray, thanks
+
+ 15:33 <jawn-smith> llvm-toolchain-14
+
+ 15:34 <schopin> missing builds are for the same reason as gcc, I believe.
+
+ 15:34 <jawn-smith> Excellent. Does i386 need to be re-triggered?
+
+ 15:35 <ginggs> jawn-smith: do it!
+
+ 15:35 <jawn-smith> done!
+
+ 15:35 <doko> and the autopkg test failure is a kill -9
+
+ 15:35 <jawn-smith> the autopkgtests for this fenics-dofinx package look flakey
+
+ 15:36 <doko> so try on a machine with more memory?
+
+ 15:36 <schopin> there was a sigkill in the test suite, oom?
+
+ 15:36 <jawn-smith> Does it need to be added to big-packages?
+
+ 15:36 <jawn-smith> Anyone want to volunteer to look into that?
+
+ 15:36 <ginggs> i'll have a look at fenics-dofinx and add it to big_packages
+
+ 15:37 <jawn-smith> thanks!
+
+ 15:37 <ginggs> now, that I can :)
+
+ 15:37 <jawn-smith> moving on
+
+ 15:37 <jawn-smith> lintian appears to need MIR investigation
+
+ 15:37 <slyon> yay! new lintian depends. they're being introduced faster than we can process them :)
+
+ 15:37 <jawn-smith> or possibly just binary package demotion if we're lucky?
+
+ 15:37 <slyon> I'll do the initial investigation for lintian
+
+ 15:37 <jawn-smith> slyon: thanks!
+
+ 15:38 <jawn-smith> apport is with bdrung
+
+ 15:38 <jawn-smith> python-httplib2. One of those is apport and therefore already covered
+
+ 15:38 <jawn-smith> then python-httplib2 itself has an armhf regression
+
+ 15:38 <ogayot> I think the python-httplib2 vs apport needs a retry
+
+ 15:38 <jawn-smith> anyone here an expert in both python and the armhf architecture....?
+
+ 15:39 <waveform> erm...
+
+ 15:39 <jawn-smith> waveform: do you have bandwidth to look at that test?
+
+ 15:39 <waveform> yeah, I'll take that one
+
+ 15:39 <ogayot> E   ModuleNotFoundError: No module named 'cryptography'
+
+ 15:39 <jawn-smith> Thanks!
+
+ 15:40 <jawn-smith> well that should be an easy fix
+
+ 15:40 <jawn-smith> moving on, curl is missing builds on quite a few architectures
+
+ 15:40 <jawn-smith> I'll take that one
+
+ 15:40 <waveform> don't jinx it...
+
+ 15:40 <jawn-smith> pygments
+
+ 15:41 <jawn-smith> has an excuses bug already
+
+ 15:41 <jawn-smith> waiting on a new version of pytest
+
+ 15:42 <jawn-smith> so we can ignore that for now
+
+ 15:42 <jawn-smith> everything else is 0 days old so that's it for proposed migration
+
+ 15:42 <bdrung> https://tracker.debian.org/pkg/pytest shows a lot of regressions
+
+ 15:42 <jawn-smith> #topic AOB
+
+ 15:43 <jawn-smith> Monday is a US holiday
+
+ 15:43 * xnox 0/
+
+ 15:44 <xnox> a few ubiquity uploads to jammy & kinetic are missing from lp:ubiquity. Does anybody want to push their git tags / uploads? or should i synthesize those?
+
+ 15:44 <xnox> i.e. uploads from bdrung bdmurray and external person.
+
+ 15:46 <bdrung> the commits are here: https://code.launchpad.net/~ubuntu-installer/ubiquity/+git/ubiquity/+ref/master
+
+ 15:49 <xnox> bdrung:  and tags? git push --tags
+
+ 15:49 <xnox> 22.10.3
+
+ 15:49 <xnox> 22.04.16
+
+ 15:49 <xnox> 22.04.15
+
+ 15:50 <xnox> https://git.launchpad.net/ubiquity?h=master => tags and jammy branch are missing.
+
+ 15:50 <xnox> i can tag 22.04.16 and push it to jammy branch, if that's what we are ok with.
+
+ 15:51 <xnox> but want to check if something unexpected happened.
+
+ 15:51 <xnox> also tsimonq2 upload is nowhere to be seen in git
+
+ 15:51 <bdrung> it's probably fine to add the missing tags (after checking that this tag actually is identical to the uploaded dsc)
+
+ 15:52 <xnox> also http://launchpadlibrarian.net/607553669/ubiquity_22.10.2_22.10.3.diff.gz chagnes the icon, which is not documented, and not expected?
+
+ 15:53 <xnox> i'll query that separately.
+
+ 15:57 <jawn-smith> This conversation seems to be resolved, so
+
+ 15:57 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

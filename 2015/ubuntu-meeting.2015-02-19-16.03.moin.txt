@@ -1,0 +1,450 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 19 Feb at 16:03 &mdash; 16:20 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-02-19-16.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== lightning round ===
+The discussion about "lightning round" started at 16:04.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/dvd+rw-tools/+bug/1113679 
+
+=== AOB ===
+The discussion about "AOB" started at 16:18.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * barry (33)
+ * ubottu (22)
+ * mvo (22)
+ * sil2100 (19)
+ * bdmurray (18)
+ * robru (16)
+ * slangasek (15)
+ * jodh (15)
+ * cyphermox (14)
+ * infinity (11)
+ * caribou (9)
+ * meetingology (3)
+ * sak (1)
+
+
+
+== Full Log ==
+
+
+ 16:03 <barry> #startmeeting
+
+ 16:03 <meetingology> Meeting started Thu Feb 19 16:03:12 2015 UTC.  The chair is barry. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:03 <meetingology> 
+
+ 16:03 <meetingology> Available commands: action commands idea info link nick
+
+ 16:03 <mvo> thanks barry
+
+ 16:03 <barry> give me a few moments folks...
+
+ 16:04 <infinity> o/
+
+ 16:04 <barry> #topic lightning round
+
+ 16:05 <barry> echo $(shuf -e barry doko stgraber jodh bdmurray slangasek caribou infinity mvo sil2100 robru cyphermox)
+
+ 16:05 <barry> sil2100 caribou robru doko slangasek stgraber mvo barry jodh bdmurray infinity cyphermox
+
+ 16:05 <barry> sil2100: you're up!
+
+ 16:05 * cyphermox is starting to think shuf knows about him, and sorts 'cy' towards the end.
+
+ 16:05 <sil2100> Oh!
+
+ 16:05 <sil2100> I didn't expect that
+
+ 16:06 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 16:06 <sil2100> - Trying to debug/triage some of the strange CI Train problems sighted on Friday
+
+ 16:06 <caribou> sil2100: I can start if you want
+
+ 16:06 <sil2100> - Promotion of the RC image for the ww07-2015 milestone
+
+ 16:06 <sil2100> - Documenting the ww07-2015 milestone on the reports page
+
+ 16:06 <sil2100> - Attending RTM status meetings
+
+ 16:06 <sil2100> - Tending the ww09-2015 milestone, coordinating landings and fixes
+
+ 16:06 <sil2100> - Experimenting with custom tarball creation for ubuntu-rtm mako * Poking around and learning about apparmor cache re-creation
+
+ 16:06 <sil2100> - Archive diff automated scripts * Implemented proper deep version differencing between archives * Made the binary -> source conversion more efficient
+
+ 16:06 <sil2100> - Improve error handling for commitlog generation
+
+ 16:06 <sil2100> - A short patch-pilot duty
+
+ 16:06 <sil2100> (done)
+
+ 16:06 <caribou> Bugfix:
+
+ 16:06 <sil2100> hm, it pasted strangely
+
+ 16:06 <caribou> - Upload of Firmware assisted dump support for ppc64el to Vivid (LP: #1415562)
+
+ 16:06 <ubottu> Launchpad bug 1415562 in linux (Ubuntu) "[Ubuntu 15.04] Support firmware assisted dump on ppc64le" [Medium,Fix committed] https://launchpad.net/bugs/1415562
+
+ 16:06 <caribou> - CUPS : SRU for bug #1352809 (-h override)
+
+ 16:06 <ubottu> bug 1352809 in cups (Ubuntu Utopic) "/usr/bin/lp on Trusty using -h option doesn't work as expected" [Medium,Fix committed] https://launchpad.net/bugs/1352809
+
+ 16:06 <caribou> - rsyslog memory leak (LP: #1423586)
+
+ 16:07 <ubottu> Launchpad bug 1423586 in rsyslog (Ubuntu Trusty) "Please backport memory leak fixes present up to 7.4.6" [Medium,Confirmed] https://launchpad.net/bugs/1423586
+
+ 16:07 <caribou> - libvirtd lost floating IP
+
+ 16:07 <caribou> Prepare CTS sprint
+
+ 16:07 <caribou> Work on deja-dup FTBS (test needs fixing)
+
+ 16:07 <caribou> (done)
+
+ 16:07 <robru> * Train:
+
+ 16:07 <robru> - ported test suite from nose to nose2 at barry's recommendation
+
+ 16:07 <robru> - fixed a couple of unhandled exceptions in rare corner cases discovered in last weeks' build.py rewrite
+
+ 16:07 <robru> - started a branch for pushing merged branches to LP at build time instead of publish time (but didn't land this yet)
+
+ 16:07 <robru> - started generating full silo content diffs at build time
+
+ 16:07 <robru> - in response to disk space crisis, added a cleanup step that deletes extra copies of built packages after they're no longer needed (eg, versions from distro are downloaded for diffing, and then those get left around taking up space; deleting them halves the silo disk usage after diffs are generated)
+
+ 16:07 <robru> - discovered a case where two silos containing the same package were published at the same time; the usual check that prevents this failed due to a race condition, experimented with a branch to resolve this but it's incomplete.
+
+ 16:07 <robru> - removed the mandatory 5 minute pause at the start of the watch phase; this has no effect on builds but speeds up WATCH_ONLY runs on already-built silos from 5 minutes to 20 seconds.
+
+ 16:07 <robru> - merged watch_ppa.py into build.py because it no longer made sense for those modules to be separate (watch_ppa.py contained a lot of boilerplate that duplicated what was already handled better by the new build.py; merging them resulted in the watch_ppa.py logic taking up half as many lines of code with no feature regressions)
+
+ 16:07 <robru> - streamlined a couple untested packagemanager.py functions and wrote tests for them
+
+ 16:07 <robru> - modified build.py to start recording the revno of the branch it merges, and modified publisher.py to check these revnos and prevent publication if a branch contains a new, unbuilt revno.
+
+ 16:07 <robru> - attempted running the test suite under py3 and started fixing the easiest of bugs, however there's a large class of unicode bugs I've yet to understand.
+
+ 16:07 <barry> robru: \o/
+
+ 16:08 <barry> robru: feel free to ping me about those
+
+ 16:09 <barry> i think doko is not here today
+
+ 16:09 <barry> slangasek: are you ready or should we come back to you?
+
+ 16:09 <robru> barry: yeah I need to read about unicode, I do not understand it very well atall
+
+ 16:10 <barry> robru: i have some excellent links and resources i'll pass along
+
+ 16:10 <robru> barry: thanks
+
+ 16:10 <barry> let's come back to slangasek
+
+ 16:10 <sak> 51 minutes until the meeting
+
+ 16:10 <barry> stgraber: are you here today?
+
+ 16:10 <mvo> robru: very impressive list :)
+
+ 16:10 <robru> mvo: thanks ;-)
+
+ 16:10 <barry> let's come back to stgraber, tho i'm not sure he's here today
+
+ 16:11 <barry> mvo: you're up if you want, or we can come back
+
+ 16:11 <mvo> click:
+
+ 16:11 <mvo> - merge review feedback from barry, thanks!
+
+ 16:11 <mvo> - New click 0.4.37, mostly SDK fixes
+
+ 16:11 <mvo> growisosfs:
+
+ 16:11 <mvo> - merge fix for blue-ray burning bts #713016 (LP: #113679) + SRU
+
+ 16:11 <mvo> unattended-upgrades:
+
+ 16:11 <mvo> - Review/merge fix for #1422345 and upload new version (thanks Brian!)
+
+ 16:11 <mvo> snappy:
+
+ 16:11 <ubottu> Launchpad bug 113679 in xorg-server (Ubuntu Dapper) "xorg freezes when running openoffice" [High,Fix released] https://launchpad.net/bugs/113679
+
+ 16:11 <mvo> - prepare new alpha3 with snappy-go as part of the release
+
+ 16:11 <mvo> - lots of features/fixes/improvements for snappy-go
+
+ 16:11 <mvo> (include fixes to make the code go vet/go-lint clean)
+
+ 16:11 <mvo> - spec/implemented snappy config (with examples)
+
+ 16:11 <mvo> (done)
+
+ 16:11 <mvo> eh, thats not the right bugnumber
+
+ 16:12 <slangasek> barry: right, hi, here now :)
+
+ 16:12 <slangasek> but I have nothing written ;-D
+
+ 16:12 <mvo> bug #11133679
+
+ 16:12 <ubottu> Error: Launchpad bug 11133679 could not be found
+
+ 16:12 <barry> slangasek: no worries, we'll come back to you
+
+ 16:12 <barry> short week due to usa holiday.
+
+ 16:12 <barry> si: LP: #1421434.  LP: #1387719.  lots of testing for 3.0 release.  built 3.0 package for citrain; testing and debugging build failures.  started to look at the server code; filed one mp with more to come.  (server needs some changes to support si 3.0)
+
+ 16:12 <ubottu> Launchpad bug 1421434 in Ubuntu system image "Ensure reactor listens for signals on the correct object path" [High,Fix committed] https://launchpad.net/bugs/1421434
+
+ 16:12 <ubottu> Launchpad bug 1387719 in Ubuntu system image "Update useragent to contain the current channel name, device name and build id" [High,Fix committed] https://launchpad.net/bugs/1387719
+
+ 16:12 <barry> other: click reviews for mvo.  lots of discussion upstream and elsewhere about python zip file distributions (single-file executables).  investigated several tools.  began working with pex.
+
+ 16:12 <barry> debuntu: debian bug 778708 (pex ITP)
+
+ 16:12 <ubottu> Debian bug 778708 in wnpp "ITP: python-pex -- library for generating Python executable zip files" [Wishlist,Open] http://bugs.debian.org/778708
+
+ 16:12 <barry> --done--
+
+ 16:12 <mvo> https://bugs.launchpad.net/ubuntu/+source/dvd+rw-tools/+bug/1113679
+
+ 16:12 <ubottu> Launchpad bug 1113679 in dvd+rw-tools (Ubuntu Utopic) "Close session failed when burning 25gb blu-ray disc" [Undecided,In progress]
+
+ 16:13 <mvo> barry: \o/ for the reviews
+
+ 16:13 <barry> mvo: np!  ping me if you need more
+
+ 16:13 <barry> jodh: are you around today?
+
+ 16:13 <mvo> barry: there are still some open but no real rush
+
+ 16:13 <jodh> * snappy:
+
+ 16:13 <jodh> - Reworked bug 1412737 after discovering the original code didn't work
+
+ 16:13 <ubottu> bug 1412737 in snappy-ubuntu "snappy on grub systems should detect a broken boot and fall back to the other root partition on power cycling." [Critical,Confirmed] https://launchpad.net/bugs/1412737
+
+ 16:13 <jodh> in a chroot:
+
+ 16:13 <jodh> https://code.launchpad.net/~jamesodhunt/snappy/bug-1412737/+merge/249976
+
+ 16:13 <jodh> - Wrote a "Snappy Image Tests" doc that documents the tests to run for
+
+ 16:13 <jodh> a promotion candiate:
+
+ 16:13 <jodh> https://docs.google.com/a/canonical.com/document/d/1R_Tw0N0QbEpjFeYf9XnVV8Gp8ldT2Ig0PO6MfR-kuSM/edit
+
+ 16:13 <jodh> - Investigated an issue raised on #snappy (bug 1423529) that uncovered a couple of
+
+ 16:13 <ubottu> bug 1423529 in snappy-ubuntu "writable partitions not fsck'd." [High,In progress] https://launchpad.net/bugs/1423529
+
+ 16:13 <jodh> initramfs bugs. Tested fix and awaiting comments:
+
+ 16:13 <jodh> https://code.launchpad.net/~jamesodhunt/ubuntu/vivid/initramfs-tools-ubuntu-core/bug-1423529
+
+ 16:13 <jodh> - Code reviews and MP prep.
+
+ 16:13 <jodh> - Promotion candidate testing.
+
+ 16:14 <jodh> * misc:
+
+ 16:14 <jodh> - perf review admin.
+
+ 16:14 <jodh> ⚽
+
+ 16:14 <barry> mvo: cool.  i'll take a look while my long friggin' tests are running :)
+
+ 16:14 <mvo> barry: hehe
+
+ 16:14 <bdmurray> investigation into errors oops regarding event greenlets
+
+ 16:14 <bdmurray> submitted RT to have staging version of gunicorn updated
+
+ 16:14 <bdmurray> tested backport of gunicorn to precise in canonistack (good)
+
+ 16:14 <bdmurray> tested gunicorn update on staging / production version of daisy and errors FEs (good)
+
+ 16:14 <bdmurray> review of Error Tracker OOPS reports, setup exception handling for LP not returning JSON
+
+ 16:14 <bdmurray> pinged webops regarding kicking retracers
+
+ 16:14 <bdmurray> foundations bug triage
+
+ 16:14 <bdmurray> submitted git pull request to upstream unattended-upgrades fixing LP: #1422345
+
+ 16:14 <ubottu> Launchpad bug 1422345 in unattended-upgrades (Ubuntu) "stop being nice does not work" [High,In progress] https://launchpad.net/bugs/1422345
+
+ 16:14 <bdmurray> uploaded unattended-upgrades fix for LP: #1422345 to T and U
+
+ 16:14 <bdmurray> uploaded update-manager fix for LP: #1421044
+
+ 16:14 <ubottu> Launchpad bug 1421044 in update-manager (Ubuntu) "Too easy to accidentally restart computer when 'restart to complete update' box pop up" [High,Fix released] https://launchpad.net/bugs/1421044
+
+ 16:14 <bdmurray> uploaded a fix for ubuntu-release-upgrade KDE frontend bug (LP: #1423279)
+
+ 16:14 <ubottu> Launchpad bug 1423279 in One Hundred Papercuts "[vivid] [proposed] syntax error while upgrading" [High,Confirmed] https://launchpad.net/bugs/1423279
+
+ 16:14 <bdmurray> SRU verification of whoopsie Utopic fix for LP: #1217407
+
+ 16:14 <mvo> bdmurray: \o/ for the unattended-upgrades fix!
+
+ 16:14 <ubottu> Launchpad bug 1217407 in whoopsie (Ubuntu Utopic) "whoopsie spams the log with "online" messages" [Low,Fix committed] https://launchpad.net/bugs/1217407
+
+ 16:14 <bdmurray> SRU verification of apport Utopic fix for LP: #1084979
+
+ 16:14 <ubottu> Launchpad bug 1084979 in apport (Ubuntu Utopic) "Submitting error report asks confounding questions" [Medium,Fix committed] https://launchpad.net/bugs/1084979
+
+ 16:14 <bdmurray> recreated and reported apport bug LP: #1423382
+
+ 16:14 <ubottu> Launchpad bug 1423382 in apport (Ubuntu) "unable to use apport to report a bug from point release Live CDs" [Undecided,New] https://launchpad.net/bugs/1423382
+
+ 16:14 <bdmurray> pinged cyphermox regarding merge proposal for bug LP: #1325801
+
+ 16:14 <ubottu> Launchpad bug 1325801 in Ubuntu CD Images "failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:" [Undecided,In progress] https://launchpad.net/bugs/1325801
+
+ 16:14 <bdmurray> performance review
+
+ 16:14 <bdmurray> short week due to Monday Holiday
+
+ 16:15 <bdmurray> ✔ done
+
+ 16:15 <infinity> Last week:
+
+ 16:15 <infinity> - Was at Linaro Connect all week, good sessions, good conversations
+
+ 16:15 <infinity> - Got a new ARMv8 board to play with, when I find some "spare" time
+
+ 16:15 <infinity> This week:
+
+ 16:15 <infinity> - Point release, point release, point release, point release!
+
+ 16:15 <infinity> - Some kernel SRU wrangling
+
+ 16:15 <infinity> - General SRU and AA reviews and maintenance
+
+ 16:15 <infinity> (done)
+
+ 16:15 <cyphermox> * partman-auto upload as per last week
+
+ 16:15 <cyphermox> * continued investigation on ppc64el bootloader installation issue.
+
+ 16:15 <cyphermox> * Patch pilot on Monday: grub-installer, live-build, resiprocate
+
+ 16:15 <cyphermox> * Fixed minor bug in network-manager-openconnect.
+
+ 16:15 <cyphermox> * Reviewed/looked into bug 1422924.
+
+ 16:15 <cyphermox> * Reviewed MP for usb-creator bug 1325801
+
+ 16:15 <ubottu> bug 1422924 in network-manager (Ubuntu) "Revert latest nm" [Undecided,New] https://launchpad.net/bugs/1422924
+
+ 16:15 <ubottu> bug 1325801 in Ubuntu CD Images "failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:" [Undecided,In progress] https://launchpad.net/bugs/1325801
+
+ 16:16 <cyphermox> * Discussed debian-installer arm64 changes with dannf.
+
+ 16:16 <cyphermox> * Looked into bug 1422864 in ubiquity with infinity.
+
+ 16:16 <cyphermox> * SRU for installation-guide, efibootmgr.
+
+ 16:16 <ubottu> bug 1422864 in ubiquity (Ubuntu Trusty) "14.04.2: UEFI: linux 3.13.0-45 downloaded during install" [Undecided,Fix released] https://launchpad.net/bugs/1422864
+
+ 16:16 <cyphermox> * ubiquity: bug 1418105.
+
+ 16:16 <ubottu> bug 1418105 in ubiquity (Ubuntu) "Trusty: testing .2 the oem session on i386 leaves the oem wifi password in place" [High,In progress] https://launchpad.net/bugs/1418105
+
+ 16:16 <cyphermox> * Reviewing mate-menu, mate-tweak for sponsoring.
+
+ 16:16 <cyphermox> (done)
+
+ 16:16 <barry> slangasek: ready?
+
+ 16:17 <barry> going once
+
+ 16:17 <slangasek> * short week due to holiday on Monday
+
+ 16:17 <slangasek> * very focused on snappy
+
+ 16:17 <slangasek> * image promotion in progress for this week
+
+ 16:17 <slangasek> * armhf device tarball generation has needed straightening out
+
+ 16:17 <slangasek> * reviewing branch for grub failover handling
+
+ 16:17 <slangasek> * looking at initramfs handling of partitions being mounted without fsck; looking to figure out how to do less in the initramfs
+
+ 16:17 <slangasek> * need to get nfs-utils systemdified today so we can make the switch to systemd by default
+
+ 16:17 <slangasek> * performance reviews!  If you haven't done your self-eval yet, do it yesterday!  If you haven't sent me your selections for 360 review, do that today!
+
+ 16:17 <slangasek> infinity: speaking of last-minute switching to systemd, are you sending the announcement about Feature Freeze?
+
+ 16:17 <slangasek> oh, and (done)
+
+ 16:18 <barry> thanks
+
+ 16:18 <infinity> slangasek: I'm delaying feature freeze until I get all the features in that I want!
+
+ 16:18 <cyphermox> nice plan
+
+ 16:18 <infinity> slangasek: (Yeah, I should send the email later tonight, after point release stuff is done)
+
+ 16:18 <barry> infinity: yay!  i can sneak a few in too then
+
+ 16:18 <robru> infinity: MOAR FEACHURES!
+
+ 16:18 <barry> #topic AOB
+
+ 16:18 <sil2100> hah
+
+ 16:18 <slangasek> infinity: ok, no hurry! ;)
+
+ 16:18 <sil2100> ;)
+
+ 16:19 <sil2100> slangasek: what about the standing FFe?
+
+ 16:19 <barry> does anybody have anything else fun or interesting to discuss?
+
+ 16:19 <sil2100> slangasek: did you have a moment to comment?
+
+ 16:19 <slangasek> sil2100: I'll follow up on that discussion
+
+ 16:19 <sil2100> Ok, thanks :)
+
+ 16:20 <slangasek> AOB> do the performance review stuff ;)
+
+ 16:20 <barry> slangasek: at least the site isn't as horribly painful this time around :)
+
+ 16:20 <barry> okay, let's me this short!
+
+ 16:20 <barry> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

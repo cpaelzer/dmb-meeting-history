@@ -1,0 +1,189 @@
+== Meeting information ==
+
+ * #ubuntu-meeting meeting, started by bdrung, 19 Oct at 15:06 &mdash; 15:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-10-19-15.06.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by bdrung at 15:07.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-19-oct-2023/39594   (bdrung, 15:07)
+
+=== Release incoming bugs ===
+
+Discussion started by bdrung at 15:26.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:26)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/packagekit/+bug/2038807   (bdrung, 15:26)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:38)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:38)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:43)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdrung at 15:44.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdrung, 15:44)
+
+=== AOB ===
+
+Discussion started by bdrung at 15:45.
+
+
+
+
+== People present (lines said) ==
+
+ * bdrung (34)
+ * bdmurray (17)
+ * adrien (3)
+ * slyon (3)
+ * dbungert (3)
+ * meetingology (2)
+ * pushkarnk (2)
+ * danilogondolfo (2)
+
+
+
+== Full log ==
+
+
+ 15:06 <bdrung> #startmeeting
+
+ 15:06 <meetingology> Meeting started at 15:06:57 UTC.  The chair is bdrung.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:06 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:07 <bdrung> #topic Lightning rounds
+
+ 15:07 <bdrung> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-19-oct-2023/39594
+
+ 15:08 <pushkarnk> adrien: yes, I have it internally documented. I can share it with you.
+
+ 15:10 <adrien> pushkarnk: thanks
+
+ 15:11 <bdmurray> bdrung: Has a test been added for apport to ensure the data is collected in the crash?
+
+ 15:11 <pushkarnk> adrien: basically, PKCS#12 is not FIPS approved :/
+
+ 15:12 <bdmurray> slyon: you were asking about an early release for bug 2039503 right?
+
+ 15:13 <slyon> correct
+
+ 15:13 <slyon> SRU verification is done and autopkgtest failures should be resolved
+
+ 15:15 <bdrung> bdmurray, https://github.com/canonical/apport/pull/224 modifies the test cases to cover the crash reporting part.
+
+ 15:15 <bdrung> (see https://github.com/canonical/apport/pull/224/commits/a16de4ec2771012a19e5d6b3075b3a914bf6a851)
+
+ 15:16 <slyon> danilogondolfo: FYI: I just pushed https://git.launchpad.net/~ubuntu-core-dev/netplan/+git/ubuntu/log/?h=ubuntu-mantic so you can target your SRU branch against that one
+
+ 15:16 <danilogondolfo> slyon, thank you :)
+
+ 15:19 <bdrung> everybody done with reading and asking questions?
+
+ 15:22 <bdmurray> dbungert: there was an issue you saw during the release
+
+ 15:22 <bdmurray> when you were doing upgrade testing with disk layouts iirc
+
+ 15:22 <dbungert> bdmurray: ah, the grub thing?  yes, I added some info to a bug, let me dig up a number
+
+ 15:23 <dbungert> LP: #1937011
+
+ 15:23 <dbungert> I concluded it wasn't a new problem and added a reproducer script to the bug
+
+ 15:24 <bdmurray> so want to fix the typo in the description
+
+ 15:25 <bdmurray> bdrung: I think we can move on
+
+ 15:26 <bdrung> #topic Release incoming bugs
+
+ 15:26 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:26 <bdrung> https://bugs.launchpad.net/ubuntu/+source/packagekit/+bug/2038807
+
+ 15:28 <bdmurray> It only has 219 crashes so far...
+
+ 15:28 <bdmurray> But then again upgrades aren't enabled yet
+
+ 15:29 <bdrung> there are not that many crash reports at all on errors.ubuntu.com for mantic: https://errors.ubuntu.com/?release=Ubuntu%2023.10&period=month
+
+ 15:30 <bdmurray> Let's save it for next week when julian is back
+
+ 15:30 <bdrung> okay
+
+ 15:30 <bdrung> next: bug #2039268
+
+ 15:31 <bdmurray> I've made contact with the snapd team about this.
+
+ 15:31 <bdmurray> I'm not certain it is something fixable in ubuntu-release-upgrader
+
+ 15:32 <bdrung> so leave it there to keep it on the list for the snapd team?
+
+ 15:32 <bdmurray> Having said that having Nick look at it when he gets back would be good
+
+ 15:32 <bdmurray> So let's foundations-todo it and we can close the card if the snapd team comes back with something helpful
+
+ 15:33 <bdrung> okay, tagged
+
+ 15:34 <bdrung> next: bug #2037894
+
+ 15:35 <bdmurray> this reporter again?
+
+ 15:36 <danilogondolfo> so annoying
+
+ 15:36 <bdmurray> I'll tag it rls-mm-notfixing
+
+ 15:38 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:38 <bdrung> empty for us
+
+ 15:38 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:38 <bdrung> bug #1990798
+
+ 15:39 <bdrung> According to the last comments, this bug cannot be reproduced and logs are missing.
+
+ 15:42 <bdrung> Should we remove the incoming tag or just wait until it expires?
+
+ 15:43 <bdmurray> Wait but maybe the QA team should setup an automated test for this
+
+ 15:43 <bdrung> okay, leaving it untouched
+
+ 15:43 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:44 <bdrung> nothing for us
+
+ 15:44 <bdrung> #topic Team proposed-migration report
+
+ 15:44 <bdrung> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:44 <bdrung> interestingly there are two packages on the list
+
+ 15:44 <bdmurray> because there isn't a devel release?
+
+ 15:45 <bdrung> but shouldn't it be empty then?
+
+ 15:45 <bdrung> anyway
+
+ 15:45 <bdrung> #topic AOB
+
+ 15:45 <adrien> swi-prolog's "error: test cat2: no_exception"
+
+ 15:49 <bdrung> adrien, do you want to look at the swi-prolog/9.0.4+dfsg-2ubuntu1 failure?
+
+ 15:51 <bdrung> any last words?
+
+ 15:51 <adrien> bdrung: not really :D
+
+ 15:51 <bdrung> then let's keep it for next week.
+
+ 15:51 <bdrung> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

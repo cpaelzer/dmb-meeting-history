@@ -1,0 +1,220 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by didrocks, 04 Oct at 14:33 &mdash; 14:50 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-10-04-14.33.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by didrocks at 14:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (didrocks, 14:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (didrocks, 14:33)
+
+=== New MIRs ===
+
+Discussion started by didrocks at 14:33.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (didrocks, 14:33)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by didrocks at 14:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (didrocks, 14:37)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by didrocks at 14:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (didrocks, 14:47)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (didrocks, 14:47)
+
+=== Any other business? ===
+
+Discussion started by didrocks at 14:49.
+
+
+
+
+== People present (lines said) ==
+
+ * didrocks (54)
+ * sarnold (11)
+ * joalif (9)
+ * schopin (5)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:33 <didrocks> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:33 <meetingology> Meeting started at 14:33:11 UTC.  The chair is didrocks.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:33 <didrocks> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 14:33 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:33 <didrocks> #topic current component mismatches
+
+ 14:33 <didrocks> Mission: Identify required actions and spread the load among the teams
+
+ 14:33 <didrocks> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:33 <didrocks> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <didrocks> nothing new apparently
+
+ 14:33 <didrocks> #topic New MIRs
+
+ 14:33 <didrocks> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:33 <didrocks> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:34 <didrocks> ah, libssh2 as been added :)
+
+ 14:34 <didrocks> it was a missing dep of libgit2 I think
+
+ 14:34 <didrocks> any taker? I’m unsure to have time for this this week
+
+ 14:34 <joalif> i can take it
+
+ 14:35 <didrocks> \o/
+
+ 14:35 <didrocks> thanks! I think there will be some fun discussion on libssh vs libssh2 and the security gods are looking :)
+
+ 14:35 <didrocks> The other is MIR licheerv-rtl8723ds-dkms
+
+ 14:36 <didrocks> this one seems to come back to the discussion of "drivers/tests"
+
+ 14:36 <didrocks> I’m happy to have a first look, but I think we should really discuss what to do with those in the QA team
+
+ 14:37 <didrocks> ok, let’s move to incomplete bugs
+
+ 14:37 <didrocks> #topic Incomplete bugs / questions
+
+ 14:37 <didrocks> Mission: Identify required actions and spread the load among the teams
+
+ 14:37 <didrocks> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:38 <joalif> re http-parser shall we discuss it now or later ?
+
+ 14:38 <didrocks> we can now
+
+ 14:38 <joalif> so apart from the upstream project being unmaintained
+
+ 14:39 <joalif> the package is ok
+
+ 14:39 <joalif> foundations say they are ok to take over
+
+ 14:39 <joalif> and also debian is actively maintaining it
+
+ 14:39 <joalif> so do we say ack or nack ?
+
+ 14:40 <didrocks> I would then say ack under those circumstances, sanoard, what would you be your vote?
+
+ 14:40 <sarnold> if we kicked out everything that was unsupported upstream it'd be a vastly smaller distro, but there's no denying that http parsers don't feel like the right place to be orphaned :(
+
+ 14:41 <didrocks> yep…
+
+ 14:41 <sarnold> if foundations is really onboard with maintenance as it comes up, that's probably good, but I want to make sure foundations understands that it might be some really heavy lifting, in addition to the far more likely case of nothing needed at all
+
+ 14:42 <didrocks> I think you can make those points during the security review :)
+
+ 14:42 <sarnold> trust me, I will :D
+
+ 14:42 <joalif> I haven't assigned it yet to security, shall I then ?
+
+ 14:43 <didrocks> I think you are good to go
+
+ 14:43 <sarnold> has it been upgraded to the latest upstream version yet?
+
+ 14:43 <didrocks> all my requirements are not answered though. schopin, do you plan on answering the other required TODOs?
+
+ 14:43 <didrocks> (I would prefer avoiding another ping/pong on the bug)
+
+ 14:43 <sarnold> oh, or was that for libgit2 only?
+
+ 14:43 <didrocks> joalif was talking about http-parser
+
+ 14:43 <schopin> didrocks: IIRC the remaining TODO was better test coverage?
+
+ 14:44 <schopin> wait, are we talking about libgit2 or http-parser?
+
+ 14:44 <didrocks> http-parser is ack
+
+ 14:45 <didrocks> schopin: we are missing on libgit2 an answer for the autopkgtests requirements and also, if possible, the warnings issue as recommended TODO
+
+ 14:45 <didrocks> (I don’t think we write the recommended TODOs for them just being fully ignored :p)
+
+ 14:45 <schopin> warnings are adressed in latest upload, still stuck in unapproved atm.
+
+ 14:45 <didrocks> oh, excellent!
+
+ 14:45 <schopin> I need to check a few things first before adressing the test case
+
+ 14:46 <didrocks> sounds good to me
+
+ 14:46 <didrocks> can we keep it as incomplete for libgit2 until this is done?
+
+ 14:46 <schopin> makes sense to me
+
+ 14:46 <didrocks> alright
+
+ 14:47 <didrocks> moving on to you sarnold :)
+
+ 14:47 <didrocks> #topic MIR related Security Review Queue
+
+ 14:47 <didrocks> Mission: Check on progress, do deadlines seem doable?
+
+ 14:47 <didrocks> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:47 <didrocks> Internal link
+
+ 14:47 <didrocks> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:47 <didrocks> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:47 <didrocks> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:47 <didrocks> mic is yours :p
+
+ 14:48 <sarnold> it's a significantly smaller list than I expected :D much thanks to my team mates who have taken mirs this cycle; it's not down to zero, and probably can't get there in time for release, but I'm pretty happy with how things went
+
+ 14:48 <sarnold> I'm hopeful that upstream for editorconfig-core will come up with some small changes to not expose user input directly to pcre2 without too much troubl
+
+ 14:48 <didrocks> anything urgent/worth mentioning on the ones that will probably miss the deadline? (not blocking teams/deliverable for this cycle?)
+
+ 14:48 <sarnold> but whether they'll be able to come up with something in the very short time left before release seems unlikely :(
+
+ 14:49 <sarnold> nullboot and fdk-aac will probably not be started in time to make it for kinetic
+
+ 14:49 <didrocks> indeeed
+
+ 14:49 <didrocks> can you ensure that the MIR reporters are aware?
+
+ 14:49 <sarnold> good idea, will do
+
+ 14:49 <didrocks> excellent, thanks sarnold!
+
+ 14:49 <didrocks> #topic Any other business?
+
+ 14:49 <didrocks> (nothing for me)
+
+ 14:49 <sarnold> nothing here
+
+ 14:49 <joalif> nothing
+
+ 14:50 <didrocks> let’s get back those 10 minutes then, thanks everyone!
+
+ 14:50 <didrocks> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

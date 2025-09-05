@@ -1,0 +1,311 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 21 Jul at 15:00 &mdash; 15:47 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-07-21-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by jawn-smith at 15:00.
+
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:05.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:05)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:11)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:23)
+
+=== Team proposed-migration report ===
+
+Discussion started by jawn-smith at 15:26.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:26)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:41.
+
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (70)
+ * slyon (13)
+ * enr0n (10)
+ * ubottu (9)
+ * bdmurray (6)
+ * vorlon (4)
+ * bdrung (3)
+ * meetingology (2)
+ * dbungert (2)
+ * alexghiti (2)
+ * xypron (2)
+ * ogayot (2)
+ * waveform (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:37 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <jawn-smith> #topic Lightning Round
+
+ 15:01 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-21-july-2022/29675
+
+ 15:01 <jawn-smith> Let's take our usual few minutesx to read and ask questions
+
+ 15:02 <bdrung> o/
+
+ 15:03 <jawn-smith> dbungert: I started reviewing some of the patches you created
+
+ 15:03 <dbungert> nice
+
+ 15:05 <jawn-smith> #topic Release incoming bugs
+
+ 15:05 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 15:06 <jawn-smith> bug 1981109
+
+ 15:06 <ubottu> Bug 1981109 in ubuntu-meta (Ubuntu) "server image pulls in ModemManager via fwupd, consumes 25MiB RAM in every container" [Undecided, New] https://launchpad.net/bugs/1981109
+
+ 15:06 <jawn-smith> That is being worked by the desktop
+
+ 15:06 <jawn-smith> bug 1981721
+
+ 15:06 <ubottu> Bug 1981721 in netplan.io (Ubuntu) "dual port SRIOV NIC with 64 VFs per PF  is not configured with switchdev eswitch mode" [Undecided, New] https://launchpad.net/bugs/1981721
+
+ 15:07 <slyon> jawn-smith: we can let that one sit there for now. I've reached out to the openstack team and they will help with reproduction
+
+ 15:07 <bdmurray> Can we do anything about the bug status and importance in bug 1981109
+
+ 15:07 <ubottu> Bug 1981109 in modemmanager (Ubuntu) "server image pulls in ModemManager via fwupd, consumes 25MiB RAM in every container" [High, New] https://launchpad.net/bugs/1981109
+
+ 15:09 <jawn-smith> bdmurray: thanks for setting the importance and triaged on that bug
+
+ 15:09 <jawn-smith> bug 1982462
+
+ 15:09 <ubottu> Bug 1982462 in systemd (Ubuntu) "Some modprobe loading services requested by the pstore service fail" [Undecided, New] https://launchpad.net/bugs/1982462
+
+ 15:10 <slyon> this one was reported by the Ubuntu core team. Seems there is an easy upstream fix available.
+
+ 15:10 <slyon> I think it'd make sense to spot check the proposed solution and maybe also include it into the pending Jammy SRU, cc enr0n
+
+ 15:10 <slyon> so should be carded IMO
+
+ 15:10 <enr0n> Yeah, this is probably worth SRU'ing. The patch we added as a result of bug 1978079 has caused a few head aches (see rls-jj-incoming later).
+
+ 15:10 <ubottu> Bug 1978079 in systemd (Ubuntu Focal) "EFI pstore not cleared on boot" [Undecided, In Progress] https://launchpad.net/bugs/1978079
+
+ 15:11 <jawn-smith> Okay cool, slyon do you mind creating a card?
+
+ 15:11 <slyon> jawn-smith: I can do that!
+
+ 15:11 <jawn-smith> Thanks!
+
+ 15:11 <jawn-smith> That's it for kk
+
+ 15:11 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:12 <bdmurray> a "few headaches"? how important are those?
+
+ 15:12 <enr0n> bdmurray: I'll elaborate when we get to that bug
+
+ 15:12 <jawn-smith> pausing to discuss the few headaches
+
+ 15:13 <jawn-smith> Okay, bug 1970449
+
+ 15:13 <ubottu> Bug 1970449 in software-properties (Ubuntu) "GPG keys are not shown in Software and Updates" [Low, Confirmed] https://launchpad.net/bugs/1970449
+
+ 15:14 <jawn-smith> We discussed this last week and decided to not card it until the person who tagged it (julian_k) was available for discussion
+
+ 15:14 <bdmurray> There may be a patch
+
+ 15:14 <bdmurray> from a deactivated account which is weird
+
+ 15:15 <jawn-smith> bdrung: Thanks for volunteering to look at the "patch"
+
+ 15:16 <jawn-smith> bug 1981721
+
+ 15:16 <ubottu> Bug 1981721 in netplan.io (Ubuntu) "dual port SRIOV NIC with 64 VFs per PF  is not configured with switchdev eswitch mode" [Undecided, New] https://launchpad.net/bugs/1981721
+
+ 15:16 <slyon> Same as before, not actionable right now as we're waiting on openstack team input
+
+ 15:17 <jawn-smith> right, moving on
+
+ 15:17 <jawn-smith> We already discussed 1982562, so skipping that
+
+ 15:17 <jawn-smith> bug 1981622
+
+ 15:17 <ubottu> Bug 1981622 in systemd (Ubuntu) "mtd device must be supplied (device name is empty)" [Undecided, Confirmed] https://launchpad.net/bugs/1981622
+
+ 15:17 <jawn-smith> this was the one enr0n wanted to discuss
+
+ 15:18 <enr0n> The actual problem here is that the mtdpstore module is not configured quite right in our kernel, so when trying to load the module you get an error printed in dmesg
+
+ 15:18 <enr0n> However, that really doesn't impact anything because other pstore backends are available etc.
+
+ 15:19 <jawn-smith> It turns out this bug isn't really the cause of the issues the users are seeing
+
+ 15:20 <jawn-smith> So is there anything for foundations to fix here? Is the actual bug a foundations issue?
+
+ 15:22 <enr0n> I would like to card this so that we don't unnecessarily print this error
+
+ 15:22 <jawn-smith> Great, thanks. Let's card it
+
+ 15:22 <slyon> will do
+
+ 15:23 <jawn-smith> That's it for rls-jj
+
+ 15:23 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:23 <jawn-smith> Just one
+
+ 15:23 <jawn-smith> bug 1930482
+
+ 15:23 <ubottu> Bug 1930482 in systemd (Ubuntu) "netplan crash on ubuntu 20.04 disabling network" [Undecided, New] https://launchpad.net/bugs/1930482
+
+ 15:23 <slyon> this is a crash in systemd-networkd
+
+ 15:24 <slyon> I did some initial investigation and might have found the upstream fix. But it should be double checked and possibly staged for Focal SRU
+
+ 15:24 <jawn-smith> Okay if it's something that we're going to work on then let's create a card
+
+ 15:24 <slyon> enr0n: do we have anything prepared for Focal currently?
+
+ 15:25 <enr0n> Yeah, we have a few things staged and I am working on getting a focal SRU ready
+
+ 15:25 <enr0n> Not urgently, but in the next couple weeks maybe
+
+ 15:25 <slyon> okay so let's card this, and try to include it
+
+ 15:25 <enr0n> Sounds good to me
+
+ 15:26 <jawn-smith> #topic Team proposed-migration report
+
+ 15:26 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:26 <jawn-smith> ubuntu-meta is with desktop
+
+ 15:27 <jawn-smith> usb-creator, lintian, mutt are all waiting on MIRs
+
+ 15:27 <jawn-smith> liburi-perl also appears to be waiting on an MIR that is being worked by slyon
+
+ 15:28 <slyon> yeah. we might not need an MIR for liburi-perl, but can drop the dependency (or the Debian maintainer might do it for us)
+
+ 15:28 <jawn-smith> ubuntu-release-upgrader: any volunteers to look at this one?
+
+ 15:29 <jawn-smith> seems like maybe a bdmurray issue
+
+ 15:29 <bdrung> FAIL: test upgrade from EOL release to EOL release
+
+ 15:29 <bdmurray> that's a network issue, I'll retry it
+
+ 15:30 <jawn-smith> Thanks
+
+ 15:30 <jawn-smith> I looked into curl a bit
+
+ 15:30 <jawn-smith> It's a riscv64 issue. There is a call to some atomic function that isn't supported by gcc on riscv64
+
+ 15:30 <jawn-smith> alexghiti, xypron have you seen anything like that before?
+
+ 15:31 <alexghiti> Oh I saw a fix for this one not that long ago
+
+ 15:31 <jawn-smith> oh cool, would you be interested in looking at curl this week?
+
+ 15:31 <alexghiti> Yes I can do that
+
+ 15:31 <jawn-smith> Great, thanks
+
+ 15:31 <jawn-smith> enr0n can you follow up on systemd?
+
+ 15:31 <enr0n> Yes
+
+ 15:31 <jawn-smith> Thanks
+
+ 15:32 <jawn-smith> golang and ubuntu-image should be mine
+
+ 15:32 <jawn-smith> golang has a weird test failure on ppc64el that I need to investigate
+
+ 15:32 <jawn-smith> so those are with me
+
+ 15:33 <jawn-smith> sqlite3: waveform?
+
+ 15:33 <waveform> ack
+
+ 15:33 <jawn-smith> Thanks
+
+ 15:33 <jawn-smith> git has a few, but based on the architectures some of them could just be retries
+
+ 15:33 <jawn-smith> dbungert: git?
+
+ 15:33 <dbungert> ack for git
+
+ 15:33 <jawn-smith> thanks!
+
+ 15:34 <jawn-smith> I'm going to trigger a migration-reference/0 test for astroquery
+
+ 15:35 <jawn-smith> lxml has a few regressions, also on architectures that have had some flakiness lately
+
+ 15:35 <jawn-smith> xypron: lxml?
+
+ 15:36 <xypron> Vacation?
+
+ 15:36 <xypron> I will be away the next two weeks
+
+ 15:36 <jawn-smith> Ah right, have fun!
+
+ 15:36 <jawn-smith> slyon: lxml?
+
+ 15:36 <slyon> sure
+
+ 15:36 <jawn-smith> Thanks!
+
+ 15:37 <jawn-smith> bdrung: can you look into pillow?
+
+ 15:37 <bdrung> yes
+
+ 15:38 <jawn-smith> Thanks. Now everyone who is in the meeting has a proposed-migration task
+
+ 15:38 <vorlon> not me
+
+ 15:38 <vorlon> :)
+
+ 15:38 <ogayot> jawn-smith: I don't have one yet
+
+ 15:38 <jawn-smith> oh whoops
+
+ 15:39 <jawn-smith> vorlon: can you take python3-stdlib-extensions failures a-l ?
+
+ 15:39 <vorlon> oh Gawd
+
+ 15:39 <jawn-smith> and ogayot can take p-z
+
+ 15:39 <vorlon> I suppose
+
+ 15:40 <ogayot> jawn-smith: ack
+
+ 15:41 <jawn-smith> Okay now everyone has one
+
+ 15:41 <jawn-smith> #topic AOB
+
+ 15:41 <enr0n> I am out all of next week
+
+ 15:46 <bdmurray> jawn-smith: I think that's it
+
+ 15:47 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

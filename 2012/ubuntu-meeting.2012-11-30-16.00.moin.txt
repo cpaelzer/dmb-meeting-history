@@ -1,0 +1,693 @@
+#title #ubuntu-meeting: status update
+
+Meeting started by achiang at 16:00:28 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-11-30-16.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Status Update
+''LINK:'' http://cdimage.ubuntu.com/daily-preinstalled/   (ogra_, 16:05:55)
+''LINK:'' http://cdimage.ubuntu.com/daily-preinstalled/   (achiang, 16:06:04)
+''LINK:'' http://cdimage.ubuntu.com/daily-preinstalled/   (achiang, 16:06:10)
+''LINK:'' http://www.chizang.net/alex/blog/2012/11/23/memory-leaks-in-ubuntu-episode-i-detection/   (achiang, 16:23:53)
+''LINK:'' http://www.chizang.net/alex/blog/2012/11/28/memory-leaks-in-ubuntu-episode-ii-analysis/   (achiang, 16:24:00)
+''LINK:'' https://bugs.kde.org/show_bug.cgi?id=310792   (achiang, 16:26:32)
+
+
+
+Meeting ended at 16:59:46 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * achiang (114)
+ * ogra_ (58)
+ * kyleN_ (56)
+ * dholbach (30)
+ * bootidsa (16)
+ * feasty (10)
+ * Aeefire (8)
+ * rrnwexec (7)
+ * mfisch (6)
+ * didrocks (3)
+ * meetingology (3)
+ * gatox (3)
+ * ubottu (1)
+ * kyleN__ (1)
+
+
+
+== Full Log ==
+
+
+ 16:00:28 <achiang> #startmeeting
+
+ 16:00:28 <meetingology> Meeting started Fri Nov 30 16:00:28 2012 UTC.  The chair is achiang. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00:28 <meetingology> 
+
+ 16:00:28 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:00:43 <achiang> today, we have a light agenda
+
+ 16:00:53 <achiang> 1) brief status update
+
+ 16:00:59 <achiang> 2) discussion about memory leaks
+
+ 16:01:02 <achiang> 3) q&a
+
+ 16:01:23 <achiang> #topic Status Update
+
+ 16:01:35 <achiang> oops, i don't know if that's what i wanted
+
+ 16:01:50 <achiang> #meetingtopic status update
+
+ 16:02:03 <achiang> oh well
+
+ 16:02:13 <mfisch> can't help you with meetingbot :(
+
+ 16:02:29 <achiang> anyway, i am sure that people have been eagerly awaiting the announcement for switching to raring
+
+ 16:02:42 <achiang> i am sorry to disappoint, but we have to wait just a little while longer
+
+ 16:03:00 <achiang> the last thing we are waiting for is a fix for nux, which is the opengl toolkit that unity is built on top of
+
+ 16:03:06 <achiang> the good news is, nux has been fixed
+
+ 16:03:08 <dholbach> good to see that many people are joining in
+
+ 16:03:12 <ogra_> well, you can play with the images by tapping blindly :)
+
+ 16:03:13 <mfisch> when will it be ready?
+
+ 16:03:22 <dholbach> achiang, I talked to didrocks and he said it will land early next week
+
+ 16:03:23 <ogra_> only nux is missing
+
+ 16:03:26 <achiang> the bad news is, a proper package has not been built and uploaded into raring
+
+ 16:03:33 <dholbach> the problem is that the test-suite or the test-suite runner needs a fix
+
+ 16:03:36 <achiang> nod
+
+ 16:03:42 <dholbach> he said early next week, at worst mid next week
+
+ 16:03:53 <achiang> so we hope to have an announcement by the end of next week
+
+ 16:03:56 <dholbach> (https://code.launchpad.net/~unity-team/nux/nux.depth-texture-detection-support/+merge/134729 for reference)
+
+ 16:04:00 <achiang> exciting times!
+
+ 16:04:10 <didrocks> also unity is failing to build on armhf for now
+
+ 16:04:10 <achiang> ogra_: any other status updates for us you'd like to give?
+
+ 16:04:17 <dholbach> another piece of feedback I have is that onboard will be reuploaded to the ppa (or the archive) because it's currently uninstallable
+
+ 16:04:19 <didrocks> which isn't useful for the nexus7 :)
+
+ 16:04:20 <ogra_> plymouth kind of works :)
+
+ 16:04:27 <didrocks> so yeah, those are tracked and under fix
+
+ 16:04:36 <dholbach> I assume that a simple rebuild (maybe of virtkey too) will do it
+
+ 16:04:54 <ogra_> the installer (oem-config) works fine thanks to xnox for making compiz work in there (that fixed a wallpaper corruption bug for us)
+
+ 16:05:12 <dholbach> would be better to get onboard/virtkey into raring archive, so we can get rid of the ppa for good
+
+ 16:05:18 <achiang> +1
+
+ 16:05:26 <ogra_> and currently i'm looking into making the initrd smaller so we can drop some hacks
+
+ 16:05:34 <dholbach> apart from that my dist-upgrade to raring went fine ;-)
+
+ 16:05:40 <achiang> ogra_: how about the daily images? what is the url?
+
+ 16:05:41 <ogra_> (or the kernel, either of tehm has to shrink)
+
+ 16:05:55 <ogra_> http://cdimage.ubuntu.com/daily-preinstalled/
+
+ 16:06:04 <achiang> [link] http://cdimage.ubuntu.com/daily-preinstalled/
+
+ 16:06:10 <achiang> #link http://cdimage.ubuntu.com/daily-preinstalled/
+
+ 16:06:32 <ogra_> one issue we still need to solve is the size, the current image is only suitable for 6G
+
+ 16:06:34 <achiang> hm, guess who doesn't know how to use meetingbot! :)
+
+ 16:07:10 <achiang> ok, any other status people want to share?
+
+ 16:07:11 <ogra_> i worked a bit with infinity on that part already but that will need further work (we will most likely switch from tar,gz to tar,xz internally)
+
+ 16:07:22 <ogra_> s/\,/\./
+
+ 16:07:52 <achiang> cool
+
+ 16:07:58 <achiang> ogra_: anything else?
+
+ 16:08:12 <ogra_> i think thats about it atm ... oh, i uploaded fixes for most of the bugs that were fixable by changing gsettings
+
+ 16:08:31 <achiang> ogra_: great, i hope you ran those changes past the desktop team. :)
+
+ 16:08:40 <kyleN_> ogra does that include the gksudo one?
+
+ 16:08:48 <ogra_> achiang, defaults-seetings :)
+
+ 16:08:59 <ogra_> kyleN_, nope, gksudo will be unseeded
+
+ 16:09:28 <kyleN_> ogra is their an alternate approach?
+
+ 16:09:32 <kyleN_> there
+
+ 16:09:34 <ogra_> it is supposed to go away since over a year now ... time to actually make that happen ;)
+
+ 16:09:46 <ogra_> pkexec, we use it everywheer already
+
+ 16:09:52 <kyleN_> ack
+
+ 16:10:00 <bootidsa> o/
+
+ 16:10:09 <achiang> bootidsa: go
+
+ 16:10:12 <bootidsa> Quick question .. does anyone know Where one can buy a Nexus 7 with Ubuntu ?
+
+ 16:10:27 <achiang> this is not a product that comes pre-installed
+
+ 16:10:31 <ogra_> you cant, you can only buy a nexus and install ubuntu yourself
+
+ 16:10:38 <dholbach> bootidsa, but installing it is very easy - just refer to https://wiki.ubuntu.com/Nexus7/Installation
+
+ 16:10:45 <bootidsa> not on Auction sites ?
+
+ 16:10:46 <kyleN_> it is a developer oriented build for now
+
+ 16:10:56 <bootidsa> oh OK
+
+ 16:11:01 <dholbach> it's VERY easy
+
+ 16:11:19 <achiang> maybe bootidsa has discovered a business plan for us?
+
+ 16:11:32 <dholbach> $$$
+
+ 16:11:34 <ogra_> achiang, oh, one thing that struck me additionally to the tegra drivers ... raring just switched to gstreamer 1.0
+
+ 16:11:34 <gatox> i have Ubuntu installed in my Nexus7... i would like to contribute to the development..... is this possible?
+
+ 16:11:37 <kyleN_> there's an installer script that, as dholbach said, makes installing it very easy
+
+ 16:11:47 <mfisch> gatox: sure, we'
+
+ 16:11:49 <achiang> gatox: let's take that question at the end please
+
+ 16:11:51 <kyleN_> gatox YES
+
+ 16:11:53 <mfisch> gatox: sure we'd love to have help
+
+ 16:11:54 <ogra_> achiang, that means the nvidia codecs and gstreamer bits will need to be ported by them
+
+ 16:11:56 <dholbach> gatox, that'd be awesome
+
+ 16:11:57 <gatox> achiang, ack
+
+ 16:12:11 <achiang> ok, i think the status section of the meeting is wrapping up
+
+ 16:12:22 <achiang> 5 more seconds for someone to give status...
+
+ 16:12:33 <ogra_> gatox, just hang around in #ubuntu-arm ... we're all there ;)
+
+ 16:12:37 <achiang> ok, great
+
+ 16:12:39 <achiang> let's move on
+
+ 16:12:42 <gatox> ogra-cb_, awesome..... thx!
+
+ 16:12:53 <achiang> the big topic for today is memory leaks
+
+ 16:13:08 <achiang> we think this would be a great place for the community to get involved...
+
+ 16:13:11 <achiang> and with that
+
+ 16:13:17 <achiang> i will hand it over to kyleN_
+
+ 16:13:23 <achiang> kyleN_: if you could do a quick intro of yourself
+
+ 16:13:26 <kyleN_> thx achiang
+
+ 16:13:26 <bootidsa> clang ?
+
+ 16:13:28 <achiang> and then go for it!
+
+ 16:13:37 <kyleN_> I worked with achiang and for canonical.
+
+ 16:13:57 <achiang> present tense... kyleN_ still works with me and still works for canonical :)
+
+ 16:13:58 <kyleN_> i think this is an exciting project with the potentia to improve Ubuntu generaly
+
+ 16:14:09 <kyleN_> right ;)
+
+ 16:14:30 <kyleN_> so, I'll give an overview of our current thinking about memory leaks
+
+ 16:14:48 <kyleN_> Valgrind finds memory leaks for a giving executable and its calls.
+
+ 16:15:06 <kyleN_> Memory leaks should be eliminated (they are especially nasty on memory constrained devices).
+
+ 16:15:23 <mfisch> Valgrind works for C/C++ code only?
+
+ 16:15:29 <kyleN_> Valgrind does a better job of producing helpful output when C debug symbols are present.
+
+ 16:15:37 <kyleN_> mfisch, yes, I think so. achiang?
+
+ 16:15:56 <achiang> good question, i don't know but will go find out
+
+ 16:16:05 <achiang> will circle back, continue on kyleN_ !
+
+ 16:16:13 <kyleN_> By default debug symbols are not installed to conserve disk. Debug symbols are available in other -dbg pkgs.
+
+ 16:16:35 <kyleN_> So we are automating the task of getting all the debug pkgs for the executable and its dependencies.
+
+ 16:16:52 <feasty> Static analysis tools can help
+
+ 16:16:59 <kyleN_> They are unpacked into a directory, not installed as debian pkgs.
+
+ 16:17:21 <kyleN_> And they can be easily deleted after use.
+
+ 16:17:42 <kyleN_> We run valgrind and pass it that directory to also look in when resolving symbols.
+
+ 16:18:04 <kyleN_> The result is that there are far fewer unknown symbols in the valgrind log.
+
+ 16:18:23 <achiang> "Valgrind works with programs written in any language. Because Valgrind works directly with program binaries, it works with programs written in any programming language, be they compiled, just-in-time compiled, or interpreted."
+
+ 16:18:23 <kyleN_> (Unknown symbols look like this: "???")
+
+ 16:18:35 <kyleN_> ^ nice
+
+ 16:18:56 <kyleN_> This all means we can look at the stack traces and see where the memory leaks actually occured.
+
+ 16:19:17 <kyleN_> That is, which actual function call is probably responsible.
+
+ 16:19:42 <kyleN_> We can theoretically find an report only unique memory leaks (not previously reported).
+
+ 16:19:43 <bootidsa> :) I've just bought a Nexus 7 on an Auction site & I'm putting Ubuntu on there and I'm gonna resell it just to fill the void of demand .. What price should I set as reserve ?
+
+ 16:20:16 <kyleN_> And in this way, we can improve the Ubuntu stack for memory constrained devices and in general!
+
+ 16:20:54 <kyleN_> I think this will be a great way for the community to get involved (among many other ways!)
+
+ 16:21:14 <kyleN_> One more related topic: valgrind suppr files. These inform valgrind of false-positive memory leaks. That is, leaks that look like leaks but that are not leaks.
+
+ 16:21:19 <feasty> What about running something like Sonar across code?
+
+ 16:21:31 <kyleN_> feasty, pls hold on just a moment :)
+
+ 16:21:54 <kyleN_> These suppr files remove noise from the valgrind logs.
+
+ 16:22:22 <kyleN_> We will want to improve these suppr files, and maybe auto install them when running this valgrind driver stuff referred to above.
+
+ 16:22:58 <kyleN_> OK, that's the overview of our current thinking of improving tooling to find unique memory leaks.
+
+ 16:23:09 <kyleN_> one last point
+
+ 16:23:32 <kyleN_> achiang, blogged about vagrind, memory leaks, and related a couple days back. very useful blog.
+
+ 16:23:37 <kyleN_> achiang, do you have the URL?
+
+ 16:23:49 <mfisch> I'll get it
+
+ 16:23:53 <achiang> http://www.chizang.net/alex/blog/2012/11/23/memory-leaks-in-ubuntu-episode-i-detection/
+
+ 16:24:00 <achiang> http://www.chizang.net/alex/blog/2012/11/28/memory-leaks-in-ubuntu-episode-ii-analysis/
+
+ 16:24:12 <dholbach> achiang, thanks a lot for putting this together
+
+ 16:24:17 <achiang> there are a few more episodes to come
+
+ 16:24:43 <achiang> i will make a statement about episode I
+
+ 16:25:06 <achiang> in there, i linked to a crappy script that i wrote to help track down debug symbols and remove the ??? that kyleN_ was talking about earlier
+
+ 16:25:23 <achiang> the good news is, kyleN_ is working on a much nicer tool to do all this for you
+
+ 16:25:24 <kyleN_> so feasty, would you like to say something about the approach and usefulness of sonar?
+
+ 16:25:30 <achiang> kyleN_: one sec
+
+ 16:25:34 <kyleN_> k
+
+ 16:25:48 <achiang> we are not ready to share this tool yet, but we can give a little preview
+
+ 16:25:51 <achiang> it consists of 2 parts
+
+ 16:26:06 <achiang> 1) an updated valgrind, that can look in any directory for debug symbols
+
+ 16:26:20 <achiang> (i wrote a patch for that and it is being discussed upstream now)
+
+ 16:26:32 <achiang> https://bugs.kde.org/show_bug.cgi?id=310792
+
+ 16:26:34 <ubottu> KDE bug 310792 in general "[PATCH v2] search additional path for debug symbols" [Normal,Unconfirmed]
+
+ 16:26:46 <feasty> I was just saying that static analysis tools might help us track down memory leaks. I use a commercial one at work called Coverity but it utilises Sonar I believe as part of it's analysis.
+
+ 16:27:07 <achiang> 2) an updated apport, which is what kyleN_ is working on. we're writing an awesome wrapper script around valgrind
+
+ 16:27:20 <achiang> and in the end, you will be able to just say:
+
+ 16:27:32 <achiang> apport-valgrind <my binary>
+
+ 16:27:35 <feasty> It supports a range of languages too
+
+ 16:28:02 <achiang> and the tool will grab all the debug symbols magically, unpack them somewhere so you don't pollute your system, profile your application, and produce a log
+
+ 16:28:22 <achiang> as you might imagine, this will be great once it's done
+
+ 16:28:37 <achiang> so we'll share that *hopefully* next week, but stay tuned...
+
+ 16:28:48 <achiang> alrighty, back to kyleN_
+
+ 16:28:57 <kyleN_> ok
+
+ 16:29:08 <kyleN_> thanks feasty for noting that.
+
+ 16:29:15 <feasty> np
+
+ 16:29:28 <kyleN_> my overview is complete, so I am handing this back :)
+
+ 16:30:03 <kyleN_> athought perhaps one more point
+
+ 16:30:23 <kyleN_> we very much plan to empower the community to help out
+
+ 16:30:44 <bootidsa> agreed,   ...
+
+ 16:30:50 <kyleN_> by 1) providing a simple method of finding (unique) memory leaks
+
+ 16:31:21 <kyleN_> 2) establishing some infrastructure for reporting them that is easy to use and allows developers to actually fix them
+
+ 16:31:32 <achiang> feasty: static analysis tools are good. however, we are trying to write some tools that people with a broad range of technical background can help out with. static analysis tools are really aimed at developers.
+
+ 16:31:44 <kyleN_> this will, as I mentioned, be great for memory constrained devices like Nexus 7.
+
+ 16:32:05 <achiang> what kyleN_ is talking about is a simple tool that non-developers can use, which will collect data that will still be useful for developers
+
+ 16:32:06 <kyleN_> but importantly, it will help improve the entire Ubuntu stack going forward, so this is impoartnat
+
+ 16:32:30 <kyleN_> with that, I am done :)
+
+ 16:32:46 <achiang> alrighty, that segues nicely into q&a
+
+ 16:33:03 <achiang> happy to answer any questions, either related to memory leaks specifically or nexus7 in general
+
+ 16:33:15 <bootidsa> :) I've just bought a Nexus 7 on an Auction site & I'm putting Ubuntu on there and I'm gonna resell it just to fill the void of demand .. What price should I set as reserve ?
+
+ 16:33:15 <achiang> floor is open
+
+ 16:33:20 <feasty> achiang Ah ok, sorry just through we were hunting leaks :).
+
+ 16:33:43 <achiang> bootidsa: i was making a joke earlier about that, i don't think that's an appropriate topic for us to cover here
+
+ 16:33:55 <bootidsa> oh OK. thanx.
+
+ 16:33:56 <dholbach> What apart from the nux fix and the onboard update are still blockers for raring? Also: will we recommend to dist-upgrade or reflash?
+
+ 16:34:29 <ogra_> re-flash
+
+ 16:34:44 <ogra_> people *can* upgrade if they really want to
+
+ 16:34:46 <dholbach> dist-upgrade (not update-manager, mentioned it to mvo already) "worked" for me earlier and folks wouldn't need to wait for updated images or an updated nexus7-installer
+
+ 16:35:03 <achiang> feasty: something like sonar might be interesting for upstream developers, but not the broader community. 2 different use cases. i agree sonar looks interesting but we're trying to cover the 2nd case here :)
+
+ 16:35:12 <ogra_> but fir the sake of not having eyeryone running around with ubuntu/ubuntu credendials we should recommend a re-flash
+
+ 16:35:24 <dholbach> ogra_, ah, makes sense :)
+
+ 16:35:28 <achiang> +1 to re-flash, we're getting that tooling all in place now
+
+ 16:35:34 <dholbach> sweet
+
+ 16:35:51 <achiang> other than nux and onboard, i do not believe there are any blockers
+
+ 16:36:02 <dholbach> that's good news
+
+ 16:36:05 <feasty> achiang, That's fair enough. I just missed that part :)
+
+ 16:36:07 * ogra_ uses the raring daily all the time here
+
+ 16:36:18 <achiang> feasty: np :)
+
+ 16:36:22 <ogra_> no blockers if you know how to click blindly ;)
+
+ 16:36:46 <achiang> ogra_ forgets that not everyone is a superman like him, so for us normal people, i recommend to just wait a few more days! :)
+
+ 16:37:00 <dholbach> yeah, there'll be announcements :)
+
+ 16:37:07 <kyleN_> achiang, where will he announcement occcur?
+
+ 16:37:10 <kyleN_> or dholbach ?
+
+ 16:37:17 <ogra_> haha, come on, firefox is the third icon from the top and ctrl-alt-t works from onboard to get a terminal :)
+
+ 16:37:28 <ogra_> what else do you need :)
+
+ 16:37:30 <dholbach> kyleN_, I'd say ubuntu-devel@, blogs and the @ubuntudev social media accounts at least
+
+ 16:37:42 <dholbach> maybe rather ubuntu-devel-announce@
+
+ 16:37:53 <achiang> yup, dholbach has a big megaphone and i'm sure will find a way to make everyone aware
+
+ 16:37:54 <ogra_> and blogs, lots of them :)
+
+ 16:38:02 <dholbach> I can't wait!
+
+ 16:38:31 <achiang> if people reading episode II on my blog find it hard to read or there are questions, i would love to clarify any confusing bits
+
+ 16:38:35 <achiang> so feedback is welcome
+
+ 16:39:01 <dholbach> I'd be interested to hear who's interested in helping with testing or memleak-analysis or anything else? Can we have a show of hands?
+
+ 16:39:21 <achiang> \o/
+
+ 16:39:24 <kyleN_> o/
+
+ 16:39:32 <dholbach> *\o/*
+
+ 16:39:51 <kyleN_> May I say that while detecting memory leaks may seem boring, it is actualy VERY important to the future
+
+ 16:40:16 <achiang> i think it's fun, i like doing detective work like this and yelling at my computer
+
+ 16:40:18 <feasty> I'd be ineterested in memory leak hunting/fixing
+
+ 16:40:25 <dholbach> sweet
+
+ 16:40:31 <ogra_> so if you plan on children be sure to help us !
+
+ 16:40:56 <ogra_> (or did i get that future thing wrong ?)
+
+ 16:42:01 <kyleN_> ogra: we will use harsh words about your children if you don't help us :)
+
+ 16:42:08 <ogra_> haha
+
+ 16:42:09 <achiang> there you have it... we need to save the rain forests, save the glaciers, and find memory leaks!
+
+ 16:42:18 <feasty> Are there any particular packages we should concentrate on?
+
+ 16:42:37 <ogra_> tehoretically everything thats preinstalled
+
+ 16:42:57 <achiang> feasty: i would say if there is an app you use every day or an app that's giving you problems... those are the 2 best places to start
+
+ 16:43:07 <feasty> Ok cool
+
+ 16:43:10 <achiang> however, i would *not* recommend trying to profile firefox or chrome / chromium
+
+ 16:43:26 <achiang> those programs are extremely complex, and the upstreams already actively profile
+
+ 16:43:36 <achiang> so the best place to help is the more neglected applications
+
+ 16:43:47 <ogra_> not on arm linux usually though
+
+ 16:44:39 <achiang> i think hunting down memory leaks in firefox or chromium might take advanced skills, e.g., you can't just run valgrind on firefox in a simple manner
+
+ 16:44:47 <achiang> it is possible, but tricky
+
+ 16:44:53 <ogra_> (chrome probably does for chromeos, not sure. but usually arm linux is a second class citizen upstream)
+
+ 16:45:06 <kyleN_> we done, dholbach?
+
+ 16:45:20 <achiang> any other questions for q&a?
+
+ 16:45:24 <bootidsa> What is the best PDF reader to use on this platform to skim through manuals .. for example ?
+
+ 16:45:41 <dholbach> kyleN_, think so
+
+ 16:45:51 <ogra_> i dont thik there is any touch friendly one in the archive atm
+
+ 16:46:06 <ogra_> so the preinstalled (evince) will be as good as any
+
+ 16:46:58 <bootidsa> I've had soo many problems with evince .. I just subscribed to the mailing list in the end .
+
+ 16:46:59 <achiang> alrighty
+
+ 16:47:04 <ogra_> (i might be wrong, probably evince even does touch already, havent tried it)
+
+ 16:47:20 <rrnwexec> Q: Are there any plans to include an email client? (Some) research shows that checking email is the #1 use case for tablets.
+
+ 16:47:35 <kyleN_> (isn't there a pkg that converts touch events to mouse events for non-touch friendy apps?)
+
+ 16:47:52 <bootidsa> I think this is *key* to the platform , but what would I know ... I'm just a n00b.
+
+ 16:48:03 <rrnwexec> Citation: http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/es//pubs/archive/38135.pdf
+
+ 16:48:13 <achiang> ogra_: the raring image will have thunderbird, right?
+
+ 16:48:16 <ogra_> rrnwexec, once we have fixed some image size issues re-including thunderbird and openoffice shuld be possible
+
+ 16:48:26 <ogra_> achiang, currently it doesnt
+
+ 16:48:38 <ogra_> but i plan to brin it back once we switched to xz
+
+ 16:48:46 <ogra_> *bring
+
+ 16:48:56 <achiang> rrnwexec: ok, so the answer is, "we intend to, but need to work out some engineering issues"
+
+ 16:49:01 <rrnwexec> great. thank you.
+
+ 16:49:10 <ogra_> Tb isnt particulary touch friendly either though
+
+ 16:49:34 <ogra_> i bet with gmail and the grab n drag extension in firefoxx you are better off
+
+ 16:49:49 <achiang> perhaps webapps?
+
+ 16:49:54 <rrnwexec> Interstingly, tablets are rarely used for "office productivity" apps.
+
+ 16:49:55 <achiang> a great 12.10 feature
+
+ 16:50:14 <achiang> ok, any more questions?
+
+ 16:50:27 <Aeefire> yes
+
+ 16:50:36 <bootidsa> Can the tablet use a stylus ?
+
+ 16:51:00 <achiang> bootidsa: yes, a stylus can be used. i watched someone in Copenhagen use a stylus on the nexus7
+
+ 16:51:02 <ogra_> yes, but the capacitive sytluses you can buy arent usually smaller than your pinky
+
+ 16:51:07 <rrnwexec> I'm using a stylus. I find it much more usable.
+
+ 16:51:13 <Aeefire> I'd like to ask something more general (hopefully it hasn't been covered already): Have I understood it right, that ubuntu on N7 is just a "proof of concept" and you MAY broaden support to other devices?
+
+ 16:51:22 <rrnwexec> it's smaller than my pinky too ;)
+
+ 16:51:30 <achiang> i'll take that one
+
+ 16:51:34 <ogra_> fat pinky he ?
+
+ 16:51:34 <ogra_> :)
+
+ 16:51:50 <achiang> Ubuntu on the N7 is intended to serve as a reference / developer platform
+
+ 16:52:16 <achiang> we want to get a cheap, easy-to-use ARM device into the hands of more people
+
+ 16:52:33 <achiang> older solutions like panda boards were still not super user friendly
+
+ 16:52:34 <bootidsa> has anyone updated the 'road-map' on launchpad ?
+
+ 16:52:36 <ogra_> it could happen that we switch to another platform at some point ... i wouldnt actually call that broadening though
+
+ 16:52:54 <Aeefire> mhm
+
+ 16:52:59 <achiang> the goal is for everyone to use the same hardware
+
+ 16:53:03 <achiang> to make fixing bugs easier
+
+ 16:53:27 <achiang> fixing bugs is a LOT easier when you do not have to ask in launchpad: what hardware do you have? i can't reproduce it here
+
+ 16:53:32 <ogra_> it is very likely that we move on with that concept in later releases, for now the nexus7 is the focus though
+
+ 16:53:32 <rrnwexec> +1 for uniform hardware
+
+ 16:53:46 <Aeefire> i understand that.
+
+ 16:53:49 <achiang> if everyone has the same hardware, then that removes one more piece of friction between testers and developers
+
+ 16:53:59 <Aeefire> fine!
+
+ 16:54:06 <ogra_> the point is though ...
+
+ 16:54:16 <achiang> since we have standardized on the N7, it's unlikely that we'll move to a new platform any time soon
+
+ 16:54:19 <ogra_> the nexus brings us support for android devices in a certain setup in general
+
+ 16:54:26 <achiang> it was hard enough to get to here in the first place :)
+
+ 16:54:46 <ogra_> which means if someone wants to roll images for a device thats similar structured it shouldnt be hard to produce one
+
+ 16:55:31 <ogra_> i.e. if you feel like maintaining a nexus10 kernel and roll images as part of the community, you are invited to learn how and do so ;)
+
+ 16:55:49 <Aeefire> ya, but as you publish all your progress (?) other (interested and skillfull) people might port your builds to different devices/hardware and work on that in parallel
+
+ 16:55:50 <ogra_> we surely wont block people that do the "breoadening" work
+
+ 16:56:10 <ogra_> right
+
+ 16:56:28 <bootidsa> Sorry, On launchpad, by 'road-map' I meant 'milestones' .. update-able ??
+
+ 16:56:40 <achiang> yes, if you want to build on the progress, i suggest hanging out in #ubuntu-arm and asking questions. it's a friendly place :)
+
+ 16:56:50 * ogra_ regulary tries to update his tasks
+
+ 16:56:51 <dholbach> you should be able to just use the normal upgrade functionality within Ubuntu once we're on raring
+
+ 16:57:05 <achiang> bootidsa: i don't believe we use milestones in launchpad for this project
+
+ 16:57:09 <Aeefire> hehe right, but currently i just own an Asus EEE Pad Transformer Prime TF201, so that will probably exclude me from testing mostly, as i don't have the skills to port the builds myself ;)
+
+ 16:57:41 <achiang> ok, we have 3 minutes left
+
+ 16:57:44 <bootidsa> achiang, Wny not , how do I know where we are going/up to ?
+
+ 16:57:48 <achiang> any other questions?
+
+ 16:57:58 <Aeefire> and as poor student, a nexus 7 or 10 won't be incoming soon :) thanks for the answer!
+
+ 16:58:18 <ogra_> bootidsa, http://status.ubuntu.com/ubuntu-raring/ have a look there
+
+ 16:58:34 <dholbach> bootidsa, and https://bugs.launchpad.net/ubuntu-nexus7 is an additional TODO list, if that helps
+
+ 16:58:40 <ogra_> ( i dont thik there is a particular nexus76 centric filter though)
+
+ 16:58:47 <ogra_> -6
+
+ 16:59:05 <achiang> ok, i think it's time to wrap up
+
+ 16:59:13 <dholbach> thanks a lot everyone! this was great
+
+ 16:59:22 <achiang> thanks to kyleN__ for the valgrind discussion
+
+ 16:59:28 <kyleN__> yw
+
+ 16:59:31 <achiang> hopefully next week we'll have even more goodies for everyone
+
+ 16:59:37 <ogra_> ++
+
+ 16:59:43 <achiang> thanks all
+
+ 16:59:46 <achiang> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

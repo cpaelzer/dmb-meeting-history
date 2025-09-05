@@ -1,0 +1,388 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:02:18 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-27-18.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:02:30)
+ *Announcements
+
+ *Review of any previous action items
+
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libparallel-forkmanager-perl.html   (jdstrand, 18:38:56)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pyftpd.html   (jdstrand, 18:38:59)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/cabextract.html   (jdstrand, 18:39:02)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/tesseract.html   (jdstrand, 18:39:05)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ayttm.html   (jdstrand, 18:39:08)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:47:31 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (57)
+ * mdeslaur (41)
+ * sbeattie (17)
+ * tyhicks (17)
+ * micahg (15)
+ * jjohansen (9)
+ * meetingology (3)
+ * ubottu (2)
+ * crickets (1)
+
+
+
+== Full Log ==
+
+
+ 18:02:18 <jdstrand> #startmeeting
+
+ 18:02:18 <meetingology> Meeting started Mon Feb 27 18:02:18 2012 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:02:18 <meetingology> 
+
+ 18:02:18 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:02:29 <jdstrand> The meeting agenda can be found at:
+
+ 18:02:30 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:02:35 <jdstrand> [TOPIC] Announcements
+
+ 18:03:05 <jdstrand> * Andreas Moog (amoog) provided debdiffs for maverick-oneiric for gypsy (LP: #690323)
+
+ 18:03:09 <jdstrand> * Zubin Mithra (zubin-mithra) provided a debdiff for maverick for dhcpcd (LP: #931036)
+
+ 18:03:14 <jdstrand> Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)
+
+ 18:03:27 <jdstrand> [TOPIC] Review of any previous action items
+
+ 18:03:34 * sbeattie sighs
+
+ 18:03:36 * jdstrand sbeattie to follow up on qrt bugs from QA team
+
+ 18:03:40 <jdstrand> sbeattie: hehe
+
+ 18:04:01 * jdstrand moves along
+
+ 18:04:26 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:04:35 <jdstrand> I'll go first
+
+ 18:05:21 <jdstrand> last week I was on triage and updated UCT to integrate with Debian's secure-testing even more
+
+ 18:05:47 <jdstrand> I fixed some bugs in the triage process, so hopefully that will be even better
+
+ 18:05:56 <jdstrand> tyhicks: let me know if you encounter any bugs
+
+ 18:06:03 <jdstrand> this week I am on community
+
+ 18:06:10 <jdstrand> and am patch piloting today
+
+ 18:06:26 <jdstrand> libxml2 should go out today
+
+ 18:06:59 <jdstrand> I have not been able to catchup on archive admin deNEWs, or auditing. I'm hopeful I'll get caught up on that this week
+
+ 18:07:25 <jdstrand> between that and an embargoed issue I am working on, I should be able to get back to reactive work soonish
+
+ 18:07:47 <jdstrand> that should be it from me
+
+ 18:07:51 <jdstrand> mdeslaur: you're up
+
+ 18:08:07 <mdeslaur> I've finally pushed out the python-httplib2 updates this morning
+
+ 18:08:17 <jdstrand> \o/
+
+ 18:08:19 <mdeslaur> so everything that uses that library should be properly checking server certificates now
+
+ 18:08:38 <mdeslaur> I've uploaded some preliminary mysql updates to the security-proposed PPA
+
+ 18:09:01 <mdeslaur> I've just done basic upgrade testing with them, but haven't run the qa scripts yet, or the exhaustive test suite
+
+ 18:09:13 <mdeslaur> if anyone is interested, testing feedback is appreciated
+
+ 18:09:23 <mdeslaur> once I've tested them, I'll be pushing them to -proposed
+
+ 18:09:30 <mdeslaur> and will send out a public call for testing
+
+ 18:09:37 <mdeslaur> and will release them a week or two after that
+
+ 18:09:54 <mdeslaur> I also have some postgresql updates to build and release
+
+ 18:10:07 <mdeslaur> and will further go down the list if I have time
+
+ 18:10:13 <mdeslaur> I am in the happy place this week
+
+ 18:10:14 <jdstrand> mdeslaur: re mysql> seems reasonable all things considered. thanks for handling that :)
+
+ 18:10:21 <mdeslaur> that's it from me!
+
+ 18:10:25 <mdeslaur> sbeattie: you're turn
+
+ 18:10:40 <sbeattie> I'm in the happy place this week, also.
+
+ 18:10:40 <mdeslaur> s/you're/your/
+
+ 18:10:46 * jdstrand declares this "The Week of the Database"
+
+ 18:11:31 <sbeattie> I'm working on an eglibc update
+
+ 18:11:46 <sbeattie> also trying to get one last armel openjdk build to occur
+
+ 18:12:26 <sbeattie> Otherwise, I'm planning on getting to the open apparmor issues I have on my plate.
+
+ 18:12:35 <jdstrand> sbeattie: can you remind me how we will deal with this going forward? we will do a micro-release update in -proposed that will allow these to build on pandas?
+
+ 18:12:36 <sbeattie> I think that's it for me.
+
+ 18:12:46 <mdeslaur> sbeattie: do you think you'll get those two done this week? (eglibc and openjdk)?
+
+ 18:12:57 <jdstrand> (and by 'we', I don't necessarily mean you ;)
+
+ 18:13:25 <sbeattie> jdstrand: yes, this is the last upstream supported release of icedtea 1.8.x , so we need to transition away from there.
+
+ 18:14:21 <sbeattie> Although, I do fear that the panda issue is a toolchain or kernel issue (I can reproduce the build failure on the porter, and I get a message in dmesg when it fails)
+
+ 18:14:36 <mdeslaur> ouch
+
+ 18:14:40 <sbeattie> and that merely moving forward may not solve the issue.
+
+ 18:15:08 <sbeattie> mdeslaur: this week> yeah, that's the plan.
+
+ 18:15:15 <jdstrand> sbeattie: if you haven't (istr you have), please forward all your info to doko to see if it is a toolchain issue
+
+ 18:15:29 <sbeattie> jdstrand: I have not, will do.
+
+ 18:15:33 <mdeslaur> sbeattie: ok, cool...please do your essential work items after those two...if any other updates come up, throw them my way
+
+ 18:15:41 <sbeattie> okay.
+
+ 18:16:18 <sbeattie> micahg: I think you're up.
+
+ 18:16:22 <jdstrand> sbeattie: thanks! :)
+
+ 18:16:30 <mdeslaur> sbeattie: thanks!
+
+ 18:17:26 <micahg> so, I'm working on getting webkit building on stable releases, chromium beta won't even build a source package now, so I'll be looking into that, there's an icedtea regression that affects Firefox 10+ that someone needs to work on, I can take that if sbeattie is working on more pressing things
+
+ 18:17:47 <mdeslaur> micahg: what's the regression? do we have a fix for it?
+
+ 18:17:58 <micahg> mdeslaur: fix was uploaded to precise earlier today
+
+ 18:18:16 <micahg> bug 927282
+
+ 18:18:17 <ubottu> Launchpad bug 927282 in icedtea-web (Ubuntu) "Java crash with icedtea plugin and Firefox 10+" [High,Triaged] https://launchpad.net/bugs/927282
+
+ 18:18:46 <mdeslaur> micahg: ah, yes, could you please take that?
+
+ 18:18:50 <micahg> yes
+
+ 18:18:54 <mdeslaur> micahg: thanks
+
+ 18:18:57 <sbeattie> micahg: were you able to reproduce the crash? Have you confirmed that the precise version is fixed?
+
+ 18:19:16 <micahg> sbeattie: was able to reproduce the crash in oneiric VM, have not tested the precise fix yet
+
+ 18:19:31 <micahg> I'll test that locally first and then move to build
+
+ 18:20:10 <micahg> so, that's my top priority ATM (icedtea), then chromium beta and webkit as they're both long builds I can work on them in parallel
+
+ 18:20:35 <jdstrand> micahg: did you work out the OOM stuff?
+
+ 18:20:35 <mdeslaur> micahg: cool
+
+ 18:20:46 <micahg> oh, and powerpc is still broke for Firefox 11, I hope to grab a fix for that so we don't regress the stable releases
+
+ 18:21:19 <micahg> jdstrand: I forgot cyphermox gave me 2 build flags to fix that, I applied them wrong last night and will kick off a build shortly which hopefully will solve the OOM issues as well
+
+ 18:21:36 <jdstrand> cool
+
+ 18:21:47 <jdstrand> micahg: btw, is firefox 11 building now on older releases?
+
+ 18:22:03 <micahg> yeah, in the beta PPA (amd64/i386)
+
+ 18:22:29 <jdstrand> excellent
+
+ 18:22:40 <micahg> I'll have release builds next Friday, but I'd prefer not to wait until release week to fix powerpc
+
+ 18:23:01 <micahg> i.e. March 9
+
+ 18:23:34 <micahg> upstream is working on it, so it shouldn't be too much effort on my part
+
+ 18:23:36 <mdeslaur> micahg: is the fix known? don't spend too much time on powerpc
+
+ 18:23:42 <jdstrand> seems reasonable, but be mindful we can pull powerpc in later too if needed (it is no an officially supported arch as you know)
+
+ 18:24:14 <micahg> right
+
+ 18:24:25 <micahg> that's it for me then
+
+ 18:24:47 <tyhicks> I am in the triage role this week
+
+ 18:24:58 <sbeattie> micahg: poke me when you get to the openjdk patch and I give you a little guidance there.
+
+ 18:25:07 <sbeattie> (sorry tyhicks, go ahead)
+
+ 18:25:10 <tyhicks> np :)
+
+ 18:26:12 <tyhicks> I really feel like I can get the ruby1.8 update out today. I said that late last week, but the update breaks a number of puppet spec tests.
+
+ 18:26:51 <mdeslaur> tyhicks: did you figure out why?
+
+ 18:27:15 <tyhicks> I've now found bugs opened in the puppet bug tracker for almost all of the issues, so I am in the process of adding those to the expected failure lists in test-puppet.py and then I'll rerun everything again
+
+ 18:27:36 <mdeslaur> huh
+
+ 18:27:40 <jdstrand> huh
+
+ 18:27:45 <tyhicks> mdeslaur: Yeah, hash table list outputs being randomized after fixing the hash table DoS issue
+
+ 18:27:59 <jdstrand> ah, that would make sense
+
+ 18:28:04 <mdeslaur> ah, yes, that,s a common problem
+
+ 18:28:11 * jdstrand has to do something similar with the libxml2 tests
+
+ 18:28:15 <tyhicks> ok
+
+ 18:28:36 <tyhicks> After I get that out, I'm going to fix eCryptfs bug #842647
+
+ 18:28:38 <ubottu> Launchpad bug 842647 in eCryptfs "[git] file blocks duplicated at the end of the file" [High,In progress] https://launchpad.net/bugs/842647
+
+ 18:28:39 <jdstrand> tyhicks: after the meeting, can you paste the output of a test-puppet.py run?
+
+ 18:28:45 <tyhicks> jdstrand: sure
+
+ 18:29:18 <tyhicks> I've got a patch that I started on for that eCryptfs bug, I just need to finish it off and get it upstream
+
+ 18:29:42 <mdeslaur> tyhicks: cool...so that would pretty much be the last ecryptfs issue for precise?
+
+ 18:29:48 <tyhicks> mdeslaur: That bug should probably be retargeted for beta 2. Even if I get it fixed and upstream in the next couple days, I don't think it will make it into the beta1 kernel
+
+ 18:30:30 <mdeslaur> tyhicks: done
+
+ 18:30:51 <tyhicks> mdeslaur: I still need to quiet down the logging in some error paths (simple fix). I was waiting on the kernel team to decide about turning on CONFIG_DYNAMIC_DEBUG and they determined that it increases the kernel size too much.
+
+ 18:31:19 <mdeslaur> tyhicks: just replace all the warnings with "eCryptfs is working fine. No need to file a bug."
+
+ 18:31:37 <jdstrand> lol
+
+ 18:31:49 <jdstrand> nice one!
+
+ 18:31:49 <mdeslaur> "This isn't the corruption you are looking for."
+
+ 18:31:53 <jdstrand> 5
+
+ 18:31:53 <jdstrand> o/
+
+ 18:31:55 <tyhicks> mdeslaur: Heh... or at least ratelimit a few of printks so that a find command doesn't fill up the hard drive ;)
+
+ 18:31:59 <tyhicks> :)
+
+ 18:32:03 <mdeslaur> 5
+
+ 18:32:05 <mdeslaur> \o
+
+ 18:32:13 <jdstrand> :)
+
+ 18:32:38 <tyhicks> I've got a few kernel patches I need to review and apply and then I'll get back to my update queue after that
+
+ 18:32:45 <mdeslaur> tyhicks: cool
+
+ 18:32:47 <tyhicks> that's it for me
+
+ 18:32:59 <tyhicks> you're up jjohansen
+
+ 18:33:00 <jjohansen> I am pushing apparmor patches upstream this week and looking into the bugs that we hit on friday when pushing in the 2.8beta into precise.
+
+ 18:33:00 <jjohansen> That is a minimization bug, an auditing bug, and what looks like it might be a race in the test suite for mount (no bugs #s on those yet /me needs to sync with jdstrand first).
+
+ 18:33:00 <jjohansen> Beyond that I need to finish up some misc workitems, add more testing to mount rules, look at why overlayfs is causing bug#925028 when attach_disconnected is not used and the task is not in another namespace), and get the latest dbus stuff into a repository so work can begin on that again.
+
+ 18:33:32 * tyhicks wonders if jj wrote a bot that watches for me to say 'you're up jjohansen' :)
+
+ 18:33:35 <mdeslaur> jjohansen: cool
+
+ 18:33:58 <jjohansen> tyhicks: nah I stole the kt bot
+
+ 18:34:36 <jjohansen> hrmmm I think thats it from me
+
+ 18:35:01 <jjohansen> jdstrand: back to you
+
+ 18:35:01 <sbeattie> jjohansen: I think your status report took longer than an entire kernel team meeting...
+
+ 18:35:11 <mdeslaur> jjohansen: so, when do you think you'll be sending your stuff to the kernel team?
+
+ 18:36:03 <jjohansen> sbeattie: hehe, okay you caught me I didn't use the bot I was just waiting and pasted the text
+
+ 18:36:18 <jjohansen> mdeslaur: I sent them a pull request friday
+
+ 18:36:39 <mdeslaur> jjohansen: oh, is the minimization issue in user space only?
+
+ 18:37:09 <jjohansen> mdeslaur: well yes, and no.  There is a kernel interface bug it exposed as well that needs to be fixed and pushed
+
+ 18:37:18 <mdeslaur> jjohansen: ok, cool
+
+ 18:38:32 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:38:37 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:38:42 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:38:56 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libparallel-forkmanager-perl.html
+
+ 18:38:59 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/pyftpd.html
+
+ 18:39:02 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/cabextract.html
+
+ 18:39:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/tesseract.html
+
+ 18:39:08 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ayttm.html
+
+ 18:39:22 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:39:26 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:44:00 * mdeslaur hears crickets
+
+ 18:45:21 <crickets> chirp chirp
+
+ 18:45:33 <mdeslaur> hehe
+
+ 18:46:03 <mdeslaur> jdstrand: fall sleep? :)
+
+ 18:47:09 * jdstrand was enjoying the chirping
+
+ 18:47:20 <mdeslaur> chirp chirp
+
+ 18:47:27 <jdstrand> mdeslaur, sbeattie, micahg, tyhicks, jjohansen: thanks!
+
+ 18:47:31 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

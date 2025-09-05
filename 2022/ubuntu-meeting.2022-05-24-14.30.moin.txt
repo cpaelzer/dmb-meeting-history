@@ -1,0 +1,316 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 24 May at 14:30 &mdash; 14:47 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-05-24-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:34.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:35)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:43)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:44.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:44)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:46.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (73)
+ * slyon (18)
+ * sarnold (12)
+ * didrocks (10)
+ * joalif (8)
+ * jamespage (4)
+ * meetingology (2)
+ * ubottu (1)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:23 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:30 <joalif> o/
+
+ 14:30 <cpaelzer> hiho sarnold didrocks slyon jamespage joalif
+
+ 14:30 <cpaelzer> no previous actions to review
+
+ 14:31 <slyon> heyhey! o/
+
+ 14:31 <cpaelzer> let us get to the lists, accorindg to my inbox there might be a lot today
+
+ 14:31 <jamespage> o/
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:31 <cpaelzer> licensecheck would usually be foundations, seems like one of the explosions we also sometimes see with lintian
+
+ 14:32 <cpaelzer> slyon: is this known in foundations already?
+
+ 14:32 <slyon> nothing new, IMO. jaraco.context needs to be looked at by openstack
+
+ 14:32 <slyon> cpaelzer: yes. the MIR is already filed: https://launchpad.net/bugs/1972853
+
+ 14:32 <ubottu> Launchpad bug 1972853 in libxs-parse-sublike-perl (Ubuntu) "[MIR] lib*-perl" [Undecided, Confirmed]
+
+ 14:32 <cpaelzer> yes, but last week jamespage wasn't around
+
+ 14:32 <cpaelzer> he is now
+
+ 14:32 <slyon> we did a combined MIR for all of those *-perl packages
+
+ 14:32 <cpaelzer> jamespage: are you ok to take jaraco to your team?
+
+ 14:32 <cpaelzer> slyon: great
+
+ 14:33 <slyon> (actuall, Simon did, kudos!)
+
+ 14:33 <cpaelzer> on requests -> python-charset-normalizer, that was picke dup by server already (and had some help from people on +1 duty)
+
+ 14:33 <jamespage> cpaelzer: yep
+
+ 14:33 <cpaelzer> slyon: did that also include the perl things dependet on by sphinx?
+
+ 14:33 <slyon> Yes, we had olivier look into requests a bit, too. I think there was some exchange with the server team happening
+
+ 14:33 <cpaelzer> yes - that is what i referred to
+
+ 14:34 <slyon> cpaelzer: yes. it also includes the sphinx changes. they are all very similar
+
+ 14:34 <cpaelzer> libsoup is driven by the desktop team already
+
+ 14:34 <cpaelzer> libqrtr-glib as well
+
+ 14:34 <cpaelzer> nothing super new that needs action here I think
+
+ 14:34 <slyon> ACK
+
+ 14:34 <didrocks> o/
+
+ 14:34 * cpaelzer feels good that teams are more on top of things nowadays!
+
+ 14:34 <cpaelzer> #topic New MIRs
+
+ 14:34 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:35 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:35 <cpaelzer> yep that reflects what I meant with "seen many in my inbox"
+
+ 14:35 <sarnold> wow
+
+ 14:35 <cpaelzer> 13 to assign
+
+ 14:36 <cpaelzer> of which 5 are hopefulyl-easy-perl cases
+
+ 14:36 <jamespage> I can take that manila MIR - I've not been involved in that
+
+ 14:36 <cpaelzer> didrocks: which of the desktop cases do you think benefit the most from you knowing Desktop better than the others?
+
+ 14:36 <cpaelzer> thanks jamespage, assigning manila to you
+
+ 14:36 <joalif> @cpaelzer https://bugs.launchpad.net/ubuntu/+source/libfreeaptx/+bug/1971767 shouldn't be there, i've done the review and got an ack from security too
+
+ 14:36 <jamespage> beat you to it :)
+
+ 14:37 <didrocks> cpaelzer: I think wireplumber, libsoup3, gnome-console
+
+ 14:37 <cpaelzer> indeed joalif let me set the status right
+
+ 14:37 <cpaelzer> didrocks: would you take these then
+
+ 14:37 <didrocks> happy to take the 3 of them, not commiting to them for next week though
+
+ 14:37 <cpaelzer> then we can re-look at the list and look to assign the rest starting with me and slyon
+
+ 14:37 <cpaelzer> not-next-week is ok didrocks as long as it is not 6 weeks
+
+ 14:37 <slyon> yes. and joalif possibly?
+
+ 14:38 <didrocks> definitively won’t be 6
+
+ 14:38 * didrocks just won 3 new tabs
+
+ 14:38 <slyon> haha
+
+ 14:38 <sarnold> hehhe
+
+ 14:38 <cpaelzer> ok updated the freeaptx case joalif
+
+ 14:38 <joalif> thanks
+
+ 14:39 <cpaelzer> the perl'y things are probably all similar
+
+ 14:40 <cpaelzer> and in the past often got a fast pass not needing security,but one never knows
+
+ 14:40 <slyon> they should be straight forward, yes
+
+ 14:40 <cpaelzer> and it should be joalif or me
+
+ 14:40 <cpaelzer> let me try
+
+ 14:40 <cpaelzer> that leaves libldac libqtr-glib and ruby-webrick for joalif and slyon
+
+ 14:40 <cpaelzer> could you pick those as you see fit?
+
+ 14:40 <joalif> so what do I get ?
+
+ 14:40 <slyon> I dont know any of those, so don't care
+
+ 14:41 <slyon> I can take the first two I guess :)
+
+ 14:41 <joalif> me neither
+
+ 14:41 <slyon> libldac and libqtr-glib
+
+ 14:41 <slyon> that'd leave ruby-webrick for joalif ?
+
+ 14:41 <joalif> and libdac ?
+
+ 14:41 <cpaelzer> I have all assigned now
+
+ 14:41 <cpaelzer> as discussed
+
+ 14:41 <cpaelzer> thank you all
+
+ 14:42 <slyon> joalif: I'll take libldac, too
+
+ 14:42 <cpaelzer> with so much inbound and plenty of PTO days coming (christian central europe Thu + often Fri) and Memorial day in US we should try to be fast, but might not make all of them by next week
+
+ 14:42 <cpaelzer> just to set expectations for anyone watching, these might take a bit more
+
+ 14:42 <didrocks> just refreshing the page… feeling better
+
+ 14:42 <sarnold> \o/
+
+ 14:42 <cpaelzer> let us say 2 weeks :-)
+
+ 14:43 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:43 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:43 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:43 <sarnold> amurray finished libfreeaptx while I was asleep (distributed companies are neat :) and telegraf is in-progress, but this week is my cve triage week, so less progress there than one might wish
+
+ 14:43 <sarnold> oh sigh I jumped the gun didn't it
+
+ 14:43 <cpaelzer> you did
+
+ 14:43 <cpaelzer> none of the incompletes needs our acation
+
+ 14:43 <cpaelzer> one is from last weeks meeting
+
+ 14:43 <cpaelzer> and the other was just a tracking change
+
+ 14:44 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:44 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:44 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:44 <cpaelzer> see above :-)
+
+ 14:44 <cpaelzer> seen freeaptx and glad to hear that telegraf is ongoing
+
+ 14:44 <cpaelzer> sergiodj: ^^ FYI
+
+ 14:44 <cpaelzer> sarnold: given the peak on the MIR queue today you can let the team know that quite likely a similar sized peak will hit your queue
+
+ 14:45 <sarnold> *nod*
+
+ 14:45 <cpaelzer> not all might need a security review
+
+ 14:45 <cpaelzer> but relatively, there should be some
+
+ 14:45 <sarnold> now would be a good time to ask if anyone would like a change of pace :)
+
+ 14:45 <cpaelzer> TBH you (=security team) asked to get things early and we have seen many teams do so
+
+ 14:45 <cpaelzer> so we should feel good about this
+
+ 14:45 <sarnold> I do!
+
+ 14:46 <didrocks> indeed, we are still far from FF
+
+ 14:46 <cpaelzer> thanks on security then
+
+ 14:46 <sarnold> it really does feel like things are clipping along nicely
+
+ 14:46 <didrocks> or does it mean we will have a lot more at FF? :p
+
+ 14:46 <cpaelzer> indeed
+
+ 14:46 <sarnold> 22.04 was 'solid' things, and 22.10 is "lets get these new things going"
+
+ 14:46 <cpaelzer> no, major shifts e.g. pipewire in desktop are causing half of them
+
+ 14:46 <cpaelzer> #topic Any other business?
+
+ 14:46 <sarnold> none here
+
+ 14:46 <didrocks> nothing from me
+
+ 14:46 <slyon> none
+
+ 14:46 <joalif> nothing
+
+ 14:47 <cpaelzer> me neither
+
+ 14:47 <cpaelzer> ok, that was a lot already
+
+ 14:47 <cpaelzer> thank you all
+
+ 14:47 <cpaelzer> see you next week and happy reviewing
+
+ 14:47 <sarnold> thanks cpaelzer, all :)
+
+ 14:47 <slyon> thanks!
+
+ 14:47 <didrocks> thanks cpaelzer, all!
+
+ 14:47 <joalif> thanks all!
+
+ 14:47 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

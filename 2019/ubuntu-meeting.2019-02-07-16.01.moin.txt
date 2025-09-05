@@ -1,0 +1,568 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 07 Feb at 16:01 &mdash; 16:40 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-02-07-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:01.
+
+  * ''LINK:'' https://code.launchpad.net/~ubuntu-core-dev/grub/+git/ubuntu/+merge/362869 
+
+=== Bugs ===
+The discussion about "Bugs" started at 16:15.
+
+
+=== proposed-migration ===
+The discussion about "proposed-migration" started at 16:25.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/disco/update_excuses_by_team.html#foundations-bugs 
+  * ''ACTION:'' vorlon to follow up w/ apw
+  * ''ACTION:'' vorlon to follow up w/ apw about kernel autopkgtests blocking the world
+
+=== AOBB ===
+The discussion about "AOBB" started at 16:35.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:35.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items, by person ==
+
+ * vorlon
+  * vorlon to follow up w/ apw
+  * vorlon to follow up w/ apw about kernel autopkgtests blocking the world
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (51)
+ * xnox (36)
+ * bdmurray (28)
+ * sil2100 (26)
+ * cyphermox (21)
+ * ubottu (17)
+ * tdaitx (15)
+ * doko (13)
+ * rbalint (8)
+ * cjwatson (8)
+ * waveform (7)
+ * gaughen (7)
+ * meetingology (5)
+ * juliank (3)
+
+
+
+== Full Log ==
+
+
+ 16:01 <vorlon> #startmeeting
+
+ 16:01 <meetingology> Meeting started Thu Feb  7 16:01:10 2019 UTC.  The chair is vorlon. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:01 <vorlon> [TOPIC] Lightning round
+
+ 16:01 <vorlon> $ echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson juliank waveform)
+
+ 16:01 <vorlon> juliank xnox rbalint vorlon infinity mwhudson waveform cyphermox doko bdmurray sil2100 tdaitx
+
+ 16:01 <juliank> * apt work
+
+ 16:01 <juliank> I think that's it
+
+ 16:01 <xnox> skip
+
+ 16:01 <vorlon> heh :)
+
+ 16:02 <vorlon> rbalint:
+
+ 16:02 <rbalint> * released livecd-rootfs merging multiple fixes including fixing mount with latest util-linux
+
+ 16:02 <rbalint> * many unattended-upgrades 16.04 SRU verifications finding a few incomplete fixes
+
+ 16:02 <rbalint> * partner meeting
+
+ 16:02 <rbalint> * trying to reproduce resurfacing LP: #1766217, with no luck yet
+
+ 16:02 <ubottu> Launchpad bug 1766217 in update-manager (Ubuntu) "software updater presents an empty panel for updating" [Undecided,Confirmed] https://launchpad.net/bugs/1766217
+
+ 16:02 <rbalint> * gardening unattended-upgrades bugs and playing with pinning support
+
+ 16:02 <rbalint> (done)
+
+ 16:02 <juliank> rbalint: does it work? :D
+
+ 16:03 <rbalint> juliank, it seems so but i'm preparing a mr for apt to use -32767 for never
+
+ 16:03 <bdmurray> vorlon:
+
+ 16:03 <vorlon> * MP raised for LP: #564853, to fix spurious ucf prompts in grub
+
+ 16:03 <vorlon> * proposed-migration
+
+ 16:03 <vorlon> * discussions around MySQL 8.0 OpenSSL linkage
+
+ 16:03 <vorlon> * discussions around OpenJDK 11 in bionic
+
+ 16:04 <ubottu> Launchpad bug 564853 in grub2 (Ubuntu) "Spurious conffile prompts for /etc/default/grub" [Undecided,Confirmed] https://launchpad.net/bugs/564853
+
+ 16:04 <vorlon> (done)
+
+ 16:04 <vorlon> waveform:
+
+ 16:04 <bdmurray> no Adam?
+
+ 16:04 <rbalint> vorlon, \o/ for the grub fix
+
+ 16:04 <vorlon> bdmurray: evidently not
+
+ 16:04 <waveform> * validating upgrades to current bionic from beta on various Pi models; identified a few issues that need dealing with
+
+ 16:04 <waveform> * patched u-boot to deal with one aforementioned upgrade issue
+
+ 16:04 <waveform> * tested core16 and core18 images on CM3; awaiting delivery of CM3+ for further testing
+
+ 16:04 <waveform> * wiringpi nearly complete (now builds on PPA and result works, but one final warning to squash)
+
+ 16:04 <waveform> * RPi.GPIO package accepted so GPIO via Python should now be possible on arm64
+
+ 16:04 <waveform> * investigated systemd "degraded" state of arm64 Pi image on boot; network-wait and kernel-modules to blame
+
+ 16:04 <waveform> (done)
+
+ 16:05 <bdmurray> cyphermox:
+
+ 16:05 <cyphermox> SHIM review: CentOS, SuSE.
+
+ 16:05 <cyphermox> MIR reviews: gnome-remote-desktop, pipewire
+
+ 16:05 <cyphermox> e2fsprogs: SRU verification for bug 1798562
+
+ 16:05 <ubottu> bug 1798562 in e2fsprogs (Ubuntu) "After a side by side installation, resized filesystem is corrupted" [Critical,Fix released] https://launchpad.net/bugs/1798562
+
+ 16:05 <cyphermox> grub2 SRUs:
+
+ 16:05 <cyphermox> - bug 1814575: fix "db is empty" on Lenovos when checking signatures for kernels (cosmic, bionic)
+
+ 16:05 <cyphermox> - bug 1814403: land vorlon's fix for quick-boot-lvm detecting efi status (cosmic, bionic)
+
+ 16:05 <ubottu> bug 1814575 in grub2-signed (Ubuntu) "Updates failing because "db is empty"" [Undecided,New] https://launchpad.net/bugs/1814575
+
+ 16:05 <cyphermox> - bionic: bug LP: #1401532: disabling fallback to unsigned. in unapproved until post-pointrelease
+
+ 16:05 <cyphermox> partman-efi/ubiquity: early detection for missing ESP (SRU verification for bug LP: #1803031)
+
+ 16:05 <ubottu> bug 1814403 in grub2 (Ubuntu Bionic) "Latest update causes 30 sec. menu delay timeout" [High,Triaged] https://launchpad.net/bugs/1814403
+
+ 16:05 <cyphermox> dkms+shim-signed: currently verifying SRUs for xenial, trusty
+
+ 16:05 <ubottu> Launchpad bug 1401532 in grub2-signed (Ubuntu Bionic) "GRUB's Secure Boot implementation loads unsigned kernel without warning" [High,In progress] https://launchpad.net/bugs/1401532
+
+ 16:05 <cyphermox> scratching my head about other shim reviews.
+
+ 16:05 <ubottu> Launchpad bug 1803031 in grub-installer (Ubuntu) "error: cannot find EFI directory." [Undecided,Confirmed] https://launchpad.net/bugs/1803031
+
+ 16:05 <cyphermox> (done)
+
+ 16:05 <doko> - FOSDEM and OpenJDK committers workshop
+
+ 16:05 <doko> - OpenJDK 12 build 31
+
+ 16:05 <doko> - GCC 9 packages in -proposed, updating GCC 8 not to build the common packages
+
+ 16:05 <doko> - binutils 2.32
+
+ 16:05 <doko> - IBMz performance call
+
+ 16:05 <doko> - OpenJDK-11 update calls
+
+ 16:05 <doko> - finished the ftbfs regression spreadsheet for OpenSSL/OpenJDK/GCC/Python
+
+ 16:05 <doko> - preparing SRU's for the planned bionic GCC 7.4 update
+
+ 16:05 <vorlon> oh yes, I guess I did other grub stuff this week too, didn't I ;)
+
+ 16:05 <doko> (done)
+
+ 16:05 <xnox> i can go too, i think
+
+ 16:05 <bdmurray> xnox: I'll wait for you
+
+ 16:06 <xnox> * FOSDEM
+
+ 16:06 <xnox> - sent report
+
+ 16:06 <xnox> - did resolved talk
+
+ 16:06 <xnox> - "fixed" snapd/systemd/no /usr/local in PATH in bionic
+
+ 16:06 <xnox> - turns out we ship and use /usr/local a lot in production
+
+ 16:06 <xnox> * systemd v240 migrated \o/
+
+ 16:06 <xnox> * working on OpenSSL SRU fixing up leaf packages
+
+ 16:06 <xnox> (end)
+
+ 16:06 <bdmurray> had MP merged regarding migration of the ET mojo spec to use autocert
+
+ 16:06 <bdmurray> worked w/ webops regarding getting ET mojo spec to pass in jenkins w/ autocert
+
+ 16:06 <bdmurray> submitted RT regarding setting up dev ops env for geonames mojo spec
+
+ 16:06 <bdmurray> wrote blog post regarding whoopsie OOPS ID and .uploaded file
+
+ 16:06 <bdmurray> fixed apport bug 1658188 harder (missed something 2 years ago)
+
+ 16:06 <bdmurray> uploaded 18.04 SRU for apport bug LP: #1766337
+
+ 16:06 <bdmurray> reported debian bug 921581 regarding distro-info
+
+ 16:06 <ubottu> bug 1658188 in apport (Ubuntu Xenial) "/usr/share/apport/apport-gtk:TypeError:/usr/share/apport/apport-gtk@597:run_argv:run_crashes" [Medium,Fix released] https://launchpad.net/bugs/1658188
+
+ 16:06 <bdmurray> reported distro-info-data bug LP: #1814976 re eol-server dates
+
+ 16:06 <ubottu> Launchpad bug 1766337 in apport (Ubuntu Bionic) "uncaught python exception : UnicodeDecodeError: 'utf-8' codec can't decode byte; invalid continuation byte" [High,In progress] https://launchpad.net/bugs/1766337
+
+ 16:06 <ubottu> Debian bug 921581 in distro-info "Typo in error message regarding csv format" [Minor,Open] http://bugs.debian.org/921581
+
+ 16:06 <ubottu> Launchpad bug 1814976 in distro-info-data (Ubuntu) "eol-server dates are empty for current releases" [Undecided,New] https://launchpad.net/bugs/1814976
+
+ 16:06 <bdmurray> submitted (merged) PR re KPI for proposed migration by team
+
+ 16:06 <bdmurray> created graph for the KPI for proposed migration by team
+
+ 16:06 <bdmurray> uploaded python-apt w/ updated mirrors lists for Ubuntu 18.04.2
+
+ 16:06 <bdmurray> tested various installers of Ubuntu on an Intel NUC
+
+ 16:06 <bdmurray> ✔ done
+
+ 16:07 <sil2100> - SRU reviews and releases
+
+ 16:07 <sil2100> - Kernel releases
+
+ 16:07 <sil2100> - Weekend snapd regression, reviewing and releasing the SRU
+
+ 16:07 <sil2100> - Updating the crisis document
+
+ 16:07 <sil2100> - 18.04.2:
+
+ 16:07 <sil2100> * Clean up of old unverified langpacks
+
+ 16:07 <sil2100> * Preparing the .2 changelog on wiki
+
+ 16:07 <sil2100> * Creating, verifying and sending the pi3 arm64 core18 model assertion to the store
+
+ 16:07 <sil2100> * Adding changes to livecd-rootfs for building core18 arm64 images
+
+ 16:07 <sil2100> * Adding pi3-arm64 to cdimage
+
+ 16:07 <sil2100> * Coordinating stable snap releases for .2
+
+ 16:07 <sil2100> - Testing ubuntu-image 1.6 snap for stable promotion
+
+ 16:07 <sil2100> - raspi3 classic:
+
+ 16:07 <sil2100> * Sponsoring various bugfix uploads for Dave
+
+ 16:07 <sil2100> * Investigating ways to deal with raspi3-firmware and config.txt upgrades
+
+ 16:07 <sil2100> - Changed core18 snap-rebuild script to only rebuild core18 if ubuntu-base package contents change
+
+ 16:07 <sil2100> - Started work on old-releases-archival helper tool for cdimage
+
+ 16:07 <sil2100> - Drafted some work on core18 promotion script
+
+ 16:07 <sil2100> (done)
+
+ 16:07 <tdaitx> Short week: half-days last week, openjdk workshop on Monday
+
+ 16:07 <tdaitx> * openjdk-11 transition
+
+ 16:07 <tdaitx> - new ppas with -security only deps
+
+ 16:07 <tdaitx> - cherry-picking package versions to backport
+
+ 16:07 <tdaitx> - testing gradle/groovy toolchains with openjdk-lts and -security only
+
+ 16:07 <tdaitx> - re-checking rebuilds; number packages:
+
+ 16:07 <tdaitx> * 65 disco, 172 bionic, 262 from test-bionic
+
+ 16:07 <tdaitx> * limited to packages listed in openjdk-11 SRU exception/FFe request
+
+ 16:07 <tdaitx> - openjdk 11 transition meetings
+
+ 16:07 <tdaitx> Other:
+
+ 16:08 <tdaitx> * off next week in Malta, will drop in for some transition work
+
+ 16:08 <tdaitx> * fighting off the fosdem flu
+
+ 16:08 <tdaitx> (done)
+
+ 16:08 <doko> tdaitx: where is this list about the rebuilds?
+
+ 16:08 <cjwatson> vorlon: Where is this grub2/ucf MP?
+
+ 16:09 * cjwatson fails to find it on https://code.launchpad.net/~vorlon/+activereviews
+
+ 16:09 <cyphermox> https://code.launchpad.net/~ubuntu-core-dev/grub/+git/ubuntu/+merge/362869
+
+ 16:09 <tdaitx> doko: grepping through the newer csv files, filtering through failures, and matching according the the packages we asked for exception
+
+ 16:09 <cjwatson> nack :P
+
+ 16:09 <cjwatson> (thanks)
+
+ 16:10 <vorlon> cjwatson: https://code.launchpad.net/~ubuntu-core-dev/grub/+git/ubuntu/+merge/362869
+
+ 16:10 <vorlon> ah
+
+ 16:10 <cyphermox> nak again, I guess
+
+ 16:10 <cyphermox> I'm thinking this was a TCP exchange rather than a review
+
+ 16:10 <cjwatson> Yes, I already fixed this in Debian with much thought, you should just cherry-pick
+
+ 16:10 <xnox> i squinted at it
+
+ 16:10 <vorlon> ah
+
+ 16:10 <tdaitx> doko: I just counted how many packages, still going through the list for each rebuild, don't necessarily mean they are openjdk related
+
+ 16:11 <doko> tdaitx: please update the spreadsheet
+
+ 16:11 <cjwatson> I'm fairly certain that MP will make matters even more confusing :)
+
+ 16:12 <vorlon> anything else re: status?
+
+ 16:12 <cyphermox> I was kind of inching towards not merging these things at all if it could be avoided
+
+ 16:12 <cyphermox> ie. we write the config once, and if you're unhappy about timeout, well, change it
+
+ 16:12 <vorlon> cyphermox: nack :P
+
+ 16:13 <cyphermox> (at least as far as timeout is involved, other things might need merging)
+
+ 16:13 <vorlon> well, timeout perhaps
+
+ 16:13 <vorlon> but it's not timeout that prompted the server team's attention
+
+ 16:13 <cyphermox> timeout is currently THE thing that comes from debconf :)
+
+ 16:13 <cyphermox> no, I know
+
+ 16:13 <cjwatson> I'm pretty sure that https://salsa.debian.org/grub-team/grub/commit/e4e7c3fae0fe7682f4c1215daeb6830716eb1b58 is correct; I spent a couple of days going over every case I could think of and verifying behaviour.
+
+ 16:13 <cyphermox> but my point is like that, you essentially write /etc/default/grub once, and not touch it again
+
+ 16:13 <vorlon> yeah, nack
+
+ 16:13 <cjwatson> Please can you just resync with Debian because the divergence is getting out of hand?
+
+ 16:14 <cyphermox> cjwatson: yes
+
+ 16:15 <vorlon> [TOPIC] Bugs
+
+ 16:15 <vorlon> bdmurray:
+
+ 16:15 <bdmurray> should we target bug 1814109?
+
+ 16:15 <ubottu> bug 1814109 in libarchive (Ubuntu) "Nautilus corrupts 7z archive files when extracting via 'Extract here' context menu" [High,Triaged] https://launchpad.net/bugs/1814109
+
+ 16:17 <vorlon> bdmurray: seems like an upstream issue that we're unlikely to fix ourselves, but might as well target it
+
+ 16:17 <bdmurray> okay, doing so
+
+ 16:18 <bdmurray> I ran across bug 1797335 again, does anybody know the status of it?
+
+ 16:18 <ubottu> bug 1797335 in glibc (Ubuntu) "strstr() on ubuntu18.04 8 times slower than on ubuntu16" [Undecided,Confirmed] https://launchpad.net/bugs/1797335
+
+ 16:19 <doko> well, I think we are waiting on the glibc SRU ...
+
+ 16:20 <xnox> that's in proposed now, no?
+
+ 16:20 <sil2100> I think that one's in -proposed already
+
+ 16:20 <vorlon> infinity might know
+
+ 16:20 <xnox> STS/SEG uploaded, no?
+
+ 16:20 <sil2100> It is
+
+ 16:20 <sil2100> Along with binutils
+
+ 16:20 <vorlon> there is a glibc SRU in flight AIUI
+
+ 16:20 <bdmurray> So the bug didn't get referenced then?
+
+ 16:20 <sil2100> It's full of ADT regressions though, hope someone tracks those
+
+ 16:20 <bdmurray> Okay, I'll dig into it.
+
+ 16:20 <vorlon> but that bug lacks an SRU template, so
+
+ 16:20 <xnox> hmmm
+
+ 16:20 <xnox> it has https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1663280 referenced
+
+ 16:20 <ubottu> Launchpad bug 1663280 in glibc (Ubuntu Xenial) "Serious performance degradation of math functions" [High,Fix committed]
+
+ 16:21 <xnox> so maybe that's something else, no?!
+
+ 16:21 <sil2100> Oh
+
+ 16:21 <xnox> or under referenced?
+
+ 16:21 <xnox> or a duplicated, no?
+
+ 16:21 <xnox> it's different
+
+ 16:21 <xnox> but similar
+
+ 16:22 <bdmurray> Okay, thanks
+
+ 16:22 <vorlon> similifferent
+
+ 16:22 <sil2100> Indeed, ugh
+
+ 16:22 <bdmurray> That's it for rls- stuff. I tested bug 1805027 again w/ the systemd SRU and it seems fine to me.
+
+ 16:22 <ubottu> bug 1805027 in systemd (Ubuntu) "systemd-resolved can't resolve Comcast mail server addresses" [Undecided,Triaged] https://launchpad.net/bugs/1805027
+
+ 16:22 * sil2100 needs to actually open the bugs before commenting on them
+
+ 16:22 <bdmurray> Should I just mark it as a duplicate of bug 1811471?
+
+ 16:22 <ubottu> bug 1811471 in systemd "local resolver stub fails to handle multiple TCP dns queries" [Unknown,New] https://launchpad.net/bugs/1811471
+
+ 16:23 <xnox> if that's fixed now, yes
+
+ 16:23 <xnox> it should be, i think
+
+ 16:23 <vorlon> do we need to hurry through publication of a systemd SRU then before it gets stomped on by security?
+
+ 16:23 <xnox> and SRUs are done across the board
+
+ 16:23 <bdmurray> Well none of the original reporters have said anything...
+
+ 16:23 <xnox> vorlon, all systemd srus are published
+
+ 16:23 <vorlon> xnox: ok. any more pending? :)
+
+ 16:25 <bdmurray> that's it for me
+
+ 16:25 <vorlon> [TOPIC] proposed-migration
+
+ 16:25 <vorlon> [LINK] http://people.canonical.com/~ubuntu-archive/proposed-migration/disco/update_excuses_by_team.html#foundations-bugs
+
+ 16:25 <vorlon> doko: ?
+
+ 16:26 <xnox> so like
+
+ 16:26 <xnox> vorlon, bdmurray - not sure why SEG/STS did not upload https://bugs.launchpad.net/ubuntu/bionic/+source/systemd/+bug/1755863
+
+ 16:26 <ubottu> Launchpad bug 1755863 in systemd (Ubuntu Cosmic) "netbooting the bionic live CD over NFS goes straight to maintenance mode :" [Medium,In progress]
+
+ 16:26 <xnox> or should we, for the point release
+
+ 16:26 <xnox> as that fixes the ubiquity NFS installer
+
+ 16:26 <xnox> ddstreet, ^
+
+ 16:26 <vorlon> the ubiquity nfs installer that we don't support?
+
+ 16:27 <gaughen> no more bugs for point release
+
+ 16:27 <gaughen> bug fixes, that is
+
+ 16:27 <bdmurray> bugs or fixes?
+
+ 16:29 <gaughen> no bug fixes which may lead to bugs
+
+ 16:29 <gaughen> and no bugs too
+
+ 16:29 <vorlon> doko: do you think we need to discuss the packages currently in?  the list of blocked packages is fairly short, and I understand the causes of each
+
+ 16:30 <vorlon> I don't know what we're doing about the failing kernel package autopkgtests
+
+ 16:30 <gaughen> vorlon, I think the only one is pillow/libimagequant0
+
+ 16:30 <xnox> i did raise that question with the kernel team
+
+ 16:30 <vorlon> gaughen: that's an MIR waiting for security review
+
+ 16:30 <xnox> i believe we overtrigger tests
+
+ 16:30 <vorlon> xnox: disagree; we deliberately care to know if the toolchain regresses the kernel
+
+ 16:30 <xnox> because their test-suite runtime dependencies, are not in indication that runtime packages are regressing the new kernel
+
+ 16:30 <gaughen> kewl
+
+ 16:31 <vorlon> but the autopkgtests do not give good signal and I don't know who's owning this
+
+ 16:31 <xnox> vorlon, sure, but we don't care about running their java testsuite and seeing regression of those, upon non-toolchain uploads.
+
+ 16:31 <vorlon> overtriggering should not be a problem if the tests are good tests
+
+ 16:31 <xnox> the tests are good, but always run from -proposed
+
+ 16:31 <xnox> so we never have good SRU migration signals either.
+
+ 16:31 <vorlon> right, so to me that's not good
+
+ 16:32 <vorlon> so do we need to get the kernel team to fix the tests to skip based on the triggers listed in the environment?
+
+ 16:34 <vorlon> [ACTION] vorlon to follow up w/ apw
+
+ 16:34 * meetingology vorlon to follow up w/ apw
+
+ 16:34 <vorlon> [ACTION] vorlon to follow up w/ apw about kernel autopkgtests blocking the world
+
+ 16:34 * meetingology vorlon to follow up w/ apw about kernel autopkgtests blocking the world
+
+ 16:34 <xnox> vorlon, let me forward you on the email thread i had with kernel-team
+
+ 16:35 <doko> vorlon: no, nothing important now
+
+ 16:35 <vorlon> ok
+
+ 16:35 <vorlon> [TOPIC] AOBB
+
+ 16:35 <vorlon> [TOPIC] AOB
+
+ 16:35 <vorlon> anything else?
+
+ 16:35 <gaughen> vorlon, doko reached out to apw, let me rope you in
+
+ 16:40 <vorlon> doesn't sound like there's anything else
+
+ 16:40 <vorlon> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

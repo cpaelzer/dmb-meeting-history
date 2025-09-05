@@ -1,0 +1,231 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 07 Dec at 15:30 &mdash; 15:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-12-07-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 15:32.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:32)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:39)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:47)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:50.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (65)
+ * slyon (14)
+ * sarnold (7)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:28 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:30 <cpaelzer> ping sarnold jamespage slyon for MIR meeting
+
+ 15:30 <cpaelzer> ping ddstreet until we have a replacement
+
+ 15:31 <sarnold> good morning
+
+ 15:31 <slyon> o/
+
+ 15:31 <cpaelzer> not pinging did_rocks he is absent with a valid excuse :-)
+
+ 15:31 <sarnold> snow day? :)
+
+ 15:31 <cpaelzer> no snow here :-P
+
+ 15:31 <cpaelzer> Th elists looked full in a sneak peak, so let us get going
+
+ 15:32 <cpaelzer> #topic Review of previous action items
+
+ 15:32 <cpaelzer> we had none defined
+
+ 15:32 <cpaelzer> #topic current component mismatches
+
+ 15:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:33 <slyon> ccache vs hiredis is being discussed here: https://lists.ubuntu.com/archives/ubuntu-devel/2021-December/041710.html
+
+ 15:33 <cpaelzer> I've seen it, thanks slyon
+
+ 15:33 <cpaelzer> haproxy is being worked on
+
+ 15:33 <cpaelzer> sdl and django have new MIRs int he new queue today
+
+ 15:34 <cpaelzer> so what is really new
+
+ 15:34 <cpaelzer> jeepney -> *
+
+ 15:34 <slyon> so does dh-elpa
+
+ 15:34 <cpaelzer> jeepney is foundations
+
+ 15:34 <cpaelzer> I do not know why its dependencies exploded so much
+
+ 15:35 <cpaelzer> but slyon could you find someone to do an initial triage of what is going on ?
+
+ 15:35 <slyon> yeah I'm wondering as well...
+
+ 15:35 <cpaelzer> cherryp3/cheroot for oepnstack (no changes)
+
+ 15:35 <slyon> yes, I can do that
+
+ 15:35 <cpaelzer> a bunch of known cases and known false positives
+
+ 15:35 <cpaelzer> I see one more
+
+ 15:36 <cpaelzer> python-pysaml2 -> responses/importlib-resources/emlementpath/python-repoze
+
+ 15:36 <cpaelzer> jamespage: that is an openstack package
+
+ 15:36 <cpaelzer> since we didn't hear a ping from jamespage yet let me highlight coreycb ^^ FYI
+
+ 15:37 <cpaelzer> jamespage: if you read the log/ping later - would you find someone from your team to have a look what happened to python-pysaml2 please ?
+
+ 15:37 <cpaelzer> since it is new this week we do not have to panic and can go on for now IMHO
+
+ 15:37 <sarnold> on the component-mismatches.svg, there's screen-resolution-extra -> policykit-1-gnome, which feels vaguely familiar, but I don't see it in /lastlog
+
+ 15:38 <sarnold> is my /lastlog too short to see that's known? heh
+
+ 15:38 <cpaelzer> sarnold: it is a known false positive
+
+ 15:38 <sarnold> cool, thanks
+
+ 15:39 <cpaelzer> discussion was ~june 2021
+
+ 15:39 <cpaelzer> and once more a long while before
+
+ 15:39 <cpaelzer> #topic New MIRs
+
+ 15:39 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:39 <cpaelzer> I see slyon prepared dh-elpa
+
+ 15:39 <cpaelzer> since we prefer cross reviews I volunteer to take this one
+
+ 15:40 <slyon> thanks. the package wasn't in best shape, so I added a diff to improve that a bit (e.g. add some testing)
+
+ 15:40 <cpaelzer> slyon: the cmake tasks on that is only for trackign right?
+
+ 15:40 <slyon> correct
+
+ 15:40 <cpaelzer> ok setting it to invlaid then
+
+ 15:40 <cpaelzer> I'd love if LP had a "for tracking" status
+
+ 15:41 <cpaelzer> didrocks: let me know that he volunteers for the new pirpewire thing in there
+
+ 15:41 <cpaelzer> we have one from coreycb (which usually james takes)
+
+ 15:41 <cpaelzer> let me cover the next two which are simpler
+
+ 15:41 <slyon> didrocks: also re dh-elpa: I think this should be a desktop package, as it is a abstraction layer above emacsen-common (a desktop package)
+
+ 15:42 <cpaelzer> slyon: why is it a dep of cmake then?
+
+ 15:42 <slyon> because cmake did use emacsen-common in the past for its packaging, but switched to using emacsen-common via dh-elpa now
+
+ 15:43 <cpaelzer> slyon:  we can review it normally and you can sort out (or let mclemenceau ask to do) if the final subscriber would be desktop
+
+ 15:43 <slyon> yes
+
+ 15:43 <cpaelzer> that needs to be kown when being promoted, not earlier
+
+ 15:43 <cpaelzer> python-asgiref and libdecor-0 are from the server team
+
+ 15:43 <cpaelzer> I could review asgiref but libdecor-0 I filed so I do not want to self-review
+
+ 15:44 <cpaelzer> slyon: would you take libdecor-0 please ?
+
+ 15:44 <slyon> ok
+
+ 15:44 <cpaelzer> that leaves two
+
+ 15:45 <cpaelzer> xdg-desktop-portal-gnome from seb128 - usually those go to didrocks
+
+ 15:45 <cpaelzer> let me assign it and if not ok he can let us know
+
+ 15:45 <cpaelzer> and the python things from openstack by coreycb I assign to jamespage, please speak up (next time?) if that does not work out for you
+
+ 15:46 <cpaelzer> Ok, that is 1-2 reivews for each of us
+
+ 15:47 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:47 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:48 <cpaelzer> raqm is incomplete between didrocks and slyon
+
+ 15:48 <cpaelzer> anything worth to discuss here about that one?
+
+ 15:49 <slyon> waveform had been taking care of that and he's usually on top of it, so I will coordinate with him about raqm
+
+ 15:49 <cpaelzer> ok
+
+ 15:50 <cpaelzer> everything else is older
+
+ 15:50 <cpaelzer> #topic Any other business?
+
+ 15:50 <sarnold> nothing from me
+
+ 15:50 <slyon> nothing
+
+ 15:50 <cpaelzer> nothing from me either - other than the active cases we have assigned above
+
+ 15:50 <cpaelzer> let us try to get those processed pre-christmas
+
+ 15:51 <cpaelzer> so that they are ready or at least in the queue of security for them to have a better chance at prio-planning
+
+ 15:51 <cpaelzer> ok, closing then ...
+
+ 15:51 <cpaelzer> thanks everyone
+
+ 15:51 <sarnold> thanks cpaelzer, all :)
+
+ 15:51 <slyon> thank you o/
+
+ 15:51 <cpaelzer> didrocks: and jamespage: pelase read the backlog once you are around
+
+ 15:51 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

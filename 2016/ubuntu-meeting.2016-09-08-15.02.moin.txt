@@ -1,0 +1,479 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 08 Sep at 15:02 &mdash; 15:30 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-09-08-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:27.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (37)
+ * infinity (34)
+ * pitti (31)
+ * robru (21)
+ * xnox (20)
+ * caribou (19)
+ * tdaitx (14)
+ * cyphermox (13)
+ * bdmurray (10)
+ * ubottu (8)
+ * meetingology (3)
+ * chiluk (2)
+ * doko_ (1)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Thu Sep  8 15:02:08 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <slangasek> [TOPIC] Lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk mwhudson)
+
+ 15:02 <slangasek> tdaitx xnox sil2100 slangasek mwhudson infinity cyphermox pitti doko chiluk caribou robru barry bdmurray
+
+ 15:02 <slangasek> shall we?
+
+ 15:02 <infinity> If you insist.
+
+ 15:02 <tdaitx> wow, twice!
+
+ 15:02 <tdaitx> Short week: holiday on Wednesday, Sep/07 was Independence Day, time to protest against the "coup" all day (instead of just during the night time)
+
+ 15:02 <tdaitx> = proposed migration
+
+ 15:02 <tdaitx> - Reported linux-libc-dev headers mismatch between powerpc/ppc64 and all other archs; causes FTBFS on repsnapper (LP: #1619446)
+
+ 15:02 <tdaitx> - repsnapper FTBFS fix + workaround (LP: #1619289 and LP: #1619100)
+
+ 15:02 <tdaitx> - mozart can be removed, no reverse dependencies (other than it's own lib); reason: requires autoconf 2.13 to regenerate files, generated configure is incompatible with gcc6 (a test fails because g++ -E output is different than gcc5), and it is not being maintained any longer; also, the launchpad page project description is wrong; just kill the poor thing please
+
+ 15:02 <ubottu> Launchpad bug 1619446 in linux (Ubuntu) "mismatching headers between powerpc/ppc64el and other archs" [Medium,Triaged] https://launchpad.net/bugs/1619446
+
+ 15:02 <ubottu> Launchpad bug 1619289 in repsnapper (Ubuntu) "repsnapper FTBFS with gcc6" [High,Confirmed] https://launchpad.net/bugs/1619289
+
+ 15:02 <tdaitx> - investigated htseq being on hold on -proposed; caused by bcftools FTBFS on i386, powerpc, and s390x (chain dependency: htseq -> python-pysam -> bcftools, where bcftools is a new dependency of python-pysam) (full report LP: #1619530)
+
+ 15:02 <ubottu> Launchpad bug 1619100 in repsnapper (Ubuntu) "FTBFS on ppc64el: termios problems" [High,Confirmed] https://launchpad.net/bugs/1619100
+
+ 15:02 <tdaitx> - Freevo FTBFS due to some unknown behavior on dh scripts (?), unable to reproduce locally, has anyone ever seen this:
+
+ 15:02 <ubottu> Launchpad bug 1619530 in bcftools (Debian) "bcftools FTBFS on i386, powerpc, s390x due to failing tests" [Unknown,Confirmed] https://launchpad.net/bugs/1619530
+
+ 15:02 <tdaitx> works: dh_strip debug symbol extraction: enabling -a due to Build-Debug-Symbols: yes in /CurrentlyBuilding
+
+ 15:02 <tdaitx> fails: dh_strip debug symbol extraction: not enabling -a because /CurrentlyBuilding exists
+
+ 15:02 <tdaitx> works: INFO: Disabling pkgstriptranslations for PPA build
+
+ 15:02 <tdaitx> fails: pkgstriptranslations: processing freevo (in debian/freevo); do_strip: ...
+
+ 15:03 <tdaitx> (done)
+
+ 15:03 <slangasek> xnox:
+
+ 15:04 <xnox> porting cirros/buildroot to s390x
+
+ 15:04 <xnox> gnupg2 migration done
+
+ 15:04 <xnox> adt failures fixing (openstack / and generic)
+
+ 15:04 <xnox> collaboration on upstream test-suite fixes for s390x
+
+ 15:04 <xnox> zua further work on upgrade path
+
+ 15:04 <xnox> was out one day
+
+ 15:04 <xnox> (done)
+
+ 15:05 <slangasek> sil2100 is out
+
+ 15:05 <infinity> tdaitx: Those messages are from pkg-create-dbgsym
+
+ 15:06 <slangasek> * short week, on vacation last Thursday through Monday
+
+ 15:06 <slangasek> * Snappy ubuntu-core RTM milestone reached yesterday, kudos to the snappy team and thanks to all who had a part is supporting them
+
+ 15:06 <slangasek> * Tracked down an upstream mtools bug that was causing vfat corruption in snappy images (LP: #1619718)
+
+ 15:06 <ubottu> Launchpad bug 1619718 in mtools (Ubuntu Xenial) "ubuntu-image created vfat eats itself after a while (mcopy creates wrong subdirs)" [Critical,In progress] https://launchpad.net/bugs/1619718
+
+ 15:06 <infinity> tdaitx: Well, the first set is.  The second set is from pkgbinarymangler.
+
+ 15:06 <slangasek> * needs the xenial SRU reviewed and approved
+
+ 15:06 <slangasek> * working on a new release of ubuntu-image with a few more fixes
+
+ 15:06 <slangasek> * the ubuntu-image snap (which included workarounds) was used to produce all the images for the RTM release, no more u-d-f!
+
+ 15:06 <slangasek> * up next:
+
+ 15:06 <slangasek> * more ubuntu-image, console-conf work on the drive to GA milestone
+
+ 15:06 <slangasek> * on vacation next Monday, Thursday, Friday
+
+ 15:06 <slangasek> (done)
+
+ 15:08 <slangasek> infinity:
+
+ 15:08 <infinity> No mwhudson?
+
+ 15:08 <slangasek> never mwhudson, I put him in the list to confuse people
+
+ 15:08 <infinity> Well done.
+
+ 15:08 <infinity> Two day week, due to vacation and national holiday:
+
+ 15:08 <infinity> - Caught up on email, and learned a valuable lesson about ignoring mail for 10 days
+
+ 15:08 <infinity> - Working on integrating ubuntu-image in LP livefs builds
+
+ 15:08 <infinity> - Working with the kernel team on getting 4.6 into yakkety
+
+ 15:08 <infinity> - Preparing another glibc upload for yakkety and a xenial SRU
+
+ 15:08 <infinity> Next week:
+
+ 15:08 <infinity> - Finishing all the above, in the order listed
+
+ 15:08 <infinity> - Spinning up more powerpc VMs to better parallelise builds
+
+ 15:08 <infinity> Side note: Insomnia had me up all night, so hours might be slightly skewed today and tomorrow (ie: I might need a nap soon).
+
+ 15:08 <infinity> Less relevant side note: I've had La Isla Bonita stuck in my head for hours, and it's driving me insane.
+
+ 15:08 <infinity> (done)
+
+ 15:09 <cyphermox> - short week due to holiday on Monday
+
+ 15:09 <cyphermox> - grub2: UEFI IPv6 support landed in yakkety; preparing SRU
+
+ 15:09 <cyphermox> - partman-auto: fix software RAID over NVMe (LP: #1615650)
+
+ 15:09 <cyphermox> - helped out lamont with more debugging IPv6 netboot in UEFI w/ MAAS
+
+ 15:09 <ubottu> Launchpad bug 1615650 in partman-auto (Ubuntu Xenial) "Guided Partitioning does not list Software RAID devices on NVMe" [High,Fix committed] https://launchpad.net/bugs/1615650
+
+ 15:09 <cyphermox> - shim: small patch fixes for upstreaming EKU changes
+
+ 15:09 <cyphermox> - console-conf bug fix
+
+ 15:09 <cyphermox> - NM SRU'ing VPN split-tunnelling fixes.
+
+ 15:09 <cyphermox> (done)
+
+ 15:09 <tdaitx> infinity, and why would they trigger for one build and not another? any way I can emulate that?
+
+ 15:09 <pitti> infinity: the Madonna song?
+
+ 15:09 <pitti> autopkgtest:
+
+ 15:09 <pitti> - Port charms to xenial (mostly upstart → systemd, dropping backport hacks), redeploy production
+
+ 15:09 <pitti> - Fully move to python3 (xenial provides py3 libs for swift and nova)
+
+ 15:09 <pitti> - Adjust deployment script to work with juju-2.0
+
+ 15:10 <pitti> - http://autopkgtest.ubuntu.com: Add back initial statistics page and moderately tasteful homepage
+
+ 15:10 <pitti> - Update https://wiki.ubuntu.com/ProposedMigration/AutopkgtestInfrastructure for new web UI code
+
+ 15:10 <pitti> distro:
+
+ 15:10 <pitti> - Provide deputy system service manager for snapd backport; now mostly working fine, pending testing from tvoss (#1616422)
+
+ 15:10 <infinity> tdaitx: It's based on the contents (or existence) of /CurrentlyBuilding.  The docs are the code, unfortunately.
+
+ 15:10 <pitti> - systemd: Add systemctl option to wait for unit to become inactive (for convergence-y-replace-upstart)
+
+ 15:10 <pitti> - Debug netplan/networkd resolv.conf bug with ogra; prepare SRU (#1620559)
+
+ 15:10 <pitti> - Fix resolved handling of multiple trailing dots (#1600000)
+
+ 15:10 <pitti> - ldb: Drop python3 packages again to solve python3-talloc-dev NBS
+
+ 15:10 <pitti> - ask kenvandine to fix ubuntu-system-settings for the one remaining NBS, MP pending now
+
+ 15:10 <pitti> - apport: Review https://code.launchpad.net/~xnox/apport/xenial-s390x/+merge/304943
+
+ 15:10 <pitti> misc:
+
+ 15:10 <pitti> - Help tvoss with snapd backport packaging on trusty
+
+ 15:10 <pitti> - Investigate RabbitMQ charm hang in LXD (#1621237)
+
+ 15:10 <pitti> - Investigate eternal hang when deploying with juju-2 (#1621336)
+
+ 15:10 <pitti> - Meeting/discussions with smoser about cloud-init unit hooks that can support mkfs (#1611074) and package installation (#1576692)
+
+ 15:10 <pitti> ~~~~ ZE END ~~~
+
+ 15:10 <infinity> Der Enden?
+
+ 15:11 <slangasek> pitti: "prepare SRU" - of netplan or networkd?
+
+ 15:11 <xnox> infinity, there is ginger man spiced latte in starbucks and it's only 107 sleeps until "WHAM!" will hit the charts again.
+
+ 15:11 <slangasek> doko_: here?
+
+ 15:11 <pitti> slangasek: neither, it's the resolvconf integration with networkd, snappy uses that in xenial
+
+ 15:11 <slangasek> ok
+
+ 15:11 * xnox is not at cauldron
+
+ 15:11 <xnox> =(
+
+ 15:12 <robru> pitti: I emailed you, please reply
+
+ 15:12 <pitti> slangasek: they currently use their own networkd backport; I guess at some point we should backport that officially, but that should then also get the NM fixes
+
+ 15:12 <slangasek> pitti: how close are we to having a netplan we can SRU into xenial?
+
+ 15:12 <slangasek> their own networkd backport> ah, eew, yes
+
+ 15:12 <slangasek> chiluk: hi
+
+ 15:12 <pitti> slangasek: oh, is that urgent? I was going to wait until it at least gets the planned features, and matures a bit
+
+ 15:12 <chiluk> sorry slangasek.. dealing with an emergency.
+
+ 15:13 <slangasek> pitti: not urgent, I'm just wondering how close we are to it :)
+
+ 15:13 <infinity> pitti: And yes, the Madonna song. :P
+
+ 15:13 <slangasek> pitti: iterating in the ppa is obviously more efficient than iterating in SRU
+
+ 15:13 <chiluk> slangasek skip me please.
+
+ 15:13 <slangasek> chiluk: no worries
+
+ 15:13 <slangasek> caribou: ?
+
+ 15:13 <caribou> I'm here
+
+ 15:13 <caribou> dpkg status file corrupt
+
+ 15:13 <caribou> OOM killer induced crash
+
+ 15:13 <caribou> Trusty multipath-tools does not document /etc/multilpath/wwids upon restart
+
+ 15:13 <caribou> bugfix mostly
+
+ 15:13 <caribou> ☑ Done
+
+ 15:13 <robru> lp:bileto
+
+ 15:13 <robru> * moved to git
+
+ 15:13 <robru> * completed git support (one successful build in production so far)
+
+ 15:13 <robru> * completed ephemeral PPA transition (23 successful ephemeral PPAs so far)
+
+ 15:13 <robru> * many many many iterations to clean up fresh deployments
+
+ 15:13 <robru> * fix bug where re-publishing ticket didn't recognize it's own packages in -proposed and got confused, blocking publication of other packages in ticket
+
+ 15:13 <robru> lp:bileto charm
+
+ 15:13 <robru> * moved to git
+
+ 15:13 <robru> * many iterations to clean up fresh deployments
+
+ 15:13 <robru> * drop a bunch of obsolete jenkins bits
+
+ 15:14 <pitti> slangasek: after NMUing NM it's unblocked
+
+ 15:14 <caribou> xnox: I'm still hunting that dpkg /var/lib/dpkg/status file corruption btw
+
+ 15:14 <robru> lp:canonical-mojo-specs
+
+ 15:14 <robru> * pull charm from git
+
+ 15:14 <robru> * fix up fresh deployments
+
+ 15:14 <robru> lp:emacs
+
+ 15:14 <robru> * migrate to git (created lp mirror of upstream git)
+
+ 15:14 <robru> * update snapshot packaging to support builds from git
+
+ 15:14 <robru> * git-based daily build recipe
+
+ 15:14 <robru> (done)
+
+ 15:14 <bdmurray> investigation into retracer processes and respawn limits
+
+ 15:14 <bdmurray> reported daisy bug 1620823 re retracers leaking memory
+
+ 15:14 <bdmurray> submitted RT re daisy-retracer charm update for daily restarts
+
+ 15:14 <bdmurray> submitted RT regarding daisy frontend OOPSes (cassandra issue?)
+
+ 15:14 <ubottu> bug 1620823 in Daisy "retracers reach respawn limit" [Undecided,New] https://launchpad.net/bugs/1620823
+
+ 15:14 <bdmurray> modified DB query to read dpkghistory to get a list of packages to install and test for the HWE upgrade bug
+
+ 15:14 <bdmurray> tested installing packages found in crashes at errors to reproduce HWE upgrade bug
+
+ 15:14 <bdmurray> released update-manager / xorg SRU for trusty
+
+ 15:15 <bdmurray> investigation into ubuntu-release-upgrader autopkg test failure
+
+ 15:15 <bdmurray> reported sbuild & gpg bug (building for yakkety on xenial)
+
+ 15:15 <bdmurray> ✔ done
+
+ 15:15 <slangasek> robru: only one successful git landing so far?  slow uptake :)
+
+ 15:15 <xnox> caribou, =( is it reproducible now in automated way? do we need archive bisect to pin point it?
+
+ 15:16 <robru> slangasek: yeah! I thought people were clamoring for git, but I guess they're busy.
+
+ 15:16 <caribou> xnox: no & not sure it's comming from the archive as they used a landscape repositor
+
+ 15:16 <pitti> robru: replied
+
+ 15:16 <robru> pitti: thanks
+
+ 15:16 <infinity> I have a hard time believing dpkg is corrupting its own status file and only one person has noticed.
+
+ 15:16 <caribou> xnox: I've been reading dpkg source & trying things
+
+ 15:17 <infinity> That's fairly improbable.
+
+ 15:17 <caribou> xnox: I'll let you know if I get somewhere
+
+ 15:18 <caribou> infinity: it's on precise & happened on >500 desktops at the same time
+
+ 15:18 <infinity> caribou: But all in the same environment, so that still qualifies as "one person".
+
+ 15:18 <caribou> infinity: and not a corruption per say, 1300 package entries have part of their description field replaced by blanks
+
+ 15:18 <infinity> caribou: As in, no one else seems to have seen or reported this in Ubuntu or Debian, so... Hrm.
+
+ 15:19 <caribou> infinity: that's why I'm suspecting something on the Landscape Dedicate Server side
+
+ 15:19 <infinity> caribou: Copies of their /var/lib/apt/lists would be helpful, if you don't have that.
+
+ 15:19 <slangasek> only /part/ of their description field replaced by blanks?
+
+ 15:19 <infinity> Could be that they're serving their apt repo over a 110 baud coupler? ;)
+
+ 15:20 <caribou> infinity: slangasek: http://paste.ubuntu.com/23150531/
+
+ 15:20 <infinity> Description: package for doing things to stu*&^!#%^NO CARRIER
+
+ 15:20 <caribou> :D
+
+ 15:20 <xnox> slangasek, lines like "  .*" get replaced with " "
+
+ 15:20 <xnox> slangasek, that is leading two spaces, in a non-empty line, become empty line
+
+ 15:20 <infinity> caribou: Are those actually spaces, or non-printable binary vomit?
+
+ 15:20 <xnox> which is invalid format
+
+ 15:21 <xnox> slangasek, i somehow suspect something else external to dpkg if fiddling with the status file, does landscape dedicated client does that? or any bindings?
+
+ 15:21 <caribou> ^<space><space>$
+
+ 15:21 <slangasek> neato
+
+ 15:21 <slangasek> are they running dselect?
+
+ 15:21 <infinity> If that was apt, I'd say someone's producing bogus Translations-$$ files.
+
+ 15:22 <xnox> ah.
+
+ 15:22 <infinity> But dpkg status should only have the contents of the actual control files.
+
+ 15:22 <pitti> cyphermox: there's still a shim-signed in precise-proposed (http://people.canonical.com/~ubuntu-archive/pending-sru.html), do you know the status of that?
+
+ 15:22 <slangasek> xnox: I don't know what might do it
+
+ 15:22 <xnox> what if they lack Translations-en ?
+
+ 15:22 <infinity> xnox: See above.
+
+ 15:22 <cyphermox> pitti: status is it will die, replaced by a newer shinier shim
+
+ 15:22 <xnox> on their mirror.
+
+ 15:22 <infinity> xnox: Translations-$$ is only used by apt.  dpkg status files are pulled from DEBIAN/control
+
+ 15:22 * doko_ waves (without summary) and reminds caribou about the clamav related MIR
+
+ 15:22 <cyphermox> but perhaps I should validate it anyway before that
+
+ 15:22 <pitti> cyphermox: ok, so not to be released?
+
+ 15:23 <caribou> doko_: haven't forgot
+
+ 15:23 <xnox> caribou, do we have access to their mirror, over http or some such?
+
+ 15:23 <cyphermox> pitti: I'll get back to the bug and look through my notes to be sure, but we'll supercede it anyway
+
+ 15:23 <infinity> caribou: Anyhow, interested in as much debugging info as you can get from their apt lists, etc.  Can't make time this week, but I'm quite interested in WTF is going on.
+
+ 15:23 <cyphermox> pitti: in any case, I've tested and retested all of this multiple times
+
+ 15:23 <caribou> infinity: ok, will keep you posted
+
+ 15:23 <pitti> cyphermox: ok; there's one bug missing v-done, but otherwise nothing to say it should be blocked; I want to avoid that it accidentally gets released if it isn't supposed to
+
+ 15:24 <caribou> xnox: I'll see what I can get regarding the mirror
+
+ 15:27 <cyphermox> pitti: I just checked, it was verification-done for precise too
+
+ 15:27 <pitti> cyphermox: not bug 1574727
+
+ 15:27 <ubottu> bug 1574727 in shim (Ubuntu Xenial) "[SRU] Enforce using signed kernels and modules on UEFI" [Undecided,New] https://launchpad.net/bugs/1574727
+
+ 15:27 <slangasek> [TOPIC] AOB
+
+ 15:27 <slangasek> Anything else?
+
+ 15:28 <infinity> LAST NIGHT I DREAMT OF SAN PEDROOOOO!
+
+ 15:28 <infinity> (nothing else)
+
+ 15:28 <xnox> Mama Mia!
+
+ 15:29 <pitti> infinity: warm wind carried on the sea, it called to me! ♪ ♫
+
+ 15:30 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

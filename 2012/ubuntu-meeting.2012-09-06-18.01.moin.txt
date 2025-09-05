@@ -1,0 +1,454 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jono at 18:01:26 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-09-06-18.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+
+
+
+Meeting ended at 18:34:57 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jono (109)
+ * cielak (47)
+ * mfisch (27)
+ * s-fox (12)
+ * jaywink (5)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 18:01:26 <jono> #startmeeting
+
+ 18:01:26 <meetingology> Meeting started Thu Sep  6 18:01:26 2012 UTC.  The chair is jono. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:01:26 <meetingology> 
+
+ 18:01:26 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:01:33 <jono> cielak, s-fox all set?
+
+ 18:01:36 <s-fox> yes
+
+ 18:01:39 <cielak> yup
+
+ 18:01:40 <jono> no mfisch it seems
+
+ 18:01:56 <jono> so I figured we could use this as an opportunity to discuss the release
+
+ 18:02:04 <jono> I have been a bit out of the loop due to travel recently
+
+ 18:02:19 <jono> cielak, what is your take on the maturity of the daemon/.
+
+ 18:02:21 <jono> ?
+
+ 18:02:29 <cielak> the daemon is fine
+
+ 18:02:51 <jono> it seems like all the bugs we wanted to fix are fixed
+
+ 18:02:53 <cielak> there is only one low-priority bug left
+
+ 18:03:01 <cielak> but it does not matter much
+
+ 18:03:01 <jono> that can wait until 0.4 I think
+
+ 18:03:07 <jono> what is your take on the viewer?
+
+ 18:03:14 <cielak> viewer is worse
+
+ 18:03:26 <cielak> apparently the Gtk spacing issue is still present
+
+ 18:03:42 <jono> right, but is this a release blocker?
+
+ 18:03:51 <jono> I see the spacing but there is not much spacing there
+
+ 18:04:02 <cielak> for mfisch all trophies are displaying in one collumn
+
+ 18:04:15 <jono> oh I see
+
+ 18:04:20 <jono> is he on Precise?
+
+ 18:04:22 <cielak> that looks very wrong
+
+ 18:04:28 <cielak> I am not sure, but that is probable
+
+ 18:04:51 <jono> we should fix this on Precise for sure
+
+ 18:05:08 <jono> I also need to test if the Quickly changes work on Precise - I have a branch, I just couldnt test it last week
+
+ 18:05:08 <s-fox> i have the same problem
+
+ 18:05:13 <jono> will test today on my Precise machine
+
+ 18:05:17 <jono> s-fox, are you on Precise?
+
+ 18:06:11 <s-fox> 12.04 jono
+
+ 18:06:15 <jono> s-fox, cool
+
+ 18:06:28 <jono> s-fox, can you do me a favor and check out https://code.launchpad.net/~jonobacon/ubuntu-accomplishments-viewer/quickly-upgrade-test and tell me it runs
+
+ 18:06:33 <jono> obviously start the viewer first
+
+ 18:06:35 <jono> oops
+
+ 18:06:40 <jono> start the daemon first
+
+ 18:07:12 <jono> so it seems when we fix the bug on Precise we get it in Quantal, and vice versa
+
+ 18:07:39 <cielak> looks like a gtk upgrade introduced that change
+
+ 18:07:41 <s-fox> i'll check it out after the meeting.
+
+ 18:08:39 <jono> cielak, ok, so this sounds like we need to take it to seb
+
+ 18:08:50 <jono> s-fox, if you can check that would be great and then I can commit the fix
+
+ 18:09:08 <mfisch> here!
+
+ 18:09:15 <jono> hey mfisch
+
+ 18:09:19 <cielak> hopefully that will be fixed quickly
+
+ 18:09:20 <jono> we are just discussing the spacing bug
+
+ 18:09:22 <cielak> hi mfisch :)
+
+ 18:09:25 <mfisch> ok
+
+ 18:09:32 <mfisch> jono: I think it should be fixed for 0.3
+
+ 18:09:45 <jono> mfisch, unfortunately it sounds like a GTK issue
+
+ 18:09:50 <jono> so we are blocking on it
+
+ 18:10:15 <jono> I wonder if it is https://bugs.launchpad.net/ubuntu/+source/gtk+3.0/+bug/1036455
+
+ 18:10:17 <ubottu> Launchpad bug 1036455 in gtk+3.0 (Ubuntu) "GTK Rendering Issue (potentially a ScrolledWindow problem)" [Undecided,Fix committed]
+
+ 18:10:22 <mfisch> but unfortunately I dont have any great solutions
+
+ 18:10:29 <cielak> but if this is a gtk issue that is present in quantal
+
+ 18:10:57 <cielak> then it is actually correct that we encounter this bug on quantal and not precise (which was the case before)
+
+ 18:11:14 <mfisch> I see it on precise now
+
+ 18:11:17 <mfisch> as of about 2 weeks ago
+
+ 18:11:17 <jono> cielak, right, so I guess we should get the code working for Precise and then try to get the bug fixed in Quantal
+
+ 18:11:38 <cielak> as quantal is not yet released, we may want to fix the issue in precise, and release a broken viewer in quantal
+
+ 18:11:52 <cielak> maybe the gtk bug fix will fix the already released viewer too
+
+ 18:11:54 <cielak> but if not
+
+ 18:12:04 <mfisch> is the issue that the space reserved for the icons is too large?
+
+ 18:12:13 <cielak> then it won't be a big matter, as quantal is not considered as stable
+
+ 18:12:23 <jono> cielak, agreed
+
+ 18:12:25 <cielak> there are two linked issues
+
+ 18:12:31 <jono> mfisch, you are on Precise?
+
+ 18:12:42 <mfisch> jono: yeah
+
+ 18:12:43 <jono> mfisch, can you do me a favor and check out https://code.launchpad.net/~jonobacon/ubuntu-accomplishments-viewer/quickly-upgrade-test and tell me it runs
+
+ 18:12:43 <cielak> reserved space being too large and icons displayed in a single column
+
+ 18:12:52 <mfisch> jono: yeah
+
+ 18:12:55 <jono> mfisch, that branch has my quickly upgrade changes in it
+
+ 18:12:57 <jono> thanks
+
+ 18:13:08 <jono> so it sounds like this is the only bug we need to fix before release
+
+ 18:13:20 <jono> ooh I need to also hide the web gallery prefs
+
+ 18:13:23 <cielak> we'll also need to disable some functionality
+
+ 18:13:25 <cielak> exactly
+
+ 18:13:27 <mfisch> did we discuss the other "high" bug in the viewer?
+
+ 18:13:29 <jono> I will do that today
+
+ 18:13:36 <jono> I have the test plan about ready to go too
+
+ 18:13:37 <cielak> and I need to suggest something concerning that disabling
+
+ 18:13:41 <jono> cielak, oh?
+
+ 18:13:54 <cielak> that we forked the code into separate series for 0.3 and trunk
+
+ 18:14:08 <cielak> so it would work this way:
+
+ 18:14:25 <cielak> 1) the code is forked into 0.3 branch and trunk branch
+
+ 18:14:36 <cielak> 2) the code in 0.3 branch has that functionality disabled
+
+ 18:14:52 <jono> cielak, yup
+
+ 18:14:52 <cielak> 3) after releasing 0.3 we work in trunk branch
+
+ 18:14:58 <jono> cielak, totally agree
+
+ 18:15:04 <jono> so why don't I fork the branches today
+
+ 18:15:05 <mfisch> for the viewer?
+
+ 18:15:08 <cielak> 4) when we want, we can return to 0.3 to release it again
+
+ 18:15:08 <mfisch> or everything
+
+ 18:15:13 <cielak> just the viewer
+
+ 18:15:20 <mfisch> ok
+
+ 18:15:24 <jono> cielak, well we probably want to fork for the daemon and viewer
+
+ 18:15:31 <cielak> for we do not plan to do any post-release changes in daemon
+
+ 18:15:32 <jono> so post release we can release a point release if needed
+
+ 18:15:36 <cielak> do we?
+
+ 18:15:47 <jono> I think it is unlikely, but forking won't hurt us
+
+ 18:15:51 <mfisch> agreed
+
+ 18:15:51 <cielak> true
+
+ 18:16:00 <jono> I don't think we need to fork UCA
+
+ 18:16:05 <mfisch> me either
+
+ 18:16:07 <jono> ok so one other update
+
+ 18:16:15 <jono> the RT ticket for t.u.c has been escalated
+
+ 18:16:19 <jono> they will be working on it soon
+
+ 18:16:20 <cielak> we don't use milestones for UCA anyway ;)
+
+ 18:16:26 <jono> cielak, indeed :-)
+
+ 18:16:49 <cielak> how about the ticket concerning ubuntu forums?
+
+ 18:16:59 <jono> cielak, I haven't seen any progress on that
+
+ 18:17:13 <jono> my priority right now is t.u.c so we can release a bunch of things
+
+ 18:17:28 <jono> if s-fox can keep on top of the other ticket, that would be great
+
+ 18:17:37 <cielak> but there is nothing to keep on
+
+ 18:17:57 <jono> cielak, I mean encouraging them to focus on
+
+ 18:18:04 <jono> IS often need reminding :-)
+
+ 18:18:13 <cielak> reminding or annoying?
+
+ 18:18:32 <jono> a little bit of both :-)
+
+ 18:18:43 <jono> ok, so it sounds like we need to do the following:
+
+ 18:18:55 <jono> * mfisch and s-fox test my branch with the quickly upgrades on Precise
+
+ 18:19:05 <cielak> is it that they lost our ticket in the flood of thousand other important issues, or do they intentionally do not want to work on that?
+
+ 18:19:10 <jono> * we need to fix viewer to work on Precise
+
+ 18:19:20 <jono> cielak, they are just busy with a 1000 other things
+
+ 18:19:26 <jono> IS is *always* oversubscribed
+
+ 18:19:39 <jono> they are a small team with a large amount of tickets
+
+ 18:20:19 <cielak> alright, then we can at least hope pushing them now and then will bring some results :)
+
+ 18:20:32 <jono> yeah, this is not the first time this has happened
+
+ 18:20:39 <jono> the good news is that the t.u.c stuff is progressing
+
+ 18:20:58 <jono> cielak, would you mind taking care of making the viewer work again on Precise?
+
+ 18:21:08 <mfisch> I have a viewer question too
+
+ 18:21:13 <jono> mfisch, shoot
+
+ 18:21:26 <mfisch> there's another viewer bug marked high:
+
+ 18:21:31 <mfisch> #1009637
+
+ 18:21:37 <mfisch> which I cannot repro
+
+ 18:21:42 <cielak> jono: to be honest, I have not given a detailed look into that gtk issue and might have trouble determining what was exactly the reason for it
+
+ 18:21:55 <jono> cielak, no worries, I will take a look at it
+
+ 18:21:55 <cielak> (I would also need to install precise somewhere)
+
+ 18:22:02 <jono> cielak,  I can take care of it
+
+ 18:22:08 <jono> I have a Precise machine
+
+ 18:22:22 <mfisch> I highly recommend installing virtualbox for this type of thing
+
+ 18:22:32 <mfisch> I may also be able to take a look
+
+ 18:22:40 <mfisch> but I'm no gtk expert
+
+ 18:23:07 <jono> cielak, oh I fixed that
+
+ 18:23:09 <jono> ops
+
+ 18:23:13 <jono> mfisch, I fixed that
+
+ 18:23:19 <mfisch> jono: I thought so
+
+ 18:23:34 <mfisch> since it's marked for a milestonr
+
+ 18:23:48 <jono> yup
+
+ 18:23:54 <jono> ok cool, so it sounds like we have a plan
+
+ 18:23:59 <jono> any other topics for discussion?
+
+ 18:24:12 <mfisch> do we have a release date in mind?
+
+ 18:24:17 <mfisch> or just after fixes and testing
+
+ 18:24:26 <cielak> there were some contributors that expressed enthusiasm concerning the meeting
+
+ 18:24:41 <jono> mfisch, I think if we have our final branches today
+
+ 18:24:52 <jono> and then do some testing tomorrow and over the weekend, we can release on Monday
+
+ 18:25:04 <jono> Monday works for me as I am out next week and the week after with work
+
+ 18:25:09 <jono> cielak, indeed
+
+ 18:25:11 <cielak> jaywink, kokoye, are you with us?
+
+ 18:25:59 <jaywink> cielak yeah here, sorry been able to only pay half attention
+
+ 18:26:05 <cielak> no problem
+
+ 18:26:07 <jaywink> our girl going to bed
+
+ 18:26:22 <cielak> you did mention you wanted to get involved in testing, right?
+
+ 18:26:28 <jaywink> yes pls :)
+
+ 18:26:32 <jono> jaywink, awesome!
+
+ 18:26:40 <jono> jaywink, so I am going to have a test plan ready soon
+
+ 18:26:51 <jono> which will have a collection of tests you can run and a place to add feedback
+
+ 18:26:56 <jono> could you do that over the weekend?
+
+ 18:27:08 <jaywink> sure
+
+ 18:27:22 <jono> jaywink, awesome, I will mail the mailing list when it is ready to go
+
+ 18:27:47 <jaywink> I can try with two computers, one is kinda more messy with lots of ppa's (mine) and one is a cleaner install (wife)
+
+ 18:27:56 <jono> sounds great
+
+ 18:27:56 <mfisch> jono: about this quickly branch, am I testing the build or functionality (or both)?
+
+ 18:27:58 <jono> thanks, jaywink!
+
+ 18:28:04 <jono> mfisch, both
+
+ 18:28:47 <jono> mfisch, I hope it works
+
+ 18:28:59 <jono> then we ca commit the  changes to trunk and it will work on both precise and quantal
+
+ 18:29:17 <jono> any other business for discussion?
+
+ 18:30:11 <s-fox> where are we at with the web gallery ?
+
+ 18:30:20 <s-fox> cielak said something about it not quite being ready
+
+ 18:30:34 <jono> s-fox, the web gallery is making good progress but we can't launch it until t.u.c is deployed
+
+ 18:30:38 <jono> same for the social media support
+
+ 18:30:39 <cielak> well, I meant that the canonical IS did not yet deploy it :)
+
+ 18:30:40 <s-fox> k
+
+ 18:31:08 <jono> s-fox, the good news is when they deploy it we will be all good to go
+
+ 18:31:29 <s-fox> oh, my forums accomplishments integration is still being ignored / stalled / whatever
+
+ 18:31:43 <jono> s-fox, as I mentioned earlier, can you keep pressuring them to focus on it?
+
+ 18:32:00 <jono> s-fox, have one more go and then I will escalate it if there is no action
+
+ 18:32:06 <s-fox> sort of disappointing to be hit with silence. beginning to give up.
+
+ 18:32:37 <s-fox> okay. i will send another email.
+
+ 18:32:45 <jono> s-fox, don't be disappointed, this is nothing personal
+
+ 18:32:52 <jono> IS have thousands of tickets to deal with
+
+ 18:33:07 <cielak> some are important, some are not ;)
+
+ 18:33:11 <jono> we will get there, it just takes a little perseverance at times :-)
+
+ 18:33:13 <jono> indeed
+
+ 18:33:14 <s-fox> i know, and i understand. i think it is a case of priorities with resources
+
+ 18:33:20 <jono> indeed
+
+ 18:33:30 <jono> s-fox, but the least they can do is give us an accurate estimation
+
+ 18:33:41 <jono> s-fox, press them for a response and lets see what they say
+
+ 18:33:49 <s-fox> it would be nice to hear something, even a no but maybe later would be nice
+
+ 18:33:49 <jono> thanks s-fox, I really appreciate it :-)
+
+ 18:34:28 <jono> alrighty, I think we are done
+
+ 18:34:50 <jono> thanks everyone, and thanks in particular to cielak and mfisch for taking care of things while I have been out of the office
+
+ 18:34:57 <jono> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

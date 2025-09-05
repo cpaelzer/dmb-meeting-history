@@ -1,0 +1,367 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jsalisbury at 17:00:13 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-01-31-17.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/Meeting   (jsalisbury, 17:00:13)
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise   (jsalisbury, 17:00:14)
+ *ARM Status (ppisati)
+
+ *Release Metrics and Incoming Bugs (jsalisbury)
+''LINK:'' http://people.canonical.com/~kernel/reports/kt-meeting.txt   (jsalisbury, 17:01:33)
+
+ *Milestone Targeted Work Items (ogasawara)
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/canonical-kernel-distro-team-precise-alpha-2.html   (ogasawara, 17:02:03)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-ceph   (ogasawara, 17:02:22)
+
+ *Blueprint: hardware-p-kernel-power-management (cking)
+
+ *Status: Precise Development Kernel (ogasawara)
+
+ *Status: CVE's (apw)
+''LINK:'' http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt   (apw, 17:14:10)
+
+ *Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ *Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+
+
+Meeting ended at 17:16:26 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * apw (39)
+ * bjf (26)
+ * ogasawara (25)
+ * jsalisbury (24)
+ * ogra_ (12)
+ * tgardner (7)
+ * ppisati (5)
+ * meetingology (3)
+ * slangasek (2)
+ * cking (2)
+ * ubottu (1)
+ * smb (1)
+
+
+
+== Full Log ==
+
+
+ 17:00:13 <jsalisbury> #startmeeting
+
+ 17:00:13 <meetingology> Meeting started Tue Jan 31 17:00:13 2012 UTC.  The chair is jsalisbury. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 17:00:13 <meetingology> 
+
+ 17:00:13 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 17:00:13 <jsalisbury> ##
+
+ 17:00:13 <jsalisbury> ## This is the Ubuntu Kernel Team weekly status meeting.
+
+ 17:00:13 <jsalisbury> ##
+
+ 17:00:13 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/Meeting
+
+ 17:00:14 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise
+
+ 17:00:15 <smb> \o
+
+ 17:00:16 <jsalisbury> # Meeting Etiquette
+
+ 17:00:18 <jsalisbury> #
+
+ 17:00:20 <jsalisbury> # NOTE: '..' indicates that you are finished with your input.
+
+ 17:00:20 <ppisati> o/
+
+ 17:00:26 <jsalisbury> #       'o/' indicates you have something to add (please wait until you are recognized)
+
+ 17:00:51 <jsalisbury> [TOPIC] ARM Status (ppisati)
+
+ 17:00:53 <ppisati> P/omap4: a new kernel version (1405.7) was released, with improved PM support and fixes for the usb subsystem (CMA revert).
+
+ 17:00:56 <ppisati> P/master: problems with mmc were due to twl4030's GPIO lines being inactive at boot time since support was factored out in a kernel module; recompiling it in the main kernel made omap3 boards boot off the mmc again (12.20).
+
+ 17:01:00 <ppisati> SRU: new kernels were released for every supported arch/release.
+
+ 17:01:03 <ppisati> ..
+
+ 17:01:20 <jsalisbury> [TOPIC] Release Metrics and Incoming Bugs (jsalisbury)
+
+ 17:01:32 <jsalisbury> Release metrics and incoming bug data can be reviewed at the following link:
+
+ 17:01:33 <jsalisbury> [LINK] http://people.canonical.com/~kernel/reports/kt-meeting.txt
+
+ 17:01:38 <jsalisbury> ..
+
+ 17:01:49 <jsalisbury> [TOPIC] Milestone Targeted Work Items (ogasawara)
+
+ 17:02:03 <ogasawara> [LINK] http://status.ubuntu.com/ubuntu-precise/canonical-kernel-distro-team-precise-alpha-2.html
+
+ 17:02:04 <ogasawara> I've pushed out any open work items from Alpha-2 to Beta-1.
+
+ 17:02:13 <ogasawara> Additionally, some work items have come to my attention but I'm unaware
+
+ 17:02:14 <ogasawara> of anyone from our team actually working on them:
+
+ 17:02:22 <ogasawara> https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-ceph
+
+ 17:02:23 <ogasawara> [canonical-kernel-team] investigate large xattr support patch from Ted T'so in ext4: TODO
+
+ 17:02:23 <ogasawara> [canonical-kernel-team] potentially help push large xattr support to ext4: TODO
+
+ 17:02:27 <ogasawara> Did anyone attend that session at UDS and commit us to those work items?
+
+ 17:02:28 <ogasawara> I suspect these may just get postponed.
+
+ 17:02:52 <apw> those were for the cluster filesystem thing
+
+ 17:03:06 <apw> for use in openstack iirc
+
+ 17:03:07 <apw> ..
+
+ 17:03:35 <ogasawara> k, i'll follow up and see if I can find out more.
+
+ 17:03:48 <ogasawara> Also, https://blueprints.launchpad.net/ubuntu/+spec/ubuntu-arm-p-optional-initrd
+
+ 17:03:51 <ogasawara> [canonical-kernel-team] provide a kernel with uuid support in the internal initrd for measuring
+
+ 17:03:54 <ogasawara> I vaguely recall there were discussions regarding this work item at the
+
+ 17:03:55 <ogasawara> rally, but I'm unaware of what the outcome was?
+
+ 17:05:23 <tgardner> oagdunno where that one is. I think ogra was gonna do some testing
+
+ 17:05:32 <tgardner> ogasawara, ^
+
+ 17:05:41 <ogasawara> ack
+
+ 17:05:48 <ogasawara> ..
+
+ 17:05:56 <tgardner> punted...
+
+ 17:05:57 <ogra_> tgardner, well, the foundations WIs were all postponed/blocked yesterday
+
+ 17:06:21 <ogasawara> ogra_: blocked on the above work item?
+
+ 17:06:32 <ogra_> i can indeed do a test of with/without initrd, but that wont tell anything about with/with minimal initrd in kernel
+
+ 17:06:49 <ogra_> ogasawara, yes
+
+ 17:06:56 <ogra_> but i cant speak for slangasek :)
+
+ 17:06:59 <tgardner> ogra_, but don't we have an option to generate a minimal initrd now ?
+
+ 17:07:03 <ogra_> he set his items to blocked
+
+ 17:07:24 <ogra_> wrt my item i can easily provide you with data tomorrow if that helps anyone
+
+ 17:07:55 <tgardner> ogra_, I think those would be interesting numbers.
+
+ 17:08:04 <ogra_> tgardner, i dont think so ... when i said minimal i meant the in-kernel initrd just containing teh blkid command as we had discussed
+
+ 17:08:34 <ogra_> though i think slangasek would even like to see that done in-kernel with a patch (which i think you already said is to intrusive)
+
+ 17:09:10 <apw> ogra_, probabally we should discuss a plan for this feature offline, we are clearly confused on who is doing what when in which order
+
+ 17:09:26 <ogra_> apw, k
+
+ 17:09:27 <slangasek> tgardner: FSVO "minimal" that always includes udev and sundry other utilities
+
+ 17:09:56 <ogra_> slangasek, not necessarily, thats why we have devtmpfs, no ?
+
+ 17:09:57 <tgardner> slangasek, I guess I was referring to the "tailored" initrd so taht we could see if there was _any_ time differences
+
+ 17:10:12 <slangasek> there is no support for generating any genuinely minimal initramfs out of initramfs-tools
+
+ 17:10:43 <ogra_> right, it will always be bloated and at least contain both libc's
+
+ 17:12:10 <tgardner> ..
+
+ 17:12:19 <apw> we'll discuss it offline ..
+
+ 17:12:22 <jsalisbury> Everyone OK with moving on?
+
+ 17:12:30 <ogra_> ..
+
+ 17:12:33 <jsalisbury> [TOPIC] Blueprint: hardware-p-kernel-power-management (cking)
+
+ 17:12:36 <cking> nothing to report this week
+
+ 17:12:36 <cking> ..
+
+ 17:12:47 <jsalisbury> [TOPIC] Status: Precise Development Kernel (ogasawara)
+
+ 17:12:50 <ogasawara> Last week we rebased to v3.2.2 and uploaded.  There is a potential
+
+ 17:12:51 <ogasawara> regression in v3.2.2 that I'm concerned about, bug 923512.  jsalisbury
+
+ 17:12:51 <ogasawara> is working with the bug reporters and has a test kernel with the
+
+ 17:12:51 <ogasawara> offending patch reverted.  If anyone else has hw which uses the ath9k
+
+ 17:12:51 <ogasawara> driver, it would be nice if you could test.  I'd consider this would
+
+ 17:12:51 <ogasawara> warrent an upload to fix before the milestone which is in 2 days, Thurs
+
+ 17:12:52 <ubottu> Launchpad bug 923512 in linux (Ubuntu) "ath9k wireless stopped working after kernel upgrade to 3.2.0-12" [High,Confirmed] https://launchpad.net/bugs/923512
+
+ 17:12:53 <ogasawara> Feb 2.  This means we'd likely have to upload by end of day today.
+
+ 17:12:55 <ogasawara> ..
+
+ 17:13:22 <jsalisbury> [TOPIC] Status: CVE's (apw)
+
+ 17:14:09 <apw> 
+
+ 17:14:10 <apw> [LINK] http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt
+
+ 17:14:11 <apw> 
+
+ 17:14:12 <apw> Currently open CVEs for each supported branch:
+
+ 17:14:13 <apw> 
+
+ 17:14:14 <apw> || Package                                  || Open      || Defd ||
+
+ 17:14:15 <apw> ||                                          ||           ||      ||
+
+ 17:14:16 <apw> || linux Hardy                              ||   20 (+3) ||    8 ||
+
+ 17:14:17 <apw> || linux Lucid                              ||   14 (+2) ||    5 ||
+
+ 17:14:18 <apw> || linux Maverick                           ||   14 (+3) ||    5 ||
+
+ 17:14:19 <apw> || linux Natty                              ||   13 (+3) ||    5 ||
+
+ 17:14:20 <apw> || linux Oneiric                            ||   10 (+1) ||    5 ||
+
+ 17:14:21 <apw> || linux Precise                            ||    7      ||    5 ||
+
+ 17:14:22 <apw> || linux-ec2 Lucid                          ||   14 (+2) ||    5 ||
+
+ 17:14:23 <apw> || linux-fsl-imx51 Lucid                    ||   14 (+3) ||    4 ||
+
+ 17:14:24 <apw> || linux-mvl-dove Lucid                     ||    0 (-9) ||    0 ||
+
+ 17:14:25 <apw> || linux-mvl-dove Maverick                  ||   10 (+1) ||    4 ||
+
+ 17:14:26 <apw> || linux-ti-omap4 Maverick                  ||   15 (+3) ||    4 ||
+
+ 17:14:27 <apw> || linux-ti-omap4 Natty                     ||   12 (+5) ||    4 ||
+
+ 17:14:28 <apw> || linux-ti-omap4 Oneiric                   ||    7 (+1) ||    4 ||
+
+ 17:14:29 <apw> || linux-ti-omap4 Precise                   ||    5      ||    4 ||
+
+ 17:14:30 <apw> || linux-lts-backport-maverick Lucid        ||   14 (+3) ||    5 ||
+
+ 17:14:31 <apw> || linux-lts-backport-natty Lucid           ||   13 (+3) ||    5 ||
+
+ 17:14:32 <apw> || linux-lts-backport-oneiric Lucid         ||   10 (+1) ||    5 ||
+
+ 17:14:33 <apw> 
+
+ 17:14:34 <apw> Note that the table has a new column this week, the "Defd" column
+
+ 17:14:35 <apw> represents the number of CVEs which have been referred back to security for
+
+ 17:14:36 <apw> resoution, either for lack of a fix or if the fix is not clearly complete.
+
+ 17:14:37 <apw> 
+
+ 17:14:38 <apw> Nine new CVEs were added this week, of which about 6 have been resolved.
+
+ 17:14:39 <apw> We have also finally dropped lucid/mvl-dove from the table above.
+
+ 17:14:40 <apw> 
+
+ 17:14:41 <apw> ..
+
+ 17:14:59 <jsalisbury> [TOPIC] Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ 17:15:04 <bjf> Here is the status for the main kernels, until today (Jan. 24):
+
+ 17:15:04 <bjf> 
+
+ 17:15:05 <bjf> * Hardy - 2.6.24-30.98
+
+ 17:15:06 <bjf> * Nothing new this cycle.
+
+ 17:15:07 <bjf> 
+
+ 17:15:08 <bjf> * Lucid - 2.6.32-38.85
+
+ 17:15:09 <bjf> * Proposed is frozen due to 10.04.4 prep.
+
+ 17:15:10 <bjf> 
+
+ 17:15:11 <bjf> * Maverick - 2.6.35-32.65
+
+ 17:15:12 <bjf> * Verification testing.
+
+ 17:15:13 <bjf> 
+
+ 17:15:14 <bjf> * Natty - 2.6.38-13.55
+
+ 17:15:15 <bjf> * Verification testing.
+
+ 17:15:16 <bjf> 
+
+ 17:15:17 <bjf> * Oneiric - 3.0.0-16.27
+
+ 17:15:18 <bjf> * Verification testing.
+
+ 17:15:19 <bjf> 
+
+ 17:15:20 <bjf> Current opened tracking bugs details:
+
+ 17:15:21 <bjf> * http://people.canonical.com/~kernel/reports/kernel-sru-workflow.html
+
+ 17:15:22 <bjf> 
+
+ 17:15:23 <bjf> For SRUs, SRU report is a good source of information:
+
+ 17:15:24 <bjf> * http://people.canonical.com/~kernel/reports/sru-report.html
+
+ 17:15:25 <bjf> 
+
+ 17:15:26 <bjf> Future stable cadence cycles:
+
+ 17:15:27 <bjf> * https://wiki.ubuntu.com/PrecisePangolin/ReleaseInterlock
+
+ 17:15:28 <bjf> ..
+
+ 17:15:47 <jsalisbury> [TOPIC] Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+ 17:16:14 <jsalisbury> OK, Thanks everyone
+
+ 17:16:26 <apw> jsalisbury, thanks
+
+ 17:16:26 <jsalisbury> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

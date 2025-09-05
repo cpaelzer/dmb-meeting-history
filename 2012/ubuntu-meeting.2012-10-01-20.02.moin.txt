@@ -1,0 +1,269 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by kees at 20:02:25 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-10-01-20.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *New/MIR processing for new nvidia-experimental-NNN packages: bryce
+
+ *Scan the mailing list archive for anything we missed (standing item)
+
+ *Check up on community bugs (standing item)
+
+ *Other business
+
+ *Select a chair for the next meeting
+
+
+
+Meeting ended at 20:29:46 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * kees (29)
+ * pitti (24)
+ * cjwatson (23)
+ * bryceh (15)
+ * stgraber (4)
+ * soren (4)
+ * mdz (3)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 20:02:25 <kees> #startmeeting
+
+ 20:02:25 <meetingology> Meeting started Mon Oct  1 20:02:25 2012 UTC.  The chair is kees. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:02:25 <meetingology> 
+
+ 20:02:25 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 20:02:50 <kees> looks like no action review
+
+ 20:02:57 <kees> so, let's move right along...
+
+ 20:03:05 <kees> [topic] New/MIR processing for new nvidia-experimental-NNN packages: bryce
+
+ 20:03:13 <cjwatson> There was one action but I did it
+
+ 20:03:17 <cjwatson> (Followed up to the lists)
+
+ 20:03:34 <bryceh> thanks again for the new policy regarding the experimental drivers.
+
+ 20:03:35 <kees> cool, saw that just now.
+
+ 20:03:47 <kees> bryceh: sure! seems like a good plan.
+
+ 20:04:17 <bryceh> the issue is that I think there was some uncertainty by reviewers on what that means, so in practice it has not been speeding things up very much.
+
+ 20:04:37 <cjwatson> Have you actually had pushback, or is it just that all the reviewers are busy?
+
+ 20:04:43 <pitti> new processing seems to be rather simple to me, I guess these drivers look all alike?
+
+ 20:04:44 <bryceh> but the specific issue I need help with is when we get a new beta driver, it needs to go through several steps:  New review, MIR, then SRU
+
+ 20:04:50 <cjwatson> There's enough overlap between -sru and -release that release timing can cause issues
+
+ 20:05:00 <pitti> I don't see much purpose in an explicit MIR
+
+ 20:05:04 <bryceh> what i'm finding is that while each review is quick, it can take several days to catch someone's attention and do the review.
+
+ 20:05:13 <pitti> we don't usually do that for other cases either (libfoo2 vs. libfoo3 or so)
+
+ 20:05:21 <bryceh> cjwatson, busy/vacation/offline yeah
+
+ 20:05:56 * soren stumbles in
+
+ 20:05:58 <soren> Sorry I'm late.
+
+ 20:06:05 <pitti> I had expected the cycle to be "upload to -proposed queue" and u-sru NEWs it into -restricted
+
+ 20:06:13 <pitti> hey soren
+
+ 20:06:36 <bryceh> anyway, currently it appears I need to go to three separate individuals to do the review steps.  It would be nice if one person (the SRU admin, ala RAOF) could handle all approvals in one go.
+
+ 20:07:19 <cjwatson> So, RAOF has technical access to do both NEW and SRU (normally he'd only process the UNAPPROVED queue, but there's nothing actually stopping him from doing NEW for a stable series and in this case it seems reasonable)
+
+ 20:07:34 <cjwatson> I think then all we would need to do is agree that he has a class-action MIR?
+
+ 20:08:05 <kees> seems fine to me. I think that was the original intent, yes?
+
+ 20:08:08 <cjwatson> i.e. that the "main" (well, restricted) review for the mainline nvidia/fglrx drivers covers these variants too
+
+ 20:08:46 <cjwatson> Does the package need to go into the development series as well as part of this?
+
+ 20:09:16 <bryceh> cjwatson, yes we will always have the development series updated too.
+
+ 20:09:32 <kees> good, yeah. I would have expected that to be happening.
+
+ 20:09:42 <bryceh> although technically they're probably orthogonal since we move them back to nvidia-current on upgrade
+
+ 20:09:49 <bryceh> er, move people back
+
+ 20:10:06 <cjwatson> That's a problem because in general -sru does not have any queue admin access to the development series
+
+ 20:10:23 <cjwatson> If the person you were dealing with were in -archive then this wouldn't be a problem though
+
+ 20:10:54 <cjwatson> And actually RAOF is - not fully trained I think but he's expressed an interest in that and it's just waiting for me to get round to it
+
+ 20:10:58 <cjwatson> If I'm thinking of the right person
+
+ 20:11:36 <pitti> but I guess the time-sensitive part is actually precise-proposed?
+
+ 20:11:43 <stgraber> having RAOF do both the AA work for the current dev release and the SRU review would make sense as he's probably the one person who's the most clue about the package anyway
+
+ 20:11:43 <bryceh> pitti, that's correct
+
+ 20:11:51 <pitti> i. e. if the equivalent dev release NEWing takes some days longer, that's not a big deal?
+
+ 20:12:10 <bryceh> having it in quantal is really only important in order to proceed with doing the SRU
+
+ 20:12:49 <pitti> if it helps archive/SRU folks, I wouldn't mind to extend the MRE with some verbiage about delegating the SRU NEWing for nvidia-* to ubuntu-sru
+
+ 20:12:52 <bryceh> pitti, yeah, if we could do the precise-proposed and quantal as two separate processes then if getting it into quantal takes a while longer, that'd be ok
+
+ 20:13:32 <pitti> we've had wholly new drivers SRUed without any dev release counterpart
+
+ 20:13:34 <cjwatson> I think NEW authorisation where necessary for SRUs is implicit in the general delegation to -sru
+
+ 20:13:39 <cjwatson> Personally
+
+ 20:14:28 <pitti> it doesn't happen often (fortunately!), so I guess there's some uncertainty involved
+
+ 20:15:39 <bryceh> ok, thanks, yes it may be just that it needed some extra clarification what was permitted.  thanks
+
+ 20:16:17 <kees> do we have a specific action to take out of this? update documentation?
+
+ 20:17:03 <bryceh> kees, I have been documenting the process at https://wiki.ubuntu.com/X/DriverUpdates and will make sure it's clearly stated and referenced on that page
+
+ 20:17:18 <kees> bryceh: okay, that sounds good to me.
+
+ 20:18:11 <cjwatson> Yep, we don't seem to have any dissent here
+
+ 20:19:05 <kees> bryceh: did this cover everything for you?
+
+ 20:19:32 <bryceh> kees, yes thank you!
+
+ 20:19:35 <kees> cool
+
+ 20:19:56 <kees> [topic] Scan the mailing list archive for anything we missed (standing item)
+
+ 20:20:32 <kees> I don't see anything outstanding on the list. anyone see anything I'm not?
+
+ 20:20:54 <pitti> neither do I
+
+ 20:20:58 <soren> Nope.
+
+ 20:21:11 <stgraber> nope
+
+ 20:21:20 <kees> [topic] Check up on community bugs (standing item)
+
+ 20:21:23 <pitti> I changed my mutt config to show  TB mail in a different color now, and nothing jumps at me :)
+
+ 20:21:47 <kees> we have https://bugs.launchpad.net/ubuntu-community/+bug/174375 still showing, but it looks like we should unassign TB from it, based on discussion.
+
+ 20:21:49 <ubottu> Launchpad bug 174375 in ubuntu-community "Distribution drivers permissions may need redesign" [Medium,Confirmed]
+
+ 20:22:45 <kees> (or mark it fix-released)
+
+ 20:22:48 <kees> what do others think?
+
+ 20:23:55 <pitti> I'd close it now
+
+ 20:24:04 <pitti> if there are specific issues left, they should get more focussed bugs
+
+ 20:24:10 <cjwatson> Yeah, let's close it.  We don't gain much from it at this point.
+
+ 20:24:15 <kees> done.
+
+ 20:24:15 <pitti> but "may need redesign" sounds like a dead horse now
+
+ 20:24:30 <kees> [topic] Other business
+
+ 20:24:41 <kees> anything else we need to go over before picking the next chair?
+
+ 20:24:43 <cjwatson> As a point of reference, ~ubuntu-release now has queue admin access and still contains ~ubuntu-release-nominators (though that was mostly oversight), and to the best of my knowledge there's been zero abuse.
+
+ 20:24:44 <pitti> "There are currently no open bugs." \o/
+
+ 20:24:53 <cjwatson> Probably because it's not exactly something you can run into by accident.
+
+ 20:24:55 <kees> pitti: :)
+
+ 20:25:30 <cjwatson> (And if we cared, we could invert the team structure as I suggested, but I don't think I really care.)
+
+ 20:26:18 <kees> [topic] Select a chair for the next meeting
+
+ 20:26:23 <kees> okay, who's next?
+
+ 20:26:37 <pitti> that would be me, I think
+
+ 20:26:51 <soren> I won't be able to make it.
+
+ 20:26:51 <kees> mdz, no?
+
+ 20:26:52 <pitti> Oct 15 sounds ok
+
+ 20:26:54 <stgraber> yeah, as long as there's no abuse, status quo is fine. I'd still love to have that audit trail implemented though :)
+
+ 20:27:05 <mdz> I'm available October 15th I think
+
+ 20:27:06 <pitti> I'm going in the order at https://launchpad.net/~techboard/+members
+
+ 20:27:11 <kees> ah!
+
+ 20:27:16 <pitti> but I don't mind much
+
+ 20:27:17 <mdz> but pitti's suggestion is fine too ;-)
+
+ 20:27:27 <pitti> I'm just less sure about Oct 29, with UDS and such
+
+ 20:27:38 <cjwatson> Oct 15 is fine by me
+
+ 20:27:45 <kees> okay, we'll do first-name then, not nick. pitti it is
+
+ 20:27:46 <mdz> oct 29 is no problem for me
+
+ 20:28:06 <cjwatson> Oct 29 will be, er, either 2200 or 2300 at UDS (haven't looked up DST)
+
+ 20:28:18 <pitti> welcome to my world :)
+
+ 20:28:19 <cjwatson> Which I doubt I can make
+
+ 20:28:28 <pitti> 2200
+
+ 20:28:40 <cjwatson> (My family will be with me so I don't think I'll be doing lots of late-night hacking)
+
+ 20:28:43 <pitti> assuming that we readjust back to winter time
+
+ 20:29:18 <stgraber> yeah, the UDS meeting seems rather unlikely to happen as we'll likely be busy with other things
+
+ 20:29:38 <kees> nice and quick meeting, just under 30 min. :)
+
+ 20:29:46 <kees> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

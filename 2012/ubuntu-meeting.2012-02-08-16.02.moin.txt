@@ -1,0 +1,442 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:02:31 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-08-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *FF
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:42:33 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (53)
+ * slangasek (42)
+ * bdmurray (32)
+ * stgraber (26)
+ * doko (11)
+ * ubottu (11)
+ * barry (10)
+ * jhunt_ (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:02:31 <slangasek> #startmeeting
+
+ 16:02:31 <meetingology> Meeting started Wed Feb  8 16:02:31 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02:31 <meetingology> 
+
+ 16:02:31 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:02:38 <slangasek> doko: no, it's the usual time ;
+
+ 16:02:38 <slangasek> )
+
+ 16:02:45 <doko> heh
+
+ 16:03:09 <slangasek> [TOPIC] Lightning round
+
+ 16:03:34 <slangasek> $ echo $(shuf -e barry doko stgraber jhunt_ ev bdmurray slangasek)
+
+ 16:03:34 <slangasek> jhunt_ ev doko bdmurray slangasek stgraber barry
+
+ 16:03:41 <slangasek> no cjwatson today, per his mail
+
+ 16:03:50 <jhunt_> Working on bug 922754 - jason and myself both independently found the
+
+ 16:03:50 <jhunt_> same bug in openssh! :-) Reworking code to take account of such 'unusually
+
+ 16:03:50 <jhunt_> behaved apps'. Started to look at stgrabers upstart-containers MP.
+
+ 16:03:51 <jhunt_> ⏏
+
+ 16:03:52 <ubottu> Launchpad bug 922754 in upstart "booting without --no-log causes init and plymouth-upstart-bridge to spin at 100%" [High,Fix committed] https://launchpad.net/bugs/922754
+
+ 16:04:00 * jhunt_ now using erc :)
+
+ 16:04:23 <ev> - Summary email to Rick on the Open Invention Network meeting I attended at
+
+ 16:04:23 <ev> his request last week.
+
+ 16:04:23 <ev> - Verifying that Wubi 11.10 is not affected by the recent download fallback
+
+ 16:04:24 <ev> bug, as expected.
+
+ 16:04:24 <ev> - Merging Loic's Automake fixes for libtimezonemap.
+
+ 16:04:24 <ev> - Wired the DBus preferences to the configuration file and vice versa in the
+
+ 16:04:25 <ev> preferences dialog backend.
+
+ 16:04:25 <ev> - Added PolicyKit wrapping to the preferences dialog backend methods.
+
+ 16:04:27 <barry> jhunt_: rock!
+
+ 16:04:32 <ev> - Wired the checkboxes to DBus calls in the preferences page.
+
+ 16:04:33 <ev> - Set up DBus service activation for the preferences page backend.
+
+ 16:04:45 <ev> - Shut down the preferences page backend 60 seconds after the last call.
+
+ 16:04:45 <ev> - Fixed some bugs in the preferences page backend.
+
+ 16:04:45 <ev> - Uploaded a new whoopsie (0.1.5) with the completed preferences page.
+
+ 16:04:46 <ev> - Initial remodeling of the apport crash dialog in support of the new crash
+
+ 16:04:46 <ev> database.
+
+ 16:04:46 <ev> - Show the icons of the application with a bottom right error icon overlay,
+
+ 16:04:47 <ev> rather than just a generic error icon in the apport crash dialog.
+
+ 16:04:47 <ev> - Sorted travel for Strata.
+
+ 16:05:09 <ev> - Move obtaining the report information into a thread that's either called
+
+ 16:05:09 <ev> when the user presses the Show Details button or when they choose to report
+
+ 16:05:09 <ev> the bug, as discussed previously with Matthew and Martin.
+
+ 16:05:10 <ev> - Handle the different types of bug reports having slightly different UI in
+
+ 16:05:10 <ev> the apport crash dialog.
+
+ 16:05:10 <ev> - Wire up the crash counter field to the ignore future problems checkbox.
+
+ 16:05:11 <ev> - Fixed a few bugs in the new apport UI.
+
+ 16:05:11 <ev> - Built and uploaded a new Wubi for 10.04.4.
+
+ 16:05:19 <ev> - Found out from Matthew that GNOME has gone ahead and created their own page
+
+ 16:05:19 <ev> called Privacy in the Control Center. I'll have to rework the code as a
+
+ 16:05:19 <ev> patch that adds a Diagnostics tab. :(
+
+ 16:05:20 <ev> - Blacklist the report if the user checked the ignore future problems
+
+ 16:05:20 <ev> checkbox.
+
+ 16:05:30 <ev> - Better handling of calling into collect_info, as was the case previously,
+
+ 16:05:30 <ev> complete with error handling UI in threads.
+
+ 16:05:30 <ev> - Handle the administrator disabling crash reporting.
+
+ 16:05:30 <ev> - Actually notify the crash reporting daemon that there's a new crash to
+
+ 16:05:31 <ev> upload.
+
+ 16:05:31 <ev> - Started work on the KDE side of the apport changes.
+
+ 16:05:32 <ev> (done)
+
+ 16:05:52 <doko> - openjdk-6 and icedtea-web builds
+
+ 16:05:52 <doko> - fosdem (best news is that RedHat announced their openjdk ARM build does pass the TCK)
+
+ 16:05:52 <doko> - now at Linaro Connect
+
+ 16:05:53 <doko> - will upload eglibc-2.15 today
+
+ 16:06:03 <doko> ... if nobody intervenes
+
+ 16:06:06 <doko> done
+
+ 16:06:06 <ev> (was actually Canonical, not GNOME)
+
+ 16:06:22 <bdmurray> bug triage of ubiquity bug reports
+
+ 16:06:22 <bdmurray> updated ubiquity apport source package hook to include installer command line
+
+ 16:06:25 <bdmurray> iso-testing bug triage
+
+ 16:06:31 <bdmurray> review of merge proposals from Vadim Rutkovsky
+
+ 16:06:31 <bdmurray> testing ubiquity bug 924836 regarding ifupdown and plymouth
+
+ 16:06:31 <bdmurray> testing ubiquity bug 902479 regarding details (dupe searching)
+
+ 16:06:31 <bdmurray> testing ubiquity bug 645449 and finding duplicates of it
+
+ 16:06:33 <ubottu> Launchpad bug 924836 in resolvconf (Ubuntu Precise) "network-manager does not tell plymouth it has started" [High,Fix released] https://launchpad.net/bugs/924836
+
+ 16:06:35 <ubottu> Launchpad bug 830946 in ubiquity (Ubuntu Precise) "duplicate for #902479 Nothing displayed on embedded terminal." [Medium,Triaged] https://launchpad.net/bugs/830946
+
+ 16:06:36 <ubottu> Launchpad bug 645449 in ubiquity (Ubuntu Precise) "Ubiquity hangs at Keyboard layout if you use keyboard to navigate / select" [High,Confirmed] https://launchpad.net/bugs/645449
+
+ 16:06:41 <bdmurray> searched for DBus.Error.NoReply bug reports
+
+ 16:06:41 <bdmurray> added screenlog.0 log file to precise update-manager apport hook
+
+ 16:06:41 <bdmurray> debugging of collect bug data for arsenal reports
+
+ 16:06:41 <bdmurray> tested apt-clone and dist-upgrade of lucid to precise (bug 927993)
+
+ 16:06:42 <ubottu> Launchpad bug 927993 in apt (Ubuntu Precise) "distribution upgrade from lucid to precise failed with : package dpkg is already installed and configured" [High,Triaged] https://launchpad.net/bugs/927993
+
+ 16:06:53 <bdmurray> apport branch not to remove dependencies.txt from duplicates
+
+ 16:06:53 <bdmurray> updated meta-release files on changelogs.ubuntu.com to show 12.04 LTS
+
+ 16:07:04 <bdmurray> ⁂
+
+ 16:08:27 <slangasek> * alpha-2 out the door
+
+ 16:08:28 <slangasek> * interviewing
+
+ 16:08:28 <slangasek> * nothing much else to report
+
+ 16:08:28 <slangasek> * I'll be off Monday
+
+ 16:08:37 <slangasek> ə
+
+ 16:08:46 <stgraber> - Testing tracker
+
+ 16:08:46 <stgraber> - Help with Alpha 2 preparation
+
+ 16:08:46 <stgraber> - Wrote an initial to generate a list of releasable images from the tracker based on testing coverage
+
+ 16:08:49 <stgraber> - Networking
+
+ 16:08:52 <stgraber> - Some more work on resolvconf, reverting the init script change that was done last week and usnig a relative symlink for /etc/resolv.conf instead
+
+ 16:08:55 <stgraber> - Merged some fixes into netcfg, fixed it to deal properly with reoslvconf and fixed another small DHCPv6 issue.
+
+ 16:08:58 <stgraber> - Got daily d-i IPv6 testing running, just need to have the results pushed somewhere now
+
+ 16:09:01 <stgraber> - Follow-up on SRUs for ifupdown, ifenslave-2.6, vlan, bridge-utils. TREllis should have test results soon that will let us move all that to -updates (if succesful)
+
+ 16:09:04 <stgraber> - LTSP
+
+ 16:09:07 <stgraber> - Started preparing the LTSP upload for Precise, there are a lot of upstream changes, so currently testing in a PPA with a few LTSP developers (yeah, you, alkisg ;))
+
+ 16:09:10 <stgraber> - Reworked LTSP-Live, just need to do some more testing on it and that'll be on less WI :)
+
+ 16:09:13 <stgraber> - Containers
+
+ 16:09:16 <stgraber> - Updated upstart branch a bit, still pending review, hopefully this week.
+
+ 16:09:19 <stgraber> - Got LXC to build armel and armhf containers on x86! http://www.stgraber.org/2012/02/03/ever-wanted-an-armel-or-armhf-container-on-an-x86-machine-its-now-possible-with-lxc-in-ubuntu-precise/
+
+ 16:09:23 <stgraber> - Started looking at ways to allow for clean upgrades and dist-upgrades of running containers
+
+ 16:09:26 <stgraber> - TPM
+
+ 16:09:29 <stgraber> - tpm-tools is back in Ubuntu!
+
+ 16:09:31 <stgraber> - Now to do a few tests and documment that stuff (post-FF probably)
+
+ 16:09:34 <stgraber> - TODO
+
+ 16:09:36 <stgraber> - Trying to get as much as possible done before Feature Freeze, thankfully quite a few work items can be done after it.
+
+ 16:09:39 <stgraber> (done)
+
+ 16:09:42 <stgraber> *wrote an initial script
+
+ 16:10:24 <slangasek> armel containers on x86 - freaky stuff :
+
+ 16:10:25 <slangasek> )
+
+ 16:10:42 <slangasek> stgraber: do you have tpm-tools working on your system now?
+
+ 16:11:08 <stgraber> slangasek: I have it installed, not quite working yet but I need to try with a clean TPM and David's instructions
+
+ 16:11:14 * slangasek nods
+
+ 16:12:00 <slangasek> barry:
+
+ 16:12:05 <barry> prepared and conducted udd class for udw; updated udd online docs.  long discussions on various python security issues.  python3-pyqt4-dbus review. DM application.  helped out oem and other internal devs on some packaging issues.  updated patch for wadllib+python3 submitted to debian.  wrote up debian python packaging style guide proposal: <http://tinyurl.com/7g2ybep>. todo: gearing up for stable+1 maintenance work this month;
+
+ 16:12:06 <barry> coordinate w/pitti and SpamapS. off on friday. ⊗
+
+ 16:13:35 <slangasek> barry: has your DM application been approved?  (For some reason that's set up to where everybody can see the application, and then no one knows when it's accepted...)
+
+ 16:14:11 <barry> slangasek: i honestly don't know.  the docs say "wait a while" so i'm waiting for confirmation
+
+ 16:14:16 <slangasek> k :)
+
+ 16:14:22 <barry> ;)
+
+ 16:15:37 <slangasek> [TOPIC] FF
+
+ 16:15:58 * ev runs away screaming
+
+ 16:16:01 <slangasek> I'm told Feature Freeze is happening next Thursday :)
+
+ 16:16:19 <slangasek> so don't get caught holding a feature on Thursday, or it'll freeze to your skin and have to be surgically removed
+
+ 16:16:46 <ev> does our health insurance policy cover that?
+
+ 16:16:54 <barry> ev: not in the usa
+
+ 16:16:57 <slangasek> ;)
+
+ 16:17:45 <slangasek> if there are any features you're concerned about not having done before FF, talk to me (and the release team) *now*, don't wait 'til next Thursday
+
+ 16:18:27 <doko> I'm still toying with making ruby1.9 the default, have to talk with lucas
+
+ 16:19:12 <barry> doko: there was some discussion yesterday in #u-devel about numpy 1.6.  any thoughts on that?
+
+ 16:19:43 <barry> (jtaylor is interested in that)
+
+ 16:19:51 <doko> <doko> jtaylor, I don't see a reason not to do that. so if you have packages for numpy, scipy, and maybe others, let me know
+
+ 16:20:00 <slangasek> doko: is that something you'll coordinate with the server team as well?  Ruby is in main to support their apps specifically
+
+ 16:20:14 <barry> doko: fantastic, thanks
+
+ 16:20:20 <doko> slangasek, ok will pester Daviey
+
+ 16:21:39 <slangasek> [TOPIC] Bugs
+
+ 16:22:07 <slangasek> bdmurray: have we found all the bugs now, or are there still new ones?
+
+ 16:22:35 <bdmurray> slangasek: I'm pretty sure there are still some new ones
+
+ 16:23:13 <bdmurray> Oh, actually I found a funny one yesterday 928447
+
+ 16:23:20 <bdmurray> bug 928447
+
+ 16:23:21 <ubottu> Launchpad bug 928447 in ubiquity (Ubuntu) "possible to use a number for your computer's name" [Medium,New] https://launchpad.net/bugs/928447
+
+ 16:24:10 <slangasek> heh
+
+ 16:24:12 <bdmurray> seriously though - ev any progress with a wubi 247 for oneiric?
+
+ 16:25:39 <bdmurray> also bug 920479 has been around for some time
+
+ 16:25:40 <ubottu> Launchpad bug 920479 in pitivi (Ubuntu) "pitivi don't start" [Undecided,New] https://launchpad.net/bugs/920479
+
+ 16:25:42 <ev> bdmurray: I tried to reproduce this issue with the wubi installer from ubuntu.com attempting to use the development release payload, but it did not
+
+ 16:25:44 <bdmurray> er 902479
+
+ 16:26:01 <stgraber> bdmurray: yeah, I guess that's because of an older RFC stating an hostname can't start by a digit and some software still expect that to be true
+
+ 16:26:31 <bdmurray> ev: so what needs to happen next
+
+ 16:27:18 <ev> well, I fixed bug 924752 for precise
+
+ 16:27:20 <ubottu> Launchpad bug 924752 in Wubi "wubi r255 - Ubuntu Desktop failed to install from disk image - wrong download url" [Critical,Fix released] https://launchpad.net/bugs/924752
+
+ 16:27:33 <ev> I'm not convinced the "if I copy this off the cd and try to run it from the desktop" is really a bug
+
+ 16:28:16 <bdmurray> right but what I did is download from ubuntu.com and it tried to install the development.  I'll test it again though just to be really sure.
+
+ 16:28:19 <slangasek> stgraber: even in the current RFCs, hostnames aren't allowed to consist entirely of numbers
+
+ 16:28:26 <ev> bdmurray: please do
+
+ 16:28:48 <ev> if you can reliably reproduce it, I'd like to see some logs from that attempt
+
+ 16:28:53 <bdmurray> regarding numbers as hostnames was that it won't let you until you type in a password
+
+ 16:29:04 <bdmurray> ev: and is there a debug switch for wubi?
+
+ 16:29:14 <ev> make sure you're getting it from the page off of ubuntu.com
+
+ 16:29:27 <ev> bdmurray: nope, it dumps its brain to %TEMP%
+
+ 16:29:37 <ev> with debug logging the default
+
+ 16:30:08 <bdmurray> okay
+
+ 16:30:14 <bdmurray> bug 902479
+
+ 16:30:16 <ubottu> Launchpad bug 830946 in ubiquity (Ubuntu Precise) "duplicate for #902479 Nothing displayed on embedded terminal." [Medium,Triaged] https://launchpad.net/bugs/830946
+
+ 16:31:16 <bdmurray> its not a huge deal but rather ugly
+
+ 16:31:21 <ev> ask me about that one when we're deep in bug fixing mode :)
+
+ 16:32:29 <slangasek> ev: should we assign it to you in the meantime? :)
+
+ 16:32:50 <stgraber> slangasek: do you know which RFC(s)? 952 is not particularly clear on the "just a number" bit as the "can't start by a digit" was taking care of that case, then 1123 says that the "can't start by a digit" bit is dropped
+
+ 16:33:06 <ev> slangasek: you can assign to me as many bugs as you'd like, now the milestone field on the other hand... ;)
+
+ 16:33:14 <ev> s/,/./
+
+ 16:33:25 <slangasek> heh
+
+ 16:33:44 <ev> go ahead, but I promise not to touch it until we're past UI freeze
+
+ 16:33:53 <slangasek> stgraber: not offhand; but I'm sure that a hostname consisting entirely of numbers is still prohibited, and is routinely interpreted as a decimal encoding of an IP
+
+ 16:34:03 <slangasek> bdmurray: any other bugs?
+
+ 16:34:57 <bdmurray> yes bug 876298 seems to have come up again as there are some issues installing flashplugin
+
+ 16:34:58 <ubottu> Launchpad bug 876298 in update-manager (Ubuntu) "[MASTER] We need to better handle external payloads (Flash, msttcorefonts) not being available." [High,Triaged] https://launchpad.net/bugs/876298
+
+ 16:35:02 * doko is changing rooms, plenaries start at 8:30 at Linaro :-/
+
+ 16:35:09 * slangasek waves to doko
+
+ 16:35:38 <bdmurray> some installs are failing to resolve archive.canonical.com to get flash and then the install crashes
+
+ 16:35:52 <bdmurray> stgraber and I talked about the name resolution failure which is a separate issue
+
+ 16:36:17 <bdmurray> it just seems to me that fixing 876298 would help more people install
+
+ 16:37:27 <slangasek> barry: that one's assigned to you; have you had a chance to look into it at all?
+
+ 16:37:56 <barry> slangasek: i haven't but i will
+
+ 16:37:58 <stgraber> slangasek: right, the closest thing I found is in the DNS RFC (1912) which clearly states that a label can't be a number, though that's specifically for DNS records. Anyway, enough digging in RFCs for the day ;)
+
+ 16:38:11 <slangasek> barry: ok, thanks
+
+ 16:38:39 <slangasek> I also want to remind folks about http://reports.qa.ubuntu.com/reports/kernel-bugs/reports/rls-p-tracking-bugs.html
+
+ 16:38:57 <bdmurray> additionally would fixing hat help with bug 922949?
+
+ 16:38:58 <ubottu> Launchpad bug 922949 in ubiquity (Ubuntu) "installer crashed due to a corrupted package" [Medium,Triaged] https://launchpad.net/bugs/922949
+
+ 16:39:04 <slangasek> this has the list of bugs that we really really need to fix for release... and the numbers aren't going down very quickly :(
+
+ 16:39:59 <slangasek> some of them are targeted to beta-1 and are on track... but we probably shouldn't leave the rest to the end of the cycle, lest they fail to make the cut
+
+ 16:41:06 <slangasek> [TOPIC] AOB
+
+ 16:41:15 <slangasek> anything else?
+
+ 16:42:33 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

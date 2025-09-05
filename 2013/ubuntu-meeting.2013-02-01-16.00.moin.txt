@@ -1,0 +1,245 @@
+#title #ubuntu-meeting: nexus7 status
+
+Meeting started by ogra at 16:00:02 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-02-01-16.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+
+
+
+Meeting ended at 16:25:58 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ogra (62)
+ * seb128 (24)
+ * cjwatson (9)
+ * meetingology (3)
+ * xnox (1)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 16:00:02 <ogra> #startmeeting nexus7 status
+
+ 16:00:02 <meetingology> Meeting started Fri Feb  1 16:00:02 2013 UTC.  The chair is ogra. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00:02 <meetingology> 
+
+ 16:00:02 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:00:14 <ogra> so who is here ?
+
+ 16:00:25 <ogra> (sorry, i didnt manage to send an announcement  today)
+
+ 16:00:29 * xnox is here in spirit.
+
+ 16:00:42 <ogra> spirit is good :)
+
+ 16:01:09 <ogra> so ... seems the distro sprint for n7 work this week was quite a success
+
+ 16:01:15 <ogra> thanks to seb128 :)
+
+ 16:01:41 <ogra> i personally see the ram usage on an idle desktop being cut in half on my install (using htop)
+
+ 16:02:04 <seb128> thanks to everyone rather, good team work ;-)
+
+ 16:02:06 <ogra> battery status was fixed (thanks gema) and the device doesnt randomly shut down anymore
+
+ 16:02:19 <seb128> rotation and bluetooth working!
+
+ 16:02:27 <ogra> yeah
+
+ 16:02:45 <ogra> and it seems that TheMuso has an idea how to get sound working without suspend cycle
+
+ 16:03:17 <ogra> i personally palyed a bit with gps ... i can gpsd to connect and init the device but sadly thats it
+
+ 16:03:27 <ogra> (suspecting we need some firmware here)
+
+ 16:03:41 <ogra> oh, and i worked massively on the interactive cpufreq scheduler
+
+ 16:03:55 <ogra> the load used to be above 1 all time ... this was fixed this week
+
+ 16:04:21 <ogra> our worst bug wasnt fixed yet though
+
+ 16:04:25 <ogra> bug 1068994
+
+ 16:04:28 <ubottu> bug 1068994 in ubuntu-nexus7 "button1 gets stuck after a while" [Critical,Confirmed] https://launchpad.net/bugs/1068994
+
+ 16:04:59 <ogra> ignoring that obstacle i think we made some leap jump this week in nexus7 support :)
+
+ 16:05:08 <ogra> and work seems to be going on :)
+
+ 16:05:32 * ogra has not much to add, anyone else ?
+
+ 16:05:52 <seb128> yeah, let's keep going this way now that we are started ;-)
+
+ 16:06:02 <ogra> ++
+
+ 16:06:21 <ogra> feels like everyone in the distro team actually actively uses the nexus now
+
+ 16:06:30 <seb128> we had quite some valgrind/leak fix actions from some people this week (thanks cjwatson especially ;-)
+
+ 16:06:40 <seb128> still quite some of those to do if anyone feels like working on that
+
+ 16:06:54 <seb128> if you do and need some guidance feel free to ask on #ubuntu-devel or to ping me directly
+
+ 16:07:08 <cjwatson> ogra: cut in *half*?  wow, that's considerably better than I expected
+
+ 16:07:12 <ogra> davmor2 gave a nice hint to statgrab too
+
+ 16:07:35 <seb128> I'm a bit surprised by the half as well
+
+ 16:07:43 <cjwatson> I thought we'd managed maybe 10%
+
+ 16:07:47 <ogra> cjwatson, overall the desktop used to take above 600M for me when idling, i'm at 357M now
+
+ 16:07:49 <seb128> we didn't did really big improvement
+
+ 16:08:17 <seb128> out of lightdm which cut 25M by not putting the whole process in locked memory
+
+ 16:08:18 <cjwatson> hm, yes, 400 or so for me
+
+ 16:08:24 <ogra> (currently with xchat and ff with 6 busy tabs open htop shows 570)
+
+ 16:08:37 <cjwatson> (that said I have swap)
+
+ 16:08:46 <ogra> filled ?
+
+ 16:08:54 <cjwatson> 130M used
+
+ 16:08:54 <ogra> i have 17M in use
+
+ 16:09:01 <ogra> intresting
+
+ 16:09:32 <ogra> oh, big thanks to Laney for uploading maliit
+
+ 16:09:42 * ogra cant wait to see it coming out of NEW
+
+ 16:09:45 <seb128> that as well indeed
+
+ 16:09:56 <seb128> you can get in laney's ppa if you want to try
+
+ 16:10:05 <ogra> there is hope it doesnt eat the 30M that onboard takes
+
+ 16:10:07 <seb128> I will try to NEW review it today or monday if I fail getting to it today
+
+ 16:10:29 <cjwatson> Do you think we've hit the second memory target on https://wiki.ubuntu.com/Nexus7/raring-targets ?
+
+ 16:10:58 <ogra> why is instant on striked out there ?
+
+ 16:11:07 <ogra> resume is pretty instant here
+
+ 16:11:20 <cjwatson> it links to an open bug
+
+ 16:11:26 <cjwatson> which is actually more about slow suspend
+
+ 16:11:32 <ogra> yeah
+
+ 16:11:52 <ogra> well, i havent run a desktop with FF and TB running yet
+
+ 16:12:02 <ogra> not sure if that runs well within 1G
+
+ 16:12:19 <ogra> without TB i'm 100% positive we have hit that target
+
+ 16:12:47 <ogra> the desktop seems to have a spike hwen starting though
+
+ 16:13:04 <ogra> i dont see the 3-400M right after start, it spikes above that
+
+ 16:13:28 <ogra> there is probably still work to do
+
+ 16:13:45 <ogra> else i would have said we even have the 3rd marker
+
+ 16:14:04 <seb128> there are still quite some processes that run and could be not running
+
+ 16:14:16 <seb128> we will get another set of improvement when upstart for session lands
+
+ 16:14:30 <ogra> we're pretty close to the 3rd marker for battery life too i think
+
+ 16:14:56 <ogra> seb128, yeah, to me it looks more like there are processes started that then shut down after a while
+
+ 16:15:29 <seb128> ogra, that's orthogonal, but yeah we have a bit of run and exit on idle
+
+ 16:15:35 <seb128> e.g oneconf does that
+
+ 16:16:45 <ogra> right, but that keeps us bunmping above the 512M
+
+ 16:16:54 <ogra> even though it goes down again
+
+ 16:17:02 <cjwatson> ogra: Have we hit the first two battery markers?
+
+ 16:17:44 <ogra> we're at least close since the interactive governor behaves
+
+ 16:18:17 <ogra> i think there is still room for improvement (afaik android uses a userspace process to dynamically adjust the governor settings, i'll look into that)
+
+ 16:19:07 <ogra> X definitely keeps us above 1% though
+
+ 16:20:24 <ogra> (i hev never tested the standby battery life, i use my device to often for testing 150h)
+
+ 16:21:31 <ogra> oh, i forgot to mention, we have a default usbnet connection on the USB wire now ... additionally to the serial console
+
+ 16:22:04 <ogra> that was actually a change requested, tested and submitted from the community :)
+
+ 16:22:42 <ogra> heh
+
+ 16:22:57 * ogra hasnt noticed "Play a youtube video of a cat" in the third marker before
+
+ 16:23:39 <ogra> anything else from anyone ?
+
+ 16:24:53 <seb128> not really
+
+ 16:24:55 <ogra> hmm, seems we'Re done then
+
+ 16:25:07 <seb128> I will try to send a summary email from things that got done this week to ubuntu-devel@
+
+ 16:25:16 <ogra> great !
+
+ 16:25:19 <seb128> just to share the good news
+
+ 16:25:19 * ogra hugs seb128
+
+ 16:25:24 * seb128 hugs ogra back
+
+ 16:25:36 <ogra> so lets close this then and enjoy the weekend :)
+
+ 16:25:36 <seb128> I will also try to set up a proper agenda for the meeting next week
+
+ 16:25:41 <ogra> going once ...
+
+ 16:25:41 <seb128> works for me
+
+ 16:25:44 <seb128> thanks ogra!
+
+ 16:25:46 <ogra> going twice
+
+ 16:25:47 <seb128> thanks everyone
+
+ 16:25:51 <ogra> done ...
+
+ 16:25:54 <ogra> #ednmeeting
+
+ 16:25:58 <ogra> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

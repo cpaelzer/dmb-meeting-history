@@ -1,0 +1,803 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:03:31 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-03-13-15.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round$ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ *lightning round
+''ACTION:'' xnox to merge busybox  (xnox, 15:06:59)
+''ACTION:'' ogra_ to email u-d about panda desktop EOL  (xnox, 15:07:27)
+
+ *Blueprints
+
+ *Bugs/errors/defects
+''ACTION:'' disable -proposed in the upgrader, and for existing pre-release users who have it enabled.  (xnox, 15:44:04)
+
+ *AOB
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/client-1303-delivering-touch-apps-to-raring   (slangasek, 16:03:02)
+
+
+
+Meeting ended at 16:06:45 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * xnox to merge busybox
+ * ogra_ to email u-d about panda desktop EOL
+ * disable -proposed in the upgrader, and for existing pre-release users who have it enabled.
+
+
+
+== Action items, by person ==
+
+ * ogra_
+ ** ogra_ to email u-d about panda desktop EOL
+ * xnox
+ ** xnox to merge busybox
+
+
+
+== People present (lines said) ==
+
+ * slangasek (70)
+ * bdmurray (47)
+ * ev (47)
+ * stgraber (43)
+ * xnox (38)
+ * cjwatson (34)
+ * ogra_ (32)
+ * ubottu (30)
+ * jodh (12)
+ * meetingology (6)
+ * stokachu (5)
+
+
+
+== Full Log ==
+
+
+ 15:03:31 <slangasek> #startmeeting
+
+ 15:03:32 <meetingology> Meeting started Wed Mar 13 15:03:31 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03:32 <meetingology> 
+
+ 15:03:32 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:03:40 <jodh> o/
+
+ 15:03:56 <slangasek> [TOPIC] lightning round$ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 15:03:59 <slangasek> barry ogra jodh ev doko bdmurray cjwatson stgraber xnox stokachu slangasek
+
+ 15:04:02 <slangasek> [TOPIC] lightning round
+
+ 15:04:03 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 15:04:06 <slangasek> barry ogra jodh ev doko bdmurray cjwatson stgraber xnox stokachu slangasek
+
+ 15:04:09 <slangasek> :-)
+
+ 15:04:13 <slangasek> barry's not here - ogra?
+
+ 15:04:23 <ogra_> done:
+
+ 15:04:23 <ogra_> * discussions, discussions, discussions about phablet ...
+
+ 15:04:23 <ogra_> * vUDS ...: foundations-1303-cdimage-android-builds
+
+ 15:04:23 <ogra_> * helped the community guys to get WIFI running on samsung phones
+
+ 15:04:23 <ogra_> * started looking into x86 android for qemu supporting images (sadly not a CM10.1 variant so it will need quite some changes)
+
+ 15:04:24 <ogra_> * debugging a boot issue when ubuntu phablet was used on an nx7 a subsequent desktop install starts with a black screen
+
+ 15:04:27 <ogra_> * tested nx7 image installation
+
+ 15:04:29 <ogra_> * added manifest syncing to the cdimage phablet-sync script
+
+ 15:04:31 <ogra_> * started work on getting an ubuntu-phablet seed into our branch (though that might be moot before 13.04 since many conflicting packages (NM, ofono ...) wont be ready i was told, so we cant build images)
+
+ 15:04:34 <ogra_> todo:
+
+ 15:04:36 <ogra_> * move nx7 desktop image to pxz ... the debian bug was fixed, we just need a merge of busybox now (xnox is on it)
+
+ 15:04:39 <ogra_> * finish the ubuntu-phablet seed (only 65 packages on top of ubuntu-minimal)
+
+ 15:04:41 <ogra_> * test ac100 lubuntu image for beta1 (and fix possible issues)
+
+ 15:04:45 <ogra_> * go on working on x86 android base for phablet qemu images
+
+ 15:04:47 <ogra_> * meeting on friday about how to handle raring images even with conflicting packages (see above)
+
+ 15:04:49 <ogra_> ..
+
+ 15:05:31 <xnox> ogra_: any news on dropping panda-desktop? or not yet final?
+
+ 15:05:38 <ogra_> oh, right
+
+ 15:05:41 <ogra_> we will drop it
+
+ 15:05:53 <ogra_> i need to write a nice note to ubuntu-devel :)
+
+ 15:05:54 <jodh> * blueprints:
+
+ 15:05:54 <jodh> - foundations-q-upstart-stateful-re-exec:
+
+ 15:05:54 <jodh> - Updated Upstart Cookbook for Upstart 1.7 and publicised.
+
+ 15:05:54 <jodh> - Finished file bridge and raised MP on lp:upstart. Awaiting feedback:
+
+ 15:05:54 <jodh> https://code.launchpad.net/~jamesodhunt/upstart/file-bridge-MP/+merge/152767
+
+ 15:05:54 <jodh> - Wrote apport hook for upstart - needs review and ideally a fix for
+
+ 15:05:54 <jodh> bug 1154536 before it's added to the package.
+
+ 15:05:55 <jodh> - foundations-r-upstart-roadmap: no progress.
+
+ 15:05:55 <jodh> * misc:
+
+ 15:05:56 <jodh> - on holiday yesterday.
+
+ 15:05:56 <jodh> 𐎯
+
+ 15:05:57 <ubottu> bug 1154536 in Apport "provide ability for apport to detect modified conffiles reliably when not running as root" [Low,Triaged] https://launchpad.net/bugs/1154536
+
+ 15:06:10 <cjwatson> ogra_: I read that as "get UEFI running on samsung phones" and was scared
+
+ 15:06:16 <ogra_> lol
+
+ 15:06:23 <ogra_> yeah, UEFI and grub :)
+
+ 15:06:34 <ev> pass (still typing)
+
+ 15:06:59 <xnox> #action xnox to merge busybox
+
+ 15:06:59 * meetingology xnox to merge busybox
+
+ 15:07:06 <ogra_> heh
+
+ 15:07:18 <ogra_> stealing power from slangasek ?
+
+ 15:07:27 <xnox> #action ogra_ to email u-d about panda desktop EOL
+
+ 15:07:27 * meetingology ogra_ to email u-d about panda desktop EOL
+
+ 15:07:41 <ogra_> ++
+
+ 15:07:43 <xnox> ogra_: AlanBell taught me tricks on #ubuntu-irc ;-)
+
+ 15:09:04 <slangasek> ogra_: ubuntu-phablet seed> even if the image builds don't move to nusakan before 13.04, I think it's important to get any phablet builds that *are* being done to use the shared view of the package list... jenkins should be pulling from the seed + livecd-rootfs config, not using its own definition
+
+ 15:09:32 <ogra_> slangasek, thats why it is on my TODO for next week :)
+
+ 15:09:33 <bdmurray> oh, is it my turn since ev passed and doko is not here?
+
+ 15:09:52 <slangasek> ogra_: ok :)
+
+ 15:10:19 <ogra_> will also help users that want to run live-build at home
+
+ 15:10:34 <ogra_> (linke the one who just asks in #ubuntu-touch)
+
+ 15:10:49 <slangasek> bdmurray: yes
+
+ 15:10:55 <bdmurray> patch-pilot
+
+ 15:10:55 <bdmurray> virtual UDS
+
+ 15:10:55 <bdmurray> uds lightning talk on new errors features
+
+ 15:10:55 <bdmurray> code reviews for evan
+
+ 15:10:55 <bdmurray> tested user parameter on errors.ubuntu.com
+
+ 15:10:58 <bdmurray> speed and logic improvements to the most common problems table in resources.py for teams
+
+ 15:11:08 <bdmurray> modified most_common_problems.js to be better when switching from packages to users and back
+
+ 15:11:11 <bdmurray> updated most_common_problem.js to update UI based on url parameters (package, user and period)
+
+ 15:11:14 <bdmurray> wrote a pycassa query to discover regressions using bucket systems
+
+ 15:11:17 <bdmurray> wrote a pycassa query regarding package crash rate
+
+ 15:11:19 <bdmurray> worked on and merge proposal for errors API feature for rate of crashes
+
+ 15:11:22 <bdmurray> modifications to rate of crashes branch based of ev's feedback
+
+ 15:11:23 <bdmurray> submitted rt 59711 regarding updating error-tracker-dependencies
+
+ 15:11:23 <bdmurray> reporting, research into and fixing of bug 1148015
+
+ 15:11:23 <bdmurray> reporting, and research into bug 1148116
+
+ 15:11:25 <bdmurray> updated error-tracker-dependencies for python-lazr.restfulclient related to the move of launchpad.py
+
+ 15:11:26 <ubottu> bug 1148015 in Daisy "launchpad.py says a PPA package is a source package but tells you it has no binaries" [High,Fix committed] https://launchpad.net/bugs/1148015
+
+ 15:11:28 <ubottu> bug 1148116 in apport (Ubuntu) "not all packages from PPAs have '[origin: ' in Package section" [Undecided,Fix committed] https://launchpad.net/bugs/1148116
+
+ 15:11:28 <bdmurray> research into bug 1056061 regarding FirstSeen being wrong
+
+ 15:11:29 <ubottu> bug 1056061 in Errors ""First seen" version is wrong in release-specific table" [High,Triaged] https://launchpad.net/bugs/1056061
+
+ 15:11:31 <bdmurray> worked with webops regarding the import user packages cronjob
+
+ 15:11:33 <bdmurray> research into gap in release:src_pkg counter
+
+ 15:11:36 <bdmurray> debugged an issue with first seen and last seen being null in the most-common-problems table
+
+ 15:11:39 <bdmurray> submitted merge proposal for less than 5 bucketids branch of errors
+
+ 15:11:41 <bdmurray> reported errors bug 1154275 regarding empty failed buckets
+
+ 15:11:43 <ubottu> bug 1154275 in Errors "bucket page for failed retraces empty" [High,New] https://launchpad.net/bugs/1154275
+
+ 15:11:44 <bdmurray> reported bug 1154356 regarding release package counter ttl
+
+ 15:11:45 <ubottu> bug 1154356 in Daisy "release package counter's ttl does not work" [Medium,New] https://launchpad.net/bugs/1154356
+
+ 15:11:46 <bdmurray> investigation into quantity of bugs being tagged regression-update
+
+ 15:11:49 <bdmurray> looked for packages to be removed from -proposed that are removal candidates
+
+ 15:11:52 <bdmurray> research into session installer bug 1056545
+
+ 15:11:53 <ubottu> bug 1056545 in sessioninstaller (Ubuntu) "session-installer crashed with AlreadyCalledDeferred in callback()" [High,Triaged] https://launchpad.net/bugs/1056545
+
+ 15:11:54 <bdmurray> testing of bug 967229
+
+ 15:11:56 <ubottu> bug 967229 in plymouth (Ubuntu) "Text mode shown briefly with various "cryptic" texts when logging out or shutting down" [High,Triaged] https://launchpad.net/bugs/967229
+
+ 15:11:57 <bdmurray> consolekit upload for bug 1130923
+
+ 15:11:59 <ubottu> bug 1130923 in consolekit (Ubuntu Quantal) "consolekit: ck-get-x11-display-device segmentation fault" [High,Triaged] https://launchpad.net/bugs/1130923
+
+ 15:11:59 <bdmurray> blogged about using launchpad users at errors.ubuntu.com
+
+ 15:12:10 <ev> wooooooooooo! Thanks for all the awesome investigative work this past week
+
+ 15:12:26 <bdmurray> ✔ done
+
+ 15:12:41 <cjwatson> Release process discussions.
+
+ 15:12:41 <cjwatson> Fixed the notorious LP override-copying bug 1152149.
+
+ 15:12:41 <cjwatson> Fixed the cause of LP bug 1152669.  Some DB cleanup still needed.
+
+ 15:12:41 <cjwatson> Set up image building for new UbuntuKylin and Ubuntu GNOME flavours.
+
+ 15:12:41 <cjwatson> Cleaned up problems caused by LibreOffice help conflicts, with Bjoern.
+
+ 15:12:43 <cjwatson> Fixed a lurking bug in grub2's kernel hook that broke Edubuntu image builds.
+
+ 15:12:45 <ubottu> bug 1152149 in Launchpad itself "Combining async copying and deletion loses overrides" [High,Fix released] https://launchpad.net/bugs/1152149
+
+ 15:12:46 <cjwatson> Expanded grub2's ACPI halt handling to cope with current seabios.
+
+ 15:12:47 <ubottu> Launchpad bug 1152669 in Launchpad itself "Soyuz allows me to delete packages from a RELEASE pocket of a CURRENT series" [High,Fix released] https://launchpad.net/bugs/1152669
+
+ 15:12:49 <cjwatson> Currently working on bug 869825 (trying to figure out how to fix it without breaking translations), and probably diving into +1 maintenance shortly thereafter.
+
+ 15:12:51 <ubottu> bug 869825 in console-setup (Ubuntu Raring) "French (Switzerland) is no longer a layout choice in the installer" [Medium,In progress] https://launchpad.net/bugs/869825
+
+ 15:12:52 <cjwatson> ..
+
+ 15:13:11 <cjwatson> Incidentally I need brain bleach to cope with having spent a day with the ACPI spec.
+
+ 15:13:26 <ogra_> beer might help
+
+ 15:13:30 <ogra_> lots ...
+
+ 15:13:53 <slangasek> bdmurray: what was the outcome of your investigation into the regression-update bugs?  Will there be a wording change in the dialog that's been prompting users about whether the bug showed up after an update?
+
+ 15:13:54 <xnox> cjwatson: intersting about ACPI halt, would that also fix not being able to reboot VirtualBox after installation finishes?!
+
+ 15:14:27 <cjwatson> xnox: No
+
+ 15:14:38 <cjwatson> Unrelated I'm afraid
+
+ 15:14:47 <xnox> ack.
+
+ 15:14:52 <stgraber> Feature work:
+
+ 15:14:52 <stgraber> - Upstart (BLUEPRINT: foundations-r-upstart-user-session-enhancements)
+
+ 15:14:52 <stgraber> - Fixed upstart user session re-exec.
+
+ 15:14:52 <stgraber> - Some more rework of Xsession/user jobs in the PPA.
+
+ 15:14:52 <stgraber> - Pushed upstart 1.7 to the archive.
+
+ 15:14:54 <stgraber> - Pushed user jobs to dbus, gnome-session and gnome-settings-daemon.
+
+ 15:14:57 <stgraber> - Container (BLUEPRINT: servercloud-r-lxc)
+
+ 15:14:58 <slangasek> hmm why is update-manager crashing and burning here all of a sudden
+
+ 15:14:59 <stgraber> - Usual code review.
+
+ 15:15:00 <bdmurray> slangasek: that was removed from xdiagnose which was the bulk of them,  I've subscribed to the tag now (-linux) and it is relatively quiet.
+
+ 15:15:02 <stgraber> - Plumbers planning.
+
+ 15:15:04 <stgraber> - Backport to precise.
+
+ 15:15:07 <stgraber> - Call on moving phablet to LXC.
+
+ 15:15:09 <stgraber> - Various fixed to the UTAH tests.
+
+ 15:15:12 <stgraber> - Implemented nesting support in lxc-ls
+
+ 15:15:14 <stgraber> - Preparing 0.9~rc1 (pull request due later today)
+
+ 15:15:19 <slangasek> bdmurray: ok, great
+
+ 15:15:23 <stgraber> - Networking (BLUEPRINT: foundations-r-networking)
+
+ 15:15:23 <stgraber> - isc-dhcp quantal SRU
+
+ 15:15:23 <stgraber> - Looking into MAAS/isc-dhcp bug.
+
+ 15:15:24 <stgraber> - General follow-up triage of networking bugs.
+
+ 15:15:27 <stgraber> - Got feedback from IS wrt IPv6. archive.u.c and security.u.c are now dual-stack.
+
+ 15:15:30 <stgraber> - Got new SIM cards to test dual-stack 3G (multiple PDP contexts)
+
+ 15:15:32 <stgraber> New work:
+
+ 15:15:35 <stgraber> - Plenty of vUDS sessions.
+
+ 15:15:37 <stgraber> - Work on plan for device updates. Spent most of yesterday in calls, have a pretty good plan now that needs to be written down.
+
+ 15:15:40 <stgraber> - Get NM integrated with ofono. The work has been split in more WI and I'm now rebasing my work on current NM and sending it to Mathieu for further work.
+
+ 15:15:43 <stgraber> Other work:
+
+ 15:15:46 <stgraber> - Installer: bug 944614
+
+ 15:15:48 <ubottu> bug 944614 in ubiquity (Ubuntu Precise) "ubiquity crashed with AttributeError in keyboard_variant_timeout(): 'NoneType' object has no attribute 'apply_keyboard'" [High,Triaged] https://launchpad.net/bugs/944614
+
+ 15:15:48 <stgraber> - Some queuebot fixes.
+
+ 15:15:51 <stgraber> - Tested grub2 UEFI PXE.
+
+ 15:15:53 <stgraber> - Found and help debugging a libssl/libgnutls regression
+
+ 15:15:56 <stgraber> - Release
+
+ 15:15:58 <stgraber> - UDS/release cadence discussions
+
+ 15:15:59 <cjwatson> stgraber: grub2 UEFI PXE> and?
+
+ 15:16:01 <stgraber> - Preparing beta1 for participating flavours
+
+ 15:16:03 <stgraber> - Helped setup UbuntuKylin and Ubuntu GNOME
+
+ 15:16:06 <stgraber> TODO:
+
+ 15:16:08 <stgraber> - LXC 0.9~rc1 release
+
+ 15:16:11 <stgraber> - Some isc-dhcp bugs
+
+ 15:16:13 <stgraber> - ifupdown SRU
+
+ 15:16:16 <stgraber> - Continue planning the mobile update process
+
+ 15:16:18 <stgraber> - Rebase NM-ofono patch and send to cyphermox
+
+ 15:16:21 <stgraber> (DONE)
+
+ 15:16:40 <stgraber> cjwatson: that was for the time I tried before you had a look. So it was starting fine but failing to retrieve anything over tftp.
+
+ 15:16:46 <cjwatson> OK
+
+ 15:17:02 <cjwatson> Huh, everyone else seems to be reporting two weeks of work; oh well
+
+ 15:17:30 <xnox> * uds - todo mobile updates & packaging follow ups.
+
+ 15:17:31 <xnox> * before and a bit after a quick guile 1.6->1.8 transition done,
+
+ 15:17:31 <xnox> please remove guile1.6 bug #1154491
+
+ 15:17:31 <xnox> * u1 ubiquity plugin is complete, pending one.ubuntu.com deployment,
+
+ 15:17:31 <xnox> final testing, FFe approval, and merge/upload. bug #1153731
+
+ 15:17:32 <xnox> lp:~xnox/ubiquity/main-u1
+
+ 15:17:32 <stgraber> right, I had a stack of notes for the pre-UDS week that I bundled in there
+
+ 15:17:33 <ubottu> bug 1154491 in guile-pg (Ubuntu) "Please remove guile-1.6 from the archive" [Low,Confirmed] https://launchpad.net/bugs/1154491
+
+ 15:17:34 <xnox> * uploaded ubiquity FF release with fix ups afterwards
+
+ 15:17:35 <ubottu> bug 1153731 in ubiquity (Ubuntu Raring) "[FFe] Ubuntu One sing in or up or skip plugin" [High,New] https://launchpad.net/bugs/1153731
+
+ 15:17:36 <xnox> * patch pilot / mostly mutliarchifying
+
+ 15:17:38 <xnox> * Prepated and uploaded openssl SRUs for bug #1083498 bug #1066032 bug
+
+ 15:17:40 <xnox> #1018522 (pending infinity / doko to review that it does not explode
+
+ 15:17:41 <xnox> the world).
+
+ 15:17:43 <ubottu> bug 1083498 in openssl (Ubuntu Quantal) "please enable arm assembler code in openssl" [Low,In progress] https://launchpad.net/bugs/1083498
+
+ 15:17:43 <xnox> * Merged up some patches for lvm2 thin_provision support
+
+ 15:17:44 <ubottu> bug 1066032 in openssl (Ubuntu Quantal) "Deadlock when reading a public key" [High,In progress] https://launchpad.net/bugs/1066032
+
+ 15:17:46 <xnox> * My shiny new Gigabyte motherboard needs a older family cpu to upgrade
+
+ 15:17:48 <xnox> bios to support the cpu I bought *sigh* =(
+
+ 15:17:50 <xnox> * Requested overlayfs support for nexus7, and ppisati implemented
+
+ 15:17:51 <xnox> that. Tested his hand compiled kernel, works great. Should be
+
+ 15:17:54 <xnox> landing in the archive soonish.
+
+ 15:18:15 <xnox> ..
+
+ 15:18:21 <stokachu> Jury duty Mon/Tuesday, catching up on emails and bugs
+
+ 15:18:23 <stokachu> Currently working bug 1121874, bug 859600 (getting sru's in shape).
+
+ 15:18:24 <stokachu> xnox, bug 778627 - just so im clear on this status with an updated sru template are we still considering fixing this for precise?
+
+ 15:18:26 <stokachu> (done)
+
+ 15:18:31 <ubottu> bug 1121874 in mysql-5.5 (Ubuntu) "MySQL launch fails silently if < 4MB of disk space is available" [Medium,Triaged] https://launchpad.net/bugs/1121874
+
+ 15:18:33 <ubottu> bug 859600 in gnome-keyring (Ubuntu Precise) "Please convert gnome-keyring to multiarch" [High,In progress] https://launchpad.net/bugs/859600
+
+ 15:18:34 <ubottu> bug 778627 in bash (Ubuntu Precise) "In natty, bash completion now quotes shell variable references rather than expanding them" [Undecided,Incomplete] https://launchpad.net/bugs/778627
+
+ 15:19:30 <slangasek> xnox: RMA the motherboard and make them send you one with a current firmware? :)
+
+ 15:20:04 <slangasek> * vUDS - great discussions, everyone!
+
+ 15:20:04 <slangasek> * post-UDS blueprint rastling
+
+ 15:20:05 <slangasek> * discussions with pitti about systemd uplift for logind support; this is going ahead, libudev has an ABI transition now in -proposed
+
+ 15:20:07 <slangasek> * patch pilot day Monday
+
+ 15:20:10 <slangasek> * libnih,upstart reviews for the file bridge
+
+ 15:20:12 <slangasek> * fighting a swap death issue with the raring kernel (bug #1152736)
+
+ 15:20:14 <ubottu> bug 1152736 in linux (Ubuntu) "system swapping itself to death in raring for no good reason" [Critical,Confirmed] https://launchpad.net/bugs/1152736
+
+ 15:20:15 <slangasek> (done)
+
+ 15:20:17 <slangasek> ev:
+
+ 15:20:19 <cjwatson> overlayfs> oh, great, I asked for that a couple of months ago too
+
+ 15:20:24 <ev> - Working with jjo to get daisy writing a percentage of the core files to
+
+ 15:20:25 <ev> Swift, with the rest still on NFS. Lots of code review and iteration, but
+
+ 15:20:25 <ev> we've finally deployed \o/. We're running 1% on Swift for now, but we're
+
+ 15:20:25 <ev> about to jump up to 10%. After this we'll get started on putting some
+
+ 15:20:25 <ev> retracers on prodstack, talking to Swift and the Rabbit queue.
+
+ 15:20:25 <ev> - Working on code to properly remove items from the retracer queue. Long story
+
+ 15:20:30 <ev> short (iknowright?), we've got a lot of "problems" that we've never retraced
+
+ 15:20:31 <ev> because we deleted their core files and message off the Rabbit queue, but
+
+ 15:20:31 <ev> they're still sitting in a Cassandra column family.
+
+ 15:20:31 <ev> - Code review for Brian as part of his phased updates work.
+
+ 15:20:31 <ev> - Fixed all our cron jobs (importing bug data, creating the unique systems over
+
+ 15:20:34 <cjwatson> (bug 1076317)
+
+ 15:20:36 <ubottu> bug 1076317 in ubuntu-nexus7 "please add aufs/overlayfs/unionfs support to android based kernels" [High,Confirmed] https://launchpad.net/bugs/1076317
+
+ 15:20:39 <ev> 90 days running counts, etc) when they broke with the path reorg. Re-ran the
+
+ 15:20:39 <ev> import scripts manually over the missing days.
+
+ 15:20:40 <ev> - Set up Google Anayltics for errors.u.c.
+
+ 15:20:40 <ev> - Fixed our SSO integration so that users not in an approved group get knocked
+
+ 15:20:40 <ev> back to the front page with a helpful error message, rather than just looping
+
+ 15:20:46 <ev> on the SSO login page.
+
+ 15:20:46 <ev> - Finally got libcassandra-dpkgversiontype-java deployed to the production
+
+ 15:20:46 <ev> Cassandra cluster. Started reworking the code to rebuild the BucketVersions
+
+ 15:20:46 <ev> CF (mapping of problems to the Ubuntu releases and versions they occur in,
+
+ 15:20:51 <ev> with counters for the latter), only to have a brainwave that we've been using
+
+ 15:20:51 <ev> counters all wrong. There's no such thing as a free lunch, and instead of
+
+ 15:20:51 <ev> pretending like over/undercounting isn't a problem, we'll write wide rows as
+
+ 15:20:51 <ev> well, using these to repair the counts in cron jobs overnight. Started
+
+ 15:20:58 <ev> writing some code to do exactly this:
+
+ 15:20:58 <ev> http://paste.ubuntu.com/5608424/
+
+ 15:20:58 <ev> - Investigated why we weren't getting whitelisted in SSO, and fixed. This had
+
+ 15:20:58 <ev> to do with the way we were handing off from Apache frontends to HAProxy to
+
+ 15:20:58 <ev> Apache WSGI runners. You'll now no longer get prompted with a page where you
+
+ 15:21:02 <xnox> stokachu: it's marked incomplete by me. If someone steps up to write an extended / complete SRU template, with procedures how to enable direxpand, i'll be happy to sponsor that SRU. Otherwise it will just fall off the radar.
+
+ 15:21:03 <ev> can select what Launchpad user data (your teams, email address, etc) to
+
+ 15:21:04 <ev> Errors - we'll get it automatically and there's nothing you can do about it
+
+ 15:21:04 <ev> (bwahaha).
+
+ 15:21:10 <ev> - Fixed some bugs in lp:daisy and lp:errors found via
+
+ 15:21:10 <ev> http://errors.ubuntu.com/oops-local.
+
+ 15:21:10 <ev> - Meeting with Amrit, Matthew, and Luca to discuss the navigation structure for
+
+ 15:21:14 <ev> errors.ubuntu.com and other Ubuntu project sites.
+
+ 15:21:14 <ev> - Came up with a plan for fixing the average errors per calendar day graph,
+
+ 15:21:14 <ev> adjusting for population growth:
+
+ 15:21:14 <ev> http://paste.ubuntu.com/5608021/
+
+ 15:21:16 <ev> (done!)
+
+ 15:21:43 <stokachu> xnox: cool ill follow up with a more proper sru and procedure
+
+ 15:21:46 <ev> slangasek: where do we stand on that NDA?
+
+ 15:22:32 <ev> ps anyone else completely locked out of lcy02?
+
+ 15:22:47 <ev> I get 403 forbidden if I try to do anything with it
+
+ 15:23:22 <xnox> cjwatson: yeap, that's the bug for nexus7. Pull request is up already, so should land soon =)
+
+ 15:24:08 <cjwatson> 'juju status' seems to work for me on lcy02
+
+ 15:24:14 <cjwatson> if that helps ...
+
+ 15:25:07 <ev> cjwatson: weird. I'll call support and whinge.
+
+ 15:25:10 <xnox> slangasek: instead of doing RMA, I ordered a 25 GBP cpu (1.6GHz single core, non-threaded, celeron) and will use it to upgrade my motherboard and then return this baby cpu back where it's comming from =))))
+
+ 15:25:13 <slangasek> ev: no progress on the NDA question; I need to circle around on that, sorry
+
+ 15:25:20 <slangasek> xnox: heh, ok
+
+ 15:25:27 <ev> slangasek: no worries, just keep me posted :)
+
+ 15:25:31 <slangasek> [TOPIC] Blueprints
+
+ 15:26:17 <slangasek> so there are relatively few blueprints coming out of vUDS that are in need of drafting, since we have quite a bit of carry-over work that we're still going on with
+
+ 15:26:32 <slangasek> but for any new blueprints that did come out of vUDS, please make sure you get your drafting done by EOB tomorrow
+
+ 15:27:18 <slangasek> also, we have a new set of milestones in launchpad, to be able to track work on a per-month basis for UE's internal management purposes
+
+ 15:27:45 <slangasek> please use these for targeting of all phone-related work items / blueprints
+
+ 15:28:08 <slangasek> (so for stuff that's happening in march, use ubuntu-13.04-month-5, not ubuntu-13.04-beta-2)
+
+ 15:28:46 <slangasek> also, for your previously-blueprinted workitems from Copenhagen, please review and check if the monthly milestone would be a more appropriate target for that work
+
+ 15:29:09 <slangasek> this will help with internal planning, to be able to see "work being done in March" in one place (ish)
+
+ 15:29:12 <slangasek> any questions?
+
+ 15:30:05 <slangasek> [TOPIC] Bugs/errors/defects
+
+ 15:30:33 <slangasek> bdmurray: so aside from teamviewer8 being insane and breaking the fabric of space-time... what should we be paying attention to?
+
+ 15:31:03 <bdmurray> I ran across bug 1143359 and while it is assigned to the hwe team wondered if we had any insight for them
+
+ 15:31:04 <ubottu> bug 1143359 in grub2 (Ubuntu) "Dell Latittude 6340u - Systems will not boot in uEFI mode" [High,New] https://launchpad.net/bugs/1143359
+
+ 15:32:10 <slangasek> bdmurray: I've seen other bug reports that booting under uefi boot to black; let me look those up
+
+ 15:32:43 <slangasek> bug #1129524
+
+ 15:32:45 <ubottu> bug 1129524 in linux (Ubuntu) "Precise & Quantal won't boot in UEFI" [High,Confirmed] https://launchpad.net/bugs/1129524
+
+ 15:32:55 <slangasek> but, 1143359 doesn't give a very clear description of what "Doesn't boot" means
+
+ 15:33:29 <slangasek> oh; "both systems were installed via PXE using legacy PXE boot mode."
+
+ 15:33:47 <slangasek> so why would that be expected to give you a useful UEFI-enabled result?
+
+ 15:33:49 <slangasek> cjwatson: ^^?
+
+ 15:35:05 <cjwatson> Er, yes, I missed that
+
+ 15:35:07 <cjwatson> It wouldn't
+
+ 15:35:39 <cjwatson> I've left a comment
+
+ 15:35:46 <cjwatson> Does sound like tester error
+
+ 15:36:02 <slangasek> cjwatson: ta
+
+ 15:36:14 <bdmurray> thanks, okay then we have bug 120689 regarding update-manager partial upgrades.
+
+ 15:36:16 <ubottu> bug 120689 in update-manager (Ubuntu) ""Not all updates can be installed" dialog has unclear buttons & unselectable text" [High,Confirmed] https://launchpad.net/bugs/120689
+
+ 15:37:20 <bdmurray> It seems that at least there should be a cancel option but I seem to recall large discussions about partial upgrade being terrible
+
+ 15:37:26 <bdmurray> or a bad idea
+
+ 15:37:35 <cjwatson> Well, it is, it's just terrible in both directions
+
+ 15:37:48 <cjwatson> As I think I said in that bug
+
+ 15:38:32 <slangasek> I thought there was a "cancel" option, which takes you into something that doesn't look much like cancelling
+
+ 15:39:11 <slangasek> but, I think the more serious issue is that "partial upgrade" doesn't make any sense, and the explanatory text explains nothing about what your choices are
+
+ 15:39:13 <cjwatson> I definitely agree the path should be towards getting rid of the partial-upgrade case, but I'd like to have some experience with how things do with my recent update-manager changes first
+
+ 15:39:37 <slangasek> well, my experience is that I've gotten the dialog again this week as a result of two separate packages
+
+ 15:39:42 <slangasek> (libreoffice, foomatic-db)
+
+ 15:40:40 <slangasek> bdmurray: so, I think it would be worth us taking a pass at wordsmithing the dialog
+
+ 15:41:46 <xnox> cjwatson: ubuntu-distro-info --help
+
+ 15:41:50 <slangasek> bdmurray: interested in tackling this yourself?  if not I can take a look
+
+ 15:42:32 <bdmurray> slangasek: I'm still pretty busy with errors and phased updates work
+
+ 15:43:22 <slangasek> ok - please assign it to me
+
+ 15:43:34 <bdmurray> then there is bug 1130284
+
+ 15:43:36 <ubottu> bug 1130284 in icu (Ubuntu) "Libreoffice crash when typing some Malayalam text using ibus" [Undecided,New] https://launchpad.net/bugs/1130284
+
+ 15:43:37 <slangasek> (would assign it myself, but my browser is currently putting my processor in a headlock)
+
+ 15:44:04 <xnox> #action disable -proposed in the upgrader, and for existing pre-release users who have it enabled.
+
+ 15:44:04 * meetingology disable -proposed in the upgrader, and for existing pre-release users who have it enabled.
+
+ 15:44:27 <cjwatson> icu> that's just a backport, right?
+
+ 15:44:32 <cjwatson> or cherry-pick I suppose
+
+ 15:44:35 <slangasek> xnox: I hope you don't expect me to send out meeting minutes with these actions for you ;)
+
+ 15:45:00 <xnox> slangasek: meetinology will give me a url at the end of the meeting ;-)
+
+ 15:45:13 <cjwatson> Oh, and a trivial one at that
+
+ 15:45:15 <cjwatson> I'll take the icu bug
+
+ 15:46:41 <bdmurray> thanks, then bug 1056545 which is similar to or the same as bug 848605 which was "fixed" some time ago
+
+ 15:46:44 <ubottu> bug 1056545 in sessioninstaller (Ubuntu) "session-installer crashed with AlreadyCalledDeferred in callback()" [High,Triaged] https://launchpad.net/bugs/1056545
+
+ 15:46:45 <ubottu> bug 848605 in sessioninstaller (Ubuntu Precise) "session-installer crashed with AlreadyCalledDeferred in callback()" [High,Fix released] https://launchpad.net/bugs/848605
+
+ 15:47:50 <bdmurray> errors is showing it still occurring with the fixed versions of the package
+
+ 15:54:42 <bdmurray> anybody?
+
+ 15:56:10 <cjwatson> Might be best to try to get hold of Sebastian Heinlein for that one?
+
+ 15:56:42 <cjwatson> Oh, or maybe Julian Andres Klode, I think I misremembered the maintainer
+
+ 15:56:45 <bdmurray> okay, I'll try that and try creating a test case for it since the previous bug didn't have a great one
+
+ 15:57:12 <bdmurray> bug 1152222 seems to be a regression in pycurl
+
+ 15:57:14 <ubottu> bug 1152222 in pycurl (Ubuntu) "pycurl fails with TypeError: string argument expected, got 'bytes' " [High,Confirmed] https://launchpad.net/bugs/1152222
+
+ 15:57:30 * stgraber has to run to another meeting (in 2min)
+
+ 15:57:35 <slangasek> whee, GPU hang.
+
+ 15:57:35 * xnox can look into pycurl.
+
+ 15:57:49 <ogra_> slangasek, Mir will fix that :P
+
+ 15:57:58 <bdmurray> xnox: thanks
+
+ 15:58:13 <bdmurray> then with bug 1152254 the webcam step is just going away right?
+
+ 15:58:14 <ubottu> bug 1152254 in ubiquity (Ubuntu) "Webcam is not capturing the image during raring desktop installations" [Undecided,New] https://launchpad.net/bugs/1152254
+
+ 15:58:16 <slangasek> ogra_: I disbelieve :)
+
+ 15:58:20 <ogra_> heh
+
+ 15:58:22 <xnox> ogra_: the one that crashed, the one that needs  approval, or the not yet finished one?
+
+ 15:58:38 <ogra_> the GPU hangs of this world
+
+ 15:58:42 <xnox> bdmurray: me and Laney fixed regression in gstreamer. Webcam should be working again.
+
+ 15:58:59 * xnox will ask for that user retest, once I retest with my webcam (which also was affected)
+
+ 15:59:02 <bdmurray> xnox: ah okay
+
+ 16:00:25 <bdmurray> that's about it from me
+
+ 16:00:51 <slangasek> bdmurray: thanks
+
+ 16:00:56 <slangasek> [TOPIC] AOB
+
+ 16:01:06 <slangasek> I do have one other minitopic
+
+ 16:01:17 <slangasek> (if I can find the blueprint amid the mess of my desktop on the floor)
+
+ 16:01:55 <slangasek> there's a blueprint out of vUDS on the client track covering getting Ubuntu Touch merged into the archive
+
+ 16:02:11 <cjwatson> For that icu bug, does anyone know how to get Ctrl-Shift-u to work for Unicode input?  Doesn't seem to for me
+
+ 16:02:14 <slangasek> I volunteered us to help, and seb128 has assigned a set of work items to me - I need volunteers for them :)
+
+ 16:03:02 <slangasek> https://blueprints.launchpad.net/ubuntu/+spec/client-1303-delivering-touch-apps-to-raring
+
+ 16:03:42 <slangasek> does someone want to take the lead on these packages: platform-api, qtubuntu, qtubuntu-sensors?
+
+ 16:03:55 <xnox> slangasek: do you know what those actually mean?
+
+ 16:04:26 <slangasek> xnox: those are the names of packages from the Ubuntu Touch preview
+
+ 16:04:38 <slangasek> xnox: for more details, talk to didrocks :)
+
+ 16:04:51 <xnox> oh, ok.
+
+ 16:05:01 <xnox> I can take one, qtubuntu-sensors sounds fun.
+
+ 16:05:11 <slangasek> thanks
+
+ 16:05:17 <slangasek> anyone else?
+
+ 16:05:52 <slangasek> it's not urgent anyway, so we can continue picking them off later
+
+ 16:06:06 <slangasek> and I think that's it unless anyone else has something
+
+ 16:06:10 <xnox> it's an oportunity to learn integration with jenkins and daily auto landing black magic =)
+
+ 16:06:36 <slangasek> yep :)
+
+ 16:06:45 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

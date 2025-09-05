@@ -1,0 +1,552 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 02 Apr at 15:02 &mdash; 15:33 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-04-02-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+  * ''LINK:'' https://code.launchpad.net/~mathieu-tl/ubiquity/oem-config/+merge/255103 
+
+=== sprint planning ===
+The discussion about "sprint planning" started at 15:21.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:30.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (41)
+ * cyphermox (37)
+ * bdmurray (20)
+ * robru (19)
+ * infinity (18)
+ * xnox (17)
+ * jodh (16)
+ * stgraber (15)
+ * sil2100 (14)
+ * barry (11)
+ * doko (11)
+ * ubottu (10)
+ * caribou (8)
+ * meetingology (3)
+ * lamont (2)
+ * ogra_ (2)
+ * gaughen (1)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Thu Apr  2 15:02:17 2015 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 * stgraber waves
+
+ 15:02 <stgraber> (be on mumble in a minute)
+
+ 15:02 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <cyphermox> o/
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek caribou infinity mvo sil2100 robru cyphermox)
+
+ 15:03 <slangasek> robru slangasek mvo doko jodh sil2100 bdmurray caribou barry cyphermox stgraber infinity
+
+ 15:03 <robru> slangasek: not ready, please come back to me ;-)
+
+ 15:03 <slangasek> hmph :)
+
+ 15:03 <slangasek> ok one second
+
+ 15:05 <slangasek> * was on vacation last week; spent the first couple of days this week playing email catch-up
+
+ 15:05 <slangasek> * snappy: worked on getting initial arm64 builds done now that the IS firewalls have been sorted
+
+ 15:05 <slangasek> * phone: created a new channel flavor, "ubuntu-developer", with a different custom tarball by request of PES - all the things that are being open sourced from the BQ custom, but with extra bits not necessarily targeted to end users
+
+ 15:05 <slangasek> * various internal contract discussions
+
+ 15:05 <slangasek> * interviewing ongoing for the open java role
+
+ 15:05 <slangasek> (done)
+
+ 15:05 <slangasek> and mvo is off today
+
+ 15:05 <slangasek> robru: are you ready yet? ;)
+
+ 15:05 <robru> slangasek: one sec
+
+ 15:06 <robru> * CI Train:
+
+ 15:06 <robru> - fixed bug with certain projects that contain spaces in bzr tags
+
+ 15:06 <robru> - fixed some bugs in the handling & reporting of "dirty" silos
+
+ 15:06 <robru> - record revids instead of revnos so that we can notice when people revise their bzr history
+
+ 15:06 <robru> - experimented with pushing active IRC notifications to #ubuntu-ci-eng instead of the current system of polling
+
+ 15:06 <robru> - fixed a race condition in the dirty silo handling
+
+ 15:06 <robru> - fixed a bug allowing silos in an inconsistent state to be cleaned more reliably
+
+ 15:06 <robru> - fixed a bug where watch_phase sometimes gets tripped up with old versions of source-only uploads in the silo PPA
+
+ 15:06 <robru> * Phablet Tools:
+
+ 15:06 <robru> - Fixed a bug where citrain tool was incorrectly interpreting zero-padded numbers as octal numbers and then installing the wrong silo on people's devices
+
+ 15:06 <robru> * CI Engine:
+
+ 15:06 <robru> - some iteration on spreadsheet replacement
+
+ 15:07 <slangasek> spaces are legal in bzr tags?
+
+ 15:07 <slangasek> robru: anything else, or (done)?
+
+ 15:07 <robru> slangasek: who knew!
+
+ 15:07 <robru> (done)
+
+ 15:07 <slangasek> thanks
+
+ 15:07 <slangasek> doko:
+
+ 15:07 <doko> - fix issues in python2.7
+
+ 15:07 <doko> - more GCC 5 work
+
+ 15:07 <doko> - sent Go summary for vivid
+
+ 15:07 <doko> - fixing build failures, MIR work, ...
+
+ 15:07 <doko> - interview for the openjdk role
+
+ 15:08 <slangasek> python2.7, people still use that? ;)  everyone should be using python3 by now, surely ;)
+
+ 15:08 <doko> well, there's a small package called openstack
+
+ 15:08 <slangasek> old technology, clearly
+
+ 15:08 <doko> and python2.7 crept in to the images again, have to check why
+
+ 15:08 <slangasek> doko: thanks for the go summary.  Do you know who was going to be proposing the FFe for golang?
+
+ 15:08 <doko> (done)
+
+ 15:09 <doko> slangasek, I know, but I don't know if I should share publically ;)
+
+ 15:09 <slangasek> ok
+
+ 15:09 <jodh> * snappy:
+
+ 15:09 <jodh> - Lots of work on the upgrader.
+
+ 15:09 <jodh> - Implemented format command.
+
+ 15:09 <jodh> - Ongoing work to update tests.
+
+ 15:09 <jodh> - MP to log commands that change system state:
+
+ 15:09 <jodh> https://code.launchpad.net/~jamesodhunt/snappy/log-commands-that-change-system-state/+merge/254405
+
+ 15:09 <jodh> - MP to quieten down logging for non-error scenarios:
+
+ 15:09 <jodh> https://code.launchpad.net/~jamesodhunt/snappy/log-filename+lineno-onlyh-for-loglevel-error-and-above/+merge/254429
+
+ 15:09 <jodh> - MPs to fix system unit generation:
+
+ 15:09 <jodh> - https://code.launchpad.net/~jamesodhunt/snappy/systemd-unit-fixes/+merge/254434
+
+ 15:09 <jodh> - https://code.launchpad.net/~jamesodhunt/snappy/service-files-should-not-be-executable/+merge/254873
+
+ 15:09 <jodh> - Bug 1412737:
+
+ 15:09 <ubottu> bug 1412737 in snappy-ubuntu "snappy on grub systems should detect a broken boot and fall back to the other root partition on power cycling." [Critical,In progress] https://launchpad.net/bugs/1412737
+
+ 15:09 <jodh> - Lots of testing.
+
+ 15:09 <jodh> - Feature Now landed.
+
+ 15:09 <jodh> - Investigating bug 1438889.
+
+ 15:09 <ubottu> bug 1438889 in snappy-ubuntu "unhelpful syslog entries" [Undecided,New] https://launchpad.net/bugs/1438889
+
+ 15:09 <jodh> J
+
+ 15:10 <sil2100> Oh, me now?
+
+ 15:10 <slangasek> yes
+
+ 15:10 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:10 <sil2100> - Small visual and performance tweaks to the Issue Tracker
+
+ 15:10 <sil2100> - Help in building and allocating an oxide-qt silo
+
+ 15:10 <sil2100> - RTM - vivid archive delta: * Finishing base scripts, added tests * Generating delta, setting up periodic scripts * Human-analyzing the delta, removing false-positives * Poking developers missing their RTM fixes in vivid
+
+ 15:10 <sil2100> - RTM status meeting and discussions
+
+ 15:10 <sil2100> - CI Train spreadsheet issues * Spreadsheet went crazy, multiple attempts to calm it down - failure (wasted time) * Workaround solution: migrating to a new spreadsheet (geh) * Re-targetting tools to the new spreadsheet * Might try helping with the spreadsheet replacement next week
+
+ 15:10 <sil2100> - Preparations for the OTA-3 next week
+
+ 15:10 <sil2100> Wow, ok, my shell doesn't like multi space-starting lines
+
+ 15:10 <sil2100> (done)
+
+ 15:10 <slangasek> bdmurray:
+
+ 15:11 <bdmurray> fixed Traceback with daisy/retracer.py
+
+ 15:11 <bdmurray> rewrote rate of crashes counter to take into account CountersForProposed
+
+ 15:11 <bdmurray> update daisy/submit.py to write to same type of counter used by rate of crashes checker (r624)
+
+ 15:11 <bdmurray> exposed exclude_proposed in error tracker API
+
+ 15:11 <bdmurray> submitted merge-proposal for phased-updater change to use exclude_proposed
+
+ 15:11 <bdmurray> release of verified SRUs for testing the phased-updater
+
+ 15:11 <bdmurray> investigation into difference in phased-updater crash rates for compiz, gvfs
+
+ 15:11 <bdmurray> discovered saved crashes on retracers are missing CoreDumps
+
+ 15:11 <bdmurray> modified daisy/retracer.py to really save crash files with the CoreDump
+
+ 15:11 <bdmurray> queried cassandra database for quantity of crashes about click packages
+
+ 15:11 <bdmurray> irc discussion with pmcgowan regarding error tracker usage
+
+ 15:11 <bdmurray> investigation into bug 1316763 not taking effect / testing
+
+ 15:11 <ubottu> bug 1316763 in apport (Ubuntu Trusty) "bucketing of recoverable problems is done poorly" [Medium,Triaged] https://launchpad.net/bugs/1316763
+
+ 15:11 <bdmurray> looked into occurrence count differences for pmcgowan
+
+ 15:11 <bdmurray> reported linux bug LP: #1436940 regarding missing wireless device driver
+
+ 15:11 <bdmurray> submitted unattended-upgrades apport package hook to grab correct log file
+
+ 15:11 <ubottu> Launchpad bug 1436940 in linux (Ubuntu) "Wireless device not listed in driver's PCI IDs" [Medium,Triaged] https://launchpad.net/bugs/1436940
+
+ 15:11 <bdmurray> investigation into ubuntu-release-upgrader autopackage test failure regression
+
+ 15:11 <bdmurray> pinged someone about https://code.launchpad.net/~xnox/goget-ubuntu-touch/product-uuid/+merge/229315
+
+ 15:12 <xnox> gosh, blast from the past.
+
+ 15:12 <bdmurray> ✔ done
+
+ 15:12 <xnox> BTW. gaughen: ogasawara_: bdmurray: slangasek: fancy a dinner next week in porland? I'll be over =)
+
+ 15:12 <caribou> Bugfix:
+
+ 15:12 <caribou> - Investigating rsyslog memory leak on Trusty : data analysis ongoing
+
+ 15:13 <caribou> - Preparation for Engineering Core sprint
+
+ 15:13 <caribou> - Endless openafs dkms fix backport
+
+ 15:13 <caribou> Sprinted with CTS engineering team all of last week
+
+ 15:13 <caribou> (done)
+
+ 15:13 <gaughen> xnox, I could do Tuesday or Thursday evening.
+
+ 15:13 <barry> snappy: working on snappy python blog post.  final proof read and post today
+
+ 15:13 <barry> debuntu: LP: #1290847
+
+ 15:13 <ubottu> Launchpad bug 1290847 in python3.4 (Ubuntu) "pyvenv fails due to mising ensurepip module" [Undecided,Fix released] https://launchpad.net/bugs/1290847
+
+ 15:13 <barry> si: updated toxify branch for server mp.  began looking into adding si 3.0 support (config.d directory).
+
+ 15:13 <barry> other: pycon prep work.
+
+ 15:13 <barry> next week: montreal
+
+ 15:13 <barry> --done--
+
+ 15:14 <cyphermox> * review/testing silo 30 for NM fixes
+
+ 15:14 <cyphermox> * manual upload of NM 0.9.10.0-0ubuntu13
+
+ 15:14 <cyphermox> * More work on casper CD ejection (input not received)
+
+ 15:14 <xnox> gaughen: cool. I guess i should send out an email or something about that.
+
+ 15:14 <cyphermox> * Spent some time looking into route metrics issue (bug 1436330)
+
+ 15:14 <cyphermox> - patch will need a fair amount of porting to work, or rewriting
+
+ 15:14 <cyphermox> * Debugging nm-applet bug 1418260
+
+ 15:14 <ubottu> bug 1436330 in network-manager (Ubuntu Vivid) "Network Manager doesn't set metric for local networks any more, causing connection issues" [Critical,In progress] https://launchpad.net/bugs/1436330
+
+ 15:14 <ubottu> Error: Launchpad bug 1418260 could not be found
+
+ 15:14 <cyphermox> * oem-config user removal/more fixes for systemd (bug 1436937)
+
+ 15:14 <cyphermox> * grub2 patch review for ARP packets, compared patch with upstream fixes
+
+ 15:14 <ubottu> bug 1436937 in ubiquity (Ubuntu) "Temporary OEM user not removed after end user setup" [High,In progress] https://launchpad.net/bugs/1436937
+
+ 15:14 <cyphermox> * Add patch to nm-applet to hide virtual devices (lxc bridges, etc.)
+
+ 15:14 <cyphermox> * Connectivity meeting, discussions on current conn. issues on phone
+
+ 15:14 <cyphermox> * Contacting design for ubiquity slideshow updates
+
+ 15:14 <cyphermox> (done)
+
+ 15:15 <stgraber> - LXC/LXD
+
+ 15:15 <stgraber> - Archive upload of LXD 0.5
+
+ 15:15 <stgraber> - Work on fixing Jenkins CI (corrupted FS, had to move a few TB around and repair the fs)
+
+ 15:15 <stgraber> - Investigation in current test failures for lxc and lxcfs, fixes in progress
+
+ 15:15 <stgraber> - Various bugfixes and feature work on LXC and LXD
+
+ 15:15 <stgraber> - Code reviews, bug triaging, other admin paperwork
+
+ 15:15 <stgraber> - Other
+
+ 15:15 <stgraber> - Couple of days working on a security bug.
+
+ 15:15 <stgraber> (done)
+
+ 15:15 <infinity> - Helped the kernel team with cherrypicks for 2015 Thinkpads
+
+ 15:15 <infinity> - Babysat firewall issues for arm64 snappy builds
+
+ 15:15 <infinity> - Lots and lots of queue reviews
+
+ 15:15 <infinity> - General AA and SRU bits
+
+ 15:15 <infinity> - Investigated LP: #1434579 -- Still needs fixing
+
+ 15:15 <infinity> - Shaved 30 seconds off ftpmaster's publisher
+
+ 15:15 <infinity> - Finished two transitions to remove old versions of gcrypt and gnutls from vivid
+
+ 15:15 <stgraber> barry, doko, cyphermox: we should have dinner or something next week then before cyphermox and I fly to Austin
+
+ 15:15 <ubottu> Launchpad bug 1434579 in virtualbox (Ubuntu) "Unable to install VirtualBox Guest Service in 15.04" [High,Confirmed] https://launchpad.net/bugs/1434579
+
+ 15:15 <infinity> - Started rebuilding powerpc and ppc64el VMs to double disk space
+
+ 15:15 <infinity> (done)
+
+ 15:15 <infinity> !!! NOTE: If you're using machines in 1SS today, use screen sessions, lamont is replacing the firewall today, and your network WILL go away, possibly for hours.
+
+ 15:15 <ubottu> infinity: I am only a bot, please don't think I'm intelligent :)
+
+ 15:15 <xnox> cyphermox: design does not do slideshow updates, as far as I can tell it's a community thing in ubiquity-slideshows project or some such?! E.g. there are screenshots from me there and minor tweaks.
+
+ 15:15 <barry> stgraber: for sure!
+
+ 15:15 <cyphermox> stgraber: I was going to point that out in AOB :)
+
+ 15:15 <xnox> cyphermox: what needs doing?
+
+ 15:16 <xnox> infinity: gcrypt \o/
+
+ 15:16 <cyphermox> xnox: a vervet, for one.
+
+ 15:16 <cyphermox> to replace our shiny triangular unicorn :)
+
+ 15:17 <xnox> cyphermox: oh, right. that was usually poking the same person who designed default desktop wallpaper to snitch the vervet graphic. i guess poke the desktop team manager. he coordinated the wallpaper this time around
+
+ 15:17 <lamont> infinity: max 2 hours, expecting about 15 min or less
+
+ 15:17 <slangasek> cyphermox: did you arrive at that "nm-applet virtual interfaces" question independently, or did this come up in response to the bug I filed yesterday about NM eating my bridges? :)
+
+ 15:17 <infinity> lamont: I prefer to prepare for the worst and be pleasantly surprised. :)
+
+ 15:18 <cyphermox> slangasek: I had come to it independently when I initially did the NM 0.9.10 work; but it was low in my priority list, but then you pointed it out and someone filed a bug, so ...
+
+ 15:18 <infinity> slangasek: The NM virtual interfaces thing was reported by lots of people, in bugs and private grumbling.
+
+ 15:18 <lamont> infinity: ack
+
+ 15:18 <cyphermox> slangasek: NM shouldn't be eating bridges and this change won't keep it from doing it
+
+ 15:18 <slangasek> infinity: ok :)
+
+ 15:18 <infinity> (Lots of private grumbling)
+
+ 15:19 <cyphermox> it's really just avoiding people clicking on the bridge thingies in nm-applet and breaking the bridge that way
+
+ 15:19 <slangasek> any other questions over folks status?
+
+ 15:19 <cyphermox> oh
+
+ 15:20 <cyphermox> I might need quick review on a ubiquity merge
+
+ 15:20 <cyphermox> https://code.launchpad.net/~mathieu-tl/ubiquity/oem-config/+merge/255103
+
+ 15:20 <cyphermox> ^ the oem-config fixes above
+
+ 15:20 <slangasek> who can help with the above?  infinity, stgraber?
+
+ 15:20 <infinity> Yes, one of us. :P
+
+ 15:21 * xnox looks
+
+ 15:21 * infinity has it open in a tab now.
+
+ 15:21 <infinity> Already not happy about "sleep 5", but need context.  Will poke later. :P
+
+ 15:21 <slangasek> :)
+
+ 15:21 <cyphermox> sure ;)
+
+ 15:21 <slangasek> [TOPIC] sprint planning
+
+ 15:22 <slangasek> so I've added a new tab to the core sprint planning spreadsheet for 'Foundations Agenda' - https://docs.google.com/a/canonical.com/spreadsheets/d/12QAyy4oB6uDzfrPrQqe54QiZzXEyFTbbQOUGvqZLrWo/edit#gid=628679993
+
+ 15:22 * ogra_ alwasy wondered why there is no "thunder round" after a "lightning round"
+
+ 15:22 <xnox> cyphermox: looks good, i ponder if we should do that for normal ubiquity as well.... including all the try-ubiquity/only-ubiquity modes.
+
+ 15:22 <slangasek> ogra_: the lightning is so far away that by the time the thunder arrives the meeting is over
+
+ 15:22 <cyphermox> ogra_: indeed. imaging we're doing lightning in space.
+
+ 15:22 <infinity> ogra_: Because we're close enough to the source that both happen together.
+
+ 15:22 <bdmurray> ogra_: because its the other way around
+
+ 15:22 <ogra_> slangasek, lol
+
+ 15:23 <slangasek> those of you who're coming to Austin, please throw in there the list of topics you plan to work on during the week
+
+ 15:23 <slangasek> especially anything that you're going to want other people's time on
+
+ 15:23 <stgraber> cyphermox: looks ok. Also not fond of the sleep but the alternative (wait loop) probably isn't much prettier. I'm also not that good at systemd units yet, so you unless you're sure about them, you may want pitti to take a look.
+
+ 15:24 <sil2100> I'll probably be running around discussing RTM plans for the future
+
+ 15:24 <slangasek> sil2100: fine, please add to the spreadsheet :)
+
+ 15:25 <slangasek> anything else on the subject of sprint planning?
+
+ 15:25 <robru> stgraber: can I get you to merge & deploy this queuebot update? https://code.launchpad.net/~robru/queuebot/new-spreadsheet/+merge/255106
+
+ 15:25 <sil2100> robru: I think he already did that
+
+ 15:26 <xnox> cyphermox: one thing, in upstart world, that blocking thing achieved was if/when ubiquity crashes on it's face the dm is brought up. Not that useful in oem-config case i guess, as one wouldn't know how to do oem login.
+
+ 15:26 <sil2100> robru: I poked him and queuebot is already switched (probably only live)
+
+ 15:26 <sil2100> robru: I tried poking and changing everything I could ;)
+
+ 15:26 <xnox> cyphermox: and there is no user setted up.
+
+ 15:26 <robru> sil2100: ok well this is a branch so the code gets updated properly and doesn't get reverted next time there's a rollout
+
+ 15:26 * bdmurray will brb
+
+ 15:26 <stgraber> robru: yeah, I already have a local commit here for that, just haven't pushed it to LP yet
+
+ 15:26 <xnox> cyphermox: i wonder if it would be possible to add oem-config.target as wantedby graphical.target and thus block it that way?
+
+ 15:26 <doko> slangasek, so I'm not allow to throw things?
+
+ 15:26 <robru> stgraber: thanks
+
+ 15:26 <doko> allowed even
+
+ 15:27 <xnox> cyphermox: and at the end of oem-config, remove that wantedby?
+
+ 15:27 <cyphermox> xnox: you kind of still need to make sure oem-config is what runs after reboot from running oem-config-prepare. this worked, at lest
+
+ 15:27 <cyphermox> xnox: heh
+
+ 15:27 <xnox> cyphermox: yeah, so prepare would add graphical.target.wants/oem-config.taget. and end of oem-config would remove that.
+
+ 15:27 <xnox> cyphermox: rather than fiddling with default-targets. Note that this oh...
+
+ 15:28 <xnox> cyphermox: this totally breaks oem-config on the server, which doesn't have graphical.target =)
+
+ 15:28 <cyphermox> there was one issue with how when we remove oem-config it deletes the files
+
+ 15:28 <cyphermox> actually
+
+ 15:28 <slangasek> doko: you can throw things, but if you're not at the sprint it may or may not stick ;)  happy to discuss it with you offline
+
+ 15:28 <cyphermox> server does do graphical.target too.
+
+ 15:28 <xnox> cyphermox: oh, ok.
+
+ 15:28 <cyphermox> unexpected, I agree
+
+ 15:29 <cyphermox> xnox: let's discuss this later in a better location.
+
+ 15:30 <slangasek> [TOPIC] AOB
+
+ 15:30 <slangasek> anything else?
+
+ 15:30 <cyphermox> drinking in YUL next week?
+
+ 15:30 <barry> when do you guys head to austin?
+
+ 15:30 <infinity> For those who missed it in the chatter last time, 1SS firewall going away this afternoon, plan accordingly.
+
+ 15:30 <cyphermox> :)
+
+ 15:30 <caribou> I can think of better places than YUL for drinks
+
+ 15:31 <cyphermox> barry: saturday.
+
+ 15:31 <barry> cool.  i get in on tuesday night
+
+ 15:31 <caribou> but I won't be there, going back to sleep
+
+ 15:31 <slangasek> saturday> cyphermox apparently needs an extra day of barbecue
+
+ 15:31 <cyphermox> err, wait, I meant sunday
+
+ 15:31 <barry> maybe thursday?
+
+ 15:31 <cyphermox> works for me
+
+ 15:32 <stgraber> thursday works for me
+
+ 15:32 <barry> on the calendar!
+
+ 15:33 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

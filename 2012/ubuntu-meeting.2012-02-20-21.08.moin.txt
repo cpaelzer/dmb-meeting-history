@@ -1,0 +1,883 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by pitti at 21:08:58 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-20-21.08.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *action review
+''LINK:'' https://wiki.ubuntu.com/ExtensionRepositoryPolicy   (wendar, 21:15:41)
+''LINK:'' https://bugs.launchpad.net/ubuntu-website-content/+bug/933187   (wendar, 21:16:52)
+
+ *Can an ARB exception be made allowing Scopes packages to depend on Lens packages in extras - mhall119
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2012-February/001205.html   (stgraber, 21:19:05)
+
+
+
+Meeting ended at 22:24:50 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (111)
+ * mhall119 (89)
+ * wendar (65)
+ * stgraber (50)
+ * jono (39)
+ * soren (26)
+ * ajmitch (13)
+ * highvoltage (5)
+ * aquarius (4)
+ * micahg (3)
+ * ScottK (3)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 21:08:58 <pitti> #startmeeting
+
+ 21:08:58 <meetingology> Meeting started Mon Feb 20 21:08:58 2012 UTC.  The chair is pitti. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 21:08:58 <meetingology> 
+
+ 21:08:58 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 21:09:08 <pitti> #topic action review
+
+ 21:09:13 <pitti> kees to perform brainstorm review
+
+ 21:09:30 <pitti> I think we can safely drop this one now, as the next one is due in March
+
+ 21:09:35 <pitti> Laney and wendar to get trademark policy updated wrt remixes
+
+ 21:09:45 <pitti> ^ do you happen to be online?
+
+ 21:09:49 <wendar> pitti: we've submitted a ticket for it
+
+ 21:10:22 <wendar> just a sec, will look for the ticket #
+
+ 21:10:29 <pitti> wendar: thanks
+
+ 21:10:35 <pitti> so, sounds like "in progress"
+
+ 21:10:44 <wendar> also, we had a suggestion about adding some information to the extension repository policy
+
+ 21:11:00 <wendar> "If the software does not allow redistribution, document this clearly in the debian/copyright file."
+
+ 21:11:28 <wendar> with supporting documentation suggesting to add this as a comment in DEP5 format
+
+ 21:11:48 <pitti> I guess remixes need to carefully go through the licenses of partner anyway
+
+ 21:11:51 <wendar> we talked some with SPDX about whether they had any standard way of tagging non-redistributable software
+
+ 21:11:57 <wendar> and, they said no
+
+ 21:12:23 <wendar> some standard comment seemed helpful
+
+ 21:12:32 <soren> Sorry, "SPDX"?
+
+ 21:12:48 <wendar> soren: that's the group that's working on license metadata
+
+ 21:12:54 <wendar> like DEP5, but more general
+
+ 21:13:00 <soren> What's it short for?
+
+ 21:13:01 <wendar> skaet is one of the leaders of the group
+
+ 21:13:18 <wendar> "Software Package Data Exchange"
+
+ 21:13:22 <wendar> spdx.org
+
+ 21:13:22 <soren> Cool. Thanks.
+
+ 21:13:40 <wendar> just a side conversation to see if we could standardize on prior art
+
+ 21:13:59 <wendar> the main idea is just to provide reasonable notification to the consumers of the packages
+
+ 21:14:28 <wendar> and, something that can be scanned automatically, so it's not an enormous task of checking each package in a remix to see if you can remix the remix
+
+ 21:15:01 <wendar> But,  no need to go into specific implementation details in the ExtensionRepositoryPolicy
+
+ 21:15:13 <wendar> Would you all be comfortable adding "If the software does not allow redistribution, document this clearly in the debian/copyright file."
+
+ 21:15:20 <wendar> to the current policy?
+
+ 21:15:41 <wendar> https://wiki.ubuntu.com/ExtensionRepositoryPolicy
+
+ 21:15:49 <wendar> under 2.3 "Copyright Considerations"
+
+ 21:16:01 <wendar> (no rush, can be considered and held over to the next meeting)
+
+ 21:16:04 <pitti> actually this is alreayd the point of the copyright file
+
+ 21:16:27 <pitti> but pointing it out more explicitly/machine readable sounds fine and straightforward
+
+ 21:16:47 <soren> Yeah, I have no problem with that.
+
+ 21:16:52 <wendar> https://bugs.launchpad.net/ubuntu-website-content/+bug/933187
+
+ 21:16:53 <ubottu> Error: launchpad bug 933187 not found
+
+ 21:17:18 <pitti> nice, fix committed already
+
+ 21:17:27 <pitti> wendar: thanks for the update!
+
+ 21:17:50 <pitti> #topic Can an ARB exception be made allowing Scopes packages to depend on Lens packages in extras - mhall119
+
+ 21:18:19 <pitti> ah, right, right now extras pacakges can only depend on Ubuntu packages, not to each other, right?
+
+ 21:18:32 <jono> yes
+
+ 21:18:39 <mhall119> pitti: right, the current policy is that one package in extras can't depend on another in extra
+
+ 21:18:58 <pitti> I see how that might be required for libraries, but what was the general reason for this?
+
+ 21:18:58 <mhall119> but the Unity API encourages separate development of lenses and scopes
+
+ 21:19:05 <stgraber> https://lists.ubuntu.com/archives/technical-board/2012-February/001205.html
+
+ 21:20:01 <mhall119> tl;dr, it makes it harder to remove problem packages from extras if other packages in extras might depend on them
+
+ 21:20:08 <wendar> note that in the general ExtensionRepositoryPolicy, packages in Extras can depend on other packages in Extras
+
+ 21:20:20 <stgraber> (FWIW, my opinion described in that ML thread hasn't changed over the past few weeks, I'm still definitely against this change)
+
+ 21:20:28 <wendar> (this is because it's generic for all)
+
+ 21:20:38 <wendar> but, Extras specifically doesn't permit libraries
+
+ 21:20:47 <mhall119> If not a general rule change, I would like to at least get a specific exception for the case of lenses and scopes
+
+ 21:20:48 <wendar> independent libraries
+
+ 21:21:15 <mhall119> I have a list of 61 lenses and scopes being developed
+
+ 21:21:25 <mhall119> so far only 6 have gone through the ARB process
+
+ 21:21:27 <jono> my worry here is that we have an enormous number of scopes and lenses in development, and the ARB is a perfect avenue for review and inclusion, but with this dependency restriction we are effectively blocking scopes from the ARB
+
+ 21:21:40 <mhall119> 29 of those are scopes that live independently from the lens they extend
+
+ 21:21:58 <jono> and I am not confident that the average scope/lens dev is going to be able to get their software into the archive via the traditional upload process
+
+ 21:22:19 <ajmitch> a lense isn't exactly a library, it's more an app for which the scopes are plugins
+
+ 21:22:50 <mhall119> ajmitch: except that the Unity API allows the scope to run in a separate, independent process
+
+ 21:22:54 <mhall119> and community over dbus
+
+ 21:22:58 <pitti> so if we'd pull a scope from extras, what would the lenses do?
+
+ 21:23:10 <pitti> AFAICS we'd need to remove them from extras as well, right?
+
+ 21:23:13 <ajmitch> mhall119: right, plugin in the data sense rather than sharing the same process
+
+ 21:23:14 <mhall119> pitti: the lens tells the Dash how to display results from the scope
+
+ 21:23:15 <soren> stgraber: So you'd prefer that people lump them together in a single binary package?
+
+ 21:23:36 <stgraber> soren: into a single source package. Multiple binary from a single source is already allowed in extras
+
+ 21:23:39 <mhall119> pitti: one lens can have multiple, independent scopes, that provide it with data to display in the dash
+
+ 21:23:41 <pitti> mhall119: would it not make sense to build them from a single source?
+
+ 21:23:44 <pitti> they seem related
+
+ 21:23:51 <pitti> ah, ok
+
+ 21:23:54 <mhall119> pitti: they don't have to be
+
+ 21:24:03 <mhall119> I can write a scope for the Music lens right now
+
+ 21:24:11 <pitti> so if the scope ceases to exist, they would just not display data any more
+
+ 21:24:11 <mhall119> the Music lens in in Vala, my scope can be in Python
+
+ 21:24:21 <mhall119> pitti: correct
+
+ 21:24:22 <stgraber> soren: the ARB doesn't maintain the packages, the individual developers do, allowing dependencies would force the ARB to do actual maintenance of these packages
+
+ 21:24:26 <pitti> so wouldn't it be sufficient for the lens to Recommends: the scope and not depends on it?
+
+ 21:24:28 <aquarius> stgraber, you're suggesting that if I write a useful scope for an existing lens -- say, I write a music scope that searches my favourite music provider, or my Sonos box, or something -- that I shouldn't be allowed to submit it? I should have to go to the music lens maintainer and beg them to include it (and leave them, officially, on the hook as the maintainer of it?)
+
+ 21:24:32 <pitti> if it can pull from several scopes?
+
+ 21:24:35 <jono> stgraber, why?
+
+ 21:24:41 <mhall119> pitti: other way, the scope currently depends on the lens
+
+ 21:25:01 <stgraber> soren: instead I'd much prefer the lens develoepr to aggregate the different scopes for their lens and upload the bundle as a single source, ensuring they are all well tested together and offering us a single point of contact
+
+ 21:25:25 <jono> stgraber, why should the lens dev be required to care about scopes he/she is uninterested in?
+
+ 21:25:28 <pitti> ^ that was my question, building them from the same source
+
+ 21:25:30 <mhall119> stgraber: that will severely limit the number of independent scopes being written
+
+ 21:26:01 <soren> I'll be honest and admit that this whole concept of lenses and scopes is new and mysterious to me, but it sounds to me like there's not a 1-to-1 relationship between them, nor even a 1-to-many, but rather a many-to-many?
+
+ 21:26:04 <mhall119> pitti: the Unity API was specifically designed to allow their independent development and deployment
+
+ 21:26:06 <pitti> but how much sense does it make to write a scope (a data provider) without a lens (the presentation for it)?
+
+ 21:26:12 <wendar> mhall119: does the lens developer currently have to modify their package to support a new scope?
+
+ 21:26:23 <wendar> mhall119: (outside of Extras,  I mean)
+
+ 21:26:26 <stgraber> aquarius: if you write a scope for a lens that's in the archive, you can submit it to extras. If you write a scope for a lens that's in extras, you need to go through the developer of the lens
+
+ 21:26:27 <mhall119> soren: it's one to many, a scope can really only target a single lens
+
+ 21:26:34 <pitti> if a lens depends on a scope, or the other way round, they already need to be developed and tested togeher, no?
+
+ 21:26:39 <mhall119> wendar: no, lens authors don't need to do anything for scopes
+
+ 21:26:46 <aquarius> stgraber, doesn't that put an inordinate burden on a lens developer? I'm not sure a lens developer should be required to test and verify scopes that they might not even be able to run (think of a video scope for a Canadian video provider, which can't be tested by a UK video lens developer).
+
+ 21:26:48 <pitti> and if they are really are so independent, why do they need to strictly depend on each other?
+
+ 21:26:51 <soren> mhall119: Ok.
+
+ 21:26:53 <soren> mhall119: Thanks.
+
+ 21:27:05 <mhall119> pitti: no, there is no need for scopes and lenses to be developed and tested together
+
+ 21:27:15 <mhall119> a scope author will need to know about the lens, but not the other way around
+
+ 21:27:17 <pitti> mhall119: so why do they need to Depends: to them then?
+
+ 21:27:23 <wendar> mhall119: so, the best analgogy for a scope, might be like an independent extension for an app?
+
+ 21:27:32 <mhall119> a scope is useless without the lens it is written for
+
+ 21:27:39 <mhall119> wendar: yes
+
+ 21:27:41 <jono> wendar, agreed
+
+ 21:27:43 <wendar> mhall119: like, an ubuntuone extension for rhythmbox?
+
+ 21:27:53 <mhall119> or the flash plugin for Mozilla
+
+ 21:28:06 <aquarius> stgraber, I'm just picking music and video as obvious examples; if those being in the archive confuses matters, then I can talk about an ebooks lens, for example. Think of the author of the ebooks lens being, in your model, responsible for scopes for e-book stores which they can't even access for geographical reasons.
+
+ 21:28:13 <jono> so we need to allow scopes to depend on the lens, but the lens does not need to depend on any scopes
+
+ 21:28:14 <stgraber> aquarius: sure, and hopefully this extra burden will make them submit the lens to the archive where the Ubuntu development team will make sure it doesn't explode post-release making extending it with scopes in extras perfectly safe
+
+ 21:28:57 <mhall119> stgraber: I can't concieve of any way, given the Unity API, that a lens can make a scope explode, or vice versa
+
+ 21:29:27 <pitti> stgraber: well, you can't (easily) introduce new software into stable ubuntu other than extras or backports
+
+ 21:29:29 <mhall119> technically we can submit scopes to the ARB that don't depend on their lens
+
+ 21:29:29 <stgraber> the current way the ARB works is "if it breaks we'll remove it", the ARB is not supposed to fix broken packages. This becomes problematic when we allow dependencies because then we might end up having to pull 10 packages because of one being broken, then deal with people complaining about it
+
+ 21:29:46 <jono> stgraber, why would the ARB need to fix broken packages?
+
+ 21:29:48 <pitti> that's why I ask why a Recommends: would not suffice
+
+ 21:29:59 <pitti> as it wouldn't render packages uninstallable when the recommends get removed
+
+ 21:30:02 <mhall119> stgraber: if you  remove a broken scope, it won't break the lens, and if you remove a broken lens, the scope will just not be accessible
+
+ 21:30:09 <pitti> and the lenses woudl just display whatever data source is available
+
+ 21:30:16 <stgraber> pitti: agreed, that's why I think the new cool lens should go to extras bundling some scopes initially, then for the next release, the lens should be in the archive and these scopes can then go as separate packages either in the archive or in extras
+
+ 21:30:53 <stgraber> pitti: a scope depends on a lens and there are usually multiple scopes for a lens
+
+ 21:30:55 <ajmitch> pitti: the lense needs to be there for the scopes to be useful at all, so if the lense is in extras & then removed, the scopes won't be functional
+
+ 21:31:02 <stgraber> pitti: so if we pull a lens, we have to pull all the scopes
+
+ 21:31:09 <jono> stgraber, why?
+
+ 21:31:19 <mhall119> stgraber: you don't
+
+ 21:31:36 <mhall119> they just become inaccessible
+
+ 21:31:51 <jono> and this is arguably what ratings and reviews are there to help with
+
+ 21:31:51 <stgraber> mhall119: well, unless you want to end up with a bunch of useless packages, because without the lens, they are completely useless and so should be pulled or they'll confuse the users
+
+ 21:32:09 <mhall119> stgraber: hence the reason we want a Depends in the scope package
+
+ 21:32:11 <soren> stgraber: How will it be more or less confusing than the situation where it's all in the same package?
+
+ 21:32:36 <pitti> we can also remove all the rdepends
+
+ 21:32:45 <pitti> but I thought lenses could also show data from different scopes
+
+ 21:32:49 <mhall119> stgraber: what would the downside be of having ScopeA depend on LensB?
+
+ 21:32:54 <pitti> so if you pull one scope, it wouldn't be useless
+
+ 21:33:02 <mhall119> pitti: correct
+
+ 21:33:23 <ajmitch> pitti: I think the problem is more about if the lense gets pulled, breaking >1 scope
+
+ 21:33:25 <mhall119> the reason for the Depends is so that you won't have a scope installed without the lens that is a capable of displaying it's results
+
+ 21:33:30 <stgraber> soren: all in the same package means that we have a single point of contact and a single person updating them all, so it's unlikely that this person would break anything in an update to the lens because we can easily ensure the changes have been done for all the scopes
+
+ 21:33:42 <stgraber> soren: also, if we pull that source package, all the binaries come with it, without any extra work
+
+ 21:33:48 <mhall119> ajmitch: if the lens gets pulled, it's scopes should be pulled, because they become useless
+
+ 21:33:59 <jono> stgraber, I think you are thinking of Extras in the same way as we think of Main/Universe
+
+ 21:34:18 <ajmitch> mhall119: yeah, that's what we were saying :)
+
+ 21:34:19 <jono> the point of Extras is to ease app devs getting their content in...requiring a maintainer for a collection of scopes and a lens is unrealistic
+
+ 21:34:33 <jono> apart from anything, the Lens author may not care about the many scopes
+
+ 21:34:39 <soren> stgraber: None of those arguments seem to have anything to do with confusion for users.
+
+ 21:34:51 <jono> in the same way, the author of an app probably doesn't care about all of the plugins for his/her app
+
+ 21:34:59 <soren> stgraber: Not saying they're invalid, just trying to understand the problem one aspect at a time. :)
+
+ 21:35:27 <jono> the say that we should expect either a maintainer for the scopes and lens in Extras or for it to go into Main/Universe is going to affect the ability of our app devs to get their content into the Software Center
+
+ 21:35:53 <jono> and as mhall119 said, the Lens/Scopes system was designed to be pluggable like this...
+
+ 21:36:11 <mhall119> it's encouraged, in fact
+
+ 21:36:14 <stgraber> soren: for the users, whether we pull a single source building all the binaries or all the sources, there won't be any difference. If we only take out the lens though, then they'll end up seeing 20 packages that when installed will do absolutely nothing
+
+ 21:36:21 <pitti> so, I still don't understand the fundamental problem here
+
+ 21:36:47 <pitti> either scopes and lenses _are_ coupled together by expected data format etc. and thus need to be written together
+
+ 21:36:58 <pitti> then removing one should also remove the other
+
+ 21:37:01 <mhall119> pitti: only in one direction
+
+ 21:37:12 <pitti> or they are magically independently, then a recommends: would be more than enough?
+
+ 21:37:28 <soren> stgraber: How do removals work, btw?
+
+ 21:37:36 <mhall119> pitti: would a recommends: force the installation of a lens if I apt-get install a scope?
+
+ 21:37:38 <ajmitch> more like Enhances:
+
+ 21:37:38 <stgraber> pitti: a scope depends on a lens. A lens can have multiple scopes.
+
+ 21:37:40 <soren> stgraber: Do we replace the source package with one that builds empty binaries?
+
+ 21:37:46 <stgraber> soren: upload of an empty package
+
+ 21:37:49 <soren> s/binaries/binary ones/
+
+ 21:37:52 <pitti> mhall119: right; if it was in two directions, there would be no doubt about putting them in one source or even one binary
+
+ 21:38:01 <soren> stgraber: That won't remove the binary packages from users's systems.
+
+ 21:38:29 <pitti> I guess "empty binary"
+
+ 21:38:37 <aquarius> doesn't software centre install recommends: packages by default?
+
+ 21:38:40 <stgraber> soren: correct, in the case of a multi-binary package, we'd probably upload the main binary package as empty and conflict/break against all the others
+
+ 21:38:41 <pitti> yes, apt does
+
+ 21:38:53 <pitti> but it doesn't break if the recommends: doesn't exist
+
+ 21:38:56 <soren> stgraber: Ok.
+
+ 21:39:10 <mhall119> does removing a package (in USC or apt) remove any package that recommends it?
+
+ 21:39:20 <stgraber> soren: so far we've been fortunate enough not to have to do anything like that though, so it's just the on-paper procedure ;)
+
+ 21:39:20 <soren> mhall119: No.
+
+ 21:39:21 <pitti> so if we pull a scope, there is no problem
+
+ 21:39:42 <mhall119> soren:  then removing a lens package would leave useless scope packages installed if we only used Recommends
+
+ 21:39:44 <pitti> if we pull a lens, we either would drop the corresponding scopes as well, or just leave them if another lens uses them as well
+
+ 21:39:48 <pitti> ^ does that make sense?
+
+ 21:39:49 <soren> mhall119: Not immediately, at least. It might be up for auto-removal later on, though.
+
+ 21:40:04 <mhall119> pitti: you can't have multiple lenses use the same scope, the API doesn't allow that
+
+ 21:40:19 <pitti> ah, that makes it even easier then
+
+ 21:40:21 <jono> mhall119, multiple installed lenses, right?
+
+ 21:41:00 <pitti> so dropping a lens would just mean to drop all dependent scopes as well
+
+ 21:41:00 <mhall119> a scope is installed into a lens' directory in /usr/share/unity/lenses/<lens_name>/
+
+ 21:41:13 <mhall119> pitti: should drop them all, yes
+
+ 21:41:29 <jono> right
+
+ 21:42:31 <pitti> so if we extended the policy so that removing a package would automatically drop all reverse dependencies, would there still be a maintenance/consistency problem?
+
+ 21:42:51 <stgraber> we also have the issue where then two different source packages will be writting to the same path (as mhall119 pointed out that scopes are installed in the lens directory), looking for problems is pretty easy for the ARB when coming from the same source (just build the source, check all files in debian/, done), but can be much trickier to spot when in multiple sources
+
+ 21:42:52 <pitti> we still should not generally allow this
+
+ 21:43:03 <pitti> this situation alreayd stretches the idea of extras.u.c. to the max
+
+ 21:43:17 <mhall119> stgraber: you have that already
+
+ 21:43:21 <pitti> and extras.u.c. should never be allowed to grow complex dependency trees
+
+ 21:43:27 <stgraber> mhall119: no
+
+ 21:43:49 <mhall119> stgraber: I can write two independent source packages that both try to install to the same /usr/share/unity/<lens_name>
+
+ 21:44:06 <stgraber> mhall119: we currently either build from the same source, making the check for such issues trivial or we install in an existing lens from the main archive, but then you have to prefix with extras- per policy, avoiding any potential clash
+
+ 21:44:10 <pitti> err, do we allow this?
+
+ 21:44:30 <pitti> I thought they'd need to use /opt/extras.u.c./project/ ?
+
+ 21:44:43 <soren> There's an exception for these things.
+
+ 21:44:44 <pitti> ah, I think we had an exception for that, /me checks logs
+
+ 21:44:50 <stgraber> pitti: they do, except for /usr/share/unity/<lens name> as we alloewd it a few meetings ago
+
+ 21:44:50 <mhall119> pitti: for Unity we need to install .lens and .scope files into /usr/share/unity/lenses/
+
+ 21:44:58 <pitti> yes, I remember
+
+ 21:45:04 <stgraber> pitti: but we allowed it by enforcing a extras- prefix
+
+ 21:45:09 <mhall119> and .service files need to be installed into /usr/share/dbus-1/
+
+ 21:45:18 <stgraber> pitti: which prefix becomes useless when allowing multiple packages in extras to write to the same path
+
+ 21:45:19 <pitti> but anyway, the ARB would hopefully reject a package foo if it installs a unity/extras-bar
+
+ 21:45:28 <pitti> it should be extras-<packagename> and nothing else
+
+ 21:46:29 <mhall119> pitti: for Unity lenses and scopes, we have to install some descriptive files into /usr/share
+
+ 21:46:39 <pitti> so, if the ARB is willing to remove reverse dependencies as well, I think the exception can be granted (although it's a very ugly precedent)
+
+ 21:46:43 <mhall119> binaries and supporting code will live in /op/
+
+ 21:46:45 <mhall119> /opt/
+
+ 21:46:54 <pitti> if not, then recommends: seems like a good enough compromise to me?
+
+ 21:47:24 <jono> from a user experience perspective with recommends, if a user installs a scope, it won't pull in the lens, right?
+
+ 21:47:36 <mhall119> it will, unless they change the default Apt settings
+
+ 21:47:41 <jono> right
+
+ 21:47:45 <pitti> recommends are installed/upgraded by default
+
+ 21:47:49 <mhall119> it's removal that Recommends will give a less than ideal experience
+
+ 21:47:55 <pitti> except that apt doesn't fall over if they don't exist
+
+ 21:48:01 <jono> right
+
+ 21:48:04 <pitti> (and some technical details which don't matter here)
+
+ 21:48:09 <stgraber> it's actually another issue I have with the proposal, no offence but it comes from the Canonical Community team without AFAICS any backing from the ARB (only e-mail from an ARB member I can see is mine and as you noticed, I'm against it)
+
+ 21:48:13 <jono> so if the user removes the lens, some scopes will by laying around
+
+ 21:48:31 <jono> stgraber, does it matter who raises this topic?
+
+ 21:48:36 <mhall119> pitti: oh, so then if stgraber pulls a lens package from extras, a user can still install one of it's scope packages without being told it won't work?
+
+ 21:48:40 <jono> also, we discussed with the ARB first and were told to bring it to the TB
+
+ 21:48:42 <pitti> jono: that's no different with Depends:; that's the job of autoremove
+
+ 21:48:50 <jono> pitti, gotcha
+
+ 21:48:58 <wendar> stgraber: I'm also generally against it, but the redeeming feature from my perspective is that mhall119 will be doing most of the work
+
+ 21:49:01 <mhall119> stgraber: both you and highvoltage encouraged me to raise this with the TB
+
+ 21:49:32 <wendar> against it from the same perspective as pitti: it's kind of ugly
+
+ 21:49:57 <pitti> well, more important than "ugly" is that it imposes extra responsibility on the ARB team
+
+ 21:50:12 <pitti> if they are willing to check for reverse dependencies on removal, it seems okay
+
+ 21:50:16 <mhall119> what exactly are the extra responsibilities?
+
+ 21:50:31 <mhall119> sorry, I'm unclear on what work will be required
+
+ 21:50:32 <wendar> if mhall119 is willing to participate as an app-review-contributor, and watch over the scopes and lenses, it's less of a stress on the ARB
+
+ 21:50:33 <pitti> introducing the concept of dependencies (in essence, a parallel distro)
+
+ 21:50:39 <stgraber> mhall119: that's correct because we were definitely stuck and only the TB can do the policy change, I just mean that we should vote on "allowing the ARB to" not "the ARB needs to" and then let the ARB choose whether to go with it or not depending on the estimated extra work
+
+ 21:50:47 * ajmitch isn't against it as such, mostly because of it being somewhat useful & not being directly against the extension repository policy
+
+ 21:51:07 <pitti> with all the fun that potentially comes with it (circular depends, NBS transitions, uninstallable packages, nontrivial removals)
+
+ 21:51:37 <mhall119> pitti: is that a reasonable concern if it's only for lenses and scopes?
+
+ 21:51:37 <ajmitch> removals *ought* to be rare, I hope
+
+ 21:51:40 <jono> stgraber, I don't understand, if you wanted to discuss this, why didn't you raise this when we brought it to the ARB?
+
+ 21:51:41 <pitti> yes, as the ARB will need to carry that ^, I'm all for letting the ARB decide this
+
+ 21:51:43 <wendar> I guess the practical question for me, which we'll only see over time, is how much demand there is for releasing new lenses on the "current" release
+
+ 21:51:49 <jono> as opposed to requesting TB discussion
+
+ 21:51:55 <pitti> mhall119: you know how it is with precedents :)
+
+ 21:52:13 <pitti> mhall119: this will quickly turn into a parallel distro
+
+ 21:52:17 <wendar> jono: we definitely needed TB guidance on whether an exception was even possible
+
+ 21:52:22 <mhall119> pitti: yes, but we shouldn't avoid making good progress for fear of possible slippery-slopes somewhere down the road
+
+ 21:52:26 <pitti> as next week someone will have a very good argument why they will need to put their library package into extras
+
+ 21:52:27 <jono> wendar, agreed
+
+ 21:52:33 <wendar> jono: if they say "No", then the ARB doesn't even need to discuss it
+
+ 21:52:53 <stgraber> jono: I was actually hoping for someone else on the ARB to say something, didn't quite happen though ;) TB approval would be needed regardless, so adding it to the TB agenda would have been the right thing to do in all cases
+
+ 21:52:56 <jono> pitti, wouldn't this be an exemption though, just for scopes/lenses?
+
+ 21:52:57 <stgraber> wendar: exactly
+
+ 21:52:58 <wendar> jono: if they say yes, then a deeper discussion of the potential risks, how to mitigate them, etc. is in order
+
+ 21:53:04 <pitti> mhall119: I don't think it's unreasonable extra effort, but as I said, as it's the ARB which will need to do the work
+
+ 21:53:25 <ajmitch> stgraber: sorry, I was waiting for the TB meeting :)
+
+ 21:53:28 <pitti> jono: we can certianly make the wording pretty tight for that, yes
+
+ 21:53:32 <jono> I think it is fair that the ARB provides input on this
+
+ 21:54:04 <jono> but my worry is that if the ARB is not interesting in this, that this will be a singificant blocker for getting all these fantastic scopes/lenses into the USC
+
+ 21:54:15 <highvoltage> mhall119: yep, I told you to raise it with the TB (as apposed to you and jono trying to bully people to submitting to your ideas on #ubuntu-arb)
+
+ 21:54:17 <wendar> if the TB/ARB made an exception, it should be clear that it's *only* for lenses/scopes
+
+ 21:54:29 <mhall119> to be frank, I have 60+ packages and counting that I need to get packaging resolved for, and I won't want to wait until the week or two before release to get started
+
+ 21:54:30 <jono> highvoltage, bully is a strong word
+
+ 21:54:31 <pitti> jono: well, that's much different than discussing technical implementations of dependencies, though :)
+
+ 21:54:32 <wendar> not for extensions/libraries in general
+
+ 21:54:47 <highvoltage> jono: perhaps, but it's exactly what it looked like to me.
+
+ 21:55:01 <mhall119> highvoltage: it was more desperate pleas for assistance
+
+ 21:55:13 <jono> pitti, agreed, but I would suggest that the app developer experience is what we are wanting to improve
+
+ 21:55:16 <wendar> and, to offer support for mhall119, FeatureFreeze is past, and the only way these are getting in to Ubuntu before October is through Extras
+
+ 21:55:20 <jono> but agreed on the technical discussion here
+
+ 21:55:38 <wendar> (which is part of why Extras was created in the first place)
+
+ 21:55:43 <soren> Just a comment on the process: I understand this is something the TB ultimately needs to approve for the ARB to be able to approve it, but I'd really prefer such requests to come from the ARB after discussion there.
+
+ 21:55:47 <pitti> mhall119: well, I don't think this needs to block you; you can start with Recommends:, and upgrade to depends: later on if/when the exception gets granted and the ARB is comfortable with it
+
+ 21:56:04 <wendar> soren: apologies, we were at an impasse
+
+ 21:56:23 <mhall119> pitti: I can, yes, but that's going to be extra work for me if I have to go back and re-do packaging if we don't have a firm decision today
+
+ 21:56:32 <wendar> I'm honestly 50/50 on this one, I see good and bad
+
+ 21:56:46 <soren> I don't see why the ARB couldn't discuss it and offer a proposal to the TB for approval/rejection. IMO, the ARB should feel empowered to do so.
+
+ 21:56:58 <wendar> perhaps we could agree to approve it for Oneiric, and revisit for consideration in Precise?
+
+ 21:56:58 <ajmitch> wendar: I'm about the same
+
+ 21:57:04 <mhall119> at the rate we're getting new lenses/scopes, I don't be able to attend to all of them on my own
+
+ 21:57:11 <micahg> wendar: backports would still be an option possibly
+
+ 21:57:28 <pitti> so, I don't personally have a problem with adding this exception, but with my TB hat I'm not comfortable making this over teh ARB's head
+
+ 21:57:29 <wendar> michahg: but, they wouldn't be in Precise, so fail the "accepted to one release" test
+
+ 21:57:57 <soren> pitti: Yeah, I agree with that.
+
+ 21:58:11 <wendar> micahg: backports could also make an exception, but that's another conversation
+
+ 21:58:21 * ScottK looks up
+
+ 21:58:24 <jono> maybe the ARB can discuss and then present their views at the next TB meeting?
+
+ 21:58:26 <soren> pitti: We could say "the TB grants the ARB permission to approve/reject this new policy", but that's really a backwards way to go about this.
+
+ 21:58:29 <highvoltage> micahg: that sounds good, but is it technically feasable? backports isn't enabled by default, is it?
+
+ 21:58:37 <micahg> highvoltage: it is from oneiric on
+
+ 21:58:40 <wendar> pitti: perhaps the answer here is: the TB is open to making an exception, pending a recommendation from the ARB?
+
+ 21:58:44 <highvoltage> micahg: ooh
+
+ 21:58:44 <ajmitch> highvoltage: it is, but pre-release backports isn't enabled yet
+
+ 21:58:52 <pitti> wendar: that's pretty much my feeling, yes
+
+ 21:59:08 <pitti> and we have a working alternative right now
+
+ 21:59:18 <ScottK> Backports is for stuff in Ubuntu, not extras, so I'm really confused.
+
+ 21:59:34 <pitti> yes, backports has nothing to do with this really
+
+ 21:59:57 <mhall119> stgraber: wendar: what will be required from the ARB if we go with Recommends, and a user complains about installable scopes not working (because the lens was removed)?
+
+ 21:59:59 <micahg> well, if stuff would never get in the distro then certainly not
+
+ 22:00:15 <highvoltage> ok. I thought that if you could get dependencies backported, it could solve the lenses and scopes problem by having some scopes in backports
+
+ 22:00:22 <pitti> mhall119: removing the scope as well, I guess
+
+ 22:00:30 <ScottK> highvoltage: Need to get them into the distro first though.
+
+ 22:00:42 <stgraber> mhall119: manual removal of all these scopes by uploading an empty package as their source
+
+ 22:00:51 <stgraber> mhall119: the problem is removal done this way will still show up in the software cener
+
+ 22:00:52 <wendar> mhall119:  not sure really, we don't have a policy or process because we have no dependencies in the ARB now
+
+ 22:00:56 <mhall119> pitti: and will that be easier on the ARB than if we used Depends?
+
+ 22:01:10 <stgraber> mhall119: so people will probably still try to install them even though there are scary warnings everywhere saying the package is empty
+
+ 22:01:16 <wendar> mhall119: which is exactly what we need to figure out
+
+ 22:01:28 <pitti> mhall119: using recommends: requires hat the recommending package fails gracefully if the recommended package is not there any more
+
+ 22:01:39 <pitti> mhall119: so with recommends: we don't need a policy/workflow change
+
+ 22:02:05 <pitti> mhall119: and I think with lenses/scopes that property should already be built into unity/the API, right?
+
+ 22:02:07 <mhall119> pitti: correct, but what I'm asking is whether or not that will actually make it easier for the ARB
+
+ 22:02:15 <stgraber> I don't think Recommends is a good idea to be honnest, I actually think it's worse than Depends ... because with Depends, your system will know it's broken, with Recommends, you'll just have useless packages with no way to know which and why
+
+ 22:02:27 <pitti> mhall119: I think so, yes
+
+ 22:02:49 <pitti> anyway, we are out of time
+
+ 22:02:52 <mhall119> pitti: stgraber disagrees :)
+
+ 22:02:56 <stgraber> using Recommends is just playing on words to avoid the "packages can't depend on other extra packages"
+
+ 22:03:04 <wendar> we'll plan a separate ARB meeting
+
+ 22:03:16 <wendar> and, bring back our recommendation to the next TB meeting
+
+ 22:03:32 <ajmitch> wendar: we have an ARB meeting this friday
+
+ 22:03:35 <pitti> stgraber: well, if the idea of that clause was to avoid breaking packages when removing other packages, recommends: would provide exactly that
+
+ 22:03:50 <pitti> i. e. you can remove a package without having to play a fully fledged archive admin process/check
+
+ 22:04:08 <pitti> wendar: yes, I think that'd be best
+
+ 22:04:11 <wendar> ajmitch: I thought so, but didn't check the calendar yet
+
+ 22:04:13 <stgraber> pitti: right, won't prevent people installing them and wondering why they don't do anything though ;)
+
+ 22:04:28 <stgraber> pitti: so it's policy-compliant but really confusing for the users...
+
+ 22:04:30 <pitti> stgraber: I see no difference with using Depends: there
+
+ 22:04:40 <stgraber> pitti: I agree, I'm against both
+
+ 22:04:42 <pitti> stgraber: if you use empty packages, you'll have that problem either way
+
+ 22:04:45 <mhall119> stgraber: wendar: Just so I'm clear on this, if I start submitting scope packages that Recommends: an existing lens package in Extras, will that be allowed or not?
+
+ 22:05:15 <wendar> mhall119: it still fails on the "no libraries, only stand-alone applications" policy
+
+ 22:05:32 <mhall119> wendar: how?
+
+ 22:05:34 <wendar> mhall119: so, we'd still have to hold them until after the ARB meeting Friday
+
+ 22:05:49 <wendar> scopes aren't stand-alone applications
+
+ 22:06:00 <wendar> for that matter, neither are lenses
+
+ 22:06:01 <mhall119> wendar: does that mean that Scopes will not be allowed at all, unless they are incorporated into the lens package?
+
+ 22:06:13 <wendar> but, we're heading off into rabbit trails there
+
+ 22:06:25 <wendar> mhall119: I don't know yet
+
+ 22:06:35 <wendar> mhall119: can you join us on Friday?
+
+ 22:06:39 <mhall119> wendar: I have multiple developers waiting on my to get their packaging going, I need *something*
+
+ 22:06:45 <wendar> mhall119: the meeting schedule is on the Fridge
+
+ 22:06:57 <mhall119> yes, I will be there Friday
+
+ 22:06:57 <pitti> yes, this stretches the idea of what extras is to the max, as I already said earlier
+
+ 22:07:08 <wendar> mhall119: thanks!
+
+ 22:07:08 <pitti> so it'll be an extension of the "spirit" anyway
+
+ 22:07:27 <stgraber> mhall119: for now, you can always submit these that are simply scopes+lens bundled, for these that need to be in multiple packages, hold until we made a decision
+
+ 22:07:35 <mhall119> can we at least all agree that we want to allow lens and scope authors to be able to submit thir packages to extras in some fashion?
+
+ 22:07:49 <wendar> mhall119: don't want to inconvenience them, but it is worth talking this through
+
+ 22:07:49 <pitti> ^ that's an ARB question, I think
+
+ 22:08:03 <stgraber> mhall119: I'm sure you already have some simple ones that are similar to these we already accepted (askubutu, ssh, utilities, calculator, city)
+
+ 22:08:13 <wendar> mhall119: it sounded like we had a workable fall-back plan that would allow them
+
+ 22:08:15 <pitti> it's not an "application" after alll, it's a plugin for your desktop
+
+ 22:08:27 <mhall119> stgraber: yes, but the conversation has shifted into questioning whether those should be allowed
+
+ 22:09:14 <mhall119> so if we can at the very least get consensus that these are an appropriate use of the extras repository, I'd feel much more comfortable
+
+ 22:09:27 <stgraber> mhall119: I think we want lenses/scopes in extras but we want them in a managable way. We already did the policy changes required to allow for a single source package to provide scopes and lenses and we already approved some of them
+
+ 22:09:38 <mhall119> thank you stgraber
+
+ 22:09:44 <stgraber> mhall119: so as long as your submissions are similar to what we already have in extras, I don't see any problem
+
+ 22:09:53 <wendar> stgraber: agreed
+
+ 22:09:59 <stgraber> mhall119: for anything that you wan to send as multiple source packages, please wait
+
+ 22:10:15 <mhall119> stgraber: I see a problem, but I suppose we can discuss that on Friday
+
+ 22:10:28 <mhall119> pitti: then can the TB officially allow the ARB to make a decision on this rule?
+
+ 22:10:51 <pitti> I'm fine with that
+
+ 22:10:53 <stgraber> mhall119: I think the plan is for the ARB to send the proposal to the next TB meeting based on the result of our meeting on Friday
+
+ 22:11:03 <jono> ok so the decision is to defer to the ARB for discussion
+
+ 22:11:14 <jono> and then the ARB to present their views to the TB for any further discussion
+
+ 22:11:15 <mhall119> stgraber: you're killing me here
+
+ 22:11:16 <pitti> we can also vote on the ARB proposal on the mailing list
+
+ 22:12:28 <stgraber> either voting on the ML or at next TB meeting works for me, if voting on the ML is better for mhall119, sure we can try that
+
+ 22:12:46 <mhall119> whatever gets a vote sooner is best for me
+
+ 22:12:49 <stgraber> but that's a big enough policy change that I want the TB to explicitly vote on it, not just delegate to the ARB
+
+ 22:12:58 <mhall119> I have to answer to developers who want to make contributions that they currently aren't allowed to
+
+ 22:13:08 <mhall119> the longer I keep them waiting, the more of them we're going to lose
+
+ 22:13:18 <jono> I think it seems fair to have the ARB discuss and present a view and then the TB to have an explicit voite
+
+ 22:14:21 <soren> I have to wonder how we ended up in a situation where the TB needs to sign off on this.
+
+ 22:14:56 <pitti> soren: TB is responsible for https://wiki.ubuntu.com/ExtensionRepositoryPolicy
+
+ 22:14:56 <soren> I would have expected the ARB to be able to make these decisions, and if they felt unfit to do so (or if someone else saw them unfit to do so), it could be raised to the TB.
+
+ 22:15:17 <mhall119> soren: the ARB felt that they didn't have the authority to make this decision
+
+ 22:15:41 <soren> mhall119: That's fair enough.
+
+ 22:16:19 <ajmitch> soren: it's not entirely clear what policy the ARB is allowed to decide - I think this one went to the TB because it changes the approved process
+
+ 22:16:34 <pitti> I see two questions for the ARB:
+
+ 22:16:57 <pitti> - do you consider lenses/scopes appropriate content for extras.u.c.
+
+ 22:17:21 <pitti> - would you be willing to do the extra effort of removing transitive dependencies when removing a package
+
+ 22:17:32 <pitti> the second is one that only the ARB can decide
+
+ 22:17:42 <pitti> the first one seems an appropriate question for both ARB and TB
+
+ 22:17:50 <mhall119> we can limit that second one to only a single level of dependency between only 2 very specific kinds of packages
+
+ 22:18:14 <pitti> right, that doesn't change the problem much, though
+
+ 22:18:31 <mhall119> it will limited the amount of 'precident'
+
+ 22:18:54 <mhall119> and makes the potential for more work far less daunting
+
+ 22:19:30 <stgraber> I believe the first one was sort of answered by the ARB asking for explicity policy changes for the unity paths a while ago, but can't hurt to have that clarified by both sides indeed
+
+ 22:19:33 <mhall119> it's also hard to have problems like cirular dependencies under those restrictions
+
+ 22:21:06 <stgraber> mhall119: single level or multiple level really doesn't change much, in either way we need to have the tools to monitor this (though shouldn't be horribly difficult as long as we don't have to remove 20 of them a week) and think of the proper way to do these removals without leaving packages around and without listing empty packages on the people's system and in the archive
+
+ 22:22:13 <stgraber> is there anything else to discuss at this TB meeting or can we wait till the ARB meeting on Friday? (considering we're already 21min past our allocated meeting time)
+
+ 22:22:22 <pitti> ok, so I don't think we can discuss more at this point
+
+ 22:22:37 <jono> thanks everyone
+
+ 22:22:43 <mhall119> stgraber: I'll wait until Friday, do you have a link to the ARB agenda?
+
+ 22:23:15 <pitti> once the ARB answers that and makes a proposal for extending that policy, voting on it should be quick
+
+ 22:23:16 <stgraber> mhall119: sure
+
+ 22:23:21 <stgraber> mhall119: https://wiki.ubuntu.com/AppReviewBoard/Agenda
+
+ 22:23:25 <mhall119> thanks
+
+ 22:23:31 <mhall119> and thanks everyone for discussing this
+
+ 22:24:19 <pitti> thanks everyone
+
+ 22:24:23 <pitti> next chair would be kees
+
+ 22:24:48 <pitti> I'll send the meeting notes tomorrow morning; good night everyone!
+
+ 22:24:50 <pitti> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

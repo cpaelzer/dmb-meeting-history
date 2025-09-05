@@ -1,0 +1,772 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 17 Jul at 15:01 &mdash; 15:46 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-07-17-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+
+=== Click signing ===
+The discussion about "Click signing" started at 15:28.
+
+  * ''LINK:'' https://wiki.ubuntu.com/ImageBasedUpgrades/GPG 
+
+=== AOB ===
+The discussion about "AOB" started at 15:42.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * mvo_ (94)
+ * slangasek (46)
+ * xnox (39)
+ * cjwatson (34)
+ * sil2100 (28)
+ * bdmurray (24)
+ * robru (14)
+ * jodh (14)
+ * barry (14)
+ * infinity (13)
+ * caribou (11)
+ * ubottu (11)
+ * doko (9)
+ * meetingology (4)
+ * ogra_ (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <cjwatson> #startmeeting
+
+ 15:01 <meetingology> Meeting started Thu Jul 17 15:01:52 2014 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <cjwatson> #topic Lightning round
+
+ 15:02 * mvo_ waves
+
+ 15:02 <cjwatson> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson xnox caribou infinity mvo bhuey sil2100 robru)
+
+ 15:02 <sil2100> o/
+
+ 15:02 <cjwatson> bhuey infinity stgraber doko cjwatson caribou sil2100 xnox barry slangasek robru mvo jodh bdmurray
+
+ 15:03 <bdmurray> cjwatson: I have to run an errand towards the end of the meeting could I go closer to the beginning?
+
+ 15:03 <cjwatson> bdmurray: mkay, why don't you go first, not sure Bill's around
+
+ 15:03 <sil2100> Maybe bdmurray could go first, bdmurray starts with the same letter as bhuey o/
+
+ 15:03 * sil2100 nods to himself proudly
+
+ 15:04 <bdmurray> and ends with the same letter too!
+
+ 15:04 <sil2100> !
+
+ 15:04 <bdmurray> review of armhf retracing results
+
+ 15:04 <bdmurray> research into missing libmirclientplatform-android-dbgsym issue (its not in the Packages file)
+
+ 15:04 <bdmurray> pinged wgrant, pitti about Packages files on ddebs.ubuntu.com
+
+ 15:04 <bdmurray> investigation into apport's error re "package liburcu1 does not exist, ignoring"
+
+ 15:04 <bdmurray> that was due to Contents.gz being out of date
+
+ 15:04 <bdmurray> research into apport bug 1336062 (confirmed and testcase created)
+
+ 15:04 <ubottu> bug 1336062 in apport (Ubuntu) "apport-retrace uses system package lists which may return a different source package for a binary" [Undecided,Fix committed] https://launchpad.net/bugs/1336062
+
+ 15:04 <bdmurray> wrote test and submitted mp fixing bug 1336062
+
+ 15:04 <bdmurray> worked with thedac to get apport updated to r2818 which fixes bug 1336062
+
+ 15:04 <bdmurray> modified how the retracer uses the original_sas
+
+ 15:04 <bdmurray> investigation into whoopsie bug 1339916
+
+ 15:04 <ubottu> bug 1339916 in whoopsie (Ubuntu) "SystemIdentifier can change between reboots" [High,Confirmed] https://launchpad.net/bugs/1339916
+
+ 15:04 <bdmurray> rewrote and tested how daisy/submit_core.py manages rabbit connections
+
+ 15:04 <bdmurray> pinged jjo about cassandra / swift errors (he'd done something about it already)
+
+ 15:04 <bdmurray> updated daisy-retracer charm and error-tracker-dependencies to use oops-amqp settings
+
+ 15:04 <bdmurray> investigation into missing stacktrace for a specific bucket
+
+ 15:04 <bdmurray> updated daisy to save the retraced crash report if the retraced crash has no Stacktrace
+
+ 15:04 <bdmurray> got the dpkcomparator to build, then it failed oopsrepository tests (sorted that out)
+
+ 15:04 <bdmurray> discussed tearing down newcassandra with thedac (its going to happen)
+
+ 15:04 <bdmurray> irc discussion with plars regarding whoopsie and how it behaves and how it should behave
+
+ 15:05 <bdmurray> ✔ done
+
+ 15:05 <mvo_> tearing it down?
+
+ 15:05 <infinity> * spent a lot of time on the kernel security and SRU updates
+
+ 15:05 <infinity> * was sick for a bit
+
+ 15:05 <infinity> * working on cleaning up last-minute pending bits for trusty point release
+
+ 15:05 <infinity> * EOLing saucy today \o/
+
+ 15:05 <infinity> ∞
+
+ 15:05 <bdmurray> infinity: oh right, less crashes to accept!
+
+ 15:06 <xnox> infinity: \o/ EOL EOL EOL =)
+
+ 15:06 <cjwatson> #chair slangasek
+
+ 15:06 <meetingology> Current chairs: cjwatson slangasek
+
+ 15:07 <cjwatson> slangasek: http://paste.ubuntu.com/7809421/
+
+ 15:07 <slangasek> cjwatson: ta
+
+ 15:08 <infinity> stgraber: You're up.
+
+ 15:09 <doko> continuing ...
+
+ 15:09 <doko> - we are waldmeister
+
+ 15:09 <doko> - openjdk-6 update, security will follow
+
+ 15:09 <doko> - openjdk-7 update
+
+ 15:09 <doko> - gcc-4.8, gcc-4.9 builds, for trusty, utopic, xgene
+
+ 15:09 <doko> - some merges
+
+ 15:09 <doko> - discussing and packaging of some third party software
+
+ 15:09 <doko> - will be at Linaro on Fri, GNU Cauldron the weekend, and travelling back on Mon
+
+ 15:09 <doko> (done)
+
+ 15:09 <mvo_> lol
+
+ 15:10 <cjwatson> Customer meeting.
+
+ 15:10 <cjwatson> Working on parted 3 transition (in Debian).  Almost done - just need to fix partitionmanager and possibly NMU guymager, then get an ack from the Debian release team to start the transition.
+
+ 15:10 <cjwatson> Pushing along the libav transition.  Also almost done - calligra still needs to be fixed, and then I need to coordinate the gallery-app changes.
+
+ 15:10 <cjwatson> Landing team shift on Wednesday.
+
+ 15:10 <cjwatson> launchpad-buildd change to improve compatibility with scalingstack.
+
+ 15:10 <cjwatson> Optimised step A2 of the Launchpad publisher, cutting about three minutes off the primary archive publishing time in several cases.
+
+ 15:10 <cjwatson> Preparing for RTM dogfood dry-run next week.  Discussed CI Train changes, added ubuntu-rtm support to livecd-rootfs, and most of the way through adding support to cdimage.
+
+ 15:10 <cjwatson> ..
+
+ 15:10 <caribou> * Sprint week with team in London
+
+ 15:10 <caribou> * Complete Debian Maintainer application
+
+ 15:10 <caribou> * Complete work on sosreport 3.1 backport on Precise (python3)
+
+ 15:10 <caribou> * Work on sosreport for Debian upstream
+
+ 15:10 <caribou> * Start migration to new escalation workflow
+
+ 15:11 <caribou> (done)
+
+ 15:11 <sil2100> o/
+
+ 15:11 <sil2100> - Landing team work, landing e-mails, landing coordination - standard stuff
+
+ 15:11 <xnox> caribou: are there details on the new workflow? Would like to be inline with it, when people ping me out of order.
+
+ 15:11 <sil2100> - CI Train maintenance and features:
+
+ 15:11 <sil2100> * Testing new auto merge & clean functionality
+
+ 15:11 <sil2100> * Performing some security-based tests on the CI Train, reverts
+
+ 15:11 <sil2100> * Debugging CI Train spreadsheet issues
+
+ 15:11 <sil2100> * Looking into the jenkins secure start-build remote triggers
+
+ 15:11 <sil2100> * Work on enabling CI Train for other-than-ubuntu distributions (e.g. ubuntu-rtm)
+
+ 15:11 <sil2100> * Moving the unapproved-merges check to the publish job
+
+ 15:11 <sil2100> * Testing the 'do not modify package version' functionality
+
+ 15:11 <sil2100> * Minor tweaks
+
+ 15:11 <sil2100> - Work on the CI Train Issue tracker:
+
+ 15:11 <sil2100> * Sniffing around Launchpad's API lack of both JSONP or CORS
+
+ 15:11 <sil2100> * Working backend, almost finished frontend
+
+ 15:11 <sil2100> - Work on +1 Maintenance:
+
+ 15:11 <sil2100> * Pushing an updated NEW libaudclient (now accepted into the archive)
+
+ 15:11 <sil2100> * Pushing some rdeps of libaudclient2 to unblock: audtty, pidgin-audacious, wmaud
+
+ 15:11 <sil2100> - Patch pilot work:
+
+ 15:11 <sil2100> * Looking at the rp-pppoe release, commenting on some required changes/fixes
+
+ 15:12 <sil2100> * Sponsoring the osm-gps-map trusty SRU upload
+
+ 15:12 <sil2100> - Help out with packaging advice for various upstreams
+
+ 15:12 <caribou> xnox: shoudn't change anything to UE, mostly to allign with CTS support tools
+
+ 15:12 <sil2100> (done)
+
+ 15:12 <xnox> caribou: ok.
+
+ 15:12 <caribou> xnox: and UE interaction will remain on LP
+
+ 15:12 <xnox> caribou: perfect.
+
+ 15:12 <slangasek> xnox: Contents.gz being out of date> have you made any progress on that?
+
+ 15:12 <xnox> slangasek: nope.
+
+ 15:12 <xnox> * upstart 1.13 landed in the archive \o/
+
+ 15:12 <xnox> * TODO land 1.13.1 into the archive
+
+ 15:12 <xnox> * mdadm 3.3 merge done
+
+ 15:12 <xnox> * plymouth 0.9.0 merge done
+
+ 15:12 <bdmurray> :-(
+
+ 15:12 <xnox> - but regresses vt_handoff=, e.g. i can instrument and see tty1
+
+ 15:12 <xnox> getty between plymouth and lightdm
+
+ 15:13 <xnox> * thanks barry for round of reviews on
+
+ 15:13 <xnox> launchpadlib/lazr.restfulclient, need to fix things up abit more
+
+ 15:13 <xnox> before proceeding to mass porting of
+
+ 15:13 <xnox> ubuntu-dev-tools/ubuntu-archivetools, etc.
+
+ 15:13 <xnox> * working on resolving:
+
+ 15:13 <xnox> - desktop images failing to work in ci.ubuntu.com automated preseeding
+
+ 15:13 <bdmurray> slangasek: we did win that race recently though
+
+ 15:13 <xnox> - some other installer bugs
+
+ 15:13 <xnox> ..
+
+ 15:13 <xnox> slangasek: bdmurray: should be looking into it later today.
+
+ 15:13 <cjwatson> sil2100: Just to be clear, are you working on both cupstream2distro and the spreadsheet?
+
+ 15:13 <barry> phone: working on releasing system-image 2.3.  lots of work on stabilizing the test suite, investigating, reporting, and working around various external issues (e.g. LP: #1341685).  LP: #1339157.  LP: #1340882.  LP: #1342183.  LP: #1273354.  released 2.3 upstream, now working on the packaging branch for the citrain.  should be ready by eow.
+
+ 15:13 <cjwatson> (for ubuntu-rtm)
+
+ 15:14 <ubottu> Launchpad bug 1341685 in ubuntu-download-manager "When unconstrained, udm sometimes downloads files to wrong location" [Undecided,New] https://launchpad.net/bugs/1341685
+
+ 15:14 <ubottu> Launchpad bug 1339157 in ubuntu-download-manager "Short term support for wifi-only downloads" [Undecided,New] https://launchpad.net/bugs/1339157
+
+ 15:14 <ubottu> Launchpad bug 1340882 in Ubuntu system image "Include the D-Bus API documentation in system-image-dbus(8)" [High,Fix committed] https://launchpad.net/bugs/1340882
+
+ 15:14 <ubottu> Launchpad bug 1342183 in Ubuntu system image "systemimage.config.Configuration() should take an ini_file argument" [High,Fix committed] https://launchpad.net/bugs/1342183
+
+ 15:14 <ubottu> Launchpad bug 1273354 in Ubuntu system image "The mock service doesn't return downloading==1 for UpdateAvailable when a download is in progress" [Medium,Fix committed] https://launchpad.net/bugs/1273354
+
+ 15:14 <barry> debuntu: zope.browserpage 4.1.0a1-0ubuntu1, zope.formlib 4.3.0a2-0ubuntu1, zope.copypastemove 4.0.0a1-0ubuntu1, debian bug #754016.  still haven't quite gotten all the zope.* packages cleared from -proposed, but i'll be looking at the blockers in more detail after landing system-image 2.3.
+
+ 15:14 <ubottu> Debian bug 754016 in src:python-mode "python-mode: please switch to emacs24" [Normal,Fixed] http://bugs.debian.org/754016
+
+ 15:14 <barry> other: helped various colleagues with python issues/questions/porting/reviews.  occasional py3 autopilot merging and pushing.
+
+ 15:14 <barry> done
+
+ 15:14 <sil2100> cjwatson: yes, but I didn't change too much on the spreadsheet side for RTM-support yet as there we're 'always' working on a live system
+
+ 15:14 <sil2100> cjwatson: so I prefer to have the backend finished up and tested first
+
+ 15:15 <cjwatson> xnox: ubuntu-archive-tools should almost all be ready for Python 3 already.  I made some effort there a while back, although most of the porting was a bit blind.
+
+ 15:15 <cjwatson> xnox: There's the problem that I expect some AAs are still running them on trusty, though, and some people other than AAs use ubuntu-archive-tools too.
+
+ 15:15 <cjwatson> So we may need to wait a while before flipping #!.
+
+ 15:16 <cjwatson> sil2100: Right, thanks
+
+ 15:17 <robru> is it my turn? sorry guys I got disconnected at the exact moment that the order was given, I missed it
+
+ 15:17 <barry> slangasek's turn i think
+
+ 15:17 <infinity> robru: You're after slangasek.
+
+ 15:18 <slangasek> caribou: escalation workflow shouldn't change anything for UE> so I should continue to ignore out-of-band requests for help on the nis package? ;-)
+
+ 15:18 <robru> infinity, thanks
+
+ 15:18 <slangasek> ok one sec
+
+ 15:18 <xnox> cjwatson: yeah, I understand that trusty is important and thus shebang shouldn't be changed yet. If i port enough bits and validate that they run correctly, I can look into upstream release of python3 enabled stack, uploads to debian/ubuntu and then possibly backport python3 support into e.g. trusty-backports or some such.
+
+ 15:18 <mvo_> hello, sorry - we had a power outage here
+
+ 15:18 <xnox> mvo_: heat power cut?! =)
+
+ 15:18 <slangasek> * finishing up the console-setup merge
+
+ 15:18 <slangasek> * not enough beer in the world
+
+ 15:18 <slangasek> * working on supporting nss_extrausers in adduser; however, there seem to be various requirements that assume other pieces will Just Work when they don't, now reviewing the spec
+
+ 15:18 <mvo_> probably :)
+
+ 15:18 <slangasek> * nudged upstart 1.13 into the archive a bit
+
+ 15:18 <slangasek> * moving the C++11 ABI transition forward so we can unblock gcc-4.9
+
+ 15:18 <mvo_> and no mobile either
+
+ 15:18 <slangasek> * performance review cycle stuff
+
+ 15:18 <slangasek> * patch piloting today
+
+ 15:19 <cjwatson> xnox: *nod*
+
+ 15:19 <caribou> slangasek: business as usual
+
+ 15:19 <xnox> slangasek: apw and I can ship more beer to get that merge done =)
+
+ 15:20 <slangasek> xnox: at some point you start to drown in it, and that's also an impediment?
+
+ 15:20 <xnox> slangasek: there is always dehydrated caplets and IV drips.....
+
+ 15:20 <xnox> =))))
+
+ 15:21 <caribou> slangasek: but I thought my OOB request was on pamd
+
+ 15:21 <slangasek> (done)
+
+ 15:21 <slangasek> caribou: this wasn't you ;)
+
+ 15:21 <slangasek> robru: your turn
+
+ 15:21 <robru> * updated CI Train dashboard and queuebot to not hard-code spreadsheet column numbers, making them more flexible in the face of spreadsheet changes, which will happen soon to support RTM
+
+ 15:21 <robru> * neutered Friends API, so it still exists for compatibility, but does not actually send or receive any messages. this fixes a long-standing security hole on the desktop where Friends would let any app impersonate you on your social networks without any authentication.
+
+ 15:21 <robru> * ton of ongoing landings as usual.
+
+ 15:21 <robru> * Trusty SRU of webapps-greasemonkey
+
+ 15:21 <robru> * branch to drop friends scope from unity7
+
+ 15:21 <robru> * de-seeded friends-app from touch image 131 & up
+
+ 15:21 <robru> * minor branch to fix a merge failure in the g++-4.9 transition
+
+ 15:21 <robru> * tweaked CI Train silo dashboard to not hover-hide MP URLs when there's a search term present. so if you're looking at just a couple silos, you don't need to fiddly-hover over the source package name to see the MP links.
+
+ 15:21 <robru> * also made the hover-mp-list slightly less fiddly to mouse to by squaring-off the top left corner, and decreasing the left margin, so you can mouse to it with less precision.
+
+ 15:21 <robru> ✔ done
+
+ 15:21 <caribou> slangasek: ah
+
+ 15:21 <mvo_> citrain:
+
+ 15:21 <mvo_> - Add warning to the .gs script when low on silos
+
+ 15:21 <mvo_> - Landing team duty
+
+ 15:21 <mvo_> click:
+
+ 15:21 <mvo_> - Code review
+
+ 15:21 <mvo_> - Discussion about click signatures/read the old ML thread to be uptodate
+
+ 15:21 <mvo_> - fix bug in debsigs --delete
+
+ 15:22 <mvo_> (https://gitorious.org/debsigs/debsigs/merge_requests/1)
+
+ 15:22 <mvo_> - Improve lp:/~mvo/click/lp1334611-getpwnam based on Colins feedback (thanks)
+
+ 15:22 <mvo_> - lp:~mvo/click/click-ubuntu-policy - initial skeleton for the debsig-verify
+
+ 15:22 <mvo_> based verification
+
+ 15:22 <mvo_> - lp:~mvo/click/debsigs-verify
+
+ 15:22 <mvo_> - Lp:~mvo/click/more-integration-tests3
+
+ 15:22 <mvo_> - Trying to debug #1338994 (no luck)
+
+ 15:22 <mvo_> hwe:
+
+ 15:22 <mvo_> - Debug/fix #1341324 and upload new version to precise-proposed
+
+ 15:22 <mvo_> - Debugged/fixed #1342424 - simple, but underlying problem is in pam,
+
+ 15:22 <mvo_> created possible solution for this as well
+
+ 15:22 <mvo_> - fix bug in update-motd to take
+
+ 15:22 <mvo_> /var/lib/update-notifier/disable-hwe-eol-messages into effect when
+
+ 15:22 <barry> robru: RIP friends?
+
+ 15:22 <mvo_> checking if the cache is still valid
+
+ 15:22 <mvo_> apt:
+
+ 15:22 <mvo_> - Debug/fix bug commandline arg parsing for packages starting with 0/1
+
+ 15:22 <mvo_> - Debug kubuntu upgrade issue with riddel
+
+ 15:22 <mvo_> - Debug/fix segfault Bug#754904
+
+ 15:22 <mvo_> merge:
+
+ 15:22 <mvo_> - Manpages, aptitude, krb5, slang2, curl
+
+ 15:22 <mvo_> - looked at some more like coreutils that are not needed to merge at this
+
+ 15:22 <mvo_> point, would be nice to have a way to mark them as unneeded somehow
+
+ 15:22 <mvo_> misc:
+
+ 15:22 <mvo_> - command-not-found: fix #1130444 and update data for utopic
+
+ 15:22 <mvo_> - apt-ddtp update/upload
+
+ 15:22 <mvo_> - Phone issues (browser 100%: #1342195, calendar not working #1338956)
+
+ 15:22 <mvo_> (done)
+
+ 15:23 <robru> barry, yep, sorry to say, it just wasn't architected for the mobile world. we can maybe revisit reviving it in 15.04 but it just wasn't suitable to RTM
+
+ 15:23 <jodh> * foundations-1305-upstart-work-items:
+
+ 15:23 <jodh> - cgroups+async: Released Upstart 1.13 and updated Upstart Cookbook.
+
+ 15:23 <jodh> * upstart:
+
+ 15:23 <jodh> - Fixed bug 1222705.
+
+ 15:23 <ubottu> bug 1222705 in upstart (Ubuntu) "init assert failure: alloc.c:633: Assertion failed in nih_unref: ref != NULL" [High,Confirmed] https://launchpad.net/bugs/1222705
+
+ 15:23 <jodh> - Followed up with a 1.13.1 release.
+
+ 15:23 <jodh> - Uploaded 1.13.1 to archive.
+
+ 15:23 <jodh> * systemd:
+
+ 15:23 <jodh> - Fixed bug 1342586.
+
+ 15:23 <ubottu> bug 1342586 in systemd (Ubuntu) "[utopic] [proposed] cgmanager breaks lightdm login" [High,Fix committed] https://launchpad.net/bugs/1342586
+
+ 15:23 <jodh> - Picking over 'systemd-boot' bugs
+
+ 15:23 <jodh> ⌚
+
+ 15:23 <barry> robru: ah well, who needs friends anyway?
+
+ 15:23 <robru> barry, not me! I got you guys!
+
+ 15:23 <jodh> xnox: we haven't yet actually activated cgroup support in upstart. We need something like http://paste.ubuntu.com/7809486/ but I'm not sure if we need tweaks to d/control for cgmanager?
+
+ 15:24 <barry> robru: with friends like us... :)
+
+ 15:24 <xnox> jodh: i'd rather not tweak tight dependencies and instead do that but with extra || true
+
+ 15:24 <jodh> xnox: my local .conf does exactly that :)
+
+ 15:25 <jodh> xnox: I'll raise an MP...
+
+ 15:25 <slangasek> mvo_: 1342424> I thought you were fixing it to always use ISO dates?  That seems perfectly appropriate to me, and is then not locale-dependent
+
+ 15:25 <xnox> jodh: and i'd want to land that when it's relatively quite in the archive, It's not at the moment. Maybe later on friday and/or over the weekend - monday time.
+
+ 15:25 <mvo_> slangasek: I fixed it that way, yes. I also mentioned in the bugreport that we might consider to make_pamd set the locale/lang environment
+
+ 15:26 <mvo_> slangasek: but that would not be suitable for a sru I think as it may trigger more bugs/unexpected behavior
+
+ 15:26 <slangasek> mvo_: ack
+
+ 15:26 <jodh> xnox: I vote for Monday (Warsaw's Second Law :)
+
+ 15:26 <barry> :)
+
+ 15:26 <mvo_> slangasek: but if that something from the pam maintainers perspective that is worthwhile, I can add it in utopic
+
+ 15:26 <slangasek> mvo_: no, I don't think that warrants an SRU
+
+ 15:27 <slangasek> bhuey: here?
+
+ 15:27 <slangasek> seems not
+
+ 15:28 <slangasek> mvo_: ready to talk about click signing? :)
+
+ 15:28 <xnox> *gasp* exiting =)
+
+ 15:28 <mvo_> sure, get ready for a paste attack
+
+ 15:28 <mvo_> What I'm currently working on: Signatures on Click Packages from
+
+ 15:28 <mvo_> the store and the developers.
+
+ 15:28 <mvo_> Most of the discussion happened about a year ago, Colin suggested to
+
+ 15:28 <mvo_> use debsigs/debsig-verify back then. There was a competing proposal to
+
+ 15:28 <mvo_> just use gpg detached signatures that caused some discussion but the
+
+ 15:28 <mvo_> approach via debsig-verify is much more flexible and robust. Its based
+
+ 15:28 <slangasek> [TOPIC] Click signing
+
+ 15:28 <mvo_> on detached gpg signatures that get appended to the deb ar
+
+ 15:28 * xnox *exciting
+
+ 15:28 <mvo_> container. Because a click is a relocatable deb without the maintainer
+
+ 15:28 <mvo_> script nonsense we can use those tools just fine. All we are currently
+
+ 15:28 <mvo_> providing is SSL (which is obviously not good enough) but we will add
+
+ 15:28 <mvo_> signatures from both the developer and from the store.
+
+ 15:28 <mvo_> How does it work in detail?
+
+ 15:28 <mvo_> - the developer signs the foo.click via "debsig --sign=maint", this
+
+ 15:28 <mvo_> process will be integrated into qtcreator in some way
+
+ 15:28 <mvo_> - the foo.click is uploaded to the store
+
+ 15:28 <mvo_> - the store checks that the signature is valid and if so appends its
+
+ 15:28 <mvo_> own "debsig --sign=origin" signature
+
+ 15:29 <mvo_> - user A downloads the click with the 2 sigs
+
+ 15:29 <mvo_> - "click install foo.click" checks the origin signature via
+
+ 15:29 <mvo_> debsig-verify and rejects invalid/missing ones
+
+ 15:29 <mvo_> (unless --allow-unauthenticated is given which can overrides
+
+ 15:29 <mvo_> missing ones)
+
+ 15:29 <mvo_> - developer signature is not used on the user machine *but* the
+
+ 15:29 <mvo_> developer (or anyone else) can verify that we didn't alter his/her
+
+ 15:29 <mvo_> click package. "debsigs --delete=origin" will even restore the identical
+
+ 15:29 <mvo_> click package that got uploaded to the click store
+
+ 15:29 <mvo_> What the current status:
+
+ 15:29 <mvo_> - click branch with debsigs-verify integration is ready for review
+
+ 15:29 <mvo_> - we need a store origin signing key
+
+ 15:29 <mvo_> - the store needs to sign the clicks using debsigs --sign=origin
+
+ 15:29 <mvo_> - a skeleton package click-ubuntu-policy with the debsig-verify policy
+
+ 15:29 <mvo_> is available, but it needs review and the store signing pubkey
+
+ 15:29 <mvo_> - once click-ubuntu-policy is ready it gets seeded and becomes part
+
+ 15:29 <mvo_> of the base image
+
+ 15:29 <mvo_> - we do not need to modify any of the higher layers (scope, updater)
+
+ 15:29 <mvo_> References:
+
+ 15:29 <mvo_> - https://wiki.ubuntu.com/SecurityTeam/Specifications/ClickPackageSigning
+
+ 15:29 <mvo_> - https://bugs.launchpad.net/ubuntu/+source/click/+bug/1330770
+
+ 15:29 <mvo_> ---
+
+ 15:29 <ubottu> Ubuntu bug 1330770 in click (Ubuntu) "click packages rely upon tls for integrity and authenticity" [High,In progress]
+
+ 15:30 <mvo_> thats the part I prepared :) I think this is the first time I'm part of such a session
+
+ 15:30 <xnox> mvo_: how does debsigs work? is it extra members in the ar archive?
+
+ 15:30 <cjwatson> it is
+
+ 15:30 <mvo_> xnox: yes, it adds a extra member for the origin and the maintainer
+
+ 15:30 <mvo_> (so one extra each)
+
+ 15:30 <cjwatson> _gpg<arbitrary name>
+
+ 15:31 <slangasek> '"debsigs --delete=origin" will even restore the identical click package that got uploaded to the click store' - oh, nice
+
+ 15:31 <mvo_> yeah, thats a nice property - once the fix for this lands upstream, but we can just distro patch it
+
+ 15:31 <cjwatson> even without debsigs --delete=origin working (which mvo had to fix), debsigs is append-only, so you can see that your previous package is a prefix
+
+ 15:31 <xnox> are we gonna sign archive binaries like that as well?
+
+ 15:32 <xnox> imho it would be benefitial that e.g. one can downloads debs direct from launchpadlib and verify them.
+
+ 15:32 <xnox> instead of just relying on the librarian SSL
+
+ 15:32 <slangasek> out of scope ;)
+
+ 15:32 <cjwatson> .debs have the chain of trust back to Release.gpg - there are some fringe benefits like that to signing them inline, but I'm not sure it's worth the hassle
+
+ 15:32 <cjwatson> and indeed, out of scope
+
+ 15:33 <cjwatson> we still need to organise some kind of meeting to generate and shard a store signing key
+
+ 15:33 <slangasek> note that Debian has consistently refused to support debsigs for packages in the Debian archive
+
+ 15:33 <cjwatson> that's on the floor right now unless somebody has picked it up lately
+
+ 15:33 <slangasek> on the grounds that it would seduce users into trusting them in bad ways
+
+ 15:33 <xnox> ETOMANYSHARDS =)
+
+ 15:33 <cjwatson> tell me about it <looks at bag>
+
+ 15:33 <infinity> slangasek: Debian has the problem that their binaries are generated on a whole lot of machines owned/operated by a whole lot of people.
+
+ 15:34 <infinity> slangasek: We could certainly sign our binaries in a more verifiably secure fashion.
+
+ 15:34 <slangasek> heh, so we want all the same keymanagement for this as for our other keys?
+
+ 15:34 <cjwatson> infinity: that's true of click packages too - we're applying the store signature centrally later
+
+ 15:34 <infinity> (Oh, I guess they could sign on ftpmaster with this append mode business)
+
+ 15:34 <cjwatson> debsigs supports multiple signatures for this kind of reason
+
+ 15:34 <slangasek> infinity: that's not the reason ftpmasters reject them
+
+ 15:34 * xnox ponders if _my_ debs would be rejected if I debsign them.
+
+ 15:34 <slangasek> xnox: yes
+
+ 15:34 <xnox> poodles =(
+
+ 15:34 <barry> infinity: there were some long threads about source-only uploads a la ubuntu, but that seems to have petered out :/
+
+ 15:35 <cjwatson> slangasek: so, I don't know how much of the full panoply we want, but if we have a key that's being trusted by a gazillion client devices we should manage it securely
+
+ 15:35 <cjwatson> it probably isn't immediately necessary to have it signed by the über-master key
+
+ 15:35 <xnox> cjwatson: just convert the ssl private key into a gpg key *giggle* =)
+
+ 15:35 <xnox> (the store one)
+
+ 15:35 <slangasek> cjwatson, mvo_: is key rotation already specced out?
+
+ 15:36 <slangasek> xnox: I'm returning this beer, it's clearly been doped with something
+
+ 15:36 <mvo_> not in detail, my current plan is to have it as part of the ubuntu-click-policy package that can be updated as part of the system-image
+
+ 15:36 <slangasek> ok
+
+ 15:36 <mvo_> I'm not sure if that is in line with the vision of cjwatson and the security team
+
+ 15:36 <slangasek> I guess we should have that written up sooner rather than later and get eyeballs on it :)
+
+ 15:37 <mvo_> yes, I will send out a mail after the meeting
+
+ 15:37 <xnox> slangasek: =)))))
+
+ 15:38 <slangasek> cool
+
+ 15:38 <slangasek> any other questions for mvo?
+
+ 15:39 <slangasek> btw, if we're updating it via a package that's in the system-image anyway, maybe it makes sense to just chain it off one of the existing trust chains in the image instead of creating a whole new root
+
+ 15:39 <slangasek> i.e., avoid the whole "must reconstitute an offline key to rotate this key"
+
+ 15:40 * mvo_ nods
+
+ 15:40 <barry> that's not a bad idea
+
+ 15:40 <barry> https://wiki.ubuntu.com/ImageBasedUpgrades/GPG
+
+ 15:42 <slangasek> mvo_: thanks for filling us in on your work!
+
+ 15:42 <mvo_> thanks for listening
+
+ 15:42 <slangasek> [TOPIC] AOB
+
+ 15:42 <mvo_> (or reading)
+
+ 15:42 <slangasek> anything else?
+
+ 15:43 * mvo_ mumbles something about the heat
+
+ 15:43 <infinity> What he said.
+
+ 15:44 * slangasek is getting quotes for air conditioning this week
+
+ 15:44 <infinity> As my phone would autocorrect to, "ducking summer".
+
+ 15:44 <ogra_> icecream !
+
+ 15:44 <barry> slangasek: what was that about the debconf dorms again? :)
+
+ 15:44 <slangasek> stay tuned for ranty blogs about internet-enabled thermostats that don't let you manage them without talking to a third-party server!
+
+ 15:45 <slangasek> barry: well, so far the summer has been surprisingly muggy; I have no reason to believe this will continue into the end of August, Portland usually has its heat wave around this time or a couple of weeks later and then it tapers off - e.g., it's supposed to be 70 degrees this weekend ;)
+
+ 15:46 <infinity> Is that it?  Can I reboot my firewall now?
+
+ 15:46 <barry> slangasek: perfect!
+
+ 15:46 <slangasek> barry: but a heat pump has been on our todo list for a few years, and this year I'm actually in town for the 95 degree weather, so ;)
+
+ 15:46 <slangasek> infinity: yep!
+
+ 15:46 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

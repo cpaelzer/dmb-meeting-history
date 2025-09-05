@@ -1,0 +1,374 @@
+#title #ubuntu-meeting: Ubuntu 12.04.1 team meeting
+
+Meeting started by stgraber at 14:01:42 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-05-31-14.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/520386, (mir @https://bugs.launchpad.net/ubuntu/+source/netcf/+bug/904014)  (stokachu, 14:10:04)
+''ACTION:'' xnox to prepare a target list for fs stack for 12.04.1  (xnox, 14:42:52)
+''ACTION:'' xnox to liase with ballons, gema and jibel w.r.t. testing  (xnox, 14:43:20)
+''ACTION:'' skaet to get an update on the status of daily QA testing of whether these are all being run still in jenkins, and where to find the results.  (xnox, 14:48:31)
+
+
+
+Meeting ended at 14:54:30 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * xnox to prepare a target list for fs stack for 12.04.1
+ * xnox to liase with ballons, gema and jibel w.r.t. testing
+ * skaet to get an update on the status of daily QA testing of whether these are all being run still in jenkins, and where to find the results.
+
+
+
+== Action items, by person ==
+
+ * skaet
+ ** skaet to get an update on the status of daily QA testing of whether these are all being run still in jenkins, and where to find the results.
+ * xnox
+ ** xnox to prepare a target list for fs stack for 12.04.1
+ ** xnox to liase with ballons, gema and jibel w.r.t. testing
+
+
+
+== People present (lines said) ==
+
+ * stgraber (47)
+ * skaet (42)
+ * xnox (21)
+ * stokachu (14)
+ * ubottu (6)
+ * meetingology (6)
+ * jamespage (6)
+ * smoser (5)
+ * ScottK (4)
+ * NCommander (3)
+
+
+
+== Full Log ==
+
+
+ 14:01:42 <stgraber> #startmeeting Ubuntu 12.04.1 team meeting
+
+ 14:01:42 <meetingology> Meeting started Thu May 31 14:01:42 2012 UTC.  The chair is stgraber. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:01:42 <meetingology> 
+
+ 14:01:42 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 14:02:05 <jamespage> o/
+
+ 14:02:25 <stgraber> seb128 told me he won't attend this week's meeting but should be able to make it to the next ones
+
+ 14:02:51 * stgraber pulls the list of attendees and does some pinging
+
+ 14:03:29 <stgraber> stokachu, arges, smoser: around?
+
+ 14:03:29 <smoser> o/
+
+ 14:03:37 <stokachu> o/
+
+ 14:04:01 <NCommander> stgraber: thanks
+
+ 14:04:29 <stgraber> right, so welcome to the first 12.04.1 team meeting
+
+ 14:04:59 <stgraber> I "think" we now have the final team list with jamespage and smoser being the two last additions (from the server team)
+
+ 14:05:59 <stokachu> arges is sick today so he wont make it
+
+ 14:06:11 <stgraber> stokachu: ok, thanks
+
+ 14:06:53 <stgraber> the idea behind this meeting is that every 2 weeks until the release of 12.04.1, we can do a quick review of what still needs to land, what's broken and not fixed yet and make sure we have resources working on these
+
+ 14:08:24 * stgraber tries to get LP to give him some useful bug lists
+
+ 14:08:40 <stokachu> i do have one for the server team
+
+ 14:09:39 <stgraber> stokachu: go ahead, while I'm digging for good bug lists :)
+
+ 14:09:43 <stokachu> ok
+
+ 14:10:04 <stokachu> https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/520386, (mir @https://bugs.launchpad.net/ubuntu/+source/netcf/+bug/904014)
+
+ 14:10:06 <ubottu> Launchpad bug 520386 in libvirt (Ubuntu Lucid) "libvirt-bin hypervisor does not support virConnectNumOfInterfaces / unable to create domain with virt-manager using network bridge" [Low,Confirmed]
+
+ 14:10:07 <ubottu> Launchpad bug 904014 in netcf (Ubuntu) "[MIR] netcf" [Undecided,In progress]
+
+ 14:10:09 <skaet> stgraber, http://status.qa.ubuntu.com/reports/kernel-bugs/reports/rls-p-tracking-bugs.html has what teams still have on their commit to fix list.
+
+ 14:10:22 <skaet> however,  there's alot that's come in that needs to be looked at.
+
+ 14:11:05 <skaet> I know of several critical that aren't on that list.
+
+ 14:12:32 <skaet> bug 944546, bug 751689, bug 949641
+
+ 14:12:36 <ubottu> Launchpad bug 944546 in libcommons-cli-java (Ubuntu Precise) "StringIndexOutOfBoundsException in HelpFormatter.findWrapPos" [Critical,Triaged] https://launchpad.net/bugs/944546
+
+ 14:12:37 <ubottu> Launchpad bug 751689 in linux (Ubuntu Precise) "ThinkPads overheat due to slow fans when on 'auto'" [Critical,Triaged] https://launchpad.net/bugs/751689
+
+ 14:12:39 <ubottu> Launchpad bug 949641 in fglrx-installer (Ubuntu Precise) "Installing both fglrx and fglrx-updates results in: error exit status 1 -"/etc/init.d/atieventsd exists during rc.d purge"" [Critical,Triaged] https://launchpad.net/bugs/949641
+
+ 14:13:03 <smoser> bug 1003842
+
+ 14:13:05 <ubottu> Launchpad bug 1003842 in network-manager (Ubuntu) "dnsmasq sometimes fails to resolve private names in networks with non-equivalent nameservers" [Medium,Confirmed] https://launchpad.net/bugs/1003842
+
+ 14:13:22 <skaet> several other high ones that are new as well...
+
+ 14:14:26 <stgraber> apparently not all of these are targeted for 12.04.1
+
+ 14:14:37 <stgraber> or rather, none of these :)
+
+ 14:15:05 <jamespage> sounds like that would be a good first action - review these bugs and others and target for 12.04.1
+
+ 14:15:21 <stokachu> for mine I'd like server team to review to see if its feasible to target for 12.04.1
+
+ 14:15:49 <stgraber> yeah, it's always easy to decide later on that they won't make it for 12.04.1 and re-target to -updates or 12.04.2
+
+ 14:16:13 <stgraber> ideally, https://launchpad.net/ubuntu/+milestone/ubuntu-12.04.1 should be an up to date representation of what's going on with 12.04.1
+
+ 14:16:19 <stokachu> definately, just wanted to make sure its on the radar
+
+ 14:16:24 * skaet nods
+
+ 14:17:40 <skaet> in terms of reviewing bugs,  scope should probably be wider than those mentioned above.
+
+ 14:17:46 <stgraber> so I think it'd make sense to always first target to 12.04.1 when we see a bug that we think should be fixed for 12.04.1, then let the team responsible for the package make the decision of doing it for 12.04.1 or postponing to 12.04.2/-updates (with a reason, ideally :))
+
+ 14:17:59 <smoser> so, to be clear, above, those bugs should have a 12.04 task and be targetted to 12.04.1 ?
+
+ 14:18:09 <stgraber> yes
+
+ 14:18:51 <skaet> should be a precise task, rather than 12.04 task,  but yeah.   ;)
+
+ 14:19:05 <skaet> milestone should be 12.04.1
+
+ 14:19:39 <stokachu> question, where do i set the task?
+
+ 14:19:52 <skaet> target to series
+
+ 14:19:55 <stokachu> ah
+
+ 14:20:17 <skaet> should give you the option.  :)   please mark it to quantal too, if its known to affect that one as well.
+
+ 14:20:55 <stokachu> gotcha
+
+ 14:21:12 * xnox was told not to target to quantal as the default task status tracks that.
+
+ 14:21:22 <stgraber> if you don't have the right to target/milestone bugs, ping me and I'll do it for you, but I guess most of us have the required rights
+
+ 14:22:04 <stgraber> xnox: it does but it's rather confusing, so I usually prefer to explicitly target to quantal (which makes the default task disappear)
+
+ 14:22:19 * xnox nods and agrees
+
+ 14:22:20 <skaet> +1,  makes it easier for finding.
+
+ 14:23:15 * skaet is willing to help out with the series and target/milestoneing if needed too.
+
+ 14:23:22 <stgraber> another source of bugs that we didn't mention yet but is really important for the point release is https://errors.ubuntu.com
+
+ 14:23:53 <skaet> indeed.   Most of them should be getting bug numbers associated with them,   but its good to see imapct.
+
+ 14:24:07 <skaet> or rather the high impact ones should be ;)
+
+ 14:24:08 <stgraber> it'd be good to have someone from each engineering team go through that list once a week or so and make sure that any frequent crasher is properly milestoned to 12.04.1 and that someone from there team is actively working on a fix
+
+ 14:24:48 <stokachu> curious why 2,3 off that list dont have bugs associated?
+
+ 14:24:50 <stgraber> I can't remember exactly what we said in the UDS session, but looking at the current state, anything that crashes > 100 times a day, should probably be actively investigated at this time
+
+ 14:25:42 <stgraber> stokachu: probably means that nobody with a similar stacktrace reported it to Launchpad
+
+ 14:25:55 <stokachu> ok
+
+ 14:26:18 <stgraber> so these should definitely be the priority as it means they aren't currently showing up on LP at all
+
+ 14:26:40 * skaet nods
+
+ 14:27:34 <skaet> getting the teams looking at the errors.ubuntu.com list is a bit of a culture change,  and this is a good place to start that behaviour changes from.  ;)
+
+ 14:28:14 <skaet> Other info that might be useful is that the schedule for 12.04.1 can be found: https://wiki.ubuntu.com/PrecisePangolin/ReleaseSchedule
+
+ 14:28:26 <skaet> Its been updated now with the latest info from UDS.
+
+ 14:28:36 <skaet> (and subsequent discussions ;) )
+
+ 14:29:31 <skaet> If people want to know when we'll be having testing windows,  prior to that release,  the information for that is captured on: https://wiki.ubuntu.com/QuantalQuetzal/ReleaseInterlock
+
+ 14:29:53 <skaet> in the QA columns,  look for events starting "P-".
+
+ 14:31:16 <skaet> If anyone has any questions about it,  feel free to ping me.
+
+ 14:32:16 * skaet done
+
+ 14:32:35 <stgraber> thanks skaet
+
+ 14:33:29 <stgraber> so I quickly drafted an agenda for our next meetings: http://paste.ubuntu.com/1016424/
+
+ 14:33:45 <stgraber> does that seem to cover what people want to discuss here, did I miss something?
+
+ 14:34:00 <jamespage> LGTM
+
+ 14:34:07 <smoser> i think that looks good, skaet
+
+ 14:34:41 <skaet> stgraber,  looks fine by me.
+
+ 14:34:43 <stokachu> looks good
+
+ 14:35:06 <stgraber> cool, updated the google calendar event to include the agenda then
+
+ 14:35:48 <stgraber> does anyone have something they wish to discuss at this meeting? any controversial bug or something that should be considered for 12.04.1?
+
+ 14:36:02 <stokachu> i dont atm
+
+ 14:36:34 <ScottK> Just as a mention ...  KDE SC 4.8.3 hit precise-updates yesterday.  We may (not sure) be able to get 4.8.4 in before 12.04.1.
+
+ 14:37:01 <ScottK> It's sched for release June 5.
+
+ 14:37:02 <stgraber> ScottK: what's the expected release date for 4.8.4?
+
+ 14:37:47 <jamespage> smoser: I'm right in saying the first set of SRU updates for openstack should land in -proposed in the next week or so?
+
+ 14:38:02 <ScottK> If we follow the timeline we managed for 4.8.3, it should make it fine.
+
+ 14:38:10 <stgraber> ScottK: looks like you should have way enough time to have it packaged and pushed through the SRU process then
+
+ 14:38:18 <ScottK> Yes.
+
+ 14:38:35 <xnox> well I have requests to update ef2progs, btrfs-tools, mdadm and lvm2 for 12.04.1. I have/will prepare -sru's but I need qa assistance to test those.
+
+ 14:39:04 <smoser> jamespage, verified your question against zul.
+
+ 14:39:07 <xnox> (just the all/most filesystems stack)
+
+ 14:39:28 <stgraber> xnox: do you just need testers or very specific setup? my feeling so far is that the QA team doesn't have a whole lot of time to help with SRU verification
+
+ 14:39:33 <skaet> xnox,  are there auto tests,  or are you looking for manal.
+
+ 14:39:40 <skaet> manual even.
+
+ 14:39:42 <skaet> ?
+
+ 14:40:14 <xnox> skaet: both. QA  install/upgrade tests with updated packages. both auto and some manual.
+
+ 14:40:48 <skaet> xnox,  for install/upgrade testing,  synch with gema and jibel.
+
+ 14:40:55 <xnox> My access to QA/kernel machines with multiple disks for RAID testing is still pending. And I don't want to push mdadm stuff to precise without testing it first.
+
+ 14:41:05 <skaet> for the manual testing,  let baloons know the details of what you're looking for.
+
+ 14:41:31 <stgraber> xnox: are these changes already in quantal?
+
+ 14:41:35 <skaet> there's a slot scheduled for some precise testing in July,  may make sense to aim for that?
+
+ 14:41:43 <xnox> stgraber: not really SRU testing, more general overall testing - it may work as an sru, but fresh .1 install or upgrade from lucid may go haywire and I don't have capacity to test that.
+
+ 14:42:04 <xnox> skaet: yes. Ok i will discuss it with people.
+
+ 14:42:12 <xnox> stgraber: some, not all yet.
+
+ 14:42:52 <xnox> [ACTION] xnox to prepare a target list for fs stack for 12.04.1
+
+ 14:42:52 * meetingology xnox to prepare a target list for fs stack for 12.04.1
+
+ 14:43:16 <stgraber> xnox: ok. Make sure these bugs are targeted to precise/12.04.1 so they show up on the list
+
+ 14:43:20 <xnox> [ACTION] xnox to liase with ballons, gema and jibel w.r.t. testing
+
+ 14:43:20 * meetingology xnox to liase with ballons, gema and jibel w.r.t. testing
+
+ 14:43:29 <xnox> stgraber: ok.
+
+ 14:43:52 <xnox> ..
+
+ 14:44:01 <skaet> :)
+
+ 14:44:21 <skaet> stgraber, can we use the .. convention in this meeting?
+
+ 14:44:34 <stgraber> skaet: sure
+
+ 14:44:37 <stgraber> ..
+
+ 14:44:44 <skaet> :D
+
+ 14:45:13 <stgraber> btw, might be worth pointing out that we have daily builds of precise going on at http://cdimage.ubuntu.com/precise/ (and other <product>/precise directories)
+
+ 14:45:48 * xnox yeah =)
+
+ 14:46:06 <stgraber> skaet: do you know if QA is doing daily testing of these?
+
+ 14:46:46 <skaet> stgraber,  I'll take the action to get an update published.
+
+ 14:46:50 <jamespage> stgraber, are there plans for a -server daily image as well?
+
+ 14:46:57 <skaet> which mail list should we be using between meetings?
+
+ 14:47:05 <stgraber> jamespage: http://cdimage.ubuntu.com/ubuntu-server/precise/
+
+ 14:47:19 <jamespage> stgraber, thanks - found it at the same time :-)
+
+ 14:47:51 <skaet> by update published, meant to say,  update on the status of whether these are all being run still in jenkins, and where to find the results.  ;)  think they are, but need to double check.
+
+ 14:47:58 <skaet> ..
+
+ 14:48:13 * skaet suggests ubuntu-release
+
+ 14:48:31 <xnox> [ACTION] skaet to get an update on the status of daily QA testing of whether these are all being run still in jenkins, and where to find the results.
+
+ 14:48:31 * meetingology skaet to get an update on the status of daily QA testing of whether these are all being run still in jenkins, and where to find the results.
+
+ 14:48:32 <stgraber> skaet: good question, mostly depend on the expected trafic I guess. Any of -release, -qa or -devel would be appropriate but -release is probably the best as it's likely of interest of most subscribers
+
+ 14:48:54 <skaet> coolio.   and thanks xnox
+
+ 14:49:14 <stgraber> ..
+
+ 14:49:34 <stgraber> can everyone make sure they are subscribed to ubuntu-release@lists.ubuntu.com?
+
+ 14:50:22 <xnox> #agreed to target all relevant bugs to the milestone, such that https://launchpad.net/ubuntu/+milestone/ubuntu-12.04.1 shows a useful summary.
+
+ 14:50:37 * xnox just old stuff
+
+ 14:50:48 <stgraber> I'll be posting the meeting notes for this meeting, create a wiki page and put the agenda of the next meeting there and announce all that to ubuntu-devel and ubuntu-release
+
+ 14:51:08 <skaet> sounds good.  :)
+
+ 14:51:15 <xnox> stgraber: well meetingology generates a good base template =)
+
+ 14:51:22 <xnox> if used properly
+
+ 14:51:32 <stgraber> so hopefully the next meeting will be better structured and properly announced, sorry for the last minute scheduling ;)
+
+ 14:51:59 <stgraber> anything else?
+
+ 14:52:18 <xnox> [TOPIC] AOB
+
+ 14:52:32 * xnox I guess the chair should be doing the commands....
+
+ 14:52:37 <skaet> :)
+
+ 14:52:47 <NCommander> We have highbank enablement stuff coming down the piple, but details are a bit light on when specifically, will get back to when they are all in
+
+ 14:53:02 <stgraber> xnox: yeah, I only wrote the agenda half way through the meeting, so using [TOPIC] now doesn't make a lot of sense :) but will definitely use the bot for the next one
+
+ 14:53:58 <stgraber> NCommander: ok, make sure any related bugs is targeted to precise/12.04.1 and that any other required changes (images?) is announced to -release (or at the next meeting)
+
+ 14:54:24 <NCommander> will do so
+
+ 14:54:30 <stgraber> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,426 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 13 Feb at 15:30 &mdash; 16:03 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2024/ubuntu-meeting.2024-02-13-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:31)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/m-r-package-team-mapping.html   (cpaelzer, 15:33)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/kexec-tools/1:2.0.28-0ubuntu1   (cpaelzer, 15:35)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:36.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:36)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:44.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:44)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 15:50.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 15:50)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 15:50)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:53.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:53)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:53)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:54)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:57.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (116)
+ * sarnold (20)
+ * slyon (17)
+ * tsimonq2 (7)
+ * eslerm (4)
+ * joalif (4)
+ * upils (4)
+ * jamespage (3)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:54 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:31 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 15:31 <cpaelzer> #topic current component mismatches
+
+ 15:31 <slyon> o/
+
+ 15:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:31 <jamespage> o/
+
+ 15:31 <sarnold> good morning
+
+ 15:31 <slyon> nullboot and python-cssselect should be ready
+
+ 15:31 <cpaelzer> let us cheeck
+
+ 15:32 <cpaelzer> they are approved at least by the color
+
+ 15:32 <slyon> yes, that's what I did earlier today :)
+
+ 15:32 <slyon> besides those, kexec-tools looks new to me
+
+ 15:32 <cpaelzer> yes, they can be promoted
+
+ 15:32 <cpaelzer> I'll do so tomorrow if no one beats me to it
+
+ 15:32 <slyon> thanks!
+
+ 15:33 <sarnold> i'm surprised the kexec-tools owner is ~canonical-ubuntu-qa
+
+ 15:33 <sarnold> I expected kernel team ;)
+
+ 15:33 <cpaelzer> it is the kernel team
+
+ 15:33 <sarnold> (maybe foundations..)
+
+ 15:33 <slyon> It shows ~kernel-packages for me
+
+ 15:33 <cpaelzer> http://reqorts.qa.ubuntu.com/reports/m-r-package-team-mapping.html
+
+ 15:33 <cpaelzer> some are subscribed by multiple which breaks some checks
+
+ 15:33 <sarnold> aha
+
+ 15:34 <slyon> but yes, QA is subscribed, too
+
+ 15:34 <sarnold> I was going by bug subscribers https://launchpad.net/ubuntu/+source/kexec-tools
+
+ 15:34 <cpaelzer> this is added in kexec-tools (1:2.0.25-1)
+
+ 15:34 <cpaelzer> * Added build dependency on libxen-dev so kexec would work on xen
+
+ 15:34 <cpaelzer> (Closes: #1023270)
+
+ 15:34 <cpaelzer> the merge didn't revert that change and made it Ubuntu delta kexec-tools (1:2.0.28-0ubuntu1)
+
+ 15:34 <cpaelzer> but probably needs to
+
+ 15:35 <cpaelzer> We lack a kernel person to ping
+
+ 15:35 <cpaelzer> let me see who uploaded that ...
+
+ 15:35 <cpaelzer> https://launchpad.net/ubuntu/+source/kexec-tools/1:2.0.28-0ubuntu1
+
+ 15:35 <cpaelzer> xnox: did
+
+ 15:35 <cpaelzer> hi xnox, do you think we should remove the recommends to xen from kexec-tools or do you want to pursue this in any other way?
+
+ 15:36 <cpaelzer> The rest of the component mismatches are known cases that are being worked on or false-positives
+
+ 15:36 <cpaelzer> #topic New MIRs
+
+ 15:36 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:36 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:36 <cpaelzer> There are two more from the production/crisis-tools set
+
+ 15:36 <cpaelzer> we last week consumed three of them, some already done some still in flight
+
+ 15:37 <slyon> I can take one of the desktop MIRs
+
+ 15:38 <cpaelzer> handing you the snapshot
+
+ 15:38 <slyon> ack
+
+ 15:39 <cpaelzer> hmm
+
+ 15:40 <cpaelzer> hard to spread the others
+
+ 15:40 <cpaelzer> jamespage: can I pass you one as well today?
+
+ 15:40 <cpaelzer> to balance the load?
+
+ 15:40 <eslerm> bpf bugs mention they are WIP, but the outstanding issues seemed small enough that I encourged submitting them (missing unit tests)
+
+ 15:40 <cpaelzer> joalif: seems not to be here yet but last week had already a second assigned - so probably full too
+
+ 15:41 <cpaelzer> I completed mine this morning (last minutes)
+
+ 15:41 <cpaelzer> There are two ways we can do this
+
+ 15:41 <eslerm> I wouldn't mind foing a review for the MIR team if that is okay
+
+ 15:41 <eslerm> doing*
+
+ 15:41 <joalif> sorry I am here but at 2 mtgs in teh same time and didnt say hi
+
+ 15:41 <cpaelzer> hehe
+
+ 15:41 <cpaelzer> np joalif, how possible or not is it to take another reivew?
+
+ 15:41 <joalif> If you cannot find anyone else assign a bug to me but then again no promises for next week
+
+ 15:42 <cpaelzer> joalif: as long as not all of them are piling up and are done never it is ok to take a while each
+
+ 15:42 <jamespage> cpaelzer: yep
+
+ 15:42 <joalif> ok then
+
+ 15:42 <cpaelzer> I assigned langtable to joalif
+
+ 15:42 <cpaelzer> thanks jamespage - giving you bpftrace
+
+ 15:42 <joalif> ack
+
+ 15:42 <cpaelzer> and myself taking bpfcc
+
+ 15:43 <jamespage> ta
+
+ 15:43 <cpaelzer> That clears the list
+
+ 15:43 <cpaelzer> to all of us, good luck in finding an efficient review time
+
+ 15:44 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:44 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:44 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:44 <cpaelzer> ok we see the libtrace* things going back
+
+ 15:45 <cpaelzer> mostly being great and ok actually, but missing some better QA
+
+ 15:45 <cpaelzer> one done by didrocks, one by me
+
+ 15:45 <slyon> cc upils: ^
+
+ 15:45 <cpaelzer> slyon: of the team prefers, there is the option to do autopkgtests once and awesome just on the high level
+
+ 15:45 <cpaelzer> I suggested to that in my review
+
+ 15:46 <cpaelzer> like
+
+ 15:46 <cpaelzer> a) get the build time tests to be better, seems didrocks found the same in his review
+
+ 15:46 <cpaelzer> but also
+
+ 15:46 <cpaelzer> b) autopkgtests are weak
+
+ 15:46 <cpaelzer> but for (b)
+
+ 15:46 <cpaelzer> that can be done in-pkg
+
+ 15:46 <cpaelzer> or it can be done on the level that pulls it in, which here is trace-cmd
+
+ 15:46 <cpaelzer> there is might be easier to write non trivial tests
+
+ 15:47 <cpaelzer> and if made sure that this uses both libs, that might be adressing 3-for-1
+
+ 15:47 <cpaelzer> all other incomplete cases in this list are much older
+
+ 15:47 <slyon> right. This is for upils to look into. Potentially doing proper autopkgtests for trace-cmd only
+
+ 15:47 <sarnold> tracing the autopkgtest runner kernels might be a challenge
+
+ 15:47 <cpaelzer> yeah slyon, if done right that would cover all three at once
+
+ 15:47 <cpaelzer> sarnold: we have testcases which spawn VMs to have control and avoid weird effects
+
+ 15:48 <cpaelzer> this could be another one of those
+
+ 15:48 <cpaelzer> mark them big to have enough mem/cpu and set it up that way
+
+ 15:48 <tsimonq2> o/ MIR team! Sorry to butt in, I just wanted to bring this to your attention: https://tracker.debian.org/news/1493585/accepted-ubuntu-dev-tools-0198-source-into-unstable/ - I am quite happy to accept any feedback if you have it. :)
+
+ 15:48 <cpaelzer> not saing it has to be that way, but it helps to have control and avoid flakyness
+
+ 15:48 <cpaelzer> hi tsimonq2, you are totally fine to interrupt
+
+ 15:48 <cpaelzer> having a look ...
+
+ 15:49 <tsimonq2> Those are just some slight tweaks I found useful for check-mir. Anyone in ~ubuntu-dev is welcome to upload to ubuntu-dev-tools in Debian as a team upload.
+
+ 15:49 <sarnold> cool :)
+
+ 15:49 <cpaelzer> tsimonq2: thanks
+
+ 15:50 <slyon> tsimonq2: without looking at the code, those sound like very useful additions! thanks :)
+
+ 15:50 <tsimonq2> My pleasure. :)
+
+ 15:50 <cpaelzer> ok, getting to git next
+
+ 15:50 <cpaelzer> we had landed some
+
+ 15:50 <cpaelzer> let us look at the queues
+
+ 15:50 <cpaelzer> #topic Process/Documentation improvements
+
+ 15:50 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 15:50 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 15:50 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 15:50 <upils> hi. thanks for the suggestion. This approach is new to me to I will probably ping some of you at some point for some details in the implementation. I have no idea how much work this is.
+
+ 15:51 <upils> *so I will
+
+ 15:51 <cpaelzer> only the old "need to work on it once we have time" cases on github
+
+ 15:51 <cpaelzer> ok upils, that is only fair
+
+ 15:51 <cpaelzer> thanks for driving this
+
+ 15:51 <cpaelzer> you might look at other tests doing that, I think systemd does - any others one immediately remembers?
+
+ 15:52 <upils> not quite sure I will have time to work on it this week but maybe next one
+
+ 15:53 <cpaelzer> sure upils, while we should try to avoid getting too late - promotions/demotions are not strictly bound by feature freeze
+
+ 15:53 <cpaelzer> better go slow and do it right if in doubt (as long as we do not miss noble)
+
+ 15:53 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:53 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:53 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 15:53 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:53 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:54 <sarnold> (but due keep in mind that the MIR has to be assigned ot security before the beta freeze to avoid extra paperwork)
+
+ 15:54 <cpaelzer> Internal link
+
+ 15:54 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:54 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:54 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:54 <slyon> bug #2052495 is ready for security review
+
+ 15:54 <sarnold> pro on wsl, interesting :)
+
+ 15:55 <sarnold> at the moment things feel like we've got a decent handle on the list of outstanding mirs
+
+ 15:55 <cpaelzer> ack sarnold, there are time limits for sure
+
+ 15:56 <cpaelzer> and pro on wsl is not only interesting it is also great :-)
+
+ 15:56 <cpaelzer> will you add it to the jira board?
+
+ 15:56 <upils> ack cpaelzer sarnold, that should be manageable before Beta Freeze I think
+
+ 15:56 <sarnold> yeah, we'll add it
+
+ 15:57 <cpaelzer> thanks
+
+ 15:57 <cpaelzer> the rest on the board looks sane
+
+ 15:57 <cpaelzer> glad to see that
+
+ 15:57 <cpaelzer> #topic Any other business?
+
+ 15:58 <cpaelzer> not from me
+
+ 15:58 <slyon> nothing here
+
+ 15:58 <cpaelzer> mirespace: is still on writing the wrapper for libcrpytx
+
+ 15:59 <cpaelzer> actually mirespace, I know you are unavailable now but please answer later - is the new version that does not use ed uploaded already to promote the full stack for now?
+
+ 15:59 <cpaelzer> as the rest adding it with the openssl wrapper is for "later" anyway
+
+ 15:59 <sarnold> one small item here
+
+ 15:59 <cpaelzer> go sarnold while I check these perl libs ...
+
+ 15:59 <sarnold> the flowchart on https://github.com/canonical/ubuntu-mir has a lot of html formatting codes in it
+
+ 15:59 <sarnold> this feels new :)
+
+ 16:00 <cpaelzer> hehe
+
+ 16:00 <sarnold> I'm hoping that this is an obvious "oh I know how to fix that" for someone around here
+
+ 16:00 <cpaelzer> yeah, it was cleaner than that for sure
+
+ 16:00 <slyon> I wonder if dviererbe can help with that... I can reach out to hin
+
+ 16:00 <slyon> him*
+
+ 16:01 <tsimonq2> sarnold: It's being interpeted as a string, Markdown is formatted into HTML to be rendered, thus it's a matter of telling the renderer "hey, actually render this as HTML!" :)
+
+ 16:01 <sarnold> I forgot to open an issue last time I spotted this :/
+
+ 16:01 <sarnold> tsimonq2: if only the browsers would inspect the content they've been delivered and ignore the MIME types they were told to use, I'm sure there's no ill consequences of this choice :)
+
+ 16:01 <tsimonq2> :D
+
+ 16:02 <tsimonq2> I suspect this will help: https://mermaid.js.org/syntax/flowchart.html#markdown-formatting
+
+ 16:02 <sarnold> anyway that was it for me
+
+ 16:02 <cpaelzer> This is a good one
+
+ 16:02 <tsimonq2> All I have for AOB is, thank you for your work, MIR Team! :D
+
+ 16:02 <cpaelzer> let us wait what dviererbe will say
+
+ 16:02 <cpaelzer> thanks tsimonq2, same to you and all others contributing to Ubuntu out there!
+
+ 16:03 <cpaelzer> since slyon will reach out we can consider this as "it will happen"
+
+ 16:03 <cpaelzer> thanks
+
+ 16:03 <cpaelzer> ok, that seems to be a wrap
+
+ 16:03 <cpaelzer> and I'm too late to the next meeting
+
+ 16:03 <sarnold> thanks cpaelzer, all :)
+
+ 16:03 <cpaelzer> closing ...
+
+ 16:03 <eslerm> thanks all o/
+
+ 16:03 <slyon> thakns cpaelzer, all!
+
+ 16:03 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

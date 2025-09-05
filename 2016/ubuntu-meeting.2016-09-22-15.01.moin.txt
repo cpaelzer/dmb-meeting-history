@@ -1,0 +1,571 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 22 Sep at 15:01 &mdash; 15:32 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-09-22-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:01.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1626108 
+
+=== AOB ===
+The discussion about "AOB" started at 15:24.
+
+  * ''LINK:'' https://wiki.ubuntu.com/StableReleaseUpdates#Publishing 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (54)
+ * pitti (37)
+ * cyphermox (31)
+ * sil2100 (22)
+ * robru (21)
+ * bdmurray (20)
+ * ubottu (15)
+ * caribou (14)
+ * xnox (13)
+ * doko (9)
+ * tdaitx (7)
+ * barry (6)
+ * apw (4)
+ * meetingology (3)
+ * lamont (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Thu Sep 22 15:01:34 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <slangasek> It's beta week, so maybe we should make this quick today
+
+ 15:01 <slangasek> [TOPIC] Lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk mwhudson)
+
+ 15:02 <slangasek> tdaitx infinity sil2100 xnox cyphermox mwhudson slangasek barry robru pitti bdmurray chiluk caribou doko
+
+ 15:02 * xnox o/
+
+ 15:02 <slangasek> tdaitx: here?
+
+ 15:03 <slangasek> infinity distinctly not here
+
+ 15:03 <slangasek> sil2100:
+
+ 15:03 <sil2100> o/
+
+ 15:03 <sil2100> - Back from vacation, reading up on e-mail backlog
+
+ 15:03 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:03 <sil2100> - RTM status meetings
+
+ 15:03 <sil2100> - Touch xenial:
+
+ 15:03 <sil2100> * Started work on splitting xenial touch seeds into two for systemd work
+
+ 15:03 <sil2100> * Prepared livecd-rootf and cdimage changes for enabling new project for touch-systemd
+
+ 15:03 <sil2100> * Work halted as we might stay on one channel and concentrate on systemd only
+
+ 15:03 <sil2100> - OTA-13:
+
+ 15:04 <sil2100> * Prepared release notes
+
+ 15:04 <sil2100> * Copied images, started phasing, sent out announcements
+
+ 15:04 <sil2100> - zeromq3:
+
+ 15:04 <sil2100> * Took Steve's zeromq3 test fixes and forward-ported them to the new git-based package
+
+ 15:04 <sil2100> * Chasing down required FTBFS changes for unity-scopes-api so we can do a no-change rebuild for new zmqpp
+
+ 15:04 <sil2100> - Booking for the sprint in October
+
+ 15:04 <sil2100> - Touch seed changes for various projects
+
+ 15:04 <sil2100> - Enabled the auto package rebuild with instrumentation infra for the KPI initiative
+
+ 15:04 <sil2100> - Started working on more detailed touch system-image maintenance documentation
+
+ 15:04 <sil2100> - Working on getting xenial i386 touch images working again (transitional gles package issues)
+
+ 15:04 <sil2100> (done)
+
+ 15:04 <tdaitx> slangasek, here
+
+ 15:05 <tdaitx> = openjdk 8
+
+ 15:05 <tdaitx> - extracting tests from debian/rules; converting to autopkgtest; checking out which tests are unstable (change pass/fail/error state between runs)
+
+ 15:05 <tdaitx> = jck
+
+ 15:05 <tdaitx> - setting it up to run on 2 separated containers (one with reference implementation from Oracle, another with the openjdk under test) using lxd
+
+ 15:05 <tdaitx> - investigating plugins to start the 2 containers+tests on separated machines using jenkins (required for ppc64el/arm64 as Oracle's reference is amd64 only)
+
+ 15:05 <tdaitx> (done)
+
+ 15:06 <xnox> beta-2 & v4.8 testing on s390x
+
+ 15:06 <xnox> gnugp2 migration fixes
+
+ 15:06 <xnox> migrated ubuntu-keyring to one-file per-key, 1024 keys to be dropped in 17.04.
+
+ 15:06 <xnox> qemu point release update
+
+ 15:06 <xnox> libica / opencryptoki SRU validation
+
+ 15:06 <xnox> hunting down kernel teams' failure to reliably boot s390x bug
+
+ 15:06 <xnox> AOB:
+
+ 15:06 <xnox> who will pick up arges SRU work from October?
+
+ 15:06 <xnox> ..
+
+ 15:07 <pitti> cyphermox?
+
+ 15:07 <bdmurray> Its not AOB time yet!
+
+ 15:08 <slangasek> cyphermox was working on some ubiquity blockers for beta this morning, perhaps he's still tied up there
+
+ 15:08 <slangasek> so:
+
+ 15:08 <slangasek> * short week, was off Thu-Fri last week; played a lot of email catch-up
+
+ 15:08 <slangasek> * misc SRU, RM work
+
+ 15:08 <slangasek> * debugged a problem with out-of-date apt repos on daily CDs, found the real source issue this time
+
+ 15:08 <slangasek> * SRU for a surprising long-standing bug in our keymap loading (LP: #1621824)
+
+ 15:08 <ubottu> Launchpad bug 1621824 in kbd (Ubuntu Yakkety) "MFG:Garrison - Ubuntu 16.04.1 dmesg error "systemd[1]: Failed to start Set console keymap."" [Undecided,In progress] https://launchpad.net/bugs/1621824
+
+ 15:08 <slangasek> * discussions around console-conf performance on arm (snappy)
+
+ 15:08 <slangasek> * wound up spending way too much time making the zeromq3 testsuite parallel-safe for the MIR
+
+ 15:08 <slangasek> * don't hard-code local port numbers in your testsuite, kids!
+
+ 15:08 <slangasek> (done)
+
+ 15:09 <sil2100> I double that!
+
+ 15:09 <barry> short week due to travel/vaca
+
+ 15:09 <barry> ubuntu-image: issue triage; argument order branch; investigating impliciations of snapcraft changes breaking the CI (LP: #1626236)
+
+ 15:09 <ubottu> Launchpad bug 1626236 in Snapcraft "snapcraft newly fails on ubuntu-image" [Undecided,New] https://launchpad.net/bugs/1626236
+
+ 15:09 <barry> debuntu: pyparsing 2.1.9+dfsg1-1; LP: #1626201; debian bug #838559
+
+ 15:09 <ubottu> Launchpad bug 1626201 in python-virtualenv (Ubuntu Xenial) "missing python*-dev and gcc dependencies" [Low,Triaged] https://launchpad.net/bugs/1626201
+
+ 15:09 <ubottu> Debian bug 838559 in python-pex "python-pex: tests started to fail on "Connection refused"" [Normal,Open] http://bugs.debian.org/838559
+
+ 15:09 <barry> armhf console-conf/python performance testing
+
+ 15:09 <barry> company survey
+
+ 15:09 <barry> --done--
+
+ 15:09 <robru> - bileto.ubuntu.com rollout, deployment migrated from trusty to xenial
+
+ 15:09 <robru> lp:bileto xenial-charm
+
+ 15:09 <robru> * ported charm to xenial
+
+ 15:09 <robru> * dropped no-longer-needed apache vhost stuff
+
+ 15:09 <robru> * fix support for git branches
+
+ 15:09 <robru> * implement juju storage
+
+ 15:10 <robru> lp:bileto master
+
+ 15:10 <robru> * use new bileto.ubuntu.com domain
+
+ 15:10 <robru> * fix nagios checks
+
+ 15:10 <robru> * be more fault tolerant with swift
+
+ 15:10 <robru> * port to xenial
+
+ 15:10 <robru> * fix Mirv's irc nick
+
+ 15:10 <robru> * fix logic for determining when to restart gunicorn3
+
+ 15:10 <robru> * some back-and-forth with sbalda about how best to implement UST (in progress)
+
+ 15:10 <slangasek> "irc nick"?
+
+ 15:10 <robru> lp:canonical-mojo-specs
+
+ 15:10 <robru> * new spec for new xenial bileto.ubuntu.com deployment
+
+ 15:10 <robru> * old spec for requests.ci-train.ubuntu.com now a redirect to bileto.ubuntu.com
+
+ 15:10 <robru> lp:queuebot, lp:phablet-tools, lp:ubuntu-archive-tools
+
+ 15:10 <robru> * s/requests.ci-train.ubuntu.com/bileto.ubuntu.com/g
+
+ 15:10 <robru> (done)
+
+ 15:10 <pitti> This has been pretty much completely a "live in the bug tracker and put out fires" week ☹
+
+ 15:10 <pitti> autopkgtest:
+
+ 15:10 <slangasek> robru: "irc nick"?
+
+ 15:10 <pitti> - Add all-proposed=1 argument to a.u.c/request.cgi
+
+ 15:10 <pitti> - Fight with broken images (4.8 kernel) and broken image boot (lcy01 networking trouble)
+
+ 15:10 <pitti> - britney: Fix broken xenial runs (fauxpkg vs. oxide-qt on arm64)
+
+ 15:10 <robru> slangasek: timo's irc nick was misconfigured in lp, I expanded our irc nick support to support his format as well
+
+ 15:10 <pitti> - britney: Move our git repo into Launchpad "britney" project
+
+ 15:10 <pitti> - britney: Write down code pointers and hints for robru for adding PPA support
+
+ 15:10 <pitti> systemd:
+
+ 15:11 <pitti> - Clean up obsolete setcap call (reported by sabdfl)
+
+ 15:11 <slangasek> robru: heh
+
+ 15:11 <pitti> - Fix nsswitch.conf cleanup after removing libnss-* (#1625584)
+
+ 15:11 <pitti> - Investigate networkd regression (Debian #837759), nss-resolved fallback (#1624071), test regression in yakkety (#1624406)
+
+ 15:11 <ubottu> Debian bug 837759 in systemd "network configuration stops working reliably" [Important,Fixed] http://bugs.debian.org/837759
+
+ 15:11 <pitti> - Tweak ondemand.service (#1579278)
+
+ 15:11 <pitti> distro:
+
+ 15:11 <pitti> - network-manager: Adjust tests to changed isc-dhcp behaviour in y-proposed (#1609898), and to fix fake-rfkill module build for kernel 4.8 (#1626568)
+
+ 15:11 <pitti> - nplan: Investigate autopkgtest flakiness (#1625461)
+
+ 15:11 <pitti> - upstart: Fix FTBFS on powerpc
+
+ 15:11 <pitti> - systemd graphical session: ix failed unit cleanup (#1618886)
+
+ 15:11 <pitti> - Build and test first yakkety langpacks
+
+ 15:11 <pitti> - Investigate and report kernel 4.8 regressions (#1626394, #1626429, #1626436, #1625100)
+
+ 15:11 <pitti> - Investigate gprbuild regressions with doko (Debian #838483)
+
+ 15:11 <pitti> - Investigate python-virtualenv regression (#1626201)
+
+ 15:11 <pitti> - Investigate test regressions in mod-wsgi and libapache2-mod-python; regression in invoke-rc.d, upload fix
+
+ 15:11 <ubottu> Debian bug 838483 in gprbuild "gprbuild starts failing with "no native compiler found for language 'ada'"" [Normal,Open] http://bugs.debian.org/838483
+
+ 15:11 <pitti> misc:
+
+ 15:11 <pitti> - Review http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html code
+
+ 15:11 <pitti> - Review/land lp:~robru/ubuntu-archive-tools/fix-bileto-excuses into lp:ubuntu-archive-tools
+
+ 15:11 <pitti> - Set up Launchpad apport retracers for arm64, ppc64el, powerpc
+
+ 15:11 <pitti> ^D
+
+ 15:11 <slangasek> bdmurray:
+
+ 15:12 <bdmurray> pinged webops about daisy nagios check failing
+
+ 15:12 <bdmurray> rls-y bug triage
+
+ 15:12 <bdmurray> discussed LP: #1610756 with mvo
+
+ 15:12 <bdmurray> uploaded backuppc change to fix upgrade bug LP: #1610756
+
+ 15:12 <bdmurray> SRU verification of upgrade bug LP: #1610756
+
+ 15:12 <ubottu> Launchpad bug 1610756 in backuppc (Ubuntu Xenial) "upgrade to 16.04 failed to calculate due to backuppc" [Medium,Fix committed] https://launchpad.net/bugs/1610756
+
+ 15:12 <bdmurray> investigation into dkms apport package hook error (LP: #1588479)
+
+ 15:12 <bdmurray> uploaded Trusty, Xenial, Yakkety fix for dkms
+
+ 15:12 <bdmurray> investigation into, test writing for LP: #1621629
+
+ 15:12 <bdmurray> pep8 / pyflakes clean-up of update-notifier package
+
+ 15:12 <ubottu> Launchpad bug 1588479 in dkms (Ubuntu Xenial) "dkms_packages.py supported kernel check is not working" [Medium,In progress] https://launchpad.net/bugs/1588479
+
+ 15:12 <ubottu> Launchpad bug 1621629 in update-notifier (Ubuntu) "package-data-downloader fails to process download requests" [High,In progress] https://launchpad.net/bugs/1621629
+
+ 15:12 <bdmurray> setup autopkgtest for update-notifier
+
+ 15:12 <bdmurray> investigation into LP: #1602536, LP: #1624641
+
+ 15:12 <bdmurray> modified bug pattern for upgrade LP: #996916
+
+ 15:12 <bdmurray> worked on youtube-dl snap some more
+
+ 15:12 <ubottu> Launchpad bug 1602536 in unattended-upgrades (Ubuntu) "/usr/bin/unattended-upgrade:apt.cache.LockFailedException:/usr/bin/unattended-upgrade@1468:main:do_auto_remove:cache_commit:commit:_fetch_archives" [High,Confirmed] https://launchpad.net/bugs/1602536
+
+ 15:12 <ubottu> Launchpad bug 1624641 in unattended-upgrades (Ubuntu) "security updates with a new dependency don't get installed" [High,Triaged] https://launchpad.net/bugs/1624641
+
+ 15:12 <ubottu> Launchpad bug 996916 in update-manager (Ubuntu) "postgresql packages in the removal blacklist making it hard to upgrade" [Undecided,Confirmed] https://launchpad.net/bugs/996916
+
+ 15:12 <bdmurray> ✔ done
+
+ 15:13 <slangasek> chiluk: ?
+
+ 15:13 <slangasek> caribou:
+
+ 15:13 <caribou> Bugfix:
+
+ 15:13 <caribou> APT hash sum mismatch when using mirror:// url (LP: #1625667)
+
+ 15:13 <caribou> - Identified root cause, mvo reviewing fix and will SRU
+
+ 15:13 <caribou> makedumpfile fails on 4.8 kernels (LP: #1626269)
+
+ 15:13 <caribou> - Identified upstream commit, but creates another issue
+
+ 15:13 <caribou> - Investigating with upstream
+
+ 15:13 <ubottu> Launchpad bug 1625667 in apt (Ubuntu Xenial) "Trusty: apt does not try next mirror if index file download fails with mirror:// source" [Medium,In progress] https://launchpad.net/bugs/1625667
+
+ 15:13 <ubottu> Error: Could not gather data from Launchpad for bug #1626269 (https://launchpad.net/bugs/1626269). The error has been logged
+
+ 15:14 <caribou> Development:
+
+ 15:14 <caribou> Working on a sosreport charm
+
+ 15:14 <caribou> tomsfastpath MIR
+
+ 15:14 <caribou> python-pip sponsorship in Xenial
+
+ 15:14 <caribou> Misc:
+
+ 15:14 <caribou> Interview & meetings
+
+ 15:14 <caribou> ☑ Done
+
+ 15:14 <doko> - started test rebuilds (unfortunately before linux 4.8 was there)
+
+ 15:14 <doko> - fix build failures, chase people to fix build failures
+
+ 15:14 <doko> - merges to fix build failures
+
+ 15:14 <doko> - MIR processing intensified
+
+ 15:14 <doko> - openjdk-9 update
+
+ 15:14 <doko> - forwarding GCC reports
+
+ 15:14 <doko> - try to enable lldb on s390x
+
+ 15:14 <doko> - chasing down autopkg test failures with pitti
+
+ 15:14 <doko> (done)
+
+ 15:14 <cyphermox> oi
+
+ 15:15 <caribou> "<doko> - MIR processing intensified", yeah I did feel that one go by ;)
+
+ 15:15 <cyphermox> MIR:
+
+ 15:15 <cyphermox> - review unity-scope-click
+
+ 15:15 <cyphermox> ubuntu-core:
+
+ 15:15 <cyphermox> - review console-conf merges
+
+ 15:15 <cyphermox> xenial:
+
+ 15:15 <cyphermox> - prepare IPv6 initramfs SRUs
+
+ 15:15 <cyphermox> yakkety:
+
+ 15:15 <cyphermox> - discussion on image build issues with Josh
+
+ 15:15 <cyphermox> - prepare new shim snapshot with fallback fix
+
+ 15:15 <cyphermox> - upload isc-dhcp and initramfs-tools for IPv6 in initramfs
+
+ 15:15 <cyphermox> ±other stuff:
+
+ 15:15 <cyphermox> - fixes in shim EKU code and fix PR
+
+ 15:15 <cyphermox> - implementing dhcpv6 in initramfs w/ lamont
+
+ 15:15 <cyphermox> (done)
+
+ 15:15 <cyphermox> well, and that ubiquity thing that looks like an issue in polkit
+
+ 15:15 <lamont> \o/ dhcpv6
+
+ 15:16 <cyphermox> yay
+
+ 15:16 <slangasek> cyphermox: are you still driving the polkit fix, or is this on someone else now?
+
+ 15:17 <cyphermox> no, I'm still trying to make sure and figure out whether that really is the case; I could certainly use help from someone more familiar with polkit though
+
+ 15:17 <slangasek> ok
+
+ 15:17 <pitti> note that the new initramfs-tools didn't land yet, as it breaks reboot with at least the multipath-tools test (which still works in y-release)
+
+ 15:17 <slangasek> policykit-1 last uploaded 25 Jul
+
+ 15:17 <slangasek> has this been broken this long?
+
+ 15:17 <cyphermox> that said, looks to me like starting sudo ubiquity helps connecting wifi with NM; and would probably do the same for the drivers
+
+ 15:18 <cyphermox> (I mean, otherwise ubuntu-drivers works, lists the drivers, and you can drive it manually on the command-line, so no reason for it not to work via ubiquity)
+
+ 15:20 <cyphermox> pitti: I don't know why it breaks multipath-tools; I'll check later
+
+ 15:20 <cyphermox> "breaks multipath-tools" <  the tests, doesn't mean it actually breaks anything in mpath
+
+ 15:20 <pitti> right
+
+ 15:20 <slangasek> cyphermox: who can help with polkit, then?
+
+ 15:20 <cyphermox> I don't know
+
+ 15:20 <slangasek> pitti: do you know polkit enough to help? I see your name in the changelog :)
+
+ 15:20 <cyphermox> pitti: didn't you know about polkti?
+
+ 15:20 <pitti> cyphermox: I didn't look deeply into it, there was too much other stuff to firefight today
+
+ 15:21 <slangasek> of course, you're applying a patch from seb128
+
+ 15:21 <pitti> slangasek: yes, I do, I just didn't get aware of *that* bug yet :)
+
+ 15:21 <pitti> which LP# is it?
+
+ 15:21 <slangasek> cyphermox: there, found you someone to help :)
+
+ 15:21 <cyphermox> https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1626108
+
+ 15:21 <ubottu> Launchpad bug 1626108 in ubiquity (Ubuntu) "Ubiquity session isn't setting up 3rd party hardware drivers" [Undecided,New]
+
+ 15:22 <cyphermox> pitti: tbf I'm not sure it's polkit, I'm just very suspicious of it because of the denies I get from NM along the way too
+
+ 15:22 <pitti> cyphermox: can you break this down to a pk-check call?
+
+ 15:23 <pitti> there's no debugging information in that LP bug, but it seems you alredy did some; can you please put the notes there?
+
+ 15:23 <cyphermox> I have no idea what this is supposed to be doing in terms of an actual pk action, only that it runs ubuntu-drivers --autoinstall and expects it to write a file with a list of drivers to install
+
+ 15:23 <pitti> well, but that part all happens as root already
+
+ 15:24 <cyphermox> my testing was limited to trying to run ubuntu-drivers on the terminal
+
+ 15:24 <cyphermox> I don't know that it does?
+
+ 15:24 <cyphermox> ubiquity is definitely started as a user
+
+ 15:24 <slangasek> pitti, cyphermox: continue OOB after meeting?
+
+ 15:24 <pitti> *nod*
+
+ 15:24 <cyphermox> yep
+
+ 15:24 <slangasek> [TOPIC] AOB
+
+ 15:24 <slangasek> anything else?
+
+ 15:25 <bdmurray> xnox asked about SRU team staffing...
+
+ 15:25 * slangasek nods
+
+ 15:26 <slangasek> anyone volunteering? :)
+
+ 15:26 <xnox> I volunteer apw
+
+ 15:26 <slangasek> isn't he already on the team?
+
+ 15:26 <apw> yep
+
+ 15:27 <bdmurray> he doesn't have a daily shift listed though
+
+ 15:27 <slangasek> ah
+
+ 15:27 <apw> la la la
+
+ 15:27 <bdmurray> https://wiki.ubuntu.com/StableReleaseUpdates#Publishing
+
+ 15:27 <xnox> apw, should not have been so mean to arges then =)
+
+ 15:27 <apw> heh, there is that
+
+ 15:28 <slangasek> arges has assured us that this is not his reason for leaving
+
+ 15:28 <slangasek> which just means we should've made him do a double SRU team shift while we had him
+
+ 15:28 <slangasek> so, if apw wants to volunteer to take a shift, cool
+
+ 15:28 <xnox> slangasek, to make sure that it would become the reason?!.... =)
+
+ 15:28 <slangasek> or maybe apw wants to volunteer another member of his team for SRU training :)
+
+ 15:29 <slangasek> xnox: if he was going to leave anyway... ;)
+
+ 15:29 <apw> slangasek, they will love me
+
+ 15:29 <slangasek> anyway, I only see people volunteering other people
+
+ 15:29 <slangasek> so yes, we will want to figure out SRU team shifts post-arges
+
+ 15:30 <slangasek> but not solving that here and now
+
+ 15:30 <slangasek> anything else?
+
+ 15:30 <bdmurray> I thought rbasak was interested in joining the team some time ago
+
+ 15:30 <slangasek> that rings a bell
+
+ 15:30 <slangasek> bdmurray: do you want to follow up with him?
+
+ 15:30 <bdmurray> slangasek: sure
+
+ 15:31 <slangasek> ta
+
+ 15:31 <slangasek> going once...
+
+ 15:32 <slangasek> going once and a half...
+
+ 15:32 <sil2100> Oh the tension
+
+ 15:32 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

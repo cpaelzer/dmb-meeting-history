@@ -1,0 +1,256 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 10 Nov at 17:23 &mdash; 17:52 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-11-10-17.23.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 17:23.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:42.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/stunnel4.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/lib3ds.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/qmail.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/c-icap.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/smokeping.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:43.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (44)
+ * tyhicks (20)
+ * sbeattie (10)
+ * mdeslaur (9)
+ * chrisccoulson (6)
+ * sarnold (4)
+ * ubottu (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 17:23 <jdstrand> #startmeeting
+
+ 17:23 <meetingology> Meeting started Mon Nov 10 17:23:11 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 17:23 <meetingology> 
+
+ 17:23 <meetingology> Available commands: action commands idea info link nick
+
+ 17:23 <jdstrand> The meeting agenda can be found at:
+
+ 17:23 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 17:23 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 17:23 <jdstrand> I'll go first
+
+ 17:23 <jdstrand> I got pretty side-tracked last week with unplanned things
+
+ 17:24 <jdstrand> so, I'd like to finish the click-apparmor 0.3 for vivid and finish apparmor-easyprof-ubuntu for vivid
+
+ 17:24 <jdstrand> I'd also like to finish my update for click-reviewers-tools changes
+
+ 17:25 <jdstrand> once again, adjusting UCT for derivative branches
+
+ 17:25 <jdstrand> and then pending updates
+
+ 17:25 <jdstrand> that includes the sponsored konversation and kde-workspace that should go out today
+
+ 17:25 <jdstrand> mdeslaur: you'r up
+
+ 17:25 <jdstrand> mdeslaur: nm
+
+ 17:25 <jdstrand> sbeattie: you're up
+
+ 17:26 <mdeslaur> oh, I'm here now
+
+ 17:26 * sbeattie pauses
+
+ 17:26 <mdeslaur> darn time zones
+
+ 17:26 <jdstrand> yes, my apologies
+
+ 17:26 <jdstrand> it is scheduled for ~ 1 hour ago
+
+ 17:26 <mdeslaur> I'm on triage this week
+
+ 17:26 <jdstrand> maybe next week...
+
+ 17:26 <mdeslaur> And have a few updates planned
+
+ 17:27 <mdeslaur> and an embargoed issue I need to look at
+
+ 17:27 <mdeslaur> and pending that, I'll be going down the list again
+
+ 17:27 <mdeslaur> that's it from me
+
+ 17:27 <mdeslaur> sbeattie: you're up
+
+ 17:28 <sbeattie> I'm working on the gcc pie-by-defaulton-x86-64 stuff; I have the patch applying cleanly again, and am currently hammering my laptop as it finishes building gcc locally.
+
+ 17:29 <sbeattie> Once that finishes, I'll start doing test builds of other packages against it.
+
+ 17:29 <sbeattie> I also need to do the usual apparmor stuff.
+
+ 17:30 <sbeattie> that's it for me; tyhicks?
+
+ 17:30 <tyhicks> I'm currently working a parser bug in trusty (LP: #1390592)
+
+ 17:30 <ubottu> Launchpad bug 1390592 in linux (Ubuntu) "'ptrace peer=@{profile_name}' does not work on 14.04 (at least) with docker" [High,Confirmed] https://launchpad.net/bugs/1390592
+
+ 17:31 <tyhicks> I've identified the bad patch and am in the process of testing a new package built with the correct upstream patch
+
+ 17:32 <tyhicks> after that, I need to revisit the dbus-daemon unrequested replies bug (LP: #1362469)
+
+ 17:32 <ubottu> Launchpad bug 1362469 in dbus (Ubuntu) "AppArmor unrequested reply protection generates unallowable denials" [Medium,Triaged] https://launchpad.net/bugs/1362469
+
+ 17:32 <jdstrand> tyhicks: oh, it was the parser after all. and this is something for trusty sru?
+
+ 17:32 <sbeattie> tyhicks: oh, hunh, we have a different patch in ubuntu to add @{profile_name} from upstream?
+
+ 17:32 <tyhicks> jdstrand: it is something for a trusty sru - does someone have one in progress?
+
+ 17:33 <tyhicks> (I know we were talking about SRUing the python utils fixes)
+
+ 17:33 <jdstrand> I think sbeattie and mdeslaur were working to prepare one
+
+ 17:33 * jdstrand isn't sure of the status
+
+ 17:33 <tyhicks> sbeattie: nope, the bad patch is one that attempted to fix and cleanup escape sequence handling
+
+ 17:33 <sbeattie> yeah, though I've mostly been doing prep work, I haven't got a tree in progress yep.
+
+ 17:33 <sbeattie> s/yep/yet/
+
+ 17:34 <sbeattie> oh, hrm.
+
+ 17:34 <tyhicks> sbeattie: ubuntu patch add-decimal-interp.patch should be replaced with upstream rev 2456
+
+ 17:34 <tyhicks> I have a bit more testing to do, though
+
+ 17:35 <tyhicks> re dbus-daemon unrequested replies bug> folks are thinking that the newer dbus might fix an issue that dbus-daemon is hitting in rtm
+
+ 17:36 <jdstrand> so, bug #1390592 is pretty important to fix
+
+ 17:36 <ubottu> bug 1390592 in apparmor (Ubuntu Trusty) "'ptrace peer=@{profile_name}' does not work on 14.04 (at least) with docker" [High,Triaged] https://launchpad.net/bugs/1390592
+
+ 17:37 <tyhicks> jdstrand: should we do an SRU just for it?
+
+ 17:37 <jdstrand> if we aren't planning to fix the python tools now, I think we should
+
+ 17:37 <tyhicks> ok
+
+ 17:37 <tyhicks> I should be able to prepare an SRU for that today
+
+ 17:37 <jdstrand> ok, thanks
+
+ 17:37 <tyhicks> np
+
+ 17:37 <sbeattie> okay, that's fine.
+
+ 17:38 <tyhicks> also, I'll continue work on turning the apparmor policy cache setup and loading code into a library
+
+ 17:38 <tyhicks> it has taken a little longer than expected but I finally feel like I'm making progress now
+
+ 17:39 <jdstrand> oh, I forgot-- I plan on finishing my upstream patch for docker so it can apply policy based on parser capabilities
+
+ 17:39 <tyhicks> (it is a little difficult to pull out the cache handling bits from the profile parser)
+
+ 17:39 <tyhicks> ok, that's it for me
+
+ 17:39 <tyhicks> chrisccoulson: I think it is your turn
+
+ 17:40 <tyhicks> skipping jjohansen and sarnold (time zone victims)
+
+ 17:40 <jdstrand> jj is off today
+
+ 17:40 <tyhicks> oh yes
+
+ 17:40 <chrisccoulson> this week, I'm hoping to finish off the header bar controls in oxide. I'm also going to be working on several bugs that affect single-process mode
+
+ 17:40 <chrisccoulson> I've just got chromium out (not for precise though)
+
+ 17:41 <chrisccoulson> and I've got one embargoed update to do
+
+ 17:41 <jdstrand> nice
+
+ 17:41 <chrisccoulson> I think that's me done
+
+ 17:41 <jdstrand> chrisccoulson: any news on precise?
+
+ 17:41 <mdeslaur> what's wrong with precise?
+
+ 17:41 <chrisccoulson> oh, and reviewing updates to the mediahub branch when they arrive
+
+ 17:42 <chrisccoulson> chad's still working on building a compiler that can actually build it
+
+ 17:42 <jdstrand> good stuff
+
+ 17:42 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:43 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/stunnel4.html
+
+ 17:43 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/lib3ds.html
+
+ 17:43 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/qmail.html
+
+ 17:43 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/c-icap.html
+
+ 17:43 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/smokeping.html
+
+ 17:43 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:43 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:43 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:43 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:47 <jdstrand> sarnold: hey, can you give a quick update?
+
+ 17:48 <sarnold> I'm on community this week; I have some outstanding apparmor patches to review, and I'd like to keep working on programming scopes and applications for the touch environment
+
+ 17:49 <sarnold> I found david planella's Ubuntu On Air video from last week really useful to understand the otherwise baffling ubuntu sdk environment, well worth watching that if you're new to it
+
+ 17:50 <sarnold> there's two more videos in the series, and even though they are ridiculously long, I found the first one worth watching, so I'll try the other two as well
+
+ 17:50 <sarnold> that's me; is it back to jdstrand or chrisccoulson?
+
+ 17:51 <jdstrand> me
+
+ 17:52 <jdstrand> but actually, that's it
+
+ 17:52 <jdstrand> sarnold: thanks :)
+
+ 17:52 <jdstrand> mdeslaur, sbeattie, tyhicks,chrisccoulson, sarnold: thanks!
+
+ 17:52 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

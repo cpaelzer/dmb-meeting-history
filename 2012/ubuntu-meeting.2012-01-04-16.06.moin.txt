@@ -1,0 +1,364 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:06:18 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-01-04-16.06.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Rally planning
+''LINK:'' https://wiki.canonical.com/UbuntuEngineering/Rally/Precise/Foundations   (slangasek, 16:25:15)
+
+ *AOB
+
+
+
+Meeting ended at 16:40:47 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (39)
+ * stgraber (27)
+ * cjwatson (24)
+ * doko (17)
+ * jodh (16)
+ * MrChrisDruif (9)
+ * barry (8)
+ * ubottu (7)
+ * bdmurray (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:06:18 <slangasek> #startmeeting
+
+ 16:06:18 <meetingology> Meeting started Wed Jan  4 16:06:18 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:06:18 <meetingology> 
+
+ 16:06:18 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:06:42 <slangasek> [TOPIC] lightning round
+
+ 16:06:47 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jodh ev bdmurray slangasek)
+
+ 16:06:50 <slangasek> slangasek jodh doko cjwatson barry bdmurray ev stgraber
+
+ 16:07:43 <slangasek> not much to report really, besides that I'm fighting a cold that's dragging me down
+
+ 16:07:54 <slangasek> although ia32-libs is installable again, so I guess there's that
+
+ 16:08:17 <barry> nice, so that will stop being held back?
+
+ 16:09:08 <stgraber> slangasek: apt doesn't seem to agree with you, at least on my laptop
+
+ 16:09:12 <slangasek> and I spent some time over the holidays puttering with maven-debian-helper to try to port it to dh(1) so we could eliminate cdbs from that corner... got a little annoyed with what I found in libshout when I converted it for multiarch
+
+ 16:09:55 <slangasek> stgraber: oh, well, I currently have it installed :)
+
+ 16:10:07 * cjwatson tries in chdist
+
+ 16:10:12 <slangasek> stgraber: happy to debug after the meeting if you're seeing issues
+
+ 16:10:17 <slangasek> EOF
+
+ 16:10:32 <stgraber> slangasek: "apt-get install ia32-libs winbind:amd64" works though, so seems to be an apt weirdness
+
+ 16:10:43 <slangasek> ah
+
+ 16:10:53 <slangasek> perhaps it worked better for me because I already had winbind installed
+
+ 16:11:18 <slangasek> so that sounds like the stock "apt picks the foreign-arch package when it should pick the native-arch one" bug
+
+ 16:11:24 <jodh> Discussions and reviews with stgraber re mountall change for disabling
+
+ 16:11:25 <jodh> mounting of already mounted directories. Discussions regarding new
+
+ 16:11:25 <jodh> setuid/setgid stanzas and applicability to different job processes.
+
+ 16:11:25 <jodh> Worked on tests for logging of "early" Upstart job output to ensure that
+
+ 16:11:25 <jodh> even jobs which *end* before the log disk is writeable have log files
+
+ 16:11:27 <jodh> created when the disk does become writeable. Restarted effort to squish
+
+ 16:11:29 <jodh> plymouth bug 553745 / bug 849414. Identified reason for failing tests
+
+ 16:11:32 <jodh> when building upstart 1.4 in/on PPA/buildd: these environments are
+
+ 16:11:33 <ubottu> Launchpad bug 553745 in plymouth (Ubuntu Maverick) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Triaged] https://launchpad.net/bugs/553745
+
+ 16:11:34 <ubottu> Launchpad bug 849414 in plymouth (Ubuntu Precise) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Incomplete] https://launchpad.net/bugs/849414
+
+ 16:11:34 <jodh> precise chroots with a lucid kernel. Unfortunately, the lucid kernel has
+
+ 16:11:37 <jodh> different signal semantics to a precise kernel!
+
+ 16:11:57 <jodh> So, anyone running tests as part of their build process needs to be *very* careful potentially.
+
+ 16:12:00 <jodh> џ
+
+ 16:12:36 <doko> - gcc-4.7 packaging updates, gcc-snapshot update
+
+ 16:12:37 <doko> - clean up the kde upload mess
+
+ 16:12:37 <doko> - start another rebuild test, gcc-4.7
+
+ 16:12:37 <doko> - evaluate build failures for gcc-4.7 test rebuild on x86 and armhf
+
+ 16:12:37 <doko> and boost 4.7 fixes
+
+ 16:12:37 <doko> - python2.6 dependency removals
+
+ 16:12:39 <doko> - openjdk-6 update
+
+ 16:12:41 <doko> - re-installation of arm machines (armhf now)
+
+ 16:12:43 <doko> - another try at eglibc-2.15 (supposed to branch now)
+
+ 16:12:45 <doko> - openmpi fixes for armhf and armel
+
+ 16:12:47 <doko> - NEW processing, syncs and merges ...
+
+ 16:12:51 <doko> - pestered people of multiarch triplets
+
+ 16:12:53 <doko> (done)
+
+ 16:13:02 <barry> doko: thanks for the py2.6 rebuilds
+
+ 16:13:27 <doko> barry: zope2.12 is left (hint, hint ...), needs an update to zope2.13
+
+ 16:13:38 <doko> maybe mterry was involved with this too?
+
+ 16:13:39 <cjwatson> Back to +1 maintenance this month.  I've mostly been helping to clear the backlog of archive administration work from the holidays, especially trying to catch up on removals where we'd fallen behind, which involved sorting out quite a lot of font package renamings.
+
+ 16:13:43 <cjwatson> Tracked down and fixed bug 900526.
+
+ 16:13:45 <ubottu> Launchpad bug 900526 in debian-installer-utils (Ubuntu Hardy) "d-i fails to divert initctl when upgrading packages during install" [High,In progress] https://launchpad.net/bugs/900526
+
+ 16:13:45 <cjwatson> Updated Wubi for precise.
+
+ 16:13:49 <cjwatson> Landed a few more Launchpad branches: port to new python-apt API, stop wasting publisher time on obsolete and future series, and fixed new cron.germinate to not explode on dogfood.  Also QAed mvo's branch to extend the support-timeframe information in the archive for precise.
+
+ 16:13:52 <barry> doko: i'll take a look
+
+ 16:13:54 <cjwatson> Pulled and uploaded James' Upstart 1.4 branch - thanks!
+
+ 16:13:57 <cjwatson> ..
+
+ 16:14:09 <jodh> cjwatson: thank you!!
+
+ 16:14:55 <cjwatson> slangasek: http://paste.ubuntu.com/792819/ - even 'ia32-libs winbind:amd64' doesn't work here
+
+ 16:14:58 <barry> forwarded fix for bug 901840 to debian.  caught up on the holiday email avalanche.  got a response from the dbus-python maintainer that my branch is under review.  done.
+
+ 16:14:59 <ubottu> Launchpad bug 901840 in cython (Debian) "FTBFS due to test failures" [Unknown,New] https://launchpad.net/bugs/901840
+
+ 16:15:39 <cjwatson> 'ia32-libs winbind:amd64 bluez-alsa:amd64 libcanberra-gtk-module:amd64' works
+
+ 16:15:49 <bdmurray> bug triage of some important bugs reported over the holidays
+
+ 16:16:09 <bdmurray> I've been working with flot (a different tool) for graphing and charting now too
+
+ 16:16:15 <bdmurray> done
+
+ 16:16:33 <stgraber> - Testing tracker
+
+ 16:16:33 <stgraber> - Added some live filtering of the builds
+
+ 16:16:33 <stgraber> - Every admin action is now logged
+
+ 16:16:33 <stgraber> - Re-introduced testcase subscription report
+
+ 16:16:36 <stgraber> - Introduced new "top testers" report
+
+ 16:16:38 <stgraber> - Some layout improvements
+
+ 16:16:41 <stgraber> - SRUs
+
+ 16:16:43 <stgraber> - opencryptoki (TPM) is now in proposed for lucid, maverick and natty. Waiting for customer to do the testing.
+
+ 16:16:46 <stgraber> - Still waiting on initial testing by Trellis of the patched ifenslave-2.6 for Oneiric before uploading to proposed.
+
+ 16:16:49 <stgraber> - Networking
+
+ 16:16:52 <stgraber> - One more ifenslave-2.6 fix to properly deal with vlan tagging.
+
+ 16:16:54 <stgraber> - Prepared a blog post with the state of network in Ubuntu including some explanations and examples.
+
+ 16:16:57 <stgraber> http://www.stgraber.org/2012/01/04/networking-in-ubuntu-12-04-lts/
+
+ 16:17:00 <stgraber> - Merged, uploaded and backported the new tcpdump (bug 892285)
+
+ 16:17:01 <ubottu> Launchpad bug 892285 in tcpdump (Ubuntu) "sFlow PDU data not correctly displayed" [Medium,Fix released] https://launchpad.net/bugs/892285
+
+ 16:17:02 <stgraber> - Containers
+
+ 16:17:05 <stgraber> - Reworked my mountall patch based on James' comments, new version is waiting for review.
+
+ 16:17:06 <slangasek> cjwatson: hmm, I suspect those are all the same kind of issue as libpam-winbind (following a dep on a M-A: foreign package down the wrong branch)
+
+ 16:17:08 <stgraber> - Other
+
+ 16:17:10 <stgraber> - Converted a bunch of packages to dh_python2 and sponsored some other, trying to get Edubuntu pysupport and pycentral free. Only one left is wxwidgets2.8.
+
+ 16:17:13 <stgraber> (done)
+
+ 16:17:53 <barry> stgraber: \o/
+
+ 16:18:45 <stgraber> barry: for wxwidgets2.8 I'm not completely sure whether we want to sync/merge from Debian or keep our current version and cherry pick the dh_python2 change from Debian
+
+ 16:18:58 <stgraber> barry: (I'm not at all familiar with wxwidgets)
+
+ 16:19:18 <slangasek> and ev's on holiday today, so that's everyone
+
+ 16:19:37 <slangasek> stgraber: it's wxwidgets, we want to do as little maintenance on it as possible - merge sounds good ;)
+
+ 16:19:49 <barry> stgraber: yes, +1 for merging :)
+
+ 16:20:07 <cjwatson> oh, yes, I have an alpha-2 bug waiting on ev to get back and look at it
+
+ 16:20:08 <stgraber> ok, will do that then
+
+ 16:20:11 <cjwatson> but he has mail about that
+
+ 16:20:21 <barry> stgraber: thanks
+
+ 16:21:11 <cjwatson> jodh: incidentally, bug 900526 which I mentioned above - you may want to be aware of that failure mode in case there've ever been upstart SRUs that changed initctl non-trivially, since you might end up with some incomprehensible archaeology otherwise
+
+ 16:21:12 <ubottu> Launchpad bug 900526 in debian-installer-utils (Ubuntu Hardy) "d-i fails to divert initctl when upgrading packages during install" [High,In progress] https://launchpad.net/bugs/900526
+
+ 16:21:39 <doko> stgraber, what are the diffs about?
+
+ 16:21:51 <cjwatson> in particular the failure mode where you can end up with dpkg thinking upstart from -updates is installed but in fact the initctl binary is still the one from the release pocket
+
+ 16:21:52 <jodh> cjwatson: thanks for the pointer!
+
+ 16:23:02 <stgraber> doko: we mostly have a different upstream version (one that never made it to Debian) and 10 Ubuntu changes on top of that, not sure how much of that is in Debian. I'll have a look later today/tomorrow and get the exact diff with Debian
+
+ 16:24:04 <slangasek> [TOPIC] Rally planning
+
+ 16:24:53 <slangasek> we have a rally coming up right around the corner... everyone should have concrete plans of what they're going to be using the face time for
+
+ 16:25:09 <slangasek> of course these plans are all going to go out the window because of 20,000 interrupts from other teams, but we should plan nonetheless ;)
+
+ 16:25:15 <slangasek> [LINK] https://wiki.canonical.com/UbuntuEngineering/Rally/Precise/Foundations
+
+ 16:25:24 <cjwatson> Just as a reminder, I'm not going to be at the rally, so if you want to get hold of me, plan videoconferencing :)
+
+ 16:25:46 <cjwatson> I'm likely to be around unless I get sudden instructions to go to the hospital ...
+
+ 16:26:00 <cjwatson> (If that happens, I'll try to let somebody know)
+
+ 16:26:14 <slangasek> please populate that page this week, so that I can help you pull in people from other teams where needed, etc
+
+ 16:26:38 <slangasek> and yes, if you need to coordinate with cjwatson on things, that will be via videoconference only :)
+
+ 16:27:14 <slangasek> questions?
+
+ 16:27:38 <slangasek> oh yes, planning for a team dinner for Wednesday... I trust that's agreeable to people as usual? :)
+
+ 16:28:02 <doko> so maybe we can walk a bit further this time?
+
+ 16:29:03 <slangasek> well, I'm up for a walk if everyone else is :)
+
+ 16:29:14 <stgraber> sure, no problem with that
+
+ 16:29:19 <barry> bring warm clothes :)
+
+ 16:29:44 <slangasek> oh right, I'll need to find some warm clothes, won't I
+
+ 16:30:15 * slangasek shakes his fist at continental climates... I moved for a reason, you know
+
+ 16:30:35 <stgraber> bah, from what I saw so far, it's actually kind of warm over there (5C vs -20C in Sherbrooke or 0C where I'm at the moment)
+
+ 16:30:41 <slangasek> [TOPIC] AOB
+
+ 16:30:55 <MrChrisDruif> AOB?
+
+ 16:31:01 <slangasek> any other business
+
+ 16:31:12 <jodh> Any ideas why there is only an armhf build log for precise here: https://launchpad.net/ubuntu/+source/plymouth ?
+
+ 16:31:15 <bdmurray> I wanted to bring up bug 906633
+
+ 16:31:16 <ubottu> Launchpad bug 906633 in Ubuntu CD Images "alpha pages should contain a link to the latest daily image" [Undecided,New] https://launchpad.net/bugs/906633
+
+ 16:32:05 <slangasek> jodh: because only armhf was built in precise - the other archs were built in oneiric
+
+ 16:32:24 <slangasek> the package hasn't had a source upload since oneiric released
+
+ 16:32:49 <slangasek> cjwatson: ^^ the above ubuntu-cdimage bug looks like a reasonable change to me in principle
+
+ 16:33:07 <MrChrisDruif> Ow, I've got one. Why is the link in the Fridge to the Agende not working? I've changed YYYY/MMDD with the actual date of today
+
+ 16:33:09 <cjwatson> yes, IIRC I asked Brian to file it :)
+
+ 16:33:24 <jodh> slangasek: ok, ta.
+
+ 16:33:25 <slangasek> cjwatson: heh :)
+
+ 16:33:42 <cjwatson> MrChrisDruif: this is a foundations team meeting, we don't manage the fridge ...
+
+ 16:33:57 <cjwatson> I don't think we generally have an agenda published in advance anyway
+
+ 16:34:19 <cjwatson> I'll have a look at that cdimage bug today or tomorrow
+
+ 16:34:22 <MrChrisDruif> I think you've added it to the Fridge ^_^
+
+ 16:34:41 <cjwatson> I doubt it, it picks it up from google calendar, iirc
+
+ 16:34:43 <MrChrisDruif> cjw44 ring any bells?
+
+ 16:34:58 <cjwatson> if I did so it was years ago and no longer relevant
+
+ 16:35:15 <MrChrisDruif> I'll send an email to the creator ^_^
+
+ 16:35:32 <cjwatson> I have no interest in what the fridge says about this meeting, honestly :)
+
+ 16:35:36 <slangasek> cjwatson: assigned then - thanks :)
+
+ 16:36:40 <cjwatson> MrChrisDruif: that's enough like my old google account login that I'm nearly certain the fridge picked it up from google calendar
+
+ 16:37:24 <MrChrisDruif> I'll send an email and see who'll respond ^_^
+
+ 16:37:35 <slangasek> yep, that's in the google calendar event
+
+ 16:37:48 <slangasek> MrChrisDruif: but as cjwatson said, we don't usually publish a formal agenda beforehand
+
+ 16:38:10 <MrChrisDruif> Okay
+
+ 16:38:20 <slangasek> I could take that out of the event description, I suppose
+
+ 16:39:03 <slangasek> anything else for today?
+
+ 16:39:08 <MrChrisDruif> Yeah, if it's useless, why include it
+
+ 16:39:52 <MrChrisDruif> Nope, not for me.
+
+ 16:40:47 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

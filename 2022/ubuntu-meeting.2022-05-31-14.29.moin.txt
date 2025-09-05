@@ -1,0 +1,477 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 31 May at 14:29 &mdash; 15:06 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-05-31-14.29.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:30.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:30)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:30)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/tiff/4.4.0-2   (cpaelzer, 14:34)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:36.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:36)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:37)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libldac/+bug/1973784   (cpaelzer, 14:38)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:43)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:45.
+
+ * ''LINK:'' https://github.com/cpaelzer/ubuntu-mir/pull/10/files   (cpaelzer, 14:46)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libsoup3/+bug/1972153/comments/5   (didrocks, 14:55)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (102)
+ * didrocks (43)
+ * slyon (26)
+ * sarnold (24)
+ * ubottu (6)
+ * joalif (4)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:29 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:29 <meetingology> Meeting started at 14:29:46 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:29 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:29 <sarnold> good morning
+
+ 14:29 <joalif> o/
+
+ 14:30 <cpaelzer> slyon: joalif: sarnold: jamespage: didrocks: ping for MIR meeting
+
+ 14:30 <didrocks> hey
+
+ 14:30 <slyon> o/
+
+ 14:30 <cpaelzer> no past action items to review
+
+ 14:30 <cpaelzer> (slyon the MR would be other business I think)
+
+ 14:30 <slyon> yes
+
+ 14:30 <cpaelzer> #topic current component mismatches
+
+ 14:30 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:30 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:30 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:31 <slyon> llvm-toolchain-13 vs z3 should be resolved by: https://bugs.launchpad.net/ubuntu/+source/z3/+bug/1971128 (but I suppose it needs to pass proposed-migration first)
+
+ 14:31 <ubottu> Launchpad bug 1971128 in rustc (Ubuntu Jammy) "z3 is incorrectly marked as a MIR candidate" [Medium, Confirmed]
+
+ 14:31 <cpaelzer> z3 is taken care in https://bugs.launchpad.net/ubuntu/+source/z3/+bug/1971128 btw
+
+ 14:31 <cpaelzer> hehe - same info :-)
+
+ 14:31 <slyon> :)
+
+ 14:32 <cpaelzer> the 5 perl bugs are in https://bugs.launchpad.net/ubuntu/+source/libobject-pad-perl/+bug/1972853
+
+ 14:32 <ubottu> Launchpad bug 1972853 in libxs-parse-sublike-perl (Ubuntu) "[MIR] lib*-perl" [Undecided, Incomplete]
+
+ 14:32 <cpaelzer> two approved - others challenged
+
+ 14:32 <cpaelzer> nothing to act on for us right now
+
+ 14:32 <cpaelzer> webrick was new last week which lucas brought  up in https://bugs.launchpad.net/ubuntu/+source/ruby-webrick/+bug/1975523
+
+ 14:32 <ubottu> Launchpad bug 1975523 in ruby-webrick (Ubuntu Kinetic) "[MIR] Promote to main in Jammy and Kinetic" [Undecided, New]
+
+ 14:32 <cpaelzer> and joalif already reviewed that one
+
+ 14:33 <cpaelzer> python-charset-normalizer is being worked on as well (no bug)
+
+ 14:33 <cpaelzer> tiff -> lerc is new to me
+
+ 14:33 <cpaelzer> jamespage: you wanted to look after jaraco IIRC - any news ?
+
+ 14:34 <cpaelzer> didrocks: tiff -> lerc sounds desktoppy, do you know what this is about?
+
+ 14:34 <didrocks> no, but I can have a look at it
+
+ 14:34 <cpaelzer> https://launchpad.net/ubuntu/+source/tiff/4.4.0-2
+
+ 14:34 <cpaelzer> sounds intentional
+
+ 14:35 <cpaelzer> and yes tiff is desktop
+
+ 14:35 <cpaelzer> thanks didrocks for having a look
+
+ 14:35 <didrocks> (I think people should realize that I’m doing very little pure distro work nowdays and thus, I can’t follow GNOME/desktop changes)
+
+ 14:35 <cpaelzer> that is fine, but you still know the people best
+
+ 14:35 <didrocks> yep :) will track it
+
+ 14:35 <cpaelzer> it is similar for me and server packaging TBH
+
+ 14:35 <cpaelzer> I see nothing else worth to discuss in mismatches
+
+ 14:36 <cpaelzer> at lesat nothing we need to act on
+
+ 14:36 <sarnold> hmmm, in the debian bug, "The problem is that LERC does not supports BE upstream."
+
+ 14:36 <cpaelzer> going on unless someone objects
+
+ 14:36 <cpaelzer> #topic New MIRs
+
+ 14:36 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:36 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:36 <cpaelzer> none
+
+ 14:36 <cpaelzer> \o/
+
+ 14:37 <cpaelzer> we have had enough last week that I'm not complaining
+
+ 14:37 <didrocks> after last week spam, that helps :)
+
+ 14:37 <cpaelzer> btw great job by all of you for doing so many reviews quick
+
+ 14:37 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:37 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:37 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> most recent updates are tags but nothing important
+
+ 14:38 <cpaelzer> one is different IMHO
+
+ 14:38 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libldac/+bug/1973784
+
+ 14:38 <ubottu> Launchpad bug 1973784 in libldac (Ubuntu) "[MIR] libldac" [Undecided, Incomplete]
+
+ 14:39 <cpaelzer> this might lead to the next topic and your MR - slyon do you think this needs an PR to change the wording?
+
+ 14:39 <slyon> yes, there was some discussion wrt out "seeded-in-ubuntu" (and some question about superficial testing)
+
+ 14:39 <cpaelzer> I think I have answered them, the open question is - do we want to update the wording in the template?
+
+ 14:39 <slyon> I'm still not yet super clear about the seeded-in-ubuntu case, as what has been described in cpaelzer's comment matches the "check-mir" test IMO
+
+ 14:40 <slyon> seeded-in-ubuntu seems to be more about a change of component (universe->main) during freeze, as that would require a re-spin of installation images?
+
+ 14:40 <slyon> (at least that is according to its manpage)
+
+ 14:41 <cpaelzer> slyon: it is just one more check that would flag things that are in main
+
+ 14:41 <cpaelzer> you could iterate over dependencies of a new MIR pkg and see if they are all seeded
+
+ 14:41 <cpaelzer> some people (not me) preferred that way
+
+ 14:42 <cpaelzer> which is how the statement got in
+
+ 14:42 <slyon> aha! now I get it
+
+ 14:42 <slyon> yes we should improve the wording
+
+ 14:42 <cpaelzer> this list is "use either of these or any else if you like"
+
+ 14:42 <cpaelzer> how about going to the next section then, while we talk about wording
+
+ 14:42 <slyon> yes
+
+ 14:43 <cpaelzer> first security
+
+ 14:43 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:43 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:43 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:43 <cpaelzer> sarnold: how does the cycle look, we are starting to pile up a queue again
+
+ 14:43 <cpaelzer> sarnold: is this time progress expected sooner than FeatureFreeze :-)
+
+ 14:44 <sarnold> I didn't make progress last week, I was on cve triage; and yesterday was a national holiday :) -- so no real 'local' progress to report
+
+ 14:44 <sarnold> cpaelzer: very much so :)
+
+ 14:44 <cpaelzer> anyone but you on those reviews ?
+
+ 14:44 <sarnold> amurray did one last week, but I don't think there's currently anyone else working a mir
+
+ 14:44 <sarnold> we've got a team meeting today, I'll fish around for more volunteers :)
+
+ 14:45 <cpaelzer> instead of exploding late, could you ask for anyone else to assist you in this phase of the cycle please?
+
+ 14:45 <sarnold> yup
+
+ 14:45 <cpaelzer> thanks
+
+ 14:45 <cpaelzer> WFM
+
+ 14:45 <cpaelzer> #topic Any other business?
+
+ 14:45 <cpaelzer> we have 1.5 topics here
+
+ 14:45 <cpaelzer> first the discussion from above
+
+ 14:46 <cpaelzer> which we haven't a PR yet, slyon do you want to prep a PR matching your newfound understanding until next week?
+
+ 14:46 <slyon> Now that I got it, I can prepare a proposal to change the wording on this one
+
+ 14:46 <cpaelzer> or should we try to come up with wording right here right now?
+
+ 14:46 <cpaelzer> ok, we are not in a hurry - looking forward to that PR then
+
+ 14:46 <slyon> I'll do it for next meeting
+
+ 14:46 <cpaelzer> but for today we have
+
+ 14:46 <cpaelzer> https://github.com/cpaelzer/ubuntu-mir/pull/10/files
+
+ 14:46 <ubottu> Pull 10 in cpaelzer/ubuntu-mir "mention update of d/control when a Ubuntu delta was introduced" [Open]
+
+ 14:46 <cpaelzer> This is (I guess) inspired by a forgotten update-maintainer
+
+ 14:47 <slyon> This one ^ came up in a discussion with seb this morning. I think it makes sense to have it as a MIR check, too. It is already enforced (in most cases) by dpkg
+
+ 14:47 <didrocks> unsure if this will really help in practice TBH, but could still be added
+
+ 14:47 <cpaelzer> To me I think this is a fine change, it should almost never be a real problem. But it would be a potential legal issue if it is forgotten
+
+ 14:47 <didrocks> There are a lot of examples of sync, then adding a change, then sync, and so on
+
+ 14:47 <didrocks> and people who don’t use their @ubuntu.com or @canonical.com won’t have the warning when building the source package
+
+ 14:47 <cpaelzer> buildpkg already warns people
+
+ 14:48 <cpaelzer> but I think it does not consume any more time (we look at d/control anyway)
+
+ 14:48 <cpaelzer> and therefore should be fine to add
+
+ 14:48 <didrocks> yeah, I just wanted to state that I’m unsure how effective this will be in practice, but I have nothing against it
+
+ 14:48 <slyon> didrocks: yes, this was the case for seb, too. Therefore, we thought it would make sense to add it to the MIR template
+
+ 14:48 <cpaelzer> I agree to didrocks that I'm unsure if it would help
+
+ 14:48 <didrocks> I think people should use their @ubuntu/canonical when preparing a package for ubuntu
+
+ 14:48 <slyon> it doesn't need to be a blocking change for MIR. but we try to keep packages in main in good shape
+
+ 14:48 <sarnold> do we have any tooling to enforce / notice when version numbers don't clearly indicate a delta from debian?
+
+ 14:49 <cpaelzer> I'm tempted to suggest "only add the reporter rule, but not the MIR review statement"
+
+ 14:49 <slyon> WFM
+
+ 14:49 <cpaelzer> there (at the reporter) is where this could have a benefit by re-assuring the awareness for this
+
+ 14:49 <didrocks> wfm as well
+
+ 14:49 <sarnold> the recent 'maysync' discussion makes me wonder how often, if ever, someone accidentally uploads a package with a delta that isn't visible by version string alone
+
+ 14:50 <cpaelzer> on the review stage it won't help much - as didrocks said there are sync/upload/sync/upload casess and mcuh more where the one time of the review won't help much
+
+ 14:50 <sarnold> (I'm mentioning it here mainly because 'discovering if there is a delta' to me means going to the patches.ubuntu.com website..)
+
+ 14:50 <slyon> sarnold: it's less about the version string, than about the "Maintainer" field in d/control.
+
+ 14:50 <cpaelzer> TL;DR: about what update-maintainers does
+
+ 14:51 <didrocks> sarnold: IIRC, the "no warning" for non ubuntu emails was for 2 cases: per package upload rights in the archive and native from upstream
+
+ 14:51 <cpaelzer> It seems we have no strong objections, but also not much trust in the benefit. Can we vote on my suggestion of only adding the reporter section of the PR please ?
+
+ 14:51 <cpaelzer> +1 (obviously)
+
+ 14:51 <slyon> +1
+
+ 14:51 <didrocks> +1
+
+ 14:52 <sarnold> is that the first hunk or second hunk? :)
+
+ 14:52 <slyon> first
+
+ 14:52 <cpaelzer> first
+
+ 14:52 <sarnold> +1  :) thanks
+
+ 14:52 <cpaelzer> we already have reached qorum but joalif?
+
+ 14:53 <cpaelzer> and jamespage
+
+ 14:53 <cpaelzer> giving you 30 more sec to object :-)
+
+ 14:53 <joalif> sorry I'm at other mtg at same time
+
+ 14:53 <slyon> is anybody still signed-in to wiki.ubuntu.com and could update that hunk? Otherwise I guess we're blocked on IS to fix the wiki
+
+ 14:53 * didrocks tries
+
+ 14:53 <joalif> +1
+
+ 14:53 <cpaelzer> I can slyon
+
+ 14:54 <didrocks> not signed in, keep your token close to you cpaelzer :)
+
+ 14:54 <sarnold> lol
+
+ 14:54 <cpaelzer> I was going through that pain two weeks ago
+
+ 14:54 <cpaelzer> that is how I have a fresh and shiny token
+
+ 14:54 <slyon> cpaelzer: do you want me to update the MR or will you just copy paste the first hunk only?
+
+ 14:54 <didrocks> haha
+
+ 14:55 <cpaelzer> I have merged the MR (the git isn#t totally in sync anyway)
+
+ 14:55 <cpaelzer> and updated the wiki
+
+ 14:55 <slyon> thanks
+
+ 14:55 <cpaelzer> I'll update git now after the meeting
+
+ 14:55 <cpaelzer> for you to rebase next weeks change
+
+ 14:55 <slyon> k
+
+ 14:55 <cpaelzer> and that seems to wrap up today meeting
+
+ 14:55 <didrocks> I have a topic to bring
+
+ 14:55 <didrocks> sorry if you wanted to leave early :p
+
+ 14:55 <cpaelzer> any last thing we forgot
+
+ 14:55 <cpaelzer> ah
+
+ 14:55 <didrocks> about libsoup3
+
+ 14:55 <cpaelzer> no didrocks, please go
+
+ 14:55 <didrocks> https://bugs.launchpad.net/ubuntu/+source/libsoup3/+bug/1972153/comments/5
+
+ 14:55 <ubottu> Launchpad bug 1972153 in libsoup3 (Ubuntu) "[MIR] libsoup3" [Undecided, Confirmed]
+
+ 14:55 <didrocks> so, it’s a soname bump
+
+ 14:56 <didrocks> but a security sensitive lib, obviously
+
+ 14:56 <didrocks> I don’t think we should plan on GNOME updating all dependencies in one release
+
+ 14:56 <didrocks> and head for the worst scenario
+
+ 14:56 <didrocks> (one or two releases with both v2 and v3)
+
+ 14:56 <sarnold> getting as much done in lts+1 seems like a good idea
+
+ 14:56 <didrocks> unsure how security is feeling about it?
+
+ 14:56 <didrocks> doubling your pain, basically for a couple of ubuntu releases :p
+
+ 14:56 <sarnold> but I am concerned about The Project losing steam before the next LTS and leaving us with too many webkits
+
+ 14:56 <cpaelzer> we have had prior cases where alternatives were kept around for a bit
+
+ 14:57 <cpaelzer> would never be ok to go into an LTS
+
+ 14:57 <didrocks> yeah, it seems we have time ahead of us
+
+ 14:57 <cpaelzer> the question is how sure we are that it will be gone in 23.04 then?
+
+ 14:57 <didrocks> but unsure how much this can sleep away
+
+ 14:57 <didrocks> and how could we track that before LTS
+
+ 14:57 <didrocks> exactly
+
+ 14:58 <didrocks> so… I wanted to gather other opinions, in particular from sarnold :)
+
+ 14:59 <cpaelzer> slyon: git updated
+
+ 14:59 <slyon> thank you
+
+ 14:59 <sarnold> I'm fine with a bit of duplication early in the overall lts cycle, but the consequences of not finishing the transition before the next lts does make me wonder how exactly we'd back out of the situation -- demote the 'old' packages? demote the 'new' packages? hustle and finish it?
+
+ 14:59 <sarnold> .. be clear at roadmap sprints that Brand New Features can't be added until our old unloved features are removed? :)
+
+ 15:00 <didrocks> that would be great :)
+
+ 15:00 <sarnold> I really hope the optimistic view prevails
+
+ 15:00 <didrocks> yeah, I think we are really early in the LTS meta-cycles
+
+ 15:00 <sarnold> but the job is all about pessimism, isn't it? :)
+
+ 15:00 <didrocks> so I’m hopeful
+
+ 15:00 <sarnold> thanks for raising it and getting started on it early
+
+ 15:00 <didrocks> but we don’t have a good way of tracking this
+
+ 15:00 <didrocks> so, let’s +1 for now with the concerns written down in the MIR
+
+ 15:01 <didrocks> ensuring this is tracked somewhere for the desktop team
+
+ 15:01 <didrocks> sounds good to you?
+
+ 15:01 <sarnold> perhaps a cronjob on your local machine that runs apt purge oldwebkitpackage  ? :) every week an email of what's left..
+
+ 15:01 <sarnold> yeah that works well for me, thanks
+
+ 15:01 <didrocks> we can upload a package that does it before next LTS :p
+
+ 15:02 <didrocks> thanks for the feedback!
+
+ 15:02 <didrocks> I’ll sum that up/copy the verbatim on the bug
+
+ 15:02 <sarnold> ah great, thanks
+
+ 15:02 <didrocks> (that’s it from me)
+
+ 15:03 <sarnold> nothing from me
+
+ 15:03 <slyon> nothing here
+
+ 15:03 <joalif> nothing
+
+ 15:06 <cpaelzer> ok
+
+ 15:06 <cpaelzer> closing
+
+ 15:06 <cpaelzer> thanks
+
+ 15:06 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

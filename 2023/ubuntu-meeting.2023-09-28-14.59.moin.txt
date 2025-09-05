@@ -1,0 +1,330 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 28 Sep at 14:59 &mdash; 15:47 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-09-28-14.59.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 14:59.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-28-sep-2023/39009   (juliank, 15:00)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:10.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:10)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:32)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:33.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:33)
+
+=== AOB ===
+
+Discussion started by juliank at 15:37.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (70)
+ * ginggs (16)
+ * vorlon (15)
+ * bdmurray (13)
+ * dbungert (6)
+ * bdrung (4)
+ * meetingology (2)
+ * waveform (2)
+ * enr0n (2)
+ * ogayot (1)
+ * xypron (1)
+ * dviererbe (1)
+ * danilogondolfo (1)
+ * jbicha (1)
+
+
+
+== Full log ==
+
+
+ 14:59 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 14:59 <meetingology> Meeting started at 14:59:32 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:59 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:59 <ogayot> o/
+
+ 14:59 <juliank> #topic Lightning rounds
+
+ 15:00 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-28-sep-2023/39009
+
+ 15:00 <xypron> o/
+
+ 15:00 <ginggs> o/
+
+ 15:00 * juliank will have to update tomorrow because brain too slow today
+
+ 15:03 <bdmurray> "dead weight"
+
+ 15:03 <dviererbe> o/
+
+ 15:04 <dbungert> bdmurray: that's the belief, yes
+
+ 15:04 <bdmurray> my comment was about word choice
+
+ 15:04 <bdmurray> I don't think I've heard that in a while
+
+ 15:05 <juliank> you may also enjoy the word salad I come up with today
+
+ 15:09 <juliank> .
+
+ 15:10 <juliank> #topic Release incoming bugs
+
+ 15:10 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <juliank> bug 2037425
+
+ 15:11 <juliank> dbungert:
+
+ 15:11 <juliank> ?
+
+ 15:12 <dbungert> work in progress, next step is a review from server.  I think we can untag mm.
+
+ 15:12 <juliank> ack
+
+ 15:13 <juliank> bug 2036999
+
+ 15:13 <dbungert> I have untagged 425
+
+ 15:13 <juliank> as did I when I wrote ack :D
+
+ 15:13 <dbungert> hah
+
+ 15:14 <juliank> bug 2036997 is related
+
+ 15:14 <juliank> one is old installer, other new instalelr
+
+ 15:15 <dbungert> ubuntu-desktop-installer has a postinstall hook that handles this, so that hook should be updated
+
+ 15:16 <danilogondolfo> Yes, this I suppose https://github.com/canonical/ubuntu-desktop-installer/blob/main/snap/local/postinst.d/10_copy_network_config
+
+ 15:16 <juliank> I tagged them foundations-todo
+
+ 15:16 <juliank> bug 2037210
+
+ 15:17 <juliank> this makes sense, yes
+
+ 15:17 <juliank> we did not implement conversion of lines to PPAs
+
+ 15:17 <juliank> I didn't expect people would actually pass PPA lines
+
+ 15:18 <juliank> We're going to have to fix that some way but not necesarily for the release
+
+ 15:19 <juliank> oh it's also tagged todo already
+
+ 15:19 <juliank> I'm just removing incoming
+
+ 15:19 <juliank> bug 2033440
+
+ 15:19 <vorlon> still Not For Us
+
+ 15:19 <juliank> ack
+
+ 15:19 <juliank> bug 2036440
+
+ 15:19 <bdmurray> very repeatable
+
+ 15:20 <vorlon> and we need to fix apport?
+
+ 15:21 <bdrung> we should fix bugs #2015857 and the desktop team should fix the gnome-shell crash
+
+ 15:21 <juliank> I still don't know
+
+ 15:21 <vorlon> should we close on the apport task on 2036440 then?
+
+ 15:21 <vorlon> close out
+
+ 15:21 <bdmurray> ^- that
+
+ 15:21 <juliank> I think that sounds reasoanably
+
+ 15:22 <juliank> done
+
+ 15:22 <juliank> bug 2037015
+
+ 15:22 <bdmurray> From a release team or QA team perspective I don't have try ubuntu crash right away is great
+
+ 15:22 <bdrung> 2015857 needs to be fixed first. afterwards we might want to tweak the apport gnome-shell hook.
+
+ 15:23 <bdmurray> We could do something shady like blacklist gnome-shell crashes in the live environment?
+
+ 15:23 <juliank> I suggest discussing the details outside the meeting
+
+ 15:25 <juliank> I guess we tag this one todo but probably this needs someone with a pi to actually do the work
+
+ 15:25 <waveform> I need to double-check this with the new images with the updated mesa; I mostly filed the bug to remind myself to do that
+
+ 15:25 <juliank> I'll just assign it to you
+
+ 15:25 <waveform> sure
+
+ 15:26 <juliank> accidentally assigned it to me, lol
+
+ 15:26 <juliank> but fixed now
+
+ 15:26 <juliank> bug 2037202
+
+ 15:26 <juliank> in the initramfs tools
+
+ 15:26 <bdrung> someone should try to reproduce (but I will be on vacation)
+
+ 15:27 <juliank> sad
+
+ 15:27 <juliank> oh but this is kernel, does kernel not have special capser initrd?
+
+ 15:28 <juliank> anyway tagged
+
+ 15:28 <juliank> bug 2036604 we are going to skip over this cycle, nothing we can do right now
+
+ 15:28 <juliank> bug 2037228
+
+ 15:30 <bdmurray> jbicha: you confirmed this bug did you recreate it?
+
+ 15:31 <vorlon> it doesn't look like a u-r-u issue anyway, should we just close that task invalid (for now)?
+
+ 15:31 <juliank> Reassign that task to snapd :D
+
+ 15:32 <juliank> I just do
+
+ 15:32 <juliank> and https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs is empty, hooray
+
+ 15:32 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:32 <juliank> still has bug 1990798
+
+ 15:33 <juliank> but pro folks are on that
+
+ 15:33 <juliank> and https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs is empty too
+
+ 15:33 <juliank> #topic Team proposed-migration report
+
+ 15:33 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:33 <juliank> vorlon: only light gray today :D
+
+ 15:33 <vorlon> none of our own packages are "late", but we also don't have much time left before release
+
+ 15:34 <vorlon> a lot of systemd autopkgtest failures on arm64
+
+ 15:34 <vorlon> enr0n: do you know what this is about? blocking a lot of kernels apparently, that it didn't before
+
+ 15:34 <juliank> oh I should unblock grub2 I suppose
+
+ 15:34 <vorlon> OTOH linux-meta-azure on arm64 is sort of a non-thing
+
+ 15:34 <enr0n> vorlon: looking
+
+ 15:34 <vorlon> thanks
+
+ 15:35 <vorlon> LP: #2030482 seems to still be blocked on MIR process
+
+ 15:35 <juliank> oof
+
+ 15:36 <vorlon> and then there's glibc
+
+ 15:36 <vorlon> schopin is out I think?  is someone else driving this?
+
+ 15:36 <ginggs> i'll retry things
+
+ 15:37 <vorlon> ok
+
+ 15:37 <enr0n> vorlon: I have not seen that error before so I will need to look closer
+
+ 15:37 <ginggs> (hopefully all that's needed)
+
+ 15:37 <vorlon> then that's it for proposed-migration
+
+ 15:37 <juliank> #topic AOB
+
+ 15:37 <juliank> ginggs:
+
+ 15:38 <ginggs> LP: #2031879
+
+ 15:38 <jbicha> bdmurray: yes, I experienced that Firefox bug a week ago
+
+ 15:38 <ginggs> in the email to foundations-crew, it was asked "should I tell them to just not use -r?"
+
+ 15:39 <ginggs> and apparently the patch ust removes the -r option from the help output so that users only see --remove as an option
+
+ 15:39 <juliank> so they ask for the fix in the commit to be SRUed really I think?
+
+ 15:39 <ginggs> which i think is pretty much the same thing
+
+ 15:39 <bdrung> i'll be on vacation starting from end of today
+
+ 15:40 <bdmurray> jbicha: Could you provide more details in the bug? Like answering comment #2.
+
+ 15:42 <juliank> ginggs: are there two meanings of -r?
+
+ 15:42 <ginggs> you can --manage -r
+
+ 15:42 <dbungert> mdadm manpage still mentions -r for remove, we should hit that also.
+
+ 15:43 <ginggs> and --monitor -t
+
+ 15:43 <ginggs> err
+
+ 15:43 <ginggs> -- monitor -r
+
+ 15:43 <ginggs> which are different
+
+ 15:44 <juliank> OK I added tasks for jammy and lunar
+
+ 15:44 <juliank> I guess lunar can also be Won't fix but meh
+
+ 15:44 <juliank> I don't think it warrants tagging particularly
+
+ 15:44 <juliank> ginggs: Does that sound right?
+
+ 15:45 <ginggs> my question was really, is this worth fixing?
+
+ 15:45 <ginggs> --remove works
+
+ 15:45 <juliank> I probably should take some time off next week, tuesday is a holiday, and I need to go visit the cat and play
+
+ 15:45 <bdmurray> What are the consequences of using `-r`?
+
+ 15:45 <ginggs> and per the email, the patch just removes -r from the help
+
+ 15:46 <juliank> it changes the options
+
+ 15:46 <bdmurray> Is there data loss involved?
+
+ 15:46 <juliank> the parsing of them in getopt
+
+ 15:46 <ginggs> bdmurray: you get no output -- nothing happens
+
+ 15:46 <bdmurray> the pfft
+
+ 15:46 <bdmurray> s/the/then/
+
+ 15:46 <juliank> I suggest taking this back to the mailing thread
+
+ 15:47 <juliank> If there's no other business in 20s I'll end the meeting
+
+ 15:47 <juliank> OK I guess that's it then?
+
+ 15:47 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

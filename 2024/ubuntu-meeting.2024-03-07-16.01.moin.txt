@@ -1,0 +1,426 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 07 Mar at 16:01 &mdash; 16:53 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2024/ubuntu-meeting.2024-03-07-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:01.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-teams-updates-thursday-2024-03-07   (juliank, 16:01)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:14.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:14)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:29.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:30)
+
+=== aob ===
+
+Discussion started by juliank at 16:45.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (59)
+ * juliank (39)
+ * adrien (12)
+ * enr0n (10)
+ * bdrung (6)
+ * schopin (6)
+ * waveform (6)
+ * upils (5)
+ * pushkarnk (4)
+ * Skia (4)
+ * Eickmeyer (3)
+ * dbungert (3)
+ * cpete (3)
+ * ravikant_ (3)
+ * meetingology (2)
+ * ginggs (2)
+ * ogayot (2)
+ * mkukri (2)
+ * zhsj (2)
+ * liushuyu (2)
+ * dviererbe (2)
+ * xypron (1)
+ * mateus-morais (1)
+
+
+
+== Full log ==
+
+
+ 16:01 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:39 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <xypron> \o
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:01 <bdrung> \o
+
+ 16:01 <juliank> #topic Lightning rounds
+
+ 16:01 <ginggs> o/
+
+ 16:01 <juliank> #link https://discourse.ubuntu.com/t/foundations-teams-updates-thursday-2024-03-07
+
+ 16:02 <pushkarnk> o/
+
+ 16:02 <schopin> o/
+
+ 16:02 <ogayot> o/
+
+ 16:02 <upils> o/
+
+ 16:04 <mkukri> o/
+
+ 16:04 <zhsj> o/
+
+ 16:04 <liushuyu> o/
+
+ 16:05 <adrien> \o
+
+ 16:14 <juliank> #topic Release incoming bugs
+
+ 16:14 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 16:14 <juliank> bug 2056375
+
+ 16:15 <juliank> vorlon: you tagged this but it's basically waiting for mokutil to migrate which has a dep-wait on armhf, where we don't even use mokutil and forced grub through
+
+ 16:15 <juliank> or rather force deleted grub
+
+ 16:15 <juliank> should we just force delete mokutil in armhf?
+
+ 16:16 <vorlon> juliank: I don't follow how it's a mokutil issue, how would that force the removal of packages?
+
+ 16:16 <vorlon> I can certainly force delete mokutil on armhf, I don't mind
+
+ 16:16 <vorlon> I just don't follow how you figured that out
+
+ 16:17 <juliank> vorlon: grub is removed because it is built against libefivar1t64, and we install mokutil from release pocket which still uses libefivar1
+
+ 16:17 <juliank> migrating new mokutil with libefivar1t64 depends fixes issue
+
+ 16:17 <vorlon> except the libefivar1 dep should be satisfied by libefivar1t64 Provides: libefivar1
+
+ 16:18 <vorlon> if promoting mokutil works around it, that's fine, let's just do that
+
+ 16:18 <vorlon> and we can move on to the next bug here :)
+
+ 16:18 <juliank> APT being stupid I suppose
+
+ 16:18 <juliank> bug 2055720
+
+ 16:19 <enr0n> The main reason I tagged this is that when u-r-u doesn't find valid sources, it offers to setup default sources. Currently that means configuring main and restricted. That's just wrong, right?
+
+ 16:19 <enr0n> At the very least it's inconsistent with the default sources described in https://discourse.ubuntu.com/t/spec-apt-deb822-sources-by-default/29333
+
+ 16:19 <juliank> Indeed
+
+ 16:20 <schopin> Do we enable universe by default?
+
+ 16:20 <schopin> On a new install, I mean.
+
+ 16:20 <waveform> we used to
+
+ 16:21 <waveform> there was an issue where they were disabled ... I think that came up in mantic with ubuntu-image produced builds but it was fixed before release I believe
+
+ 16:21 <enr0n> ogayot and dbungert would probably know what we do on default installs
+
+ 16:21 * Eickmeyer chimes
+
+ 16:22 <Eickmeyer> Flavors require universe on new installs
+
+ 16:22 <waveform> yes, LP: #2037018
+
+ 16:22 * Eickmeyer chimes out
+
+ 16:23 <vorlon> enr0n: "default" sources should include universe, for all install types
+
+ 16:23 <enr0n> vorlon: cool thanks
+
+ 16:23 <upils> ubuntu-image is setting main,restricted by default but some (ex. ubuntu-server-pi-arm64) configurations do override it to add universe and multiverse
+
+ 16:23 <vorlon> I think multiverse should also be enabled though the history there is a bit muddled
+
+ 16:23 * juliank relatedly is also working with josch to get a hook added to mmdebstrap that auomtatically enables universe on Ubuntu systems
+
+ 16:23 <vorlon> upils: well there's a bug about it being wrong to use the same set of components for the image build and the post-install sources
+
+ 16:24 <waveform> indeed -- it shouldn't be enabled during the image build itself, but patched in at the end
+
+ 16:24 <juliank> I see bootstraps of any sorts are main/restricted only, and then enable universe/multiverse? before building final image
+
+ 16:25 <juliank> so we don't install packages from them into the image :)
+
+ 16:25 <vorlon> juliank: bootstraps of *Ubuntu* are main/restricted only
+
+ 16:25 <upils> vorlon: which is now fixed (see LP: 2038111)
+
+ 16:25 <vorlon> flavors include universe
+
+ 16:25 <juliank> hmm
+
+ 16:25 <vorlon> upils: ok :)
+
+ 16:25 <enr0n> Okay, well for the case of ubuntu-release-upgrader, which is *not* building images, I am going to just add universe to the default components.
+
+ 16:25 <juliank> +10
+
+ 16:26 <enr0n> I'll untag etc.
+
+ 16:26 <vorlon> enr0n: (and multiverse)
+
+ 16:26 <enr0n> vorlon: ack
+
+ 16:26 <juliank> And next is another enr0n thingie: bug 2055806
+
+ 16:27 <vorlon> analysis on the bug, seemed like it was a slam dunk to fix?
+
+ 16:28 <enr0n> vorlon: does that mean you agree with my comment (https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/2055806/comments/8)
+
+ 16:28 <vorlon> enr0n: well it made sense to me :)
+
+ 16:28 <enr0n> vorlon: ack, I will upload a fix today then
+
+ 16:28 <juliank> +1
+
+ 16:28 <vorlon> so I agree but have thought deeply about it independently!
+
+ 16:28 <vorlon> *not
+
+ 16:29 <juliank> If that fails some way we can always add the After= :D
+
+ 16:29 <juliank> OK that's it for incoming bugs, the other releases did not have anything for us
+
+ 16:29 <juliank> #topic Team proposed-migration report
+
+ 16:30 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:30 * juliank hands the talking stick to vorlon
+
+ 16:30 <dbungert> does it crash the browser today?
+
+ 16:30 <upils> yup
+
+ 16:30 <vorlon> 480 packages needing attention
+
+ 16:30 <vorlon> hasn't crashed my browser *yet*
+
+ 16:31 <vorlon> let's go ahead and assign some of these out
+
+ 16:31 <vorlon> and everybody can share in the time_t fun
+
+ 16:31 <vorlon> libselinux: adrien please
+
+ 16:31 <vorlon> vim: bdrung
+
+ 16:31 <bdrung> ack
+
+ 16:32 <vorlon> initramfs-tools vs klibc: cpete
+
+ 16:32 <adrien> btw, as I mentioned on mattermost, if it crashes your browser, download the page, and atler the page with: sed 's/<a href="https:\/\/.*-perl.*">\(.*\)<\/a>/\1/'
+
+ 16:32 <vorlon> procps: dbungert:
+
+ 16:32 <dbungert> ack
+
+ 16:32 <cpete> ack
+
+ 16:32 <vorlon> python-ldap: waveform
+
+ 16:32 <adrien> vorlon: I'm scared :D
+
+ 16:32 <waveform> ack
+
+ 16:32 <vorlon> libgtk3-perl: dviererbe:
+
+ 16:32 <dviererbe> ack
+
+ 16:33 <vorlon> dviererbe: fwiw that seems to be a general pango1.0 ppc64el issue, based on the list of regressions - so you'll probably need to fix pango1.0 itself
+
+ 16:33 <dbungert> adrien: my go-to is to just look at it in `links` on such days
+
+ 16:33 <vorlon> libbsd: Skia
+
+ 16:33 <dviererbe> okay
+
+ 16:33 <Skia> ack
+
+ 16:33 <waveform> or good ol' w3m
+
+ 16:33 <vorlon> libapt-pkg-perl: ginggs
+
+ 16:33 <ginggs> aye aye
+
+ 16:33 <vorlon> packagekit: xypron
+
+ 16:33 <adrien> dbungert: I know some do but I find it less readable; this sed call reduces the memory usage byt 75% currently, probably more when the page is worse
+
+ 16:34 <vorlon> python-apt: juliank
+
+ 16:34 <vorlon> dnspython: mkukri
+
+ 16:34 <mkukri> ack
+
+ 16:34 <vorlon> python-cups: mateus-morais
+
+ 16:34 <juliank> hooray
+
+ 16:34 <mateus-morais> ack
+
+ 16:34 <vorlon> curl: I'm just going to take this one myself because I know what that bootstrap chain looks like :)
+
+ 16:34 <Skia> for information, initramfs-tools vs klibc, there already is a fix here: https://salsa.debian.org/kernel-team/initramfs-tools/-/merge_requests/91
+
+ 16:34 <vorlon> publicsuffix: enr0n
+
+ 16:35 <enr0n> ack
+
+ 16:35 <cpete> skia: perfect, thanks
+
+ 16:35 <vorlon> Skia: great, then someone can cherry-pick :)
+
+ 16:35 <Skia> yes, I think bdrung wanted to have a look, and certainly got sidetracked
+
+ 16:35 <vorlon> apt vs db5.3: ogayot
+
+ 16:35 <ogayot> vorlon: ack
+
+ 16:35 <vorlon> apt vs xz-utils: upils
+
+ 16:35 <upils> ack
+
+ 16:36 <vorlon> ccache: pushkarnk
+
+ 16:36 <pushkarnk> ack
+
+ 16:36 <vorlon> ogayot: let's make that db5.3 in general please, there are several packages that need retested with --all-proposed or such (assuming they're fixed to depend on libdb5.3t64)
+
+ 16:37 <vorlon> elfutils: ravikant_:
+
+ 16:37 <vorlon> fwupd vs xz-utils: schopin
+
+ 16:37 <schopin> vorlon: ack
+
+ 16:37 <vorlon> libtirpc: liushuyu
+
+ 16:37 <vorlon> libuv1: mwhudson
+
+ 16:37 <liushuyu> vorlon: okay
+
+ 16:37 <vorlon> pycurl: vpa1977:
+
+ 16:37 <ravikant_> vorlon: I am ooo next week, can sombody else take it?
+
+ 16:37 <bdrung> cpete, please give me initramfs-tools vs klibc. you get vim instead. i have a pending initramfs-tools upload where i can include the fix from Skia (and yes, i missed to pick that fix)
+
+ 16:37 <vorlon> and the rest of xz-utils to zhsj
+
+ 16:38 <vorlon> bdrung: done for now
+
+ 16:38 <zhsj> ack
+
+ 16:38 <cpete> bdrung: ack
+
+ 16:38 <schopin> nice, I got a non-armhf regression!
+
+ 16:38 <adrien> vorlon: so, umockdev armhf build fails (it failed a couple minutes ago) due to t64; are there general guidance there?
+
+ 16:38 <juliank> vorlon, ravikant_ I can take elfutils too I suppsoe
+
+ 16:38 <vorlon> adrien: do we need to get umockdev rebuilt? if so, make that happen.  or if we need to retest with --all-proposed, do that
+
+ 16:38 <ravikant_> juliank: thanks
+
+ 16:39 <adrien> vorlon: ack, thanks
+
+ 16:39 <vorlon> adrien: ah you said the build fails.  So yes, you need to make it not fail :-)
+
+ 16:39 <vorlon> if you're lucky that's maybe a simple retry with new apt, or a copy to the bootstrap archive and back
+
+ 16:39 <vorlon> if you're unlucky you should sign up to learn how to trace bootstrapping horrors with me
+
+ 16:40 * schopin will try to attend that workshop
+
+ 16:40 <adrien> thanks, I'll see, it's either t64 or something else yet to be fully identified
+
+ 16:40 <bdrung> Skia, I included your fix in the 0.142ubuntu20 upload which is still in -proposed
+
+ 16:40 <Skia> bdrung: great!
+
+ 16:41 <vorlon> adrien: you're unlucky, umockdev depends on glib
+
+ 16:42 <vorlon> adrien: or maybe you're lucky, because that means you probably don't have anything to do there and maybe should leave it to mwhudson or doko or myself
+
+ 16:42 <adrien> haha, I'll also try to get up to speed with what's going on with glib
+
+ 16:43 <vorlon> adrien: there's a terrible bootstrap loop between glib2.0 and gobject-introspection
+
+ 16:43 <adrien> (well, at least for t64 because I never want to get deep into glib :) )
+
+ 16:43 <adrien> doh
+
+ 16:43 <vorlon> I got as far as building glib2.0 without gir
+
+ 16:44 <vorlon> and then I had to leave it there to work on other stuff and didn't look any deeper at bootstrapping gobject-introspection
+
+ 16:44 <vorlon> so jbicha reverted it because it was blocking things on !armhf in -proposed
+
+ 16:44 <vorlon> juliank: back to you
+
+ 16:44 <adrien> thanks for the summary, yeah, it's complicated
+
+ 16:44 <adrien> and long
+
+ 16:45 <juliank> #topic aob
+
+ 16:47 <pushkarnk> tomorrow is a public holiday in India
+
+ 16:48 <bdrung> and in Berlin
+
+ 16:48 <juliank> not here :(
+
+ 16:48 <juliank> but on the bright side it's going to be sunny
+
+ 16:48 <juliank> (pun intended)
+
+ 16:49 <ravikant_> It is International Women's Day
+
+ 16:49 <bdrung> we got this public holiday because Berlin has fewer public holidays than other regions in Germany
+
+ 16:50 <juliank> some celebrate women, other celebrate shiva
+
+ 16:51 <pushkarnk> :D
+
+ 16:53 <juliank> final call!
+
+ 16:53 <juliank> 32
+
+ 16:53 <juliank> 3
+
+ 16:53 <juliank> 2
+
+ 16:53 <juliank> 1
+
+ 16:53 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

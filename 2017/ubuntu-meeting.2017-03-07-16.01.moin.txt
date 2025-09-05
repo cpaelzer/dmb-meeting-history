@@ -1,0 +1,562 @@
+== Meeting information ==
+ * #ubuntu-meeting: ubuntu-server-team, 07 Mar at 16:01 &mdash; 16:37 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2017/ubuntu-meeting.2017-03-07-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Review ACTION points from previous meeting ===
+The discussion about "Review ACTION points from previous meeting" started at 16:02.
+
+  * ''ACTION:'' : rbasak, powersj, cpaelzer to draft mysql triage response page like nginx has
+
+=== Zesty Development ===
+The discussion about "Zesty Development" started at 16:07.
+
+  * ''LINK:'' https://wiki.ubuntu.com/ZestyZapus/ReleaseSchedule 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1670311 
+ * '''blueprints''' (16:10)
+  * ''LINK:'' #https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core 
+  * ''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core 
+  * blueprint looks good, no active major items outstanding
+  * cpaelzer gave an FYI on a ppc64el crypto bug in 4.10 that might block dep8 tests
+ * '''Release Bugs''' (16:13)
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-z-tracking-bug-tasks.html#ubuntu-server 
+  * cpaelzer elaborated on the pro/con of bug 1670481
+  * no other "big issues" on there for now
+  * zesty fix uploads to dpdk, qemu, libvirt last week
+
+=== Server & Cloud Bugs & SRU/Pending Uploads (caribou) ===
+The discussion about "Server & Cloud Bugs & SRU/Pending Uploads (caribou)" started at 16:18.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-x-tracking-bug-tasks.html#ubuntu-server 
+  * STS SRU are pending for :sssd, gtk+3.0, nfs-utils, multipath-tools, sosreport, tftp-hpa
+  * rbasak looking into tftp-hpa currently, but git import is blocked
+
+=== Weekly Updates & Questions for the QA Team (powersj) ===
+The discussion about "Weekly Updates & Questions for the QA Team (powersj)" started at 16:22.
+
+  * ''LINK:'' https://jenkins.ubuntu.com/server/ 
+  * powersj fixed a lot of issues, most tests are green again
+  * cloud-init and curtin tests up and running again
+
+=== Weekly Updates & Questions for the Kernel Team (smb, sforshee) ===
+The discussion about "Weekly Updates & Questions for the Kernel Team (smb, sforshee)" started at 16:27.
+
+  * bcache issues fixed soonish (blocked some server related work)
+
+=== Upcoming Call For Papers ===
+The discussion about "Upcoming Call For Papers" started at 16:30.
+
+  * ''LINK:'' https://lwn.net/Calendar/Monthly/cfp/ 
+  * no CFPs to consider at the moment
+
+=== Ubuntu Server Team Events ===
+The discussion about "Ubuntu Server Team Events" started at 16:30.
+
+  * no events scheduled
+
+=== Open Discussion ===
+The discussion about "Open Discussion" started at 16:31.
+
+  * nacc proposed the idea of a community wide monthly bug-squash day
+
+=== Announce next meeting date, time and chair ===
+The discussion about "Announce next meeting date, time and chair" started at 16:36.
+
+  * next chair on 14th march will be nacc
+
+
+
+== Vote results ==
+
+
+
+
+== Action items, by person ==
+
+ * cpaelzer
+  * : rbasak, powersj, cpaelzer to draft mysql triage response page like nginx has
+ * powersj
+  * : rbasak, powersj, cpaelzer to draft mysql triage response page like nginx has
+ * rbasak
+  * : rbasak, powersj, cpaelzer to draft mysql triage response page like nginx has
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (126)
+ * nacc (25)
+ * jgrimm (20)
+ * powersj (14)
+ * rharper (12)
+ * rbasak (9)
+ * caribou (5)
+ * ubottu (4)
+ * meetingology (4)
+ * smb (2)
+ * smoser (1)
+ * Odd_Bloke (1)
+
+
+
+== Full Log ==
+
+
+ 16:01 <cpaelzer> #startmeeting ubuntu-server-team
+
+ 16:01 <meetingology> Meeting started Tue Mar  7 16:01:45 2017 UTC.  The chair is cpaelzer. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:01 <nacc> o/
+
+ 16:02 <cpaelzer> ok, seo helle overybody - lets start as usual with
+
+ 16:02 <rharper> o/
+
+ 16:02 <cpaelzer> #topic Review ACTION points from previous meeting
+
+ 16:02 <caribou> \o
+
+ 16:02 <rbasak> o/
+
+ 16:02 <cpaelzer> first was "ACTION: nacc to ping release team on removing src:postgresql-9.6 and src:php7.1"
+
+ 16:02 <cpaelzer> nacc: I know about one of them
+
+ 16:02 <cpaelzer> could you elaborate on both?
+
+ 16:03 <nacc> both are done
+
+ 16:03 <cpaelzer> yay
+
+ 16:03 <smoser> o/
+
+ 16:03 <nacc> well, the first by migrating postgresql-9.6 in
+
+ 16:03 <nacc> so 'done', albeit differently than the action ;)
+
+ 16:04 <cpaelzer> ok, so the next one would be powersj
+
+ 16:04 * cpaelzer powersj to see about getting the lxd team onto torkoal
+
+ 16:04 <powersj> done
+
+ 16:04 <cpaelzer> yay#2
+
+ 16:04 <powersj> stgraber helped clean things up
+
+ 16:04 <cpaelzer> I remember
+
+ 16:04 <jgrimm> any idea how it got so borked up?
+
+ 16:04 <cpaelzer> powersj: do we already have an understanding how it could happen?
+
+ 16:04 <jgrimm> :)
+
+ 16:05 <powersj> jumping between versions of lxd and not cleaning everything up
+
+ 16:05 <cpaelzer> I happen to know that it can break without that
+
+ 16:05 <cpaelzer> but
+
+ 16:05 <powersj> true :)
+
+ 16:05 <cpaelzer> I'm fine to ait until it happens
+
+ 16:05 <cpaelzer> "wait" rather
+
+ 16:05 <powersj> and we did see that one failure, and then it went away
+
+ 16:05 <cpaelzer> ok, thank you powersj
+
+ 16:05 <cpaelzer> for now all are unblocked and the action is done
+
+ 16:06 <cpaelzer> number 3: ACTION: rbasak, powersj, cpaelzer to draft mysql triage response page like nginx has
+
+ 16:06 <cpaelzer> I did nothing, did anybody start on that?
+
+ 16:06 <powersj> nope... sorry
+
+ 16:06 <cpaelzer> rbasak: ?
+
+ 16:07 <cpaelzer> lets take that as a no and keep the action for next week as well
+
+ 16:07 <cpaelzer> #ACTION: rbasak, powersj, cpaelzer to draft mysql triage response page like nginx has
+
+ 16:07 * meetingology : rbasak, powersj, cpaelzer to draft mysql triage response page like nginx has
+
+ 16:07 <rbasak> I haven't started on it, sorry. Please carry forward.
+
+ 16:07 <cpaelzer> #topic Zesty Development
+
+ 16:07 <cpaelzer> #link https://wiki.ubuntu.com/ZestyZapus/ReleaseSchedule
+
+ 16:08 <cpaelzer> anything general before we go to blueprint and bugs?
+
+ 16:08 <jgrimm> i don't have anything
+
+ 16:08 <cpaelzer> ... well I have :-)
+
+ 16:08 <jgrimm> go for it
+
+ 16:08 <cpaelzer> fyi - if you happen to be blocked on ppc based test verification fails based on encryption
+
+ 16:08 <cpaelzer> (as I was)
+
+ 16:08 <cpaelzer> consider checking if it could be the following bug
+
+ 16:09 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1670311
+
+ 16:09 <ubottu> Launchpad bug 1666483 in linux (Ubuntu Zesty) "duplicate for #1670311 ecryptfs fails to load block cipher on ppc64el " [Undecided,Fix committed]
+
+ 16:09 <cpaelzer> TL;DR various crypto options fail with current 4.10 kernel
+
+ 16:09 <cpaelzer> but fix is known and enqueued
+
+ 16:09 <jgrimm> interesting. thanks
+
+ 16:09 <cpaelzer> so no need to bother the kernel Team more than I already did
+
+ 16:10 <cpaelzer> btw kernel Team, pinging smb for later
+
+ 16:10 <cpaelzer> #subtopic blueprints
+
+ 16:10 <cpaelzer> #https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core
+
+ 16:10 <cpaelzer> #link #https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core
+
+ 16:11 <cpaelzer> I saw some updates there
+
+ 16:11 <cpaelzer> #link https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core
+
+ 16:11 <cpaelzer> any of those calls should do :-/
+
+ 16:11 <cpaelzer> is there anything big outstanding that one wants to discuss?
+
+ 16:11 <rbasak> Remember to keep up the meetingology commentary to save writing minutes later.
+
+ 16:11 <cpaelzer> I take this as a no, and will go on
+
+ 16:12 <cpaelzer> thanks, true
+
+ 16:12 <cpaelzer> #info blueprint looks good, no active major items outstanding
+
+ 16:13 <jgrimm> indeed, very happy with how much we got done this cycle. and jumping on it early
+
+ 16:13 <cpaelzer> #info cpaelzer gave an FYI on a ppc64el crypto bug in 4.10 that might block dep8 tests
+
+ 16:13 <cpaelzer> #subtopic Release Bugs
+
+ 16:13 <cpaelzer> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-z-tracking-bug-tasks.html#ubuntu-server
+
+ 16:13 <cpaelzer> I can say that I submitted a pack of new versions - DPDK (Stable release), New Qemu (CVE/Log fix), Libvirt (device format, apparmor for virt-manager)
+
+ 16:13 <cpaelzer> anything on the list of open issues you want to go into?
+
+ 16:14 <cpaelzer> any majore bvugfix uploads to zesty happened last week?
+
+ 16:14 <cpaelzer> wow typo-master 2000
+
+ 16:15 <cpaelzer> I heard rharper and smoser talk about bug 1670481 yesterday
+
+ 16:15 <ubottu> Error: Could not gather data from Launchpad for bug #1670481 (https://launchpad.net/bugs/1670481). The error has been logged
+
+ 16:15 <cpaelzer> which is on that list
+
+ 16:15 <cpaelzer> I triaged and started the discussion with IBM
+
+ 16:15 <cpaelzer> but I think it might be an SRU deadlock
+
+ 16:15 <rharper> cpaelzer: +1
+
+ 16:15 <cpaelzer> either it is important enough to be an SRU, but then it changes behaviour and does not qualify
+
+ 16:15 <cpaelzer> or not ...
+
+ 16:15 <jgrimm> has upstream accepted it?
+
+ 16:15 <rharper> I don't think so
+
+ 16:15 <cpaelzer> upstream accepted
+
+ 16:15 <rharper> it's just a patch at this point
+
+ 16:15 <rharper> really?
+
+ 16:15 <cpaelzer> it is in 2.9
+
+ 16:16 * rharper goes home
+
+ 16:16 <cpaelzer> so we have forward order up to qemu 2.4
+
+ 16:16 <jgrimm> ok, i was going to be -1 if it wasn't upstream
+
+ 16:16 <cpaelzer> 2.5-2.8 reverse
+
+ 16:16 <cpaelzer> and then forward again
+
+ 16:16 <rharper> well, let's just say that the churn will hopefully encourage folks to not rely on it
+
+ 16:16 <cpaelzer> that for sure
+
+ 16:16 <cpaelzer> and I'm ok pulling into zesty (as a pre-2.9)
+
+ 16:17 <cpaelzer> but SRU they have to be pretty convincing
+
+ 16:17 <cpaelzer> not yet
+
+ 16:17 <rharper> right
+
+ 16:17 <jgrimm> ack
+
+ 16:17 <cpaelzer> #info cpaelzer elaborated on the pro/con of bug 1670481
+
+ 16:17 <ubottu> Error: Could not gather data from Launchpad for bug #1670481 (https://launchpad.net/bugs/1670481). The error has been logged
+
+ 16:17 <cpaelzer> #info no other "big issues" on there for now
+
+ 16:18 <cpaelzer> #info zesty fix uploads to dpdk, qemu, libvirt last week
+
+ 16:18 <jgrimm> was is that lookup failing?
+
+ 16:18 <cpaelzer> anything else?
+
+ 16:18 <jgrimm> ubottu you are failing us
+
+ 16:18 <ubottu> jgrimm: I am only a bot, please don't think I'm intelligent :)
+
+ 16:18 <cpaelzer> jgrimm: sometimes it fails
+
+ 16:18 <jgrimm> :)
+
+ 16:18 <cpaelzer> #topic Server & Cloud Bugs & SRU/Pending Uploads (caribou)
+
+ 16:19 <cpaelzer> caribou: your time
+
+ 16:19 <cpaelzer> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-x-tracking-bug-tasks.html#ubuntu-server
+
+ 16:19 <caribou> Here are the SRU we're looking ata :
+
+ 16:19 <caribou> #info STS SRU are pending for :sssd, gtk+3.0, nfs-utils, multipath-tools, sosreport, tftp-hpa
+
+ 16:19 <cpaelzer> thanks, I also sponsored a libvirt (trusty) one from STS
+
+ 16:20 <cpaelzer> also nacc you might be happy to hear that I tested and finally sponsored that azure fix into xenial
+
+ 16:20 <rbasak> I've just been looking at tftp-hpa for you caribou, but I started with wanting a git tree to do diffs and the import is failing. I'm currently in that rabbithole :)
+
+ 16:20 <cpaelzer> waiting for the SRU tema
+
+ 16:20 <nacc> cpaelzer: ah excellent! Odd_Bloke will be happy :)
+
+ 16:20 <Odd_Bloke> \o/
+
+ 16:21 <cpaelzer> anything else for caribou or in-Release SRUs ?
+
+ 16:21 <caribou> rbasak: good thanks. why don't you diff the src pkg ?
+
+ 16:22 <cpaelzer> #info rbasak looking into tftp-hpa currently, but git import is blocked
+
+ 16:22 <rbasak> caribou: I can do that, sure. But then I have to fetch things I want to diff against piecemeal. Using git everything is easier :-)
+
+ 16:22 <rbasak> If I can't fix it soon, then sure I'll do it by hand.
+
+ 16:22 <caribou> rbasak: indeed
+
+ 16:22 <cpaelzer> ok, moving on to powersj then
+
+ 16:22 <cpaelzer> #topic Weekly Updates & Questions for the QA Team (powersj)
+
+ 16:23 <cpaelzer> #link https://jenkins.ubuntu.com/server/
+
+ 16:23 <powersj> Debug lots of test failures last week, bit of curtin vmtest development for daily tests, and got test systems back to sane status. All tests were green over the weekend. Trusty ppc64el ISO testing is also now functional.
+
+ 16:23 <powersj> If I get access to staging.launchpad.net I want to work on auto landing for curtin and cloud-init. Untill then I have a few jenkins test related items I need to clean up, look into cloud-init to understand more about how setup.py is setup, as well as triage today and some bug work.
+
+ 16:23 <powersj> And as of yesterday, we finally have cloud-init ci tests up and running again \o/
+
+ 16:23 <cpaelzer> powersj: gz
+
+ 16:24 <cpaelzer> powersj: was the debugging to debug the tests or test-env, or into issues they uncovered?
+
+ 16:24 <jgrimm> powersj, \o/
+
+ 16:24 <powersj> cpaelzer: mix of both, we had the lxd issues, which I filed two bugs against lxd and got fixes for, but also the system getting borked
+
+ 16:25 <cpaelzer> ok powersj
+
+ 16:25 <powersj> plus downreving lxd found some issues with our curtin vmtest daily job, so had to fix those up withsmoser
+
+ 16:25 <cpaelzer> getting better every time
+
+ 16:25 <powersj> yes time to go break more stuff then and write more tests ;)
+
+ 16:25 <jgrimm> it should also be noted that the ppc64el ISO testing is Not Yet gating.  That is next.
+
+ 16:26 <cpaelzer> fyi I also experimented with avocado a bit (qemu testing) but that is unessesarily complex for what you want to do
+
+ 16:26 <cpaelzer> so not jumping on it right now
+
+ 16:26 <powersj> that was my assessment as well :)
+
+ 16:26 <cpaelzer> #info powersj fixed a lot of issues, most tests are green again
+
+ 16:27 <cpaelzer> #info cloud-init and curtin tests up and running again
+
+ 16:27 <cpaelzer> #topic Weekly Updates & Questions for the Kernel Team (smb, sforshee)
+
+ 16:27 <smb> Not much to report. The bcache naming should be fixed soonish (or maybe has) there was something cpaelzer had which I forgot about.
+
+ 16:27 <rharper> \o.
+
+ 16:27 <rharper> smb: thans
+
+ 16:27 <cpaelzer> smb: I reported on the ase-xts thing before
+
+ 16:27 * rharper 's keyboard needs a new battery
+
+ 16:27 <cpaelzer> Oh that is a good excuse rharper
+
+ 16:27 <cpaelzer> mine too
+
+ 16:27 <rharper> hehe
+
+ 16:27 * cpaelzer has no keyboards with batteries
+
+ 16:28 <smb> cpaelzer, oh that... think I saw other people of the team being aware
+
+ 16:28 <cpaelzer> great
+
+ 16:28 * rbasak keeps his keyboard in the same place, and it has a cord :-)
+
+ 16:28 <cpaelzer> #info bcache issues fixed soonish (blocked some server related work)
+
+ 16:28 <rbasak> This approach does make for a desk covered in cables though :-/
+
+ 16:29 <cpaelzer> I can't choke people without - and I want to so do so often
+
+ 16:29 <cpaelzer> maybe it is good to be in home office :-P
+
+ 16:29 <cpaelzer> anyway, back to business
+
+ 16:29 <nacc> dark
+
+ 16:30 <cpaelzer> #topic Upcoming Call For Papers
+
+ 16:30 <cpaelzer> #link https://lwn.net/Calendar/Monthly/cfp/
+
+ 16:30 <cpaelzer> anything else anybody which is worth to be mentioned here?
+
+ 16:30 <cpaelzer> #info no CFPs to consider at the moment
+
+ 16:30 <cpaelzer> #topic Ubuntu Server Team Events
+
+ 16:31 <cpaelzer> nothing scheduled soon I'd know about
+
+ 16:31 <jgrimm> ditto
+
+ 16:31 <cpaelzer> jgrimm: do we have anything I forget?
+
+ 16:31 <cpaelzer> ach you were fast
+
+ 16:31 <cpaelzer> ok
+
+ 16:31 <jgrimm> :)
+
+ 16:31 <cpaelzer> #info no events scheduled
+
+ 16:31 <cpaelzer> #topic Open Discussion
+
+ 16:31 <cpaelzer> release all you have held back
+
+ 16:31 <nacc> i had a thought for something we could do to encourage community participation
+
+ 16:31 <nacc> we just crested 400 bugs in the backlog
+
+ 16:32 <nacc> i'd like to propose on the ML a monthly bug-squashing day
+
+ 16:32 <nacc> on #ubuntu-server, esp. to get community folk who are interested in taking bitesize
+
+ 16:32 <cpaelzer> nacc: I think the day would be great
+
+ 16:32 <rbasak> That's a great idea.
+
+ 16:32 <powersj> +1
+
+ 16:32 <nacc> we can walk folks through using the git tree(s), submitting bugs, asking for sponsorship (and we'd have several of us available throughout the day for that )
+
+ 16:32 <cpaelzer> nacc: yet we have to consider the usual can of worms to track that to completion
+
+ 16:33 <nacc> of course, but I think the benefit might outweigh it -- and i fear we are too afraid of that and now there is no community participation
+
+ 16:33 <cpaelzer> we should just plan at least for us to have the time for that post work
+
+ 16:33 <nacc> except for filing more and more bugs that we never get to :/
+
+ 16:33 <cpaelzer> nacc: oh I'm clearly +1
+
+ 16:33 <jgrimm> do you think you want to get people pre-signed up?  or just randomly show up?
+
+ 16:34 <nacc> jgrimm: i think unstructured at first. I think people can subscribe to bugs if they want, and can bring them up in the channel.
+
+ 16:34 <nacc> jgrimm: my plan in my e-mail was to specifically call out server-next and bitesize as tags
+
+ 16:34 <jgrimm> np, we can learn as we go too
+
+ 16:34 <nacc> i think they are not well broadcasted currently
+
+ 16:34 <nacc> or maybe they were, but it's been a while, etc.
+
+ 16:34 <nacc> and the contributions can even just be helping with testing in various enviroments
+
+ 16:35 <nacc> which teaches people how to use lxd, kvm, etc.
+
+ 16:35 <nacc> (uvtool...)
+
+ 16:35 <nacc> i think all of which is beneficial for both our team and our product(s)
+
+ 16:35 <jgrimm> so one thing that sort of came up with rbasak is that given where we are at in the cycle.. some valid fixes, we may still want to hold off on until the beginning of next cycle.. so think about what to do with those type of fixes
+
+ 16:35 <nacc> right, i'm assuming most people in this context can't upload
+
+ 16:35 <jgrimm> ^^ in context to sponsorship day he floated a couple week ago
+
+ 16:36 <nacc> but yeah
+
+ 16:36 <cpaelzer> #info nacc proposed the idea of a community wide monthly bug-squash day
+
+ 16:36 <cpaelzer> ok to go on for today?
+
+ 16:36 <nacc> yep
+
+ 16:36 <cpaelzer> #topic Announce next meeting date, time and chair
+
+ 16:37 <cpaelzer> nacc: will be next weeks chair
+
+ 16:37 <cpaelzer> nacc: ok ?
+
+ 16:37 <nacc> cpaelzer: ack
+
+ 16:37 <cpaelzer> next tuesday is 14th of march
+
+ 16:37 <cpaelzer> see you all here then
+
+ 16:37 <cpaelzer> #info next chair on 14th march will be nacc
+
+ 16:37 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

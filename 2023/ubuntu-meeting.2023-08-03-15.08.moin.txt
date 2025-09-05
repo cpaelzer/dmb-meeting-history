@@ -1,0 +1,311 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by schopin, 03 Aug at 15:08 &mdash; 15:58 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-08-03-15.08.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by schopin at 15:08.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-03-aug-2023/37534   (schopin, 15:09)
+
+=== Release incoming bugs ===
+
+Discussion started by schopin at 15:20.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (schopin, 15:20)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (schopin, 15:28)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/2004551   (ogayot, 15:30)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (schopin, 15:35)
+
+=== Team proposed-migration report ===
+
+Discussion started by schopin at 15:36.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (schopin, 15:36)
+
+=== AOB ===
+
+Discussion started by schopin at 15:52.
+
+ * ''LINK:'' https://merges.ubuntu.com/universe.html   (ginggs, 15:54)
+
+
+
+== People present (lines said) ==
+
+ * juliank (56)
+ * schopin (35)
+ * ginggs (5)
+ * enr0n (4)
+ * bdrung (4)
+ * slyon (3)
+ * pushkarnk (3)
+ * meetingology (2)
+ * dbungert (2)
+ * ogayot (2)
+ * dviererbe (2)
+ * zhsj (1)
+ * danilogondolfo (1)
+ * xypron (1)
+ * mateus-morais (1)
+ * liushuyu (1)
+
+
+
+== Full log ==
+
+
+ 15:08 <schopin> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:08 <meetingology> Meeting started at 15:08:38 UTC.  The chair is schopin.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:08 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:08 <schopin> #topic Lightning rounds
+
+ 15:09 <schopin> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-03-aug-2023/37534
+
+ 15:09 <schopin> Let's take a few minutes to read each other's status :)
+
+ 15:10 <schopin> enr0n: re the deb822 migration, doesn't moving stuff from sources.list to ubuntu.sources impact the order of the sources?
+
+ 15:10 <enr0n> schopin: like order in the file? Or what do you mean?
+
+ 15:11 <schopin> in the sources.list man page it's stated that "it is important to list sources in order of preference". I'm guessing moving files around will change said order.
+
+ 15:11 <enr0n> Oh, yeah that's addressed in the spec (https://discourse.ubuntu.com/t/spec-apt-deb822-sources-by-default/29333).
+
+ 15:12 <schopin> neat, thanks :)
+
+ 15:12 <juliank> I'm considering making the order not important
+
+ 15:12 <juliank> Parallelize downloads if multiple mirrors have same file basically
+
+ 15:14 <bdrung> didn't we want to have security.ubuntu.com last to prefer pulling stuff from the mirrors instead?
+
+ 15:16 <juliank> that's true
+
+ 15:16 <juliank> But we can add and use source priorities for that
+
+ 15:17 <juliank> I guess they're also pin priorities at the same time :D
+
+ 15:17 <bdrung> juliank, are source priorities documented somewhere?
+
+ 15:17 <juliank> They don't exist yet
+
+ 15:18 <juliank> That's why I wrote *add*
+
+ 15:18 <bdrung> ah, okay
+
+ 15:18 <juliank> But I admit I messed up the tenses :D
+
+ 15:19 <schopin> Anything else?
+
+ 15:19 <juliank> Please test grub 2.12, I push to mantic release on Monday
+
+ 15:19 <juliank> :D
+
+ 15:19 <schopin> Alright, on that note, moving on :)
+
+ 15:20 <schopin> #topic Release incoming bugs
+
+ 15:20 <schopin> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:21 <schopin> bug 2028888
+
+ 15:21 <schopin> That sounds rather unfortunate!
+
+ 15:22 <juliank> Hmm, should be assigned elsewhere, livecd-rootfs?
+
+ 15:22 <juliank> the meta package can't force snaps to be installed
+
+ 15:22 <juliank> Reassign there and tag foundations-todo?
+
+ 15:22 <dbungert> I don't know if this is a canary issue or a livecd-rootfs issue or an issue with how desktop is restructuring what is part of the default install
+
+ 15:23 <juliank> it's not a meta package restructuring issue
+
+ 15:23 <juliank> the deb for firefox is installed as the output says
+
+ 15:23 <juliank> but the snap isn't
+
+ 15:23 <juliank> Or I guess the snap needs to be seeded too?
+
+ 15:24 <juliank> The snap:firefox is in the desktop-minimal seed
+
+ 15:25 <juliank> But I think next step is analysing image build logs, so it makes sense to assign to livecd-rootfs as a starting point
+
+ 15:25 <schopin> Sounds good to me, I guess.
+
+ 15:25 <juliank> lemme update the bug and we can move on in parallel
+
+ 15:26 <schopin> thanks
+
+ 15:26 <schopin> bug 2017401
+
+ 15:28 <schopin> to be handled by server, nothing to do for us.
+
+ 15:28 <schopin> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:29 <schopin> shared custody, but explicitly tagged by Steve for us.
+
+ 15:30 <juliank> schopin: what bug are you talking about?
+
+ 15:30 <ogayot> https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/2004551
+
+ 15:30 <schopin> Oh right :)
+
+ 15:31 <schopin> thanks ogayot
+
+ 15:34 <schopin> nothing actionable for us there as nobody seems to be able to reproduce it, let's leave the tag to revisit it next week, enr0n to try to look at it meanwhile.
+
+ 15:35 <schopin> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:35 <schopin> nothing new for us there
+
+ 15:35 <juliank> also nothing in jammy fwiw
+
+ 15:36 <schopin> #topic Team proposed-migration report
+
+ 15:36 <schopin> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:37 <juliank> python-reportlab
+
+ 15:37 <juliank> MIR stuff to be demoted
+
+ 15:37 <juliank> cryptsetup blocking linux-meta (6.3.0.7.8 to 6.3.0.7.9) for 15 days
+
+ 15:39 <zhsj> kmod vs dpdk-kmods needs a retry, just clicked for arm64 and ppc64el (i already clicked retry on amd64 before)
+
+ 15:39 <juliank> cryptsetup: bdrung
+
+ 15:40 <bdrung> ack
+
+ 15:40 <juliank> tpm2-tss: danilogondolfo
+
+ 15:41 <juliank> sorry
+
+ 15:41 <juliank> tpm2-tss: dviererbe
+
+ 15:42 <juliank> vim
+
+ 15:42 <juliank> I actually uploaded that but have no cycles to investigate the build test failures, soo much flakyness
+
+ 15:43 <juliank> vim: danilogondolfo (check if retry ppc64el works, maybe dig some more)
+
+ 15:43 <danilogondolfo> juliank, ack
+
+ 15:44 <juliank> kmod vs dpdk-kmods: zhsj
+
+ 15:44 <juliank> which already retried :)
+
+ 15:45 <juliank> dbus: is with ogayot afaict
+
+ 15:45 <juliank> dbus-python is the same thing
+
+ 15:45 <juliank> both are failures in openrazer-drivers missing gcc-12
+
+ 15:45 <ogayot> juliank: ack, will look at dbus. I uploaded it
+
+ 15:46 <juliank> You also have a Jira issue for it from July 20
+
+ 15:46 <juliank> livecd-rootfs blocking lsb-release-minimal
+
+ 15:46 <juliank> livecd-rootfs blocking lsb-release-minimal: ginggs
+
+ 15:46 <ginggs> ack
+
+ 15:47 <juliank> lsb-release-minimal vs zfs-linux: xypron
+
+ 15:48 <xypron> juliank: next week I on the armhf shift
+
+ 15:48 <juliank> ok
+
+ 15:48 <juliank> lsb-release-minimal vs zfs-linux: slyon
+
+ 15:48 <slyon> ok
+
+ 15:48 <juliank> e2fsprogs vs initramfs-tools: mateus-morais
+
+ 15:48 <mateus-morais> ack
+
+ 15:48 <juliank> e2fsprogs vs livecd-roots livecd-rootfs: enr0n
+
+ 15:48 <juliank> sigh typo
+
+ 15:49 <enr0n> ack
+
+ 15:49 <juliank> curl: pushkarnk
+
+ 15:49 <pushkarnk> ack
+
+ 15:50 <juliank> cmake vs khronos-opencl-clhpp: schopin
+
+ 15:50 <schopin> ack
+
+ 15:51 <juliank> cmake vs wslay: liushuyu
+
+ 15:51 <liushuyu> juliank: ack
+
+ 15:51 <juliank> We ran out of new stuff and people in the meeting so everyone who's not here today gets a free pass
+
+ 15:51 <juliank> :D
+
+ 15:52 <juliank> schopin: back to you
+
+ 15:52 <schopin> thanks
+
+ 15:52 <schopin> #topic AOB
+
+ 15:52 <schopin> Any vacation coming up?
+
+ 15:52 <dbungert> I'm at a conference half of next week, including jammy point release.  ogayot to be on hand to help with subiquity if needed
+
+ 15:53 <dviererbe> As mentioned in my Discourse Update, I am out for 2 weeks, starting next week
+
+ 15:54 <ginggs> winter is coming
+
+ 15:54 <slyon> Feature Freeze is coming up next week
+
+ 15:54 <ginggs> yes, that :)
+
+ 15:54 <dviererbe> :D
+
+ 15:54 <ginggs> https://merges.ubuntu.com/universe.html
+
+ 15:54 <enr0n> I thought that was Aug 17
+
+ 15:54 <ginggs> please do look at your TIL universe merges
+
+ 15:55 <schopin> slyon: fake news!
+
+ 15:55 <slyon> sorry my bad :) we have one extra week
+
+ 15:55 <juliank> Next week is grub 2.12 landing day
+
+ 15:55 <juliank> :D
+
+ 15:55 <juliank> And my off week
+
+ 15:55 <schopin> and glibc too.
+
+ 15:55 <pushkarnk> juliank:
+
+ 15:55 <schopin> and openssl
+
+ 15:56 <juliank> well 2.12~rc1 landing day for mantic release pocket :)
+
+ 15:56 <pushkarnk> (ignore my empty message)
+
+ 15:57 <schopin> Anything else?
+
+ 15:58 <schopin> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,620 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:02:34 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-03-07-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Thunder and lightning round
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:56:51 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (50)
+ * ubottu (43)
+ * slangasek (41)
+ * stgraber (30)
+ * bdmurray (30)
+ * ogra_ (27)
+ * jodh (26)
+ * doko (17)
+ * ev (14)
+ * meetingology (3)
+ * mvo (1)
+
+
+
+== Full Log ==
+
+
+ 16:02:34 <slangasek> #startmeeting
+
+ 16:02:34 <meetingology> Meeting started Wed Mar  7 16:02:34 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02:34 <meetingology> 
+
+ 16:02:34 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:03:03 * stgraber waves
+
+ 16:04:56 <slangasek> [TOPIC] Thunder and lightning round
+
+ 16:05:35 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson)
+
+ 16:05:38 <slangasek> jodh ogra slangasek stgraber cjwatson doko barry ev bdmurray infinity
+
+ 16:05:41 <slangasek> $
+
+ 16:05:52 <jodh> * This week:
+
+ 16:05:52 <jodh> * [dpkg] bug 927993: Started to investigate, but mvo identified the
+
+ 16:05:52 <jodh> problem+fix.
+
+ 16:05:52 <jodh> almost immediately. Thanks mvo!
+
+ 16:05:54 <ubottu> Launchpad bug 927993 in apt (Ubuntu Precise) "ordering code may mark a package for configure before its unpacked" [Critical,Triaged] https://launchpad.net/bugs/927993
+
+ 16:05:55 <jodh> * [boot/upstart] bug 940290: Isolated issue, finished code, and updated
+
+ 16:05:56 <ubottu> Launchpad bug 940290 in upstart "console log consumes fds upon job restart/respawn" [Medium,Confirmed] https://launchpad.net/bugs/940290
+
+ 16:05:58 <jodh> tests. Pending code review.
+
+ 16:06:01 <jodh> * [boot/upstart] bug 936667: Created a basic fix. Pending review. We'll
+
+ 16:06:03 <ubottu> Launchpad bug 936667 in upstart (Ubuntu) "Upstart early job logging causes boot failure for systems with no initramfs (error is "No available ptys")" [High,Confirmed] https://launchpad.net/bugs/936667
+
+ 16:06:05 <jodh> need to consider this scenario carefully should we introduce an
+
+ 16:06:08 <jodh> initramfs-less boot experience for some for 12.10 though.
+
+ 16:06:11 <jodh> * [upgrade/do-release-upgrade] bug 883618: Fixed. Problem cause was
+
+ 16:06:12 <ubottu> Launchpad bug 883618 in update-manager (Ubuntu) "Console upgrade useless.. XSet warnings all over the screen" [High,Triaged] https://launchpad.net/bugs/883618
+
+ 16:06:14 <jodh> identified using a generic dpkg-divert(8) script I wrote:
+
+ 16:06:19 <jodh> http://is.gd/H6iPus
+
+ 16:06:19 <jodh> * [packaging/eglibc] bug 508083: Fix identified - currently reworking
+
+ 16:06:20 <ubottu> Launchpad bug 508083 in eglibc (Ubuntu) "cron crashed with SIGSEGV in __pthread_initialize_minimal_internal()" [Medium,Triaged] https://launchpad.net/bugs/508083
+
+ 16:06:22 <jodh> maintainer scripts.
+
+ 16:06:25 <jodh> * TODO:
+
+ 16:06:28 <jodh> * [packaging/eglibc] bug 508083: Complete work and test very carefully.
+
+ 16:06:32 <jodh> * [boot/upstart] Early job logging code review and upstream merge.
+
+ 16:06:35 <jodh> ⌂
+
+ 16:06:38 <mvo> jodh: almost immediately is a bit of a overstatement, but I'm really happy that its found and fixed
+
+ 16:06:38 <jodh> 
+
+ 16:06:41 <jodh> 
+
+ 16:07:03 <ogra_> intramfs-less boot experience \o/
+
+ 16:07:31 <ogra_> done:
+
+ 16:07:31 <ogra_> * more weeding out of the rotting ubuntu-arm bugs
+
+ 16:07:31 <ogra_> * fixed a bug in fixrtc that made it set the clock in any case in any direction
+
+ 16:07:31 <ogra_> * merged a bunch of alsa fixes from tobin
+
+ 16:07:31 <ogra_> * merged a bunch of flash-kernel bugfixes
+
+ 16:07:32 <ogra_> * fixed sound on ac100 netbooks, finally works by default now
+
+ 16:07:34 <ogra_> * didnt get much done wrt oem-config this week, will prioritize for next week
+
+ 16:07:36 <ogra_> todo:
+
+ 16:07:38 <ogra_> * oem-config !
+
+ 16:07:40 <ogra_> * stopwatch initrdless boot
+
+ 16:07:42 <ogra_> * start looking at delay caused by fsck on boot
+
+ 16:07:44 <ogra_> * more ubuntu-arm rotten bug cleanup
+
+ 16:09:35 <slangasek> jodh: mvo is also asking for help getting a test case out of bug #930396 that he can reproduce; can you put this to the top of your list?
+
+ 16:09:36 <ubottu> Launchpad bug 930396 in Zim "No menu on upper desktop panel. Ubuntu 11.10." [Undecided,Invalid] https://launchpad.net/bugs/930396
+
+ 16:10:08 <jodh> slangasek: will do.
+
+ 16:10:11 <slangasek> ta
+
+ 16:10:51 <jodh> slangasek: is that bug number correct?
+
+ 16:10:59 <slangasek> apparently not ;)
+
+ 16:11:08 <slangasek> bug #940396
+
+ 16:11:09 <ubottu> Launchpad bug 940396 in apt (Ubuntu Precise) "lucid -> precise main all failed to upgrade: dpkg: dependency problems prevent configuration of kde-runtime" [Critical,Confirmed] https://launchpad.net/bugs/940396
+
+ 16:11:14 <slangasek> jodh: that one is :)
+
+ 16:11:41 <jodh> slangasek: thanks. I've assigned myself.
+
+ 16:11:48 <slangasek> * RELEASE MEETING: working on bug #901638; build-time testing confirmed, could use verification from Kubuntu folks that it still actually works
+
+ 16:11:50 <ubottu> Launchpad bug 901638 in soprano (Ubuntu Precise) "Remove iodbc2 (causes upgrade failure from Oneiric to Precise)" [High,In progress] https://launchpad.net/bugs/901638
+
+ 16:11:51 <slangasek> * discussions around Wubi
+
+ 16:11:53 <slangasek> * looking into fixing upstart's fork-tracking handling
+
+ 16:11:56 <slangasek> * gconf merge for full multiarch support; now chasing regressions related to upgrade order & triggers (bug #948294)
+
+ 16:11:57 <ubottu> Launchpad bug 948294 in gconf (Ubuntu) "package gconf2 3.2.3-3ubuntu1 failed to install/upgrade: ErrorMessage: subprocess installed post-installation script returned error exit status 250" [High,Confirmed] https://launchpad.net/bugs/948294
+
+ 16:11:59 <slangasek> * merged a package from Debian over the weekend for the Ubuntu Global Jam to fix an RC bug we still had (revelation)
+
+ 16:12:02 <slangasek> * acpi-support uploaded to work around lightdm not writing to utmp (bug #933626)
+
+ 16:12:03 <ubottu> Launchpad bug 933626 in acpi-support (Ubuntu) "acpi-support should use ck-list-sessions to determine active X display and X user" [High,Fix released] https://launchpad.net/bugs/933626
+
+ 16:12:05 <slangasek> ¢
+
+ 16:12:19 <slangasek> cjwatson: ^^ is that a suitable tagging for release-meeting stuffs?
+
+ 16:12:44 * stgraber quickly looks for anything release-meeting worthy before pasting
+
+ 16:13:08 <cjwatson> I figured we'd see what people came up with in this meeting and settle for the best :)
+
+ 16:13:14 <stgraber> Bugs, bugs, bugs...
+
+ 16:13:15 <stgraber> - Networking
+
+ 16:13:15 <stgraber> - Tweaked netcfg to follow the expected workflow for wireless, bug 36426
+
+ 16:13:17 <stgraber> - Fixed resolvconf support in casper, bug 946215
+
+ 16:13:18 <ubottu> Launchpad bug 36426 in netcfg (Ubuntu) "Can't skip configuring wireless network" [Medium,Fix released] https://launchpad.net/bugs/36426
+
+ 16:13:20 <ubottu> Launchpad bug 946215 in casper (Ubuntu Precise) "12.04 not set nameserver in pxe boot ( resolvconf or dhcp client bug)" [Medium,Fix released] https://launchpad.net/bugs/946215
+
+ 16:13:20 <stgraber> - Worked on converting isc-dhcp to upstart and support IPv4/IPv6 by default, bug 944849
+
+ 16:13:21 <ubottu> Launchpad bug 944849 in isc-dhcp (Ubuntu) "[FFe] converting isc-dhcp from sysvinit to upstart" [Undecided,New] https://launchpad.net/bugs/944849
+
+ 16:13:23 <stgraber> - Started investigating bug 919068 (bridge_ports all not working at boot time)
+
+ 16:13:24 <ubottu> Launchpad bug 919068 in bridge-utils (Ubuntu) "bridge_ports all doesn't work at boot time" [Medium,Triaged] https://launchpad.net/bugs/919068
+
+ 16:13:27 <stgraber> - Installer
+
+ 16:13:29 <stgraber> - A bunch of ubiquity bugs (bug 942030, bug 944614, bug 942560, bug 926493, bug 830946)
+
+ 16:13:32 <stgraber> - Tried to reproduce bug 924511 without success, might have been fixed lately
+
+ 16:13:33 <ubottu> Launchpad bug 942030 in ubiquity (Ubuntu Precise) "'Take a photo' preview pane not showing live preview" [High,Fix released] https://launchpad.net/bugs/942030
+
+ 16:13:35 <ubottu> Launchpad bug 944614 in ubiquity (Ubuntu) "ubiquity crashed with AttributeError in keyboard_variant_timeout(): 'NoneType' object has no attribute 'apply_keyboard'" [High,Fix released] https://launchpad.net/bugs/944614
+
+ 16:13:35 <stgraber> - Fixed a race condition in casper when using persistent storage (bug 940908)
+
+ 16:13:36 <ubottu> Launchpad bug 942560 in ubiquity (Ubuntu) "keyboard layout screen - Keyboard navigation broken" [High,Fix released] https://launchpad.net/bugs/942560
+
+ 16:13:37 <ubottu> Launchpad bug 926493 in ubiquity (Ubuntu) "[UIFe] The installer still says your picture will be used on the login screen" [Low,Fix committed] https://launchpad.net/bugs/926493
+
+ 16:13:38 <stgraber> - Containers
+
+ 16:13:41 <stgraber> - Started looking at the new apparmor but it's currently broken, causing bug 947617
+
+ 16:13:42 <ubottu> Launchpad bug 830946 in ubiquity (Ubuntu Precise) "Nothing displayed on embedded terminal." [Medium,Fix committed] https://launchpad.net/bugs/830946
+
+ 16:13:43 <ubottu> Launchpad bug 924511 in ubiquity (Ubuntu) "ubiquity tells me my computer name already exists on the network - hostname lookup can be slow" [Low,Incomplete] https://launchpad.net/bugs/924511
+
+ 16:13:44 <stgraber> - Wrote about how to start a 12.04 system from a VM in a LXC container instead: http://www.stgraber.org/2012/03/04/booting-an-ubuntu-12-04-virtual-machine-in-an-lxc-container/
+
+ 16:13:44 <ubottu> Launchpad bug 940908 in casper (Ubuntu Precise) "Keyboard layout, oem-config not set on persistent USB image" [High,Fix released] https://launchpad.net/bugs/940908
+
+ 16:13:45 <ubottu> Launchpad bug 947617 in lxc (Ubuntu) "After update, lxc does not start" [High,Fix released] https://launchpad.net/bugs/947617
+
+ 16:13:48 <stgraber> - Other
+
+ 16:13:50 <stgraber> - Expecting LTSP 5.3.4 upload soonish (bugfix release) including converting to upstart (to actually start at the right time)
+
+ 16:13:53 <stgraber> - Updated LTTng stack, will blog about it soon
+
+ 16:13:56 <stgraber> - TODO this week
+
+ 16:13:58 <stgraber> - Look at James' friendly-recovery branch, merge and ask for a FFe
+
+ 16:14:01 <stgraber> - Get LXC working again with apparmor
+
+ 16:14:03 <stgraber> - Upload the new isc-dhcp
+
+ 16:14:06 <stgraber> - Continue working on bugs
+
+ 16:14:08 <stgraber> (DONE)
+
+ 16:14:49 <stgraber> oh, and I'd really appreciate it if an archive admin could process bug 931809
+
+ 16:14:51 <ubottu> Launchpad bug 931809 in ust (Ubuntu) "Please remove the old LTTng packages from the Ubuntu archive" [Undecided,New] https://launchpad.net/bugs/931809
+
+ 16:15:24 <stgraber> I won't blog about lttng until that's done as having both stacks in the archive would just confuse everyone ;)
+
+ 16:15:53 <cjwatson> For release meeting:
+
+ 16:15:53 <cjwatson> * Sorted out most of the remaining dpkg-maintscript-helper upgrade bugs.
+
+ 16:15:57 <cjwatson> * Fixed a couple of biosdevname-related problems (bug 948546, bug 948559).
+
+ 16:16:00 <ubottu> Launchpad bug 948546 in bridge-utils (Ubuntu) "eth* device names hardcoded in debian/bridge-utils.sh" [Medium,Fix released] https://launchpad.net/bugs/948546
+
+ 16:16:00 <cjwatson> * Ported grub2 to GCC 4.6, and tried to disable the cursor earlier on boot (bug 861048).
+
+ 16:16:01 <ubottu> Launchpad bug 948559 in vlan (Ubuntu) "eth* NIC names hardcoded" [Medium,Fix released] https://launchpad.net/bugs/948559
+
+ 16:16:02 <ubottu> Launchpad bug 861048 in The Ubuntu Flicker-Free Boot Project "have really quick '_' on boot before first purple screen" [Medium,In progress] https://launchpad.net/bugs/861048
+
+ 16:16:04 <cjwatson> Everything else:
+
+ 16:16:06 <cjwatson> * Various syncs and merges from Debian (especially ntfs-3g), and a few build failure fixes.
+
+ 16:16:09 <cjwatson> * Dealt with various grub2 build failures and regressions.
+
+ 16:16:12 <cjwatson> * Fixed bug 939278 which broke the d-i GTK frontend.
+
+ 16:16:13 <ubottu> Launchpad bug 939278 in kickseed (Ubuntu) "GTK mini-iso can't start X" [High,Fix released] https://launchpad.net/bugs/939278
+
+ 16:16:14 <cjwatson> * Writing parted tests in an attempt to track down bug 856826.
+
+ 16:16:15 <ubottu> Launchpad bug 856826 in partman-base (Ubuntu Precise) "'guided resize' partioning leaves Mac unbootable" [High,Confirmed] https://launchpad.net/bugs/856826
+
+ 16:16:17 <cjwatson> * Enormous mail catchup.  Still ~200 messages behind in my inbox alone.
+
+ 16:16:19 <cjwatson> ..
+
+ 16:16:43 <ev> Week of Thursday, March 1st, 2012
+
+ 16:16:43 <ev> - At the Strata conference Tuesday through Thursday. 10 hours on a plane
+
+ 16:16:45 <ev> Friday.
+
+ 16:16:46 <ev> - Crafted this (and a long companion email to James, Robert, and Lucio):
+
+ 16:16:48 <ev> https://wiki.ubuntu.com/ErrorTracker/ServerArchitecture
+
+ 16:16:49 <ev> - Call with Robert to discuss the status of the crash database and get his
+
+ 16:16:51 <ev> feedback on the backend design.
+
+ 16:16:52 <ev> - Work on implementing the missing bits from /ServerArchitecture.
+
+ 16:16:54 <ev> - Chat with Colin and Steve about the future of Wubi.
+
+ 16:16:55 <ev> - Joined the QA sprint for a day at the reqest of Pete and discussed their
+
+ 16:16:56 <ev> proposed high level test harness.
+
+ 16:16:57 <ev> (done)
+
+ 16:17:37 <bdmurray> bug triage of iso-testing and ubiquity bug reports
+
+ 16:17:37 <bdmurray> bug triage of foundations-bugs receiving duplicates
+
+ 16:17:37 <bdmurray> creation of a bug heat chart that compares packages
+
+ 16:17:51 <bdmurray> the heat chart is http://reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-packages-hottest-bugs.html
+
+ 16:18:07 * doko is back again
+
+ 16:18:09 <bdmurray> reported apport bug 944078 regarding missing information
+
+ 16:18:09 <bdmurray> investigation into aptdaemon bugs 858707 and bug 659438
+
+ 16:18:09 <bdmurray> investigation into team assigned bug 556293 and other apt proxy issues
+
+ 16:18:10 <ubottu> Launchpad bug 944078 in apport (Ubuntu) "bugs reported by apport missing essential information" [Undecided,Incomplete] https://launchpad.net/bugs/944078
+
+ 16:18:13 <ubottu> Launchpad bug 858707 in aptdaemon (Ubuntu) "<type 'exceptions.SystemError'>: E:I wasn't able to locate a file for the upnp-router-control package. This might mean you need to manually fix this package." [High,Confirmed] https://launchpad.net/bugs/858707
+
+ 16:18:15 <ubottu> Launchpad bug 659438 in aptdaemon (Ubuntu) "Installation/Removal fails because of package which could not be located (failure in apt.Cache.required_download)" [Critical,Triaged] https://launchpad.net/bugs/659438
+
+ 16:18:16 <ubottu> Launchpad bug 556293 in apt (Ubuntu) "apt/aptitude need to take global proxy settings into account" [Undecided,Fix released] https://launchpad.net/bugs/556293
+
+ 16:18:23 <bdmurray> closed apt-xapian-index bug 631215 (foundations-bugs high heat bug) that seems fixed
+
+ 16:18:23 <ubottu> Launchpad bug 631215 in apt-xapian-index (Ubuntu) "update-apt-xapian-index crashed with DatabaseCorruptError in buildIndex()" [Undecided,Fix released] https://launchpad.net/bugs/631215
+
+ 16:18:26 <bdmurray> closed update-notifier high heat bug 467875 (closed and bug pattern removed)
+
+ 16:18:26 <ubottu> Launchpad bug 467875 in update-notifier (Ubuntu) "apt_check.py crashed with SIGSEGV in pkgCache::FindPkg()" [Medium,Fix released] https://launchpad.net/bugs/467875
+
+ 16:18:31 <bdmurray> added procfb to the linux apport package hook
+
+ 16:18:31 <bdmurray> update-manager bug fixes for bug 946539 and bug 940196
+
+ 16:18:31 <bdmurray> participated in global bug jam and worked on evince bugs
+
+ 16:18:32 <ubottu> Launchpad bug 946539 in update-manager (Ubuntu) "gnome-session removed during partial upgrade to Precise Beta1" [High,In progress] https://launchpad.net/bugs/946539
+
+ 16:18:34 <ubottu> Launchpad bug 940196 in update-manager (Ubuntu Precise) "cdromupgrade from Oneiric to Precise no network failed: The package 'unity-2d-places' is marked for removal but it's in the removal blacklist" [High,Fix released] https://launchpad.net/bugs/940196
+
+ 16:18:53 <bdmurray> done
+
+ 16:23:11 <slangasek> doko: any status to report?
+
+ 16:24:00 <doko> - GCC 4.6.3 packages, including gcj and gnat.
+
+ 16:24:00 <doko> - GCC 4.7.0~rc1 packages (ubuntu-toolchain-r/test PPA)
+
+ 16:24:00 <doko> - icedtea-web update from the 1.2 branch, fixed some issues
+
+ 16:24:00 <doko> with the packaging.
+
+ 16:24:00 <doko> - openjdk-6 update, revert an ARM optimization which should
+
+ 16:24:00 <doko> have landed in a PPA only.
+
+ 16:24:02 <doko> - trying to the gcc-4.7 branch imported in LP for Linaro
+
+ 16:24:04 <doko> - address eglibc testing from a PPA with gema (follow-up
+
+ 16:24:06 <doko> at UDS is likely, not before, no more uploads planned)
+
+ 16:24:08 <doko> - get ARM patches for dragonegg (LLVM backend for GCC)
+
+ 16:24:10 <doko> working on ARM.
+
+ 16:24:12 <doko> - started updates for the final python 2.7.3 and 3.2.3
+
+ 16:24:14 <doko> releases, but didn't finish today.
+
+ 16:24:16 <doko> todo this week: MIRs
+
+ 16:24:28 <doko> done
+
+ 16:24:32 <slangasek> thanks
+
+ 16:25:24 <slangasek> <infinity> some grub bugfixes, and looking into bugs #911436 and #876626, and fiddling with fpc and ghc.
+
+ 16:25:27 <ubottu> Launchpad bug 911436 in p11-kit (Ubuntu) "https crashed with SIGSEGV in lookup_or_create_bucket()" [Critical,Triaged] https://launchpad.net/bugs/911436
+
+ 16:25:28 <ubottu> Launchpad bug 876626 in upstart (Ubuntu Precise) "Unlocking the second crypto disk (/home) echos password on console" [High,Confirmed] https://launchpad.net/bugs/876626
+
+ 16:25:47 <slangasek> and that should be it for the status round
+
+ 16:25:49 <slangasek> any questions?
+
+ 16:26:32 <slangasek> [TOPIC] Bugs
+
+ 16:27:36 <bdmurray> stgraber and I were talking about bug 942539 and removing the version from the icon
+
+ 16:27:37 <ubottu> Launchpad bug 942539 in ubiquity (Ubuntu) "Ubiquity desktop icon text looks messy" [Low,Triaged] https://launchpad.net/bugs/942539
+
+ 16:27:54 <bdmurray> we weren't sure if there was a design reason for having it
+
+ 16:28:53 <bdmurray> cjwatson, ev?
+
+ 16:28:54 <stgraber> the change would probably be done in casper to avoid messing with the translations (doing s/RELEASE// in the adduser script)
+
+ 16:28:54 <cjwatson> IIRC it was there so that we could refer to it on CD sleeves, and because we couldn't guarantee people would understand the icon
+
+ 16:29:09 <cjwatson> but couldn't nautilus be fixed to wrap this correctly
+
+ 16:29:09 <cjwatson> ?
+
+ 16:29:24 <cjwatson> oh, wait, you said the version, not the whole text, I misunderstood
+
+ 16:29:37 <bdmurray> right, so having it say just "Install Ubuntu"
+
+ 16:29:41 <cjwatson> it was "Install Ubuntu" at one point actually, so let me see if I can dig through archives
+
+ 16:29:47 <cjwatson> IIRC higher-ups told me to change it
+
+ 16:30:04 <slangasek> in the example it's splitting "12.04" in the middle
+
+ 16:30:10 <slangasek> which seems to be a nautilus bug
+
+ 16:30:30 * stgraber is happy to re-assign to desktop for a nautilus fix :)
+
+ 16:30:57 <cjwatson> hmm, looks like it was changed in https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/154506
+
+ 16:30:59 <ubottu> Launchpad bug 154506 in One Hundred Paper Cuts "Ubuntu LiveCD "Install" icon confusing" [Low,Fix released]
+
+ 16:31:06 <cjwatson> but I definitely think the wrapping is a nautilus bug
+
+ 16:31:12 <cjwatson> or something in that stack
+
+ 16:32:09 <stgraber> I don't think there's any good reason for that weird wrapping, having nautilus render it as "Install Ubuntu\n12.04 LTS" would be fine
+
+ 16:32:31 <cjwatson> might even be gtk/pango
+
+ 16:32:48 <stgraber> so move the bug to desktop and if they can't get it fixed for 12.04, then drop the version number for final?
+
+ 16:33:44 <jodh> Are we allowed to say "Install Ubuntu Precise"? Seems that it considers the period a sentence end so is wrapping it there.
+
+ 16:34:30 <bdmurray> jodh: I don't think so and that would likely cause some confusion
+
+ 16:34:49 <cjwatson> "Ubuntu Precise" isn't a proper way to refer to the final release
+
+ 16:35:54 <bdmurray> so assign to the desktop team then?
+
+ 16:36:01 <jodh> I wonder if you could "fool" the wrapping code then by using a UTF-8 'middle-dot' ('·' (0x00B7)) rather than a basic ASCII one?
+
+ 16:36:08 <cjwatson> bdmurray: yeah
+
+ 16:36:09 <slangasek> and reassign the bug to nautilus, yes
+
+ 16:36:22 <cjwatson> there might be a way to fix it with pango attributes
+
+ 16:36:31 <slangasek> splitting on a dot without whitespace after it is obviously wrong
+
+ 16:36:39 <bdmurray> okay, then bug 947236 - that won't be done this release will it?
+
+ 16:36:40 <ubottu> Launchpad bug 947236 in base-files (Ubuntu Q-series) "Please provide /etc/os-release" [Wishlist,Confirmed] https://launchpad.net/bugs/947236
+
+ 16:36:43 <cjwatson> but it likely won't be accessible from a desktop file so it will have to be fixed in the desktop stack anyway
+
+ 16:37:11 <cjwatson> I don't know that I object to doing os-release for P; it's not intrusive
+
+ 16:37:12 <ogra_> pango has a "nowrap" mode iirc
+
+ 16:38:09 <jodh> fwiw the middle-dot trick works ;)
+
+ 16:38:43 <bdmurray> okay, then assign it to the team?
+
+ 16:39:15 <cjwatson> yeah
+
+ 16:40:07 <bdmurray> when I was looking at apt proxy bugs I found bug 24061
+
+ 16:40:08 <ubottu> Launchpad bug 24061 in apt (Ubuntu Precise) "GPG error with apt-get/aptitude/update-manager behind proxy (BADSIG 40976EAF437D05B5)" [High,In progress] https://launchpad.net/bugs/24061
+
+ 16:40:22 <bdmurray> its in progress but not assigned
+
+ 16:41:21 <cjwatson> I'm not sure why that's in progress; for updated status you probably need to talk with mvo and/or DonKult
+
+ 16:42:03 <ev> bdmurray: apols for the delay. That was a bug fix for a papercut. I'll try to find it.
+
+ 16:42:25 <bdmurray> ev: colin found it
+
+ 16:42:45 <ev> cool
+
+ 16:43:23 <bdmurray> then slangasek and I were looking at bug 484499 yesterday
+
+ 16:43:24 <ubottu> Launchpad bug 484499 in grub2 (Ubuntu Lucid) "[MASTER] syntax errors in /etc/default/grub break upgrades" [Medium,Triaged] https://launchpad.net/bugs/484499
+
+ 16:43:37 <bdmurray> Is there anything actionable there?
+
+ 16:43:59 <ogra_> have something like visudo ?
+
+ 16:44:09 <cjwatson> the only thing we could do would be to have a debconf check for validity
+
+ 16:44:09 <ogra_> but thats rather a task for UDS discussion
+
+ 16:44:21 <cjwatson> I strongly suspect that people would continue to file bugs anyway after breaking their configuration files
+
+ 16:44:35 <cjwatson> particularly because there are circumstances in which a debconf prompt won't show up
+
+ 16:44:41 <cjwatson> (noninteractive upgrades)
+
+ 16:44:42 <ogra_> it causes a lot of noise though
+
+ 16:44:52 <cjwatson> it does, but we can't prevent it completely
+
+ 16:44:55 <ogra_> every bit we can cut from that would help
+
+ 16:45:05 <cjwatson> I'm not even convinced we can prevent it mostly
+
+ 16:45:54 <cjwatson> visudo - mm, except that all the forums/blog/etc. advice people are following recommends editing the file directly
+
+ 16:46:05 <slangasek> my initial suggestion to bdmurray had been to close that as non-actionable
+
+ 16:46:07 <cjwatson> and people will get equivalently confused if they're prevented
+
+ 16:46:09 <ogra_> sure, it will have a transition time
+
+ 16:46:16 <slangasek> he countered that we could at least put a warning comment in the file
+
+ 16:46:28 * doko is leaving now for the Python language summit
+
+ 16:46:33 <ogra_> but people also edit sudo without visudo ... still there is the header in the file
+
+ 16:46:34 <cjwatson> people observably don't read any commentary in grub configuration files
+
+ 16:46:43 <cjwatson> I don't think it's truly actionable, but if we close it, it will just get reopened
+
+ 16:46:53 <cjwatson> or new dups opened
+
+ 16:46:59 <ogra_> s/sudo/sudoers/
+
+ 16:47:09 <slangasek> but in general, I don't think we should consider it in scope for us to prevent users from breaking package upgrades by breaking config files
+
+ 16:47:30 <cjwatson> (also, I don't want to change that file unnecessarily because it leads to conffile merge prompts)
+
+ 16:47:41 <slangasek> bdmurray: should we leave the bug open then, but exclude it somehow with a tag?
+
+ 16:47:58 <bdmurray> slangasek: exclude it from the bug heat graph? sure
+
+ 16:48:08 <cjwatson> I'm not being wilfully obstructive here btw, I've just thought about this in the past and concluded that there isn't really much useful I can do ...
+
+ 16:48:18 <slangasek> bdmurray: and from any other graphs / reports we're using to track bugs of importance
+
+ 16:48:55 <bdmurray> aren't a lot of duplicates of it automatically reported?  we could so something there at least
+
+ 16:49:02 <slangasek> cjwatson: right, users following bad advice they get on the Internet and breaking their /etc/default/grub is a social problem, not a technical one
+
+ 16:49:02 <bdmurray> s/so/do/
+
+ 16:49:46 <cjwatson> if there's some way to automatically guide people through fixing it, that would be good
+
+ 16:50:15 <ogra_> doesnt it need an update-grub run ?
+
+ 16:50:20 <ogra_> after you edited ?
+
+ 16:50:25 <cjwatson> yes
+
+ 16:50:31 <ogra_> so that could have a check
+
+ 16:50:33 <cjwatson> it does
+
+ 16:50:35 <cjwatson> it fails
+
+ 16:50:41 <ogra_> aww, ok
+
+ 16:50:47 <cjwatson> I'm not prepared to let the package install anyway under those circumstances, though
+
+ 16:50:51 <cjwatson> that's just asking for trouble later
+
+ 16:50:54 * slangasek nods
+
+ 16:51:43 <cjwatson> (the bad advice is often unintentional, BTW - unicode quotes and the like - but it's bad advice nonetheless)
+
+ 16:51:57 <bdmurray> that's all I have
+
+ 16:52:46 <slangasek> cjwatson: realistically, what's the next step with this bug?  If it's just going to sit open until someone gets around to writing "some way to automatically guide people through fixing it", that's the same as doing nothing
+
+ 16:54:07 <slangasek> well, let's take that off-line I think :)
+
+ 16:54:08 <ogra_> how about having it automatically included in /var/backups ... ?
+
+ 16:54:09 <slangasek> [TOPIC] AOB
+
+ 16:54:17 <cjwatson> that's the only plausible next step that I can think of, so I guess if you think that bdmurray or I or somebody should be actioned to fix it ...
+
+ 16:54:20 <ogra_> so you can at least easily roll back
+
+ 16:54:49 <slangasek> anything else people want to talk about today?
+
+ 16:56:24 <slangasek> cjwatson: I think it's going to be a lot of work to produce something (either wiki page or program) that gets people out of the mess in a semi-automated fashion, and I don't think that's a priority right now, no
+
+ 16:56:51 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

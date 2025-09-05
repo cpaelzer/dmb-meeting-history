@@ -1,0 +1,265 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 10 May at 14:31 &mdash; 14:50 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-05-10-14.31.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by slyon at 14:31.
+
+
+=== current component mismatches ===
+
+Discussion started by slyon at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 14:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 14:33)
+
+=== New MIRs ===
+
+Discussion started by slyon at 14:41.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 14:41)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 14:44.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 14:44)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 14:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 14:47)
+
+=== Any other business? ===
+
+Discussion started by slyon at 14:49.
+
+
+
+
+== People present (lines said) ==
+
+ * slyon (58)
+ * sarnold (17)
+ * didrocks (16)
+ * joalif (4)
+ * ubottu (4)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:31 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:31 <meetingology> Meeting started at 14:31:13 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:31 <slyon> #topic Review of previous action items
+
+ 14:31 <slyon> we'd didn't have any formal action items last week.
+
+ 14:31 <slyon> but how is the nullboot MIR progressing, joalif ?
+
+ 14:32 <joalif> slyon: just pasted my review, it's ok but needs security review
+
+ 14:32 <slyon> nice, thank you!
+
+ 14:32 <sarnold> good morning
+
+ 14:32 <slyon> #topic current component mismatches
+
+ 14:32 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:33 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:33 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <slyon> non-proposed looks rather clean. I created a stub bug for z3, which is in foundation's backlog
+
+ 14:33 <sarnold> requests -> python-charset-normalizer feels new
+
+ 14:34 <slyon> sarnold: ACK. we had it last week.
+
+ 14:34 <sarnold> licensecheck -> libobject-pad-perl feels new too
+
+ 14:34 <sarnold> d'oh
+
+ 14:34 <slyon> its shared duty between foundations and server, I might find some time to investigate that, or maybe cpaelzer can.
+
+ 14:35 <slyon> wrt licensecheck -> lib*-perl and sphinx -> lib*-perl:
+
+ 14:35 <slyon> i investigated that. its the usual start of new cycle pulling in of new -perl dependencies.
+
+ 14:35 <slyon> but all are maintained by Debians perl team and usually in a good shape
+
+ 14:35 <slyon> I created a (combined) stub bug report about it, so maybe we can handle them all at once
+
+ 14:36 <sarnold> nice nice
+
+ 14:37 <slyon> I also had a look at mutt vs gsasl. The SASL library was changed due to a licensing conflict and I'm currently consulting the team of what would be the best way forward. Most probably we need to MIR gsasl in addition to the existing SASL library
+
+ 14:37 <slyon> ruby-xmlrpc vs ruby-webrick is server, so maybe cpaelzer can investigate once he's back
+
+ 14:37 <sarnold> the licenses, they give, they take
+
+ 14:38 <slyon> jaraco.text vs jaraco.context is openstack, so for jamespage to have a look at
+
+ 14:38 <sarnold> I'm surprised ruby-xmlrpc is in main, but in focal libruby2.7 drags it around to everything..
+
+ 14:38 <slyon> sarnold: yeah... initially I just wanted to revert that change, but after some consultation this doesn't sound like a good idea.
+
+ 14:39 <slyon> we also have gvfs vs libsoup3 – didrocks did you have a chance to investigate that?
+
+ 14:39 <didrocks> slyon: it’s a real one, soname transition. However libsoup3 depends on sysprof right now which is uneeded
+
+ 14:39 <didrocks> so, the goal is for jbicha to fix this in Debian
+
+ 14:40 <didrocks> (assigned to him)
+
+ 14:40 <slyon> ok nice!
+
+ 14:40 <didrocks> I guess status is correct, no? there is a MIR bug, set as incomplete and assigned
+
+ 14:40 <didrocks> oh interesting, it’s not picked up
+
+ 14:40 <slyon> it doesn't show up in the report... did you subscribe ~ubuntu-mir ?
+
+ 14:40 <didrocks> I will check
+
+ 14:40 <slyon> thanks
+
+ 14:41 <didrocks> I thought I did, but maybe not clicked strongly enough :)
+
+ 14:41 <slyon> hehe
+
+ 14:41 <sarnold> hehehe
+
+ 14:41 <slyon> #topic New MIRs
+
+ 14:41 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:41 <slyon> we have a bunch of new MIRs for review
+
+ 14:41 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:41 <slyon> bug #1971738
+
+ 14:41 <ubottu> Bug 1971738 in ell (Ubuntu) "[MIR] ell" [High, New] https://launchpad.net/bugs/1971738
+
+ 14:42 <slyon> bug 1971973
+
+ 14:42 <ubottu> Bug 1971973 in gnome-text-editor (Ubuntu) "[MIR] gnome-text-editor" [Undecided, New] https://launchpad.net/bugs/1971973
+
+ 14:42 <slyon> bug 1971767
+
+ 14:42 <ubottu> Bug 1971767 in libfreeaptx (Ubuntu) "[MIR] libfreeaptx" [Undecided, New] https://launchpad.net/bugs/1971767
+
+ 14:42 <slyon> bug 1971739
+
+ 14:42 <ubottu> Bug 1971739 in iwd (Ubuntu) "[MIR] iwd" [Undecided, New] https://launchpad.net/bugs/1971739
+
+ 14:42 <didrocks> I guess I can’t hide from gnome-text-editor. I can try taking iwd as well
+
+ 14:42 <slyon> I'd volunteer to do the iwd review, as I've been involved with that transition a bit
+
+ 14:43 <slyon> ok. didrocks: gnome-text-editor
+
+ 14:43 <slyon> slyon: iwd
+
+ 14:43 <didrocks> oh, forget I told that, feel free to tak iwd :p
+
+ 14:43 <slyon> joalif: do you have capacity to take one as well?
+
+ 14:43 <joalif> i can take the libfreeaptx or the other one
+
+ 14:43 <joalif> i don't mind
+
+ 14:44 <slyon> ok joalif: libfreeaptx
+
+ 14:44 <slyon> and I guess we'll leave ell for cpaelzer
+
+ 14:44 <slyon> #topic Incomplete bugs / questions
+
+ 14:44 <didrocks> sounds good, if he can’t, I will take it next week
+
+ 14:44 <didrocks> I see seb is spamming us with MIRs :p
+
+ 14:44 <slyon> thank you!
+
+ 14:44 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:44 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:45 <slyon> All I see here are my lib*-perl stub bug reports.
+
+ 14:45 <slyon> And libqtr-glib; didrocks did you find some time to look at that?
+
+ 14:46 <didrocks> sorry, I missed that one, will do this week
+
+ 14:46 <slyon> thank you
+
+ 14:46 <didrocks> my goal is to ping seb/jbicha to get news
+
+ 14:46 <didrocks> but they were in the sprint
+
+ 14:46 <didrocks> so… hard :)
+
+ 14:46 <slyon> yes that'd be great
+
+ 14:47 <sarnold> :)
+
+ 14:47 <slyon> indeed
+
+ 14:47 <slyon> #topic MIR related Security Review Queue
+
+ 14:47 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 14:47 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:47 <slyon> I see no changes here.
+
+ 14:47 <sarnold> I started in on telegraf last night and I've got some panics that are stopping the build
+
+ 14:47 <slyon> do you have any news for us sarnold ?
+
+ 14:48 <sarnold> I haven't invested yet, it failed over night :( I'll probably need help if these are in the tests, as I think at the moment
+
+ 14:48 <sarnold> ok      github.com/influxdata/telegraf/plugins/outputs/influxdb_v2      0.020s
+
+ 14:48 <sarnold> panic: runtime error: invalid memory address or nil pointer dereference
+
+ 14:48 <sarnold> [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0x971eb1]
+
+ 14:48 <sarnold> etc
+
+ 14:49 <slyon> ok. I think it would be best to reach out to sergiodj directly if you have any questions about that
+
+ 14:49 <sarnold> thanks
+
+ 14:49 <slyon> #topic Any other business?
+
+ 14:49 <sarnold> none here
+
+ 14:49 <didrocks> nothing for me
+
+ 14:49 <joalif> none
+
+ 14:50 <slyon> cool, I'll assign the new MIRs to us as agreed upon above
+
+ 14:50 <slyon> other than that, we're done :)
+
+ 14:50 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

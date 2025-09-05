@@ -1,0 +1,341 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 09 Mar at 15:30 &mdash; 16:00 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-03-09-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 15:31.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:34.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:34)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:38)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:45.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:45)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:53.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:53)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libayatana-appindicator/+bug/1915695 is incompleted and sorted out between didrocks and seb128 which is ok (no current todo for us)  (cpaelzer, 15:55)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:57.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (82)
+ * didrocks (19)
+ * sarnold (9)
+ * ubottu (9)
+ * doko (8)
+ * seb128 (8)
+ * meetingology (2)
+ * ddstreet (2)
+ * mclemenceau (1)
+
+
+
+== Full log ==
+
+
+ 15:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:40 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:31 <cpaelzer> #topic Review of previous action items
+
+ 15:31 <sarnold> good morning
+
+ 15:31 <cpaelzer> My action is to excuse myself being suddenly missing, but I was rather sick all of last week
+
+ 15:31 <cpaelzer> Ihope you were able to cover over that just fine
+
+ 15:31 <cpaelzer> if there were any real actions from last week let me know
+
+ 15:31 <cpaelzer> other than that we will give everyone a minute to realize it is meeting-time
+
+ 15:31 <cpaelzer> re-ping jamespage ddstreet doko didrocks
+
+ 15:32 <cpaelzer> and hi sarnold
+
+ 15:32 <sarnold> cpaelzer: alas there were only two of us last week, so nothing happened
+
+ 15:32 <sarnold> cpaelzer: I hope you're feeling better
+
+ 15:32 <ddstreet> o/ sorry
+
+ 15:33 <didrocks> hey
+
+ 15:33 <ddstreet> i have dual mtgs at this time each week, so i have to split my attention :)
+
+ 15:33 <cpaelzer> your 50% is often good enough
+
+ 15:34 <cpaelzer> as long as you can say yes to assigned tasks :-)
+
+ 15:34 <cpaelzer> ok let us get started here
+
+ 15:34 <cpaelzer> hoping to be more than the three of us :-)
+
+ 15:34 <cpaelzer> #topic current component mismatches
+
+ 15:34 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:35 <cpaelzer> we will nsee needrestart later anyway
+
+ 15:35 <didrocks> (4 of us?)
+
+ 15:35 <cpaelzer> oh you have the same color as sarnold has for me - sure 4
+
+ 15:35 <cpaelzer> and hi didrocks
+
+ 15:35 <didrocks> o/
+
+ 15:35 <cpaelzer> the real new content in mismatches are
+
+ 15:35 <cpaelzer> a) gnome-control-center -> power-profiles-daemon
+
+ 15:36 <cpaelzer> that sounds desktoppy - any opinion didrocks ?
+
+ 15:36 <didrocks> I can handle it, I did the NEW review already with MIR review mind
+
+ 15:36 <didrocks> I’ll ask seb to file it
+
+ 15:36 <cpaelzer> and b) libnotify (which according to http://reqorts.qa.ubuntu.com/reports/m-r-package-team-mapping.html also is desktop)
+
+ 15:36 <doko> o/
+
+ 15:36 <cpaelzer> which depends on mor
+
+ 15:37 <cpaelzer> -> sugar -> sugar-toolkit-gtk3 and python-gwebsockets
+
+ 15:37 <cpaelzer> websockets sounds like an intense security review ...
+
+ 15:37 <doko> it's just a recommends
+
+ 15:37 <cpaelzer> didrocks: would you mind carrying that to the team for evaluation as well?
+
+ 15:37 <didrocks> (actually, forgot we did the MIR already, just seb didn’t subcribe us)
+
+ 15:37 <didrocks> I’ll look at it, but yeah, sounds big
+
+ 15:38 <cpaelzer> doko: which of the cases did you mean for "only a recommends" ?
+
+ 15:38 <cpaelzer> and still it needs to be sorted out, but it might be one of the simple "demote to suggests" cases
+
+ 15:38 <didrocks> yep, hoping that will work out functionally
+
+ 15:38 <cpaelzer> looking at the same in propoposed
+
+ 15:38 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:39 <cpaelzer> it is 3 weeks with abseil in this state now
+
+ 15:39 <cpaelzer> do we need to do anything about https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=981269 ?
+
+ 15:39 <ubottu> Debian bug 981269 in mozc "Use the shared abseil library which isn't ABI stable" [Normal,Open]
+
+ 15:40 <cpaelzer> for libbsd -> libmd - this one is on security atm. I know @sarnold you must be rather busy, but I guess libbsd is non debatable
+
+ 15:40 <didrocks> I asked multiple times about it and seb is tracking it, I think we let him proposing what to do
+
+ 15:40 <cpaelzer> therefore is there someone assigned to libmd from seucrity already ?
+
+ 15:40 <cpaelzer> ok didrocks for abseil
+
+ 15:41 <sarnold> cpaelzer: no, no one's assigned to review libmd, afaik we haven't discussed it further since you raised it recently
+
+ 15:42 <cpaelzer> IMHO @sarnold if you tihnk you can't make it happen you need to raise it with mclemenceau for emergency alternatives
+
+ 15:42 <cpaelzer> I'll leave it with you sarnold (not to do it, but to sort out an assignment and ETA to let mclemenceau know then) - ok ?
+
+ 15:43 <mclemenceau> thanks cpaelzer
+
+ 15:43 <sarnold> cpaelzer: ack, thanks
+
+ 15:44 <doko> cpaelzer, didrocks: libnotify recommends sugar
+
+ 15:44 <cpaelzer> thanks doko
+
+ 15:44 <cpaelzer> the last one I see here is https://bugs.launchpad.net/ubuntu/+source/libdeflate/+bug/1908502
+
+ 15:44 <ubottu> Launchpad bug 1908502 in libdeflate (Ubuntu Hirsute) "[MIR] libdeflate" [Undecided,In progress]
+
+ 15:44 <cpaelzer> that seemed mostly ready and is in the hands of  seb128 and didrocks
+
+ 15:45 <cpaelzer> I expect this is gone from mismatches next week didrocks, do you agree ?
+
+ 15:45 <didrocks> doko: merge error apparently, will be fixed
+
+ 15:45 <cpaelzer> thanks
+
+ 15:45 <cpaelzer> ok, nothing else in mismatches AFAICS
+
+ 15:45 <cpaelzer> #topic New MIRs
+
+ 15:45 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:46 <doko> didrocks: yeah, I can understand that you don't want to have a delta. but keeping that in the current state in -proposed isn't helpful either
+
+ 15:46 <didrocks> cpaelzer: well, I can ask again
+
+ 15:46 <sarnold> ah, xnox just fiddled with the settings on nftables, no actual state change there
+
+ 15:46 <didrocks> doko: can you tell that to the uploader and not me?
+
+ 15:47 <cpaelzer> yeah sarnold, but we still need to make suerr in whicih field the ball is atm
+
+ 15:47 <didrocks> seems like all actions I have here are pending on other individual and not me, while I got asked for it…
+
+ 15:47 <cpaelzer> sarnold: on https://bugs.launchpad.net/ubuntu/+source/nftables/+bug/1887187
+
+ 15:47 <ubottu> Launchpad bug 1887187 in nftables (Ubuntu) "[MIR] nftables" [Critical,New]
+
+ 15:48 <cpaelzer> let me try to summarize
+
+ 15:48 <cpaelzer> 1. opened by rbalint
+
+ 15:48 <doko> didrocks: so that would be gunnarhj? is he community?
+
+ 15:48 <didrocks> doko: he is
+
+ 15:48 <cpaelzer> 2. but then punted to security to complete/drive this (the filing not the review)
+
+ 15:48 <cpaelzer> => https://bugs.launchpad.net/ubuntu/+source/nftables/+bug/1887187/comments/4
+
+ 15:49 <cpaelzer> 3. to reflect that we have assigned it to you in https://bugs.launchpad.net/ubuntu/+source/nftables/+bug/1887187/comments/8
+
+ 15:49 <ubottu> Launchpad bug 1887187 in nftables (Ubuntu) "[MIR] nftables" [Critical,New]
+
+ 15:49 <cpaelzer> and now xnox fail-read this as waiting for review and did https://bugs.launchpad.net/ubuntu/+source/nftables/+bug/1887187/comments/9
+
+ 15:49 <doko> didrocks: I can, but anybody else can do as well ;p
+
+ 15:49 <cpaelzer> but it wasn't waiting for review, it was waiting for https://bugs.launchpad.net/ubuntu/+source/nftables/+bug/1887187/comments/4 to happe
+
+ 15:49 <didrocks> doko: I told this is a merge error and we will handle it
+
+ 15:50 <doko> ok, thanks
+
+ 15:50 <cpaelzer> doko:  didrocks: thanks for sorting out that other case in parallel - It seems this will go fine and all is clear
+
+ 15:50 <cpaelzer> sarnold: are you (or any other security member) follow up on https://bugs.launchpad.net/ubuntu/+source/nftables/+bug/1887187/comments/4
+
+ 15:50 <ubottu> Launchpad bug 1887187 in nftables (Ubuntu) "[MIR] nftables" [Critical,New]
+
+ 15:50 <cpaelzer> to quote "... I think the MIR preparations will be done by the Security Team, who will own nftables itself, too."
+
+ 15:51 <sarnold> cpaelzer: I can re-raise it at our next team meeting, but given $everything I can't imagine it'll be a priority for the team to push on this
+
+ 15:51 <seb128> @deflate, I forwarded the comments to Debian, I'm unsure those issues should block the MIR, one is about a patch description being inacurrate, the other one about optimisation profile warnings that don't seem to have an impact
+
+ 15:52 <cpaelzer> ok sarnold, I'll update the bug accordingly and re-assign it to you for doing that
+
+ 15:52 <sarnold> cpaelzer: cool, thanks
+
+ 15:53 <cpaelzer> that should do it https://bugs.launchpad.net/ubuntu/+source/nftables/+bug/1887187/comments/10
+
+ 15:53 <ubottu> Launchpad bug 1887187 in nftables (Ubuntu) "[MIR] nftables" [Critical,New]
+
+ 15:53 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:53 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:53 <cpaelzer> obviously https://bugs.launchpad.net/ubuntu/+source/needrestart/+bug/1907422
+
+ 15:53 <ubottu> Launchpad bug 1907422 in needrestart (Ubuntu) "[MIR] needrestart + dependencies" [Undecided,Incomplete]
+
+ 15:53 <cpaelzer> we had plenty of MIR members doing reviews
+
+ 15:54 <cpaelzer> all of them LGTM, doko also found a great "why don't you use ..." and also got it answered by now
+
+ 15:54 <cpaelzer> the one task remaining is  needrestart itslef atm being sorted out between ddstreet (reviewer) and sil2100 (to implement what was requested)
+
+ 15:55 <cpaelzer> I think that state is good for now and we can't do more atm
+
+ 15:55 <cpaelzer> thanks to all of you did your reviews!
+
+ 15:55 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libayatana-appindicator/+bug/1915695 is incompleted and sorted out between didrocks and seb128 which is ok (no current todo for us)
+
+ 15:55 <ubottu> Launchpad bug 1915695 in libayatana-appindicator (Ubuntu) "[MIR] libayatana-appindicator" [Undecided,Incomplete]
+
+ 15:55 <cpaelzer> abseil we mentioned already
+
+ 15:56 <sarnold> heh "it's a very specific fruitcake"
+
+ 15:56 <cpaelzer> hehe
+
+ 15:56 <cpaelzer> the last recent/interesing one is https://bugs.launchpad.net/ubuntu/+source/libftdi/+bug/1912371
+
+ 15:56 <ubottu> Launchpad bug 1912371 in libftdi (Ubuntu) "[MIR] flashrom + libftdi" [Undecided,Incomplete]
+
+ 15:56 <cpaelzer> doko: this went back to mclemenceau to opt-in to drive this further (or reject)
+
+ 15:57 <cpaelzer> could you ask him next time you speak with him so that it doesn't stay stuck in this state?
+
+ 15:57 <doko> ok, I'll chase that down
+
+ 15:57 <cpaelzer> thanks
+
+ 15:57 <cpaelzer> #topic Any other business?
+
+ 15:57 <cpaelzer> what did I miss ?
+
+ 15:57 <cpaelzer> ... nothing from me
+
+ 15:58 <didrocks> on libdeflate: the last blocker is the weird patch description, but what concerns me more is reflected by seb128 with what was raised in the debian bug report: "Removing the patch the package still builds fine, is the change still needed? What problem does it resolve exactly?", like we have a patch workarounding a failing test and we don’t have any idea if this is a valid case or not…
+
+ 15:58 <didrocks> That doesn’t sound confortable to maintain? But happy to set a ACK if this is fine to live with it for seb128
+
+ 15:58 <seb128> well, either we keep in sync with that one test disabled
+
+ 15:58 <seb128> or we add a delta to re-enable the patch
+
+ 15:58 <seb128> whatever MIR team decide is fine with me
+
+ 15:58 <didrocks> it’s up to you, but we all know that if we don’t investigate now, that will not happen post-MIR
+
+ 15:59 <seb128> I prefer to be in sync if possible and the Debian maintainer doesn't reply
+
+ 15:59 <cpaelzer> ^^ ack to didrocks
+
+ 15:59 <seb128> we can add the delta for now if that's the ask
+
+ 15:59 <cpaelzer> yeah that would be nice seb128
+
+ 15:59 <seb128> alright
+
+ 15:59 <seb128> let me upload in a bit
+
+ 15:59 <cpaelzer> that should be all then for today ... ?
+
+ 15:59 <didrocks> sounds like it’s enough already :)
+
+ 16:00 <cpaelzer> oh yeah :-)
+
+ 16:00 <cpaelzer> see you all next week
+
+ 16:00 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

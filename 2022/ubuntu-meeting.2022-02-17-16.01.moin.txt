@@ -1,0 +1,721 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 17 Feb at 16:01 &mdash; 16:58 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-02-17-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 16:01.
+
+ * ''LINK:'' https://github.com/systemd/systemd/pull/22038   (slyon, 16:01)
+ * ''LINK:'' https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/415663   (slyon, 16:01)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 16:11.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html   (bdmurray, 16:11)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html   (bdmurray, 16:24)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 16:26.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (schopin, 16:26)
+
+=== AOB ===
+
+Discussion started by bdmurray at 16:57.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (61)
+ * jawn-smith (56)
+ * ubottu (46)
+ * juliank (24)
+ * schopin (21)
+ * slyon (17)
+ * dbungert (16)
+ * alexghiti (16)
+ * ogayot (15)
+ * doko (15)
+ * waveform (13)
+ * ginggs (9)
+ * enr0n (9)
+ * xypron (7)
+ * meetingology (2)
+ * mclemenceau (2)
+
+
+
+== Full log ==
+
+
+ 16:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:06 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:01 <bdmurray> #topic Lightning Round
+
+ 16:01 * bdmurray does the shuffle
+
+ 16:01 <bdmurray> dbungert slyon ginggs jawn-smith bdmurray sil2100 enr0n juliank vorlon xypron waveform alexghiti ogayot doko mwhudson schopin
+
+ 16:01 <dbungert> * zeek vs glibc - look at this a bit, package ended up being removed, and that
+
+ 16:01 <dbungert> was a good choice.  With update to new upstream version things will be fine.
+
+ 16:01 <dbungert> * subiquity - fix issue where sensitive information could be logged to log
+
+ 16:01 <dbungert> files, and tighten permissions on files that subiquity writes. LP: #1960162
+
+ 16:01 <dbungert> * subiquity - add scaling boot and efi system for guided partitioning, to help
+
+ 16:01 <ubottu> Launchpad bug 1960162 in subiquity "Subiquity Shows Guided Storage  Passphrase in Plaintext with Read-all Permissions" [Critical, Confirmed] https://launchpad.net/bugs/1960162
+
+ 16:01 <dbungert> create smaller partitions for VMs and larger ones for full disks
+
+ 16:01 <dbungert> * prep subiquity release for above items and to get updates into 20.04.4
+
+ 16:01 <dbungert> * ubuntu-desktop-installer - LP: #1959579 - investigate subiquity side and
+
+ 16:01 <ubottu> Launchpad bug 1959579 in livecd-rootfs (Ubuntu) "Desktop canary installation fails on curtin error, E: Unable to locate package linux-generic" [Undecided, New] https://launchpad.net/bugs/1959579
+
+ 16:01 <dbungert> recommend livecd-rootfs changes to allow u-d-i to pick the kernel they want
+
+ 16:01 <dbungert> * curtin - review and merge fix for LP: #1955671, thanks x_nox
+
+ 16:01 <ubottu> Launchpad bug 1955671 in curtin (Ubuntu) "support for rocky linux UEFI" [Undecided, In Progress] https://launchpad.net/bugs/1955671
+
+ 16:01 <dbungert> (done)
+
+ 16:01 <slyon> - MIR review libapache2-mod-auth-openidc, LP: #1959722
+
+ 16:01 <slyon> - fixed sudo autopkgtests (after merge)
+
+ 16:01 <slyon> - sponsorig new libzdnn package (s390x)
+
+ 16:01 <slyon> - merging systemd-stable 249.10, disabling some flaky tests
+
+ 16:01 <slyon> - working on barbican proposed-migration, LP: #1959626
+
+ 16:01 <slyon> + hits timeout in sqlalchemy.engine.connect() – but why?!
+
+ 16:01 <slyon> - pushing systemd vs dbus-daemon issue a bit:
+
+ 16:01 <ubottu> Launchpad bug 1959722 in libapache2-mod-auth-openidc (Ubuntu) "[MIR] libapache2-mod-auth-openidc" [Undecided, Incomplete] https://launchpad.net/bugs/1959722
+
+ 16:01 <slyon> https://github.com/systemd/systemd/pull/22038
+
+ 16:01 <ubottu> Launchpad bug 1959626 in barbican (Ubuntu) "barbican autopkgtests fail with python3.10" [Undecided, New] https://launchpad.net/bugs/1959626
+
+ 16:01 <ubottu> Pull 22038 in systemd/systemd "Fix deadlock between nss-systemd and dbus (dbus call timeout)" [Open]
+
+ 16:01 <slyon> === Netplan ===
+
+ 16:01 <slyon> - Fixed NetworkManager integration:
+
+ 16:01 <slyon> https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/415663
+
+ 16:01 <slyon> - lots of pre-release testing, smaller fixes & packaging work
+
+ 16:01 <slyon> - released 0.104 upstream \o/ (and uploaded to jammy)
+
+ 16:02 <slyon> (done)
+
+ 16:02 <bdmurray> ginggs:
+
+ 16:02 <ginggs> * Working on FTBFS and autopkgtest regressions in Python 3.10-as-default transition
+
+ 16:02 <ginggs> * FTBFS reports
+
+ 16:02 <ginggs> * No-change rebuilds for vtk 9.1 transition
+
+ 16:02 <ginggs> * Worked on FTBFS and merges; ppc64-diag,
+
+ 16:02 <ginggs> * Sponsored some uploads; pytest-sugar, python-pxattr, openspi and shasta
+
+ 16:02 <ginggs> * No-change rebuilds for LP: #1959054
+
+ 16:02 <ubottu> Launchpad bug 1959054 in libvirt (Ubuntu Jammy) "debhelper restarts services marked --no-restart-on-upgrade" [Undecided, Triaged] https://launchpad.net/bugs/1959054
+
+ 16:02 <ginggs> (done)
+
+ 16:02 <jawn-smith> * ubuntu-image
+
+ 16:02 <jawn-smith> * Made updates to snapd PR to address requested changes
+
+ 16:03 <jawn-smith> * Productive meetings about pre-built rootfs handling in new design                                               * Working on example snaps to show Raspberry Pi header pin usage on Core
+
+ 16:03 <jawn-smith> * Also working on a blog post to demonstrate these                                                                * Assisting security team in understanding golang-*-dev packages and how to recursively determine the packages that need to be rebuilt when a security vulnerability is found
+
+ 16:03 <jawn-smith> * Working on scripts to identify LP bugs related to accessiblity and a11y for the accessibility TMRG.
+
+ 16:03 <jawn-smith> [done]
+
+ 16:03 <bdmurray> investigation into germinate with -updates (LP: #1921862)
+
+ 16:03 <bdmurray> closed the Focal task for the above given changes to livecd-rootfs
+
+ 16:03 <bdmurray> livecd-rootfs MP to replace lupin-casper w/ casper
+
+ 16:03 <ubottu> Launchpad bug 1921862 in livecd-rootfs (Ubuntu Jammy) "Call germinate with -updates" [High, Triaged] https://launchpad.net/bugs/1921862
+
+ 16:03 <bdmurray> uploaded livecd-rootfs to B, F, I, J for LP: #1960537
+
+ 16:03 <bdmurray> updated focal seed for change from btrfs-tools to btrfs-progs
+
+ 16:03 <bdmurray> sru-verification of /boot partition sizing LP: #1959971
+
+ 16:03 <bdmurray> merged autopkgtest-package-configs change adding shasta to big_packages
+
+ 16:03 <ubottu> Launchpad bug 1960537 in livecd-rootfs (Ubuntu Jammy) "umount_partition e2fsck call fails with ${rootfs_dev_mapper} in use" [High, Fix Released] https://launchpad.net/bugs/1960537
+
+ 16:03 <ubottu> Launchpad bug 1959971 in partman-auto (Ubuntu Jammy) "increase /boot partition size" [High, Triaged] https://launchpad.net/bugs/1959971
+
+ 16:03 <bdmurray> sync'ed memtest86+ from Debian, sent email regarding the new version
+
+ 16:03 <bdmurray> email to ubuntu-devel regarding /boot partition sizing
+
+ 16:03 <bdmurray> review, sponsoring of enr0n's apport wayland ubuntu-bug -w changes
+
+ 16:03 <bdmurray> review of ogayot's whoopsie --no-polling changes
+
+ 16:03 <bdmurray> updated EoL crash removal code to remove more columns
+
+ 16:03 <bdmurray> submitted RT to remove crash data for Ubuntu 16.04 crashes
+
+ 16:03 <bdmurray> preparing for and conducting interviews
+
+ 16:03 <bdmurray> ✔ done
+
+ 16:04 <juliank> sil2100 is not in here
+
+ 16:04 <bdmurray> enr0n:
+
+ 16:04 <enr0n> * macaulay2 vs gdbm
+
+ 16:04 <enr0n> - test timed out; success on retry
+
+ 16:04 <enr0n> * MP submitted and merged for LP #1959458
+
+ 16:04 <enr0n> * Filed MIR for plocate (LP #1960864)
+
+ 16:04 <enr0n> - Opened LP #1961266 (with patch) to address MIR feedback
+
+ 16:04 <enr0n> * Fixed LP: #1952947
+
+ 16:04 <enr0n> - bdmurray sponsored upload to jammy
+
+ 16:04 <enr0n> - Waiting for sponsor(s) for SRU to focal and impish
+
+ 16:04 <ubottu> Launchpad bug 1959458 in ubuntu-release-upgrader (Ubuntu Jammy) "Lock screen disabling needs updating" [High, Fix Released] https://launchpad.net/bugs/1959458
+
+ 16:04 <enr0n> (done)
+
+ 16:04 <ubottu> Launchpad bug 1960864 in plocate (Ubuntu) "[MIR] plocate" [Undecided, Incomplete] https://launchpad.net/bugs/1960864
+
+ 16:04 <ubottu> Launchpad bug 1961266 in plocate (Ubuntu) "remove debian/source/include-binaries file from plocate package" [Medium, Triaged] https://launchpad.net/bugs/1961266
+
+ 16:04 <ubottu> Launchpad bug 1952947 in apport (Ubuntu Impish) "ubuntu-bug -w (using xprop) doesn't work under wayland" [Low, Triaged] https://launchpad.net/bugs/1952947
+
+ 16:04 <juliank> * various grub work
+
+ 16:04 <juliank> - switch to fuse3 (LP: #1935659)
+
+ 16:04 <ubottu> Launchpad bug 1935659 in grub2-unsigned (Ubuntu Jammy) "grub2 FTBFS when built with libfuse3-dev" [Undecided, In Progress] https://launchpad.net/bugs/1935659
+
+ 16:04 <juliank> - run os-prober on new install and if run before (LP: #1955109)
+
+ 16:04 <ubottu> Launchpad bug 1955109 in ubiquity (Ubuntu Jammy) "boot menu not appearing after manual install of jellyfish daily build alongside other OS" [Undecided, Confirmed] https://launchpad.net/bugs/1955109
+
+ 16:04 <juliank> - fix wrong number of bytes being freed (LP: #1958623)
+
+ 16:05 <ubottu> Launchpad bug 1958623 in grub2 (Ubuntu) "encounter RSOD while pxe booting from MaaS server" [Medium, New] https://launchpad.net/bugs/1958623
+
+ 16:05 <juliank> * UC20 signing for shim/grub (LP: #1961080)
+
+ 16:05 <ubottu> Launchpad bug 1961080 in shim-signed (Ubuntu) "UC20 Online Key signing request for grub2-signed 1.177 and shim-signed 1.51" [Undecided, New] https://launchpad.net/bugs/1961080
+
+ 16:05 <juliank> * sponsored python-debian for schopin
+
+ 16:05 <juliank> * autopkgtest-cloud:
+
+ 16:05 <juliank> - restart rabbitmq, write an auto restarter
+
+ 16:05 <juliank> (done)
+
+ 16:05 <bdmurray> vorlon is out
+
+ 16:05 <bdmurray> xypron:
+
+ 16:05 <xypron> Investigated 'toil' autopkgtests failures LP #1961097
+
+ 16:05 <xypron> Fixed #1960263 python-pil-doc fails to build in jammy
+
+ 16:05 <xypron> Reworked GRUB pull request for riscv64 support LP #1876620
+
+ 16:05 <xypron> Analyzing what is needed to used Ubuntu toolchain for building recovery tools for VisionFive board
+
+ 16:05 <xypron> <done />
+
+ 16:05 <ubottu> Launchpad bug 1961097 in toil (Ubuntu) "autopackage tests fail against Python 3.10" [Undecided, Confirmed] https://launchpad.net/bugs/1961097
+
+ 16:05 <ubottu> Launchpad bug 1876620 in grub2 (Ubuntu) "Enable riscv64 build" [Wishlist, Confirmed] https://launchpad.net/bugs/1876620
+
+ 16:07 <bdmurray> waveform:
+
+ 16:07 <waveform> * Fix for debhelper was merged upstream (https://salsa.debian.org/debian/debhelper/-/merge_requests/61)
+
+ 16:07 <waveform> * ginngs kindly sponsored the debhelper merge (LP: #1960248) which incorporated the --no-restart fix (LP: #1959054)
+
+ 16:07 <waveform> * Added list of packages that need rebuilding to the aforementioned bugs (and another for Debian upstream)
+
+ 16:07 <waveform> * Jammy raspi desktop images have a non-functional swapfile; proposed a merge to fix (LP: #1961047)
+
+ 16:07 <waveform> * Merged pi-gadget changes
+
+ 16:07 <waveform> * Lots of testing of focal .4 dailies using the new gadget from the "classic" branch
+
+ 16:07 <waveform> * Pushed one gadget fix for missing net.ifnames=0 on series <= focal
+
+ 16:07 <ubottu> Merge 61 in debian/debhelper "Fix #994204 (restarting of services marked --no-stop-on-upgrade)" [Merged]
+
+ 16:07 <ubottu> Launchpad bug 1960248 in debhelper (Ubuntu) "Please merge debhelper 13.6 from Debian unstable." [Undecided, In Progress] https://launchpad.net/bugs/1960248
+
+ 16:07 <waveform> * Verification of the vcio permissions fix (LP: #1958563)
+
+ 16:07 <ubottu> Launchpad bug 1959054 in libvirt (Ubuntu Jammy) "debhelper restarts services marked --no-restart-on-upgrade" [Undecided, Triaged] https://launchpad.net/bugs/1959054
+
+ 16:07 <ubottu> Launchpad bug 1961047 in livecd-rootfs (Ubuntu Jammy) "swapfile has holes on preinstalled desktop" [Undecided, Confirmed] https://launchpad.net/bugs/1961047
+
+ 16:07 <waveform> * Investigating upgrade failure on linux-firmware-raspi (LP: #1961185)
+
+ 16:07 <ubottu> Launchpad bug 1958563 in raspberrypi-userland (Ubuntu Impish) "[SRU] Wrong permissions on vcio" [Undecided, Fix Committed] https://launchpad.net/bugs/1958563
+
+ 16:07 <waveform> * Pi meetings
+
+ 16:07 <ubottu> Launchpad bug 1961185 in linux-firmware-raspi (Ubuntu) "package linux-firmware-raspi 6-0ubuntu2 failed to install/upgrade: new linux-firmware-raspi package pre-installation script subprocess returned error exit status 2" [Undecided, Confirmed] https://launchpad.net/bugs/1961185
+
+ 16:07 <waveform> (done)
+
+ 16:07 <alexghiti> Opensbi new ISA spec fix uploaded
+
+ 16:07 <alexghiti> Python-pip test fix as suggested by stefanor
+
+ 16:07 <alexghiti> Servicelog version bump to fix FTBFS uploaded
+
+ 16:07 <alexghiti> Shasta disabled test that consumed too much memory (even with big_packages)
+
+ 16:07 <alexghiti> Lintian merge work: lots of MIR or a demotion to universe? Discussion ongoing
+
+ 16:07 <alexghiti> U-boot upstream build failures investigations https://source.denx.de/u-boot/custodians/u-boot-riscv/-/jobs/393314
+
+ 16:07 <alexghiti> Linux kernel upstream fixes following sv48 introduction
+
+ 16:07 <alexghiti> (done)
+
+ 16:07 <bdmurray> ogayot:
+
+ 16:07 <ogayot> * subiquity:
+
+ 16:07 <ogayot> * worked on third-party drivers (more issues when mounting overlays)
+
+ 16:07 <ogayot> * implemented option to run commands in private mounts namespace
+
+ 16:07 <ogayot> * fixed installation not finishing when query to geoip service is still running (move to async HTTP for geoip)
+
+ 16:08 <ogayot> * investigated integration tests regression on jammy-daily -> caused by move to glibc 2.35
+
+ 16:08 <ogayot> * met with UX to discuss improvements for ubuntu advantage support
+
+ 16:08 <ogayot> * whoopsie / apport: added timer-based activation for apport-autoreport (every 3h). Tests looking good so far.
+
+ 16:08 <ogayot> * python-testtools from merge party (LP #1960297)
+
+ 16:08 <ubottu> Launchpad bug 1960297 in python-testtools (Ubuntu) "Please merge python-testtools 2.5.0-3 (main) from Debian unstable (main)" [Undecided, Confirmed] https://launchpad.net/bugs/1960297
+
+ 16:08 <ogayot> done
+
+ 16:08 <bdmurray> doko:
+
+ 16:09 <bdmurray> schopin‽
+
+ 16:09 <doko> - icu now migrated, remaining bits are in NBS
+
+ 16:09 <doko> - ocaml should be ready to migrate now, once autopkg tests finish
+
+ 16:09 <doko> - perl: giving back autopkg tests with &all-proposed=1, still a lot to run
+
+ 16:09 <doko> - packaged gdb trunk (to become 12.1)
+
+ 16:09 <doko> - updated openjdk-18 to the release candidate 1
+
+ 16:09 <doko> - gcc-12 updated, libgo soname bump, should be ready to upload now
+
+ 16:09 <doko> - ubuntu-archive work related to migrations
+
+ 16:09 <doko> - now have the results for an LTO test rebuild in Debian, hopefully will reduce the delta again for 22.10
+
+ 16:09 <doko> - retried builds for the impish vX test rebuilds
+
+ 16:09 <doko> - taking a vacation day for tomorrow, Feb 18
+
+ 16:09 <doko> (done)
+
+ 16:09 <schopin> * On +1 rotation this week, but much time was also taken by the Rust MIR work
+
+ 16:09 <schopin> * Distro work:
+
+ 16:09 <schopin> + Finished the mini-transition that I triggered when patching haskell-hsopenssl
+
+ 16:09 <schopin> + Filed a bug to remove ruby-gitlab-labkit from the archive as out of date and blocking
+
+ 16:09 <schopin> other packages from migrating (LP: #1960803)
+
+ 16:09 <ubottu> Launchpad bug 1960803 in ruby-gitlab-labkit (Ubuntu) "Remove ruby-gitlab-labkit from the archive" [Undecided, New] https://launchpad.net/bugs/1960803
+
+ 16:09 <schopin> + Fixed libdbd-mysql-perl FTBFS for the Perl transition (LP: #1960784)
+
+ 16:09 <ubottu> Launchpad bug 1960784 in libdbd-mysql-perl (Ubuntu) "libdbd-mysql-perl: FTBFS on jammy (4.050-4build1)" [Undecided, Fix Committed] https://launchpad.net/bugs/1960784
+
+ 16:09 <schopin> + Rebuilt siril and x264 for the libffms2-5 transition
+
+ 16:09 <schopin> + Looked into opa-ff build failure, turned out to be caused by a packaging difference between Debian and Ubuntu at the kernel level (LP: #1960841)
+
+ 16:09 <ubottu> Launchpad bug 1960841 in opa-ff (Ubuntu) "Make linux-tools-common Provide linux-cpupower" [Undecided, Confirmed] https://launchpad.net/bugs/1960841
+
+ 16:09 <schopin> + Uploaded no-change rebuilds of sundials and petsc for the libhydre transition
+
+ 16:09 <schopin> + Contacted upstream regarding the ntpsec situation wrt OpenSSL 3.0 : https://gitlab.com/NTPsec/ntpsec/-/issues/726
+
+ 16:09 <ubottu> Issue 726 in NTPsec/ntpsec "NTPsec fails to build with OpenSSL 3.0" [Opened]
+
+ 16:09 <schopin> + Synced tpm2-openssl from Debian experimental (LP: #1959901)
+
+ 16:09 <ubottu> Launchpad bug 1959901 in Ubuntu "[needs-packaging] tpm2-openssl" [Wishlist, Fix Released] https://launchpad.net/bugs/1959901
+
+ 16:09 <schopin> + Pinged upstream for a new release for tpm2-tss (LP: #1958439)
+
+ 16:09 <ubottu> Launchpad bug 1958439 in tpm2-tss (Ubuntu) "tpm2-tss: builds against OpenSSL 3.0, but fails on execution" [Undecided, New] https://launchpad.net/bugs/1958439
+
+ 16:09 <schopin> + Patched openpace to fix openssl-related FTBFS (LP: #1960913)
+
+ 16:09 <ubottu> Launchpad bug 1960913 in openpace (Ubuntu) "openpace: FTBFS against OpenSSL 3.0" [High, Fix Released] https://launchpad.net/bugs/1960913
+
+ 16:10 <schopin> + Patched racket to recommend libssl3 instead of libssl1
+
+ 16:10 <schopin> + Reviewed and sponsored opencryptoki for fheimes (LP: #1959419)
+
+ 16:10 <ubottu> Launchpad bug 1959419 in opencryptoki (Ubuntu) "[22.04 FEAT] Upgrade openCryptoki to latest version (>= 3.17)" [High, Fix Released] https://launchpad.net/bugs/1959419
+
+ 16:10 <schopin> + Investigated softhms2 OpenSSL related FTBFS, with little progress (LP: #1961189)
+
+ 16:10 <ubottu> Launchpad bug 1961189 in softhsm2 (Ubuntu) "softhsm2: FTBFS against OpenSSL 3.0 (test suite)" [Undecided, New] https://launchpad.net/bugs/1961189
+
+ 16:10 <schopin> * Rust: I finalized a candidate version for 1.58.1 but am investigating armhf failures in the test suite. See LP: #1957932 for a better status report
+
+ 16:10 <ubottu> Launchpad bug 1957932 in rustc (Ubuntu) "[MIR] rustc, cargo" [Critical, Incomplete] https://launchpad.net/bugs/1957932
+
+ 16:10 <schopin> * Netplan: reviewed a couple of PRs for slyon
+
+ 16:10 <schopin> ✓ done
+
+ 16:10 <bdmurray> any questions on status?
+
+ 16:11 <bdmurray> #topic Release Incoming Bugs
+
+ 16:11 <bdmurray> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html
+
+ 16:12 <bdmurray> bug 1895799
+
+ 16:12 <ubottu> Bug 1895799 in pkgbinarymangler (Ubuntu) "pkgstripfiles doesn't respect override_dh_installchangelogs targets" [High, Confirmed] https://launchpad.net/bugs/1895799
+
+ 16:13 <bdmurray> If the server team isn't on this then we should take it.
+
+ 16:14 <bdmurray> so let's card it and target it
+
+ 16:14 <bdmurray> bug 1958720 that one it looks like the server team is on
+
+ 16:14 <ubottu> Bug 1958720 in pyyaml (Ubuntu) "python3-yaml and python3-six are not co-installable with python-is-python2 in jammy" [High, Confirmed] https://launchpad.net/bugs/1958720
+
+ 16:15 <bdmurray> bug 1914278
+
+ 16:15 <ubottu> Bug 1914278 in packagekit (Ubuntu Jammy) "Kernel updates marked as 'manually installed', prevents old kernels cleanup" [High, In Progress] https://launchpad.net/bugs/1914278
+
+ 16:16 <bdmurray> So the packagekit bug just needs sponsoring for Jammy as a start.
+
+ 16:16 <bdmurray> Is there somebody interested in sponsoring it?
+
+ 16:16 <juliank> yes
+
+ 16:16 <bdmurray> great, thanks. Do you think it is worth carding?
+
+ 16:17 <bdmurray> I mean do you need a card to track it or will you just JFDI?
+
+ 16:17 <juliank> It's now actually the new upstream release itself
+
+ 16:17 <juliank> I'd like a card
+
+ 16:17 <bdmurray> ack
+
+ 16:17 <juliank> No sense uploading a git snapshot debdiff if the release it out :)
+
+ 16:17 <mclemenceau> ok carded
+
+ 16:17 <bdmurray> The card would be useful for tracking the SRU of the fix too
+
+ 16:17 <bdmurray> bug 1961047
+
+ 16:17 <ubottu> Bug 1961047 in livecd-rootfs (Ubuntu Jammy) "swapfile has holes on preinstalled desktop" [Undecided, Confirmed] https://launchpad.net/bugs/1961047
+
+ 16:18 <bdmurray> let's card the review of that
+
+ 16:18 <bdmurray> bug 1960749
+
+ 16:18 <ubottu> Bug 1960749 in dpkg (Ubuntu) "dpkg incorrectly installs singular-doc in jammy Docker container" [Undecided, Triaged] https://launchpad.net/bugs/1960749
+
+ 16:19 <juliank> this is a dpkg incompleteness
+
+ 16:19 <juliank> I don't know if we can/want to fix it
+
+ 16:19 <juliank> we can probably move it to next cycle at the very least
+
+ 16:20 <juliank> basically it keeps dirs and symlinks in /usr/share/doc that should not be there
+
+ 16:20 <juliank> due to how dpkg unpacks tarballs
+
+ 16:20 <juliank> (longstanding XXX in code)
+
+ 16:21 <bdmurray> yeah, lets punt it to Krazy Kangaroo
+
+ 16:21 <juliank> yeah up to kool koala
+
+ 16:22 <bdmurray> bug 1947046
+
+ 16:22 <ubottu> Bug 1947046 in grub2 (Ubuntu) "EFI stub: ERROR: FIRMWARE BUG: kernel image not aligned on 64k boundary" [Undecided, In Progress] https://launchpad.net/bugs/1947046
+
+ 16:22 <bdmurray> juliank: have you seen that MP?
+
+ 16:22 <juliank> yes um that's straight to selected for development
+
+ 16:23 <juliank> we don't _need_ that code, xypron's patch also handles it, but security review so hmm
+
+ 16:23 <juliank> so I'll see if I can put it in the upload
+
+ 16:24 <bdmurray> Okay, thanks.
+
+ 16:24 <bdmurray> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html
+
+ 16:24 <bdmurray> bug 1959085
+
+ 16:24 <ubottu> Bug 1959085 in initramfs-tools (Ubuntu) "Ubuntu 21.10 boot stuck in initramfs" [Undecided, Confirmed] https://launchpad.net/bugs/1959085
+
+ 16:25 <bdmurray> The hope is xnox will look at that
+
+ 16:25 <bdmurray> and rls-ff is just /boot partition sizing
+
+ 16:26 <bdmurray> #topic Team proposed-migration report
+
+ 16:26 <jawn-smith> o/
+
+ 16:26 <jawn-smith> glibc I'm assuming is mwhudson
+
+ 16:26 <schopin> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:26 <jawn-smith> libselinux and libsemanage should be with the server team
+
+ 16:26 <jawn-smith> python-click was previously with mwhudson for the mailman3 issue
+
+ 16:27 <jawn-smith> it now seems to be related to something else. Does anyone know if that's still with mwhudson?
+
+ 16:27 <dbungert> I think we can assume that
+
+ 16:28 <jawn-smith> alright, time to dive into python3-defaults
+
+ 16:28 <jawn-smith> barbican was slyon
+
+ 16:28 <slyon> still with me, it's a bit tricky
+
+ 16:28 <jawn-smith> Steve had mentioned that it was a tough one
+
+ 16:29 <jawn-smith> libapache2-mod-python was alexghiti
+
+ 16:29 <slyon> going down the rabbit hole on barbican currently :)
+
+ 16:29 <alexghiti> Yes; I updated the bug report with my findings, but I have to admit that I dropped this one because it is marked server-todo
+
+ 16:30 <jawn-smith> libreoffice probably just needs a retry on armhf
+
+ 16:30 <jawn-smith> IIRC that one is known to be flakey and prone to timeouts
+
+ 16:31 <bdmurray> I can click that button
+
+ 16:31 <jawn-smith> mdanalysis, any volunteers?
+
+ 16:31 <jawn-smith> thanks bdmurray
+
+ 16:32 <jawn-smith> waveform: mdanalysis is arm64. Can you take a look?
+
+ 16:32 <bdmurray> I can look at mdanalysis with enr0n
+
+ 16:32 <jawn-smith> alexghiti: in your status last week you mentioned fixing the mosquitto autopkgtest. Was that python3.10 related?
+
+ 16:33 <jawn-smith> based on the number of failed retries on s390x this appears to be an actual issue
+
+ 16:33 <ogayot> the regression with Python 3.10 is fixed, but the package still FTBFS because of bug #1929553
+
+ 16:33 <alexghiti> Mosquitto was'nt mine :)
+
+ 16:33 <ubottu> Bug 1929553 in mosquitto (Ubuntu) "autopkgtest is very flaky on s390x" [Undecided, Confirmed] https://launchpad.net/bugs/1929553
+
+ 16:33 <jawn-smith> bdmurray: thanks!
+
+ 16:34 <jawn-smith> waveform: python-clevercsv
+
+ 16:34 <waveform> jawn-smith, ack
+
+ 16:34 <jawn-smith> alexghiti: looks like you were looking into python-dugong
+
+ 16:34 <jawn-smith> you have a lot of these :)
+
+ 16:35 <alexghiti> Ok I'll look into it a bit more :)
+
+ 16:35 <jawn-smith> it looks like you looked into a few of them for +1
+
+ 16:35 <jawn-smith> If you need to pass some of them off we can definitely reassign
+
+ 16:37 <jawn-smith> python-pip is doko
+
+ 16:37 <jawn-smith> software-properties: any takers?
+
+ 16:37 <schopin> o/
+
+ 16:37 <jawn-smith> thanks schopin!
+
+ 16:38 <jawn-smith> toil and unicycler were also looked at by alexghiti during +1
+
+ 16:38 <bdmurray> schopin: FYSA the software-properties tests are very long
+
+ 16:38 <alexghiti> unicycler will be fixed when upstream will take a look at spades
+
+ 16:38 <alexghiti> toil may not support python 3.10 upstream
+
+ 16:39 <jawn-smith> okay great. Does toil have any reverse dependencies?
+
+ 16:39 <jawn-smith> and is it active upstream? can we expect 3.10 support to be added by upstream?
+
+ 16:40 <alexghiti> There is patch that fixes a few things but not everything
+
+ 16:40 <alexghiti> But I'll do a proper summary for this one too
+
+ 16:40 <doko> toil has no rdeps
+
+ 16:40 <jawn-smith> it doesn't appear to have any reverse dependencies, so we may be able to remove it from the archive for now
+
+ 16:40 <alexghiti> Ok, I'll re-check one last time before asking for removal then
+
+ 16:40 <doko> I'll remove it, if somebody files an issue, or points to a debian issue
+
+ 16:41 <jawn-smith> thanks alexghiti and doko
+
+ 16:41 <jawn-smith> That's it for python3-defaults, hooray
+
+ 16:41 <jawn-smith> libplist appears to have a regression. Any volunteers?
+
+ 16:42 <ginggs> doko: there's debian bug #1004516 for toil
+
+ 16:42 <ubottu> Debian bug 1004516 in src:cwltool, src:toil "cwltool breaks toil autopkgtest: No such file or directory: '/home/debci/tmp/tmpgxz5j85g'" [Serious, Open] https://bugs.debian.org/1004516
+
+ 16:42 <dbungert> libplist might just be a retry
+
+ 16:43 <jawn-smith> ogayot was looking into initramfs-tools vs klibc
+
+ 16:43 <ogayot> sadly haven't had time to look deep enough into that one
+
+ 16:43 <ogayot> would gladly trade it for another one though!
+
+ 16:43 <jawn-smith> I'll look into initramfs-tools vs klibc then
+
+ 16:44 <ogayot> thanks, appreciated!
+
+ 16:44 <jawn-smith> waveform: any progress on cdebconf vs kopanocore?
+
+ 16:44 <jawn-smith> It looks like cdebconf may also need a retest against glibc 2.35
+
+ 16:44 <waveform> jawn-smith, kopanocore was likely just a net timeout and probably just needs a retry; didn't have time to dig into the glibc side of it but it was 2.34 so perhaps 2.35 fixes it
+
+ 16:45 <bdmurray> I can retry glibc stuff
+
+ 16:45 <jawn-smith> thanks bdmurray
+
+ 16:45 <jawn-smith> and now for everyone's favorite: perl!
+
+ 16:46 <jawn-smith> ogayot: could  have have a look at cyrus-imapd?
+
+ 16:46 <doko> cyrus-imapd/3.4.3-3: ppc64el, I removed the binaries, so that one should be ignored
+
+ 16:46 <ogayot> sure
+
+ 16:46 <jawn-smith> never mind then!
+
+ 16:46 <doko> bdmurray: ^^^
+
+ 16:46 <jawn-smith> ogayot: how about libclass-dby-sweet-perl?
+
+ 16:46 <jawn-smith> s/dby/dbi/
+
+ 16:46 <ogayot> yes, that's a sweet name
+
+ 16:47 <jawn-smith> who still needs one?
+
+ 16:47 <dbungert> I need one
+
+ 16:47 <slyon> I can take the systemd one
+
+ 16:48 <jawn-smith> dbungert: libobject-pad-slotattr-final-perl ?
+
+ 16:48 <dbungert> ack
+
+ 16:48 <jawn-smith> ginggs: libspreadsheet-wright-perl ?
+
+ 16:49 <ginggs> sure
+
+ 16:49 <jawn-smith> thanks!
+
+ 16:53 <jawn-smith> xypron: can you take a look at libcommon-sense-perl?
+
+ 16:53 <xypron> sure
+
+ 16:53 <jawn-smith> it is FTBFS
+
+ 16:55 <jawn-smith> juliank: Can you take a look at the libobject-pad-slotattr* packages with dbungert ?
+
+ 16:55 <xypron> jawn-smith: libcommon-sense-perl is waiting for perl to build. What are you missing?
+
+ 16:56 <jawn-smith> update excuses said it had missing builds, but as that appears to be i386 only can you take a look at libcrypt-openssl-random-perl instead?
+
+ 16:57 <bdmurray> #topic AOB
+
+ 16:57 <bdmurray> Monday is a US holiday, however I'm taking tomorrow off.
+
+ 16:57 <dbungert> same
+
+ 16:58 <mclemenceau> I'll be off Monday as well
+
+ 16:58 <bdmurray> Alright, thanks everybody!
+
+ 16:58 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

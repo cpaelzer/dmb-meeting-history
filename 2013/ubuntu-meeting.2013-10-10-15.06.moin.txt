@@ -1,0 +1,459 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 10 Oct at 15:06 &mdash; 15:48 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-10-10-15.06.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:07.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:36.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (49)
+ * slangasek (39)
+ * xnox (22)
+ * doko (18)
+ * ubottu (16)
+ * cjwatson (14)
+ * stgraber (14)
+ * bdmurray (12)
+ * jodh (9)
+ * barry (4)
+ * meetingology (3)
+ * lool (2)
+ * mdeslaur (1)
+
+
+
+== Full Log ==
+
+
+ 15:06 <slangasek> #startmeeting
+
+ 15:06 <meetingology> Meeting started Thu Oct 10 15:06:40 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:06 <meetingology> 
+
+ 15:06 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:07 <slangasek> [TOPIC] Lightning round
+
+ 15:08 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:08 <slangasek> bdmurray xnox stgraber slangasek cjwatson barry jodh ev doko stokachu
+
+ 15:08 <slangasek> bdmurray: hello!
+
+ 15:08 <slangasek> stokachu: ack :)
+
+ 15:08 <bdmurray> bug triage
+
+ 15:08 <bdmurray> tested update-manager bug 1119427
+
+ 15:08 <bdmurray> removed usage of gksu from ubuntu-release-upgrader - bug 1210649
+
+ 15:08 <bdmurray> added phased-update knowledge to update-notifier - bug 1223321
+
+ 15:08 <ubottu> bug 1119427 in update-manager (Ubuntu) "update-manager crashed with AttributeError in update(): 'NoneType' object has no attribute 'saveDistUpgrade'" [Medium,Confirmed] https://launchpad.net/bugs/1119427
+
+ 15:08 <ubottu> bug 1210649 in ubuntu-release-upgrader (Ubuntu Raring) "/usr/lib/ubuntu-release-upgrader/check-new-release-gtk:TypeError:on_button_upgrade_now_clicked:run:error:error:__init__:__init__:function" [High,Fix released] https://launchpad.net/bugs/1210649
+
+ 15:08 <ubottu> bug 1223321 in update-notifier (Ubuntu) "update-notifier notifies of phased-updates for which you may not be eligible" [Medium,Fix released] https://launchpad.net/bugs/1223321
+
+ 15:08 <bdmurray> click chroot modifications
+
+ 15:08 <bdmurray> reviewed / approved P SRU of libreoffice
+
+ 15:09 <bdmurray> ⌁ done
+
+ 15:09 <cjwatson> bdmurray: Are you finished with the chroot work?  I think I was waiting for a response to my most recent comment before circling back
+
+ 15:09 <xnox> * emulator:
+
+ 15:09 <xnox> - adbd into android available out of the box
+
+ 15:09 <xnox> - serial into ubuntu available out of the box
+
+ 15:09 <xnox> - everything else is built and boots correctly
+
+ 15:09 <xnox> - emulator on the people.c.c is updated, but is kind of hand-build
+
+ 15:09 <xnox> (some patches are not in saucy)
+
+ 15:09 <xnox> - todo: /data/ is not mounted inside the android-lxc container
+
+ 15:09 <xnox> * bugs:
+
+ 15:09 <xnox> - fixed up u1 page bug in ubiquity (couldn't login/sign-up)
+
+ 15:10 <xnox> - putting spam plug into upstart-udev-bridge (and related debugging)
+
+ 15:10 <xnox> - todo: spam plug on the udev source in systemd-udevd
+
+ 15:10 <xnox> - fixing FTBFS in main
+
+ 15:10 <xnox> ..
+
+ 15:10 <stgraber> No fancy report today, fighting with dbus/kernel/lxc over in #ubuntu-touch (not sure why since it doesn't affect touch though ;)) ...
+
+ 15:10 <bdmurray> cjwatson: no, I was going to have a poke at it again today
+
+ 15:10 <stgraber> 
+
+ 15:10 <stgraber> Quite a lot of upload queue reviews
+
+ 15:10 <stgraber> Looked into a couple of ubiquity bugs (xnox, what's the status on the webkit related one?)
+
+ 15:10 <stgraber> LXC code reviews and cherry-picked a bunch of bugfixes (including trying to sort out the dbus/apparmor mess introduced by recent kernels...)
+
+ 15:10 <stgraber> Added logging support to system-image
+
+ 15:10 <stgraber> Started to work on some of the changes required for ports support for system-image
+
+ 15:10 <stgraber> Some more touch related work (debugging udm, system-image, ...)
+
+ 15:10 <stgraber> (DONE)
+
+ 15:11 <cjwatson> bdmurray: ok, cool
+
+ 15:13 <xnox> stgraber: right, it's on my todo list. but i don't think i'll get to it today.
+
+ 15:14 <stgraber> xnox: yeah, no worries, I kind of gave up on that one after I told cjwatson and slangasek I'd take care of it so I at least keep an eye on it to make sure we make progress (our initial guess was something related to logind I may have been able to help with, but now that it's clearly a webkit issue, I'm not too useful ;))
+
+ 15:15 <xnox> stgraber: i see.
+
+ 15:15 <xnox> stgraber: my guess was to move loading up T&C webpage, only if/when people click to see it. Instead of on module import. Thus at that point we at least know if network is available and don't fail the install horibly.
+
+ 15:16 <slangasek> * working to try to reproduce bug #1234731 in upstart
+
+ 15:16 <slangasek> * being hamstrung by bug #1228406
+
+ 15:16 <slangasek> * freeze reviews
+
+ 15:16 <ubottu> bug 1234731 in dbus (Ubuntu) "calling 'initctl set-env -g' from within an upstart job is lost" [High,New] https://launchpad.net/bugs/1234731
+
+ 15:16 <slangasek> (done)
+
+ 15:16 <ubottu> bug 1228406 in linux (Ubuntu) "[LENOVO 3249CTO] suspend/resume failure" [Medium,Confirmed] https://launchpad.net/bugs/1228406
+
+ 15:17 <cjwatson> Lots of archive cleanup.  NBS now zero, amd64 and armhf zero uninstallables, saucy_outdate_all.txt almost cleared, proposed-migration backlog improved, component-mismatches-proposed tidied up, fixed various build failures.
+
+ 15:17 <cjwatson> ARM64 porting.  Lots of build supervision and scheduling.  Loads of config.guess/config.sub updates.  Fixed dlopen segfault in statically-linked programs which is harmless but confused the fault watcher we have to have in our builds at the moment.
+
+ 15:17 <cjwatson> Investigated bug 1237519.
+
+ 15:17 <ubottu> bug 1237519 in grub2 (Ubuntu) "Grub2 fails to install to non-standard device path" [High,Incomplete] https://launchpad.net/bugs/1237519
+
+ 15:17 <cjwatson> Working on displaying Launchpad builder versions in the UI so that upgrades are slightly less painful to monitor.
+
+ 15:17 <cjwatson> To do:
+
+ 15:17 <cjwatson> * Finish reviewing and merging Brian's chroot management branch (carried over).
+
+ 15:17 <cjwatson> * Hunt through GRUB code to try to chase down bug 1229458 (carried over).
+
+ 15:17 <ubottu> bug 1229458 in grub2 (Ubuntu) "grubnetx64.efi tftp client does not work over ipv6" [High,New] https://launchpad.net/bugs/1229458
+
+ 15:17 <cjwatson> * Merge Steve's GRUB patch (in progress).
+
+ 15:17 <cjwatson> * Look for last-minute installer bugs to hoover up.
+
+ 15:17 <cjwatson> ..
+
+ 15:17 <cjwatson> (I can't take credit for all the archive cleanup obviously :) )
+
+ 15:17 <barry> short week due to illness.
+
+ 15:17 <barry> system-image: LP: #1215586, LP: #1206588, LP: #1235975
+
+ 15:18 <ubottu> Launchpad bug 1215586 in Ubuntu system image "The u/i cannot handle the array-of-dictionaries update descriptions" [High,In progress] https://launchpad.net/bugs/1215586
+
+ 15:18 <ubottu> Launchpad bug 1206588 in Ubuntu system image "test_service_exits() can't run on system bus" [Medium,In progress] https://launchpad.net/bugs/1206588
+
+ 15:18 <ubottu> Launchpad bug 1235975 in Ubuntu system image "Unsafe file and directory permissions" [Critical,In progress] https://launchpad.net/bugs/1235975
+
+ 15:18 <barry> done
+
+ 15:18 <stgraber> xnox: not sure if that'll be enough though, here I clearly had network access and ubiquity would work fine if started under sudo, so it seems like we've got a permission issue somewhere (write to cache, config, similar stuff?)
+
+ 15:18 <jodh> * upstart
+
+ 15:18 <jodh> - Fixed bug 1234898.
+
+ 15:18 <jodh> - Investigated bug 1235231.
+
+ 15:18 <jodh> - Investigated bug 1234743.
+
+ 15:18 <ubottu> bug 1234898 in upstart "upstart-local-bridge not handling all events sent to it" [Undecided,Fix committed] https://launchpad.net/bugs/1234898
+
+ 15:18 <ubottu> bug 1235231 in plymouth (Ubuntu) "plymouth loses output to /dev/console (such as ci-info: messages)" [High,Confirmed] https://launchpad.net/bugs/1235231
+
+ 15:18 <jodh> - Investigating bug 1235649 - multiple issues: relates to 1234743 and
+
+ 15:18 <ubottu> bug 1234743 in linux (Ubuntu) "omapfb module floods system with udev events on samsung galaxy nexus" [Undecided,Incomplete] https://launchpad.net/bugs/1234743
+
+ 15:18 <ubottu> bug 1235649 in unity (Ubuntu Saucy) "uevent spam causes session upstart to consume massive amounts of memory on Ubuntu Touch" [Undecided,New] https://launchpad.net/bugs/1235649
+
+ 15:18 <jodh> what looks to be an incorrect use of the D-Bus API (ongoing).
+
+ 15:18 <jodh> ಠ
+
+ 15:18 <xnox> stgraber: set a11y?!
+
+ 15:19 <xnox> (cause that's one thing that webview does)
+
+ 15:19 <xnox> jodh: i think mhr3 can be a dbus expert, he seems to be working a lot with e.g. for https://launchpad.net/dee
+
+ 15:20 <jodh> xnox: ack, thanks.
+
+ 15:20 <ev> - Chat with Rick on the 1SS move.
+
+ 15:20 <ev> - Chat with James on the 1SS move.
+
+ 15:20 <ev> - Call with Chris and Andy on getting a role account in canonistack for team
+
+ 15:20 <ev> projects. Chatted with Tom Haddon over the approach. Submitted an RT.
+
+ 15:20 <ev> - Call with Chris on the vanguard implementation.
+
+ 15:20 <ev> - Landing task force standups.
+
+ 15:20 <stgraber> xnox: could be
+
+ 15:20 <ev> - Work with Chris on getting OOPS support into lp:qa-dashboard.
+
+ 15:20 <ev> - Some light code review.
+
+ 15:20 <ev> - Chased Canonistack role account (RT 65080).
+
+ 15:20 <ev> - Debugging GNetworkMonitor waking up frequently with apw (LP: #991481).
+
+ 15:20 <ev> Suggestions welcome.
+
+ 15:20 <ev> - A few meetings with Alice on the move.
+
+ 15:20 <ubottu> Launchpad bug 991481 in Whoopsie "Constant dns traffic for daisy.ubuntu.com" [High,Confirmed] https://launchpad.net/bugs/991481
+
+ 15:20 <stgraber> xnox: if sudo strips some of that from the environment, that may be the different
+
+ 15:20 <stgraber> *difference
+
+ 15:20 <ev> - Set up a project to manage the new canonistack role account:
+
+ 15:20 <ev> https://launchpad.net/ci-engineering-canonistack
+
+ 15:20 <ev> - Call with Rick, Larry, pinky, Herb, and James Troup on the 1SS move.
+
+ 15:20 <ev> - Catch up call with Chris.
+
+ 15:20 <ev> - Reviewed some small changes from deej to the daisy and daisy-retracer charms.
+
+ 15:20 <ev> - Investigated using apport-retrace for the touch images for lool. Chat with
+
+ 15:20 <ev> lool and pitti about how we can override UnreportableReason.
+
+ 15:20 <ev> - Chased jjo on https://rt.admin.canonical.com/Ticket/Display.html?id=64590.
+
+ 15:20 <ev> - Mail to the CI team, explaining the new Canonistack role account.
+
+ 15:20 <ev> - Arranged a meeting with the whole CI team to discuss the 1SS move.
+
+ 15:21 <xnox> stgraber: cause ubiquity-dm does process and sets/unsets a11y & modifies gsettings which wouldn't be there, if boot straight to desktop.
+
+ 15:21 <ev> - Mail to ubuntu-engineering, letting them know how they can engage the CI
+
+ 15:21 <ev> engineering team.
+
+ 15:21 <ev> - Worked with Chris and Alex to further clarify our responsibilities in the
+
+ 15:21 <ev> wiki.
+
+ 15:21 <ev> - Call with Alex, Steve, Leann, Michael, and Colin on the landing spreadsheet
+
+ 15:21 <ev> and what we're doing post-release.
+
+ 15:21 <ev> - Created RT 65144 for setting up oops.canonical.com for reports.qa.ubuntu.com.
+
+ 15:21 <ev> - Mail to ubuntu-engineering explaining how to retrace crashes.
+
+ 15:21 <ev> - Chased retracers in prodstack. Nearly there!
+
+ 15:21 <ev> - Working with the AUS folks to find an acceptable meeting time.
+
+ 15:21 <ev> - Small review and merge from Steve for daisy armhf retracer config.
+
+ 15:21 <ev> - Helping the CI team chase a LXC/apparmor issue around dbus.
+
+ 15:21 <ev> - Chasing up statsd RT with alexlist, psivaa, and vila. Waiting for init script
+
+ 15:21 <ev> fixes from jjo.
+
+ 15:21 <ev> - Chased up oops.canonical.com reporting from dashboard.qa.ubuntu.com (RT 65144)
+
+ 15:21 <ev> - Putting Larry and Rick in charge of lab access and discussing using IS' LDAP,
+
+ 15:21 <ev> per Alex's request.
+
+ 15:21 <ev> - Chasing up why we're not seeing the autopilot documentation on
+
+ 15:21 <ev> http://utah.readthedocs.org/en/latest/.
+
+ 15:21 <ev> - Helped jjo debug statsd configuration.
+
+ 15:21 <ev> - Fixes to lp:daisy to support recoverable problems server-side.
+
+ 15:21 <ev> - Investigated bugs in the retracers from deej that turned about to be wrong
+
+ 15:21 <ev> package versions in the deployed charms.
+
+ 15:21 <ev> (done)
+
+ 15:22 <ev> I think there's more, but I forgot to write down whatever it was I did last week
+
+ 15:22 <cjwatson> oh, one other thing on my to-do, the germinate run at the end of the publisher is crashing with something arm64-related and I need to investigate why ASAP
+
+ 15:22 <slangasek> jodh: do you have all the remote access to a mako device that you need for reproducing the problem in place on the phone?
+
+ 15:25 <jodh> slangasek: yes, I do now thanks.
+
+ 15:25 <slangasek> jodh: ok, good
+
+ 15:25 <slangasek> doko: your turn :)
+
+ 15:25 <doko> - one more last (later?) gcc-4.8 update for saucy, fixing wrong code-gen for gmp and nss
+
+ 15:25 <doko> - update all our cross binutils and compilers
+
+ 15:25 <doko> - fixing build failures, ftbfs looks good (main), the test rebuild too besides some texinfo related ftbfs
+
+ 15:25 <doko> - Address remaing MIRs
+
+ 15:25 <doko> - Trying to prepare a Go meetup during Linaro Connect together with mwhudson and some google Go devs
+
+ 15:25 <doko> - Prepare an AArch64 test chroot
+
+ 15:25 <doko> - AArch64 upload orgies
+
+ 15:25 <doko> - last Thu was national holiday, was sick on Fri
+
+ 15:25 <doko> (done)
+
+ 15:28 <lool> ev: pitti suggested something simple for forcing report on .crash
+
+ 15:28 <slangasek> doko: so I didn't get back to you on your question about wrong code generation on armhf
+
+ 15:28 <ev> hm?
+
+ 15:28 <slangasek> I think it's too late (and was already too late) to do much about this before release, besides release note it
+
+ 15:28 <lool> ev: just remove the unreportable reason with vi and submit it (ugly, but works); he didn't want an official flag as this approach is frowned upon in the first place
+
+ 15:28 <doko> yeah
+
+ 15:29 <ev> lool: seems reasonable
+
+ 15:29 <slangasek> doko: I was puzzled by something in your mail, you said that it affected 64-bit math, but the test case for it is only using 32-bit ints?
+
+ 15:30 <doko> was it? hmm ... just chatted with linora tcwg guys
+
+ 15:30 <slangasek> yeah
+
+ 15:30 <slangasek> so if it affects 32-bit math, that worries me a lot more :-)  Yet the problem was only reported in things like gmp
+
+ 15:31 <slangasek> and if we had a widespread problem with 32-bit math I would expect everything to be on the floor, and it's not
+
+ 15:31 <doko> yes, I add the list of packages that apparently were affected
+
+ 15:31 <slangasek> those affected packages were all ones that caught the bug in the testsuite though, right?
+
+ 15:32 <doko> yes, I'm sure about nss and the cyrpto package, didn't check the others
+
+ 15:33 <slangasek> so the part that worries me is the packages that might be affected but *don't* have test suites
+
+ 15:33 <doko> exactly
+
+ 15:33 <slangasek> but I don't think we currently can quantify this well enough to release note it
+
+ 15:33 <slangasek> "some math might be broken" is scaremongering, not a useful release note
+
+ 15:34 <doko> well, it's not broken anymore
+
+ 15:34 <slangasek> doko: can you work with the Linaro guys to try to identify the scope of this?  Any chance that there's a way to search the archive for packages that include the wrong code?
+
+ 15:34 <slangasek> or maybe they know that this is a very rare corner case that only affects heavy-duty math libs
+
+ 15:34 <slangasek> right, it's not broken for anything built with the current compiler
+
+ 15:34 <bdmurray> the ubuntu security team has code for searching archive packages
+
+ 15:35 <doko> slangasek, the corner case was the issue which did show up in mpfr. right, will check again, but afaiu just scanning the assembler for some instructions isn't possible
+
+ 15:35 <doko> will do that at connect
+
+ 15:35 <slangasek> bdmurray: yeah, what doko said, the hard part is scanning the binary for assembly sequences
+
+ 15:36 <doko> xnox, did you feel disturbed? ;-P never typing that much during meetings
+
+ 15:36 <slangasek> I know there are tools out there for scanning for instructions, but perhaps in this case it's too difficult to craft a proper match for the breakage
+
+ 15:36 <slangasek> anyway
+
+ 15:36 <slangasek> [TOPIC] AOB
+
+ 15:36 <slangasek> ?
+
+ 15:36 <xnox> doko: I use push-to-talk such that I don't make noise =)
+
+ 15:37 * xnox ponders if Saucy Salamander, will be followed by Tasty Tintin
+
+ 15:38 <bdmurray> I could use some help with bug 1024590
+
+ 15:38 <ubottu> bug 1024590 in update-manager (Ubuntu Saucy) "update-manager crashed with AttributeError in _on_download_changed(): 'NoneType' object has no attribute 'get_value'" [Medium,Confirmed] https://launchpad.net/bugs/1024590
+
+ 15:39 <slangasek> xnox: a tintin is an animal?
+
+ 15:40 <mdeslaur> tasty turkey
+
+ 15:42 <barry> tangy tadpole
+
+ 15:42 <slangasek> bdmurray: how can we help?
+
+ 15:43 <slangasek> reading the bug log, it seems you're already pretty far down the rabbit hole
+
+ 15:43 <bdmurray> and then I got stuck
+
+ 15:44 <slangasek> anyone have some spare cycles to help bdmurray with this?
+
+ 15:46 <slangasek> <crickets>
+
+ 15:46 <slangasek> bdmurray: I can try to take a look this afternoon, but no promises :/
+
+ 15:47 <bdmurray> slangasek: okay, no problem
+
+ 15:47 <slangasek> anything else today?
+
+ 15:48 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

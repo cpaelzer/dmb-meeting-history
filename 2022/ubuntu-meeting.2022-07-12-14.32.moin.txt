@@ -1,0 +1,372 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 12 Jul at 14:32 &mdash; 15:05 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-07-12-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by slyon at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 14:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 14:32)
+
+=== New MIRs ===
+
+Discussion started by slyon at 14:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 14:37)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 14:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 14:40)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 14:46.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 14:46)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (slyon, 14:46)
+
+=== Any other business? ===
+
+Discussion started by slyon at 14:51.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pull/1   (cpaelzer, 15:00)
+
+
+
+== People present (lines said) ==
+
+ * slyon (66)
+ * cpaelzer (40)
+ * sarnold (34)
+ * ubottu (11)
+ * jamespage (3)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:32 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:06 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:32 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:32 <sarnold> hah, slyon's faster today :) thanks
+
+ 14:32 <slyon> joalif (afk), sarnold, didrocks, cpaelzer, jamespage MIR meeting ping o/
+
+ 14:32 <slyon> #topic current component mismatches
+
+ 14:32 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:32 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <slyon> nothing new on -release
+
+ 14:34 <slyon> on -proposed we have libisofs->jigit, which had some discussion today in #ubuntu-release, but I'll bring that up during AOB
+
+ 14:34 <sarnold> -proposed has a mess of lintian, python->redis brings in python-deprecated,. python-async-timeout, python-typing-extensions
+
+ 14:34 <sarnold> liburi-perl -> libregexp-ipv6-perl
+
+ 14:34 <slyon> python-redis seems new. It's ubuntu-openstack, so probably for jamespage to have a look at
+
+ 14:35 <slyon> the lintian mess is all assigned with the Foundations team
+
+ 14:35 <slyon> liburi-perl seems Foundation'ish, so I'll investigate that
+
+ 14:35 <slyon> the others seem to be known
+
+ 14:36 <sarnold> and hooray for the tracking bug for the known false positives :)
+
+ 14:36 <slyon> I'd also like to talk about false-positives (https://bugs.launchpad.net/ubuntu/+source/plzip/+bug/1980663) e.g. plzip, lzlib, xterm ... but we can do this during AOB, too, when cpaelzer is available as well.
+
+ 14:36 <ubottu> Launchpad bug 1980663 in xterm (Ubuntu) "[MIR] false-positives, do not promote" [Undecided, Fix Released]
+
+ 14:36 <jamespage> o/
+
+ 14:36 <jamespage> apologies for being a little late
+
+ 14:37 <slyon> hey jamespage! could you have a look at the new python-redis depends/mismatches on https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg?
+
+ 14:37 <jamespage> looking now
+
+ 14:37 <slyon> thanks. Moving on
+
+ 14:37 <slyon> #topic New MIRs
+
+ 14:37 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:37 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:37 <slyon> we only have https://bugs.launchpad.net/ubuntu/+source/protobuf-c/+bug/1956617
+
+ 14:37 <ubottu> Launchpad bug 1956617 in protobuf-c (Ubuntu) "[MIR] protobuf-c" [Undecided, New]
+
+ 14:38 <sarnold> I think that's just a simple matter of the statuses being set incorrectly
+
+ 14:38 <slyon> We got the security team ACK. but we need to sync from debian
+
+ 14:38 <slyon> sarnold: is it? there was some recent activity
+
+ 14:39 <sarnold> slyon: yeah, eslerm acked it, but only unassigned us when done, not change the status to In Progress
+
+ 14:40 <sarnold> I changed it to In Progress just now so we'll probably see it again in a few minutes :)
+
+ 14:40 <slyon> sarnold: right. I think this is actually done (MIR ACK & security ACK), but we'd want to sync/merge from debian before promoting it, right?
+
+ 14:40 <slyon> thanks
+
+ 14:40 <slyon> #topic Incomplete bugs / questions
+
+ 14:40 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:40 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:40 <sarnold> there was a good debate about the security fix and whether or not it actually made sense, etc, so pulling in from debian *soon* would give us a lot more confidence for the release
+
+ 14:42 <slyon> I guess I can do the protobuf-c merge and set to "Fix Committed" afterwards..
+
+ 14:42 <slyon> as I've been involved in resolving the original MIR requirements
+
+ 14:42 <sarnold> excellent, thanks
+
+ 14:42 <slyon> so for incomplete MIRs, we have: https://bugs.launchpad.net/ubuntu/+source/libregexp-wildcards-perl/+bug/1980968
+
+ 14:42 <ubottu> Launchpad bug 1980968 in libregexp-wildcards-perl (Ubuntu) "[MIR] libregexp-wildcards-perl" [Undecided, Incomplete]
+
+ 14:43 <slyon> oh that's a dummy. Foundations tracking it wrt lintian mismatch
+
+ 14:43 <slyon> same with https://bugs.launchpad.net/ubuntu/+source/libhtml-tokeparser-simple-perl/+bug/1980662 (assigend to Graham)
+
+ 14:43 <ubottu> Launchpad bug 1980662 in libwww-mechanize-perl (Ubuntu) "[MIR] lib*-perl for lintian 2.115" [Undecided, Incomplete]
+
+ 14:43 <sarnold> "Moved libregexp-wildcards-perl into a separate MIR since it's maintained by a different group" aha!
+
+ 14:43 <sarnold> and that question answered :)
+
+ 14:44 <slyon> that leaves us with https://bugs.launchpad.net/ubuntu/+source/mdevctl/+bug/1942394
+
+ 14:44 <ubottu> Launchpad bug 1942394 in mdevctl (Ubuntu) "[MIR] mdevctl 1.0.0 (rust switch)" [Undecided, Incomplete]
+
+ 14:44 <sarnold> I can't quickly spot what changed in the description recently..
+
+ 14:44 <sarnold> aha, TODOs are changed, eg " The package runs a test suite on build time, if it fails it makes the build fail"
+
+ 14:45 <slyon> I think this is related to the rust ruleset changes and for cpaelzer to comment on
+
+ 14:45 <slyon> IIRC mdevctl was the first rust package
+
+ 14:45 <sarnold> yeah
+
+ 14:46 <slyon> it seems to be actively worked on (last change 5 min ago), so I'd just let it sit there for now and move to AOB, to discuss the rust changes
+
+ 14:46 <slyon> ah wait. security update first :)
+
+ 14:46 <sarnold> it's probably the same discussion anyway :)
+
+ 14:46 <slyon> #topic MIR related Security Review Queue
+
+ 14:46 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 14:46 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:46 <slyon> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:47 <sarnold> ah right! protobuf-c is finished yesterday \o/
+
+ 14:47 <slyon> sarnold: do you have any news for us? We saw some progress on protobuf-c :)
+
+ 14:48 <slyon> sarnold: have you been able to onboard a few more security reviewers?
+
+ 14:48 <sarnold> other MIRs are in progress, which is good; even with the help of the newer folks, we are getting worried about burning down the entire list of MIRs to finish, so we'd like to encourage / recommend teams to please set priorities in jira, it really does help us when we're assigning tasks
+
+ 14:49 <slyon> do the priorities in jira somehow relate to the milestones we set in launchpad?
+
+ 14:49 <sarnold> slyon: let's say sporadic progress, promising, but a reminder that we can't expect the same throughput from newer folks than our friends who'd found greener pastures, etc..
+
+ 14:49 <sarnold> through a manual process :(
+
+ 14:49 <slyon> understandably.
+
+ 14:49 <sarnold> and when there's risk of not getting all the tasks done in a milestone, it's nice to know which ones the requesting teams would like us to pick first
+
+ 14:50 <slyon> so is this something the security team is doing (setting priorities) or are teams expected to set priorities in LP and jira?
+
+ 14:50 <sarnold> those are inputs from other teams
+
+ 14:50 <sarnold> (fwiw I don't think LP priorities are considered at all)
+
+ 14:50 <slyon> okay. Maybe let's repeat that next week. as this week's MIR meeting seems a bit short staffed :)
+
+ 14:51 <sarnold> will do
+
+ 14:51 <slyon> thanks!
+
+ 14:51 <slyon> #topic Any other business?
+
+ 14:51 * sarnold pokes cpaelzer
+
+ 14:51 <slyon> maybe let's start with https://bugs.launchpad.net/ubuntu/+source/plzip/+bug/1980663
+
+ 14:51 <ubottu> Launchpad bug 1980663 in xterm (Ubuntu) "[MIR] false-positives, do not promote" [Undecided, Fix Released]
+
+ 14:51 <sarnold> that's lovely
+
+ 14:52 <sarnold> good job with the explanations
+
+ 14:52 <slyon> I created this bug to track some false-positive component-mismatches. what do you thinkg about having such a ticket? (And do you feel the "Fix Released" status is appropriate?
+
+ 14:52 <slyon> the idea is to add a bug task + description in the comments for every false-positive package
+
+ 14:52 <sarnold> it is a bit weird that it shows up bright yellow in the svgs, but the legend seems to suggest that's a very low-stress place for them to be, so it kind of feels like it fits
+
+ 14:52 <slyon> this way they would show up as yellow on the component-mismatch list and are clickable to read the explanation
+
+ 14:53 <cpaelzer> fully back - reading backlog
+
+ 14:54 <slyon> sarnold: ACK. I felt the "yellow" fix-released status to be the least actionable, that's why i chose it
+
+ 14:54 <cpaelzer> ok
+
+ 14:54 <cpaelzer> thanks slyon for the false-positive handling
+
+ 14:54 <cpaelzer> the good thing on approved/yellow state is that it is more obvious that those are different
+
+ 14:54 <cpaelzer> so I like it
+
+ 14:54 <slyon> I couldn't come up with a proper analysis for esmtp (and others) so if somebody knows their story, feel free to add a bug task abou tit
+
+ 14:55 <cpaelzer> esmtp was also an alternative
+
+ 14:56 <cpaelzer> wow this is older that the move to libera
+
+ 14:56 <slyon> cpaelzer: could you add that in a comment?
+
+ 14:56 <cpaelzer> need the other log for esmtp
+
+ 14:56 <slyon> ok
+
+ 14:56 <slyon> On a different note, there was some discussion today on #ubuntu-release about https://bugs.launchpad.net/ubuntu/+source/usb-creator/+bug/1978066
+
+ 14:56 <ubottu> Launchpad bug 1978066 in usb-creator (Ubuntu) "[MIR] jigit" [Undecided, Confirmed]
+
+ 14:57 <cpaelzer> slyon: that is the reason for esmtp https://bugs.launchpad.net/ubuntu/+source/germinate/+bug/1895011
+
+ 14:57 <ubottu> Launchpad bug 1895011 in germinate (Ubuntu) "virtual-packages do not pick a seeded package (ordering dependent)" [Undecided, New]
+
+ 14:57 <slyon> looks like libisofs https://bugs.launchpad.net/ubuntu/+source/libisoburn/+bug/1977959 was set to "Fix Committed" (and promoted) too early, which caused Desktop ISOs build failures
+
+ 14:57 <ubottu> Launchpad bug 1977959 in usb-creator (Ubuntu) "[MIR] libisoburn, libburn, libisofs" [Undecided, Fix Released]
+
+ 14:58 <cpaelzer> hmm that is an issue slyon
+
+ 14:58 <cpaelzer> how did that happen?
+
+ 14:58 <slyon> src:libisofs has a required TODO: "- In addition of this MIR for the 3 packages, ensure that jigit MIR is also acked (https://bugs.launchpad.net/ubuntu/+source/jigit/+bug/1978066)." which is not yet resolved. So I guess its status should be set to "In Progress" right?
+
+ 14:58 <ubottu> Launchpad bug 1978066 in usb-creator (Ubuntu) "[MIR] jigit" [Undecided, Confirmed]
+
+ 14:58 <cpaelzer> yesa indeed
+
+ 14:59 <slyon> we rolled back the change for now (moved usb-creator to -proposed) and set a "block-proposed" tag on LP to avoid this issue for now
+
+ 14:59 <cpaelzer> it is a miss by didrocks (who isn't here to defend) when re-checking the case
+
+ 14:59 <cpaelzer> rolling it back was right IMHO
+
+ 14:59 <slyon> OK I'll update the status
+
+ 14:59 <cpaelzer> we might want/need to update th ebug
+
+ 14:59 <cpaelzer> ok thanks
+
+ 14:59 <cpaelzer> using the last few seconds .. (time flies)
+
+ 14:59 <cpaelzer> about the rust rules
+
+ 15:00 <cpaelzer> https://github.com/canonical/ubuntu-mir/pull/1
+
+ 15:00 <ubottu> Pull 1 in canonical/ubuntu-mir "Add rust v3" [Open]
+
+ 15:00 <cpaelzer> the question comes down to
+
+ 15:00 <cpaelzer> a) land rules now - modify later OR hold changes back until all is ready
+
+ 15:00 <cpaelzer> and
+
+ 15:00 <cpaelzer> b) do we allow packages in main before things like cargo.lock or else are ready OR not
+
+ 15:01 <cpaelzer> a and b can be decided independently
+
+ 15:01 <cpaelzer> and the time here runs out
+
+ 15:01 <cpaelzer> there is also a discussion about if the new static-built-using is helpful and would replace go.mod/sum and cargo.lock or not
+
+ 15:01 <cpaelzer> since time runs out all I can ask is to participate on the PR discussion
+
+ 15:01 <cpaelzer> sorry
+
+ 15:02 <sarnold> iirc static-built-using reports only source retrieved from other binary packages; and the cargo.lock reports also vendored-in sources
+
+ 15:02 <cpaelzer> and next week is planning sprint - so most likely hard to attend for even more of us
+
+ 15:02 <sarnold> should we skip it? or is it that much more important?
+
+ 15:03 <cpaelzer> thanks sarnold - I also expected it to cover only packages
+
+ 15:03 <slyon> I'm all for merging the rust rules, soon. As landing smaller changes/adoptions in the future (wrt cargo.lock/static-built-using) should be much easier
+
+ 15:03 <cpaelzer> so it really comes down to ask foundations if they would be willing to pick up generating a cargo.lock in dh-cargo
+
+ 15:03 <sarnold> hmm; related to the jigit/iso-creator .. should we have a step "add block-proposed to a bug if there are outstanding TODO"?
+
+ 15:03 <cpaelzer> I'll ask mclemenceau about that
+
+ 15:03 <cpaelzer> but for landing the current text I'm also preferring to land it soon
+
+ 15:04 <slyon> thanks cpaelzer. It would probably be for Simon, who's on vacation currently
+
+ 15:04 <cpaelzer> sarnold: what if I change the rules for rust to require the cargo.lock (that we can't have yet)
+
+ 15:04 <cpaelzer> sarnold: can we then merge them
+
+ 15:04 <cpaelzer> sarnold: and later revise?
+
+ 15:04 <sarnold> cpaelzer: that would make me feel vastly better, yes
+
+ 15:04 <cpaelzer> ok, I#ll ping you once updated
+
+ 15:04 <sarnold> cpaelzer: so long as point (b) remains ..
+
+ 15:04 <sarnold> thank you thank you :)
+
+ 15:05 <cpaelzer> thank you all
+
+ 15:05 <cpaelzer> I'm on a run again :-/
+
+ 15:05 <cpaelzer> thanks for leading slyon
+
+ 15:05 <sarnold> thanks slyon, cpaelzer, jamespage :)
+
+ 15:05 <slyon> sounds good! let's merge the rules with requiring cargo.lock and discuss the cargo.lock + static-built-using situation further as the next step
+
+ 15:05 <slyon> thanks all!
+
+ 15:05 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,198 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 29 Aug at 16:30 &mdash; 16:50 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-08-29-16.30.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:31.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 16:45.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gamera.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/mbedtls.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/mediaelement.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/python-rsa.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/node-cli.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 16:46.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * tyhicks (32)
+ * sarnold (11)
+ * jdstrand (8)
+ * ratliff (5)
+ * sbeattie (5)
+ * jjohansen (5)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 16:30 <tyhicks> #startmeeting
+
+ 16:30 <meetingology> Meeting started Mon Aug 29 16:30:56 2016 UTC.  The chair is tyhicks. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:30 <meetingology> 
+
+ 16:30 <meetingology> Available commands: action commands idea info link nick
+
+ 16:31 <tyhicks> The meeting agenda can be found at:
+
+ 16:31 <tyhicks> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:31 <tyhicks> [TOPIC] Weekly stand-up report
+
+ 16:31 <tyhicks> jdstrand: you're up
+
+ 16:31 <jdstrand> hi
+
+ 16:31 <jdstrand> short week this week (off friday)
+
+ 16:31 <jdstrand> last week had a few unplanned items that caused things to be pushed back a bit: discussed the shared mount for snap implementation, bunch of apparmor-easyprof-ubuntu merges, discussions where others landed the branches in silos
+
+ 16:31 <jdstrand> the apparmor-easyprof-ubuntu silos had yakkety failures in qrt and autopkgtests due to yakkety changes, so I investigated those. The qrt test faillures were due to dropping 13.10 frameworks. autopkgtests were from a click bug that others are working on
+
+ 16:31 <jdstrand> I did finish the lxd-support interface and finished working with the desktop team on browser policy. This resulted in several additional cards being added for the review tools. Those cards are almost done and hopefully I'll finish them today
+
+ 16:32 <jdstrand> this week I'm going to work on the high priority policy bugs PR, high priority interface PR reviews (eg, udisks2/pluggable-storage, docker, fwupd, systemd interaction and serial-port)
+
+ 16:32 <jdstrand> now that the shared mount for snaps is worked out, I'll explore using 'ip netns exec' with strict mode snaps
+
+ 16:32 <jdstrand> that's it from me
+
+ 16:32 <tyhicks> sbeattie: go ahead
+
+ 16:32 <sbeattie> I'm on cve triage this week
+
+ 16:33 <sbeattie> Kernel updates are in the middle of promoted to -security, so I'll be publishing the USNs for those after the meeting.
+
+ 16:33 <sbeattie> After that, I plan to go through the list for updates.
+
+ 16:33 <sbeattie> I also have some apparmor reviews to do.
+
+ 16:33 <sbeattie> That's probably my week. tyhicks?
+
+ 16:35 <tyhicks> I'm in the happy place this week (thanks to ratliff for picking up bug triage!)
+
+ 16:36 <tyhicks> I'm attempting to bring unix domain socket AppArmor mediation support back to 14.04 + hardware enablement kernel
+
+ 16:37 <tyhicks> I'll be working on seccomp complain mode
+
+ 16:37 <tyhicks> that should keep me busy along with incoming requests throughout the week
+
+ 16:37 <tyhicks> jjohansen: go ahead
+
+ 16:37 <jjohansen> I am back from LSS and I have a few cleanup items related to that.
+
+ 16:38 <jjohansen> I'll then be crying over^W^W working on fixing stacking bugs and finishing up gsettings review wi.
+
+ 16:38 <jjohansen> And if I actually get to a point where any of that is cleared or waiting for feedback will be working on finishing up what needs to be done for upstreaming
+
+ 16:39 <jjohansen> I think that is it for me
+
+ 16:39 <tyhicks> jjohansen: can you please ensure that the fix for bug 1579135 will be included in the next SRU kernel?
+
+ 16:39 <ubottu> bug 1579135 in apparmor (Ubuntu Yakkety) "AppArmor profile reloading causes an intermittent kernel BUG" [Critical,Incomplete] https://launchpad.net/bugs/1579135
+
+ 16:40 <tyhicks> jjohansen: we have another apparmor SRU for xenial and I'm going to hold it back until that kernel fix has been published
+
+ 16:41 <jjohansen> tyhicks: yep, that has been submitted and committed. we just need to stay ontop of the SRU process now
+
+ 16:41 <tyhicks> jjohansen: ok, thanks!
+
+ 16:41 <tyhicks> sarnold: you're up
+
+ 16:41 <sarnold> good morning
+
+ 16:41 <sarnold> I'm on community this week
+
+ 16:42 <sarnold> I haven't yet looked at the backlog of reviews or updates to perform yet, so I'm not sure where the remainder of my week will be
+
+ 16:42 <sarnold> I suspect it'ls unity8 MIRs?
+
+ 16:42 <tyhicks> yep
+
+ 16:42 <sarnold> it'd be nice to also make progress on cboltz's huge patchset
+
+ 16:43 <sarnold> I just now realized that that certainly falls as a 'feature', does it make sense to do a FFE for that patchset for yakkety? hrm.
+
+ 16:43 <tyhicks> sarnold: FYI, sounds like kshitij8 is working on reviewing it
+
+ 16:43 <sarnold> yay
+
+ 16:43 <sarnold> he knows the tools and python better than I do :)
+
+ 16:44 <sarnold> anyway that's me
+
+ 16:44 <tyhicks> I don't know enough about that patch set to say if we need to get it into yakkety
+
+ 16:44 <sarnold> no tab-complete for chris coulson, ratliff then?
+
+ 16:44 <ratliff> I'm on bug triage this week.
+
+ 16:44 <ratliff> I'll be learning the community role from sarnold this week as well.
+
+ 16:45 <ratliff> I'm working on an update for clamav.
+
+ 16:45 <ratliff> And poking at the Unity 8 MIRs
+
+ 16:45 <ratliff> that's it for me, back to you tyhicks
+
+ 16:45 <tyhicks> thanks
+
+ 16:45 <tyhicks> [TOPIC] Highlighted packages
+
+ 16:46 <tyhicks> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:46 <tyhicks> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:46 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/gamera.html
+
+ 16:46 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/mbedtls.html
+
+ 16:46 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/mediaelement.html
+
+ 16:46 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/python-rsa.html
+
+ 16:46 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/node-cli.html
+
+ 16:46 <tyhicks> [TOPIC] Miscellaneous and Questions
+
+ 16:46 <tyhicks> Does anyone have any other questions or items to discuss?
+
+ 16:47 <sarnold> o/~ gamera is really neat gamera is full of meat o/~
+
+ 16:50 <tyhicks> heh
+
+ 16:50 <tyhicks> jdstrand, sbeattie, jjohansen, sarnold, ratliff: Thanks!
+
+ 16:50 <tyhicks> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

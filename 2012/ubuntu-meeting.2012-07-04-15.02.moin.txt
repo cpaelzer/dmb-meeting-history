@@ -1,0 +1,556 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 15:02:03 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-07-04-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *bugs
+
+ *AOB
+
+
+
+Meeting ended at 15:43:32 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (72)
+ * xnox (59)
+ * stgraber (31)
+ * ubottu (30)
+ * infinity (19)
+ * ogra_ (16)
+ * ev (13)
+ * jodh (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02:03 <cjwatson> #startmeeting
+
+ 15:02:03 <meetingology> Meeting started Wed Jul  4 15:02:03 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:03 <meetingology> 
+
+ 15:02:03 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:11 <cjwatson> #topic lightning round
+
+ 15:02:13 <cjwatson> $ echo $(shuf -e cjwatson ev ogra jodh stgraber infinity xnox)
+
+ 15:02:13 <cjwatson> xnox stgraber ev infinity cjwatson ogra jodh
+
+ 15:02:26 <cjwatson> I think I remembered the set of people who're off today correctly
+
+ 15:02:37 <xnox> i am first for the first time
+
+ 15:02:39 <xnox> ubiquity-lvm auto install works with UI, apart from the install fails
+
+ 15:02:39 <xnox> due to new bug #1020574
+
+ 15:02:39 <xnox> did patch piloting, see report on the mailing list
+
+ 15:02:39 <xnox> got access to HPCloud together with a few other devs, started to
+
+ 15:02:39 <xnox> jujufy collab-qa/cloud-scripts.git for launching archive rebuilds. The
+
+ 15:02:41 <xnox> goal is full archive rebuild in 8 hours (excluding libreoffice).
+
+ 15:02:41 <ubottu> Launchpad bug 1020574 in ubiquity (Ubuntu) "SystemError: Broken pipe while installing language packs" [Critical,Confirmed] https://launchpad.net/bugs/1020574
+
+ 15:02:43 <xnox> got panda board, didn't install it
+
+ 15:02:45 <xnox> two packages left for boost1.49: player (quick fix), and ball (FTBFS
+
+ 15:02:47 <xnox> with gcc4.7 and gcc4.6, and python-moc)
+
+ 15:03:04 <cjwatson> lvm auto install> well done, good start :)
+
+ 15:03:10 <cjwatson> (is there a branch somewhere for it?)
+
+ 15:03:15 * xnox should push
+
+ 15:03:25 <xnox> after removing swear words from commit messages
+
+ 15:03:35 <xnox> i am in the office today
+
+ 15:03:49 <xnox> and will be working with mpt for the second part of the week on the RAID and LUKS design
+
+ 15:03:51 <xnox> ..
+
+ 15:04:20 <stgraber> Short week, Monday was a public holiday (Canada day).
+
+ 15:04:20 <stgraber> - Containers
+
+ 15:04:20 <stgraber> - Some bugfixes in quantal, rebased the API branch and PPA on that.
+
+ 15:04:20 <stgraber> - Started preparing the next SRU (got 4-5 fixes already).
+
+ 15:04:20 <stgraber> - ISO tracker
+
+ 15:04:22 <stgraber> - Migrated package testing content from staging tracker to production tracker.
+
+ 15:04:25 <stgraber> - Networking
+
+ 15:04:27 <stgraber> - Went through all the bugs related to the network stack (netbase, isc-dhcp, ifupdown, resolvconf, vlan, ifenslave-2.6, iproute).
+
+ 15:04:30 <stgraber> - Merged isc-dhcp, ifupdown, netbase and resolvconf.
+
+ 15:04:33 <stgraber> - Synced bridge-utils (no more delta!).
+
+ 15:04:35 <stgraber> - Started going through the bugs for ppp and libnl-3.
+
+ 15:04:38 <stgraber> - Other
+
+ 15:04:41 <stgraber> - Alpha-2 release on Thursday.
+
+ 15:04:43 <stgraber> - Updated casper, fixing bug 1013843 and adding proper support for cifs boot.
+
+ 15:04:45 <ubottu> Launchpad bug 1013843 in casper (Ubuntu Quantal) "resolv.conf empty when doing PXE installations" [High,Fix released] https://launchpad.net/bugs/1013843
+
+ 15:04:46 <stgraber> - 12.04.1 team meeting and minutes
+
+ 15:04:49 <stgraber> - TODO this week
+
+ 15:04:51 <stgraber> - Some ISO tracker improvements (and getting IS to deploy)
+
+ 15:04:53 <stgraber> - Finish reviewing/triaging ppp and libnl-3 bugs, then start looking at SRUs for the network packages.
+
+ 15:04:57 <stgraber> - Go through the pending-sru and help for these that are stuck on verification-needed
+
+ 15:05:00 <stgraber> (DONE)
+
+ 15:05:12 <ev> - Took a few passes with great reviews from pitti, but I've finally finished
+
+ 15:05:13 <ev> writing the error reports from application hangs feature in apport and
+
+ 15:05:13 <ev> merged it into trunk.
+
+ 15:05:13 <ev> - Wrote support for the apport application hangs into compiz. Just tidying up
+
+ 15:05:13 <ev> and will submit for review later today.
+
+ 15:05:13 <ev> - Started investigating the implementation work for the new debconf dialogs:
+
+ 15:05:13 <ev> https://wiki.ubuntu.com/ErrorTracker#debconf
+
+ 15:05:14 <ev> - Started writing my trip report for the Software Experts Summit. Nearly done.
+
+ 15:05:14 <ev> (done)
+
+ 15:05:41 <infinity> * This past week:
+
+ 15:05:41 <infinity> - Finished up my +1 maint month
+
+ 15:05:41 <infinity> - Did some SRU work, including a big round of kernel updates
+
+ 15:05:41 <infinity> - Celebrated Canada Day with beer and poutine
+
+ 15:05:41 <infinity> - Fixed some ARM issues in both Debian and Ubuntu
+
+ 15:05:44 <infinity> - Investigated GNU R breakage on ARM, made progress
+
+ 15:05:46 <infinity> - Started setting up Britney on my local network
+
+ 15:05:49 <infinity> * Upcoming week:
+
+ 15:05:51 <infinity> - More Britney fiddling
+
+ 15:05:54 <infinity> - eglibc SRUs for a few issues
+
+ 15:05:56 <infinity> - DebConf
+
+ 15:05:59 <infinity> - Naps
+
+ 15:06:01 <infinity> ⚐
+
+ 15:06:48 <cjwatson> Did the half-started pile of branches I had lying around for britney help at all?
+
+ 15:07:22 <infinity> cjwatson: I've not actually looked at your half-started branches yet.  Nor do I remember where you half put them. ;)
+
+ 15:07:45 <cjwatson> lillypilly:~cjwatson/proposed-migration/
+
+ 15:07:48 <infinity> (Yesterday was the first chance I really had to dive in much at all, now that I no longer have minions interrupting me)
+
+ 15:07:51 <cjwatson> All my state was there
+
+ 15:08:10 <cjwatson> Well, if you want to pair-hack on it for a while at some point, I'm available - or not, if that'd be a distraction :)
+
+ 15:08:12 <infinity> Shiny.  Will look when awake.
+
+ 15:08:22 <cjwatson> UEFI:
+
+ 15:08:22 <cjwatson> * efilinux menu patch landed.
+
+ 15:08:22 <cjwatson> * Launchpad custom-uefi branch landed.  QA in progress.
+
+ 15:08:22 <cjwatson> Launchpad:
+
+ 15:08:22 <cjwatson> * Fixed bug 795005 (although not usable until another bug is fixed, since that other bug means that copies to PPAs are currently disabled).
+
+ 15:08:24 <ubottu> Launchpad bug 795005 in Launchpad itself "Asynchronous PPA copying with default series OOPSes" [Critical,Fix released] https://launchpad.net/bugs/795005
+
+ 15:08:25 <cjwatson> * Split up my queue-api branch into several smaller branches and started getting those reviewed and landed:
+
+ 15:08:29 <cjwatson> * New name, version, and exact_match parameters to DistroSeries.getPackageUploads (deployed).
+
+ 15:08:32 <cjwatson> * Refactor PackageUpload.overrideBinaries interface for performance (deployed).
+
+ 15:08:35 <cjwatson> * Export read-only properties and methods on PackageUpload (in QA).
+
+ 15:08:37 <cjwatson> Installer:
+
+ 15:08:40 <cjwatson> * Added some more fonts to desktop installs by default to support languages offered by the installer (bug 1015483).
+
+ 15:08:41 <ubottu> Launchpad bug 1015483 in ubuntu-meta (Ubuntu Quantal) "ubiquity-dm: 2 language names wrongly displayed (missing font?)" [High,Fix released] https://launchpad.net/bugs/1015483
+
+ 15:08:43 <cjwatson> * Fixed another bit of python-apt 0.8 API porting (bug 1018759).
+
+ 15:08:44 <ubottu> Launchpad bug 1018759 in ubiquity (Ubuntu Quantal) "ubiquity crashed with TypeError: update() takes exactly 2 arguments (1 given)" [High,Fix released] https://launchpad.net/bugs/1018759
+
+ 15:08:46 <cjwatson> * Fixed non-cylinder alignment on GPT (bug 1006894).
+
+ 15:08:47 <ubottu> Launchpad bug 1006894 in partman-base (Ubuntu Precise) "Partitions are misaligned when using GPT on disks w/ 4096 byte physical sectors" [Critical,In progress] https://launchpad.net/bugs/1006894
+
+ 15:08:48 <cjwatson> * Verified some old installer SRUs.
+
+ 15:08:51 <cjwatson> * Fixed incorrect removal of /var/lib/mysql and /var/lib/mythtv on live CD upgrade (bug 992241).
+
+ 15:08:52 <ubottu> Launchpad bug 992241 in partman-target (Ubuntu Precise) "Upgrading using the live cd wipes /var/lib/mythtv/*" [High,In progress] https://launchpad.net/bugs/992241
+
+ 15:08:54 <cjwatson> Image building:
+
+ 15:08:56 <cjwatson> * Got point release candidate images building with -proposed (bug 1019514).
+
+ 15:08:58 <ubottu> Launchpad bug 1019514 in livecd-rootfs (Ubuntu Precise) "Need to be able to generate images with -proposed in sources.list" [High,Fix released] https://launchpad.net/bugs/1019514
+
+ 15:08:59 <cjwatson> Other:
+
+ 15:09:02 <cjwatson> * Fixed bash to stop hardcoding command-not-found's interpreter.
+
+ 15:09:04 <cjwatson> * Fixed pending-triggers detection in dpkg-reconfigure (bug 1018884).
+
+ 15:09:05 <ubottu> Launchpad bug 1018884 in debconf (Ubuntu) "debconf: setting console triggers update-initramfs" [Medium,Fix released] https://launchpad.net/bugs/1018884
+
+ 15:09:07 <cjwatson> * Usual round of syncs and merges.
+
+ 15:09:09 <cjwatson> * Endless flow of archive admin.
+
+ 15:09:12 <cjwatson> * Got a compose key working, several years after everyone else.  In celebration:
+
+ 15:09:15 <cjwatson> ☭
+
+ 15:09:17 <cjwatson> (best compose key sequence evah)
+
+ 15:09:59 <ogra_> done:
+
+ 15:10:00 <ogra_> * tried to debug plymouth issues on various arm images (ongoing)
+
+ 15:10:00 <ogra_> * banging my head against an ac100 kernel/image issue (upgrades work, images fail booting with a kernel panic)
+
+ 15:10:00 <ogra_> * ac100 image build debugging
+
+ 15:10:00 <ogra_> * plenty of kernel testing on omap4
+
+ 15:10:01 <ogra_> * booked flight for QA sprint end of the month
+
+ 15:10:03 <ogra_> todo:
+
+ 15:10:05 <ogra_> * foundations-q-hwpack-integration
+
+ 15:10:07 <ogra_> * finally get ac100 to work all over again
+
+ 15:10:11 <ogra_> * look at what QA wants to have set up during the sprint
+
+ 15:10:29 <ogra_> (your preferred utf-8 end sign here)
+
+ 15:11:01 <jodh> * boot/upstart: stateful re-exec work:
+
+ 15:11:01 <jodh> - Made code 64-bit safe (time-consuming due to awkwardness of JSON-C).
+
+ 15:11:01 <jodh> - Currently working on Job serialisation and all its associated
+
+ 15:11:01 <jodh> tentacles.
+
+ 15:11:04 <jodh> * misc: on holiday Friday 6th and next week.
+
+ 15:11:07 <jodh> ⟿
+
+ 15:11:11 <jodh> 
+
+ 15:11:19 <stgraber> cjwatson: good to hear the -proposed change landed, I'll test a desktop image later this week so we can get ubiquity out of proposed
+
+ 15:11:26 <xnox> ogra_: (in text2speech audio description ;-) )
+
+ 15:11:45 <cjwatson> stgraber: Yeah, I've tried a couple of times but for some reason was having trouble getting it to use a proxy at all
+
+ 15:11:49 <ogra_> *g*
+
+ 15:12:38 <xnox> cjwatson: can't you pressed the proxy via apt.conf setting or via debconf.
+
+ 15:12:40 <xnox> ?
+
+ 15:12:46 <cjwatson> Yes, I did
+
+ 15:12:50 <xnox> =(
+
+ 15:12:50 <xnox> ok
+
+ 15:12:58 <cjwatson> Something was weird and I didn't get a chance to investigate properly
+
+ 15:13:13 <jodh> ogra_: what are the plymouth issues out of interest?
+
+ 15:13:29 <stgraber> IIRC ubiquity is supposed to pick it up from gsettings, but that's a part of the code that I touched quite a while ago and isn't widely tested (if at all)
+
+ 15:13:29 <cjwatson> I had a suspicion maybe the python-apt code in scripts/{plugin,}install wasn't picking up the setting or something, but it was just a guess
+
+ 15:13:47 <ogra_> jodh, one is an issue with the omap4 kernel providing a drm device but not attaching it to any output ...
+
+ 15:13:51 <cjwatson> Maybe setting it in the live session's apt.conf as well as preseeding it would help, for the purposes of getting this verified
+
+ 15:14:14 <ogra_> jodh, the other is still unidentified (still trying to fix the kernel issue on ac100 first)
+
+ 15:15:07 * xnox so it's the network's transparent proxy which is borked... since there is no obvious way to force proxy usage. Can it be done outside of the VM for example..
+
+ 15:15:22 <cjwatson> #topic bugs
+
+ 15:15:54 <cjwatson> Steve asked me if we could have a quick look through some of the 12.04.1 targeted bugs and make sure that (a) any that should be on target are (b) any that we shouldn't care about aren't on the list
+
+ 15:16:23 <xnox> from the subset of ~foundations subscribed/assigned/personal?
+
+ 15:16:31 <cjwatson> stgraber: Does https://bugs.launchpad.net/ubuntu/precise/+bugs?field.milestone=49926 match the list you're working from?
+
+ 15:16:34 <xnox> or just all the 12.04.1?
+
+ 15:16:46 <cjwatson> xnox: the above is the URL Steve gave me
+
+ 15:16:48 <stgraber> cjwatson: I guess I'll simply make that perl script the transparent proxy for that VM, that's a pretty simple iptables rule
+
+ 15:17:05 <cjwatson> stgraber: That should work, yeah
+
+ 15:17:08 <stgraber> cjwatson: yep, that's the one
+
+ 15:17:20 <cjwatson> I picked out a few categories from that
+
+ 15:17:48 <cjwatson> There's the multi-arch bugs, which IIRC stokachu has moderately well in hand, although he's presumably out celebrating independence today
+
+ 15:18:05 <cjwatson> (bug 977940, bug 977964, bug 977947, bug 977952, bug 977959)
+
+ 15:18:10 <ubottu> Launchpad bug 977940 in gnome-vfs (Ubuntu Precise) "Please transition gnome-vfs to multi-arch" [Medium,In progress] https://launchpad.net/bugs/977940
+
+ 15:18:11 <ubottu> Launchpad bug 977964 in libart-lgpl (Ubuntu Precise) "Please transition libart-lgpl to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977964
+
+ 15:18:13 <ubottu> Launchpad bug 977947 in libbonobo (Ubuntu Quantal) "Please transition libbonobo to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977947
+
+ 15:18:14 <ubottu> Launchpad bug 977952 in libbonoboui (Ubuntu Precise) "Please transition libbonoboui to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977952
+
+ 15:18:16 <ubottu> Launchpad bug 977959 in libgnome (Ubuntu Precise) "Please transition libgnome to multi-arch" [Medium,Confirmed] https://launchpad.net/bugs/977959
+
+ 15:18:51 <cjwatson> There's the bugs that I put in category "xnox"
+
+ 15:18:52 <cjwatson> bug 978012, bug 1002357, bug 1009973, bug 1017407, bug 942106, bug 968074, bug 969384
+
+ 15:18:58 <ubottu> Launchpad bug 978012 in e2fsprogs (Ubuntu Precise) "Please SRU micro bug fix release of e2fsprogs 1.42.4-3ubuntu1 (main) from Quantal (main)" [High,Confirmed] https://launchpad.net/bugs/978012
+
+ 15:19:00 <ubottu> Launchpad bug 1002357 in mdadm (Ubuntu Precise) "sort out udev rules madness (3 editions installed into 4 files)" [Medium,Confirmed] https://launchpad.net/bugs/1002357
+
+ 15:19:01 <ubottu> Launchpad bug 1009973 in mdadm (Ubuntu Precise) "SRU upstream bugfix micro point release 3.2.5" [Wishlist,Confirmed] https://launchpad.net/bugs/1009973
+
+ 15:19:02 <ubottu> Launchpad bug 1017407 in mdadm (Ubuntu Precise) "should copy /etc/udev/ rule if available" [Medium,Triaged] https://launchpad.net/bugs/1017407
+
+ 15:19:03 <ubottu> Launchpad bug 942106 in mdadm (Ubuntu Precise) "software raid doesn't assemble before mount on boot" [High,Confirmed] https://launchpad.net/bugs/942106
+
+ 15:19:33 <xnox> cjwatson: so the mdadm SRU for all of these got rejected, because of being overenthusiastic.
+
+ 15:19:39 <cjwatson> and there's everything else
+
+ 15:19:40 <cjwatson> bug 523896, bug 683640, bug 946406, bug 970638, bug 974584, bug 994575, bug 1003842, bug 1006898, bug 1017001
+
+ 15:19:46 <ubottu> Launchpad bug 523896 in shadow (Ubuntu Quantal) "useradd: cannot lock /etc/passwd; try again later." [High,Triaged] https://launchpad.net/bugs/523896
+
+ 15:19:47 <ubottu> Launchpad bug 683640 in lsb (Ubuntu Quantal) "status_of_proc is returning incorrect error code" [Medium,Confirmed] https://launchpad.net/bugs/683640
+
+ 15:19:49 <ubottu> Launchpad bug 946406 in casper (Ubuntu Quantal) "suspect race condition Keyboard layout, oem-config not set on persistent USB image" [High,Confirmed] https://launchpad.net/bugs/946406
+
+ 15:19:50 <ubottu> Launchpad bug 970638 in psmisc (Ubuntu Precise) "killall can't kill processes with fairly long names (Ubuntu 12.04)" [Medium,Triaged] https://launchpad.net/bugs/970638
+
+ 15:19:51 <ubottu> Launchpad bug 974584 in sysvinit (Ubuntu Quantal) "Semaphores cannot be created in lxc container" [High,Triaged] https://launchpad.net/bugs/974584
+
+ 15:20:01 <xnox> cjwatson: the e2fsprogs SRU is pending review from infinity, but it potentially also needs cleaning up.
+
+ 15:20:12 <cjwatson> And apparently ubottu has rate-limited me, sigh
+
+ 15:20:38 <cjwatson> xnox: So are each of the non-microrelease bugs on mdadm still good targets, or are you going to pare that down?
+
+ 15:20:48 <cjwatson> As in, is it a matter of backporting specific patches?
+
+ 15:21:07 <stgraber> bug 946406 might be related to bug 985065
+
+ 15:21:10 <ubottu> Launchpad bug 946406 in casper (Ubuntu Quantal) "suspect race condition Keyboard layout, oem-config not set on persistent USB image" [High,Confirmed] https://launchpad.net/bugs/946406
+
+ 15:21:11 <ubottu> Launchpad bug 985065 in xkeyboard-config (Ubuntu Precise) "Can't use fr/oss keyboard layout by default" [High,Fix committed] https://launchpad.net/bugs/985065
+
+ 15:21:48 <cjwatson> Meh, I'll take that psmisc one, since I've been uploading the quantal merges anyway
+
+ 15:22:38 <infinity> It looks straightforward.
+
+ 15:23:03 <xnox> cjwatson: yes they are. i need to revert a couple of patches from the micro-release of mdadm and it should be good to go.
+
+ 15:23:26 <xnox> those that change interfaces.
+
+ 15:23:57 <cjwatson> stgraber: There's a cluster of four dnsmasq and resolvconf bugs; are you happy with all of those being listed?
+
+ 15:24:29 <ev> cjwatson: I've tidied up https://wiki.ubuntu.com/Ubiquity
+
+ 15:25:01 <stgraber> cjwatson: I need to go through them but it's very unlikely we'll fix them as they'd be pretty significant behaviour changes, IIRC most of them are linked to NM and so should be somewhere on cyphermox's list
+
+ 15:25:32 <cjwatson> OK, I'll assume you'll shift the milestone if you nack them, then
+
+ 15:25:42 <stgraber> yep
+
+ 15:25:59 <cjwatson> Sigh, LP's assignee listings are unhelpful for this list
+
+ 15:26:06 <cjwatson> (some of the Nones are lies)
+
+ 15:26:39 <stgraber> I'll try to do some nagging this week, making sure the various teams assign the bugs they're planning to work on or move the bugs to another milestone
+
+ 15:26:53 <cjwatson> Does anyone know about bug 683640?  It's currently milestoned for 12.04.1 and also rls-q-notfixing, which seems like an unlikely combination
+
+ 15:26:54 <ubottu> Launchpad bug 683640 in lsb (Ubuntu Quantal) "status_of_proc is returning incorrect error code" [Medium,Confirmed] https://launchpad.net/bugs/683640
+
+ 15:27:07 <xnox> cjwatson: https://launchpad.net/ubuntu/+milestone/ubuntu-12.04.1
+
+ 15:27:13 <xnox> but it's not the whole truth
+
+ 15:27:56 <cjwatson> Right, I know there are various possibilities but I explicitly want to work off the same list as Steve so that I'm not missing things
+
+ 15:28:13 <xnox> ok
+
+ 15:28:30 <cjwatson> Bug 974584 (sysvinit) and bug 523896 (shadow) appear to need assignees; any volunteers?
+
+ 15:28:32 <ubottu> Launchpad bug 974584 in sysvinit (Ubuntu Quantal) "Semaphores cannot be created in lxc container" [High,Triaged] https://launchpad.net/bugs/974584
+
+ 15:28:33 <ubottu> Launchpad bug 523896 in shadow (Ubuntu Quantal) "useradd: cannot lock /etc/passwd; try again later." [High,Triaged] https://launchpad.net/bugs/523896
+
+ 15:29:47 <infinity> I can try to poke at the shadow bug, though I have some eglibc SRUs that trump it for urgency.
+
+ 15:29:50 <stgraber> the sysvinit one is being worked on by slangasek/hallyn
+
+ 15:30:32 <xnox> ev: bug 994921
+
+ 15:30:34 <ubottu> Launchpad bug 994921 in apport (Ubuntu Quantal) "'ubuntu-bug /var/crash/app.crash' (and even more so, 'apport-cli -c /var/crash/app.crash') should still allow manual bug filing in stable releases" [Medium,Triaged] https://launchpad.net/bugs/994921
+
+ 15:31:26 <ev> xnox: cheers
+
+ 15:32:05 <cjwatson> stgraber: Neither of whom is assigned, but OK ...
+
+ 15:32:29 <cjwatson> Ah, he's assigned to the lxc task, not the sysvinit one
+
+ 15:32:30 <cjwatson> OK
+
+ 15:33:38 <stgraber> cjwatson: yeah, I'll poke him for a status update on that bug tomorrow and to figure out who of slangasek and hallyn is actually working on it
+
+ 15:34:15 <stgraber> IIRC there's a fix that landed in Debian (or in the vcs branch) but that slangasek then considered wrong, so it's still being discussed
+
+ 15:39:18 <cjwatson> ev: wiki> thanks, much better
+
+ 15:39:31 <ev> cjwatson: sure thing
+
+ 15:39:58 <cjwatson> #topic AOB
+
+ 15:40:00 <cjwatson> Anything else?
+
+ 15:41:30 <ev> nope!
+
+ 15:41:45 <ogra_> not here
+
+ 15:42:26 <xnox> Happy Canada Day!
+
+ 15:42:38 <xnox> _
+
+ 15:42:38 <xnox> (_)
+
+ 15:42:38 <xnox> |______________________________________
+
+ 15:42:38 <xnox> |&&&&&&&                        &&&&&&&|
+
+ 15:42:38 <xnox> |&&&&&&&                        &&&&&&&|
+
+ 15:42:41 <xnox> |&&&&&&&                        &&&&&&&|
+
+ 15:42:41 * ogra_ looks for a maple leaf shirt
+
+ 15:42:43 <xnox> |&&&&&&&         .\^/.          &&&&&&&|
+
+ 15:42:45 <xnox> |&&&&&&&       . |&&&| .        &&&&&&&|
+
+ 15:42:46 <xnox> |&&&&&&&       |\|&&&|/|        &&&&&&&|
+
+ 15:42:48 <xnox> |&&&&&&&    .--'&&&&&&&'--.     &&&&&&&|
+
+ 15:42:50 <xnox> |&&&&&&&     \&&&&&&&&&&&/      &&&&&&&|
+
+ 15:42:52 <xnox> |&&&&&&&      >&&&&&&&&&<       &&&&&&&|
+
+ 15:42:54 <xnox> |&&&&&&&     '~|/~~|~~\|~'      &&&&&&&|
+
+ 15:42:56 <xnox> |&&&&&&&           |            &&&&&&&|
+
+ 15:42:58 <xnox> |&&&&&&&                        &&&&&&&|
+
+ 15:43:00 <xnox> |&&&&&&&                        &&&&&&&|
+
+ 15:43:02 <xnox> |&&&&&&&________________________&&JGS&&|
+
+ 15:43:04 <xnox> |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 15:43:06 <xnox> |
+
+ 15:43:10 <infinity> I'm pretty insulted by that awful ASCII art.
+
+ 15:43:10 <xnox> |
+
+ 15:43:12 <xnox> |
+
+ 15:43:14 <xnox> |
+
+ 15:43:16 <xnox> |
+
+ 15:43:18 <xnox> |
+
+ 15:43:20 <xnox> |
+
+ 15:43:22 <xnox> |
+
+ 15:43:24 * xnox =(
+
+ 15:43:29 <cjwatson> all right, thanks all, safe travels to debconf if you're going; better close the meeting before we get any more ascii art :)
+
+ 15:43:32 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

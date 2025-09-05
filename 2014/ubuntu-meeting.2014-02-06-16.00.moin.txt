@@ -1,0 +1,335 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 06 Feb at 16:00 &mdash; 16:32 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-02-06-16.00.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:01.
+
+  * ''LINK:'' http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20140127-trusty.html 
+
+=== AOB ===
+The discussion about "AOB" started at 16:31.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (41)
+ * xnox (41)
+ * doko (17)
+ * jodh (12)
+ * bdmurray (11)
+ * barry (9)
+ * stgraber (6)
+ * meetingology (3)
+ * ubottu (1)
+ * ogra_ (1)
+
+
+
+== Full Log ==
+
+
+ 16:00 <slangasek> #startmeeting
+
+ 16:00 <meetingology> Meeting started Thu Feb  6 16:00:53 2014 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00 <meetingology> 
+
+ 16:00 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01 <slangasek> [TOPIC] Lightning round
+
+ 16:02 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson xnox stokachu)
+
+ 16:02 <slangasek> stgraber slangasek jodh stokachu cjwatson xnox barry bdmurray doko
+
+ 16:02 <slangasek> stgraber: you first :)
+
+ 16:03 <stgraber> Short week, was off on Monday.
+
+ 16:03 <stgraber> Spent some time preparing/testing 12.04.4 (mostly for Edubuntu).
+
+ 16:03 <stgraber> Working towards LXC beta4, ton of reviews, some discussions on fixing our logging story, some more bugfixes here and there, ...
+
+ 16:03 <stgraber> Patch piloted yesterday.
+
+ 16:03 <stgraber> Making slow progress on system-image, trying to get those tests done finally (found some more regressions), then have to add some features requested by ogra.
+
+ 16:03 <stgraber> (DONE)
+
+ 16:03 <xnox> oh, patch pilot, I think i had one last week, but obviously skipped.
+
+ 16:05 <slangasek> * spending a lot of time on customer engagements this week
+
+ 16:05 <slangasek> * finished the protobuf ABI transition
+
+ 16:05 <slangasek> * introduced a regression by merging a newer protobuf from Debian that broke ABI; thanks to cjwatson for cleaning up the mess
+
+ 16:05 <slangasek> * some timely NEW processing for packages needed at the cloud sprint
+
+ 16:05 <slangasek> (done)
+
+ 16:05 <jodh> * core-1311-upstart-roadmap
+
+ 16:05 <jodh> - async-spawn: Grinding through the test code and updating for new async
+
+ 16:05 <jodh> behaviour (necessitating porting most of the tests to use a proper
+
+ 16:05 <jodh> main loop).
+
+ 16:05 <jodh> - cgroup support: Updated spec, parser and parser tests after discussions with
+
+ 16:05 <jodh> stgraber on enhanced cgroup stanza syntax (see
+
+ 16:05 <jodh> http://upstart.ubuntu.com/wiki/Cgroup). Need to identify how best to
+
+ 16:05 <jodh> add handle adding cgroup paths to set of paths "owned" by Upstart
+
+ 16:05 <jodh> (either way, requires async branch).
+
+ 16:05 <jodh> * upstart:
+
+ 16:05 <jodh> - reviewed https://code.launchpad.net/~cameronnemo/upstart/ipv6/+merge/204599
+
+ 16:06 <jodh> ➿
+
+ 16:07 <slangasek> stokachu: anything this week? :)
+
+ 16:09 <slangasek> letting cjwatson off the hook for 12.04.4
+
+ 16:09 <slangasek> xnox:
+
+ 16:09 <xnox> * mostly catch up on everything from last week.
+
+ 16:09 <xnox> * worked with barry/phonedations on getting py2/3 compatible runners:
+
+ 16:09 <xnox> - barry is doing the autopilot merge proposal
+
+ 16:09 <xnox> - i'm working with sergio on the phablet-test-run portion
+
+ 16:09 <xnox> * fixed partman-btrfs failing to format btrfs volumes
+
+ 16:09 <xnox> * tracking down 12.04.4 .0 stack bug which prevents automatic LUKS
+
+ 16:09 <xnox> encrypted installation for x/kubuntu, cryto-modules-3.2-udeb is missing
+
+ 16:09 <xnox> xts module, apw proposed a fix for that already.
+
+ 16:09 <xnox> * worked with till, on cups socket activation, more work is needed to
+
+ 16:10 <xnox> get it properly working, see upstart bug report.
+
+ 16:10 <xnox> * helped with some 12.04.4 iso testing and generated-signed wubi
+
+ 16:10 <xnox> build, also spotted that wubi builds were out of date, now fixed by
+
+ 16:10 <xnox> cjwatson.
+
+ 16:10 <xnox> * helped smoser to fix overlayroot to work with cryptsetup from saucy
+
+ 16:10 <xnox> and newer, the change of "not including crypto modules by default"
+
+ 16:10 <xnox> resulted in regressing "covert launched cloud instance to
+
+ 16:10 <xnox> full-disk-encryption" with overlayroot. Fix is in overlayroot,
+
+ 16:10 <xnox> initramfs hooks configuration to export flag variable to force
+
+ 16:10 <xnox> crypto module inclusion.
+
+ 16:10 <xnox> * uploaded all patches for "messages-less shutdown" into trusty. After
+
+ 16:10 <xnox> confirming successful testing from all of my systems and Timo's
+
+ 16:10 <xnox> systems (precise ones). If you see messages on shutdown on up to
+
+ 16:10 <xnox> date trusty let me know.
+
+ 16:10 <xnox> * Investigating to drop gtk2 from ubuntu-touch images. (lol, yes...)
+
+ 16:10 <xnox> * I'm taking next friday off, for a volleyball tournament.
+
+ 16:10 <xnox> ..
+
+ 16:10 <barry> xnox: what's the status of phablet-test-run?
+
+ 16:11 <xnox> barry: there is a branch, it's partial and has a bug i and sergios need to work out.
+
+ 16:11 <xnox> barry: "work in progress" =)
+
+ 16:11 <barry> xnox: cool.
+
+ 16:11 <slangasek> gtk2!
+
+ 16:11 <barry> u-d-m/s-i debugging (bugs against u-d-m filed)
+
+ 16:11 <xnox> barry: i'm hoping to get it done today.
+
+ 16:11 <xnox> slangasek: tell me about it!
+
+ 16:11 <xnox> =))))
+
+ 16:11 <slangasek> +1 for dropping ;)
+
+ 16:11 <barry> autopilot py3 porting; window-mocker py3 support; unity7 & unity8 autopilot testing.  fun fact: autopilot tests now seem to cpu peg X and make it totally unresponsive (will check again after dist-upgrade).
+
+ 16:11 <barry> done
+
+ 16:11 <xnox> slangasek: there is 56MB worth of cruft  to be dropped there.
+
+ 16:12 <xnox> slangasek: unlike autopilot, which we like are actually using ;-)
+
+ 16:12 * slangasek nods
+
+ 16:12 <barry> oh the above X problem is when `autopilot run autopilot` ;)
+
+ 16:13 <slangasek> autopilot run autopilot?
+
+ 16:14 <barry> slangasek: yes, run autopilot's own autopilot tests
+
+ 16:14 <slangasek> strange
+
+ 16:14 <slangasek> since autopilot isn't a gui
+
+ 16:14 <slangasek> what do those do?
+
+ 16:15 <barry> they test some basic functionality of autopilot, which is why we had to port window-mocker.  it's a sample app/framework that autopilot's own ap tests use
+
+ 16:15 <slangasek> ah, ok
+
+ 16:15 <slangasek> bdmurray:
+
+ 16:15 <barry> i think the window-mocker port is largely done, but not yet landed
+
+ 16:16 <bdmurray> submitted merge proposal for canonical-is-puppet to stop updating unique users for Raring
+
+ 16:16 <bdmurray> setup and tested error tracker refusal of crash reports from Raring
+
+ 16:16 <bdmurray> submitted rt regarding updating daisy to r407 and 408
+
+ 16:16 <bdmurray> submitted rt regarding getting core dumps from the error tracker
+
+ 16:16 <bdmurray> tested back population of rls:src_pkg:version counters
+
+ 16:16 <bdmurray> wrote a cronjob to look for unsubbed packages being added to main
+
+ 16:16 <bdmurray> fixed unattended-upgrades bug 1272381 regarding python3.4 build failure
+
+ 16:16 <ubottu> bug 1272381 in unattended-upgrades (Ubuntu) "test failures with python 3.4" [Medium,In progress] https://launchpad.net/bugs/1272381
+
+ 16:16 <bdmurray> manually retraced some crash reports with core dumps from swift
+
+ 16:17 <bdmurray> +1 maintenance work
+
+ 16:17 <bdmurray> ⁂ done⁂
+
+ 16:17 <slangasek> doko: here?
+
+ 16:18 <doko> - sprint, and Fosdem
+
+ 16:18 <doko> - openjdk-6 updates
+
+ 16:18 <doko> - component mismatches, fix some ftbfs, MIRs
+
+ 16:18 <doko> - look at test rebuild ftbfs, addressing the python 3.4 issues first
+
+ 16:18 <doko> - if somebody has an idea for the ~200 php ftbfs, please let me know
+
+ 16:18 <doko> (done)
+
+ 16:19 <slangasek> ah, pointer to the php failures?
+
+ 16:19 <doko> http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20140127-trusty.html
+
+ 16:20 <doko> all of the form
+
+ 16:20 <doko> dh build --buildsystem=phppear --with phppear
+
+ 16:20 <doko> dh_testdir -O--buildsystem=phppear
+
+ 16:20 <doko> dh_auto_configure -O--buildsystem=phppear
+
+ 16:20 <doko> dh_auto_build -O--buildsystem=phppear
+
+ 16:20 <doko> PHP Notice:  Array to string conversion in /usr/share/php/PEAR.php on line 1053
+
+ 16:20 <doko> [pear_error: message="Parsing of package.xml from file "/build/buildd/php-image-text-0.6.1/Image_Text-0.6.1/package.xml" failed" code=2 mode=return level=notice prefix="" info="Array"]
+
+ 16:20 <slangasek> doko: what's an example of a php package on there?
+
+ 16:20 <doko> dh_auto_build: /usr/share/pkg-php-tools/scripts/phppkginfo -d package . returned exit code 1
+
+ 16:20 <doko> make: *** [build] Error 1
+
+ 16:20 <doko> php-image-text
+
+ 16:21 <slangasek> ok
+
+ 16:21 * xnox should probably update debhelper with support for a new stanza in $package.maintscripts i've seen a couple FTBFS due to that.
+
+ 16:21 <slangasek> so I guess it'll be something simple, we just need to track down some bug in the phppear build system support
+
+ 16:22 <slangasek> bdmurray: maybe you could take a look at that, under +1maint?
+
+ 16:22 <bdmurray> slangasek: okay
+
+ 16:23 <slangasek> bdmurray: thanks
+
+ 16:23 <slangasek> anything else, status-wise?
+
+ 16:25 <slangasek> xnox: are you getting useful feedback from the team wrt the emulator + autopilot?
+
+ 16:26 <xnox> slangasek: i get reports from people, that it at times may fail to boot. But that appears to be a low percentage.
+
+ 16:26 <xnox> slangasek: sdk team are integrating using ubuntu-emulator into sdk.
+
+ 16:26 <slangasek> I bet that's the bug where the clock sometimes stops
+
+ 16:27 <xnox> slangasek: and after the friday move of CI to phablet-test-run, it should be easier to integrate emulator into jenkins, then we will have more recorded attempts as to what's happening there.
+
+ 16:27 <xnox> slangasek: could well be that.
+
+ 16:27 <slangasek> any news on the android 4.4.2 rebase?  Phonedations seemed to think that would come together early this week
+
+ 16:28 <ogra_> slangasek, waiting for Mir
+
+ 16:28 * slangasek is hoping 4.4 will fix the stopped-clock problem
+
+ 16:28 <xnox> slangasek: i have 4.4 source code, but i didn't build / try emulator under it yet.
+
+ 16:28 <xnox> (at scale)
+
+ 16:28 <slangasek> ogra_: as in, Mir is ahead of it in the landing queue, or Mir needs some changes to work with 4.4?
+
+ 16:31 <slangasek> well, we can take that up out of band
+
+ 16:31 <slangasek> [TOPIC] AOB
+
+ 16:31 <slangasek> anything else?
+
+ 16:32 <slangasek> <crickets>
+
+ 16:32 <slangasek> clearly everyone is still jet lagged ;)
+
+ 16:32 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

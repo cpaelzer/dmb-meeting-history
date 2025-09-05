@@ -1,0 +1,632 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 21 Oct at 15:01 &mdash; 15:37 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-10-21-15.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:01.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:14.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:14)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html   (bdmurray, 15:23)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html   (bdmurray, 15:30)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:30.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 15:31)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:35.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (73)
+ * sil2100 (35)
+ * ubottu (34)
+ * dbungert (27)
+ * slyon (22)
+ * jawn-smith (18)
+ * vorlon (18)
+ * ginggs (13)
+ * juliank (10)
+ * waveform (10)
+ * doko (9)
+ * schopin (5)
+ * alexghiti (5)
+ * xypron (3)
+ * meetingology (2)
+ * mclemenceau (1)
+
+
+
+== Full log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started at 15:01:00 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <bdmurray> #topic Lightning Round
+
+ 15:01 <juliank> o/
+
+ 15:01 <bdmurray> I'll just put the shuf results
+
+ 15:01 <bdmurray> schopin dbungert waveform juliank slyon alexghiti ginggs mwhudson jawn-smith doko bdmurray xypron vorlon sil2100
+
+ 15:01 <bdmurray> schopin:
+
+ 15:01 <schopin> Small week for me (several days off around the weekend)
+
+ 15:02 <bdmurray> but there's last week too!
+
+ 15:02 <schopin> THis week and last was focused on netplan, working the YAML consolidation.
+
+ 15:02 <schopin> Not yet landed, still hoping though :)
+
+ 15:02 <schopin> (done)
+
+ 15:02 <dbungert> 2 week edition
+
+ 15:02 <dbungert> * subiquity / u-d-i: storage/v2 last changes for impish merged
+
+ 15:02 <dbungert> * subiquity: find LP: #1946668 during my own testing, and fix
+
+ 15:02 <dbungert> * subiquity: review fix for LP: #1946656, merge, then publish subiquity 21.10.3
+
+ 15:02 <ubottu> Launchpad bug 1946668 in subiquity "subiquity no longer confirms that the requested storage config is desired" [Critical, Fix Released] https://launchpad.net/bugs/1946668
+
+ 15:02 <dbungert> * subiquity misc: fail integration test if crashes are seen, make progress on
+
+ 15:02 <dbungert> running API tests in parallel, show the Sources screen in dryrun,
+
+ 15:02 <ubottu> Launchpad bug 1946656 in snapd "[daily impish-live-server] snap stuck in the installer system" [Undecided, In Progress] https://launchpad.net/bugs/1946656
+
+ 15:02 <dbungert> better autoinstall error when no disk, fix lvm guided LV sizes
+
+ 15:02 <dbungert> * ubiquity: verify patch on LP: #1942648
+
+ 15:02 <ubottu> Launchpad bug 1942648 in ubiquity (Ubuntu Focal) "restart button remains visible in the advanced partitioner after the bitlocker page is shown" [Undecided, New] https://launchpad.net/bugs/1942648
+
+ 15:02 <dbungert> * ubiquity: find LP: #1946828 while verifying the above, release note it
+
+ 15:02 <dbungert> * help with iso testing
+
+ 15:02 <ubottu> Launchpad bug 1946828 in ubiquity (Ubuntu) "ntfsresize hang and call traces in syslog" [Undecided, Confirmed] https://launchpad.net/bugs/1946828
+
+ 15:02 <dbungert> * help review old items in the Sponsor queue
+
+ 15:02 <dbungert> * subiquity roadmap planning and speculation on storage/v2 API next
+
+ 15:02 <dbungert> * autoinstall-generator: if the preseed has partial data, it may be enough to
+
+ 15:02 <dbungert> look like somewhat correct autoinstall yaml but fail schema validation, such
+
+ 15:02 <dbungert> as supplying user info but no hostname being an invalid 'identity' section.
+
+ 15:02 <dbungert> Soften this to a warning and allow the user to get their partial data.
+
+ 15:02 <dbungert> * subiquity: when I changed the unit test runner, it exposed warnings.
+
+ 15:03 <dbungert> Address some deprecated usage of the attrs module + some harmless warnings.
+
+ 15:03 <dbungert> * update-notifier LP: #1821412 - find root cause on why the report process was
+
+ 15:03 <dbungert> being killed - the system crash dialog was a deep decendent of a systemd
+
+ 15:03 <ubottu> Launchpad bug 1821412 in update-notifier (Ubuntu) "'System program problem' report button does nothing" [High, In Progress] https://launchpad.net/bugs/1821412
+
+ 15:03 <dbungert> service, and the default KillMode policy of control group is killing the
+
+ 15:03 <dbungert> report process when the UI process goes away.  Split wayland portion to
+
+ 15:03 <dbungert> LP: #1947929
+
+ 15:03 <ubottu> Launchpad bug 1947929 in update-notifier (Ubuntu) "wayland: crash report button does nothing" [Undecided, New] https://launchpad.net/bugs/1947929
+
+ 15:03 <dbungert> (done)
+
+ 15:03 <bdmurray> waveform:
+
+ 15:03 <waveform> * Worked on HDMI display freeze issue (LP: #1946368)
+
+ 15:03 <waveform> * Impish released (yay!), with freeze issue unresolved (boo!), but with workaround documented in release notes (yay-ish)
+
+ 15:03 <waveform> * Wrote a bunch of blog posts for impish (HDMI explanation, sense hat, storage tips)
+
+ 15:03 <waveform> * Proposed updates for ISO test case generator (https://code.launchpad.net/~waveform/ubuntu-manual-tests/+git/ubuntu-manual-tests/+merge/410534), and responded to review notes
+
+ 15:03 <waveform> * Prepped flash-kernel changes to speed up kernel updates on pi
+
+ 15:03 <ubottu> Launchpad bug 1946368 in linux-raspi (Ubuntu) "HDMI output freezes under current/proposed impish kernels" [Critical, Confirmed] https://launchpad.net/bugs/1946368
+
+ 15:03 <waveform> * Prepped flash-kernel changes to handle new Pi boot modes / layouts
+
+ 15:03 <waveform> * Discussed possible changes to linux-firmware-raspi2 (rename at the least, possible move of source) for jammy
+
+ 15:03 <waveform> * Pi meetings
+
+ 15:03 <waveform> (done)
+
+ 15:03 <juliank> * apt 2.3.10 and 2.3.11, the latter fixing python-apt
+
+ 15:03 <juliank> * cleaning up the autopkgtest cloud worker a bit
+
+ 15:04 <juliank> * 2nd autopkgtest cloud worker
+
+ 15:04 <juliank> * cleaning up old autopkgtest cloud images
+
+ 15:04 <juliank> * filing tickets with IS because impish images are missing
+
+ 15:04 <juliank> (done)
+
+ 15:04 <slyon> - Interviews
+
+ 15:04 <slyon> - Townhall
+
+ 15:04 <slyon> - MIR wiki rework review, MIR vulkan[-tools] review
+
+ 15:04 <slyon> - roadmap planning
+
+ 15:04 <slyon> - PlusOne Maintenance, FTBFS fixes, many upstreamed and forwarded to Debian
+
+ 15:04 <slyon> + devscripts, libunity, glm, aplus-fsf, aufs-tools, calligra, cdbs,
+
+ 15:04 <slyon> checkinstall, gsmlib, lasi, knot, libloki
+
+ 15:04 <slyon> - Supporting util-linux SRU bug #1944741
+
+ 15:04 <ubottu> Bug 1944741 in util-linux (Ubuntu Jammy) "HiFive Unmatched partitions are named 'Unleashed'" [Low, New] https://launchpad.net/bugs/1944741
+
+ 15:04 <slyon> - glm SRU verification (LP: #1946750)
+
+ 15:04 <slyon> === Netplan ===
+
+ 15:04 <slyon> - v0.103 packaging for Debian (incl. autopkgtests) & getting it sponsored
+
+ 15:04 <slyon> + looks like DebCI/LXC does not yet like the autopkgtests (or udevadm)
+
+ 15:04 <slyon> - review https://github.com/canonical/netplan/pull/233 (explicit parser context)
+
+ 15:04 <ubottu> Launchpad bug 1946750 in glm (Ubuntu Impish) "FTBFS with GCC-11" [Undecided, Fix Committed] https://launchpad.net/bugs/1946750
+
+ 15:04 <slyon> - rework & merge https://github.com/canonical/netplan/pull/238 (NM snap compat)
+
+ 15:04 <slyon> + landed NM snap 1.22.10-9 into the "20/stable" channel
+
+ 15:04 <slyon> - merge https://github.com/canonical/netplan/pull/232 (NetplanState)
+
+ 15:04 <ubottu> Pull 233 in canonical/netplan "lib: use an explicit parser context" [Open]
+
+ 15:04 <ubottu> Pull 238 in canonical/netplan "parse-nm: Handle missing gateway in keyfile routes, keep dns-search fallback" [Merged]
+
+ 15:04 <ubottu> Pull 232 in canonical/netplan "lib: introduce the notion of NetplanState" [Merged]
+
+ 15:04 <slyon> - review https://github.com/canonical/netplan/pull/234 (error handling code)
+
+ 15:04 <slyon> - review & merge https://github.com/canonical/netplan/pull/239 (generator API)
+
+ 15:04 <slyon> - review & merge https://github.com/canonical/netplan/pull/240 (wpa_supplicant)
+
+ 15:04 <slyon> + LP: #1814012
+
+ 15:04 <slyon> (done)
+
+ 15:04 <ubottu> Pull 234 in canonical/netplan "parser: fix some error handling code" [Merged]
+
+ 15:04 <ubottu> Pull 239 in canonical/netplan "libnetplan: expose coherent generator APIs" [Merged]
+
+ 15:04 <ubottu> Pull 240 in canonical/netplan "networkd:wpa_supplicant: driver fallback to nl80211 and/or wext (LP: #1814012)" [Merged]
+
+ 15:04 <ubottu> Launchpad bug 1814012 in netplan.io (Ubuntu) "netplan type wifis needs a device option" [High, Triaged] https://launchpad.net/bugs/1814012
+
+ 15:04 <alexghiti> BeagleV board enablement: port of u-boot SPL
+
+ 15:05 <alexghiti> Review openSBI patchset for Unmatched reset
+
+ 15:05 <alexghiti> Nx-libs patchset about to get merged thanks to Graham Inggs!
+
+ 15:05 <alexghiti> util-linux SRU in proposed
+
+ 15:05 <alexghiti> (done)
+
+ 15:05 <ginggs> * continued with second impish test rebuild and retries https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20210927-impish-impish.html
+
+ 15:05 <ginggs> * fixed sqlalchemy FTBFS by cherry-picking upstream fixes for zzzeeksphinx LP: #1939346
+
+ 15:05 <ginggs> * working on test rebuild with Python 3.10 as a supported version https://people.canonical.com/~ubuntu-archive/transitions/html/python3.10-add.html
+
+ 15:05 <ginggs> * found a regression in py_compile upstream, fixed in python3.10 3.10.0-2 and patch accepted upstream
+
+ 15:05 <ginggs> * add support for 2-digit python minor versions in pyversions from python3-defaults LP: #1946965
+
+ 15:05 <ginggs> * add support for 2-digit python minor versions in dh-python LP: #1946971
+
+ 15:05 <ubottu> Launchpad bug 1939346 in zzzeeksphinx (Ubuntu) "FTBFS 1.3.22+ds1-1 in build-docs during rebuild-test" [Undecided, Fix Released] https://launchpad.net/bugs/1939346
+
+ 15:05 <ubottu> Launchpad bug 1946965 in python3-defaults (Ubuntu) "python3-defaults: py3versions -i does not list python3.10 when it is installed" [Undecided, New] https://launchpad.net/bugs/1946965
+
+ 15:05 <ginggs> * uploaded no-change rebuilds of dependency levels 1 and 2 to https://launchpad.net/~pythoneers/+archive/ubuntu/python3.10/
+
+ 15:05 <ubottu> Launchpad bug 1946971 in dh-python (Ubuntu) "dh-python: generates incorrect dependencies when python3.10 is supported" [Undecided, Fix Released] https://launchpad.net/bugs/1946971
+
+ 15:05 <ginggs> * uploaded python3-defaults with Python 3.10 as a supported version, r-base and r-bioc-biocgenerics before jammy opening
+
+ 15:05 <ginggs> * jammy sync party: r-cran-rlang, python-xarray, zzzeeksphinx, mat2, r-cran-paretykit, ruby-nokogiri, r-bioc-dropletusils, dask-sphinx-theme and tasksel
+
+ 15:05 <ginggs> * uploaded pytest, cython, numpy and boost1.74 for python3.10-add
+
+ 15:05 <ginggs> * retried many FTBFS in the python3.10-add and r-api-bioc-3.13 transitions
+
+ 15:05 <ginggs> (done)
+
+ 15:05 <bdmurray> ginggs: is bug 1946971 verified yet?
+
+ 15:06 <ginggs> not yet
+
+ 15:06 <bdmurray> that seems like a candidate for speedy release
+
+ 15:06 <bdmurray> jawn-smith:
+
+ 15:06 <jawn-smith> * Rewrite ubuntu-image in Go
+
+ 15:06 <jawn-smith> * makeDisk PR merged
+
+ 15:06 <jawn-smith> * A few last minute bug fixes/UX improvements
+
+ 15:06 <jawn-smith> * fix --snap=name=channel syntax
+
+ 15:06 <jawn-smith> * fix handling of --image-size flag
+
+ 15:06 <jawn-smith> * remove image file if it already exists to avoid errors
+
+ 15:06 <jawn-smith> * Adding more unit test cases
+
+ 15:06 <jawn-smith> * Tons of manual testing
+
+ 15:06 <jawn-smith> * ubuntu-image 2.0 now in jammy-proposed!
+
+ 15:06 <jawn-smith> * 21.10 image testing
+
+ 15:07 <jawn-smith> * +1 maintenance
+
+ 15:07 <jawn-smith> * main focus is the universe packages that we had to hint in order to finish the golang 1.17 transition
+
+ 15:07 <jawn-smith> * packaged golang-github-marten-seemann-qtls-go1-17 from upstream
+
+ 15:07 <jawn-smith> * repackaged golang-github-lucas-clemente-quic-go from upstream
+
+ 15:07 <jawn-smith> * still working on weird s390x test failures
+
+ 15:07 <jawn-smith> * Still need to repackage syncthing from upstream
+
+ 15:07 <jawn-smith> * sponsorship queue cleanup. Found many bugs that didn't need to be assigned to ubuntu-sponsors
+
+ 15:07 <jawn-smith> [done]
+
+ 15:07 <bdmurray> doko:
+
+ 15:08 <doko> - archive opening
+
+ 15:08 <doko> - add python3.10 as supported, some no-change uploads over the weekend
+
+ 15:08 <doko> - fix uninstallability issues
+
+ 15:08 <doko> - python 3.10 related bug fixes
+
+ 15:08 <doko> - preparing openjdk security updates
+
+ 15:08 <doko> - backporting amdgcn offload patches to gcc-11, to use the "binutils" from LLVM 13
+
+ 15:08 <doko> - gcc-11 update
+
+ 15:08 <doko> (done)
+
+ 15:08 <bdmurray> xypron:
+
+ 15:08 <xypron> Testing LXD, LXC on riscv resulting in some upstream patches
+
+ 15:09 <xypron> Packaging first stage boot loader for Nezha board
+
+ 15:09 <xypron> <done>
+
+ 15:09 <vorlon> * jammy archive opening
+
+ 15:09 <vorlon> * running 'new-binary-debian-universe -y' in a loop
+
+ 15:09 <vorlon> * going through my TIL merges
+
+ 15:09 <vorlon> * (still need to sponsor the pam merge)
+
+ 15:09 <vorlon> * kicking retries of various failed builds
+
+ 15:09 <vorlon> * glaring at the khronos-opencl-clhpp / khronos-opencl-headers build loop
+
+ 15:09 <vorlon> * roadmap sprint planning
+
+ 15:09 <vorlon> * reviews of various server-critical SRUs (ubuntu-advantage-tools, containerd)
+
+ 15:09 <vorlon> * answering fun questions on the technical board list
+
+ 15:09 <vorlon> * discussions around FDE in jammy
+
+ 15:09 <vorlon> (done)
+
+ 15:10 <schopin> What's a TIL merge? oO
+
+ 15:10 <bdmurray> touched it last
+
+ 15:10 <bdmurray> Oh whoops I skipped myself
+
+ 15:10 <bdmurray> uploaded ubiquity with a fix for LP: #1231091
+
+ 15:10 <bdmurray> updated autopkgtest MP re building EoL releases
+
+ 15:10 <bdmurray> uploaded autopkgtest with a fix to build EoL release VMs to a PPA
+
+ 15:10 <bdmurray> Ubuntu 21.10 release work
+
+ 15:10 <ubottu> Launchpad bug 1231091 in ubuntu-mate-settings (Ubuntu Impish) "Screenreader starts, but does not work with installer (ubiquity) in live session" [High, Fix Released] https://launchpad.net/bugs/1231091
+
+ 15:10 <bdmurray> Ubuntu 22.04 opening work
+
+ 15:10 <bdmurray> iso testing
+
+ 15:10 <bdmurray> testing, release noting LP: #1944519
+
+ 15:10 <bdmurray> improved generate-freeze-block to be multi-arch aware
+
+ 15:10 <bdmurray> adding hints as I'm the hint master now
+
+ 15:10 <ubottu> Launchpad bug 1944519 in casper (Ubuntu) "Xubuntu shutdown prompt is missing - system reboots at once" [Undecided, Confirmed] https://launchpad.net/bugs/1944519
+
+ 15:10 <bdmurray> updated some manual test cases for the isotracker
+
+ 15:10 <bdmurray> review of items in the sponsorship queue
+
+ 15:10 <bdmurray> ubuntu-release-upgrader bug triage
+
+ 15:10 <bdmurray> updated u-r-u to depend on procps LP: #1947333
+
+ 15:10 <ubottu> Launchpad bug 1947333 in ubuntu-release-upgrader (Ubuntu) "python3-distupgrade missing an explicit dependency on procps" [Medium, In Progress] https://launchpad.net/bugs/1947333
+
+ 15:10 <bdmurray> uploaded u-r-u for upgrades from impish to jammy
+
+ 15:10 <bdmurray> recreated u-r-u bug LP: #1947600
+
+ 15:10 <bdmurray> uploaded a fix for u-r-u bug LP: #1947501 to jammy and impish
+
+ 15:10 <bdmurray> review of vorlon's mp re: unsubscribing teams from packages
+
+ 15:10 <ubottu> Launchpad bug 1947600 in ubuntu-release-upgrader (Ubuntu) "Default browser changed from firefox to chrome" [Undecided, New] https://launchpad.net/bugs/1947600
+
+ 15:10 <ubottu> Launchpad bug 1947501 in update-manager (Ubuntu) "update-manager should not remove deb-packaged Firefox on flavors" [Undecided, In Progress] https://launchpad.net/bugs/1947501
+
+ 15:10 <bdmurray> etesting debootstrap autopkgtest failures
+
+ 15:10 <bdmurray> sru-verification of debootstrap
+
+ 15:10 <bdmurray> review of cdimage simplestreams MP
+
+ 15:11 <bdmurray> sil2100:
+
+ 15:11 <sil2100> o/
+
+ 15:11 <sil2100> * Last week: release of 21.10!
+
+ 15:11 <sil2100> * Archive opening for 22.04:
+
+ 15:11 <sil2100> - Prepared tracking document
+
+ 15:11 <sil2100> - Worked with Colin to get the base bits working on Friday
+
+ 15:11 <sil2100> - Prepared for starting jammy dailies running
+
+ 15:11 <sil2100> * ubuntu-cdimage simplestream support:
+
+ 15:11 <sil2100> - Last few weeks full of improvements and small bugfixes
+
+ 15:11 <sil2100> - Prepared initial MP for review, got Brian's comments
+
+ 15:11 <sil2100> - Fixed issues mentioned during the review, merged and deployed
+
+ 15:11 <sil2100> - Fixed deployment issues, found a stupid bug in checksum reusage
+
+ 15:11 <sil2100> - Chatting with cert
+
+ 15:11 <sil2100> * ubuntu-image:
+
+ 15:11 <sil2100> - Reviewed final PRs from William!
+
+ 15:11 <sil2100> - Added support for --version printing
+
+ 15:11 <sil2100> - Snapped an 2.0 RC and put in edge/2.0, asked for feedback
+
+ 15:11 <sil2100> - Reported various bugs, sat down with William and fixed a few of those
+
+ 15:11 <sil2100> - Prepping a small sanity change, unimportant, but not finished yet
+
+ 15:11 <sil2100> - Prepared a new snap and an official jammy 2.0 release - uploaded
+
+ 15:11 <sil2100> - ...William preparing a riscv64 FTBFS fix and we'll reupload!
+
+ 15:11 <sil2100> * Working on getting a new core18 in stable
+
+ 15:11 <sil2100> * Ubuntu Core:
+
+ 15:11 <sil2100> - Worked with Sertac on getting the core22 snap building again
+
+ 15:11 <sil2100> - Discussed ways forward with UC22
+
+ 15:12 <sil2100> - Looked into our ubuntu-base tarball builds
+
+ 15:12 <sil2100> * A heated DMB meeting, still waiting for ML votes
+
+ 15:12 <sil2100> * Discussions about WSL cdimage work
+
+ 15:12 <sil2100> * HWE meeting, prioritization of ubuntu-image tasks
+
+ 15:12 <sil2100> * Working on documentation for ESM britney, other doc pieces too
+
+ 15:12 <sil2100> * Updated checklist for server-live images for RISC-V
+
+ 15:12 <sil2100> * A few SRU reviews
+
+ 15:12 <sil2100> (done)
+
+ 15:12 <bdmurray> Are there any questions on status?
+
+ 15:13 <bdmurray> juliank: Is there any progress with the RT about jammy images?
+
+ 15:13 <juliank> bdmurray: it's about impish images
+
+ 15:13 <juliank> and no
+
+ 15:13 <bdmurray> impish is dead to me ;-)
+
+ 15:13 <juliank> but also, they're needed for jammy images on staging autopkgtest
+
+ 15:14 <bdmurray> #topic Release Incoming Bugs
+
+ 15:14 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:16 <bdmurray> bug 1940011
+
+ 15:16 <ubottu> Bug 1940011 in update-notifier (Ubuntu) "Reduce cron spam from weekly update-notifier-common" [Low, New] https://launchpad.net/bugs/1940011
+
+ 15:17 <bdmurray> vorlon: Do you have an opinion on changing this behavior?
+
+ 15:17 <vorlon> bdmurray: seems like a good idea on its face
+
+ 15:18 <vorlon> I don't recall any discussion about cron emails being used to notify admins
+
+ 15:18 <bdmurray> okay, let's add it to the backlog
+
+ 15:19 <bdmurray> bug 1943530 seems incomplete to me
+
+ 15:19 <ubottu> Bug 1943530 in krb5 (Ubuntu) "link libkrb5 with openssl" [Undecided, New] https://launchpad.net/bugs/1943530
+
+ 15:19 <bdmurray> bug 1947581 seems like something we could do and keep that bug reporter happy
+
+ 15:20 <ubottu> Bug 1947581 in ubuntu-release-upgrader (Ubuntu) "Download times for 1Mbit DSL connection and 56k modem are meaningless" [Undecided, New] https://launchpad.net/bugs/1947581
+
+ 15:20 <bdmurray> so let's target and card it
+
+ 15:20 <mclemenceau> ok
+
+ 15:20 <bdmurray> bug 194628
+
+ 15:20 <ubottu> Bug 130811 in rhythmbox (Ubuntu) "use 'close' animation when sending to the notification area" [Low, Triaged] [duplicate: 194628] https://launchpad.net/bugs/130811
+
+ 15:20 <bdmurray> hunh
+
+ 15:20 <bdmurray> bug 1946828
+
+ 15:20 <ubottu> Bug 1946828 in ubiquity (Ubuntu) "ntfsresize hang and call traces in syslog" [Undecided, Confirmed] https://launchpad.net/bugs/1946828
+
+ 15:21 <bdmurray> dbungert: Did you bring this up with anybody?
+
+ 15:21 <dbungert> no, who would I direct that to?
+
+ 15:21 <bdmurray> Do you think its a kernel issue?
+
+ 15:21 <dbungert> Yes
+
+ 15:22 <bdmurray> Then maybe xnox
+
+ 15:23 <dbungert> will do
+
+ 15:23 <bdmurray> bug 1918421 already has a card
+
+ 15:23 <ubottu> Bug 1918421 in netplan.io (Ubuntu) "netplan does not match multiple driver specifications" [Undecided, Triaged] https://launchpad.net/bugs/1918421
+
+ 15:23 <slyon> yes
+
+ 15:23 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html
+
+ 15:23 <bdmurray> bug 1943816
+
+ 15:23 <ubottu> Bug 1943816 in OEM Priority Project "'ubuntu-drivers install' needs to be used when installing nvidia-driver if enabling 'third-party packages'" [Critical, Confirmed] https://launchpad.net/bugs/1943816
+
+ 15:23 <bdmurray> sil2100: did we decide if the ubiquity task was necessary?
+
+ 15:25 <sil2100> I think it's tricky, since it wasn't needed for this one fix we did but will be needed for the final 'proper' fix
+
+ 15:25 <sil2100> With the switch to actually installing via ubuntu-drivers
+
+ 15:25 <sil2100> So this one is fixed, but we want to fix it better I guess?
+
+ 15:26 <bdmurray> Okay, so should we close it out then?
+
+ 15:27 <bdmurray> we already discussed the download speed issues
+
+ 15:27 <bdmurray> bug 1947600 is really with the desktop team
+
+ 15:27 <ubottu> Bug 1947600 in ubuntu-release-upgrader (Ubuntu) "Default browser changed from firefox to chrome" [Undecided, New] https://launchpad.net/bugs/1947600
+
+ 15:27 <bdmurray> bug 1947800 has a ton of duplicates
+
+ 15:27 <ubottu> Bug 1947800 in apport (Ubuntu) "/usr/share/apport/whoopsie-upload-all:zlib.error:/usr/share/apport/whoopsie-upload-all@196:collect_info:process_report:add_gdb_info:gdb_command:write:read:readinto:read" [Undecided, New] https://launchpad.net/bugs/1947800
+
+ 15:28 <bdmurray> well or a ton of reports
+
+ 15:28 <bdmurray> so that's worth carding and sorting out
+
+ 15:29 <bdmurray> bug 1944519 I want to untag because its flavor specific
+
+ 15:29 <ubottu> Bug 1944519 in casper (Ubuntu) "Xubuntu shutdown prompt is missing - system reboots at once" [Undecided, Confirmed] https://launchpad.net/bugs/1944519
+
+ 15:29 <bdmurray> Also its already carded so I'll clean that up
+
+ 15:30 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:30 <bdmurray> just that same bug tagged champagne
+
+ 15:30 <bdmurray> #topic Team proposed-migration report
+
+ 15:31 <bdmurray> vorlon:
+
+ 15:31 <vorlon> [LINK] https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:32 <vorlon> 34 packages of age, but I think we should forgo assigning these out individually this week, on account of so many of these waiting for autopkgtests to finish
+
+ 15:32 <bdmurray> Do we know when they might finish?
+
+ 15:33 <vorlon> not really; graphs show the queued autopkgtest count still growing over the past day
+
+ 15:33 <vorlon> so can't draw any conclusions about how quickly the backlog will be processed
+
+ 15:34 <doko> I'd guess about two weeks ...
+
+ 15:35 <bdmurray> vorlon: okay should we move on to AOB then?
+
+ 15:35 <vorlon> bdmurray: yes please
+
+ 15:35 <bdmurray> #topic AOB
+
+ 15:36 <waveform> I'll be out from tomorrow and for next week (kid's half-term; will be available for urgent stuff)
+
+ 15:37 <bdmurray> okay, thanks everybody!
+
+ 15:37 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

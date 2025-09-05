@@ -1,0 +1,610 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 14 Jan at 16:01 &mdash; 16:42 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-01-14-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:01.
+
+  * ''LINK:'' https://www.youtube.com/watch?v=8YlE_pLwU_0 
+
+=== AOB ===
+The discussion about "AOB" started at 16:15.
+
+  * ''LINK:'' http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20151218.1-xenial-baseline-xenial.html 
+  * ''LINK:'' http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20151218.1-xenial-baseline-xenial.html 
+  * ''LINK:'' http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20151218.1-pie-z-now-xenial.html 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (61)
+ * caribou (34)
+ * xnox (30)
+ * cyphermox (23)
+ * bdmurray (22)
+ * sil2100 (20)
+ * pitti (18)
+ * ubottu (15)
+ * doko (13)
+ * barry (11)
+ * robru (10)
+ * tdaitx (8)
+ * chiluk (4)
+ * meetingology (4)
+ * jgrimm (1)
+ * Trevinho (1)
+
+
+
+== Full Log ==
+
+
+ 16:01 <slangasek> #startmeeting
+
+ 16:01 <meetingology> Meeting started Thu Jan 14 16:01:42 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:01 <slangasek> [TOPIC] Lightning round
+
+ 16:01 <xnox> \o\ \o/ /o/
+
+ 16:01 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk)
+
+ 16:01 <slangasek> chiluk tdaitx pitti robru infinity bdmurray slangasek barry doko cyphermox sil2100 caribou xnox
+
+ 16:02 <sil2100> Phew
+
+ 16:02 * xnox winning
+
+ 16:02 <chiluk> guess I'm first..
+
+ 16:02 * tdaitx 2nd place!
+
+ 16:02 <sil2100> I still have some time to prepare the report...
+
+ 16:02 <chiluk> Fixed https://bugs.launchpad.net/maas/+bug/1484696 waiting on upload approval and SRU.
+
+ 16:02 <chiluk> Fixed https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1527062 Verification TBD.
+
+ 16:02 <chiluk> --done--
+
+ 16:02 <ubottu> Launchpad bug 1484696 in apache2 (Ubuntu) "Unable to connect to: ws://<maas IP>:/MAAS/ws" [High,In progress]
+
+ 16:02 <ubottu> Launchpad bug 1527062 in linux (Ubuntu) "XFS Deadlock on 4.2+" [High,In progress]
+
+ 16:02 <tdaitx> * Sort out freeipmi merge confusion (LP: #1527685)
+
+ 16:02 <tdaitx> * Checking OpenJDK 7 candidate patches to upstream
+
+ 16:02 <tdaitx> * Backport 8u71 security patches to OpenJDK 7
+
+ 16:02 <tdaitx> Next:
+
+ 16:02 <tdaitx> * Backport 8u71 security patches to OpenJDK 6
+
+ 16:02 <tdaitx> * Provide OpenJDK 7 & 6 with 8u71 security patches to the security team
+
+ 16:02 <ubottu> Launchpad bug 1527685 in freeipmi (Ubuntu) "Please merge freeipmi 1.4.11-1 (main) from Debian unstable (main)" [Wishlist,Fix released] https://launchpad.net/bugs/1527685
+
+ 16:02 <tdaitx> (done)
+
+ 16:02 <pitti> autopkgtest:
+
+ 16:02 <pitti> - lots of manual maintenance mostly due to some LXC problems on armhf, and on a juju bug in prodstack; investigated with #juju and IS; nothing worked, re-deployed entire environment
+
+ 16:02 <pitti> - improve heuristics of which souce package version to download; not perfect yet (particularly for the kernel), but better for most cases (LP: #1517426)
+
+ 16:02 <ubottu> Launchpad bug 1517426 in autopkgtest (Ubuntu) "apt-get source the pinned versions, not the latest available ones" [High,Fix released] https://launchpad.net/bugs/1517426
+
+ 16:02 <pitti> - Adjust deployment script to work with juju-local, as preparation for the upcoming virtual sprint and for easier development
+
+ 16:02 <pitti> - Attempt to move armhf testing into Scalingstack; first attempt failed due to LP: #1531768, alternative attempt with direct kernel+initrd boot is blocked on some Scalingstack fixes (wgrant was looking into that)
+
+ 16:03 <ubottu> Launchpad bug 1531768 in linux (Ubuntu) "arm64 kernel and multiple CPUs is unusably slow" [Medium,Confirmed] https://launchpad.net/bugs/1531768
+
+ 16:03 <pitti> misc:
+
+ 16:03 <pitti> - unstick some packages in -proposed, do some library transitions
+
+ 16:03 <pitti> - ongoing: PostgreSQL 9.4 → 9.5 transition
+
+ 16:03 <pitti> - apport: fix tests with gcc 6 and some flaky test
+
+ 16:03 <pitti> - Help didrocks with running ubuntu-make upstream tests on autopkgtest CI; we found various issues both in the u-make tests and in the infra
+
+ 16:03 <pitti> - Fix wrong keyboard layout on console (#1531442)
+
+ 16:03 <pitti> (END)
+
+ 16:03 <robru> lp:canonical-mojo-specs
+
+ 16:03 <robru> * FINALLY got first successful train deployment in mojo CI in over 2 months
+
+ 16:03 <robru> lp:bileto
+
+ 16:03 <robru> * phase 2 of britney support: gating qa queue on britney approval
+
+ 16:03 <robru> * fixed a huge bug in britney configuration that prevented it from identifying regressions (britney was rubberstamping nearly everything as ALWAYSFAIL until today)
+
+ 16:03 <robru> * split qa signoff field into lander signoff and qa signoff, hopefully fixing much confusion.
+
+ 16:03 <robru> * many minor bug fixes and optimizations.
+
+ 16:03 <robru> (done)
+
+ 16:04 <slangasek> infinity's not in channel; bdmurray ?
+
+ 16:04 <bdmurray> worked on mojo specification on wendigo / devops environment
+
+ 16:04 <bdmurray> fixed permissions issue with creating daisy and errors tarballs
+
+ 16:04 <bdmurray> investgation into mojo spec failure to install cassandra and tried to work around it
+
+ 16:04 <bdmurray> investigation into derived.archive.c.c access failures from the production retracers
+
+ 16:04 <bdmurray> updated daisy to remove ddebs entry for ubuntu-rtms
+
+ 16:04 <bdmurray> submitted RT to have daisy updated on the retracers
+
+ 16:04 <bdmurray> worked with webops regarding upgrading the Error Tracker and charm errors
+
+ 16:04 <bdmurray> reverted changes to error tracker charms for precise, created trusty branches
+
+ 16:04 <bdmurray> updated ifupdown bug with Stacktrace for seb128 / pitti
+
+ 16:04 <bdmurray> investigation into apport not creating a SAS for an ifupdown crash
+
+ 16:04 <bdmurray> reported apport bug LP: #1533349 and submitted MP
+
+ 16:04 <ubottu> Launchpad bug 1533349 in Apport "StacktraceAddressSignature is generated using suboptimal function" [Undecided,New] https://launchpad.net/bugs/1533349
+
+ 16:04 <bdmurray> investigation into release upgrade bug LP: #1497688
+
+ 16:04 <ubottu> Launchpad bug 1497688 in apt (Ubuntu Trusty) "dmsetup and libdevmapper1.02.1 fail to install, depend on each other" [High,Fix committed] https://launchpad.net/bugs/1497688
+
+ 16:04 <bdmurray> upload trusty fix for apt bug LP: #1497688  / LP: #1347721
+
+ 16:04 <ubottu> Launchpad bug 1347721 in apt (Ubuntu Trusty) "Saucy -> Trusty upgrade failed: procps fails to configure" [High,Fix committed] https://launchpad.net/bugs/1347721
+
+ 16:04 <bdmurray> uploaded xenial fix for bug LP: #1517625
+
+ 16:04 <ubottu> Launchpad bug 1517625 in biosdevname (Ubuntu Wily) "Typo in hooks/biosdevname" [Medium,Fix committed] https://launchpad.net/bugs/1517625
+
+ 16:04 <bdmurray> worked on app-install-data-partner bug LP: #1531194
+
+ 16:04 <ubottu> Launchpad bug 1531194 in app-install-data-partner (Ubuntu Xenial) "13.04 "raring-partner" channel included in 14.04/15.04/15.10/16.04" [Low,Triaged] https://launchpad.net/bugs/1531194
+
+ 16:04 <bdmurray> fixing ubuntu-release-upgrader test failures
+
+ 16:04 <bdmurray> reuploaded bzr to Trusty SRU queue to get LaunchpadBugsFixed
+
+ 16:04 <bdmurray> reuploaded bzr to the Trusty SRU queue for vincent (ftbfs)
+
+ 16:04 <bdmurray> ✔ done
+
+ 16:05 * xnox what is mojo?
+
+ 16:05 <robru> xnox: you don't want to know
+
+ 16:06 <pitti> bdmurray: FWIW, I briefly looked at that, but I can't make sense of that yet
+
+ 16:06 <bdmurray> pitti: I'd be happy to talk about it.
+
+ 16:06 <barry> https://www.youtube.com/watch?v=8YlE_pLwU_0
+
+ 16:06 <robru> xnox: in-house bespoke wrapper around juju, it's used to deploy all Canonical cloud services
+
+ 16:06 <slangasek> * merges
+
+ 16:06 <slangasek> * helped unblock a few packages from -proposed
+
+ 16:06 <slangasek> * triaging of IBM Power bug escalations
+
+ 16:06 <slangasek> * finishing up golang merge sponsorship this week (LP: #1524165)
+
+ 16:07 <ubottu> Launchpad bug 1524165 in golang (Ubuntu) "merge with debian" [Wishlist,New] https://launchpad.net/bugs/1524165
+
+ 16:07 <slangasek> (done)
+
+ 16:07 <barry> python issue 22995 (regression in pickability tests affecting cython-based packages); testing other issues with python 3.5
+
+ 16:07 <barry> LP: #1526613; LP: #1440504
+
+ 16:07 <ubottu> Launchpad bug 1526613 in python3.5 (Ubuntu) "ftbfs asyncio test failure with 3.5.1-2, used to pass with 3.5.0-2" [Undecided,New] https://launchpad.net/bugs/1526613
+
+ 16:07 <ubottu> Launchpad bug 1440504 in libpeas (Ubuntu) "libpeas-1.0-0 depends on both libpython2.7 and libpython3.4" [Medium,In progress] https://launchpad.net/bugs/1440504
+
+ 16:07 <barry> click-toolbelt review and sponsorship for pindonga (ultimately he chose not to upload it)
+
+ 16:07 <barry> pycurl 7.21.5-1 and 7.21.5-1ubuntu1
+
+ 16:07 <barry> python3 blueprint ping :)
+
+ 16:07 <barry> new dput code reviews
+
+ 16:07 <barry> python-virtualenv 13.1.2-1
+
+ 16:07 <barry> returning to dirtbike/rewheeling work
+
+ 16:07 <barry> --done--
+
+ 16:08 <doko> - gcc6 test rebuild finished, evaluated, and filed issues for all ICEs
+
+ 16:08 <doko> - gcc-5 test build from the ibm branch
+
+ 16:08 <doko> - python update for 22925
+
+ 16:08 <doko> - around 20 merges in main
+
+ 16:08 <doko> (done)
+
+ 16:08 <cyphermox> - back from vacation, catching up
+
+ 16:08 <cyphermox> - added MokSBStateRT variable in upstream shim
+
+ 16:08 <cyphermox> - dkms update for Secure Boot support.
+
+ 16:08 <cyphermox> - completed some outstanding multipath SRUs (herding testers)
+
+ 16:08 <cyphermox> - powerpc-ibm-utils SRU
+
+ 16:08 <cyphermox> - isc-dhcp merge for 4.3.3, with fix for bug LP: #1186662
+
+ 16:08 <ubottu> Launchpad bug 1186662 in isc-dhcp (Ubuntu) "isc-dhcp-server fails to renew lease file" [High,Triaged] https://launchpad.net/bugs/1186662
+
+ 16:08 <cyphermox> (fyi, isc-dhcp is in NEW)
+
+ 16:08 <cyphermox> - got pulled into a meeting about networking / wifi on phone
+
+ 16:08 <cyphermox> - lsvpd, ppc64-diag package updates
+
+ 16:08 <cyphermox> - more multipath-tools SRUs/bug fixes to be done this week
+
+ 16:09 <cyphermox> (done)
+
+ 16:09 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 16:09 <sil2100> - RTM Status meetings
+
+ 16:09 <sil2100> - system-image:
+
+ 16:09 <sil2100> * Work on the testability branch
+
+ 16:09 <sil2100> - Image manipulation and copies for ubuntu-core
+
+ 16:09 <sil2100> - Landing Team tools:
+
+ 16:09 <sil2100> * Add the map-image script to the tools, displaying rootfs->number mappings for images
+
+ 16:09 <sil2100> * Modify commitlog generation scripts to create symlinks for other touch channels
+
+ 16:09 <sil2100> - +1-maintenance:
+
+ 16:09 <sil2100> * Merged ppp, network-manager-pptp and fso-gsmd
+
+ 16:09 <sil2100> * Briefly looked into the reason why ppp is blocked (ppp-modules for s390x)
+
+ 16:09 <sil2100> - Manual imports of custom tarballs for the tarball teams
+
+ 16:09 <sil2100> - Writing up a script for analysing the delta between vivid-overlay and xenial
+
+ 16:09 <sil2100> * Started interpreting the results
+
+ 16:09 <sil2100> - Sync up on current touch device situation and get info for the future
+
+ 16:09 <sil2100> - Packaging reviews for dual-landing merges
+
+ 16:10 <sil2100> (done)
+
+ 16:11 <sil2100> caribou: you're next (if you're around)
+
+ 16:11 <caribou> sil2100: I'm hre
+
+ 16:11 <caribou> here
+
+ 16:11 <caribou> Bugfix :
+
+ 16:11 <caribou> - rsyslog fails to start under upstart : More investigation
+
+ 16:11 <caribou> - DMB preparation
+
+ 16:11 <caribou> - LP1532146 - initramfs-tools nvme support
+
+ 16:11 <caribou> - LP1528101 - vm.min_free_kbytes crash issues
+
+ 16:11 <caribou> - LP1534106 - rsyslog segfault with juju
+
+ 16:11 <caribou> - Nut merge : waiting for sponsor
+
+ 16:11 <caribou> Project:
+
+ 16:11 <caribou> - Research on clvm/dlm supportability
+
+ 16:12 * xnox grins
+
+ 16:12 <caribou> ☑ Done
+
+ 16:12 <caribou> xnox: I thought you would ;)
+
+ 16:12 <xnox> fixed qemu
+
+ 16:12 <xnox> fixed cloud-images, tested them on two operating systems
+
+ 16:12 <xnox> fixed strace
+
+ 16:12 <xnox> fixed procps
+
+ 16:12 <xnox> requested fixes for kernel, some are done
+
+ 16:12 <xnox> fixed kdevplatform, libmpd, packagekit-qt (bootstrap)
+
+ 16:12 <xnox> lsb is now in-sync (debian pro-actively took our remaining delta)
+
+ 16:12 <xnox> doing test-rebuilds with golang-go 1.6 beta2
+
+ 16:12 <xnox> discussed sever/d-i image automated qa, didn't do actions from that yet
+
+ 16:12 <xnox> end of life for David Bowie & Alan Rickman
+
+ 16:13 <xnox> ..
+
+ 16:13 <slangasek> mmm nut merge
+
+ 16:13 <slangasek> it's like faux nutmeg
+
+ 16:13 <caribou> :)
+
+ 16:14 <cyphermox> oh, chicken milk, yes :)
+
+ 16:14 <slangasek> xnox: you worked on their EOL?
+
+ 16:14 <caribou> would be nice to touch base about clvm/dlm
+
+ 16:14 <caribou> @AOB
+
+ 16:14 <meetingology> caribou: Error: "AOB" is not a valid command.
+
+ 16:14 <xnox> slangasek, i cannot confirm or deny
+
+ 16:14 <slangasek> any questions RE: status?
+
+ 16:15 <doko> have a look at the ftbfs for the test rebuild ...
+
+ 16:15 <slangasek> [TOPIC] AOB
+
+ 16:16 <slangasek> caribou: clvm/dlm?
+
+ 16:16 <caribou> well, yes : while clvm is in main, the dlm/libdlm packages are in Universe
+
+ 16:16 <caribou> and clvm relies on them
+
+ 16:16 <caribou> (aside from the dlm package being broken)
+
+ 16:17 <caribou> do we have an official statement or plan of action on supporting a clustering architecture ?
+
+ 16:17 <slangasek> caribou: are you asking about for 14.04 or 16.04?
+
+ 16:17 <pitti> I think this is ancient, from fabionnes' time
+
+ 16:17 <caribou> slangasek: I would say both
+
+ 16:17 <xnox> caribou, i see dlm in debian new, i wonder if that's better than our version of dlm.
+
+ 16:17 <slangasek> 14.04, from what I can see, is an oversight; nobody reviewed the seeds to make sure that the things in there were things we wanted to support
+
+ 16:17 <caribou> 14.04 is broken and if we plan to support it, we should fix it in 16.04
+
+ 16:17 <bdmurray> regarding bug 1531194 - Its seems like an obvious fix do I need a test case for it?
+
+ 16:17 <ubottu> bug 1531194 in app-install-data-partner (Ubuntu Xenial) "13.04 "raring-partner" channel included in 14.04/15.04/15.10/16.04" [Low,Triaged] https://launchpad.net/bugs/1531194
+
+ 16:17 <pitti> I thought our clusters are being called "clouds"
+
+ 16:18 <slangasek> caribou: for 16.04, I think this needs to get out of the seeds
+
+ 16:18 <slangasek> however, it's a server team call
+
+ 16:18 <xnox> at the time i touched it i remember cluster-agents got deprecated, and like i promoted clvm cause it seemed like the right thing to do.
+
+ 16:18 <slangasek> it's in the server seed
+
+ 16:18 <caribou> I will talk to the server team about it
+
+ 16:18 <caribou> but do we want to have a supported clustering architecture ?
+
+ 16:19 <caribou> clustering as in shared storage access in that case
+
+ 16:19 <slangasek> that's also a server team decision
+
+ 16:19 <caribou> slangasek: ok, will talk to them
+
+ 16:19 <slangasek> if the server team tells us the answer is "yes" and that they need our support for it, we will help
+
+ 16:19 <slangasek> but we went two years before anyone even noticed clvm was in main and didn't work
+
+ 16:19 <caribou> slangasek: true
+
+ 16:20 <xnox> slangasek, i wonder if that coincides with working 12.04 and people starting 16.04 migration prep.
+
+ 16:20 <xnox> (ie. skip every other LTS, because it over laps)
+
+ 16:21 <caribou> I have another "support" question : do we do any kind of test of Unity on the ppc64el architecture ?
+
+ 16:21 <slangasek> xnox: the question was raised because of a customer trying to deploy it on 14.04; so no
+
+ 16:21 <slangasek> caribou: absolutely not
+
+ 16:21 <xnox> caribou, no desktops are support on ppc64el and ubuntu-desktop isn't/shouldn't be part of ppc64el.
+
+ 16:21 <slangasek> we support ppc64el for servers only
+
+ 16:21 <xnox> slangasek, i think i should drop ubuntu-desktop on unsupported arches.
+
+ 16:21 <caribou> ok, that's what I needed to know
+
+ 16:21 <xnox> as far as i know it's only really supported on amd64
+
+ 16:21 <slangasek> caribou: for packages that are built on ppc64el, they get autopkgtests
+
+ 16:22 <caribou> slangasek: thanks!
+
+ 16:22 <slangasek> xnox: propose to desktop team? :)
+
+ 16:22 <xnox> slangasek, sure.
+
+ 16:22 <pitti> unity doesn't have any autopkgtests, just unity8 (and that's alwaysfailed across the board)
+
+ 16:23 <xnox> Laney, is it ok to make ubuntu-desktop like Architecutre: i386 amd64 ? or maybe armhf too, as i'm sure unity7 is not supported on anything but x86
+
+ 16:23 <caribou> we've seen people try to start Unity on ppc64el with vesa but it fails badly
+
+ 16:23 <slangasek> doko: you wanted to talk about test build failures?
+
+ 16:23 <Trevinho> unity7 used to work in armhf... Not tried for long time, though
+
+ 16:24 <doko> slangasek, no talk, just mention the regressions
+
+ 16:24 <xnox> Laney, cause we got a unity7/ppc64el support request, and we're like "no, no no no no" https://youtu.be/31g0YE61PLQ
+
+ 16:24 <cyphermox> re: unity7: might some people want powerpc?
+
+ 16:25 <slangasek> caribou: IBM has certainly asked about running a desktop; but that's out of scope for our engagement on ppc64el
+
+ 16:25 <caribou> xnox: I wouldn't say "support request" but rather "support questino"
+
+ 16:25 <slangasek> doko: maybe repaste the link here?
+
+ 16:25 <xnox> Trevinho, i'm pretty sure this one time X got updated, and we didn't get new armhf blobs for egl (somewhere) thus unity7 stopped working.
+
+ 16:25 <xnox> toshiba AC100 ?!
+
+ 16:25 <xnox> ogra_, would remember
+
+ 16:25 <doko> http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20151218.1-xenial-baseline-xenial.html
+
+ 16:25 <slangasek> [LINK] http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20151218.1-xenial-baseline-xenial.html
+
+ 16:25 <slangasek> doko: thanks :)
+
+ 16:26 <slangasek> only 35 build failures in main?  clearly we aren't breaking the release hard enough
+
+ 16:27 <slangasek> a lot of familiar names on that list (shim, yaboot).  shim will get updated this cycle (cyphermox) so that'll take care of thato ne
+
+ 16:27 <doko> [LINK] http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20151218.1-pie-z-now-xenial.html
+
+ 16:27 <cyphermox> yup
+
+ 16:27 <doko> pie will do that for u s...
+
+ 16:28 <slangasek> doko: right, do you have the PIE build test link?
+
+ 16:28 <cyphermox> I already had to rebuild shim here to test stuff, and hit the bug, and fixed it with the fix we already have committed
+
+ 16:28 <xnox> slangasek, well, things did get fixed since the rebuild =)
+
+ 16:28 <slangasek> xnox: which the rebuild status pages track, if so
+
+ 16:29 <doko> and 980 packages ftbfs with GCC 6
+
+ 16:30 <slangasek> 7 extra build failures in main w/ PIE
+
+ 16:30 <slangasek> manageable!
+
+ 16:30 <slangasek> btw
+
+ 16:30 <slangasek> I had an email conversation with the server team about trying to get caught up on merges before the LTS
+
+ 16:30 <slangasek> they're pushing hard to get there
+
+ 16:31 <slangasek> but they're short on uploaders
+
+ 16:31 <slangasek> so upload sponsorship is going to be key for helping them get through this backlog
+
+ 16:31 <cyphermox> I thought I already offered stgraber my services
+
+ 16:31 <slangasek> if you have cycles to spare, please send them there
+
+ 16:31 <cyphermox> (so he could tell them)
+
+ 16:32 <slangasek> cyphermox: not sure if the message got passed, maybe you want to flag rbasak or jgrimm :)  but let's see if we figure out a more systematic way to organize upload sponsorships
+
+ 16:32 <cyphermox> yup
+
+ 16:32 <cyphermox> sponsoring overview? ;)
+
+ 16:33 <slangasek> doko: fewer build failures in universe when turning -pie on? hmmm
+
+ 16:33 <slangasek> is the PIE rebuild complete?
+
+ 16:33 <jgrimm> thanks slangasek! indeed help with sponsorships and mentoring in general would be greatly appreciated.
+
+ 16:34 <caribou> slangasek: jgrimm: isn't that was +1 maintenance was suppose to achieve ?
+
+ 16:35 <cyphermox> maybe
+
+ 16:35 <cyphermox> caribou: sponsoring things in a timely manner is always an issue though, not limited to +1
+
+ 16:35 <slangasek> caribou: +1 maintenance is really the structure of rotating individuals in to work on archive tasks... merges are a minor part of that
+
+ 16:35 <cyphermox> people send patches all the time
+
+ 16:36 <caribou> slangasek: ah, ok, I understood otherwise
+
+ 16:36 <slangasek> ok
+
+ 16:36 <cyphermox> +1 maint is probably also sending people down the deep end if they're just starting to upload
+
+ 16:37 <slangasek> other business, Monday is a bank holiday here in the US
+
+ 16:37 <slangasek> so some of us are off
+
+ 16:37 * barry will probably swapday it
+
+ 16:37 <slangasek> (either Monday, or a nearby swap day)
+
+ 16:37 <doko> slangasek, I hope so ...
+
+ 16:38 <doko> slangasek, it's only three archs
+
+ 16:38 <slangasek> doko: ahh true
+
+ 16:38 <slangasek> looking at the per-arch failures, amd64 increases from 760 to 964 - so indeed, there are more failures there
+
+ 16:38 <bdmurray> I'll be out tomorrow instead fwiw
+
+ 16:39 <slangasek> ok, anything else today?
+
+ 16:40 <pitti> slangasek: vsprint?
+
+ 16:40 <slangasek> pitti: will follow up by email on that with details
+
+ 16:40 <slangasek> (today)
+
+ 16:40 <pitti> slangasek: ah, ok
+
+ 16:42 <slangasek> sounds like that's it, then
+
+ 16:42 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

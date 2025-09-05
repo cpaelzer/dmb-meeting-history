@@ -1,0 +1,470 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 28 Mar at 15:02 &mdash; 16:09 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-03-28-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:03.
+
+
+=== Release incoming bugs (bionic) ===
+The discussion about "Release incoming bugs (bionic)" started at 15:17.
+
+
+=== Release incoming bugs (disco) ===
+The discussion about "Release incoming bugs (disco)" started at 15:17.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:47.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:05.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (42)
+ * rbalint (36)
+ * doko (30)
+ * gaughen (29)
+ * ubottu (16)
+ * cyphermox (15)
+ * juliank (12)
+ * tdaitx (11)
+ * waveform (9)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02 <rbalint> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:02 <meetingology> Meeting started Thu Mar 28 15:02:04 2019 UTC.  The chair is rbalint. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <rbalint> #topic Lightning rounds
+
+ 15:03 <gaughen> o/
+
+ 15:03 <rbalint> echo $(shuf -e bdmurray tdaitx doko sil2100 rbalint infinity cyphermox juliank waveform)
+
+ 15:04 <rbalint> doko bdmurray cyphermox tdaitx waveform infinity sil2100 juliank rbalint
+
+ 15:04 <doko> again at 4pm ...
+
+ 15:05 <bdmurray> soon there will be no time changes right?
+
+ 15:05 <bdmurray> it'll all be stable
+
+ 15:05 <doko> sorry, no status. openjdk-11 transition, GCC updates, Python 3.7.3 release, some MIRs
+
+ 15:05 <doko> (done)
+
+ 15:05 <juliank> tz trouble will be over with next week
+
+ 15:05 <bdmurray> woo it's me!
+
+ 15:05 <bdmurray> sorted out issues with retracer-failed-queue-cronner-app with webop
+
+ 15:05 <bdmurray> uploaded plymouth cosmic SRU for LP: #1794292
+
+ 15:05 <bdmurray> reported update-notifier bug LP: #1821412 after extensive testing
+
+ 15:05 <ubottu> Launchpad bug 1794292 in plymouth (Ubuntu Bionic) "plymouthd crashed with SIGSEGV in /sbin/plymouthd:11 in ply_renderer_set_handler_for_input_source -> ply_keyboard_stop_watching_for_renderer_input -> ply_keyboard_stop_watching_for_input -> ply_device_manager_deactivate_keyboards -> on_deactivate" [Medium,Triaged] https://launchpad.net/bugs/1794292
+
+ 15:05 <ubottu> Launchpad bug 1821412 in update-notifier (Ubuntu) ""System program problem" report button does nothing" [High,New] https://launchpad.net/bugs/1821412
+
+ 15:05 <bdmurray> reported policykit-1 bug LP: #1821415 after lots of testing too
+
+ 15:05 <bdmurray> review of retracer failure reasons see below
+
+ 15:05 <bdmurray> discovered an issue with apport being unable to find pkgs for some executables
+
+ 15:06 <ubottu> Launchpad bug 1821415 in policykit-1 (Ubuntu) "pkexec fails in a non-graphical environment" [Undecided,New] https://launchpad.net/bugs/1821415
+
+ 15:06 <bdmurray> fixed the above issue in apport r3229
+
+ 15:06 <bdmurray> tested apport changes in staging Error Tracker, updated LP retracers
+
+ 15:06 <bdmurray> submitted RT regarding production Error Tracker update
+
+ 15:06 <bdmurray> investigation into apport crash LP: #1820132 - missing executable
+
+ 15:06 <bdmurray> review, merge of colin's update-manager MP re changelogs
+
+ 15:06 <ubottu> Launchpad bug 1820132 in apport (Ubuntu Disco) "/usr/share/apport/whoopsie-upload-all:AssertionError:/usr/share/apport/whoopsie-upload-all@162:collect_info:process_report:add_gdb_info:gdb_command" [High,Triaged] https://launchpad.net/bugs/1820132
+
+ 15:06 <bdmurray> done
+
+ 15:07 <bdmurray> cyphermox:
+
+ 15:07 <cyphermox> - shim-review: finally managed to review OpenSuSE Leap & SLES shims succesfully
+
+ 15:07 <cyphermox> - MIR: reviewing containerd
+
+ 15:07 <cyphermox> - verifying grub2 SRUs trusty: signature enforcement and grub-check-signatures (LP: #1401532) (LP: #1789918)
+
+ 15:07 <cyphermox> - upload grub2-signed for pc-kernel 4.15 snap fix (LP: #1820898)
+
+ 15:07 <cyphermox> - verifying netplan.io SRUs bionic/cosmic
+
+ 15:07 <ubottu> Launchpad bug 1401532 in grub2-signed (Ubuntu Xenial) "GRUB's Secure Boot implementation loads unsigned kernel without warning" [High,In progress] https://launchpad.net/bugs/1401532
+
+ 15:07 <cyphermox> - rework netplan systemd jobs ordering again; wpa reorder broke some minimal setups
+
+ 15:07 <cyphermox> - setting up ubuntustudio for upload rights
+
+ 15:07 <cyphermox> - migrating DMB scripts to git
+
+ 15:07 <cyphermox> (done)
+
+ 15:07 <ubottu> Launchpad bug 1789918 in grub2 (Ubuntu Trusty) "grub2 signed kernel enforcement doesn't check on upgrade that signatures are from trusted keys" [Undecided,Fix committed] https://launchpad.net/bugs/1789918
+
+ 15:07 <ubottu> Launchpad bug 1820898 in grub2 (Ubuntu Xenial) "grub in xenial fails to read pc-linux 4.15 kernel snap" [High,Fix committed] https://launchpad.net/bugs/1820898
+
+ 15:07 <tdaitx> * openjdk-11 bionic security transition
+
+ 15:07 <tdaitx> - gtk3 tests, backporting upstream fixes, looking for more fixes to backport and other bug reports, sadly gtk3 is currently still worse off then gtk2
+
+ 15:07 <tdaitx> - rebuild openjdk with gtk3 fixes, then with gtk2 as default
+
+ 15:07 <tdaitx> - uploaded new openjdk
+
+ 15:07 <tdaitx> - tested scilab and jabref, again
+
+ 15:07 <tdaitx> - driving android-platform-tools-apksig fixes on Ubuntu and Debian
+
+ 15:07 <tdaitx> - looking at jh_build (javatools) failure to use --release
+
+ 15:07 <tdaitx> - driving gradle delta into debian
+
+ 15:07 <tdaitx> (done)
+
+ 15:08 <waveform> * Pi classic first-boot specification (k/b+display, serial, and net)
+
+ 15:08 <waveform> * Tested seeding cloud-init (inc. networking config) from boot partition of raspi image (re: net first-boot); tracing where partitions are named in livecd-rootfs
+
+ 15:08 <waveform> * Worked on getting CM3+ to boot: armhf and arm64 working; turns out it just needs up-to-date firmware blobs (current device-trees are acceptable)
+
+ 15:08 <waveform> * Added newer firmwares to linux-firmware-raspi2; need to check with sil2100 this is done correctly (new version, etc.)
+
+ 15:08 <waveform> * Stripped out hacks from linux-firmware-raspi2 after raspi-sync discussion re: cloud-init networking config
+
+ 15:08 <waveform> * Attempted (rather lamely) to aid doko with some arm-related python debugging (nearly there!)
+
+ 15:08 <waveform> (done)
+
+ 15:09 <rbalint> infinity is not online
+
+ 15:09 <rbalint> cyphermox:
+
+ 15:09 <cyphermox> I think you have a bug there
+
+ 15:10 <rbalint> i mean sil2100 is out too
+
+ 15:10 <rbalint> juliank:
+
+ 15:10 <juliank> * Followup SRU for apt/trusty to fix regression in previous one (LP: #1821308)
+
+ 15:10 <ubottu> Launchpad bug 1821308 in apt (Ubuntu Trusty) "apt-get upgrade ignores pinning preferences since 1.0.1ubuntu2.22" [Critical,Fix committed] https://launchpad.net/bugs/1821308
+
+ 15:10 <juliank> * Messaging adjustments for update-notifier-common's motd
+
+ 15:10 <juliank> * Reviewing some documents
+
+ 15:10 <juliank> * Uploaded fix for aptdaemon crashes with "raise StopIteration" (LP: #1811694)
+
+ 15:10 <ubottu> Launchpad bug 1811694 in aptdaemon (Ubuntu Disco) "/usr/sbin/aptd:RuntimeError:_inline_callbacks:get_uid_from_dbus_name:return_value:_inline_callbacks:_check_simulated:_inline_callbacks" [High,In progress] https://launchpad.net/bugs/1811694
+
+ 15:10 <juliank> * Fed the desktop team a new bug 1822082 :)
+
+ 15:10 <ubottu> bug 1822082 in gnome-shell (Ubuntu) "[disco] Shell sometimes shows username instead of full name in top-right menu" [Undecided,New] https://launchpad.net/bugs/1822082
+
+ 15:10 <juliank> (done)
+
+ 15:11 <rbalint> * finalized unattended-upgrades fixes and sru-d + verified them
+
+ 15:11 <rbalint> * uploaded systemd's wsl detection fix to Disco and Cosmic, and asked mvo to include the fixes in his uploads to Bionic and Xenial (thanks!)
+
+ 15:11 <rbalint> * verified the wslu and systemd SRU-s
+
+ 15:11 <rbalint> * partner work
+
+ 15:11 <rbalint> * further unattended-upgrades improvements
+
+ 15:11 <rbalint> (done)
+
+ 15:11 <rbalint> any questions about the status?
+
+ 15:11 <gaughen> I have one
+
+ 15:12 <gaughen> tdaitx, doko - so what's left to do for openjdk11 in Bionic?
+
+ 15:12 <rbalint> doko: i'm adding an autopkgtest to u-u to test upgrading everything to -proposed
+
+ 15:12 <rbalint> that covers openjdk11 packages in proposed now
+
+ 15:13 <doko> gaughen: looking at openjfx, and looking at unattended-upgrades
+
+ 15:13 <tdaitx> gaughen: u-u for bionic and cosmic, checking gtk3 support on openjfx
+
+ 15:13 <doko> gaughen, tdaitx: I asked rbalint to do that
+
+ 15:14 <doko> and I think I  copied openjdk-lts to -proposed without waiting for the armhf binaries :-/
+
+ 15:14 <doko> I'll need to sort that out ...
+
+ 15:15 <gaughen> doko, tdaitx should I setup a sync for Monday?
+
+ 15:16 <tdaitx> gaughen: I think so, steve was out this week, so could be a good way to get back to it
+
+ 15:16 <gaughen> cool, will do
+
+ 15:16 <doko> gaughen: I'm at a conference, so probably not ...
+
+ 15:16 <gaughen> well I'll get sbeattie and tdaitx together
+
+ 15:17 <rbalint> #topic Release incoming bugs (bionic)
+
+ 15:17 <rbalint> #topic Release incoming bugs (disco)
+
+ 15:17 <rbalint> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs
+
+ 15:18 <bdmurray> bug 1821869? should we just target that doko?
+
+ 15:18 <ubottu> bug 1821869 in python3.7 (Ubuntu) "bus error in test_gil test on armhf with 64bit kernel" [High,New] https://launchpad.net/bugs/1821869
+
+ 15:18 <doko> bdmurray: no
+
+ 15:18 <bdmurray> doko: what is the tag for?
+
+ 15:19 <doko> it says rls-dd-incoming, not assign-to-doko, or what did I read wrong?
+
+ 15:19 <doko> anyway, if you would have read the status ... waveform is looking at that
+
+ 15:19 <bdmurray> when I said target I meant target it to the release not to doko
+
+ 15:20 <bdmurray> waveform: if you are looking at it perhaps you should be assigned?
+
+ 15:21 <waveform> okay - I'm just putting together something with more space to test it (having run out on the CM :)
+
+ 15:22 <bdmurray> okay, I'l target it and assign it
+
+ 15:22 <gaughen> wait
+
+ 15:22 <gaughen> so we're wanting to fix this for disco?
+
+ 15:23 <bdmurray> I believe so
+
+ 15:23 <gaughen> k
+
+ 15:23 <bdmurray> then bug 1821412
+
+ 15:23 <ubottu> bug 1821412 in update-notifier (Ubuntu) ""System program problem" report button does nothing" [High,New] https://launchpad.net/bugs/1821412
+
+ 15:28 <rbalint> sounds important to fix but we can sru that later
+
+ 15:28 <bdmurray> yeah, that's ture
+
+ 15:28 <gaughen> so we don't think this one is release critical?
+
+ 15:28 <bdmurray> er, true and it may need SRU'ing to an older release
+
+ 15:28 <gaughen> bdmurray, so let's get it in the queue for early in EE and then SRU
+
+ 15:29 <bdmurray> Is it worth getting this fixed on the Disco image?
+
+ 15:29 <bdmurray> I guess that's the real question.
+
+ 15:29 <bdmurray> and I'd say no, so EE
+
+ 15:30 <bdmurray> then that leaves bug 1822044 which is also High
+
+ 15:30 <ubottu> bug 1822044 in ubiquity (Ubuntu) "Laptop freezes after installation is finished when pressing "Restart Now"" [High,Confirmed] https://launchpad.net/bugs/1822044
+
+ 15:32 <rbalint> i think this shoule be fixed, but probably not in our packages
+
+ 15:32 <bdmurray> right, the restart now issues are never ubiquity
+
+ 15:34 <rbalint> withot nouveau it seems to work
+
+ 15:34 <bdmurray> this is recent hardware and is certified so seems important for DD
+
+ 15:36 <gaughen> bdmurray, I just poked bjf about this bug
+
+ 15:36 <gaughen> bdmurray, do you want to retarget it at something not-ubiquity?
+
+ 15:37 <bdmurray> gaughen: will do
+
+ 15:37 <gaughen> so one more thing on the first one - the python one - who will pick that one up?
+
+ 15:38 <bdmurray> gaughen: I thought waveform is
+
+ 15:38 <waveform> yup
+
+ 15:38 <gaughen> ah cool, thanks waveform
+
+ 15:38 <doko> Bug 1821350
+
+ 15:38 <ubottu> bug 1821350 in linux (Ubuntu) "Lenovo X1: failing to resume from suspend after closing the lid" [Undecided,Triaged] https://launchpad.net/bugs/1821350
+
+ 15:40 <gaughen> what about bug 1809920
+
+ 15:41 <ubottu> bug 1809920 in update-manager (Ubuntu Xenial) "prompt to upgrade to 18.04 shows while upgrade to 16.04 is still in progress" [High,New] https://launchpad.net/bugs/1809920
+
+ 15:41 <bdmurray> there needs to be another release to upgrade to for that to happen
+
+ 15:41 <bdmurray> so if people are upgrading to disco, e won't be available yet so its not critical for fixing
+
+ 15:41 <rbalint> +1
+
+ 15:45 <bdmurray> maybe we should test that and see what happens if click yes during the existing upgrade
+
+ 15:46 <bdmurray> I'll go ahead and test this
+
+ 15:46 <bdmurray> so how about bug 1795477
+
+ 15:46 <ubottu> bug 1795477 in ubuntu-release-upgrader (Ubuntu) "ubuntu-release-upgrader crashed with ValueError: could not convert string to float: '0,0000'" [High,Confirmed] https://launchpad.net/bugs/1795477
+
+ 15:47 <juliank> woohoo
+
+ 15:47 <bdmurray> is that a localization issue?
+
+ 15:47 <rbalint> imo this should be fixed
+
+ 15:47 <rbalint> most likely l19n
+
+ 15:47 <juliank> python-apt bug
+
+ 15:47 <rbalint> l18n :-)
+
+ 15:47 <juliank> well apt bug; this was supposed to be fixed
+
+ 15:47 <rbalint> #topic Team proposed-migration report
+
+ 15:47 <rbalint> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:48 <bdmurray> juliank: when was it supposed to be fixed
+
+ 15:48 <juliank> years ago I remember that problem from then
+
+ 15:48 <bdmurray> actually the last report is from 1/26/2019 in the Error Tracker
+
+ 15:49 <bdmurray> but that's not years ago! ;-)
+
+ 15:52 <juliank> summary: this was fixed in xenial's apt 1.2.16 (nov 2016), but the people never upgraded to that before upgrading to bionic
+
+ 15:52 <gaughen> xnox was going to look at fuse next week
+
+ 15:52 <gaughen> python-numpty is the next one
+
+ 15:53 <doko> numpy
+
+ 15:53 <gaughen> python-numpy is the next one
+
+ 15:53 <doko> graham inggs asked several times including rationale to ignore that one. He never got a reply ...
+
+ 15:54 <doko> ... and not for the first time
+
+ 15:54 <gaughen> doko, where did he ask?
+
+ 15:55 <doko> #u-r
+
+ 15:56 <doko> this is a waste of time, here, and for the community contributors
+
+ 15:56 <gaughen> so I'm not sure what to do with this one
+
+ 15:56 <gaughen> gdb
+
+ 15:56 <doko> there's nothing with gdb
+
+ 15:56 <doko> archive is frozen for the beta
+
+ 15:57 <gaughen> k
+
+ 15:57 <gaughen> doko, anything else on the list we should talk about?
+
+ 15:58 <doko> gaughen: yes, things like lintian and cross-toolchain-base-mipsen
+
+ 15:59 <doko> these all time out, and the runtime varies for some reason.  this is known, but nobody makes any progress on these
+
+ 15:59 <doko> e.g. I gave back lintian/armhf until it succeeded
+
+ 16:00 <doko> does anybody want to drive that with the release team?
+
+ 16:00 * doko looks at the vacuum of volunteers
+
+ 16:00 <cyphermox> shouldn't we try to get to the bottom of it a different way? is this timing out reproducible when running autopkgtests manually?
+
+ 16:01 <rbalint> cyphermox, i think there are just a lot of tests
+
+ 16:01 <doko> yes, when I'm doing some other work on my machine
+
+ 16:01 <cyphermox> rbalint: lots of tests is no good reason to timeout
+
+ 16:01 <doko> so lintian is sequential
+
+ 16:01 <cyphermox> rbalint: netplan has a ton of tests, they run one after the other, some of them take >60 seconds to run, etc.
+
+ 16:02 <doko> c-t-b is a normal build using all the cpu's on the machine
+
+ 16:02 <cyphermox> c-t-b?
+
+ 16:02 <doko> c-t-b-m
+
+ 16:02 <doko> cross-toolchain-base-mipsen
+
+ 16:02 <cyphermox> ah
+
+ 16:03 <rbalint> i pick lintian
+
+ 16:03 <gaughen> thanks rbalint
+
+ 16:04 <rbalint> anythong else from the queue?
+
+ 16:05 <rbalint> #topic AOB
+
+ 16:06 * doko is away next week at Linaro Connect, only working half day on distro stuff
+
+ 16:08 <gaughen> 19.04 Final Freeze is two weeks from today
+
+ 16:08 <gaughen> that's all I have to say Balint
+
+ 16:08 <gaughen> rbalint,
+
+ 16:08 <gaughen> +1 to closing the mtg
+
+ 16:08 <rbalint> happy hacking the next weeks then, lets roll out an awsome Disco! :-)
+
+ 16:08 <rbalint> awesome
+
+ 16:09 <rbalint> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

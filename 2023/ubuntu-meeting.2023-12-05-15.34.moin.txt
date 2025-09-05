@@ -1,0 +1,341 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 05 Dec at 15:34 &mdash; 16:02 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-12-05-15.34.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by slyon at 15:34.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 15:34)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 15:34)
+
+=== New MIRs ===
+
+Discussion started by slyon at 15:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 15:37)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 15:54.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 15:54)
+
+=== Process/Documentation improvements ===
+
+Discussion started by slyon at 15:56.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (slyon, 15:57)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (slyon, 15:57)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 15:59.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 15:59)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 16:00)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (slyon, 16:00)
+
+=== Any other business? ===
+
+Discussion started by slyon at 16:00.
+
+
+
+
+== People present (lines said) ==
+
+ * slyon (75)
+ * cpaelzer (21)
+ * sarnold (13)
+ * eslerm (13)
+ * jbicha (5)
+ * mirespace (4)
+ * joalif (3)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:34 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:34 <meetingology> Meeting started at 15:34:25 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:34 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:34 <slyon> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 15:34 <slyon> #topic current component mismatches
+
+ 15:34 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:34 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:34 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:34 <slyon> c-m looks all clean and known
+
+ 15:34 <slyon> c-m-p:
+
+ 15:35 <slyon> there seems to be some progress on jaraco.text.
+
+ 15:35 <slyon> I remember the desktop team agreed to look into pipewire, so this is still pending
+
+ 15:36 <jbicha> yes, no progress on pipewire yet but it's on our list
+
+ 15:36 <slyon> Foundations is working to demote libio-prompter-perl (which is a devscripts Recommends for Salsa integration)
+
+ 15:36 <sarnold> yay
+
+ 15:36 <slyon> IIRC the server team agreed to take responsibility for libmail-dkim-perl
+
+ 15:36 <slyon> So I'd say everything is being handled, but still in flight.
+
+ 15:37 <slyon> #topic New MIRs
+
+ 15:37 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:37 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:37 <slyon> bug #1977614
+
+ 15:37 <slyon> jbicha: what's the state on this? Are the testing requirements (#0 & #1) already resolved?
+
+ 15:38 <jbicha> fdk-aac-free was last assigned to Security. I repackaged (fdk-aac-free instead of fdk-aac) and removed the incomplete tag
+
+ 15:38 <jbicha> I haven't added the 0 and 1 tests yet
+
+ 15:39 <slyon> Okay. I can see it's still on the security board TODO. But is also still pending the #0 and #1 requirements.
+
+ 15:39 <slyon> I think this should be back to Incomplete, until the MIR requirements are resolved, while security review could continue in parallel.
+
+ 15:39 <sarnold> has the code or packaging changed enough to justify / require a new mir-team review?
+
+ 15:39 <slyon> jbicha: are you OK with that?
+
+ 15:40 <jbicha> sarnold: some code was removed. I believe the security review was paused before it was completed
+
+ 15:40 <jbicha> slyon: yes, I'd like to proceed in parallel
+
+ 15:40 <eslerm> in JIRA, fdk-aac is blocked, I can remove that and add it to the to-do pile
+
+ 15:41 <sarnold> I can't recall if it was paused or just never started, heh; anyway, it sounds like we ought to start in on it rather than waiting for another pass through the mir review process
+
+ 15:41 <eslerm> once the LP is assigned back to Security
+
+ 15:42 <slyon> IMO removal of (non-free) code wouldn't justify a re-MIR..
+
+ 15:42 <eslerm> it was not started, due to licensing conflicts being resolved
+
+ 15:42 <slyon> is everybody OK to unblock it on the security queue and assing it to ~ubuntu-security on LP?
+
+ 15:42 <sarnold> slyon: yeah, if that's the only / big change, that makes sense to me. I didn't know if this was an entirely new codebase aiming to provide the same feature, or what exactly might have changed
+
+ 15:42 <slyon> while jbicha will work on resolving the testing MIR requirements in parallel?
+
+ 15:42 <sarnold> wfm
+
+ 15:42 <eslerm> +1 for me
+
+ 15:43 <slyon> ok, let's do that!
+
+ 15:43 <cpaelzer> fully here now, thanks slyon!
+
+ 15:44 <slyon> bug #2044535
+
+ 15:44 <cpaelzer> keep going if you dd not mind
+
+ 15:44 <slyon> I found consensus for ~foundations-bugs to take ownership of this package. So the MIR process can start.
+
+ 15:44 <cpaelzer> Thanks for unblocking the ownership on this one
+
+ 15:44 <cpaelzer> I can take this one
+
+ 15:44 <slyon> joalif: would you be interested in taking this review?
+
+ 15:44 <slyon> oh, ok. cpaelzer it is :)
+
+ 15:44 <joalif> yes
+
+ 15:44 <cpaelzer> there are 4 in the queue, there will be one for each of us :-)
+
+ 15:45 <slyon> the others are from the server team, so let's assign this one to cpaelzer
+
+ 15:45 <slyon> bug #2030880
+
+ 15:47 <slyon> looks like this MIR might be on hold, while #2 is being resolved/reviewed.
+
+ 15:48 <slyon> I might be able to double check Miriam's work here.
+
+ 15:48 <slyon> (as it was my initial recommendation)
+
+ 15:48 <slyon> I'll be out soon for end-of-year break, though. So it might take a while
+
+ 15:48 <slyon> bug #2023971
+
+ 15:48 <cpaelzer> mirespace: ^^ FYI
+
+ 15:49 <slyon> cpaelzer: can you elaborate on the overall status of the libmail-dmarc-perl status?
+
+ 15:49 <mirespace> o/ I'm taking notes :)
+
+ 15:49 <cpaelzer> slyon: yes, mirespace please correct me where I'm wrong
+
+ 15:50 <cpaelzer> overall many of the sub-dependencies have by now been approved or at least are in the progress towards that
+
+ 15:50 <sarnold> I wish launchpad could show a diff when the description changed..
+
+ 15:50 <cpaelzer> thereby the main bug, which is 2023971 itself has now gotten into the MIR queue
+
+ 15:50 <mirespace> right
+
+ 15:50 <cpaelzer> So it looks for a reviewer
+
+ 15:51 <mirespace> the news on that is:
+
+ 15:51 <slyon> ok, thanks. joalif could you take the libemail-mime-perl review then?
+
+ 15:51 <joalif> yes
+
+ 15:52 <sarnold> slyon: is that the right packageg name? I thought you were taking it again since you'd done the first pass?
+
+ 15:52 <sarnold> (or just that specific commit?)
+
+ 15:52 <slyon> err. sorry, wrong tab.
+
+ 15:53 <joalif> i think slyon means libmail-dmarc-perl
+
+ 15:53 <mirespace> The only pending, apart from libmail-dmarc-itself  is the refactor for not using libnet-ip-perl
+
+ 15:53 <slyon> libmail-dmarc-perl exactly
+
+ 15:53 <slyon> mirespace: that's good to know. And I think it can continue in parallel
+
+ 15:53 * slyon assigning joalif to libmail-dmarc-perl
+
+ 15:54 <cpaelzer> indeed
+
+ 15:54 <cpaelzer> thanks
+
+ 15:54 <slyon> That concludes the list
+
+ 15:54 <slyon> #topic Incomplete bugs / questions
+
+ 15:54 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:54 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:54 <cpaelzer> only https://bugs.launchpad.net/ubuntu/+source/libmatch-simple-perl/+bug/2042100 is new here
+
+ 15:55 <cpaelzer> which was due to realizing the dependencies were different
+
+ 15:55 <cpaelzer> nothing to act for us AFAIS
+
+ 15:55 <cpaelzer> +C
+
+ 15:55 <slyon> also bug #2039456 sounds ready. cpaelzer can you take care of that?
+
+ 15:55 <sarnold> ack, that seems like foundation deciding what to do will make it clear
+
+ 15:56 <slyon> yes, libmatch-simple-perl will probably go away
+
+ 15:56 <cpaelzer> I'll mark it as ready, we'll promote all of them together eventually
+
+ 15:56 <slyon> thx!
+
+ 15:56 <slyon> then we head a tracking update on dbus-broker (bug #2015538) which we don't need to act upon
+
+ 15:56 <slyon> thanks eslerm for driving it!
+
+ 15:56 <slyon> #topic Process/Documentation improvements
+
+ 15:57 <slyon> Mission: Review pending process/documentation pull-requests or issues
+
+ 15:57 <slyon> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 15:57 <slyon> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 15:57 <cpaelzer> nothing new
+
+ 15:57 <eslerm> my manager asked me to take on more cross-team distro work
+
+ 15:57 <eslerm> next year I will put a big focus on helping build the Rust base set. hoping to become a ppu/packageset maintainer for some Rust packages as well
+
+ 15:57 <eslerm> vendored base set*
+
+ 15:57 <slyon> There's an update on https://github.com/canonical/ubuntu-mir/issues/35
+
+ 15:58 <slyon> I'm glad to hear that eslerm !
+
+ 15:58 * slyon looking forward
+
+ 15:58 <cpaelzer> so far it is a capacity decision to not be able to do such sets
+
+ 15:58 <slyon> Maybe someone who attended the in-person MIR meeting in Riga can comment on that.
+
+ 15:58 <cpaelzer> let us see if your contribution can help to overcome this
+
+ 15:59 <slyon> eslerm: is there any specific clarification on the base-sets that you want to discuss right now?
+
+ 15:59 <slyon> otherwise let's move on, as we're already at the top of the hour
+
+ 15:59 <eslerm> I don't
+
+ 15:59 <slyon> #topic MIR related Security Review Queue
+
+ 15:59 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 15:59 <slyon> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 15:59 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 16:00 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 16:00 <slyon> Internal link
+
+ 16:00 <slyon> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 16:00 <eslerm> two SpamAssassin related perl packages will likey have Security reviews completed this week
+
+ 16:00 <eslerm> pydantic is in progress
+
+ 16:00 <cpaelzer> I'm out for a conflict again, sorry
+
+ 16:00 <eslerm> fdk-aac is assigned, and review will begin after holiday break
+
+ 16:00 <eslerm> fips team members may work on the libgssglue MIR when assigned to us
+
+ 16:00 <slyon> this sounds like good progress, thanks!
+
+ 16:00 <sarnold> oh that seems like a good fit :)
+
+ 16:00 <slyon> #topic Any other business?
+
+ 16:01 <sarnold> eoy holidays are upon us, I've got one more of these meetings inthe year, and not a whole lot of time -- I imagine others are similar :)
+
+ 16:01 <slyon> right. this has been my last meeting for this year.
+
+ 16:01 <sarnold> how many will be around for this meeting next week? if it's just me, I'd rather skip it :)
+
+ 16:01 <slyon> Have a good break everybody!
+
+ 16:02 <slyon> If nothing else. That's it for today.
+
+ 16:02 <slyon> Thanks all! o/
+
+ 16:02 <eslerm> thanks all o/
+
+ 16:02 <sarnold> thanks slyon, all :)
+
+ 16:02 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

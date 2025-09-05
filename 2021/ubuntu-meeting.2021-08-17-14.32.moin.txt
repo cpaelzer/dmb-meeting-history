@@ -1,0 +1,189 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 17 Aug at 14:32 &mdash; 14:51 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-08-17-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:33)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:37)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:46.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:46)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:47.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (53)
+ * doko (9)
+ * ddstreet (3)
+ * meetingology (2)
+ * ubottu (2)
+
+
+
+== Full log ==
+
+
+ 14:32 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:59 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:33 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:33 <cpaelzer> d_dstreet is here
+
+ 14:33 <cpaelzer> also pinging sarnold doko didrocks jamespage
+
+ 14:33 <cpaelzer> we know a few are unavailable this week
+
+ 14:33 <cpaelzer> so I'm almost expecting a status-monologue
+
+ 14:33 <cpaelzer> 1. no previous actions
+
+ 14:33 <cpaelzer> #topic current component mismatches
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:35 <cpaelzer> not seeing sarnold here :-/
+
+ 14:35 <cpaelzer> I wanted to ask about the timing of https://bugs.launchpad.net/ubuntu/+source/fence-agents/+bug/1927004 since we close in on feature freze
+
+ 14:35 <ubottu> Launchpad bug 1927004 in fence-agents (Ubuntu) "[MIR] fence-agents" [Undecided, Confirmed]
+
+ 14:35 <cpaelzer> I'll ask in the seucrity channel instead
+
+ 14:36 <cpaelzer> done
+
+ 14:36 <doko> o/
+
+ 14:36 <cpaelzer> hi doko, nice to see you
+
+ 14:36 <cpaelzer> everything else in these lists is known or false-positives
+
+ 14:37 <cpaelzer> #topic New MIRs
+
+ 14:37 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:37 <cpaelzer> egl-wayland is on ddstreet - he had requirements and we need to check if all are fulfilled
+
+ 14:37 <ddstreet> cpaelzer that's the one waiting on the q about missing tests
+
+ 14:38 <cpaelzer> one in particular is testing on special HW which we usually prohibit - ddstreet was so kind and suggested to put a formal "what if we need special HW for tests" in the MIR process
+
+ 14:38 <cpaelzer> I think we are not enough people to discuss that statement for our process
+
+ 14:38 <cpaelzer> but doko if you and I could read the case for 3 min and ack/nack if that is ok
+
+ 14:39 <cpaelzer> see the ping above it is about us saying "missing tests" and the owning team saying "can't be done in build/autopkgtest"
+
+ 14:39 <cpaelzer> generally I think that is ok
+
+ 14:39 * cpaelzer is reading
+
+ 14:40 <doko> is ubuntu-x-swat a team that we recognize?
+
+ 14:40 <cpaelzer> we said no to that in the past
+
+ 14:40 <cpaelzer> ddstreet: yeah this case has my ack in regard to the tests - here a build/autopkgtest (while nice) just isn't feasible
+
+ 14:40 <cpaelzer> we said no to ubuntu-x-swat I mean
+
+ 14:40 <doko> right, the hardware tests don't work. can we add a requirement that somebody has checked this locally?
+
+ 14:40 <cpaelzer> it needs to be a canonical-team as that is who offers the "support"
+
+ 14:41 <cpaelzer> doko: excatly, in the past we had this on dpdk and there we (server team) confirmed that we have a machine with special HW and regularly doing tests
+
+ 14:41 <cpaelzer> something like that I'd put into the formal MIR requirements
+
+ 14:41 <doko> sounds ok for me
+
+ 14:41 <cpaelzer> but when we have more people here to vote
+
+ 14:42 <cpaelzer> doko: does it have a real team subscriber as well or only ubuntu-x-swat
+
+ 14:42 <doko> which probably isn't going to work this week
+
+ 14:42 <doko> no other team subscriber
+
+ 14:43 <cpaelzer> I'm updating the case then
+
+ 14:43 <ddstreet> should the case go back to owned by me, waiting on further discussion in later mir team mtg?
+
+ 14:45 <cpaelzer> ddstreet: no it goes to seucrity IMHO
+
+ 14:45 <cpaelzer> the subscription can be solved while waiting for them
+
+ 14:45 <ddstreet> ack sounds good
+
+ 14:46 <cpaelzer> updated
+
+ 14:46 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:46 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:46 <cpaelzer> nothing since last week
+
+ 14:46 <cpaelzer> doko: I fail to remember which one, but IIRC some case was assigned to you and still open
+
+ 14:47 <cpaelzer> doko: are you aware which one or do I need to check logs?
+
+ 14:47 <cpaelzer> and if you are aware could you link it and estimate when it will be done (a MIR review IIRC) ?
+
+ 14:47 <cpaelzer> while we look for that we enter the next section
+
+ 14:47 <cpaelzer> #topic Any other business?
+
+ 14:47 <doko> urgh, don't remember which one
+
+ 14:48 <doko> was this some fuse stuff?
+
+ 14:48 <cpaelzer> no, that was a different case
+
+ 14:48 <cpaelzer> let me check
+
+ 14:50 <cpaelzer> doko: https://bugs.launchpad.net/ubuntu/+source/adsys/+bug/1936907 ?
+
+ 14:50 <ubottu> Launchpad bug 1936907 in adsys (Ubuntu) "[MIR] ADSys" [Undecided, New]
+
+ 14:50 <cpaelzer> I think that was what didrocks waited on
+
+ 14:50 <cpaelzer> anything else for today ?
+
+ 14:51 <doko> ok
+
+ 14:51 <cpaelzer> ddstreet: we will have to remember about adding a statement for the special-HW testing for when more MIR members are available
+
+ 14:51 <cpaelzer> ok - if there is nothing else I'd close for today
+
+ 14:51 <cpaelzer> thanks doko and ddstreet for not letting me alone here :-)
+
+ 14:51 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

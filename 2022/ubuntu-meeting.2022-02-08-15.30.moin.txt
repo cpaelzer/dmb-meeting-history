@@ -1,0 +1,435 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 08 Feb at 15:30 &mdash; 15:59 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-02-08-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 15:31.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:39)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libapache2-mod-auth-openidc/+bug/1959722   (cpaelzer, 15:40)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:41.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/frr/+bug/1951834   (cpaelzer, 15:43)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/frr/+bug/1951834 for my MIR reveiew  (ahasenack, 15:47)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:51.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:51)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:56.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (96)
+ * ahasenack (28)
+ * didrocks (19)
+ * sarnold (15)
+ * slyon (7)
+ * joalif (5)
+ * ubottu (5)
+ * seb128 (3)
+ * meetingology (2)
+ * didrocks999 (1)
+ * schopin (1)
+
+
+
+== Full log ==
+
+
+ 15:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:39 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:30 <cpaelzer> ping slyon, didrocks, sarnold, joalif, jamespage for MIR meeting
+
+ 15:30 <joalif> o/
+
+ 15:31 <didrocks999> hey
+
+ 15:31 <cpaelzer> #topic Review of previous action items
+
+ 15:31 <slyon> o/
+
+ 15:31 <cpaelzer> we had none - other than the assigned reviews
+
+ 15:31 <cpaelzer> #topic current component mismatches
+
+ 15:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:31 <sarnold> good morning
+
+ 15:32 <ahasenack> ndctl in that report is a mess, vorlon asked me to look into it
+
+ 15:33 <sarnold> I can't spot it.. did you already de-mess it? :)
+
+ 15:33 <cpaelzer> TBH I do not even see ndctl in there
+
+ 15:33 <ahasenack> his words were
+
+ 15:33 <ahasenack> <vorlon> ahasenack: coherent accelerator vs compute express link? wheeee
+
+ 15:33 <ahasenack> <vorlon> ahasenack: I will trust you to sort this
+
+ 15:33 <cpaelzer> does it go by another name here, i do not see it in the .svg
+
+ 15:34 <ahasenack> I didn't demess it yet
+
+ 15:34 <cpaelzer> then maybe someone else did
+
+ 15:34 <cpaelzer> I see nothing new in the normal mismatches
+
+ 15:34 <ahasenack> I guess they removed it from proposed
+
+ 15:34 <cpaelzer> and a few in -proposed
+
+ 15:34 <ahasenack> something happened, ndctl is today in jammy release
+
+ 15:34 <ahasenack> that wasn't the case yesterday
+
+ 15:34 <cpaelzer> \o/
+
+ 15:35 <cpaelzer> -proposed shows libreoffic -> epiphany-browser and IIRC didrocks wanted to have a look
+
+ 15:35 <cpaelzer> any news there?
+
+ 15:35 <didrocks> yes, the issue appeared when debian version was synced in ubuntu. Asked the maintainer, should be fixed with next libreoffice version (hopefully this/next week)
+
+ 15:35 <didrocks> basically, debian assumed we had firefox-esr, and then, by the alternatives order, epiphany is picked
+
+ 15:35 <cpaelzer> ok, so for that one we just wait then
+
+ 15:35 <didrocks> indeed
+
+ 15:36 <cpaelzer> heat -> python3-vitrageclient -> twitter-bootstrap3 is openstack - jamespage
+
+ 15:37 <cpaelzer> jamespage: any news on that, I saw the upload that pulls in python3-vitrageclient, but will you really go for  twitter-bootstrap3 or will there be another upload cutting the dependency?
+
+ 15:37 <cpaelzer> while waiting for jamespage another candidate for didrocks
+
+ 15:37 <cpaelzer> xwayland -> libxcvt
+
+ 15:37 <didrocks> putting it in my caddy of things to look at :)
+
+ 15:38 <cpaelzer> is Desktop aware of that as far as you know?
+
+ 15:38 <cpaelzer> ah ok, if you need a look that is fine
+
+ 15:38 <cpaelzer> we will see if it is gone next week :-)
+
+ 15:38 <cpaelzer> all others are known cases AFAICS (or known false positives)
+
+ 15:38 <didrocks> yeah, I’m not working too much on transitions/gnome/xorg stack (actually, desktop is still not the ones doing Xorg uploads)
+
+ 15:39 <cpaelzer> hehe
+
+ 15:39 <cpaelzer> TIL - but you are ok to check this case are you?
+
+ 15:39 <didrocks> sure sure
+
+ 15:39 <cpaelzer> jamespage: please chime in later when you see the questions - we will go on ...
+
+ 15:39 <cpaelzer> #topic New MIRs
+
+ 15:39 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:39 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:40 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libapache2-mod-auth-openidc/+bug/1959722
+
+ 15:40 <ubottu> Launchpad bug 1959722 in libapache2-mod-auth-openidc (Ubuntu) "[MIR] libapache2-mod-auth-openidc" [Undecided, New]
+
+ 15:40 <cpaelzer> just one that needs a review
+
+ 15:40 <cpaelzer> oh BTW since I gave you credit - didrocks did you have a chance last week to complete cargo?
+
+ 15:40 <cpaelzer> looking for a volunteer to review this libapache case
+
+ 15:41 <joalif> I can take the  new one
+
+ 15:41 <cpaelzer> thank you joalif !
+
+ 15:41 <slyon> I could to the review for joalif
+
+ 15:41 <joalif> np :)
+
+ 15:41 <slyon> (if needed)
+
+ 15:41 <joalif> thanks!
+
+ 15:41 <cpaelzer> slyon: you'll be her "if in doubt ask" buddy :-)
+
+ 15:41 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:41 <cpaelzer> Mission: discuss the recent activity to identify any follow up action
+
+ 15:41 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:42 <cpaelzer> rust has a discussion ongoing, I have done the review
+
+ 15:42 <cpaelzer> I saw schopin answered, but had no time to read the answer yet
+
+ 15:42 <cpaelzer> just saw the mail in my inbox
+
+ 15:42 <cpaelzer> cargo will be done by didrocks  in a bit
+
+ 15:42 <schopin> cpaelzer: tldr: progress on many items but the big one (LLVM) is still pending
+
+ 15:42 <cpaelzer> thanks for that TL;DR
+
+ 15:42 <didrocks> cpaelzer: yeah, couldn’t even start looking at it until now
+
+ 15:42 <didrocks> but still plan for this one :)
+
+ 15:43 <cpaelzer> since I've kept schopin busy with rustc that is ok :-)
+
+ 15:43 <cpaelzer> FRR is recently incomplete and I've brought ahasenack here with me to talk about it
+
+ 15:43 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/frr/+bug/1951834
+
+ 15:43 <ubottu> Launchpad bug 1951834 in frr (Ubuntu) "[MIR]: frr" [Critical, Incomplete]
+
+ 15:43 <ahasenack> o/
+
+ 15:43 <cpaelzer> sarnold: we will need everyone, but especially you for this
+
+ 15:43 <cpaelzer> This is mostly done from an MIR review POV with one exception
+
+ 15:44 <ahasenack> let me try to find the original quagga mir
+
+ 15:44 <didrocks> indeed, ahasenack quickly addressed most of the concerns :)
+
+ 15:44 <cpaelzer> sarnold: the question that is still open is "does it need a security review or does it get a fast pass"
+
+ 15:44 <didrocks> right!
+
+ 15:44 <cpaelzer> didrocks: he always does, when you see his name be prepared for quick answers to your review :-)
+
+ 15:44 <didrocks> heh :-)
+
+ 15:44 <cpaelzer> sarnold: here the situation:
+
+ 15:44 * ahasenack didn't find the quagga mir, maybe it was born in main
+
+ 15:44 <cpaelzer> 1. quagga is a discontinued project
+
+ 15:44 <cpaelzer> 2. FRR is the fork and continuation
+
+ 15:45 <cpaelzer> 3. So the code is the same, but very much evolved since then
+
+ 15:45 <didrocks> ahasenack: you’re correct, first upload was in main: https://launchpad.net/ubuntu/+source/quagga/+publishinghistory?batch=75&direction=backwards&start=225
+
+ 15:45 <cpaelzer> 4. Security asked us to switch those for jammy to be able to long term support it
+
+ 15:45 <cpaelzer> 5. We would not have checked a new quagga version (with the same changes)
+
+ 15:46 <ahasenack> this is the original frr release, from 2017: https://frrouting.org/release/2.0/
+
+ 15:46 <cpaelzer> So the question to you sarnold, does this go onto your not too small pile of reviews-with-deadline or does this get a fast pass by you?
+
+ 15:47 <cpaelzer> We (MIR team) are happy with both, but me (Server team) and me (pity for your review queue) want to recommend a fast pass
+
+ 15:47 <sarnold> cpaelzer: I'm inclined to say we should give it the fast pass. :( we just really don't have the capacity to look at everything, and quagga is a known sad situation
+
+ 15:47 <ahasenack> https://bugs.launchpad.net/ubuntu/+source/frr/+bug/1951834 for my MIR reveiew
+
+ 15:47 <ubottu> Launchpad bug 1951834 in frr (Ubuntu) "[MIR]: frr" [Critical, Incomplete]
+
+ 15:47 <cpaelzer> ok ahasenack, here you have it - fast pass it will be for "special csae + capacity"
+
+ 15:47 * ahasenack better subscribe to its bugs then
+
+ 15:47 <ahasenack> also in debian
+
+ 15:47 <ahasenack> stay on top of it
+
+ 15:47 <cpaelzer> ahasenack: this is still blocked on libyang2
+
+ 15:47 <cpaelzer> ahasenack: but other than that it is ready
+
+ 15:48 <ahasenack> yes, I'll get to that one next then
+
+ 15:48 <sarnold> thanks cpaelzer, ahasenack :)
+
+ 15:48 <ahasenack> let me just quickly check if I have questions about libyang2
+
+ 15:48 <ahasenack> well, it does need a security review
+
+ 15:48 <ahasenack> hi sarnold ;)
+
+ 15:48 <sarnold> ohello :)
+
+ 15:49 <ahasenack> ok, better dep8, deal with gcc warnings
+
+ 15:49 <ahasenack> easy
+
+ 15:49 <cpaelzer> I updated the FRR bug status and left a comment
+
+ 15:50 <cpaelzer> To complete the list of recent incompletes - https://bugs.launchpad.net/ubuntu/+source/v4l2-relayd/+bug/1958109 got reviewed by slyon and is now back with the reporter
+
+ 15:50 <ubottu> Launchpad bug 1958109 in OEM Priority Project "[MIR] v4l2-relayd" [High, In Progress]
+
+ 15:50 <cpaelzer> Before I go on - are we ok with FRR / Libyang2 for now or are there open questions here?
+
+ 15:51 <ahasenack> I'll address the libyang2 comments, but will be blocked on a security review
+
+ 15:51 <cpaelzer> o
+
+ 15:51 <cpaelzer> ok
+
+ 15:51 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:51 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:51 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:51 <sarnold> python-cheroot python-asgiref adsys are in progress at the moment
+
+ 15:52 <cpaelzer> Glad to hear that
+
+ 15:52 <cpaelzer> Adsys was in progress last time, what happened there?
+
+ 15:52 <didrocks> it wasn’t, was it?
+
+ 15:52 <sarnold> I finished going through the coverity issues -- there's a vast number of error checks that are skipped
+
+ 15:52 <didrocks> hum? This is surprising
+
+ 15:52 <sarnold> didrocks: alas it's been in progres for weeks
+
+ 15:52 <cpaelzer> It was "on" or "next" as far as I remember
+
+ 15:53 <didrocks> we are using go vet and error checking are all covered
+
+ 15:53 <slyon> IIRC it was "no progress on adsys so far"
+
+ 15:53 <didrocks> what slyon said ^
+
+ 15:53 <cpaelzer> ah ok, thanks
+
+ 15:53 <cpaelzer> well we all know the list
+
+ 15:53 <didrocks> sarnold: btw, 0.8 for adsys is out, it shouldn’t change the general strategy, but Mark asked explicitely the script part (in 0.8) to go through security
+
+ 15:53 <slyon> sarnold: but it's good that adsys is on progress now as the release team has been asking for that
+
+ 15:53 <cpaelzer> in Theory 16 days until FF and 7 cases with a deadline towards that
+
+ 15:53 <cpaelzer> you can all do the dpressing math
+
+ 15:54 <cpaelzer> wishing the best for sarnold and company to churn through some more
+
+ 15:54 <didrocks> I think the coverity thing should be looked again, I’m happy to have preliminery results because errors are for sure all covered and linted by upstream tools
+
+ 15:54 * cpaelzer hands a crate of security-engergy-drinks
+
+ 15:54 <ahasenack> is adsys ours? (canonical)
+
+ 15:54 <didrocks> yes
+
+ 15:54 <cpaelzer> desktop driven ahasenack
+
+ 15:55 <sarnold> didrocks: it's not as friendly as the web interface, but it's way easier to share the text output: https://termbin.com/hb49
+
+ 15:55 <sarnold> Type: Unchecked error (SUPPRESSED_ERROR)
+
+ 15:56 <cpaelzer> Ok, that seems like didrocks has some homework to check these for false-positives
+
+ 15:56 <sarnold> $ grep -c SUPPRESSED_ERROR coverity.txt
+
+ 15:56 <sarnold> 1442
+
+ 15:56 <cpaelzer> The rest of the list is done for today
+
+ 15:56 <cpaelzer> #topic Any other business?
+
+ 15:56 <cpaelzer> we can continue adsys talk here
+
+ 15:56 <cpaelzer> but is there anything else for this section?
+
+ 15:56 <seb128> hey, I wanted to mention https://github.com/cpaelzer/ubuntu-mir/pull/5
+
+ 15:56 <ubottu> Pull 5 in cpaelzer/ubuntu-mir "Tweak TBD placeholders" [Open]
+
+ 15:56 <cpaelzer> thanks seb128
+
+ 15:57 <seb128> it's trivial and can wait for another meeting which is less busy if you prefer
+
+ 15:57 <ahasenack> I have a question, if my style of very verbose MIRs helps, or hinders, analysis
+
+ 15:57 <ahasenack> (since I'm here)
+
+ 15:57 <cpaelzer> it looks trivial seb128, I can merge it once I have 1-2 reviews - so everyone could a few have a look together with me?
+
+ 15:58 <cpaelzer> ahasenack: I like it, I read it, and I appreciate when I find the answers in the MIR request instead of having to dig on my own
+
+ 15:58 <cpaelzer> ahasenack: we have continuously extended the report template for wanting those infos
+
+ 15:58 <slyon> cpaelzer: seb128: I just added my +1 for that PR#5 on github
+
+ 15:58 <cpaelzer> thanks slyon
+
+ 15:58 <sarnold> ahasenack: I like your very verbose MIRs :)
+
+ 15:58 <seb128> slyon, thx
+
+ 15:58 <cpaelzer> seb128: I'll keep the tab open and have a look myself and then merge most likely
+
+ 15:58 <ahasenack> ok, thx :)
+
+ 15:58 <ahasenack> I'll continue with the style then :)
+
+ 15:59 <cpaelzer> next meeting is knocking on my door, closing for today
+
+ 15:59 <cpaelzer> anything urgent we missed ?
+
+ 15:59 <sarnold> nothing from me
+
+ 15:59 <joalif> nothing
+
+ 15:59 <slyon> nope
+
+ 15:59 <cpaelzer> thanks then
+
+ 15:59 <sarnold> thanks cpaelzer, all :)
+
+ 15:59 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

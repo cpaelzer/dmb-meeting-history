@@ -1,0 +1,249 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 03 May at 14:32 &mdash; 14:52 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-05-03-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by slyon at 14:32.
+
+
+=== current component mismatches ===
+
+Discussion started by slyon at 14:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 14:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 14:33)
+
+=== New MIRs ===
+
+Discussion started by slyon at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 14:38)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 14:38)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 14:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 14:40)
+
+=== Any other business? ===
+
+Discussion started by slyon at 14:41.
+
+
+
+
+== People present (lines said) ==
+
+ * slyon (55)
+ * sarnold (14)
+ * didrocks (12)
+ * joalif (6)
+ * ubottu (4)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:32 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:17 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:32 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:32 <sarnold> woo, thanks slyon
+
+ 14:32 <joalif> yup I'm at sprint, but I'm around
+
+ 14:32 <slyon> #topic Review of previous action items
+
+ 14:33 <slyon> joalif: did you already have a chance to review bug #1965115 from last week's meeting?
+
+ 14:33 <ubottu> Bug 1965115 in nullboot (Ubuntu) "[MIR] nullboot" [Undecided, New] https://launchpad.net/bugs/1965115
+
+ 14:33 <joalif> I'm working on it
+
+ 14:33 <slyon> ok, thanks. I think we had no other action items
+
+ 14:33 <slyon> #topic current component mismatches
+
+ 14:33 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:33 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:33 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:34 <slyon> there are quite some mismatches, especially in -proposed, but let's start with the release pocket
+
+ 14:34 <slyon> llvm-toolchain-13 vs z3 is in foundation's backlog, we're still investigating if we can drop one recommends, or if we actually need to do a z3 MIR
+
+ 14:35 <sarnold> libnotify -> sugar -> { python-gwebsockets, sugar-toolkit-gtk3} looks new to me
+
+ 14:35 <didrocks> yeah, I can take libnotify
+
+ 14:35 <slyon> libnotify looks new to me, too
+
+ 14:35 <slyon> thanks didrocks
+
+ 14:35 <slyon> looking at -proposed mismatches, there is gvfs -> libsoup3 -> sysprof – that is a desktop package too
+
+ 14:35 <didrocks> indeed, taking as well
+
+ 14:36 <slyon> didrocks: do you have capacity to ivestigate what's happening there, too?
+
+ 14:36 <slyon> thanks!
+
+ 14:36 <slyon> ok, next here are plenty of foundations packages, that I will have a look at:
+
+ 14:36 <slyon> licensecheck, sphinx, twisted, mutt, requests
+
+ 14:36 <slyon> I will at least try to do an investigation on those.
+
+ 14:37 <didrocks> (enjoy :))
+
+ 14:37 <slyon> finally we have jaraco.text -> jaraco.context which is an openstack package, so for jamespage to have a look at (after the sprint I suppose)
+
+ 14:38 <slyon> did I miss anything?
+
+ 14:38 <sarnold> I think that's it
+
+ 14:38 <slyon> #topic New MIRs
+
+ 14:38 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:38 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:38 <slyon> <none> :)
+
+ 14:38 <sarnold> \o/
+
+ 14:38 <slyon> #topic Incomplete bugs / questions
+
+ 14:38 <didrocks> yeah!
+
+ 14:38 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:38 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:39 <slyon> we have bug #1963707 that was updated since last week
+
+ 14:39 <ubottu> Bug 1963707 in libqrtr-glib (Ubuntu) "[MIR] libqrtr-glib" [Low, Incomplete] https://launchpad.net/bugs/1963707
+
+ 14:39 <slyon> seb created this... do you know anything about it didrocks ?
+
+ 14:39 <slyon> it's still in "Incomplete" status, is that accurate?
+
+ 14:39 <didrocks> I don’t. I can check on this, but this might wait for the sprint to be over
+
+ 14:40 <didrocks> I can chat with Jeremy too
+
+ 14:40 <slyon> that should be fine, i guess. As priority is set to "Low"
+
+ 14:40 <didrocks> yeah
+
+ 14:40 <slyon> Thanks that'd be great
+
+ 14:40 <slyon> #topic MIR related Security Review Queue
+
+ 14:40 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 14:40 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:40 <slyon> sarnold: any updates?
+
+ 14:41 <sarnold> we haven't worked on MIRs this last week
+
+ 14:41 <slyon> that's sad :( but we're still early in the cycle! :)
+
+ 14:41 <slyon> thanks for the update
+
+ 14:41 <slyon> #topic Any other business?
+
+ 14:41 <sarnold> yeah, I had hoped to start in on one..
+
+ 14:41 <joalif> juliank: re lp 1965115 (nullboot) any reason why it vendorizes go libraries ?
+
+ 14:41 <sarnold> we do have one question on https://bugs.launchpad.net/ubuntu/+source/networkd-dispatcher/+bug/1764362
+
+ 14:41 <ubottu> Launchpad bug 1965115 in nullboot (Ubuntu) "[MIR] nullboot" [Undecided, New] https://launchpad.net/bugs/1965115
+
+ 14:41 <ubottu> Launchpad bug 1764362 in networkd-dispatcher (Ubuntu) "[MIR] networkd-dispatcher" [Undecided, Fix Released]
+
+ 14:42 <slyon> ok. let's go with nullboot first
+
+ 14:42 <slyon> joalif: are those go-dependencies available as individual packages in the archive?
+
+ 14:43 <slyon> IIRC we have some rules that allow vendoring of go libraries
+
+ 14:43 <didrocks> with a correct rationale and ensuring that the maintainance will follow, this is allowed
+
+ 14:43 <joalif> slyon: need to check this, but still iiuc it is required by the process to be justified why librearies are vendorized
+
+ 14:43 <slyon> like those: "Go Package that follows the Debian Go packaging guidelines" "vendoring is used, but the reasoning is sufficiently explained" "golang: static builds are used, the team confirmed their commitment to the additional responsibilities implied by static builds."
+
+ 14:44 <slyon> yes, if the justification and maintenance commitment is missing, you should ask about it in the LP bug
+
+ 14:44 <joalif> ok thanks
+
+ 14:45 <slyon> OK. netwirkd-dispatcher next, what was the question there sarnold?
+
+ 14:46 <sarnold> we're curious why networkd-dispatcher wasn't forwarded to the security team for security review -- the checklist suggests to me that it should have been forwarded to us for review, based on the "Package does install services, timers or recurring jobs" rule https://wiki.ubuntu.com/MainInclusionProcess
+
+ 14:47 <sarnold> (the context is https://www.microsoft.com/security/blog/2022/04/26/microsoft-finds-new-elevation-of-privilege-linux-vulnerability-nimbuspwn/ )
+
+ 14:47 <slyon> that MIR is 4 years old... I haven't been involved at that time, does anybody have context about this?
+
+ 14:47 <slyon> I don't know how our rules MIR evolved in the past 4 year...
+
+ 14:47 <didrocks> yeah, at the time, security review was more depending on how the reviewed felt it
+
+ 14:47 <sarnold> quite a lot, I think :)
+
+ 14:48 <slyon> sarnold: do you think it makes sense to do a security-review retro-actively for networkd-dispatcher?
+
+ 14:48 <didrocks> we have stricter and defined rules now
+
+ 14:48 <sarnold> slyon: probably not, I expect our friends at microsoft probably gave it a pretty thorough look
+
+ 14:49 <slyon> OK. I need to read up on that microsoft link. But other than that, I think we can leave it as is for now?
+
+ 14:49 <sarnold> I'm more curious if future similar cases of privileged dbus services would be seen differently today or not
+
+ 14:50 <slyon> sarnold: yes, thanks for bringing this up. IMO according to our new rules anything that runs a system service with escalated privilegs should go through security review.
+
+ 14:50 <sarnold> cool cool :)
+
+ 14:50 <slyon> so, yes. I think this would be seen differently today.
+
+ 14:51 <slyon> didrocks: do you agree? (you've been around longer than me)
+
+ 14:51 <didrocks> oh sure, today, we have way more rigorous rules and this will definitively go through security
+
+ 14:51 <slyon> Alright folks, that's all for today then.
+
+ 14:52 <didrocks> thanks slyon for hosting the meeting :)
+
+ 14:52 <slyon> if there isnt any thing else?
+
+ 14:52 <sarnold> nothing else, thanks :)
+
+ 14:52 <joalif> nope
+
+ 14:52 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

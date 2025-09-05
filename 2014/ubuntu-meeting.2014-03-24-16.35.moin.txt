@@ -1,0 +1,312 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 24 Mar at 16:35 &mdash; 17:17 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-03-24-16.35.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 16:35.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:36.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:10.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/php-radius.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gamera.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/offlineimap.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/banshee.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/python-scipy.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:10.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (42)
+ * mdeslaur (23)
+ * ScottK (14)
+ * jjohansen1 (10)
+ * tyhicks (10)
+ * sbeattie (8)
+ * sarnold (6)
+ * chrisccoulson (6)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 16:35 <jdstrand> #startmeeting
+
+ 16:35 <meetingology> Meeting started Mon Mar 24 16:35:28 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:35 <meetingology> 
+
+ 16:35 <meetingology> Available commands: action commands idea info link nick
+
+ 16:35 <jdstrand> The meeting agenda can be found at:
+
+ 16:35 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:35 <jdstrand> [TOPIC] Announcements
+
+ 16:36 <jdstrand> I'm happy to announce I just booted into the ipc kernel and apparmor userspace that is available in the dbus-dev ppa (it is in that ppa for historical reasons, there are no dbus changes)
+
+ 16:36 <jdstrand> :)
+
+ 16:36 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:37 <jdstrand> I'll go first
+
+ 16:38 <jdstrand> so, as mentioned, I am running the ipc kernel and userspace. I plan to continue running it and report issues, feed information back to the team, etc
+
+ 16:38 <jdstrand> I have to look into golang a bit and comment in its MIR (related to juju-core)
+
+ 16:38 <jdstrand> oxide-qt will be uploaded to the archive soon, and I'll help with that as I can
+
+ 16:39 <chrisccoulson> hi :)
+
+ 16:39 <jdstrand> I have a couple of action items related to webbrowser-app/webapp-container moving to oxide that I will work on
+
+ 16:39 <jdstrand> chrisccoulson: hi!
+
+ 16:40 <jdstrand> ScopesConfinement discussions have continued. I'm not sure I'll have more this week on that, but will be thinking about it for a meeting with the scopes team next week
+
+ 16:40 <jdstrand> I have several embargoed items
+
+ 16:41 <jdstrand> I'm on triage and will do updates if I can
+
+ 16:41 <jdstrand> mdeslaur: you're up
+
+ 16:42 <mdeslaur> I'm on community this week
+
+ 16:42 <mdeslaur> I have a bunch of updates to test
+
+ 16:42 <mdeslaur> I'm about to push out ca-certificates updates for our stable releases
+
+ 16:42 <mdeslaur> and also an initramfs-tools update to fix /run being mounted without noexec
+
+ 16:43 <mdeslaur> and apache2
+
+ 16:43 <mdeslaur> If I have any time pending those, I'll be going down the CVE list, as usual
+
+ 16:43 <mdeslaur> that's it for me, sbeattie?
+
+ 16:43 <sbeattie> I'm on apparmor this week
+
+ 16:44 <sbeattie> I too am focused on testing the ipc kernel and userspace
+
+ 16:44 <mdeslaur> is the ipc userspace pretty much done now?
+
+ 16:44 <jjohansen1> no
+
+ 16:44 <mdeslaur> I seem to recall discussion of syntax changes
+
+ 16:45 <jjohansen1> right, very limited discussion on that happened
+
+ 16:45 <jjohansen1> thats one of the things that needs to happen
+
+ 16:45 <sbeattie> yeah, I'll look at that as well
+
+ 16:45 <sbeattie> as part of testing
+
+ 16:45 <jdstrand> I will probably be able to respond too now that I am starting to profile some things
+
+ 16:46 <mdeslaur> jjohansen1: the userspace changes only affect userspace, right?
+
+ 16:46 <jdstrand> aiui, really just the discussion needs to happen. once it does, the changes are trivial
+
+ 16:46 <jjohansen1> mdeslaur: yes
+
+ 16:47 <mdeslaur> jjohansen1: ok, cool
+
+ 16:48 <sbeattie> anyway, I'm also monitoring fallout from the apparmor userspace upload from last week (though tyhicks got tagged with the lxc issue that was raised)
+
+ 16:48 <sbeattie> and that's pretty much it for me.
+
+ 16:48 <sbeattie> tyhicks: you're up
+
+ 16:48 <tyhicks> I'm working on LXC regressions in AppArmor (LP: #1296459, LP: #1295774)
+
+ 16:48 <ubottu> Launchpad bug 1296459 in apparmor (Ubuntu) "Upgrade from 2.8.0-0ubuntu38 to 2.8.95~2430-0ubuntu2 breaks LXC containers" [Critical,New] https://launchpad.net/bugs/1296459
+
+ 16:48 <ubottu> Launchpad bug 1295774 in apparmor (Ubuntu) "ERROR processing policydb rules for profile lxc-container-default, failed to load" [Undecided,Incomplete] https://launchpad.net/bugs/1295774
+
+ 16:48 <mdeslaur> tyhicks: any quick idea what could be the cause?
+
+ 16:49 <tyhicks> the dfa generation for mount rules changed and it looks like some permissions are missing in the dfa
+
+ 16:49 <tyhicks> mdeslaur: ^
+
+ 16:49 <mdeslaur> ok
+
+ 16:49 <tyhicks> it also looks like the mount.sh regression test is busted and exits early
+
+ 16:49 <tyhicks> I'll fix that, too
+
+ 16:49 <tyhicks> after that I'll help with AppArmor work items, as needed
+
+ 16:50 <tyhicks> that's it for me
+
+ 16:50 <tyhicks> jjohansen1: you're up
+
+ 16:50 * jjohansen1 is working on apparmor again this week
+
+ 16:50 <jdstrand> tyhicks: fyi, that could be considered as a separate uploading depending on the timing of things. if so, we could roll in the aa.py fixes
+
+ 16:50 * tyhicks nods
+
+ 16:50 <jdstrand> s/uploading/upload/
+
+ 16:51 * jjohansen1 is working on more ipc revisions to apparmor
+
+ 16:51 <jjohansen1> and will be coordinating with sbeattie, tyhicks, ...
+
+ 16:52 <mdeslaur> jjohansen1: what's the current status...have you managed to wrangle some of the bugs you had last week?
+
+ 16:52 <sbeattie> jdstrand: there's other bits to pull in as well as aa.py fixes, some of the testsuite fixes address issues that show up on arm/ppc64el
+
+ 16:52 <jjohansen1> mdeslaur: they are a work in progress, so not done
+
+ 16:53 <mdeslaur> cool
+
+ 16:53 <jjohansen1> so I am still working on the bugs from last week, and turned up a few more and fixed those
+
+ 16:54 <jjohansen1> I think that is it from me sarnold, your up
+
+ 16:55 <sarnold> I'm in the happy place this week, which means working on MIRs, which will make some people very happy indeed :)  I've got juju-core, glusterfs, schroot, and strongswan to review and I don't think they're all doable this week, but I aim to make progress on them :)
+
+ 16:55 <sarnold> if there's a new apparmor upload in the works I may do that one again, to keep those neurons fresh and try to take work from jjohansen1 and sbeattie
+
+ 16:56 <sarnold> it depends upon how much effort the brain-dumps would take, I guess
+
+ 16:56 <jdstrand> tyhicks may be able to help there. let's be flexible
+
+ 16:56 <sarnold> oh okay
+
+ 16:56 <tyhicks> we'll decide on the fly
+
+ 16:56 <jdstrand> sarnold: (and thanks for offering, we might need it)
+
+ 16:56 <sarnold> I think that's it for me, chrisccoulson, your turn :)
+
+ 16:57 <chrisccoulson> i'm just about to upload oxide to the archive :)
+
+ 16:57 <jdstrand> \o/
+
+ 16:57 <jdstrand> huge milestone-- great job :)
+
+ 16:57 <chrisccoulson> and then i've got a bunch of reviews that i need to get through for webapps
+
+ 16:57 <chrisccoulson> other than that, it's business as usual :)
+
+ 16:57 <chrisccoulson> did everyone see the blog posts?
+
+ 16:58 <mdeslaur> chrisccoulson: congrats!
+
+ 16:58 <jdstrand> chrisccoulson: was there another recent one beyond http://www.chriscoulson.me.uk/blog/?p=242?
+
+ 16:58 <jdstrand> I know of that and http://www.chriscoulson.me.uk/blog/?p=196
+
+ 16:58 <sarnold> chrisccoulson: heh, I saw the one about oxide running on raw egl, no display managers...
+
+ 16:58 <chrisccoulson> jdstrand, http://www.chriscoulson.me.uk/blog/?p=251
+
+ 17:00 <mdeslaur> chrisccoulson: nice
+
+ 17:02 <ScottK> o/
+
+ 17:02 <mdeslaur> hi ScottK!
+
+ 17:02 <ScottK> You might want to consider promoting clamav 0.98.1 from backports to updates or security/updates.  0.97.8 is not able to use all the current virus definitions and so there's a capability/security gap there if people aren't using backports.
+
+ 17:02 <ScottK> I think both upstream and the packaging are in a pretty stable place ATM.
+
+ 17:03 <jdstrand> chrisccoulson: ah, nice!
+
+ 17:03 <mdeslaur> ScottK: oh, cool. Is there a bug open about this?
+
+ 17:03 <ScottK> No.
+
+ 17:04 <ScottK> I can open one if you want, I thought it was worth a discussion first.
+
+ 17:04 <ScottK> There's no CVE's the force it, but I think we're at a point where it would be smart.
+
+ 17:05 <mdeslaur> ScottK: I think it definitely makes sense if the engine can't parse all the signatures...is there a link somewhere upstream where that is mentioned
+
+ 17:05 <mdeslaur> ?
+
+ 17:05 <ScottK> I suspect it's in the changelog.
+
+ 17:06 <ScottK> Let me look.
+
+ 17:06 <mdeslaur> ScottK: if you could please open a bug with a link, and assign it to me, I'll take care of it
+
+ 17:06 <ScottK> OK.
+
+ 17:06 <ScottK> I don't immediately see it in the Changelog, it may take reading the code.
+
+ 17:07 <ScottK> (there's a variable that gets bumped.
+
+ 17:07 <ScottK> Also there's on access scanning now that works with our kernel.
+
+ 17:07 <ScottK> Other goodness too.
+
+ 17:10 <mdeslaur> jdstrand: I think we're done?
+
+ 17:10 <jdstrand> can this be taken to the bug or is there more discussin needed here?
+
+ 17:10 <jdstrand> ok
+
+ 17:10 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:10 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:10 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/php-radius.html
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/gamera.html
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/offlineimap.html
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/banshee.html
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/python-scipy.html
+
+ 17:10 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:10 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:11 <ScottK> jdstrand: Working on the bug now.
+
+ 17:16 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen1, sarnold, chrisccoulson, ScottK: thanks
+
+ 17:17 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

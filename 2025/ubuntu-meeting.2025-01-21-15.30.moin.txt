@@ -1,0 +1,274 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 21 Jan at 15:30 &mdash; 15:55 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-01-21-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by slyon at 15:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 15:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 15:31)
+
+=== New MIRs ===
+
+Discussion started by slyon at 15:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 15:37)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 15:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 15:39)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868 didrocks reviewed. Back to incomplete due to questions/action items for the reporter  (slyon, 15:39)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/python-observabilityclient/+bug/2095359 this is the openstack stub we mentioned earlier  (slyon, 15:39)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libpisp/+bug/2093321   (slyon, 15:41)
+
+=== Process/Documentation improvements ===
+
+Discussion started by slyon at 15:43.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (slyon, 15:43)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (slyon, 15:43)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 15:45.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 15:45)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 15:45)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (slyon, 15:45)
+
+=== Any other business? ===
+
+Discussion started by slyon at 15:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868/comments/10, is it recommended to move some autopkgtest to run during build to fulfil the requirement?  (r41k0u, 15:51)
+
+
+
+== People present (lines said) ==
+
+ * slyon (65)
+ * sarnold (8)
+ * r41k0u (8)
+ * jamespage (3)
+ * joalif (3)
+ * dviererbe (3)
+ * meetingology (2)
+ * jbicha (2)
+ * seb128 (2)
+ * schopin (2)
+ * juliank (1)
+
+
+
+== Full log ==
+
+
+ 15:30 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:58 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:31 <slyon> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( dviererbe )
+
+ 15:31 <slyon> #topic current component mismatches
+
+ 15:31 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:31 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:31 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:31 <jamespage> o/
+
+ 15:32 <joalif> o/
+
+ 15:32 <slyon> non-proposed looking clean
+
+ 15:33 <jamespage> my team has been processing a milestone for the openstack release last and this week which has generated a few mismatches (and will generate some more - I'm aware of a switch to libsass for Scss processing in Horizon)
+
+ 15:33 <sarnold> wow, 2013-05-09 .. https://bugs.launchpad.net/ubuntu/+source/ruby-json/+bug/1178274
+
+ 15:33 <slyon> jpeg-xl is pending security, jemalloc making good progress but there are some comments from eslerm for joalif to check
+
+ 15:34 <slyon> wtmpdb is with the server team (I will talk with the team about that, but we already discussed it previously)
+
+ 15:35 <slyon> thanks jamespage for the python-observabilityclient stub https://launchpad.net/bugs/2095359
+
+ 15:35 <jamespage> I'll get one of my team to fill that in (along with any others that appear)
+
+ 15:35 <slyon> flexparser pending security review
+
+ 15:35 <slyon> thx!
+
+ 15:35 <slyon> I'm actively reviewing raspi-utils for foundations. It's a bit complex..
+
+ 15:36 <slyon> that leaves us with new mismatches for ruby3.3, pcs and ruby-sinatra, all owned by the server team. I'll take an action item to discuss those with the team
+
+ 15:37 <slyon> as sarnold  mentioned to old/previous MIRs are probably not good enough by today's standards
+
+ 15:37 <slyon> #topic New MIRs
+
+ 15:37 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:37 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:37 <slyon> joalif: do you have capacity to take https://bugs.launchpad.net/ubuntu/+source/glycin/+bug/2093182 ?
+
+ 15:38 <joalif> yes
+
+ 15:38 <slyon> (I'll be off next week, so rather not take a review in addition to the mismatches)
+
+ 15:38 <slyon> ok, let me assign it to you. Thx!
+
+ 15:38 <slyon> that's all for new MIRs
+
+ 15:38 <slyon> #topic Incomplete bugs / questions
+
+ 15:38 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:39 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:39 <slyon> https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868 didrocks reviewed. Back to incomplete due to questions/action items for the reporter
+
+ 15:39 <slyon> https://bugs.launchpad.net/ubuntu/+source/python-observabilityclient/+bug/2095359 this is the openstack stub we mentioned earlier
+
+ 15:40 <slyon> still TODO
+
+ 15:40 <slyon> and just a tracking update about sequoia, which is unrelated to MIR
+
+ 15:41 <slyon> https://bugs.launchpad.net/ubuntu/+source/libpisp/+bug/2093321
+
+ 15:42 <slyon> this needs sponsorship
+
+ 15:43 <slyon> So "Incomplete" is still correct. I left a comment.
+
+ 15:43 <slyon> #topic Process/Documentation improvements
+
+ 15:43 <slyon> Mission: Review pending process/documentation pull-requests or issues
+
+ 15:43 <slyon> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 15:43 <slyon> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 15:44 <slyon> I started a new draft about "rust cargo vendor-filterer", https://github.com/canonical/ubuntu-mir/pull/76 which seems to be a nice tool for filtering vendored Rust dependencies (cc didrocks)
+
+ 15:44 <slyon> Thanks juliank for packaging it. He also wanted to improve the MIR/vendoring documentation around it further, so we can ignore this draft for now.
+
+ 15:45 <slyon> #topic MIR related Security Review Queue
+
+ 15:45 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 15:45 <slyon> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 15:45 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:45 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:45 <juliank> :D
+
+ 15:45 <slyon> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:45 <slyon> sarnold: how is the security-review backlog looking?
+
+ 15:45 <sarnold> unfortunately I don't believe anything has been picked up recently :/ we're all feeling pretty squeezed due to turnover :(
+
+ 15:47 <slyon> :( Please poke management about this capacity bottleneck. The Plucky FeatureFreeze (Feb 20) is the looming deadline for many of the pending reviews, and it's only 4 weeks away.
+
+ 15:47 <slyon> #topic Any other business?
+
+ 15:48 <jbicha> we added erlang-doc to Extra-Exclude to get it off component mismatches. Could an AA demote it so that erlang in plucky-proposed can migrate? bug 2094814
+
+ 15:48 <r41k0u> o/
+
+ 15:48 <dviererbe> The erlang component missmatch from last week is still listed on the proposed-migration page https://bugs.launchpad.net/ubuntu/+source/erlang/+bug/2094814 ; Can an AA do the demotion of demote erlang-doc?
+
+ 15:48 <jbicha> ☺️
+
+ 15:48 <sarnold> ha :)
+
+ 15:48 <r41k0u> can we also look at https://bugs.launchpad.net/ubuntu/+source/nbd/+bug/2054480
+
+ 15:49 <slyon> No AA here today, unfortunately. Maybe didrocks can help with erlang-doc demotion when he reads the log later? ^ Otherwise, you you please ping ubuntu-archive in #ubuntu-release instead?
+
+ 15:49 <sarnold> r41k0u: awesome, thanks, I'll give the new merge request a look later today :)
+
+ 15:49 <r41k0u> thanks a lot!!
+
+ 15:50 <seb128> jbicha, slyon, I can do that demotion
+
+ 15:50 <sarnold> r41k0u: the part about the different permissions in prodstack sure feels weird, though.
+
+ 15:50 <schopin> seb128: may I,
+
+ 15:50 <dviererbe> thx
+
+ 15:50 <schopin> ?
+
+ 15:50 <slyon> thanks seb128!
+
+ 15:50 <seb128> schopin, please do
+
+ 15:50 <slyon> and schopin!
+
+ 15:50 <sarnold> hah, and here I thought an aa might be hard to find this week :)
+
+ 15:50 <dviererbe> :D
+
+ 15:50 <slyon> and thanks sarnold for handling r41k0u's request!
+
+ 15:50 <slyon> Do we have anything else?
+
+ 15:51 <r41k0u> yep
+
+ 15:51 <r41k0u> https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868/comments/10, is it recommended to move some autopkgtest to run during build to fulfil the requirement?
+
+ 15:52 <r41k0u> or allowed (instead of recommended)
+
+ 15:53 <slyon> r41k0u: yes, that's a reasonable approach. It shouldn't be moved, though. But copied. We want to run it at build time (dh_auto_test) and as an autopkgtest of the installed packages
+
+ 15:53 <r41k0u> right, thanks!
+
+ 15:53 <sarnold> ah slyon said it better than what I was writing :)
+
+ 15:53 <slyon> If you can extract some autopkgtests to also run at build-time, that'd be great. Please do so and ping on the bug report once it's ready.
+
+ 15:54 <r41k0u> ack
+
+ 15:54 <slyon> Any other topic?
+
+ 15:54 <sarnold> none here
+
+ 15:54 <joalif> nothing here
+
+ 15:55 <slyon> So now I need to come up with a fancy "countdown" sequence? :P
+
+ 15:55 <slyon> 8
+
+ 15:55 <slyon> 5
+
+ 15:55 <slyon> 3
+
+ 15:55 <slyon> 2
+
+ 15:55 <slyon> 1
+
+ 15:55 <slyon> 1
+
+ 15:55 <slyon> 0
+
+ 15:55 <slyon> Thanks all!
+
+ 15:55 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

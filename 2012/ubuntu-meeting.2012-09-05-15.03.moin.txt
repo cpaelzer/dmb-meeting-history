@@ -1,0 +1,743 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:03:06 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-09-05-15.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html   (slangasek, 15:43:07)
+''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html   (slangasek, 15:43:18)
+
+ *AOB
+
+
+
+Meeting ended at 16:02:07 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (80)
+ * ogra_ (51)
+ * cjwatson (46)
+ * ev (35)
+ * xnox (32)
+ * bdmurray (26)
+ * ubottu (25)
+ * stgraber (20)
+ * stokachu (9)
+ * doko (9)
+ * barry (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:03:06 <slangasek> #startmeeting
+
+ 15:03:06 <meetingology> Meeting started Wed Sep  5 15:03:06 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03:06 <meetingology> 
+
+ 15:03:06 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:03:15 * stokachu removes socks
+
+ 15:03:15 <slangasek> #topic lightning round
+
+ 15:03:21 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:03:24 <slangasek> ev jodh bdmurray xnox doko ogra stgraber slangasek barry stokachu cjwatson infinity
+
+ 15:03:29 <ev> I lose.
+
+ 15:03:44 <ev> - Finally got to the bottom of our retracer problems. Cassandra and its
+
+ 15:03:44 <ev> transport layer, Thrift, do not like large column values. The limit here is
+
+ 15:03:44 <ev> currently about 16MB. So if we encounter a value larger than that, like we
+
+ 15:03:44 <ev> did with lyx's hundred megabyte stacktrace (!), we break it apart into
+
+ 15:03:44 <ev> separate numbered columns. Added some tooling to better diagnose these sorts
+
+ 15:03:44 <ev> of problems in the future.
+
+ 15:03:53 <ev> - Started counting the number of reports we receive for the combinations of
+
+ 15:03:53 <ev> (package, release, version) so that we can adapt the average errors per day
+
+ 15:03:53 <ev> graph on the front page to the form selection. Right now it just shows lines
+
+ 15:03:53 <ev> for all of 12.04 and all of 12.10.
+
+ 15:03:53 <ev> - Investigated efficient solutions to recording the First seen and Last seen
+
+ 15:03:53 <ev> versions for each problem on a per-release level. Committed and RT filed.
+
+ 15:04:03 <ev> - Finally finished off the bug creation branch of lp:errors and merged it in.
+
+ 15:04:03 <ev> Once this is landed on production, you'll see a "Create" link wherever you
+
+ 15:04:03 <ev> currently see a blank space in the bug column of the most common problems
+
+ 15:04:04 <ev> table. This asynchronously talks to Launchpad, creates a bug for the package
+
+ 15:04:04 <ev> in question, and subscribes you to it. It also records it in Cassandra so
+
+ 15:04:04 <ev> that if we do eventually see a bug report from Apport, we can just
+
+ 15:04:04 <ev> programmatically dup it to the errors.ubuntu.com created one.
+
+ 15:04:15 <ev> 
+
+ 15:04:15 <ev> This functionality *should* supersede the daisy backend to apport's
+
+ 15:04:15 <ev> crash-digger. Time will tell if this is the right solution. It also is the
+
+ 15:04:15 <ev> foundational piece for building a mapping between bug numbers and fixed
+
+ 15:04:15 <ev> binary packages so that we can feed users updates that purport to fix the
+
+ 15:04:15 <ev> issue they just encountered.
+
+ 15:04:16 <ev> - Still waiting on https://rt.admin.canonical.com/Ticket/Display.html?id=55322
+
+ 15:04:16 <ev> with lots of things queued up behind it. It's near the top of the chart, but
+
+ 15:04:17 <ev> I'm growing concerned about just how much stuff is going to land right
+
+ 15:04:17 <ev> behind it.
+
+ 15:04:18 <ev> https://portal.admin.canonical.com/ruins?team=losa
+
+ 15:04:18 <ev> (done)
+
+ 15:04:34 <doko> that was short ...
+
+ 15:04:40 <ev> you're welcome
+
+ 15:06:04 <cjwatson> jodh is on holiday IIRC
+
+ 15:06:15 <cjwatson> (He mailed his update)
+
+ 15:06:52 <cjwatson> * blueprints
+
+ 15:06:53 <cjwatson> - foundations-q-session-management:
+
+ 15:06:53 <cjwatson> - no progress (but I actually don't have any work items on this one ;-)
+
+ 15:06:56 <cjwatson> - desktop-q-upstart-session-requirements
+
+ 15:06:59 <cjwatson> - not started: still awaiting desktop teams precise requirements.
+
+ 15:07:01 <cjwatson> - foundations-q-upstart-service-readiness
+
+ 15:07:04 <cjwatson> - no recent progress: the 2 outstanding work items are man page updates.
+
+ 15:07:07 <cjwatson> - foundations-q-upstart-roadmap
+
+ 15:07:09 <cjwatson> - no recent progress.
+
+ 15:07:12 <cjwatson> - foundations-q-event-based-initramfs:
+
+ 15:07:14 <cjwatson> - Fixed EventOperator collapsing code to serialise start/stop on.
+
+ 15:07:17 <cjwatson> - Implemented cross re-exec logger handling.
+
+ 15:07:19 <cjwatson> - Moved to using branch lp:~upstart-devel/upstart/stateful-reexec.
+
+ 15:07:21 <cjwatson> - Got working Ubuntu build in ppa:jamesodhunt/upstart-testing.
+
+ 15:07:24 <cjwatson> - Publicised build on ubuntu-devel.
+
+ 15:07:27 <cjwatson> ^- jodh's update
+
+ 15:07:46 <cjwatson> bdmurray: around?
+
+ 15:08:08 <bdmurray> cjwatson: shall I start or is there more from jodh?
+
+ 15:08:19 <bdmurray> ah yes!
+
+ 15:08:29 <bdmurray> holidays²
+
+ 15:08:29 <bdmurray> merge proposal https://code.launchpad.net/~brian-murray/apport/pre-release-freeze/+merge/122747
+
+ 15:08:32 <bdmurray> uploaded apport bug fix for bug 917903 regarding examining VarLogDistupgradeApttermlog attachments
+
+ 15:08:34 <ubottu> Launchpad bug 917903 in apport (Ubuntu) "ubuntu general hook doesn't know how to read .gz files" [High,In progress] https://launchpad.net/bugs/917903
+
+ 15:08:35 <bdmurray> uploaded grub2 fixing bug 919956
+
+ 15:08:36 <ubottu> Launchpad bug 919956 in grub2 (Ubuntu) "Apport hook breaks with Pyhton2 due to non-ASCII character" [Medium,Fix committed] https://launchpad.net/bugs/919956
+
+ 15:08:41 <bdmurray> discussion with ev regarding package installation failures
+
+ 15:08:41 <bdmurray> sorted out a failed upgrade to quantal
+
+ 15:08:41 <bdmurray> reported bugs 1043867, 1043862, 1043859
+
+ 15:08:41 <bdmurray> discussion regarding bug reporting information on the ubuntu qa tracker
+
+ 15:08:41 <bdmurray> tested kernels for audio bug 1043538
+
+ 15:08:45 <ubottu> Launchpad bug 1043862 in evolution (Ubuntu) "gsettings-data-convert crashed with signal 5 in g_settings_schema_get_value()" [High,Confirmed] https://launchpad.net/bugs/1043862
+
+ 15:08:46 <ubottu> Error: Launchpad bug 1043859 could not be found
+
+ 15:08:47 <ubottu> Launchpad bug 1043449 in postgresql-9.1 (Ubuntu Quantal) "duplicate for #1043867 package postgresql-client-9.1 9.1.5-1 failed to install/upgrade: trying to overwrite '/usr/share/postgresql/9.1/man/man1/pg_basebackup.1.gz', which is also in package postgresql-9.1 9.1.5-0ubuntu12.04" [High,Fix released] https://launchpad.net/bugs/1043449
+
+ 15:08:48 <ubottu> Launchpad bug 1043538 in alsa-driver (Ubuntu) "[0831CTO, Conexant CX20585, Pink Mic, Right] No sound at all" [Medium,Triaged] https://launchpad.net/bugs/1043538
+
+ 15:08:51 <bdmurray> done
+
+ 15:09:18 <xnox> * This week I have spend breaking & fixing ubiquity and dependencies.
+
+ 15:09:18 <xnox> Causing respins for the milestone. In retrospect, more testing & code
+
+ 15:09:19 <xnox> review & landing the thursday upload later maybe would have been
+
+ 15:09:19 <xnox> better, maybe not.
+
+ 15:09:19 <xnox> * Trianging loads of interesting bugs from jibel with respect to new & existing
+
+ 15:09:19 <xnox> ubiquity behaviour with various options. Some fixed, some to fix
+
+ 15:09:21 <xnox> after beta1.
+
+ 15:09:23 <xnox> * Had little progress finishing manual LVM & Crypt, due to above.
+
+ 15:09:27 <xnox> * Specs & workitems tracker:
+
+ 15:09:29 <xnox> - postponed low priority spec foundations-q-degraded-hw-notification
+
+ 15:09:31 <xnox> - postponed foundations-q-event-based-initramfs. Upstart stateful
+
+ 15:09:33 <xnox> re-exec is nearing completion, the implementation for the event
+
+ 15:09:34 <xnox> based initramfs has not started and will not be landing in
+
+ 15:09:36 <xnox> quantal. But this is work to be done during late quantal & early
+
+ 15:09:38 <xnox> Rancid Raccoon. Note two views:
+
+ 15:09:39 <slangasek> ev: bah, still waiting on the django ticket?  any idea why it's held up now?
+
+ 15:09:40 <xnox> http://status.ubuntu.com/ubuntu-quantal/u/xnox.html (new)
+
+ 15:09:42 <xnox> http://status.ubuntu.com/ubuntu-quantal/u/dmitrij.ledkov.html (old)
+
+ 15:09:44 <xnox> Filed http://pad.lv/1045548 asking to merge the two.
+
+ 15:09:46 <ubottu> Launchpad bug 1045548 in work-items-tracker "launchpad id rename confused status.ubuntu.com" [Undecided,New]
+
+ 15:09:46 <xnox> * Still Blocked: Geoname lookup still not deployed. See RT #55554
+
+ 15:09:54 <ev> slangasek: *shrugs*
+
+ 15:10:24 <slangasek> ev: as for "how much stuff is going to land right behind it", perhaps you could ask for a staged roll-out, and have them only deploy the subsequent commits in batches of 100? ;)
+
+ 15:10:37 <ev> lol
+
+ 15:10:47 <stgraber> ;)
+
+ 15:10:57 <xnox> ev: every friday to excercise canonistack deployments.
+
+ 15:11:03 <doko> - OpenJDK week ...
+
+ 15:11:03 <doko> - update both openjdk-6 and openjdk-7 to recent release
+
+ 15:11:03 <doko> - some bug triage, but getting demotivated by 475 reports
+
+ 15:11:03 <doko> - debug and fix jamvm for openjdk-7
+
+ 15:11:03 <doko> - package Avian, another jvm for x86, ARM and powerpc
+
+ 15:11:04 <doko> - started icedtea-web update and bug triage
+
+ 15:11:06 <doko> - look at webkit build failure on ARM with bzoltan
+
+ 15:11:25 <ogra_> done ?
+
+ 15:11:49 <doko> yes
+
+ 15:11:53 <ogra_> done:
+
+ 15:11:53 <ogra_> * fix nux, compiz and unity for GLES (over and over and over...)
+
+ 15:11:53 <ogra_> * make beta work on arm
+
+ 15:11:53 <ogra_> * test arm beta images
+
+ 15:11:53 <ogra_> * updated usb-imagewriter (dd frontend in universe for writing arm images to SD) from hal to udisks (upload pending)
+
+ 15:11:56 <ogra_> todo:
+
+ 15:11:58 <ogra_> * bug 1028905
+
+ 15:11:59 <ubottu> Launchpad bug 1028905 in cdrom-detect (Ubuntu Quantal) "cdrom-detect in quantal omap4 hangs trying to look for install media on an extended partition" [High,Confirmed] https://launchpad.net/bugs/1028905
+
+ 15:12:00 <ogra_> * bug 1045855
+
+ 15:12:01 <ubottu> Launchpad bug 1045855 in linux-ti-omap4 (Ubuntu) "usb keyboard doesn't work during installation of ubuntu-server on panda" [Undecided,New] https://launchpad.net/bugs/1045855
+
+ 15:12:02 <ogra_> * bug 1045741
+
+ 15:12:03 <ubottu> Launchpad bug 1045741 in firefox (Ubuntu) "since the switch to unity 3D and the GLES driver by default firefox on the pandaboard reders extremely slow" [Undecided,New] https://launchpad.net/bugs/1045741
+
+ 15:12:04 <ogra_> * bug 1045491
+
+ 15:12:05 <ubottu> Launchpad bug 1045491 in pvr-omap4 (Ubuntu Quantal) "Moving mouse messes up the desktop" [High,Confirmed] https://launchpad.net/bugs/1045491
+
+ 15:12:06 <ogra_> * decide if the bootpartition on the pandas shouldnt be a hidden part instead of being automounted on the desktop (we used to hide it in the past)
+
+ 15:12:09 <ogra_> * make a decision if we want to show the source device in the partitioner on pandas (bug 1042930)
+
+ 15:12:10 <ubottu> Launchpad bug 1042930 in ubiquity (Ubuntu) "partition size error during install of Quantal on Panda board" [Undecided,Confirmed] https://launchpad.net/bugs/1042930
+
+ 15:12:11 <ogra_> * inspect the framebuffer and keyboard issues with d-i on server images
+
+ 15:12:13 <ogra_> * prepare and hold a "panda install howto" Google OnAir session
+
+ 15:12:15 <ogra_> * update arm installation wikipages
+
+ 15:12:17 <ogra_> ..
+
+ 15:12:34 <stgraber> - Was at Linux Plumbers last week (Tuesday -> Friday)
+
+ 15:12:34 <stgraber> - Monday was a public holiday (labour day)
+
+ 15:12:34 <stgraber> - Changed machine (Lenovo X230) and moved to 12.10 (only very annoying issue is bug 1021471)
+
+ 15:12:36 <ubottu> Launchpad bug 1021471 in linux (Ubuntu) "clone() hang when creating new network namespace (dmesg show unregister_netdevice: waiting for lo to become free. Usage count = 2)" [High,Triaged] https://launchpad.net/bugs/1021471
+
+ 15:12:38 <stgraber> - Container
+
+ 15:12:40 <stgraber> - Pushed all the Ubuntu delta in a git branch for merging upstream (100 commits)
+
+ 15:12:43 <stgraber> - Started looking at getting the rest of our custom scripts and changes upstream too
+
+ 15:12:46 <stgraber> - Release
+
+ 15:12:49 <stgraber> - Started testing/fixing Edubuntu for 12.10 beta 1
+
+ 15:12:51 <stgraber> - Updated post-image-to-tracker in ubuntu-archive-tools to support adding a note to builds
+
+ 15:12:54 <stgraber> - Updated post-qa on cdimage to add a warning in the note field of oversized builds
+
+ 15:12:57 <stgraber> - TODO
+
+ 15:13:00 <stgraber> - 12.10 beta 1 release
+
+ 15:13:02 <stgraber> - Some more LXC work based on notes from Plumbers
+
+ 15:13:05 <stgraber> - Some ISO tracker work
+
+ 15:13:07 <stgraber> (DONE)
+
+ 15:15:14 <slangasek> ogra_: +1 for hiding the boot partition from the desktop on Panda
+
+ 15:15:25 <ogra_> k
+
+ 15:15:39 <slangasek> stgraber: btw, can you send a trip report to the list about Plumbers?
+
+ 15:15:41 <ogra_> need to see if we have dosfstools available to set a label
+
+ 15:15:59 <ogra_> (else i need to pull it into flash-kernel-installer)
+
+ 15:16:15 <slangasek> * short week due to labor day
+
+ 15:16:15 <slangasek> * not nearly as much progress on XDG_RUNTIME_DIR as intended; mountall support is in the queue, but the new PAM module is not uploaded yet
+
+ 15:16:18 <slangasek> * making some progress on multiarch SRU reviews: libart-lgpl accepted, libgnome being reviewed
+
+ 15:16:21 <slangasek> * reviewing upstart stateful re-exec branch, helping polish for upstream merge
+
+ 15:16:24 <slangasek> * working on getting Red Hat shim packaged, for our first-stage non-GPL SB bootloader
+
+ 15:16:27 <slangasek> * Panda board Google OnAir session, tomorrow at 1400 UTC
+
+ 15:16:30 <slangasek> * management sprint in Portland next week, Tue-Thu; expect me to be scarce
+
+ 15:16:32 <slangasek> (done)
+
+ 15:16:41 <slangasek> ogra_: hmm, how is the partition being created?  parted/partman should certainly be able to set a label
+
+ 15:16:50 <stgraber> slangasek: yep, meant to reply to Seth's e-mail to cover the sessions that Stefan and he didn't cover already. Will do that later today
+
+ 15:16:56 <slangasek> stgraber: ta
+
+ 15:16:58 <xnox> ogra_: wasn't there a magic hidden file you can touch to make $desktop not mount/show that partition
+
+ 15:17:10 <barry> short week due to labor day.  gwibber, gwibber, and more gwibber.  blueprints:
+
+ 15:17:15 <barry> foundations-q-python-version - all uncompleted work is postponed
+
+ 15:17:18 <barry> foundations-q-udd - unmilestoned
+
+ 15:17:22 <barry> foundations-q-python33 - nothing needed changing
+
+ 15:17:27 <barry> started working on updating python3 spreadsheet and evaluating work to be done for r-cycle
+
+ 15:17:29 <barry> done.
+
+ 15:17:49 <cjwatson> partman-basicfilesystems doesn't appear to be hooked up to set labels on FAT right now
+
+ 15:17:54 <ogra_> slangasek, i want it to be visible until flash-kernel-installer is run and then hide it on the actual installed system ... we used to do that by setting the label to SERVICE001 or some such (have tto check udisk rules for hidden names)
+
+ 15:17:59 <cjwatson> It probably wouldn't be that hard to hack into commit.d/format_basicfilesystems
+
+ 15:18:22 <slangasek> ogra_: I don't see any reason to make it visible even in the beginning
+
+ 15:18:24 <stokachu> * need to verify a couple sru's
+
+ 15:18:25 <ogra_> xnox, only on a per user base
+
+ 15:18:35 <xnox> ok.
+
+ 15:18:41 <ogra_> slangasek, so the user can edit the bootargs after writing the SD
+
+ 15:18:47 <slangasek> it's an internal detail of the system, I don't think users should be playing with it from the desktop
+
+ 15:19:03 <stokachu> * customer reported bugs are taking priority this week, starting to see an increase which could mean more customers or more bugs :\
+
+ 15:19:05 <stokachu> done
+
+ 15:19:06 <slangasek> ogra_: don't they have a place to do this under /etc/default now?
+
+ 15:19:17 <ogra_> after install we want that tro be done through flash-kernel and not directly ... before the user should eb able to edit the txt file to i.e. add a serial console entry
+
+ 15:19:29 <ogra_> oh, i havent heard of that
+
+ 15:19:31 <cjwatson> Short week; got back from holiday on Monday.
+
+ 15:19:31 <cjwatson> Cleaned up a good fraction of the outstanding ~ubuntu-archive bugs.
+
+ 15:19:31 <cjwatson> Pushed the libglew1.8 and libtiff5 transitions some of the way up the hill, prompted by various bits of NBS.
+
+ 15:19:34 <cjwatson> Fixed what I believe was the last major regression from the live-build apocalypse, namely a failure of livecd-rootfs to put iso-hybrid images in the right place.
+
+ 15:19:37 <cjwatson> Fixed a regression in my python-debian Python 3 port (Debian bug 686731).
+
+ 15:19:39 <ubottu> Debian bug 686731 in python-debian "edos-builddebcheck: Stopped working" [Serious,Fixed] http://bugs.debian.org/686731
+
+ 15:19:40 <cjwatson> Working on packaging GRUB 2.00, initially for Debian experimental but with the intention of requesting a feature freeze exception for 12.10.  Good news: it builds.  Bad news: no idea whether it works.
+
+ 15:19:44 <cjwatson> Various bits of assistance with 12.10 beta-1 preparation, e.g. bug 987418.  Frustrated at abject slowness of current desktop in kvm; makes it very difficult to work on installer bugs.
+
+ 15:19:46 <ubottu> Launchpad bug 987418 in ubiquity (Ubuntu Precise) "manual partitioner: /dev/sdb (installation media) selected by default as device for boot loader installation" [High,Fix committed] https://launchpad.net/bugs/987418
+
+ 15:19:48 <ogra_> i know that certain labels get ignored on a udev level though
+
+ 15:19:48 <cjwatson> Pushed a Launchpad branch which moves bug closure when accepting packages into an asynchronous job, eliminating timeouts.  There's a bit more work to do on this before it lands.
+
+ 15:19:52 <cjwatson> ..
+
+ 15:19:57 <slangasek> ogra_: heard of that> I thought you implemented it! :)
+
+ 15:20:11 <slangasek> (or were going to implement it)
+
+ 15:20:17 <ogra_> slangasek, /etc/default for hiding partitions from udsisk ?
+
+ 15:20:25 <slangasek> no, for letting users edit their boot arguments
+
+ 15:20:27 <ogra_> surely not :)
+
+ 15:20:51 <ogra_> slangasek, *before* installing the first partitioon of the SD needs to be visible for this
+
+ 15:21:00 <xnox> cjwatson: i'd love to try grub 2.00 to unlock luks =) would make the world better
+
+ 15:21:10 <ogra_> after installing (once it turned into a "boot rom" we want to hide it
+
+ 15:21:21 <slangasek> ogra_: I don't agree, I think this is a bad interface
+
+ 15:21:23 <cjwatson> Surely boot arguments should be done by preseeding the installer or something, not by expecting users to poke around manually
+
+ 15:21:31 <slangasek> what cjwatson said
+
+ 15:21:37 <xnox> well you can't =)
+
+ 15:21:59 <ogra_> hmm, k, that will require a ton of code to teach d-i about applying preseed options to u-boot setups then
+
+ 15:22:02 <xnox> becuase the most common change is boot into serial console or the screen. If you don't have one or the other, there is no way to change it on the panda
+
+ 15:22:06 <cjwatson> xnox: LUKS is indeed among the important features it brings
+
+ 15:22:18 <cjwatson> ogra_: But it would parallel what's done for GRUB, rather than being completely different
+
+ 15:22:19 <xnox> s/screen/graphical display/
+
+ 15:22:24 <stokachu> if i was a panda, what name would i be
+
+ 15:22:31 <slangasek> ogra_: this may not be high enough priority to get it all fixed this cycle, but I think you should be working towards a correct design rather than spending cycles on making the partition visible in the beginning and hidden later
+
+ 15:22:32 <ogra_> cjwatson, but it wont help :)
+
+ 15:23:01 <ogra_> how would i add preseed args ?
+
+ 15:23:28 <ogra_> either by ediuting the preseed.cfg on the actual installer partition ... or by changing bootargs, no ?
+
+ 15:23:54 <ogra_> i'm talking about the image before any installer runs or anything
+
+ 15:24:20 <slangasek> are you talking about how users would edit the boot partition when the SD card is inserted into a different machine than the install target?
+
+ 15:24:26 <ogra_> i.e. if i want to turn a normal d-i install into a serial one ... i need to set console= ...
+
+ 15:25:04 <ogra_> i'm talking about dd'ing the image to an SD, then re-plugging the SD and editing the txt file that holds the bootarg line to change something
+
+ 15:25:09 <xnox> slangasek: download .img from ubuntu.com; write it into sd card; re-instert sd card -> change bootargs to serial; put sd-card into panda, hook up serial => install.
+
+ 15:25:16 <xnox> this is how I installed it.
+
+ 15:25:16 <ogra_> so i can add preseed options etc
+
+ 15:25:26 <ogra_> right
+
+ 15:25:45 <xnox> after the install the sd-card became a boot floppy and no longer can serve the purpose of installing anything.
+
+ 15:25:48 <ogra_> the only prob here is that the partition is still visible *after* installation (and gets atuomounted)
+
+ 15:25:57 <slangasek> xnox: well, I know how to install a panda, but it didn't occur to me that someone doing this would care about the default visibility of the boot partition on their x86 desktop :)
+
+ 15:25:58 <xnox> so it's /boot shouldn't show up.
+
+ 15:26:05 <ogra_> i would only liuke to fix the "after install" part
+
+ 15:26:31 <ogra_> xnox, well, its no /boot thats the point
+
+ 15:26:31 <cjwatson> If there's no way to edit installer boot arguments, I'd speculate that new UI in the installer would be better than expecting people to do it by hand
+
+ 15:26:32 <slangasek> ok, so that makes more sense - sorry for misunderstanding
+
+ 15:26:39 <ogra_> ist the equivalent of a BIOS on SD
+
+ 15:26:51 <slangasek> cjwatson: I think this is about setting boot arguments /for booting the installer/
+
+ 15:26:52 <xnox> slangasek: the point is that on the x86 desktop the "internal" partitions don't show up already.
+
+ 15:26:59 <slangasek> anyway, let's move on
+
+ 15:27:05 <cjwatson> Ah
+
+ 15:27:07 <slangasek> #topic Bugs
+
+ 15:27:09 <ogra_> yeah
+
+ 15:27:14 <ogra_> slangasek has it :)
+
+ 15:27:18 <stokachu> multi-arch SRUS!
+
+ 15:27:21 <stokachu> thats all im gonna say
+
+ 15:27:31 <slangasek> ogra_: right - sorry for misunderstanding initially
+
+ 15:27:35 <slangasek> stokachu: working on it!
+
+ 15:27:44 <stokachu> slangasek: lol thank you :D
+
+ 15:27:47 <ogra_> well, i probably explained it not good enough :)
+
+ 15:28:05 <ogra_> (since everyone misunderstood)
+
+ 15:28:58 <stokachu> slangasek: i did get your update to libart for precise, ill need to verify that this week
+
+ 15:29:11 <bdmurray> a new one that came in recently is bug 1045579
+
+ 15:29:12 <ubottu> Launchpad bug 1045579 in software-properties (Ubuntu Quantal) "software-properties-gtk makes a change resulting in a conf file prompt on upgrade that's unnecessary" [High,Triaged] https://launchpad.net/bugs/1045579
+
+ 15:29:43 <bdmurray> I'm happy to work on it, I'm just not positive of the best way of fixing this.
+
+ 15:32:29 <slangasek> bdmurray: the issue seems to be that the editor isn't using the right case for the option name, leading to a conffile prompt, yes?
+
+ 15:32:55 <bdmurray> slangasek: correct it writes it as prompt instead of Prompt
+
+ 15:33:53 <slangasek> bdmurray: so a) fix software-properties to set the option correctly, b) add a Breaks: from ubuntu-release-upgrader-core to older versions of software-properties that don't include this fix, c) include a one-time fix-up in the preinst of ubuntu-release-upgrader-core that fixes the case of any entry in the file on disk
+
+ 15:34:36 <bdmurray> slangasek: got it thanks
+
+ 15:34:55 <slangasek> bdmurray: how are we doing on our rls-q-tracking bugs?
+
+ 15:35:15 <bdmurray> bug 1045588 was tagged rls-q-incoming and I think the tag should just be removed as this has always been the case afaik
+
+ 15:35:16 <ubottu> Launchpad bug 1045588 in ubuntu-release-upgrader (Ubuntu) "release upgrader asks to remove the last known working kernel" [Medium,Triaged] https://launchpad.net/bugs/1045588
+
+ 15:36:07 <slangasek> really?  I didn't think any kernels were getting auto-removed
+
+ 15:36:35 <bdmurray> I believe that during a dist-upgrade the kernel from the old distribution will be in the removal list
+
+ 15:36:39 <slangasek> marked rls-q-notfixing
+
+ 15:36:56 <bdmurray> and that is what micah is referring to
+
+ 15:37:08 <slangasek> however, it is a bug, and ties in to infinity's spec regarding proper kernel autoremoval, so assigning to him
+
+ 15:37:11 <slangasek> (for "later")
+
+ 15:38:18 <bdmurray> we have quite a few bugs in the rls-q-tracking list
+
+ 15:38:35 <bdmurray> one bug 1017001 is critical and I wonder if it still should be
+
+ 15:38:37 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:38:58 <slangasek> we can probably drop it to high
+
+ 15:39:13 <slangasek> it was 'critical' as a flag that it might make 12.04.1 blow up, and it didn't
+
+ 15:39:37 <bdmurray> we have a test case though and are in a position to fix it. correct?
+
+ 15:39:54 <slangasek> we don't have a reduced test case
+
+ 15:40:51 <slangasek> anyway, it's still assigned to infinity (for precise), he should be working on it when his kidneys recover from Plumbers
+
+ 15:43:01 <slangasek> stgraber, ogra_, xnox: you all have high-importance bugs on that list; are they on your radar?
+
+ 15:43:07 <slangasek> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html
+
+ 15:43:09 <ogra_> yes
+
+ 15:43:18 <slangasek> [LINK] http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html
+
+ 15:43:21 <slangasek> hmph
+
+ 15:43:53 <slangasek> bug #946406 #1027648 #1037757 #154086 #984276 #1015567 #974284
+
+ 15:43:55 <ubottu> Launchpad bug 946406 in casper (Ubuntu Quantal) "suspect race condition Keyboard layout, oem-config not set on persistent USB image" [High,Incomplete] https://launchpad.net/bugs/946406
+
+ 15:44:07 <slangasek> bug #1027648 bug #1037757 bug #154086 bug #984276 bug #1015567 bug #974284
+
+ 15:44:12 <ubottu> Launchpad bug 1027648 in ubiquity (Ubuntu Quantal) "ubiquity crashed with ValueError in command(): I/O operation on closed file." [High,Confirmed] https://launchpad.net/bugs/1027648
+
+ 15:44:13 <ubottu> Launchpad bug 1037757 in flash-kernel (Ubuntu Quantal) "flash-kernel-installer is not creating an initial preEnv.txt during installation" [High,Confirmed] https://launchpad.net/bugs/1037757
+
+ 15:44:14 <ubottu> Launchpad bug 154086 in partman-auto-lvm (Ubuntu Quantal) "Installing to HDD with previous ubuntu fails to create fresh LVM claiming group already in use" [High,Confirmed] https://launchpad.net/bugs/154086
+
+ 15:44:16 <ubottu> Launchpad bug 984276 in casper (Ubuntu Quantal) "installing casper on a non live system causes update-initramfs to fail" [High,Confirmed] https://launchpad.net/bugs/984276
+
+ 15:44:18 <ubottu> Launchpad bug 1015567 in dpkg (Ubuntu Quantal) "upgrade failed: mixed non-coinstallable and coinstallable package instances present" [High,Triaged] https://launchpad.net/bugs/1015567
+
+ 15:45:34 <xnox> yes. working more at ubiquity/partman. the dpkg one I was meant to look at together with infinity, but that slipped.
+
+ 15:45:46 <slangasek> ok
+
+ 15:45:55 * ogra_ just closed 1037757
+
+ 15:46:11 <ogra_> missed to close it from changelog
+
+ 15:46:13 <slangasek> ogra_: ah, hurray :)
+
+ 15:46:27 <slangasek> stgraber: how about your bugs from that list? :)
+
+ 15:46:36 <slangasek> 946406, 974284
+
+ 15:47:30 <stgraber> slangasek: I just got rid of one of them and dhclient is on my todo
+
+ 15:47:42 <cjwatson> shall I take that coreutils sort -u bug?  it appears to have upstream patches
+
+ 15:47:57 <slangasek> stgraber: got rid of by fixing, or by unassigning yourself? ;)
+
+ 15:48:03 <stgraber> slangasek: the race condition is well, a race condition... need to spend some more time on it...
+
+ 15:48:17 <stgraber> slangasek: I had an ubiquity-slideshow-ubuntu bug on that list which got fixed but not closed
+
+ 15:48:44 <slangasek> stgraber: ah, ok
+
+ 15:49:18 <slangasek> cjwatson: please
+
+ 15:49:44 <cjwatson> slangasek: can I do your TIL merge at the same time? :)
+
+ 15:49:51 <slangasek> cjwatson: feel free :)
+
+ 15:50:02 <cjwatson> seeing as you did the NMU I suspect our delta is about to shrink
+
+ 15:50:34 * cjwatson wonders why avahi is on the foundations list
+
+ 15:50:36 <slangasek> did I?  I guess it should be down to just the gettext:any build-dep now
+
+ 15:50:42 <slangasek> because $reason
+
+ 15:51:07 <slangasek> avahi is the networky bits as much as anything
+
+ 15:51:20 <ogra_> you can use it without desktop :)
+
+ 15:51:25 <cjwatson> I guess
+
+ 15:53:19 <slangasek> bug #433897 has a proposed fix
+
+ 15:53:21 <ubottu> Launchpad bug 433897 in console-setup (Ubuntu Quantal) "at boot, the font is not set by the upstart job" [High,Confirmed] https://launchpad.net/bugs/433897
+
+ 15:53:43 <slangasek> bdmurray: would it make sense / be much trouble to highlight linked branches on the rls-q-tracking report?
+
+ 15:54:51 <cjwatson> 433897> I'm very wary, will need to think about it
+
+ 15:55:07 <cjwatson> I do know there's a problem but the races here are insanely delicate
+
+ 15:55:10 <slangasek> cjwatson: ack
+
+ 15:55:15 <slangasek> not suggesting a blind upload :)
+
+ 15:55:31 <slangasek> do you want me to assign that one to you?
+
+ 15:55:36 <cjwatson> And I don't think I buy the initramfs-tools proposal
+
+ 15:55:37 <cjwatson> Yeah
+
+ 15:55:42 <bdmurray> slangasek: I think it, and patches, makes sense.  If we don't check the branch package it should be easy.
+
+ 15:55:47 <slangasek> oh, also, should it even be on our list?  this seems to have bypassed the nomination process by virtue of a community member targeting it to quantal
+
+ 15:56:12 <cjwatson> 433897 you mean?  we ought to fix it really, it's foundations-induced damage and it annoys a lot of people
+
+ 15:56:22 <cjwatson> even if it bypassed the process
+
+ 15:56:38 <slangasek> bdmurray: if it's easy to do, I think that'd be great to have
+
+ 15:56:53 <bdmurray> slangasek: bryce targetted it I believe
+
+ 15:56:58 <slangasek> cjwatson: I agree, just wanted to make sure we explicitly evaluated
+
+ 15:57:32 <slangasek> bdmurray: ah, then we shall harrass him about not following the process :)
+
+ 15:58:33 <slangasek> I think that's probably as much time as it's useful to spend on that list for today, then
+
+ 15:58:48 <bdmurray> next week we should visit the team assigned ones then
+
+ 15:59:03 <slangasek> bdmurray: unless there are any in particular that you think have stagnated and warrant a call-out right now?
+
+ 15:59:27 <slangasek> bdmurray: right, I'm actually going through and un-assigning the team from these so they'll all show as unassigned instead of being a mix
+
+ 16:00:35 <bdmurray> slangasek: nothing to call-out
+
+ 16:00:39 <slangasek> (so we can review the whole set of unassigned ones, in that case)
+
+ 16:00:43 <slangasek> bdmurray: ok, cool - thanks
+
+ 16:00:46 <slangasek> #topic AOB
+
+ 16:00:48 <slangasek> anything else?
+
+ 16:02:07 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

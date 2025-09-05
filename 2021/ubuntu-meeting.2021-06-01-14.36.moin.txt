@@ -1,0 +1,262 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by doko, 01 Jun at 14:36 &mdash; 15:12 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-06-01-14.36.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by doko at 14:36.
+
+
+=== current component mismatches ===
+
+Discussion started by doko at 14:37.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (doko, 14:37)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (doko, 14:37)
+
+=== New MIRs ===
+
+Discussion started by doko at 14:53.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (doko, 14:53)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by doko at 15:07.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (doko, 15:07)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (61)
+ * doko (29)
+ * sarnold (14)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:36 <doko> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:36 <meetingology> Meeting started at 14:36:44 UTC.  The chair is doko.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:36 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:36 <doko> #topic Review of previous action items
+
+ 14:37 <doko> we didn't have the meeting at all last week, so skipping
+
+ 14:37 <doko> #topic current component mismatches
+
+ 14:37 <doko> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:37 <doko> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:38 * sarnold gives his customary weekly ack to cpaelzer about backuppc
+
+ 14:38 <doko> sarnold, status of backupppc related security reviews?
+
+ 14:38 <sarnold> I don't remember seeing the libayatana-appindacator thing
+
+ 14:38 <sarnold> doko: not yet started
+
+ 14:39 <doko> ayatana looks incomplete, 2/3 packages done. maybe ping didrocks?
+
+ 14:39 <doko> jamespage, can you review the cherrypy related ones, or should we split these?
+
+ 14:40 <doko> mesa is still pending. I email didrocks two weeks ago. no reply yet
+
+ 14:41 <cpaelzer> I'm around - sorry
+
+ 14:41 <doko> ipmitool is oldish, but shows up in mismatches ... waiting on cpaelzer for that
+
+ 14:41 <cpaelzer> thanks for backuppc @sarnold
+
+ 14:42 <cpaelzer> IIRC ipmitool is from MAAS for MAAS
+
+ 14:42 <cpaelzer> and no one ever cared about it
+
+ 14:42 <cpaelzer> [Reverse-Depends: Ubuntu.Impish supported-maas seed]
+
+ 14:42 <cpaelzer> yes
+
+ 14:42 <doko> jamespage, fence-agents has been in main before. is it supposed to re-enter?
+
+ 14:42 <cpaelzer> fence-agents comes from us I guess doko
+
+ 14:42 <cpaelzer> as part of https://bugs.launchpad.net/ubuntu/+source/fence-agents/+bug/1927004
+
+ 14:42 <sarnold> yeah, we've had a discussion on the bug about the right names to use for the binary package that'll have agents we want to support
+
+ 14:42 <cpaelzer> waiting for security atm
+
+ 14:43 <doko> if we don't care about ipmitool, then maybe it should be seeded in the community-maas seed
+
+ 14:43 <doko> who can confirm this?
+
+ 14:44 <cpaelzer> Adam I guess
+
+ 14:45 <cpaelzer> Collard
+
+ 14:45 <cpaelzer> I hope that wasn't misspelled ...
+
+ 14:45 <doko> I'll chase this with xnox
+
+ 14:45 <doko> I think he set these seeds initially
+
+ 14:46 <cpaelzer> freeipmi is in main, ipmitool and openimpi are not
+
+ 14:46 <cpaelzer> unfortunately HW manaufacturers seem to be unable to settle on one
+
+ 14:46 <sarnold> heh I didn't realize we had three of the things
+
+ 14:46 <cpaelzer> we might end up taking it in in additon to the one we have, but these changes
+
+ 14:47 <cpaelzer> seed changes I mean
+
+ 14:47 <cpaelzer> that it is worth to start with a clarification
+
+ 14:48 <sarnold> hmm, openimpi also looks to be in main
+
+ 14:48 <cpaelzer> sarnold: oh your are right, agreed
+
+ 14:49 <cpaelzer> so maybe we really have to take the third one in to make it a charm :-)
+
+ 14:49 <sarnold> hah
+
+ 14:49 <sarnold> or is it 'operator' now..
+
+ 14:49 <cpaelzer> other than the expected fight of who will own this I see no problem
+
+ 14:49 <cpaelzer> and starting with xnox to calrify the intend doesn't sound like a bad start
+
+ 14:50 <cpaelzer> thanks doko for offering to chase this down
+
+ 14:52 <doko> I don't want to create actions for people not being present ... didn't work well last time
+
+ 14:52 <cpaelzer> hehe
+
+ 14:52 <cpaelzer> FYI I have reviewed prips which came in yesterday
+
+ 14:53 <cpaelzer> and I have updated the status on a few to get them moving forward
+
+ 14:53 <cpaelzer> but nothing that would be a new team todo
+
+ 14:53 <doko> #topic New MIRs
+
+ 14:53 <cpaelzer> shall we look at th ebug lists now?
+
+ 14:53 <doko> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:54 <cpaelzer> That scary list is actually two
+
+ 14:54 <cpaelzer> let us start with https://bugs.launchpad.net/ubuntu/+source/libftdi1/+bug/1912371
+
+ 14:54 <sarnold> oh hey and one of them is even good news :)
+
+ 14:54 <cpaelzer> doko: in the update between commend 8 and 9
+
+ 14:55 <cpaelzer> doko: did you have a look and acked it assinging it to security?
+
+ 14:55 <cpaelzer> that wasn't clear to me looking at the bug this morning
+
+ 14:55 <cpaelzer> if you have, then this is ready to go
+
+ 14:55 <cpaelzer> if it was a mistake then we need to assign someoen for a MIR review
+
+ 14:56 <cpaelzer> essentially William self-reviewed in commen 8 :-)
+
+ 14:56 <sarnold> what's the libftdi and libftdi1 change amurray made in comment 16?
+
+ 14:56 <cpaelzer> so your update could be seen as sign-off and Ack on that
+
+ 14:56 <doko> ok, I'll chase this down as well, probably just needs a seed
+
+ 14:56 <cpaelzer> sarnold: If I read correctly there is a debdiff that shall be applöied before promotion
+
+ 14:57 <doko> yep, the symbols file should be fixed
+
+ 14:58 <doko> I'll chase this down
+
+ 14:58 <cpaelzer> thanks
+
+ 14:58 <cpaelzer> let us go to the bigger chunks of work now https://bugs.launchpad.net/ubuntu/+source/jaraco.classes/+bug/1930111
+
+ 14:58 <cpaelzer> 8 potentially easy python lib review tasks to assign
+
+ 14:58 <doko> yep, already asked before. should we split this, or load it on jamespage? ;)
+
+ 14:59 <cpaelzer> but the question upfront, who will own this?
+
+ 14:59 <cpaelzer> Is that from openstack?
+
+ 14:59 <doko> yes, openstack
+
+ 14:59 <cpaelzer> I'd say we assign him and he can call out to us if needed
+
+ 15:00 <cpaelzer> as he knows how this works even if he has no time to do it himself
+
+ 15:00 <cpaelzer> python3-cherrypy3                                         | cherrypy3                              | ceph-mgr                                          | Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>      |          228656 |            1181
+
+ 15:00 <cpaelzer> from germinate so yes indeed from openstack
+
+ 15:01 <cpaelzer> I've added an update and assigned jamespage to one of them
+
+ 15:01 <cpaelzer> now it shoudl be clear
+
+ 15:01 <cpaelzer> is that ok for everyone atm?
+
+ 15:02 <sarnold> I'm slightly skeptical the world needs yet another "high performance python webserver", it feels like one of the other existing webservers ought to work..
+
+ 15:02 <sarnold> but perhaps that's not one to solve at this meeting
+
+ 15:03 <cpaelzer> I agree
+
+ 15:03 <cpaelzer> to both
+
+ 15:07 <cpaelzer> ok
+
+ 15:07 <cpaelzer> next ...
+
+ 15:07 <doko> #topic Incomplete bugs / questions
+
+ 15:07 <doko> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:08 <sarnold> hmm, "new cherrypy3 18.6.0-1 release" .. we've got 8.9.1-8 packaged now.. this might be a big jump, heh
+
+ 15:08 <cpaelzer> or just a rename
+
+ 15:08 <cpaelzer> versions are smoke and mirrors
+
+ 15:08 <cpaelzer> I guess there is only https://bugs.launchpad.net/ubuntu/+source/ledmon/+bug/1794219 in this list to talk about
+
+ 15:09 <cpaelzer> doko: this one seems that sil2100 decided to help sorting that out
+
+ 15:09 <cpaelzer> doko: does tha answer we got from rex tsai satisfy that for foundations to go on?
+
+ 15:10 <doko> ok, I'll take this
+
+ 15:11 <cpaelzer> thanks ++
+
+ 15:11 <cpaelzer> #topic Any other business?
+
+ 15:11 <cpaelzer> not from me
+
+ 15:12 <sarnold> none from me
+
+ 15:12 <doko> ok, finished!
+
+ 15:12 <doko> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,196 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 04 Apr at 15:02 &mdash; 15:33 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2024/ubuntu-meeting.2024-04-04-15.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2024-04-04/   (juliank, 15:02)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:14.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:15)
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:22)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:23.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:23)
+
+=== AOB ===
+
+Discussion started by juliank at 15:26.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (37)
+ * vorlon (19)
+ * bdmurray (3)
+ * meetingology (2)
+ * adrien (2)
+ * xypron (2)
+ * slyon (2)
+ * schopin (1)
+ * ravikant_ (1)
+ * mkukri (1)
+
+
+
+== Full log ==
+
+
+ 15:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:02 <meetingology> Meeting started at 15:02:39 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:02 <juliank> #topic Lightning rounds
+
+ 15:02 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2024-04-04/
+
+ 15:03 <juliank> I'm afraid I got lost in discussions and have no update written :(
+
+ 15:03 <schopin> juliank: same here.
+
+ 15:07 <ravikant_> o/
+
+ 15:07 <bdmurray> lost in discussions or in work?
+
+ 15:09 <vorlon> - preparing the design of t-shirts which read "I talked to Jia Tan"
+
+ 15:09 <vorlon> winning
+
+ 15:10 <bdmurray> Is the Milk-V Mars some new hardware we'll be supporting. xypron ?
+
+ 15:10 <adrien> I suck at design so only white letters on black t-shirt ;-)
+
+ 15:10 <xypron> bdmurray: nothing decided yet
+
+ 15:11 <xypron> It is a RISC-V board with the same SoC as the VisionFive2 which we support.
+
+ 15:12 <vorlon> adrien: that's fine, it goes right along with the "No I won't fix your laptop but mjg59 will" tshirt in my drawer
+
+ 15:12 <juliank> Does anyone want some more time for status update reading/discussion? We have 2 incoming bugs to discuss today
+
+ 15:13 <adrien> vorlon: :D   but now maybe I really need to make that t-shirt...
+
+ 15:13 <bdmurray> I'm still reading
+
+ 15:14 * juliank was in the wrong window
+
+ 15:14 <juliank> #topic Release incoming bugs
+
+ 15:14 <juliank> 2 today
+
+ 15:15 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 15:15 <juliank> bug 1951491
+
+ 15:16 <juliank> I think this is expected sort of?
+
+ 15:16 <juliank> People seem to try to run stuff as a different user in a cron job without having a user session for that user
+
+ 15:17 <juliank> Like this is not how you do this:
+
+ 15:17 <juliank> I had to install dbus-user-session and then make sure the /run/user/../bus was initialized by for example runuser -u user /bin/true.
+
+ 15:17 <juliank> And make sure that it remains by loginctl enable-linger user
+
+ 15:17 <juliank> But how is VNC related to it?
+
+ 15:18 <mkukri> that makes sense, but i am not sure if a user can reasonable figure that
+
+ 15:18 <juliank> I think there's probably 3 issues mixed into one at that point
+
+ 15:18 <juliank> Yeah some others somehow ended up with sessions without a session bus
+
+ 15:19 <juliank> Closing the entire thing and asking for clear bugs would be a good start?
+
+ 15:21 <vorlon> no objection
+
+ 15:22 <vorlon> next? :)
+
+ 15:22 <juliank> Since there was no opposition I've just done that, marking them all Incomplete and asking people to file clear succinct bugs
+
+ 15:22 <juliank> Writing took a while :)
+
+ 15:22 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:22 <juliank> bug 2058743
+
+ 15:23 <juliank> sarnold:
+
+ 15:23 <juliank> sorry
+
+ 15:23 <juliank> slyon:
+
+ 15:23 <slyon> I wanted to reach out to the server team... Still need to do that
+
+ 15:23 <slyon> It's not urgent, we should skip it for now
+
+ 15:23 <juliank> ack
+
+ 15:23 <juliank> #topic Team proposed-migration report
+
+ 15:23 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:23 <juliank> vorlon:
+
+ 15:23 <juliank> not sure anything useful there?
+
+ 15:24 <vorlon> mtd-utils missing builds? :)
+
+ 15:24 <juliank> yes but does it make sense assigning vs someone solving it in adhoc fashion
+
+ 15:24 <vorlon> I guess what I'll say here is, if anybody doesn't have a corner of the xz-utils migration to work on right now, this is a useful additional list to draw from
+
+ 15:25 <vorlon> but yes I don't think assigning individual packages here makes sense when we're in an all-hands-on-deck situation for xz-utils
+
+ 15:25 <juliank> Do we want to talk about xz-utils?
+
+ 15:25 <vorlon> does someone need us to?
+
+ 15:25 <vorlon> what has yet to be covered
+
+ 15:25 <juliank> otherwise it's aob
+
+ 15:26 <juliank> #topic AOB
+
+ 15:26 <juliank> So be it
+
+ 15:26 <vorlon> well, I can tell y'all what my plan is for my work day wrt xz-utils
+
+ 15:26 <vorlon> which is that by EOD I intend to have Ubuntu Desktop images buildable
+
+ 15:26 <vorlon> by hook or by crook
+
+ 15:26 <vorlon> so skiptesting anything necessary to get packages migrated
+
+ 15:27 <vorlon> stage 1 is still getting livecd-rootfs installable
+
+ 15:27 <vorlon> stage 2 is making debootstrap work
+
+ 15:27 <vorlon> stage 3 is making ubuntu-desktop installable
+
+ 15:27 <vorlon> help wanted to make sure we minimize regressing things in the process
+
+ 15:27 <vorlon> (similar to during time_t)
+
+ 15:33 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

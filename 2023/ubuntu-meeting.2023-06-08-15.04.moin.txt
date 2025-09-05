@@ -1,0 +1,180 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdrung, 08 Jun at 15:04 &mdash; 15:44 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-06-08-15.04.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by bdrung at 15:04.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-8-jun-2023/36137/5   (bdrung, 15:04)
+
+=== Release incoming bugs ===
+
+Discussion started by bdrung at 15:17.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:17)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:17)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/aptdaemon/+bug/2008430   (bdrung, 15:18)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:25)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/mysql-8.0/+bug/2019203   (bdrung, 15:26)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:32)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdrung at 15:33.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdrung, 15:33)
+
+=== AOB ===
+
+Discussion started by bdrung at 15:38.
+
+
+
+
+== People present (lines said) ==
+
+ * bdrung (26)
+ * vorlon (20)
+ * schopin (5)
+ * liushuyu (3)
+ * meetingology (2)
+ * mclemenceau (2)
+ * danilogondolfo (2)
+ * bdmurray (1)
+
+
+
+== Full log ==
+
+
+ 15:04 <bdrung> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:04 <meetingology> Meeting started at 15:04:02 UTC.  The chair is bdrung.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:04 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:04 <bdrung> #topic Lightning rounds
+
+ 15:04 <bdrung> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-8-jun-2023/36137/5
+
+ 15:05 <bdrung> I give everybody time to read and ask questions.
+
+ 15:10 <mclemenceau> o/
+
+ 15:13 <bdmurray> "footgun"
+
+ 15:14 <bdrung> I give everyone one more minute for reading.
+
+ 15:17 <bdrung> #topic Release incoming bugs
+
+ 15:17 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:17 <bdrung> nothing there
+
+ 15:17 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:18 <bdrung> https://bugs.launchpad.net/ubuntu/+source/aptdaemon/+bug/2008430
+
+ 15:20 <vorlon> sounds like something we should take and resolve
+
+ 15:20 <vorlon> though I thought all the non-PEP-440 packages were fixed by lunar?
+
+ 15:21 <schopin> Yes but basically the point made by the last comment is that non-distro packages that don't respect PEP440 will break apt-daemon, even if they're unrelated.
+
+ 15:21 <bdrung> all lunar packages (except for drslib) should have PEP-440 compliant versions.
+
+ 15:21 <vorlon> ok
+
+ 15:22 <vorlon> anyway, +1 for us taking this, we do rather rely on aptdaemon not exploding
+
+ 15:22 * bdrung agrees
+
+ 15:23 <bdrung> targetted the bug to lunar
+
+ 15:24 <bdrung> tagged foundations-todo and subscribed foundations-bugs
+
+ 15:24 <bdrung> next: https://bugs.launchpad.net/ubuntu/+source/plymouth/+bug/2012698
+
+ 15:25 <vorlon> desktop
+
+ 15:25 <bdrung> so leaving that untouched
+
+ 15:25 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:26 <bdrung> https://bugs.launchpad.net/ubuntu/+source/mysql-8.0/+bug/2019203
+
+ 15:27 <vorlon> is this the same as the regression we saw in mysql in mantic-proposed from the security update?
+
+ 15:27 <vorlon> it is
+
+ 15:27 <schopin> Oh, I subscribed it, but then danilogondolfo looked into it and AFAICT the conclusion was that it wasn't a glibc issue.
+
+ 15:27 <schopin> I didn't get around to update the status.
+
+ 15:28 <danilogondolfo> I helped investigating the problem. Apparently the kernel doesn't expose information about cache line sizes on armhf and the code relied on that to allocate memory
+
+ 15:29 <danilogondolfo> allocate cache-line-size aligned memory*
+
+ 15:32 <schopin> I'll mark the glibc status as Invalid then, and add the kernel in the loop.
+
+ 15:32 <bdrung> thanks
+
+ 15:32 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:33 <bdrung> nothing for us (unless there is something in "unknown")
+
+ 15:33 <bdrung> #topic Team proposed-migration report
+
+ 15:33 <bdrung> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:34 <bdrung> that list is short. Enjoy it before Debian unfreezes...
+
+ 15:34 <vorlon> indeed
+
+ 15:35 <vorlon> fwupd continues to be stuck there
+
+ 15:35 <vorlon> there's been discussion on the bug w/ the Debian maintainer but I haven't analyzed it
+
+ 15:35 <vorlon> he asserts that there are flaky tests and different behavior across the autopkgtest runners
+
+ 15:36 <liushuyu> vorlon: There is a LP bug for it: https://bugs.launchpad.net/ubuntu/+source/fwupd/+bug/2021908 and it does not seem to be flaky...?
+
+ 15:36 <vorlon> liushuyu: that's the bug Mario repliedto
+
+ 15:36 <vorlon> liushuyu: will you continue to drive this one for the next week, or do you need to hand it off?
+
+ 15:37 <liushuyu> vorlon: I can take a look after finishing the armhf time_t stuff. It looks like the upstream did not gate the network tests correctly
+
+ 15:37 <vorlon> ok
+
+ 15:37 <vorlon> that leaves just python-apt needing an assignee
+
+ 15:38 <vorlon> any volunteers?
+
+ 15:38 <liushuyu> Even if you turn off the network tests, some of them will still run
+
+ 15:38 <schopin> o/
+
+ 15:38 <vorlon> python-apt: schopin:
+
+ 15:38 <vorlon> thanks
+
+ 15:38 <vorlon> bdrung: back to you
+
+ 15:38 <bdrung> #topic AOB
+
+ 15:39 <vorlon> I'll be out next Wed/Thu
+
+ 15:39 <mclemenceau> I'm OOO monday
+
+ 15:44 <bdrung> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

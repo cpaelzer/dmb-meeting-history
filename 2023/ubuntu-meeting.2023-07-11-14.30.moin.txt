@@ -1,0 +1,561 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 11 Jul at 14:30 &mdash; 15:01 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-07-11-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:36.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:36)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/lua5.4/+bug/2026608   (cpaelzer, 14:36)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/tecla/+bug/2026774   (cpaelzer, 14:40)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nvme-stas/+bug/2026591   (cpaelzer, 14:40)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:44.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:44)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:47.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:47)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:47)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pull/23   (dviererbe, 14:47)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:50.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:50)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:50)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:50)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:52.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues/30   (cpaelzer, 14:55)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pull/31   (cpaelzer, 14:55)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (152)
+ * slyon (23)
+ * didrocks (21)
+ * seb128 (16)
+ * sarnold (15)
+ * eslerm (6)
+ * dviererbe (3)
+ * meetingology (2)
+ * bdrung (2)
+ * joalif (2)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:54 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:30 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:31 <cpaelzer> lots of people already around
+
+ 14:31 <cpaelzer> and a lot on the agenda I guess
+
+ 14:31 <cpaelzer> so let us start
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <slyon> o/
+
+ 14:32 <cpaelzer> on spamassassin we now have mirespace working, but that still isn't yet ready for review
+
+ 14:32 <cpaelzer> rustc we've had the hiccup of bundling cargo and the related back and forth
+
+ 14:32 <sarnold> oooof so much perl
+
+ 14:32 <cpaelzer> what we see now for rustc
+
+ 14:32 <cpaelzer> is that it was demoted to universe
+
+ 14:32 <slyon> I can give an update on rustc in AOB (for now it's back to universe)
+
+ 14:32 <cpaelzer> to let it pass
+
+ 14:32 <didrocks> O/
+
+ 14:33 <cpaelzer> thanks slyon, I'll stop at this level of detail then
+
+ 14:33 <cpaelzer> hiding in there are two new candidates to look at
+
+ 14:33 <cpaelzer> fence-agents -> sbd
+
+ 14:33 <cpaelzer> and libblockdev -> libbytesize
+
+ 14:34 <cpaelzer> fence is server
+
+ 14:34 <cpaelzer> I guess I need to ask kanashiro[m] about that one
+
+ 14:34 <cpaelzer> who is libblockdev?
+
+ 14:34 <cpaelzer> desktop it seems
+
+ 14:34 <didrocks> yeah, sounds like it
+
+ 14:34 <didrocks> I’ll ask
+
+ 14:35 <cpaelzer> ok ok, thanks didrocks
+
+ 14:35 <seb128> cpaelzer, libblockdev is fixed and just needs a refresh of the report
+
+ 14:35 <seb128> new binaries were sent to main by error by whoever NEWed it
+
+ 14:36 <cpaelzer> I see, thanks
+
+ 14:36 <cpaelzer> #topic New MIRs
+
+ 14:36 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:36 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:36 * didrocks will NOT ask then :)
+
+ 14:36 <cpaelzer> we had quite a few spread last weeks, two more this time
+
+ 14:36 <cpaelzer> 1. lua5.4
+
+ 14:36 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/lua5.4/+bug/2026608
+
+ 14:37 <cpaelzer> this is from my team so I can't really take it :-)
+
+ 14:37 <cpaelzer> but gladly this is a carry forward MIR
+
+ 14:37 <cpaelzer> it is about getting all to move to 5.4 and then let go of 5.3
+
+ 14:37 <cpaelzer> so it isn't exactly "new"
+
+ 14:37 <cpaelzer> anyone up to look at that?
+
+ 14:37 <slyon> I can
+
+ 14:37 <didrocks> I can
+
+ 14:37 <didrocks> ah :)
+
+ 14:37 <cpaelzer> slyon: wins
+
+ 14:37 <cpaelzer> didrocks: gets next
+
+ 14:37 <cpaelzer> next would be https://bugs.launchpad.net/ubuntu/+source/aom/+bug/2004442
+
+ 14:38 <didrocks> yeah, assign me that one then
+
+ 14:38 <cpaelzer> wasn't that done already?
+
+ 14:38 <slyon> I think aom is actually fine. No work for us, but back to the reporter
+
+ 14:38 <cpaelzer> by didrocks
+
+ 14:38 <didrocks> some deps of libheif were
+
+ 14:38 <didrocks> unsure that one
+
+ 14:38 <didrocks> ah, indeed
+
+ 14:38 <slyon> should be incomplete to fix the things didrocks requested
+
+ 14:38 <eslerm> the status of aom may be wrong, should have been set to in progress
+
+ 14:39 <cpaelzer> just looking at the same eslerm
+
+ 14:39 <seb128> there is also https://bugs.launchpad.net/ubuntu/+source/tecla/+bug/2026774 which I think is ready for review
+
+ 14:39 <cpaelzer> security ack is good
+
+ 14:39 <cpaelzer> how about all the findings of didrocks ...?
+
+ 14:39 <didrocks> yeah, sounds like some questions that were not answered
+
+ 14:39 <seb128> jbicha, did you forgot to unassign yourself so it shows in the MIR team queue?
+
+ 14:39 <cpaelzer> that might be the reasons we miss it
+
+ 14:39 <cpaelzer> but you are on time
+
+ 14:39 <cpaelzer> we'll have a look next
+
+ 14:39 <cpaelzer> didrocks: would you have a look at https://bugs.launchpad.net/ubuntu/+source/aom/+bug/2004442 if all your asks are fulfilled
+
+ 14:40 <cpaelzer> and set it to incomplete or in progress accordingly?
+
+ 14:40 <didrocks> cpaelzer: will do
+
+ 14:40 <bdrung> I just subscribed ~ubuntu-mir to https://bugs.launchpad.net/ubuntu/+source/nvme-stas/+bug/2026591
+
+ 14:40 <didrocks> I don’t see followup comments, but maybe new uploads fixes it
+
+ 14:40 <cpaelzer> ok thanks bdrung and seb128
+
+ 14:40 <cpaelzer> reloading the page now gives the expected two more
+
+ 14:40 <slyon> We now have a MIR queue that is filling up just-in-time :D
+
+ 14:40 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/tecla/+bug/2026774
+
+ 14:40 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/nvme-stas/+bug/2026591
+
+ 14:40 <sarnold> slyon: lol
+
+ 14:41 <cpaelzer> I'd look at nvme-stas
+
+ 14:41 <cpaelzer> that sounds like a candidate for "special HW" though :-)
+
+ 14:41 <cpaelzer> who would be up for tecla
+
+ 14:42 <didrocks> I can take it, I think mine will be easy to reset to incomplete
+
+ 14:42 <seb128> tecla should be relatively easy, it's a simple UI to show keyboard layouts (replace libgnomekbd)
+
+ 14:42 <bdrung> there is also dasbus as nvme-stas dependency: https://bugs.launchpad.net/ubuntu/+source/dasbus/+bug/2025912 (just subscribed)
+
+ 14:42 <cpaelzer> ok, I can't deal with everything
+
+ 14:42 <cpaelzer> one by one :-)
+
+ 14:43 <cpaelzer> ok, tecla for didrocks
+
+ 14:43 <cpaelzer> thanks
+
+ 14:43 <cpaelzer> joalif: are you around?
+
+ 14:43 <joalif> yes
+
+ 14:43 <cpaelzer> round robin wise https://bugs.launchpad.net/ubuntu/+source/dasbus/+bug/2025912for you ?
+
+ 14:43 <joalif> ack
+
+ 14:43 <cpaelzer> BTW we'd have now hit the limit that we once discussed
+
+ 14:44 <cpaelzer> even if there would be more I guess that is all we should assign in one week
+
+ 14:44 <cpaelzer> gladly unless anyone adds another one last miute, that was all of them
+
+ 14:44 <slyon> +1
+
+ 14:44 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:44 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:44 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:45 <cpaelzer> cargo will be mentioned by slyon in AOB
+
+ 14:45 <cpaelzer> we mentioned dmarc-perl
+
+ 14:45 <cpaelzer> dhcpcd was in a bad state
+
+ 14:45 <cpaelzer> I corrected it to incomplete as there are tasks up
+
+ 14:45 <eslerm> (what is AOB?)
+
+ 14:45 <cpaelzer> TBH this is quite some effort, but the new dhcp seems to really end up much better eventually
+
+ 14:45 <slyon> any-other-business (the last section of the meeing)
+
+ 14:45 <cpaelzer> AOB = any other business
+
+ 14:46 <eslerm> ty
+
+ 14:46 <cpaelzer> the python things have been reviewed and wait for the reporter (hence incomplete) on one task
+
+ 14:46 <cpaelzer> fdk-aac .. reading ... ?
+
+ 14:46 <cpaelzer> reviewed
+
+ 14:46 <cpaelzer> got tasks
+
+ 14:47 <cpaelzer> ok, back on jbicha by his own comment
+
+ 14:47 <cpaelzer> opk
+
+ 14:47 <cpaelzer> ok
+
+ 14:47 <cpaelzer> nothing to act on here
+
+ 14:47 <seb128> yes, fdk-aac we are working on getting it in shape, maybe by next week
+
+ 14:47 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:47 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:47 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:47 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:47 <dviererbe> https://github.com/canonical/ubuntu-mir/pull/23
+
+ 14:47 <cpaelzer> we have the re-review topic which I consider on-hold until other things settled
+
+ 14:47 <cpaelzer> we have special HW which I'd move to AOB as it could be long
+
+ 14:48 <cpaelzer> that leaves https://github.com/canonical/ubuntu-mir/pull/23 as dviererbe said
+
+ 14:48 <cpaelzer> I acked it already
+
+ 14:48 <cpaelzer> but wanted to give everone a last chance to yell "no I loved asciart"
+
+ 14:48 <cpaelzer> if not, then I'd merge
+
+ 14:48 <dviererbe> :D
+
+ 14:48 <cpaelzer> this can be seen much better under these links
+
+ 14:48 <sarnold> well, I *did* love the ascii art.. :)
+
+ 14:49 <cpaelzer> old: https://github.com/canonical/ubuntu-mir/blob/main/README.md#process-states
+
+ 14:49 <cpaelzer> new: https://github.com/dviererbe/ubuntu-mir/tree/modernize-process-states-overview#process-states
+
+ 14:49 <slyon> only condsideration I have: This will make us non-backward compatible
+
+ 14:49 <cpaelzer> sarnold: me too, it was much better than the old text, but this really seems to be an improvement
+
+ 14:49 <slyon> should we ever want to go back to moinmoin/wiki
+
+ 14:49 <cpaelzer> slyon: backward with what - wiki text?
+
+ 14:49 <didrocks> I really prefer mermaid for our own API scheme too, so it’s not completely stranger
+
+ 14:49 <slyon> but do we want that? :D
+
+ 14:49 <cpaelzer> slyon: no we don't
+
+ 14:49 <didrocks> slyon: please nooooooooooo
+
+ 14:49 <cpaelzer> slyon: and if we do we would find another way
+
+ 14:49 <cpaelzer> this is git
+
+ 14:49 <cpaelzer> easy to grab the old
+
+ 14:50 <slyon> OK, so +1 from my side for merging it :)
+
+ 14:50 <didrocks> yeah, and probably markdown-based :p
+
+ 14:50 <cpaelzer> ok, sounds like overall +1
+
+ 14:50 <cpaelzer> merging ...
+
+ 14:50 <dviererbe> yay \o/
+
+ 14:50 <sarnold> thanks dviererbe :)
+
+ 14:50 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:50 <didrocks> thanks dviererbe, this looks so much better!
+
+ 14:50 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:50 <eslerm> the new version is much more readable :)
+
+ 14:50 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:50 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:50 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:50 <cpaelzer> Internal link
+
+ 14:50 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:50 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:50 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:50 <cpaelzer> we didn't have much time last week
+
+ 14:50 <cpaelzer> so ensure there is no crap in these queues ...
+
+ 14:51 <cpaelzer> LGTM in regard to server
+
+ 14:51 <cpaelzer> nothing yet from us, slowly acruing credit for our perl-storm
+
+ 14:51 * sarnold hides
+
+ 14:51 <cpaelzer> +c
+
+ 14:51 <sarnold> right now the lists feels managable
+
+ 14:51 <cpaelzer> anyone else seeing anything of concern?
+
+ 14:52 <cpaelzer> indeed
+
+ 14:52 <slyon> [dh-]cargo is highest priority from foundations, but more on that later..
+
+ 14:52 <sarnold> but that big pile of perl is troubling; even if each individual package is super-simple, there's a cost / stress on the sheer number of them
+
+ 14:52 <cpaelzer> keeping in mind how much else will come I'd go on then ...
+
+ 14:52 <cpaelzer> #topic Any other business?
+
+ 14:52 <cpaelzer> slyon: cargo first
+
+ 14:52 <slyon> Ok:
+
+ 14:52 <didrocks> nothing for me
+
+ 14:52 <cpaelzer> that was all there is ^^ :-)
+
+ 14:53 <slyon> basically in the past we had src:rustc (main) and src:cargo (universe), which got merged in the current version in mantic. so we now only have src:rustc
+
+ 14:53 <eslerm> (foundations can adjust the prioirty of the cargo jira task, we encouarge other teams to set priority relative to their other mirs)
+
+ 14:53 <slyon> it circumvented the MIR process, sneaking cargo into main
+
+ 14:53 <cpaelzer> ^^ unintentional
+
+ 14:53 <slyon> but as we needed the new version to support firefox and kernel, we decided to demote src:rust back to universe for now
+
+ 14:54 <slyon> but it's our hightes priority and I'd like to ask security to review the cargo parts and didrocks to coordinate with liushuyu[m] about the open MIR questions/answers
+
+ 14:54 <slyon> eslerm: I think the priority is set accordingly for cargo
+
+ 14:54 <cpaelzer> that matches all I've heard and is ok
+
+ 14:54 <eslerm> ty
+
+ 14:54 <cpaelzer> thanks for summarizing so that everyone is aware
+
+ 14:54 <sarnold> how do kernel builds in mantic work if rust is in universe?
+
+ 14:54 <cpaelzer> That leads me to my topic of revisiting special HW rules
+
+ 14:55 <cpaelzer> sarnold: build deps can be in universe
+
+ 14:55 <slyon> once we have a final MIR ACK for cargo and security +1, we can promote the combined rustc+cargo package
+
+ 14:55 <slyon> which shall happen this cycle
+
+ 14:55 <sarnold> cpaelzer: ah, right, thanks
+
+ 14:55 <cpaelzer> ok, seb128 brought this up and I took it actively trying to find a compromise
+
+ 14:55 <cpaelzer> by now most of you have seen
+
+ 14:55 <cpaelzer> https://github.com/canonical/ubuntu-mir/issues/30
+
+ 14:55 <cpaelzer> https://github.com/canonical/ubuntu-mir/pull/31
+
+ 14:56 <cpaelzer> It seems on these links that we seem to settle and agree
+
+ 14:56 <cpaelzer> But - if you do not mind - I want no one later on be surprised and yell at us. Therefore I'd bring it to the sprint and have everyone that MIGTH suffer long term by effort or untestable things to sign off.
+
+ 14:57 <cpaelzer> I can do all the sprint magic for this, just set up your Director of choice if you want to :-)
+
+ 14:57 <cpaelzer> but this is my "last call" here for the actual MIR members and friends - would you be ok to go that way?
+
+ 14:57 <sarnold> :sprint-magic:
+
+ 14:58 <cpaelzer> I guess there are not much answers as most of you said "ok" on the issue or PR
+
+ 14:58 <cpaelzer> and therefore consider the silence as "no revolts"
+
+ 14:58 <cpaelzer> :-)
+
+ 14:58 <slyon> +1, especially with buy-in from management
+
+ 14:58 <cpaelzer> slyon: yeah, I think that is the best way to go and hence I try to drive it that way
+
+ 14:59 <cpaelzer> ok then
+
+ 14:59 <cpaelzer> any other AOB then?
+
+ 14:59 <didrocks> nothing for me
+
+ 14:59 <cpaelzer> nothing else here ...
+
+ 14:59 <seb128> quick ones from me yes
+
+ 14:59 <sarnold> none from me
+
+ 14:59 <slyon> nothing
+
+ 14:59 <cpaelzer> ok go seb128
+
+ 14:59 <cpaelzer> closing words
+
+ 14:59 * didrocks needs to jump to a customer meetings, will read afterwards
+
+ 14:59 <seb128> 1. as a FYI we are going to try to MIR gst-plugins-bad
+
+ 14:59 <seb128> we would like a couple of plugins in main
+
+ 14:59 <seb128> we currently move some of those to -good via distro patches but that's tedious and we need some more
+
+ 15:00 <seb128> that was just a FYI
+
+ 15:00 <cpaelzer> set up dependencies to match what you want, and describe in the case which to promote and which not
+
+ 15:00 <seb128> 2. I would like to give another try to reconsider dbus-broker for promotion even if we can't demote dbus-daemon
+
+ 15:00 <cpaelzer> #2 is valid, sometime there just isn't any other choice
+
+ 15:00 <cpaelzer> put a statement there why you think that is right
+
+ 15:00 <seb128> I think we do a disfavor to Ubuntu by using a less performant and secure dbus service only to spare some maintainance work on dbus-daemon that we have to do anyway under esm
+
+ 15:01 <cpaelzer> and make it appear in the queue next week
+
+ 15:01 <cpaelzer> is that ok seb128?
+
+ 15:01 <sarnold> re dbus-broker, I'd be more amenable if I knew a timeline to write a replacement for the missing tool
+
+ 15:01 <seb128> ack
+
+ 15:01 <sarnold> .. or demote gdm or whatever
+
+ 15:01 <seb128> lol
+
+ 15:01 <cpaelzer> ok, I need to close and run
+
+ 15:01 <cpaelzer> thank you all
+
+ 15:01 <sarnold> :D
+
+ 15:01 <seb128> thanks
+
+ 15:01 <sarnold> thanks cpaelzer, seb128, all
+
+ 15:01 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,530 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by kyleN_ at 16:01:04 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-12-07-16.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *raring/nux
+''ACTION:'' sfeole to add usb debug shell instructions to wiki  (kyleN_, 16:10:44)
+''LINK:'' https://launchpad.net/~ubuntu-nexus7/+archive/ubuntu-nexus7-installer   (vanhoof, 16:20:57)
+
+ *valgrind mem leak work
+
+ *QA updates
+''LINK:'' http://askubuntu.com/questions/tagged/nexus-7?sort=faq&pagesize=50 only has 8 FAQs  (ogra_, 16:35:34)
+''ACTION:'' sfeole to handle faq migration from wiki to askubuntu  (kyleN_, 16:36:41)
+
+
+
+Meeting ended at 16:40:47 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * sfeole to add usb debug shell instructions to wiki
+ * sfeole to handle faq migration from wiki to askubuntu
+
+
+
+== Action items, by person ==
+
+ * sfeole
+ ** sfeole to add usb debug shell instructions to wiki
+ ** sfeole to handle faq migration from wiki to askubuntu
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (85)
+ * kyleN_ (65)
+ * sfeole (23)
+ * vanhoof (16)
+ * ayan (15)
+ * janimo (14)
+ * bcurtiswx (6)
+ * meetingology (5)
+ * xnox (1)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 16:01:04 <kyleN_> #startmeeting
+
+ 16:01:04 <meetingology> Meeting started Fri Dec  7 16:01:04 2012 UTC.  The chair is kyleN_. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01:04 <meetingology> 
+
+ 16:01:04 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:18 <kyleN_> This is the weekly Ubuntu Nexus 7 meeting
+
+ 16:01:29 <vanhoof> o/
+
+ 16:01:35 <janimo> hi
+
+ 16:01:41 <sfeole> \o/
+
+ 16:01:45 <ogra_> moo
+
+ 16:01:45 <kyleN_> Today Alex Chiang, who normally runs the meeting, is in Korea, so I will moderate
+
+ 16:02:11 <kyleN_> First, I'll summarize the news
+
+ 16:02:21 <kyleN_> Then folks can give status
+
+ 16:02:30 <kyleN_> then we'll have discussion/Q&A
+
+ 16:02:31 <ayan> o/
+
+ 16:02:45 <kyleN_> So here's the news:
+
+ 16:02:59 <kyleN_> The nux fix has landed, and raring "works" (ogra will discuss this after the summary)
+
+ 16:03:13 <ogra_> will i ?
+
+ 16:03:19 <kyleN_> Ubuntu Nexus 7 Installer is almost ready for raring support. version1.7 will be available shortly
+
+ 16:03:20 <ogra_> seems i will :)
+
+ 16:03:49 <kyleN_> Work to develop a nice approach for finding memory leaks with valgrind is progressing
+
+ 16:04:14 <kyleN_> So, if ogra is willing, perhaps he can take it up now, or sfeole
+
+ 16:04:19 <kyleN_> #topic raring/nux
+
+ 16:04:36 <ogra_> well, no issues with unity and nux anymore in raring
+
+ 16:04:59 <vanhoof> ogra_: drop shadow on the top panel as well?
+
+ 16:05:03 <ogra_> the "panel shaddow is black bar" issue is still there
+
+ 16:05:04 <janimo> ogra_, as of today's image?
+
+ 16:05:05 * vanhoof hasn't  updated today yet :)
+
+ 16:05:15 <ogra_> janimo, as of wednesdays image
+
+ 16:05:26 <ogra_> vanhoof, no, the fix for that one hasnt landed
+
+ 16:05:45 <ogra_> beyond that i got plymouuth to half work on the images
+
+ 16:06:06 <bcurtiswx> Where can we find the plans for the nexus 7 for raring ?
+
+ 16:06:10 <ogra_> oem-config works fine but since xnox switched it to compiz it seems to have input issues
+
+ 16:06:28 <vanhoof> ogra_: as of late?
+
+ 16:06:42 <ogra_> usually a reboot fixes these ... (you land in oem-config again automatically until it is done)
+
+ 16:06:47 <vanhoof> ogra_: I got through an install (and plymouth \o/) no issues yesterday
+
+ 16:07:00 <sfeole> <~~~ no issues here as well
+
+ 16:07:02 <ogra_> vanhoof, yeah, the change is two weeks old or so
+
+ 16:07:20 <ogra_> it doesnt seem to happen always or to everyone
+
+ 16:07:33 <janimo> bcurtiswx, the strictly nexus related plans are to make current ubuntu robust on it and support at least some hw features (sensors, webcam)
+
+ 16:07:34 <ogra_> and the reboot not always fixes it
+
+ 16:07:49 <ogra_> so expect some support questions if people start using it widely
+
+ 16:08:01 <ogra_> oh, and before i forget ...
+
+ 16:08:13 <ogra_> we have a serial debug shell via USb by defautl now
+
+ 16:08:14 <janimo> bcurtiswx, the plans are mostly in Launchpad blueprints and in the stated goals of the project but not written up as plans anywhere AFAIK
+
+ 16:08:48 <kyleN_> bcurtiswx, the genera plan is to make Ubuntu raring "work" on nexus 7. We are mostly concerned with system level stuff as opposed to GUI for now
+
+ 16:08:51 <ogra_> attach the nexus to your PC and run: screen /dev/ttyACM0 115200
+
+ 16:08:54 <bcurtiswx> janimo, ubuntu right now on a small screen like the nexus 7 is had to work with. It would be nice to develop "home" screen for them, maybe like the dash but with the users choice of apps, and they would always be fullscreen?
+
+ 16:08:59 <ogra_> and you will get a login prompt
+
+ 16:09:18 <kyleN_> ogra, nice. should that be put in the wiki/
+
+ 16:09:20 <bcurtiswx> kyleN_, OK, maybe I'll turn into an idea/thinktank for the GUI aspects
+
+ 16:09:20 <kyleN_> ?
+
+ 16:09:33 <ogra_> kyleN_, that would make sense yeah
+
+ 16:09:36 <kyleN_> sfeole, can you please add that to the wiki?
+
+ 16:09:48 <ogra_> it prevents users from having to set up wlan and install ssh
+
+ 16:09:49 <janimo> bcurtiswx, I agree, however this particular project only concers itself with making this hw a good enough platform to test such new UIs on, not actually have them done by 13.04
+
+ 16:09:57 <ogra_> to get debugging stuff done
+
+ 16:10:06 <ogra_> i think thats all wrt images atm ...
+
+ 16:10:15 <ogra_> the touchscreen bug is still there in raring
+
+ 16:10:26 <janimo> ogra_, and that serial should work after a dist-upgrade, no need for a fresh raring install?
+
+ 16:10:35 <sfeole> might want to comment on bluetooth in raring...
+
+ 16:10:44 <ogra_> oh, and brcm-patchram isnt in raring atm, so even though we have BT fixes in kernel it wont work yet
+
+ 16:10:44 <kyleN_> [action] sfeole to add usb debug shell instructions to wiki
+
+ 16:10:44 * meetingology sfeole to add usb debug shell instructions to wiki
+
+ 16:10:56 <ogra_> janimo, right
+
+ 16:10:57 <ayan> ogra_: I'm working on getting it in asap.
+
+ 16:11:19 <ogra_> ayan, getting what in ?
+
+ 16:11:19 <ayan> ogra_: you can find the daily build here: https://code.launchpad.net/~ayan/+recipe/brcm-patchram-daily
+
+ 16:11:25 <ayan> not that it is changing often.
+
+ 16:11:30 <janimo> ogra_, till just commented on LP that his BT on raring is not fixed by the kernel patch
+
+ 16:11:35 <janimo> it was only 12.10 that worked
+
+ 16:11:47 <ogra_> ayan, i dont think we want the hack in the archive
+
+ 16:11:56 <ayan> the hack?
+
+ 16:11:56 <janimo> which is unfortunate, but bluez did not seem to change that much since 12.10
+
+ 16:12:16 <ogra_> ayan, loading the firmware is/should be part of the driver ... not of a userspace tool
+
+ 16:12:36 <ogra_> there are patches upstream that even seem to have gone into mainline for this
+
+ 16:12:43 * ayan nods.
+
+ 16:12:44 <ogra_> but there arent any for our kernel version
+
+ 16:12:45 <ayan> okay.
+
+ 16:13:07 <kyleN_> ok, so BT support is pending
+
+ 16:13:10 <ogra_> if we would use the hack, i would just upload the ppa package to the archive ... untouched
+
+ 16:13:23 <janimo> bcurtiswx, here is the work item status for 13.04 http://status.ubuntu.com/ubuntu-raring/group/topic-raring-desktop-targets-for-embedded.html
+
+ 16:13:30 <ogra_> which is the last resort solution if kernel cant work
+
+ 16:13:42 <ayan> it isn't quite a 'hack' though.  it is software writen and maintained by a broadcom developer.
+
+ 16:13:51 <ogra_> yeah, true
+
+ 16:14:00 <ayan> (software of questionable quality though.)
+
+ 16:14:05 <ogra_> but there are upstream efforts for getting patchram support into the kernel itself
+
+ 16:14:12 <ayan> right.  understood.
+
+ 16:14:19 * janimo sees this as a helper tool like with many hw peripherals (usb modeswitch for ex)
+
+ 16:14:19 <ogra_> if we could make use of teehse that would be great
+
+ 16:14:27 <ogra_> if we cant we still have the fallback
+
+ 16:14:34 <janimo> not ideal but if it is the only way to get it work properly now...
+
+ 16:14:53 <ogra_> janimo, well, our x86 kernel can handle patchram stuff just fine
+
+ 16:15:07 <janimo> it is at 3.7 though no?
+
+ 16:15:28 <janimo> a lot of our issues would go away if we had a 3.7 kernel too (and we'd likely have some new)
+
+ 16:15:31 <ogra_> the patcches went into mainline ... so it feels a bit odd adding a userspace hack for something that doesnt need one on other arches
+
+ 16:15:41 <bcurtiswx> janimo, thx
+
+ 16:15:58 <ogra_> yeah, no 3.7 for us until the binary drivers fullly work with it
+
+ 16:16:01 <ayan> ogra_: it needs to be on other archs.
+
+ 16:16:30 <ogra_> ayan, on other arches the BT stack of the kernel performs the patchram call
+
+ 16:16:48 <ogra_> while we do it in userspace and by replacing hcitool completely
+
+ 16:17:17 <vanhoof> thats device by device though I thought, what has landed upstream doesn't cover all brcm combo cards /me thought
+
+ 16:17:34 * ayan wasn't aware that it actually landed upstream.
+
+ 16:17:35 <ogra_> bug 1065400
+
+ 16:17:37 <ubottu> Launchpad bug 1065400 in linux (Ubuntu Raring) "Support for loading Broadcom bluetooth firmware" [Medium,In progress] https://launchpad.net/bugs/1065400
+
+ 16:17:43 <ogra_> it was at least requested
+
+ 16:17:49 <ayan> okay.
+
+ 16:18:11 <ogra_> anyway, if we could use that approach that would be a ton better
+
+ 16:18:19 <ogra_> if we cant we can still pull the package in
+
+ 16:18:21 <kyleN_> Sounds like we have a plan A and a possible hack/fallback/plan B
+
+ 16:18:33 <ogra_> right
+
+ 16:18:46 <kyleN_> done, ogra?
+
+ 16:18:56 <ogra_> yeah, wrt images i am :)
+
+ 16:19:01 <kyleN_> ok, thanks
+
+ 16:19:12 <ayan> so should i continue with the brcm-patchram userspace stuff?
+
+ 16:19:50 <vanhoof> ayan, i'd say as a fallback, perhaps ping jesse to see about raring and the device in the n7
+
+ 16:20:01 <ayan> got it.
+
+ 16:20:05 <kyleN_> thanks ayan
+
+ 16:20:12 <ogra_> awesome
+
+ 16:20:24 <kyleN_> OK moving along to the installer supporting R
+
+ 16:20:40 <kyleN_> I understand installer pkg 1.7 will support R
+
+ 16:20:51 <kyleN_> but it is not yet available - will be soon
+
+ 16:20:56 <vanhoof> it is now :)
+
+ 16:20:57 <sfeole> it's avail now
+
+ 16:20:57 <vanhoof> https://launchpad.net/~ubuntu-nexus7/+archive/ubuntu-nexus7-installer
+
+ 16:21:01 <kyleN_> aha
+
+ 16:21:07 <ogra_> great
+
+ 16:21:10 <sfeole> wiki is already updated
+
+ 16:21:20 <ogra_> usb-creator work is still pending
+
+ 16:21:21 <kyleN_> vanhoof, thx, and sfeole.
+
+ 16:21:27 <vanhoof> with the raring dailys looking nice I've moved over to raring now
+
+ 16:21:38 <ogra_> i think i'll start with that with xnox after the vacation days
+
+ 16:21:54 <vanhoof> same process as before, it'll pull the daily if its new(er) than what you have locally
+
+ 16:22:01 <ogra_> we might change the image output format mind you
+
+ 16:22:23 <ogra_> i.e. we peobably will merge both files into one etc
+
+ 16:22:35 <ogra_> *probably
+
+ 16:22:38 <vanhoof> ogra_: ok, if you do, no biggie to fix-up on my end if needed
+
+ 16:22:39 <kyleN_> ogra, can you pls explain the usb creator approach and how it differs from the installer approach?
+
+ 16:22:48 <ogra_> but i'll shout if that happens
+
+ 16:22:52 <vanhoof> cool
+
+ 16:23:35 <xnox> ogra_: yeap, ideally i would like to have a quick chat about the format with you.
+
+ 16:23:41 <ogra_> kyleN_, a supported distro toool thats installed in all ubuntu installs to do the flashing
+
+ 16:23:57 <ogra_> instead of a separately maintained installer script
+
+ 16:24:17 <kyleN_> ogra, to flash an attached n7 'disk' directly, or via an external media?
+
+ 16:24:21 <ogra_> kyleN_, the plan is to have usb-creator generally support android flashing
+
+ 16:24:39 <ogra_> it should function similar to the script installer ....
+
+ 16:24:49 <ogra_> download on demand etc
+
+ 16:25:01 <ogra_> xnox, yeah, lets do that after the meeting in #ubuntu-arm
+
+ 16:25:10 <kyleN_> ok, thx ogra
+
+ 16:25:37 <kyleN_> I forgot to announce the Installer topic -oops
+
+ 16:25:48 <kyleN_> [topic] valgrind mem leak work
+
+ 16:26:21 <kyleN_> Alex chiang's patch to valgrind to accept a path to a dir with debug symbols was commited
+
+ 16:26:35 <kyleN_> upstream
+
+ 16:26:52 <kyleN_> We are working on modifications to apport to:
+
+ 16:27:11 <kyleN_> create a dir with the debug symbols for the app you want to valgrind
+
+ 16:27:27 <kyleN_> valgrind it and produce a log file that can be used to identify memory leaks
+
+ 16:28:04 <kyleN_> in the longer run, we hope to normalize those log files and upload them if they are 'unique' in a manner that lets people find them and act on them
+
+ 16:28:09 <ogra_> will that in any way influence "normal" apport behavior for normal users of armhf ?
+
+ 16:28:21 <kyleN_> ogra_, no
+
+ 16:28:26 <ogra_> great
+
+ 16:28:56 <kyleN_> [topic] QA updates
+
+ 16:29:05 <kyleN_> sfeole, putting you on the spot without warning here
+
+ 16:29:12 <kyleN_> sorry - anything to add?
+
+ 16:29:15 <sfeole> sure
+
+ 16:29:28 <sfeole> If some of you want to dist-upgrade from 12.10 -> 13.04 then you may hit some known issues.
+
+ 16:29:39 <sfeole> Please refer to the following bugs:
+
+ 16:29:47 <sfeole> #1087295
+
+ 16:29:53 <sfeole> #1087335
+
+ 16:30:18 <sfeole> it's not a smooth transition, requires a little bit of work.
+
+ 16:30:29 <sfeole> but other than that should function as expected
+
+ 16:30:33 <kyleN_> sfeole, is there any reason to do dist-upgrade instead of using the new installer R support?
+
+ 16:30:42 <ogra_> and generally we encourage re-flashing anyway
+
+ 16:30:59 <sfeole> nope, up to the user, as ogra_ just said we encourage a re-flash
+
+ 16:31:15 <ogra_> (so people have proper user, tomezone and language setup)
+
+ 16:31:25 <sfeole> yes
+
+ 16:31:26 <kyleN_> perhaps the wiki should make that clear, if it doesn't aleady
+
+ 16:31:34 <sfeole> Thats it for now, I have been updating the Nexus7/KnownIssues page every day and bringing it up to speed. So be sure to check it out
+
+ 16:31:35 <ogra_> its just for the hardcore guys that insit on upgrading :)
+
+ 16:32:03 <sfeole> Also
+
+ 16:32:20 <sfeole> all of the other exciting announcement that we have covered today will be on the Wiki in about 5 minutes.
+
+ 16:32:25 <sfeole> <-- done
+
+ 16:32:29 <ogra_> wrt known issues and wikippages ....
+
+ 16:32:33 <kyleN_> thanks sfeole
+
+ 16:32:47 <ogra_> the FAQ link now takes you to askubuntu ....
+
+ 16:32:54 <ogra_> from the main wiki page
+
+ 16:33:26 <sfeole> yea, that was our goal to migrate most of the questions to AU
+
+ 16:33:28 <ogra_> on askubuntu the amount of FAQs seems to be ratrher sparse while the actuall FAQ wikipage is pretty full ... but its not easily discoverable anymore
+
+ 16:34:03 <ogra_> will anyone transfer these faqs, or should we have a "wikiFAQ" link or some such to not lose alll the answers ?
+
+ 16:34:32 <sfeole> most of the questions in the wiki faq should be already up on Ask Ubuntu, simply search for the Nexus-7 tag
+
+ 16:34:45 <kyleN_> +1 on migrate faq to AU and delete from wiki
+
+ 16:35:01 <kyleN_> ogra, one follow up question
+
+ 16:35:03 <kyleN_> ogra, your comment above about timezone/language/etc is that if you reinstall/reflash, you will use oem-config, which prompts you for timezone, language, and creates a user account with your specifics, right?
+
+ 16:35:22 <sfeole> kyleN_: correct
+
+ 16:35:34 <ogra_> http://askubuntu.com/questions/tagged/nexus-7?sort=faq&pagesize=50 only has 8 FAQs
+
+ 16:35:49 <ogra_> kyleN_, exactly
+
+ 16:36:06 <kyleN_> so sfeole, pls massage the wiki/AU faq situation
+
+ 16:36:14 <sfeole> ogra_: I'll take that action item to add the remaining questions to that faq
+
+ 16:36:23 <ogra_> i think chris was working on that
+
+ 16:36:34 <ogra_> k
+
+ 16:36:41 <kyleN_> [action] sfeole to handle faq migration from wiki to askubuntu
+
+ 16:36:41 * meetingology sfeole to handle faq migration from wiki to askubuntu
+
+ 16:36:55 <kyleN_> OK, so that's it for the agenda.
+
+ 16:37:03 <kyleN_> any comments/discussion/etc?
+
+ 16:37:07 * ogra_ has some personal announcement ....
+
+ 16:37:17 <kyleN_> go for it
+
+ 16:37:19 <ogra_> this is officially my last day ...
+
+ 16:37:28 <ogra_> ... for this year :P
+
+ 16:37:30 <kyleN_> -1
+
+ 16:37:36 <kyleN_> +1 ;)
+
+ 16:37:37 <sfeole> haha,
+
+ 16:37:37 * ogra_ sees pale faces :)
+
+ 16:37:44 <vanhoof> ogra_: dont make me grab my heart medicine
+
+ 16:37:45 <vanhoof> kthx
+
+ 16:37:52 <bcurtiswx> I think all of freenode will be gone these next few weeks
+
+ 16:37:54 <ogra_> i.e. i didnt take my vacation in a timely manner
+
+ 16:37:57 <kyleN_> picks up jaw and gets back into chair
+
+ 16:38:13 <ogra_> but even though i'm vacating i'll largely be around
+
+ 16:38:24 <bcurtiswx> ogra_, why call it a vacation? :P
+
+ 16:38:38 <ogra_> bcurtiswx, yeah, its more like a free month
+
+ 16:38:40 <kyleN_> So I will leave it to Alex Chiang to schedule this meeting respecting upcoming holdiay season
+
+ 16:38:52 <kyleN_> we can expect dholbach to announce as usual
+
+ 16:39:04 <kyleN_> dholbach is out today
+
+ 16:39:06 <ogra_> right, the llast ten days everything is shut down anyway
+
+ 16:39:20 <ogra_> we only have two of them before new year
+
+ 16:39:48 <kyleN_> ok, anything else?
+
+ 16:40:12 <kyleN_> ogra, and all, Happy Holidays!
+
+ 16:40:16 <kyleN_> going once...
+
+ 16:40:20 <ogra_> heh, thx
+
+ 16:40:35 <kyleN_> going twice...
+
+ 16:40:44 <kyleN_> cheers and thx all
+
+ 16:40:47 <vanhoof> thanks kyleN_, you too!
+
+ 16:40:47 <kyleN_> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

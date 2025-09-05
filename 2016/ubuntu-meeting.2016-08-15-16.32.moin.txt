@@ -1,0 +1,250 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 15 Aug at 16:32 &mdash; 17:01 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-08-15-16.32.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:32.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 16:55.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libxml-dt-perl.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gcc-4.8.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/tryton-server.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/web2ldap.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ibm-3270.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 16:55.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * tyhicks (47)
+ * sbeattie (15)
+ * jjohansen (9)
+ * sarnold (8)
+ * jdstrand (7)
+ * mdeslaur (6)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 16:32 <tyhicks> #startmeeting
+
+ 16:32 <meetingology> Meeting started Mon Aug 15 16:32:26 2016 UTC.  The chair is tyhicks. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:32 <meetingology> 
+
+ 16:32 <meetingology> Available commands: action commands idea info link nick
+
+ 16:32 <tyhicks> The meeting agenda can be found at:
+
+ 16:32 <tyhicks> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:32 <tyhicks> [TOPIC] Weekly stand-up report
+
+ 16:32 <tyhicks> jdstrand: you're up
+
+ 16:36 <jdstrand> hi!
+
+ 16:36 <jdstrand> I completed the review tools updates and iterated on several of my PRs to address snappy team feedback and they are now committed (including browser-support and system-trace (for bcc). I conducted a lot of other PR reviews from others teams
+
+ 16:36 <jdstrand> I'm continuing to focus on PR reviews for lxd, udisks2/pluggable-storage, docker and serial-port (formerly zigbee-dongle)
+
+ 16:37 <jdstrand> I just got a request for another high-prioirty review for interacting with systemd
+
+ 16:37 <jdstrand> I'd like to spend some time with that one, but put it after these 4
+
+ 16:37 <jdstrand> assuming I can get through those, I'll pick up my dbus-app interface PR which should finish all the priority-bumped cards that came out of recent sprint outcomes (I suspect dbus-app won't land until next week)
+
+ 16:37 <jdstrand> that's it from me. mdeslaur, you're up
+
+ 16:38 <mdeslaur> I'm in the happy place this week
+
+ 16:38 <mdeslaur> I'm currently publishing an openssh update
+
+ 16:38 <mdeslaur> and need to investigate the regression in the qemu update that I reverted on friday
+
+ 16:38 <mdeslaur> after that, I'll be going down the list, as usual.
+
+ 16:38 <mdeslaur> that's it for me, sbeattie?
+
+ 16:38 <sbeattie> I'm on community this week.
+
+ 16:39 <sbeattie> I'm tetsing an openjdk-7 update, and have an embargoed issue
+
+ 16:39 <sbeattie> I have some upstream apparmor work to do (patch review, etc)
+
+ 16:40 <tyhicks> sbeattie: is the openjdk-7 update still blocked by the gcc-4.8 segfault in trusty?
+
+ 16:40 <sbeattie> We can discuss this after the stand-up reports, but I'd like to finish up moving the qa-r-t repo to git.
+
+ 16:41 <tyhicks> sbeattie: bjf was eager for QRT to move to git this week
+
+ 16:41 <sbeattie> tyhicks: it's not, there was a bug in the packaging that was causing it to use pre-compiled-headers on trusty on arm64. Once that was fixed to really disable it, it built fine.
+
+ 16:41 <tyhicks> great
+
+ 16:42 <sbeattie> Anyway, that's probably it for me this week.
+
+ 16:42 <sbeattie> tyhicks: you're up.
+
+ 16:42 <tyhicks> short week this week (off friday)
+
+ 16:42 <tyhicks> I'm on bug triage
+
+ 16:42 <tyhicks> I've got some MIR review assistance to continue providing
+
+ 16:43 <tyhicks> I'll be working on seccomp complain mode (hopefully - other things keep popping up)
+
+ 16:43 <tyhicks> and then maybe I can work on squashfs bugs for the review tools
+
+ 16:43 <tyhicks> that's it for me
+
+ 16:43 <tyhicks> jjohansen: you're up
+
+ 16:44 <jjohansen> I'm working on fixing a signal issue that has surfaced when stacking is used across namespaces
+
+ 16:45 <tyhicks> jjohansen: were you able to fix the oopses introduced by the fix for the name lookup errors?
+
+ 16:45 <jjohansen> and of course any new bugs that surface while testing out stacking with lxc/d
+
+ 16:46 <jjohansen> tyhicks: yes, I haven't seen any oops, and was running with stacked containers on the weekend
+
+ 16:46 <tyhicks> nice
+
+ 16:46 <jjohansen> I need to finish my review of gsettings, and get together a merge request before FF
+
+ 16:47 <jjohansen> and then I will be working on upstreaming and prepping for LSS
+
+ 16:47 <tyhicks> jjohansen: FF is thursday
+
+ 16:47 <jjohansen> yes
+
+ 16:47 <tyhicks> jjohansen: I don't think the gsettings stuff is going to make it by FF
+
+ 16:48 <jjohansen> we can certainly file for an exception if we need to, but I'd like to get it done before if we can
+
+ 16:48 <tyhicks> jjohansen: lets discuss it after this meeting
+
+ 16:48 <jjohansen> I am trying to get the apparmor end, done today
+
+ 16:48 <jjohansen> tyhicks: sure
+
+ 16:48 <tyhicks> sarnold: go ahead
+
+ 16:49 <sarnold> I've got two short weeks, out thursday through monday; I'm on cve triage but this week ratliff is going to do the cve triage, I'll be walking her through it and reviewing her checkins (same intention for bug triage and community in the ocming weeks)
+
+ 16:50 <sarnold> I'll also be doing MIR reviews but I'm not sure which ones, I haven't looked at the prioritised list lately
+
+ 16:50 <tyhicks> sarnold: if that ends up taking more time than CVE triage (or whichever role you're helping her with) would typically take, be sure to pass off some of that work to the rest of us
+
+ 16:51 <tyhicks> sarnold: I can review checkins for a day or whatever is needed
+
+ 16:51 <sarnold> tyhicks: okay, thanks
+
+ 16:51 <sarnold> hmm it seemed there was another package needed for one of the reviews I finished up last week or the week before.. i.e. no point promoting one without the other.. I can't recall what that package was now
+
+ 16:52 <tyhicks> let me know if you remember what that was
+
+ 16:52 <sarnold> tyhicks: ah that's what it is, python-pykmip https://bugs.launchpad.net/ubuntu/+source/barbican/+bug/1543754  -- make sense?
+
+ 16:52 <ubottu> Launchpad bug 1543754 in barbican (Ubuntu) "[MIR] barbican, python-pykmip" [High,In progress]
+
+ 16:52 <sarnold> it'll be an HSM layer to barbican
+
+ 16:54 <tyhicks> sarnold: ok, we'll need to discuss priorities with ratliff after the meeting
+
+ 16:54 <sarnold> tyhicks: alrighty
+
+ 16:55 <sarnold> that's it for me, I think chrisccoulson is out this week, is ratliff in?
+
+ 16:55 <tyhicks> not yet
+
+ 16:55 <tyhicks> [TOPIC] Highlighted packages
+
+ 16:55 <tyhicks> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:55 <tyhicks> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:55 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/libxml-dt-perl.html
+
+ 16:55 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/gcc-4.8.html
+
+ 16:55 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/tryton-server.html
+
+ 16:55 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/web2ldap.html
+
+ 16:55 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/ibm-3270.html
+
+ 16:55 <tyhicks> [TOPIC] Miscellaneous and Questions
+
+ 16:55 <tyhicks> Does anyone have any other questions or items to discuss?
+
+ 16:57 <sbeattie> Like I mentioned, I'd like to finish converting qa-r-t to git.
+
+ 16:57 <tyhicks> I'm all for it
+
+ 16:57 <tyhicks> do we have any scripts that depend on it being in bzr?
+
+ 16:57 <sbeattie> But I want to make sure the rest of the team, particularly mdeslaur, since he is probably the most active committer, is okay with that.
+
+ 16:58 <sbeattie> scripts> I don't think so.
+
+ 16:58 <tyhicks> good
+
+ 16:58 <mdeslaur> I'm ok with it
+
+ 16:58 <tyhicks> that's right, we talked about that at the last sprint
+
+ 16:58 <sbeattie> it's not used on people.c.c.
+
+ 16:58 <sbeattie> right, that's why it's a good conversion candidate.
+
+ 16:58 <tyhicks> sbeattie: are you going to be able to do the submodules thing that bjf requested?
+
+ 16:59 <sbeattie> tyhicks: not at this point, but I figure having it in git, and getting familiar with using git regularly might make that easier.
+
+ 16:59 <tyhicks> (for others, the 'submodules thing' is that the kernel team wants the kernel tests to be in a git submodule so that they don't have to pull down the entire QRT tree)
+
+ 16:59 <tyhicks> sbeattie: ok, we can always make the submodules change afterwards
+
+ 17:00 <tyhicks> sbeattie: sounds like you've got the green light
+
+ 17:00 <tyhicks> thanks
+
+ 17:00 <sbeattie> yeah, that was my thought. And realistically, we'd need two submodules: one for kernel stuff, one for testlib stuff.
+
+ 17:00 <sbeattie> tyhicks: awesome, thanks.
+
+ 17:01 <tyhicks> jdstrand, mdeslaur, sbeattie, jjohansen, sarnold: Thanks!
+
+ 17:01 <tyhicks> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

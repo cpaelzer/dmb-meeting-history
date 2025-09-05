@@ -1,0 +1,370 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status, 14 Jan at 14:03 &mdash; 14:39 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-01-14-14.03.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/ovn/+bug/1859601 
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/containerd/+bug/1819761 and https://bugs.launchpad.net/ubuntu/+source/runc/+bug/1817336
+=== Review of previous action items ===
+The discussion about "Review of previous action items" started at 14:24.
+
+
+=== New MIRs ===
+The discussion about "New MIRs" started at 14:25.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir 
+
+=== Incomplete bugs / questions ===
+The discussion about "Incomplete bugs / questions" started at 14:28.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/usbguard/+bug/1816548 
+
+=== Any other business? ===
+The discussion about "Any other business?" started at 14:38.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (95)
+ * jamespage (23)
+ * joeubuntu (16)
+ * ubottu (7)
+ * kanashiro (4)
+ * meetingology (3)
+ * ahasenack (2)
+ * cyphermox (2)
+ * doko (2)
+
+
+
+== Full Log ==
+
+
+ 14:03 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:03 <meetingology> Meeting started Tue Jan 14 14:03:39 2020 UTC.  The chair is cpaelzer. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:03 <meetingology> 
+
+ 14:03 <meetingology> Available commands: action commands idea info link nick
+
+ 14:03 <cpaelzer> can you repeat for the log jamespage?
+
+ 14:03 <jamespage> #link https://bugs.launchpad.net/ubuntu/+source/ovn/+bug/1859601
+
+ 14:04 <jamespage> context is that we've split the ovn source package out of the openvswitch package (already in main).
+
+ 14:04 <cpaelzer> as I said this morning, you already have my ack jamespage
+
+ 14:05 <jamespage> the objective for 20.04 is to make OVN the default SDN for OpenStack on Ubuntu
+
+ 14:05 <cpaelzer> as its source was in main before it has had reviews and such already
+
+ 14:05 <jamespage> so I've seeded the required binaries into one of the server supported seeds
+
+ 14:06 <cpaelzer> joeubuntu: you need to be the third vote to decide, do you agree that in such a case we can fast-path ack it to be promoted?
+
+ 14:06 <joeubuntu> +1
+
+ 14:07 <cpaelzer> jamespage: ok I'm setting the bug state
+
+ 14:07 <jamespage> ta
+
+ 14:07 <joeubuntu> for the reasons cpaelzer and jamespage  laid out.
+
+ 14:07 <cpaelzer> jamespage: only it is listed as "unsubscribed"
+
+ 14:07 <cpaelzer> jamespage: could you do the pkg-subscription for openstack team whie I change state
+
+ 14:07 <jamespage> I sorted that out this morning - might not have refreshed yet
+
+ 14:07 <cpaelzer> ah ok thanks
+
+ 14:08 <cpaelzer> jamespage: the update is done, you just need to get an AAs attention as usual
+
+ 14:09 <cpaelzer> other cases for discussion from you jamespage?
+
+ 14:09 <jamespage> ta - no rush I'll chase one down if it does not happne
+
+ 14:09 <jamespage> no - I think ceph-iscsi and nfs-ganesha are both with joeubuntu and the security team for review
+
+ 14:09 <cpaelzer> ok then topic switch - I have an own bug(s) to discuss
+
+ 14:09 * jamespage listens
+
+ 14:10 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/containerd/+bug/1819761 and https://bugs.launchpad.net/ubuntu/+source/runc/+bug/1817336
+
+ 14:10 <ubottu> Launchpad bug 1819761 in containerd (Ubuntu) "[MIR] containerd" [Undecided,New]
+
+ 14:10 <ubottu> Launchpad bug 1817336 in runc (Ubuntu) "[MIR] runc" [Undecided,New]
+
+ 14:10 <cpaelzer> last discussed on the engineering sprint
+
+ 14:10 <cpaelzer> let me summarize the background
+
+ 14:10 <cpaelzer> 1. plenty of golang dependencies
+
+ 14:10 <cpaelzer> 2. comes with the deps vendorized
+
+ 14:10 <cpaelzer> 3. we were tasked to anaylze the dependencies if some of them are packaged
+
+ 14:11 <cpaelzer> 4. this is a special case as runc/containerd will NOT stay at their version, they will get regular bumps to new major versions
+
+ 14:11 <cpaelzer> like we did with docker.io in the past
+
+ 14:11 <jamespage> and so their dependencies will change over time as well right
+
+ 14:11 <jamespage> ?
+
+ 14:11 <cpaelzer> yes jamespage, they will update
+
+ 14:11 <cyphermox> cpaelzer: no, technically not a member anymore
+
+ 14:12 <cpaelzer> cyphermox: :-/ but still o/
+
+ 14:12 <cpaelzer> therefore the decision in Paris was that we'd want dependencies that have extra packages alrady in main (e.g. due to LXD work in the past) to use these packages
+
+ 14:12 <cyphermox> cpaelzer: MIR is Canonical-specific, AFAIK; since I'm not Canonical anymore, I wouldn't necessarily be representing the best interests, but I'll be happy to give you my opinion on software when asked :)
+
+ 14:13 <cpaelzer> if on a bump the vendored dependencies are needed on a newer level we'd swicth from package to vendored dependency
+
+ 14:13 <cpaelzer> while the other vendored dependencies (since they'd move anyway and have no initial better review-path) can stay vendored
+
+ 14:13 <cpaelzer> now the analysis is complete and was added to the bugs
+
+ 14:13 <cpaelzer> TL;DR: none of the dependencies are in main already
+
+ 14:14 <jamespage> concern - both juju and lxd are no longer shipped in the archive so are they archive maintainers for the packages that have been split out
+
+ 14:14 <jamespage> ?
+
+ 14:14 <jamespage> they/there
+
+ 14:14 <cpaelzer> yes they are still
+
+ 14:14 <jamespage> I suspect the LXD team where probably doing some of them
+
+ 14:14 <cpaelzer> as usual with a MIR who brought it in owns it
+
+ 14:14 <cpaelzer> but they might have dropped to universe since then
+
+ 14:15 <jamespage> are they also in Debian?
+
+ 14:15 <cpaelzer> most, but not all are packaged in Debian/Ubuntu
+
+ 14:15 <jamespage> just considering that if they are Ubuntu only and end up with no reverse depends they might pop up on a potential to remove list
+
+ 14:16 <jamespage> TBH I struggle to hate vendoring - on the one side I appreciate that its not the distro model and muddies the view of the world
+
+ 14:16 <jamespage> on the other hand - its what upstream have tested with...
+
+ 14:16 <jamespage> that said we've taken a similar approach in ceph
+
+ 14:16 <joeubuntu> as long as we can  easily track the versions in the vendored code I am not against it.
+
+ 14:16 <jamespage> (and that's not go)
+
+ 14:16 <cpaelzer> jamespage: joeubuntu: what I'd want from you know is considering the above; the Paris discussion if you remember; and the bugs; then with me discuss/ack that we'll go forward on this case with the MIR and security review keeping dependencies vendored
+
+ 14:17 <cpaelzer> kanashiro: ^^ if you want to chime in as well
+
+ 14:17 <joeubuntu> I think we should proceed as planned in Paris .
+
+ 14:17 <cpaelzer> kanashiro: ahasenack were the ones working on prepping the MIRs and the package
+
+ 14:17 <cpaelzer> joeubuntu: ok, that would mean since nothing is in main we keep all vendored then
+
+ 14:18 <jamespage> tbh I think that's the reality of where the packages would be in 6-9 months anyway
+
+ 14:18 <jamespage> so at least if we've reviewed whats vendored we have a know good startline...
+
+ 14:18 <doko> sorry, typing too much ...
+
+ 14:18 <joeubuntu> We've got the ability to track it on our end, so I'm cool with it.
+
+ 14:19 <cpaelzer> ok, I'd MIR ack the bugs then and "all that is left" is the security review then (a lot I know)
+
+ 14:19 <cpaelzer> it already is assigned to security and on their trello
+
+ 14:19 <cpaelzer> doko: anything to add since you are now with us?
+
+ 14:19 <cpaelzer> we can give you a few min to inhale all the backlog here :-)
+
+ 14:20 <joeubuntu> As an update we are down to 9 MIRs from a high of 14 in December.
+
+ 14:20 <doko> not from my side
+
+ 14:20 <kanashiro> do you mean a way to track the diff of vendorized deps between versions in both packages?
+
+ 14:21 <cpaelzer> kanashiro: joeubuntu and all of seucrity will need to track if containerd has dependency A at version 1.2.3
+
+ 14:21 <joeubuntu> kanashiro , if that is for me, we have the ability to track the version of vendorized code in all vendored packages
+
+ 14:22 <cpaelzer> in case 1.2.3 becomes known to be affected to know that we also need to change the package that vendorized it
+
+ 14:22 <joeubuntu> I can't recall the details of how... but the tools exist.
+
+ 14:22 <cpaelzer> kanashiro: have you added the result of the package anylasis to both bugs already runc and containerd?
+
+ 14:22 <cpaelzer> anylasis->analysis
+
+ 14:23 <kanashiro> cpaelzer, I just need to add a comment to containerd bug, but I have it in my notes
+
+ 14:23 <ahasenack> note we will have potentially two versions of vendor code in the archive: the package in universe, and the vendored code inside runc/containerd
+
+ 14:23 <cpaelzer> I only see it on the runc bug
+
+ 14:23 <cpaelzer> kanashiro: ok please add it there
+
+ 14:23 <kanashiro> runc ibug is ok
+
+ 14:23 <cpaelzer> ahasenack: yeah but that (two versions) is the natural consequence of vendorizing
+
+ 14:23 <ahasenack> yep
+
+ 14:23 <cpaelzer> ok I conclude that we are ok and will update the bug then
+
+ 14:24 <cpaelzer> lets go on with the tail end of the "normal" MIR meeting
+
+ 14:24 * kanashiro is copying and pasting his notes regarding containerd now
+
+ 14:24 <cpaelzer> #topic Review of previous action items
+
+ 14:24 <cpaelzer> I'm not aware of recent action items
+
+ 14:24 <cpaelzer> anything for you others?
+
+ 14:25 <cpaelzer> ok - I take that as a no, then ...
+
+ 14:25 <cpaelzer> #topic New MIRs
+
+ 14:25 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:25 <cpaelzer> there is https://bugs.launchpad.net/ubuntu/+source/gamemode/+bug/1853830
+
+ 14:25 <ubottu> Launchpad bug 1853830 in gamemode (Ubuntu) "[MIR] gamemode" [Undecided,New]
+
+ 14:25 <cpaelzer> from the Desktop team or Wimpress
+
+ 14:26 <cpaelzer> anyone having extra context on that one?
+
+ 14:27 <cpaelzer> didrocks: I know you are not here - but you'll read thids ping. Could you clarify if this is up for review or waiting on anything else?
+
+ 14:27 <cpaelzer> It is there quite some time for not being mentioned before, therefore a pre-check by someone close to desktop could be useful
+
+ 14:27 <cpaelzer> next list
+
+ 14:28 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:28 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:29 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/usbguard/+bug/1816548
+
+ 14:29 <ubottu> Launchpad bug 1816548 in usbguard (Ubuntu) "[MIR] usbguard" [Undecided,Incomplete]
+
+ 14:29 <cpaelzer> joeubuntu: did you (=security) and any desktop member get further on this one?
+
+ 14:29 <cpaelzer> last was an update by jdstrand missing still some fixes
+
+ 14:30 <cpaelzer> seb128 isn't here, didrocks could you ask internally if Desktop wants to re-emphasize or drop the efforts on usbguard?
+
+ 14:31 <joeubuntu> cpaelzer It is still in progress by jdstrand
+
+ 14:31 <cpaelzer> should it move from incomplete to new then?
+
+ 14:31 <cpaelzer> as incomplete indicates waiting on the reporter
+
+ 14:32 <joeubuntu> Let me check with jdstrand when he comes back.
+
+ 14:32 <cpaelzer> ok, you have the powers to set tat state then if he agrees
+
+ 14:32 <joeubuntu> yup
+
+ 14:32 <cpaelzer> the last I see worth for discussion is https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061
+
+ 14:33 <ubottu> Launchpad bug 711061 in openjpeg2 (Ubuntu) "[MIR] openjpeg2" [High,Incomplete]
+
+ 14:33 <cpaelzer> had security review a) https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061/comments/62
+
+ 14:33 <cpaelzer> which let doko set it to incomplete
+
+ 14:33 <cpaelzer> then a lot of things happened
+
+ 14:33 <cpaelzer> and we got https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061/comments/71
+
+ 14:33 <cpaelzer> which is security review (b)
+
+ 14:34 <cpaelzer> doko: joeubuntu: Is that ready for promotion now?
+
+ 14:34 <cpaelzer> as (b) was an ack
+
+ 14:34 <joeubuntu> Yes it was acked. promote
+
+ 14:34 <cpaelzer> doko: or are you waiting on https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061/comments/70 ?
+
+ 14:34 <ubottu> Launchpad bug 711061 in openjpeg2 (Ubuntu) "[MIR] openjpeg2" [High,Incomplete]
+
+ 14:35 <joeubuntu> cpaelzer hold on,
+
+ 14:35 <cpaelzer> holing ... :-)
+
+ 14:35 <cpaelzer> +d
+
+ 14:36 <joeubuntu> I  may be wrong...
+
+ 14:36 <cpaelzer> I also don't see desktop-packages subscribed
+
+ 14:37 <joeubuntu> I thought it was done, let me check with the team and get back via email.
+
+ 14:37 <cpaelzer> joeubuntu: you could check with the team and then do a small update on the bug maybe?
+
+ 14:37 <cpaelzer> directly on https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061
+
+ 14:37 <ubottu> Launchpad bug 711061 in openjpeg2 (Ubuntu) "[MIR] openjpeg2" [High,Incomplete]
+
+ 14:37 <joeubuntu> will do
+
+ 14:38 <cpaelzer> thanks
+
+ 14:38 <cpaelzer> so I guess we unblcoked all we heard about
+
+ 14:38 <cpaelzer> #topic Any other business?
+
+ 14:38 <cpaelzer> we had the two big discussion in the beginning
+
+ 14:38 <cpaelzer> anything else?
+
+ 14:39 <cpaelzer> ... no?
+
+ 14:39 <cpaelzer> 3
+
+ 14:39 <cpaelzer> 2
+
+ 14:39 <cpaelzer> 1
+
+ 14:39 <cpaelzer> than ks everyone
+
+ 14:39 <cpaelzer> today was a rather big one, so thanks-twice!
+
+ 14:39 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

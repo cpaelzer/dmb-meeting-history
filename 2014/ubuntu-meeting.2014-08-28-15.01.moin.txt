@@ -1,0 +1,236 @@
+== Meeting information ==
+ * #ubuntu-meeting: Foundations team meeting, 28 Aug at 15:01 &mdash; 15:14 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-08-28-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Round table ===
+The discussion about "Round table" started at 15:01.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:07.
+
+
+=== Round table (continued) ===
+The discussion about "Round table (continued)" started at 15:07.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:11.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * stgraber (60)
+ * robru (11)
+ * jodh (10)
+ * caribou (6)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <stgraber> #startmeeting Foundations team meeting
+
+ 15:01 <meetingology> Meeting started Thu Aug 28 15:01:39 2014 UTC.  The chair is stgraber. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <stgraber> #topic Round table
+
+ 15:02 <stgraber> since I'm ready anyway, I'll start
+
+ 15:02 <stgraber> I was in Chicago last week (Tuesday to Saturday):
+
+ 15:02 <stgraber> - Presented user namespaces at the Linux Security Summit with hallyn
+
+ 15:02 <stgraber> - Gave a talk on running your own Internet at LinuxCon North America
+
+ 15:02 <stgraber> - Ran a container hackfest on the Friday
+
+ 15:02 <stgraber> 
+
+ 15:02 <stgraber> Serge and I had a lot of good discussions with various kernel and userspace
+
+ 15:02 <stgraber> developers around container security, userspace improvement and new use cases.
+
+ 15:02 <stgraber> I also found the time to attend a few talks on other container projects (we had
+
+ 15:02 <stgraber> a whole track dedicated to containers this time around) and some other topics I
+
+ 15:02 <stgraber> had an interest into like btrfs.
+
+ 15:02 <stgraber> 
+
+ 15:02 <stgraber> During some of the spare time and the hackfest, we mostly focused on:
+
+ 15:02 <stgraber> - Kernel and userspace fixes/workarounds for a recent regression introduced by
+
+ 15:02 <stgraber> the latest kernel security update (breaking nested unprivileged containers).
+
+ 15:02 <stgraber> - Some cgmanager debugging for random crashes and for a race on the phone.
+
+ 15:02 <stgraber> - Discussed the new LXC command line tool and worked on it a bit.
+
+ 15:03 <stgraber> - Started working on lxcfs, a fuse filesystem that exposes cpuinf, meminfo and
+
+ 15:03 <stgraber> stat with the values coming from the cgroup limits.
+
+ 15:03 <stgraber> - Started looking at cgmanagerfs, a fuse filesystem simulating the cgroup
+
+ 15:03 <stgraber> hierarchy based on what cgmanager tells it, allowing for safe unprivileged
+
+ 15:03 <stgraber> cgroup operations.
+
+ 15:03 <stgraber> - Unprivileged fuse mounts, Seth has been reworking his patchset.
+
+ 15:03 <stgraber> - Went through a bunch of upstream bug reports and fixed a bunch.
+
+ 15:03 <stgraber> - Discussed using seccomp as a way to catch mount() and do userspace handling
+
+ 15:03 <stgraber> of it (so we can do policy checks in userspace and fake mounts).
+
+ 15:03 <stgraber> - Granite (LXC for OpenStack) work, including a bunch of upstream changes to
+
+ 15:03 <stgraber> support unprivileged containers joining an openvswtich bridge.
+
+ 15:03 <stgraber> - Checkpoint and restart with CRIU, went through the patchset from tych0 a few
+
+ 15:03 <stgraber> times and eventually merged it upstream!
+
+ 15:03 <stgraber> - Had some chats with the Akamai, Heroku, Parallels, Docker.io and Google
+
+ 15:03 <stgraber> folks in attendance.
+
+ 15:03 <stgraber> 
+
+ 15:03 <stgraber> We had about 20 people attending the hackfest, a bunch from Canonical (Serge,
+
+ 15:03 <stgraber> Seth, Chuck, Tycho and myself), one from Akamai (our lxc-go maintainer), one
+
+ 15:03 <stgraber> from Heroku, a bunch from Google (3-4), a bunch from Docker (3-4), a couple
+
+ 15:03 <stgraber> from Parallels and a few other just dropping in here and there.
+
+ 15:03 <stgraber> 
+
+ 15:03 <stgraber> 
+
+ 15:04 <stgraber> After getting back, I've been doing:
+
+ 15:04 <stgraber> - Some more LXC cleanups, merges, reviews, ...
+
+ 15:04 <stgraber> - Setup system-image for Ubuntu RTM
+
+ 15:04 <stgraber> - Running 14.10 beta-1
+
+ 15:04 <stgraber> - Prepared and attended a whole bunch of LXC/container related meetings
+
+ 15:04 <stgraber> 
+
+ 15:04 <stgraber> Please note that I won't be around on Monday as it's labour day in the US and
+
+ 15:04 <stgraber> Canada and I'll also be without Internet since I'm doing a partial move (work
+
+ 15:04 <stgraber> equipment only) this weekend. I'll be working from my new place starting on
+
+ 15:04 <stgraber> Tuesday and then moving over there for good the Saturday after that.
+
+ 15:04 <stgraber> 
+
+ 15:04 <stgraber> (DONE)
+
+ 15:04 <stgraber> then let's make it jodh and caribou
+
+ 15:04 <jodh> * misc:
+
+ 15:04 <jodh> - Short week - only 2 days due to bank holiday and time off! :-)
+
+ 15:04 <jodh> * upstart:
+
+ 15:04 <jodh> - Continuing to investigate bug 1357252 which seems to be the result
+
+ 15:04 <ubottu> bug 1357252 in cgmanager (Ubuntu) "systemd-shim fails to handle cgmanager being unavailable" [Undecided,Fix released] https://launchpad.net/bugs/1357252
+
+ 15:04 <jodh> of multiple races in various parts of the system :-)
+
+ 15:04 <jodh> - Currently reworking code hallyn whipped up to resolve this.
+
+ 15:04 <jodh> -  Wrote script to reboot device until command fails:
+
+ 15:04 <jodh> http://people.canonical.com/~jhunt/scripts/adb-reboot-until-true.sh
+
+ 15:04 <jodh> 𝀷
+
+ 15:05 <caribou> * DMB application for PPU rights postponed due missed quorum (debconf)
+
+ 15:05 <caribou> * Overhaul of packaging workflow for sosreport : started to use git.dpm
+
+ 15:05 <caribou> * Made sosreport available for Precise, Trusty & Utopic in PPA
+
+ 15:05 <caribou> * Misc SRU work
+
+ 15:05 <caribou> (done)
+
+ 15:07 <stgraber> #topic AOB
+
+ 15:07 <robru> wait i'm here
+
+ 15:07 <robru> just up
+
+ 15:07 <stgraber> #topic Round table (continued)
+
+ 15:07 <stgraber> robru: go ahead :)
+
+ 15:08 <robru> * fixed queuebot for RTM bugs
+
+ 15:08 <robru> * fixed citrain dashboard for RTM bugs
+
+ 15:08 <robru> * fixed a bunch of citrain RTM bugs ;-)
+
+ 15:09 <robru> * wrote a script to automate copying utopic packages into RTM silos
+
+ 15:09 <robru> * RTM, RTM, RTM
+
+ 15:09 <robru> * optimized some NFSS graphing logic
+
+ 15:09 <robru> * 10 bajillion citrain landings.
+
+ 15:09 <robru> (done) ;-)
+
+ 15:11 <robru> stgraber: ok I gotta run. thanks!
+
+ 15:11 <stgraber> #topic AOB
+
+ 15:12 <stgraber> anyone has anything to talk about or should we make that one of our shortest meetings ever and adjourn? :)
+
+ 15:12 <caribou> nothing on my side
+
+ 15:13 <jodh> ditto
+
+ 15:14 <stgraber> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

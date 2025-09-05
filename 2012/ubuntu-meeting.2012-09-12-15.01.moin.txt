@@ -1,0 +1,1007 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 15:01:18 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-09-12-15.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:20:20 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (103)
+ * cjwatson (82)
+ * ogra_ (51)
+ * xnox (47)
+ * infinity (38)
+ * jodh (30)
+ * stgraber (27)
+ * ubottu (22)
+ * bdmurray (21)
+ * slangasek (20)
+ * micahg (10)
+ * doko (6)
+ * TheLordOfTime (5)
+ * mvo (3)
+ * meetingology (3)
+ * stokachu (2)
+ * davmor2 (1)
+ * barry (1)
+
+
+
+== Full Log ==
+
+
+ 15:01:18 <cjwatson> #startmeeting
+
+ 15:01:18 <meetingology> Meeting started Wed Sep 12 15:01:18 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01:18 <meetingology> 
+
+ 15:01:18 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01:30 <cjwatson> #topic lightning round
+
+ 15:01:36 <cjwatson> $ echo $(shuf -e barry bdmurray cjwatson ev doko ogra jodh stgraber infinity xnox stokachu)
+
+ 15:01:39 <cjwatson> stokachu jodh xnox barry cjwatson ogra stgraber doko ev infinity bdmurray
+
+ 15:01:45 * infinity naps.
+
+ 15:03:01 <stokachu> - working on bug regression for libgcrypt, swamped in customer issues, backporting multi-arch into precise for the ones that have been approved, testing/verifying approved multiarch srus
+
+ 15:03:05 <stokachu> done
+
+ 15:03:10 <ev> oh yes, team meeting
+
+ 15:03:14 * ev scrambles
+
+ 15:03:17 <jodh> * blueprints
+
+ 15:03:18 <jodh> - foundations-q-session-management:
+
+ 15:03:18 <jodh> - no progress.
+
+ 15:03:18 <jodh> - desktop-q-upstart-session-requirements
+
+ 15:03:22 <jodh> - not started.
+
+ 15:03:25 <jodh> - foundations-q-upstart-service-readiness
+
+ 15:03:28 <jodh> - no progress.
+
+ 15:03:31 <jodh> - foundations-q-upstart-roadmap
+
+ 15:03:34 <jodh> - no progress.
+
+ 15:03:38 <jodh> - foundations-q-event-based-initramfs:
+
+ 15:03:38 <jodh> - reviewing slangaseks changes.
+
+ 15:03:41 <jodh> - collaboration with cjwaton on ptrace parent semantics:
+
+ 15:03:44 <jodh> - wading through kernel code and writing tests both confirm that
+
+ 15:03:48 <jodh> if a "debugger" re-execs, it retains its debugger status over
+
+ 15:03:51 <jodh> ptraced children. This behaviour appears not to be documented.
+
+ 15:03:54 <jodh> - allow unflushed log data to include null bytes in serialised data.
+
+ 15:03:57 <jodh> - fixed issue where 2nd and subsequent re-exec stopped log data serialisation.
+
+ 15:04:00 <jodh> - reviewed and merged lp:~jconti/upstart/fix_empty_chroot.
+
+ 15:04:04 <jodh> - reviewed lp:~cjwatson/upstart/stateful-reexec-ptrace.
+
+ 15:04:07 <jodh> - started writing tests (for sessions). This has uncovered an issue
+
+ 15:04:10 <jodh> with how empty strings are encoded which has necessitated a lot of
+
+ 15:04:14 <jodh> macro tweaks (in progress).
+
+ 15:04:17 <jodh> * upstart
+
+ 15:04:17 <jodh> - bug 1049820: informed user of workaround and identified fix.
+
+ 15:04:18 <ubottu> Launchpad bug 1049820 in upstart "Using kill signal SIGPWR results in system crash" [Medium,Confirmed] https://launchpad.net/bugs/1049820
+
+ 15:04:20 <jodh> ~
+
+ 15:04:26 <jodh> sorry ev - I'm not getting competitive, honest!
+
+ 15:04:38 <slangasek> jodh: any further comments on my merge request?  is it time to merge it?: )
+
+ 15:04:56 <jodh> slangasek: which one? :) Do you mean the partial handling one?
+
+ 15:05:02 <ev> hahaha
+
+ 15:05:08 <slangasek> jodh: yes
+
+ 15:05:31 <cjwatson> thanks for the comments on my MP; I'll get to them once I'm out from under a few other things
+
+ 15:06:16 <jodh> well, the session test I'm currently working on touches on that whole area. TBH, I think that if we drop the partial handling, we also need the redesign whereby we serialise in the parent since we its a lot messier to back-out of an event_new() than creating a partial event.
+
+ 15:06:45 <cjwatson> I thought the agreement was that serialising in the parent was simpler anyway ...
+
+ 15:06:46 <jodh> slangasek: so, I think we do need to simplify that whole area, but it requires other changes to be applied together so I'll work on that.
+
+ 15:07:05 <xnox> * rls-q-tracking:
+
+ 15:07:05 <xnox> - btrfs-tools mark quantal task as fixed released, due to merging new
+
+ 15:07:05 <xnox> upstream release back in may. Precise task is still open.
+
+ 15:07:05 <xnox> - partman-auto-lvm fixed 154086 in precise & quantal, patch send to
+
+ 15:07:05 <xnox> debian as well (stokachu *wink* )
+
+ 15:07:05 <xnox> - autofs bug #488696 did some analysis options are to fix buggy
+
+ 15:07:07 <xnox> lex/bison parser or to rewrite it in C (as libc does). But I don't
+
+ 15:07:07 <ubottu> Launchpad bug 488696 in autofs5 (Ubuntu Precise) "syntax error in nsswitch config near [ syntax error ]" [High,Triaged] https://launchpad.net/bugs/488696
+
+ 15:07:09 <xnox> have working lex/bison knowledge nor want to spend time ripping
+
+ 15:07:11 <xnox> libc specific bits out of the libc parser. Anyone up for fun times
+
+ 15:07:15 <xnox> with lex/yacc?!
+
+ 15:07:17 <xnox> - proposed a branch to fix the top crashes in ubiquity bug #1027648,
+
+ 15:07:18 <ubottu> Launchpad bug 1027648 in ubiquity (Ubuntu Quantal) "ubiquity crashed with ValueError in command(): I/O operation on closed file." [High,Confirmed] https://launchpad.net/bugs/1027648
+
+ 15:07:19 <xnox> which is actually yet another incarnation of an older bug #792652.
+
+ 15:07:21 <ubottu> Launchpad bug 792652 in ubiquity (Ubuntu Precise) "ubiquity crashed with ValueError in command(): I/O operation on closed file" [High,Fix released] https://launchpad.net/bugs/792652
+
+ 15:07:21 <xnox> Please review https://code.launchpad.net/~xnox/ubiquity/fix-value-errors/+merge/123727
+
+ 15:07:23 <xnox> * ubiquity:
+
+ 15:07:25 <xnox> - many bugfixes committed and uploaded
+
+ 15:07:27 <jodh> yes it is and we plan to do that, but I'm currently working on the tests, being higher priority than that parent-serialisation work (it's in the TODO list :)
+
+ 15:07:27 <xnox> - good progress on hooking up manual crypt UI
+
+ 15:07:29 <xnox> - spent some time chatting with Riddell, Qt Automatic LVM & LUKS has
+
+ 15:07:31 <xnox> landed in trunk, pending FFe bug 1048712
+
+ 15:07:32 <ubottu> Launchpad bug 1048712 in ubiquity (Ubuntu Quantal) "FFe [kde] add LVM and LUKS options" [High,Confirmed] https://launchpad.net/bugs/1048712
+
+ 15:07:42 <cjwatson> fix-value-errors> on my list (somewhere), thanks
+
+ 15:07:50 * xnox realised it's my turn.
+
+ 15:07:57 <cjwatson> need to think hard about that
+
+ 15:08:04 <xnox> true....
+
+ 15:08:57 <xnox> .. *done* ..
+
+ 15:09:14 <barry> more consumption of gwibber spaghetti, but it's getting progressively more gluten-free as we're nearing completion of the py3 port.  worked a bit on support for the py3 port of twisted (buildbots, ppas).  bug #1048710 (patches landed upstream, but discussion is ongoing).  bug #887699 (postponed).  no change to q blueprints.  will atone today for my lack of patch piloting yesterday.  will continue with r planning of py3 work.  done.
+
+ 15:09:16 <ubottu> Launchpad bug 1048710 in python3.2 (Ubuntu) "Regression in argparse for Python 2.7, 3.2 and 3.3" [Critical,Confirmed] https://launchpad.net/bugs/1048710
+
+ 15:09:17 <ubottu> Launchpad bug 887699 in python-distutils-extra (Ubuntu) "python-mkdebian: Support python3 projects" [High,Triaged] https://launchpad.net/bugs/887699
+
+ 15:10:27 <slangasek> jodh: hmm, I don't agree that these things are tied; I think the 'partial' reworking stands on its own...  but ok, we can discuss outside the meeting
+
+ 15:10:56 <cjwatson> Got permission to open-source the bits of cdimage that weren't already released, in conjunction with my Python rewrite; so I've been powering ahead with that rewrite.  In branch hell at the moment.
+
+ 15:11:00 <cjwatson> Working on GRUB 2.00 packaging; FFe approved as long as I get it landed this week, so aiming for that.  Testing looking fairly good so far.
+
+ 15:11:03 <cjwatson> Worked on a test for ptrace handling across stateful-reexec in Upstart.  Needs a few tidy-ups before landing, but James and I confirmed that ptrace is preserved which saves a chunk of work.
+
+ 15:11:07 <cjwatson> Tidied up various glitches in the squashfs-base server image (bug 1028453, bug 1049011).
+
+ 15:11:10 <ubottu> Launchpad bug 1028453 in livecd-rootfs (Ubuntu) "Quantal Ubuntu Server minimal install oversized" [High,Fix released] https://launchpad.net/bugs/1028453
+
+ 15:11:10 <cjwatson> Added a couple of binaries to ubuntustudio-meta on request of the Ubuntu Studio folks.
+
+ 15:11:11 <ubottu> Launchpad bug 1049011 in live-installer (Ubuntu Quantal) "Quantal server installation fails to install kernel" [Critical,Fix released] https://launchpad.net/bugs/1049011
+
+ 15:11:13 <cjwatson> Backported fix for data-loss bug in 'sort -u' (bug 1038468).
+
+ 15:11:14 <ubottu> Launchpad bug 1038468 in coreutils (Ubuntu Precise) "data loss on sort -u" [High,In progress] https://launchpad.net/bugs/1038468
+
+ 15:11:16 <cjwatson> Lots of rebuilds for glew and tiff transitions.
+
+ 15:11:19 <cjwatson> ..
+
+ 15:11:37 <ogra_> done:
+
+ 15:11:37 <ogra_> * plenty of ac100 testing, fixing etc
+
+ 15:11:37 <ogra_> * held panda install hangout talk http://www.youtube.com/watch?v=jsIW7EF103A
+
+ 15:11:37 <ogra_> * flash-kernel: worked on hiding boot devices
+
+ 15:11:38 <ogra_> * started on updating the arm install wikis
+
+ 15:11:40 <ogra_> * some GLES driver work (kernel tests etc for fixing the remaining issues) for bug 1045491
+
+ 15:11:41 <ubottu> Launchpad bug 1045491 in pvr-omap4 (Ubuntu Quantal) "Moving mouse messes up the desktop" [High,Confirmed] https://launchpad.net/bugs/1045491
+
+ 15:11:44 <ogra_> * looked into lshw, it defaults to run dmidecode as first test on all arches, started looking into a fix
+
+ 15:11:47 <ogra_> todo:
+
+ 15:11:49 <ogra_> * finish flash-kernel changes
+
+ 15:11:51 <ogra_> * inspect framebuffer and kbd issues with d-i on panda (1045855 and 1045788)
+
+ 15:11:53 <ogra_> * get the kernel fixes for 1045491 finally applied
+
+ 15:11:55 <ogra_> * finish wikipages
+
+ 15:11:57 <ogra_> ..
+
+ 15:12:31 <stgraber> - Container
+
+ 15:12:31 <stgraber> - Worked on upstream repository, got daily builds setup, soon to be integrated with the test suite (Serge is working on that part)
+
+ 15:12:35 <stgraber> - Announced the upstream staging branch, reviewed and merged quite a few more changes
+
+ 15:12:38 <stgraber> - Rewrote lxc-start-ephemeral in python3 using the API (used to be shell) and pushed upstream
+
+ 15:12:41 <stgraber> - Reviewed Serge's changes to the server guide (covering apparmor changes, seccomp, hooks and API)
+
+ 15:12:44 <stgraber> - Started preparing a blog post on the API
+
+ 15:12:46 <stgraber> - Release
+
+ 15:12:49 <stgraber> - Beta-1 release with the usual tweaks to lp:ubuntu-archive-tools
+
+ 15:12:51 <stgraber> - A few FFe/UIFe reviews
+
+ 15:12:54 <stgraber> - Networking
+
+ 15:12:56 <stgraber> - Spent some time going through bug 1003656 again, hopefully fixed for good this time. Forwarded change to Debian.
+
+ 15:12:58 <ubottu> Launchpad bug 1003656 in bridge-utils (Ubuntu Precise) "bridge-utils/vlan udev hooks prevent execution of upstart hook, slowing down boot" [Low,Triaged] https://launchpad.net/bugs/1003656
+
+ 15:12:59 <stgraber> - Re-added missing dhclient-script code checking for /etc/resolv.conf writability (when not using resolvconf), forwarded to Debian
+
+ 15:13:02 <stgraber> - Uploaded resolvconf with bugfix for bug 1035076 and bug 994575
+
+ 15:13:04 <ubottu> Launchpad bug 1035076 in resolvconf (Ubuntu) "dnscache resolvconf update script still accesses /etc/resolvconf/run/" [High,Fix released] https://launchpad.net/bugs/1035076
+
+ 15:13:05 <stgraber> - Reviewed fix in bug 752481 and uploaded
+
+ 15:13:06 <ubottu> Launchpad bug 994575 in resolvconf (Ubuntu Precise) "/etc/ppp/ip-up.d/000resolvconf should "exit 0" if pppd was run by NM, since NM will register the nameserver addresses itself" [Undecided,Fix committed] https://launchpad.net/bugs/994575
+
+ 15:13:07 <ubottu> Launchpad bug 752481 in ifupdown (Ubuntu) "networking is not actually brought down/up when moving to/from runlevel 1" [Medium,Fix released] https://launchpad.net/bugs/752481
+
+ 15:13:07 <stgraber> - Other
+
+ 15:13:10 <stgraber> - Some ARB package reviews
+
+ 15:13:12 <stgraber> - Tested new grub2 from cjwatson's PPA
+
+ 15:13:15 <stgraber> - TODO
+
+ 15:13:17 <stgraber> - Continue with isc-dhcp bugfixes
+
+ 15:13:20 <stgraber> - Look at merging ifupdown 0.7.2 (should be bugfix only)
+
+ 15:13:22 <stgraber> - Go through the other networking related packages seeing if there's something else that needs fixing for 12.10
+
+ 15:13:25 <stgraber> - ISO tracker work
+
+ 15:13:28 <stgraber> (DONE)
+
+ 15:15:20 <cjwatson> doko: ?
+
+ 15:15:43 <doko> - openjdk-7 backport for precise
+
+ 15:15:43 <doko> - binutils and gcc-4.7 updates (toward the 2.23 and 4.7.2 releases).
+
+ 15:15:43 <doko> - start ubuntu+1 maintenance
+
+ 15:15:43 <doko> - worked on component mismatches, filed outstanding bug reports, pestered people, and processed some MIRs
+
+ 15:15:43 <doko> - cleaning up NBS, bug fixes, package removals
+
+ 15:15:49 <doko> (done)
+
+ 15:15:59 <ev> - Massive http://errors.ubuntu.com deployment.
+
+ 15:15:59 <ev> - We've now gone live with our own handling of openid. Your session will be
+
+ 15:15:59 <ev> cached - you'll no longer have to log into every individual problem or
+
+ 15:15:59 <ev> instance page. This also will let us map your teams to the packages those
+
+ 15:15:59 <ev> teams are responsible for, in order to give you a custom view of the most
+
+ 15:15:59 <ev> common problems table.
+
+ 15:16:07 <ev> - We've iterated over the most common problems table a lot. The coloring
+
+ 15:16:07 <ev> should be a bit more obvious (we're still working through this) and it
+
+ 15:16:07 <ev> should be a lot easier to read overall.
+
+ 15:16:07 <ev> - The graph finally has a denominator of the number of unique systems over a
+
+ 15:16:07 <ev> 90 day span. I have to manually run a script for each day for this until
+
+ 15:16:07 <ev> my merge to canonical-memento gets merged.
+
+ 15:16:12 <ev> - The graph now changes to reflect what packages and Ubuntu version you've
+
+ 15:16:13 <ev> selected. So you can now see how often software-center crashes over time.
+
+ 15:16:13 <ev> - You can create bug links where they don't already exist. Woo.
+
+ 15:16:13 <ev> - The Loading of the most common problems table has been sped up again. In
+
+ 15:16:13 <ev> my tests it loads somewhere between 1483 and 1988ms, but production is
+
+ 15:16:13 <ev> still somehow a bit sluggish. Investigating further.
+
+ 15:16:23 <ev> - The coloring of the most common problems table actually reflects the
+
+ 15:16:23 <ev> selected release. The first seen and last seen fields do as well.
+
+ 15:16:23 <ev> - Started testing Cassandra authentication on behalf of the webops team so
+
+ 15:16:23 <ev> that we can give Brian read-only access to the DB.
+
+ 15:16:23 <ev> - Lots of bug fixes. I'll spare you listing them all here for a change.
+
+ 15:16:23 <ev> - Merges from both Brian and Matthew. Yay contributors!
+
+ 15:16:28 <ev> (done)
+
+ 15:16:40 <infinity> - kernel SRU wrangling
+
+ 15:16:40 <infinity> - utouch->oif rename SRU reviews/shepherding
+
+ 15:16:40 <infinity> - other random SRU and AA work
+
+ 15:16:40 <infinity> - some FFe reviews
+
+ 15:16:40 <infinity> - discussions about offspring and cdimage mating
+
+ 15:16:42 <infinity> - discussions with IS about the state of buildd upgrades
+
+ 15:16:45 <infinity> - worked on livefs-in-soyuz stuff a bit
+
+ 15:16:47 <infinity> - a few FTBFS fixes
+
+ 15:16:50 <infinity> - looked into dpkg SRU for bug #624877
+
+ 15:16:52 <infinity> - started looking at clang updates
+
+ 15:16:55 <infinity> ………
+
+ 15:16:56 <ubottu> Launchpad bug 624877 in linux (Ubuntu) "INFO: task dpkg:23317 blocked for more than 120 seconds." [Undecided,Confirmed] https://launchpad.net/bugs/624877
+
+ 15:17:10 <ev> sorry if that's entirely incoherent. I was working with Matthew on how we present the coloring if we're showing all the releases at once, and entirely forgot we had the meeting. Oops.
+
+ 15:17:32 <bdmurray> research into package install failures and less useful dpkgterminallog files - 'can not write log'
+
+ 15:17:35 <bdmurray> added patch / branch information to rls-q-tracking and incoming reports
+
+ 15:17:38 <bdmurray> added count per team to rls-q reports on cranberry
+
+ 15:17:40 <bdmurray> errors branch to display Launchpad bug report on a bucket page
+
+ 15:17:41 <bdmurray> errors branch to sort package versions on a bucket page
+
+ 15:17:41 <bdmurray> errors branch to display the release(s) a package version is in on a bucket page
+
+ 15:17:44 <bdmurray> modified needs-packaging wishlisting code to be more lenient regarding bug title renaming
+
+ 15:17:47 <bdmurray> branch for sponsoring page to show nominated tasks (bug 833706)
+
+ 15:17:49 <ubottu> Launchpad bug 833706 in ubuntu-sponsoring "Show pending SRU nominations" [Undecided,Fix released] https://launchpad.net/bugs/833706
+
+ 15:17:50 <bdmurray> bug fix for aptdaemon bug 875879
+
+ 15:17:50 <bdmurray> worked on fixing apport bug 1039220
+
+ 15:17:51 <ubottu> Launchpad bug 875879 in aptdaemon (Ubuntu Precise) "update-manager crashed with AttributeError in show_diff(): 'NoneType' object has no attribute 'group'" [High,Triaged] https://launchpad.net/bugs/875879
+
+ 15:17:52 <ubottu> Launchpad bug 1039220 in apport (Ubuntu Quantal) "don't report crashes for programs that don't match the file on disk (like for kernel crashes)" [High,In progress] https://launchpad.net/bugs/1039220
+
+ 15:18:04 <bdmurray> done
+
+ 15:20:14 <cjwatson> ok, thanks all
+
+ 15:20:17 <cjwatson> #topic bugs
+
+ 15:20:47 <cjwatson> my rough impression is that rls-q-tracking has been trending downwards, but I don't know if there are any graphs of that so I'm going off memory
+
+ 15:20:47 <bdmurray> I ran across bug 988583 again and was wondering if that might be fixed with the new version of grub2
+
+ 15:20:49 <ubottu> Launchpad bug 988583 in grub2 (Ubuntu) "grub-mount hangs when update-grub is ran" [High,Triaged] https://launchpad.net/bugs/988583
+
+ 15:21:19 <bdmurray> cjwatson: there are no graphs for rls-q-tracking but there is a number in the report now
+
+ 15:21:30 <cjwatson> bdmurray: it's certainly possible; there've been a number of changes in the hfsplus driver
+
+ 15:21:32 <bdmurray> and I recall it being at around 50 last week
+
+ 15:22:02 <ev> oooh, is one of those changes write support?
+
+ 15:22:04 <cjwatson> including things like "Add btree loop check"
+
+ 15:22:09 <cjwatson> ev: ... in grub?
+
+ 15:22:13 <ev> hahaha
+
+ 15:22:14 <ev> sorry
+
+ 15:22:19 <bdmurray> additionally per steve's suggestion I added in a P and a B for bugs with patches or branches
+
+ 15:22:19 <ev> I missed that part :)
+
+ 15:22:20 <cjwatson> knee.  stop jerking.
+
+ 15:23:10 <cjwatson> bdmurray: I'll leave a note on that bug asking for testing
+
+ 15:23:23 <bdmurray> cjwatson: okay, thanks
+
+ 15:24:11 <bdmurray> with the dropping of the alternates cdromupgrade will no longer be supported - is that correct? bug 1045201
+
+ 15:24:12 <ubottu> Launchpad bug 1045201 in update-manager (Ubuntu) "Precise to Quantal: cdromupgrade of Ubuntu Desktop failed with cannot calculate dependencies" [Medium,Triaged] https://launchpad.net/bugs/1045201
+
+ 15:24:37 <cjwatson> we should probably go round images and check, but that's my understanding
+
+ 15:25:21 <xnox> i wonder though... there is a package pool on the quantal cd's with optional/restricted packages....
+
+ 15:25:30 <xnox> does update-manager pick that up as upgrade pool?
+
+ 15:25:50 <cjwatson> it's probably still on the server CD, probably mistakenly
+
+ 15:26:14 <cjwatson> since apt isn't going to have a whole lot of luck upgrading the base system from the squashfs
+
+ 15:27:45 <cjwatson> xnox: you know I'm actually not sure
+
+ 15:28:27 <bdmurray> so it sounds like there is some testing to be done
+
+ 15:28:47 <cjwatson> update-notifier distinguishes between "CD with packages", "CD with dist-upgrader", "CD with addons", "CD with aptoncd"
+
+ 15:29:03 * xnox commented on the bug
+
+ 15:29:21 <cjwatson> I don't think we'll get the dist-upgrader one but it might well show up as having packages
+
+ 15:29:28 <cjwatson> arguably correctly
+
+ 15:29:39 <cjwatson> This is the difference between:
+
+ 15:29:54 <cjwatson> A volume with software packages has been detected.  Would you like to open it with the package manager?
+
+ 15:29:57 <cjwatson> and:
+
+ 15:30:09 <cjwatson> A distribution volume with software packages has been detected.  Would you like to try to upgrade from it automatically?
+
+ 15:32:42 <xnox> cjwatson: will you comment on the bug?
+
+ 15:33:02 * xnox didn't even think about aptoncd
+
+ 15:33:16 <cjwatson> it's actually not relevant because it's commented out
+
+ 15:33:19 <xnox> also how does one produce "DVD with dist-upgrader" for personal reasons.
+
+ 15:33:28 <cjwatson> packages vs. dist-upgrader are the only two we actually need to care about
+
+ 15:33:37 <cjwatson> I suggest you start with data/apt-cdrom-check in update-notifier
+
+ 15:34:32 <cjwatson> anyway all the stuff that apt-cdrom-check looks for is basically under the same chunk of code in debian-cd
+
+ 15:34:42 <cjwatson> so it's easy enough to switch on and off
+
+ 15:34:59 <cjwatson> (for dist-upgrader support)
+
+ 15:35:07 <cjwatson> I've commented on the bug by the time-honoured method of copy and paste
+
+ 15:35:08 <cjwatson> next?
+
+ 15:35:18 * xnox who is "you" in the "I suggest you.."? (or did my connection drop and I missed something)
+
+ 15:35:44 <cjwatson> xnox: you, since you asked 'how does one produce "DVD with dist-upgrader"'
+
+ 15:35:51 <xnox> ah ok.
+
+ 15:35:52 <bdmurray> is bug 1013681 still something fixable for quantal?
+
+ 15:35:53 <ubottu> Launchpad bug 1013681 in apt (Ubuntu Quantal) "make apt-key net-update secure" [High,Triaged] https://launchpad.net/bugs/1013681
+
+ 15:35:54 <cjwatson> apt-cdrom-check will show you what it's looking for
+
+ 15:36:05 * xnox got it.
+
+ 15:37:45 <cjwatson> well, I've acked the proposed approach on 1013681 now although not the specifics
+
+ 15:38:48 <cjwatson> it's not a security hole as the code is currently disabled, so I'd rather not rush mvo into it; if he's comfortable that what he has now is secure then he should upload it, if not then we can live without it for another release IMO
+
+ 15:41:38 <bdmurray> okay so let's wait on won't fix'ing
+
+ 15:41:45 <bdmurray> that's all I had for today
+
+ 15:43:16 <mvo> cjwatson: it will require a server side change
+
+ 15:43:36 <mvo> cjwatson: if you guys are happy with the new proposed schema we can upload (once the server side is updated)
+
+ 15:43:56 <mvo> but I (much) agree we should not rush this :) it caused enough pain already :/
+
+ 15:45:30 <cjwatson> Of course I can't help with the server side change at the moment because we don't have our sudo access back yet on pepo
+
+ 15:45:35 <cjwatson> You'll probably have to ask webops
+
+ 15:46:25 * xnox got some help with autofs flex parser from mjt =)
+
+ 15:46:28 * xnox \0/
+
+ 15:47:50 <cjwatson> #topic AOB
+
+ 15:47:57 <cjwatson> xnox: oh good
+
+ 15:48:02 <cjwatson> any more for any more?
+
+ 15:49:33 <ev> the 12.10 and 12.04 lines on errors.ubuntu.com have not converged
+
+ 15:49:42 <ev> and we're getting ever closer to release day
+
+ 15:49:59 <ev> not sure how to spin that into a positive :)
+
+ 15:50:23 <infinity> Are we expecting them to converge?
+
+ 15:50:40 <ev> infinity: I would hope so. It currently implies that 12.10 is less stable than 12.04
+
+ 15:50:47 <infinity> A stable release with a ton of post-release bugfixing, versus a new release with a ton of new software and new bugs?
+
+ 15:50:57 <xnox> ev: having them no converged is ok, as long as quantal one is below precise..... but that is not the case
+
+ 15:51:04 <xnox> ev: having them not converged is ok, as long as quantal one is below precise..... but that is not the case
+
+ 15:51:14 <infinity> (I mean, I'd like each release to be better than the last, but right after an LTS and a massive push to stabilise said LTS seems like a bit of a hard benchmark)
+
+ 15:51:44 <ev> but surely we don't want to ship something less stable than what we put out previously?
+
+ 15:51:53 <ogra_> heh
+
+ 15:51:54 <ev> one step forward, two steps back and all that
+
+ 15:52:00 <ogra_> can we hire 100 more devs then ?
+
+ 15:52:05 <infinity> ev: I think the only way to guarantee that is to stop fixing bugs in the LTS. :P
+
+ 15:52:05 * micahg would think that applies LTS -> LTS
+
+ 15:52:06 * xnox was considering to propose that Debian releases when RC(stable) > RC(testing) for a period of 3+ months....
+
+ 15:52:13 <ogra_> micahg, ++
+
+ 15:52:18 * ev beats ogra_ to death with the mythical man month
+
+ 15:52:20 <micahg> or interim -> interim
+
+ 15:52:45 <cjwatson> I can't figure out how to get the table below the graphs to show me just problems in 12.10
+
+ 15:52:55 <TheLordOfTime> cjwatson:  on errors.u.c?
+
+ 15:52:59 <cjwatson> Yes
+
+ 15:53:01 <ev> cjwatson: change the "error reports for" to Ubuntu 12.10
+
+ 15:53:03 <TheLordOfTime> ^ that
+
+ 15:53:06 <TheLordOfTime> near the top of that
+
+ 15:53:12 <TheLordOfTime> page
+
+ 15:53:21 <cjwatson> I do not see a widget labelled thus
+
+ 15:53:34 <cjwatson> There are clicky things labelled "Ubuntu 12.04" and "Ubuntu 12.10"
+
+ 15:53:38 <ev> above that
+
+ 15:53:40 <ev> to the left
+
+ 15:53:47 <cjwatson> Oh I see, duh
+
+ 15:53:48 <cjwatson> Thanks
+
+ 15:53:48 <ev> just under the site navigation
+
+ 15:53:50 <TheLordOfTime> :P
+
+ 15:53:50 <ev> sure thing
+
+ 15:53:55 <ev> that's changing, by the way
+
+ 15:54:03 <ev> to something you'll presumably find a bit more intuitive
+
+ 15:54:09 <ev> I'll post the mockup shortly
+
+ 15:55:18 * xnox presumes cjwatson scrolled down to the table ignoring the pretty pictures and colourful css and then tried to control the table....
+
+ 15:55:19 <ev> but it's like jml summarised in that canonical-tech posting:
+
+ 15:55:19 <cjwatson> The 12.10 list seems pretty dominated by software-center
+
+ 15:55:19 <ev> * Don't show your work-in-progress. Make it look like it came from
+
+ 15:55:19 <ev> heaven. You aren't going to get a second chance after they use your
+
+ 15:55:19 <ev> buggy app.
+
+ 15:55:19 <ev> * Ship 3.0.
+
+ 15:55:32 <cjwatson> xnox: No, I was misled by "all installed versions"
+
+ 15:55:41 <ev> I just don't think it's acceptable that we throw something out there that's less stable than 12.04 just because 12.04 was an LTS
+
+ 15:55:50 <ev> I have no doubt I'll be overruled on this :)
+
+ 15:55:59 <ev> but I want to make that sentiment known
+
+ 15:56:12 <xnox> ev: Debian folks will love you =)
+
+ 15:56:24 <ev> somehow I doubt that
+
+ 15:56:32 <ev> Debian folks and I don't generally get along
+
+ 15:56:34 * xnox remembers something about "time-based releases"
+
+ 15:56:38 <ogra_> ev, seriously, the LTS got several extra months of stabilization
+
+ 15:56:43 <slangasek> yeah, we Debian folk don't get on with ev
+
+ 15:56:49 <ev> what with my love for our inherited package system and development process
+
+ 15:56:50 <ogra_> how could 12.10 even remotely be more stable
+
+ 15:57:33 <ev> ogra_: because we shouldn't be letting things through that make it less stable. 12.04 should be the bar.
+
+ 15:57:35 <infinity> ev: Generally, I agree with you that each release should be an obvious quality iteration over the last, but the way we did post-release development on the LTS, it's a bit hard to demand that the next non-LTS measure up, bug-wise (though, it should be shinier and featurier!)
+
+ 15:57:57 <ogra_> to do a proper comparison here you would have to compare a snapshot of 12.04 that was taken at the same time in the cycle to todays quantal at least
+
+ 15:58:06 <slangasek> infinity: it's not hard at all to demand it, it's just hard to deliver it
+
+ 15:58:07 <infinity> ev: "Shouldn't be letting things through that make it less stable" means "no new upstream GNOME or KDE" (etc), which just ain't gonna happen.
+
+ 15:58:09 <davmor2> ogra_: not switch it on?
+
+ 15:58:11 <ev> we shouldn't consider each release independent of one another, otherwise we're always going to be going back and forth between remotely stable and hideously unstable
+
+ 15:58:13 <infinity> slangasek: Heh.
+
+ 15:58:17 <slangasek> I think we absolutely should demand it ;)
+
+ 15:58:24 <ogra_> davmor2, lol
+
+ 15:59:03 <ev> so for what it's worth, Matthew has asked Rick to make that graph release criteria in the future
+
+ 15:59:11 <ogra_> oh my
+
+ 15:59:12 <micahg> ev: no, but you have to compare apples to apples, 10.04 -> 12.04, 10.10 -> 12.10
+
+ 15:59:26 <ogra_> ev, then pretty please sync up the comparison timelines
+
+ 16:00:03 <ev> micahg, ogra_: then we'll at best be racing to catch up with the LTS as we get close to it
+
+ 16:00:04 <ogra_> you cant really compare something that had 50% more time and work invested into it with something unfinished if you dont look at the same timeframe
+
+ 16:00:06 <slangasek> micahg: why should we tolerate the newer release being crashier than the older one, LTS or not?
+
+ 16:00:09 <ev> we won't be getting more stable than the LTS
+
+ 16:00:17 <ev> and we wont be able to promise stable releases to our users between releases
+
+ 16:00:34 <slangasek> ogra_: why is "something unfinished" uploaded to the archive? :)
+
+ 16:00:35 <micahg> slangasek: because the LTS is feature conservative which starts you out in a better place quality wise
+
+ 16:00:56 <ogra_> slangasek, the release as such isnt finished :)
+
+ 16:01:23 <slangasek> ogra_: right, so you're arguing we should compare 12.10 today with 12.04 at the same point pre-release instead of comparing it with 12.04 today
+
+ 16:01:29 <ev> welcome mpt. Thought you might find this chat interesting
+
+ 16:01:31 <ogra_> all i'm sayin is that you need to compate precise after 5 months of development with quantal after 5months of development
+
+ 16:01:41 <ogra_> else the measuring is nonsense
+
+ 16:01:44 <infinity> We wouldn't need such pesky things as "feature freeze", if every new feature was landed bug-free.  Adding new software will add bugs, period.
+
+ 16:01:45 <micahg> even that might not be a fair comparison
+
+ 16:01:54 <infinity> And the LTS had 3 months of extra bug-fixing.
+
+ 16:01:58 <slangasek> ogra_: the point is that we want to be constantly ratcheting up the quality
+
+ 16:01:59 <ogra_> *compare
+
+ 16:02:01 <infinity> (Heck, it continues to have bug-fixing)
+
+ 16:02:14 <slangasek> and not just delivering something that's "as good" at release time as the last one
+
+ 16:02:26 <ogra_> slangasek, how if we have a huge dump of new sowftware each cycle that needs stabilization first
+
+ 16:02:29 <ev> infinity: sure - but shouldn't we be forward porting those fixes too?
+
+ 16:02:33 <ogra_> it will always be a sinus
+
+ 16:02:33 <slangasek> and the way to do that is to hold ourselves to a higher standard than what we delivered before
+
+ 16:02:45 <slangasek> ogra_: by not allowing huge dumps of software still in need of stabilization
+
+ 16:02:48 <ev> slangasek: ++
+
+ 16:02:50 <infinity> ev: Old fixes don't magically apply to new features.
+
+ 16:02:51 <ogra_> it might raise over tie
+
+ 16:02:56 <micahg> right, while there's a 6 mo release cycle, it's really a 2 yr/4 release cycle
+
+ 16:03:02 <infinity> ev: But yes, where they apply, of course they should be forward-ported and upstreamed.
+
+ 16:03:04 <slangasek> anyway, I'm not here today so I should perhaps stop derailing the meeting ;)
+
+ 16:03:07 <ev> hahaha
+
+ 16:03:09 <ogra_> but after all quality will droip through the cycle and has to be re-established every release
+
+ 16:03:23 <cjwatson> Old fixes - our processes tend to ensure this anyway by demanding that fixes land in the development release before being SRUed
+
+ 16:03:27 <cjwatson> (except near release)
+
+ 16:03:33 <slangasek> ogra_: that's the pattern of the past.  I don't think we should accept it as inevitable for the future.
+
+ 16:03:45 <micahg> so, each LTS should be progressively better, each LTS + 1 should be progressively better
+
+ 16:03:49 <ogra_> slangasek, by doin what ? take over all upstreams ?
+
+ 16:04:03 <ogra_> we dont really have any influence here
+
+ 16:04:09 <slangasek> sure we do
+
+ 16:04:11 <ev> micahg: only if we're chasing quality rather than demanding it up front, the chances of that happening are slim
+
+ 16:04:13 <slangasek> we don't take stuff that's not ready :)
+
+ 16:04:24 <ogra_> tricky :)
+
+ 16:04:36 <ev> micahg: especially over the distance between LTSes
+
+ 16:04:55 <cjwatson> slangasek: I do think auto-syncs would be completely impractical if we applied that standard in general
+
+ 16:04:59 <cjwatson> We can do it for stuff we touch anyway
+
+ 16:05:03 <micahg> ev: it's hard not to break stuff when you land a new everything, I would think the goal is to improve that over time as we have more automated test coverage
+
+ 16:05:03 <ev> suddenly in 3 months of LTS development we have to care about getting *better* than the previous LTS was
+
+ 16:05:22 <ogra_> note that i dont disagree that quality should raise with each release ... i just dont think the way we measure quality id right here
+
+ 16:05:25 <ogra_> *is
+
+ 16:05:38 <xnox> workitems burn-down chart has negative correlation with positive slope on the the errors chart
+
+ 16:05:39 <micahg> ev: I would think that each 2yr LTS cycle the quality gets better so you don't have to chase up quality at the last minute
+
+ 16:05:40 <ev> ogra_: what's wrong with how we're measuring it?
+
+ 16:05:45 <ogra_> since it doesnt apply to the real world scenario
+
+ 16:05:57 <slangasek> cjwatson: yes, another good point
+
+ 16:06:31 <ogra_> ev, if you measure R rigth after the big debian import and compare it to quantal final, R will be highly more unstable at that point
+
+ 16:06:34 <infinity> ev: Well, in an "ideal" world, the number of incidents per day in an LTS should approach 0 as people backport and fix old bugs.  (Sure, it won't reach 0, but that's the goal).
+
+ 16:06:46 <ev> micahg: we shouldn't be landing a new everything unless it's not making the line go up. If it does, reject it until we can show that it doesn't affect stability
+
+ 16:06:55 <infinity> ev: In a new release with new features and new bugs, we can never converge on that line, only on a data point in the past, as Oli points out.
+
+ 16:07:03 <cjwatson> ogra_: That will hopefully change as we move to using -proposed
+
+ 16:07:06 <ev> we shouldn't be giving people a blanket license to upload whatever broken software they want
+
+ 16:07:10 <ev> because "we'll fix it eventually"
+
+ 16:07:14 <ogra_> you need to compare the two points in time, not the final product with a product in the works
+
+ 16:07:23 <cjwatson> The vast majority of auto-sync breakage is just transient dependency kerfuffle, and that's detectable
+
+ 16:07:33 <ev> ogra_: right, and I'm saying we shouldn't do that.
+
+ 16:07:40 <micahg> ev: you can't predict every interaction, over time it will get better, but there will be bumps along the way, one would hope that it's new bumps each time though rather than the old ones
+
+ 16:07:43 <xnox> infinity: well it will reach to 0, because people will upgrade from the LTS to get shiny candy from asterisk or unity or emacs (or whatever tickles their fancy)
+
+ 16:07:47 <ogra_> ev, how else will you accurately measure then ?
+
+ 16:07:49 <ev> if something from an import is proving unstable, kick it out until we can prove otherwise
+
+ 16:08:07 * cjwatson proposes ev runs the auto-syncs for a while ;-)
+
+ 16:08:10 <infinity> xnox: Neat theory, but plenty of people (including us!) still us hardy in production.
+
+ 16:08:22 <ogra_> my mom uses hardy :)
+
+ 16:08:30 <infinity> s/still us/still use/
+
+ 16:08:30 <xnox> infinity: i remember upgrading from potato last year....
+
+ 16:08:31 * ogra_ recently discovered that
+
+ 16:09:34 <ev> cjwatson: I'm not saying don't do the autosyncs. I'm saying that if something passes through whatever QA we have and is showing up as buggy on errors.ubuntu.com, and we're not going to immediately fix it, then revert back to the old version.
+
+ 16:09:39 <xnox> ev: should we sync from testing by default then? such that we don't get debian's RC bugs, which will put us behind debian in terms of features, as users are free to run debian unstable to get shiny stuff
+
+ 16:09:40 <infinity> ev: It's also pretty unrealistic (IMO) to say "well, if you land the new GNOME stack and it has new bugs that hurt the pretty graph, we should revert the whole thing until it can all magically be fixed without testers".
+
+ 16:09:50 <ev> infinity: why?
+
+ 16:09:52 <ogra_> ev, what you are proposing means that every package has to be touched ....
+
+ 16:09:58 <ev> I just don't think we can accept these as the rules of the game
+
+ 16:10:02 <ogra_> no more autosyncing etc
+
+ 16:10:06 <ev> I realise our tooling isn't entirely there
+
+ 16:10:09 <ev> but we should focus on that
+
+ 16:10:20 <infinity> ev: Hey, if you want to be the one who figures out how to reliably downgrade everyone to an old GNOME version, be my guest.  But that's wasted effort.
+
+ 16:10:25 <infinity> ev: It's not about "tooling".
+
+ 16:10:30 <ev> rather than focus on continuing to shovel broken software in and throwing our hands in the air when we talk about being able to revert bad decisions
+
+ 16:10:31 * ogra_ hands ev the manhour back with the last sentence :P
+
+ 16:10:45 <cjwatson> ev: I actually quite seriously think that -proposed will sort out omost of the auto-sync chaos
+
+ 16:11:05 <cjwatson> ev: Given that practically none of the stuff we see on errors.ubuntu.com is auto-synced from Debian; it's nearly all Ubuntu-specific stuff
+
+ 16:11:11 <xnox> ev: what about facebook style deployements "reverts are for suckers" policy which implies "everyone help fix the last deployment NOW"
+
+ 16:11:19 <ev> this is getting slightly off track. It's ultimately unrelated to whether we use those lines as release criteria
+
+ 16:11:28 <ev> xnox: sure
+
+ 16:11:38 <ev> this is why I think we're off track
+
+ 16:11:51 <cjwatson> ev: Which has implied to me for some time that worrying about imports of other people's software is misdirected effort, and we need to get our own in-house-developed software in order instead
+
+ 16:11:53 <ev> even if we accept broken software into the archive
+
+ 16:11:55 <ogra_> xnox, yay, after hours !
+
+ 16:11:57 <ev> we should be fixing that *now*
+
+ 16:12:01 <ev> not in a few releases
+
+ 16:12:20 <infinity> cjwatson: Yeah, I won't disagree with that.
+
+ 16:12:27 <ev> cjwatson: to be honest, I'd like to get to the point where we can measure the actual usage of this software
+
+ 16:12:36 <ev> I think a lot of time is wasted on merges and syncs that are done because people can
+
+ 16:12:41 <ev> and not because anyone is actually using the software
+
+ 16:13:03 <xnox> ogra_: well... it all mater only up to... it's time for my volleyball practice. And by that time US folks are up ;-)
+
+ 16:13:04 <ev> and then we could take the number of people using a package, the number of errors it has, and make a real judgement on whether its worth our investment
+
+ 16:13:09 <ogra_> that surely doesnt apply to main
+
+ 16:13:09 <ev> of qa, engineering, etc
+
+ 16:13:17 <cjwatson> I wonder how much time you think is wasted on auto-syncs; it's not that much
+
+ 16:13:20 <ogra_> (or what MoM lists as main)
+
+ 16:13:27 <stgraber> well, if something isn't widely used, it's unlikely to have an Ubuntu delta, so it's just a "free" auto-sync then
+
+ 16:13:40 <xnox> "free" auto-sync with bugs.
+
+ 16:13:50 <infinity> We'll sometimes carry a small FTBFS delta, but that's never onerous.
+
+ 16:14:02 * xnox wanted new offlineimap and I am not affected by it's new bug..... yet everyone else is.....
+
+ 16:14:03 <ogra_> stgraber, apart from libs and transitions that come down the drain and need manual intervention on a set of ubuntu maintained bits
+
+ 16:14:05 <infinity> Anything with an actual runtime bugfix kinda implies someone used it and found a bug.
+
+ 16:15:26 <stgraber> ogra_: right, but these are mostly easy/repetitive/scriptable kind of work, not multi-hours kind of merges like we have on some other packages
+
+ 16:15:50 <ogra_> yeah, indeed, but its work nontheless and migth have impact on e-u-c graphs
+
+ 16:15:54 <infinity> Anyhow, we already spend a majority of our engineering time on a tiny subset of the archive, and most of the time people complain about having to fix a transition or touch a package "that doesn't matter", they could have fixed it in the time it took to whine. :P
+
+ 16:16:10 <cjwatson> I also worry about the underlying notion that even if only 1% of our userbase uses something, say, that we can afford to incrementally annoy 1% of our users in slices until they're all gone
+
+ 16:16:26 <stgraber> xnox: for something that doesn't have an Ubuntu delta, I prefer being in sync with Debian so that we can directly forward any bug report there than run an old version that's supposedly more stable (we don't really know) and where when it breaks we'd just be told that we're using an outdated version
+
+ 16:17:30 <ev> cjwatson: I think the data (if we ever get it) will first show that our userbase isn't a collection of 1% slices
+
+ 16:17:30 <cjwatson> I'd much rather be very inclusive of the long tail
+
+ 16:17:30 <stgraber> cjwatson: +1 on the whining is taking up way more time than actually fixing it :)
+
+ 16:17:33 <xnox> stgraber: yeah... I uploaded into debian ;-)
+
+ 16:18:02 <cjwatson> ev: I also think that the effort of discussing most of this exceeds the effort involved in leaving it there :-)
+
+ 16:18:26 <ev> :)
+
+ 16:18:31 * infinity thinks that perhaps this meeting has run its course, and it's time for us to plan an in-person sprint, with boxing gloves.
+
+ 16:18:40 <ev> yes please
+
+ 16:18:51 <cjwatson> 1% is a random number obviously but I have at least some anecdotal evidence in the form of upset messages in my inbox from a reasonable percentage of the packages I remove from the archive
+
+ 16:19:04 <cjwatson> Many of which I thought were so obscure nobody would care
+
+ 16:19:15 <cjwatson> It turns out we have users who care about different business-specific requirements ;-)
+
+ 16:19:19 <ev> cjwatson: we could always work out a system whereby it got copied to another pocket
+
+ 16:19:28 <ev> instead of removed entirely
+
+ 16:19:29 <ev> err moved
+
+ 16:19:36 <ev> one that our users don't have to deal with
+
+ 16:19:38 <infinity> ev: That's just adding complexity, I don't see how that fixes anything.
+
+ 16:19:41 <cjwatson> Well, this was stuff that had been removed from Debian, generally
+
+ 16:19:45 <ev> ah
+
+ 16:19:48 <cjwatson> Not removing it means we assume responsibility
+
+ 16:20:09 <slangasek> geez, y'all are still going? :)
+
+ 16:20:10 <slangasek> #endmeeting
+
+ 16:20:14 <ogra_> haha
+
+ 16:20:15 <infinity> \o/
+
+ 16:20:16 <cjwatson> So I think those removals were generally correct, but even in those should-be-fairly-uncontroversial cases, a good fraction of the removals cause user upset
+
+ 16:20:20 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

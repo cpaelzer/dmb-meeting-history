@@ -1,0 +1,715 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by bdrung at 19:03:47 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-11-07-19.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Review of previous action items
+
+ *Continue discussion about our package set management workflows (review TB feedback)
+
+ *Creation of new desktop-extra package set
+''LINK:'' https://lists.ubuntu.com/archives/ubuntu-desktop/2011-October/003374.html   (bdrung, 19:08:06)
+''LINK:'' https://lists.ubuntu.com/archives/ubuntu-desktop/2011-November/003391.html   (micahg, 19:10:06)
+
+ *Serge Hallyn's application for upload rights for the Ubuntu Server package set.
+
+ *https://wiki.ubuntu.com/SergeHallyn/ServerDeveloperApplication
+
+ *Creation of new desktop-extra package set
+''LINK:'' http://git.gnome.org/browse/jhbuild/tree/modulesets   (jbicha, 19:31:18)
+''ACTION:'' jbicha to create a list of packages from the .modules files  (bdrung, 19:43:38)
+
+ *Herton Ronaldo Krzesinski's application for upload rights for linux-* packages.
+''LINK:'' https://wiki.ubuntu.com/HertonKrzesinski/PerPackageUploaderApplication   (bdrung, 19:45:14)
+''LINK:'' http://kernel.ubuntu.com/git?p=ubuntu/ubuntu-oneiric.git;a=commit;h=41d202d80e829c0a489119ad63d7ece08a9786da   (ogasawara, 20:02:35)
+''LINK:'' http://people.canonical.com/~stgraber/package_sets/precise/kernel   (micahg, 20:09:59)
+
+ *Stephen M. Webb's application for upload rights for the uTouch package set
+''LINK:'' https://wiki.ubuntu.com/StephenMWebb/DeveloperApplication   (bdrung, 20:19:16)
+
+
+
+Meeting ended at 20:50:24 UTC.
+
+
+
+== Votes ==
+
+
+ * Should Stephen M. Webb get upload rights for the uTouch package set?
+   For: 4 Against: 0 Abstained: 1
+
+ * Should Serge Hallyn get upload rights for the Ubuntu Server package set?
+   For: 5 Against: 0 Abstained: 0
+
+ * Should Herton Ronaldo Krzesinski get upload rights for the kernel package set?
+   For: 4 Against: 0 Abstained: 1
+
+
+
+== Action items ==
+
+ * jbicha to create a list of packages from the .modules files
+
+
+
+== Action items, by person ==
+
+ * jbicha
+ ** jbicha to create a list of packages from the .modules files
+
+
+
+== People present (lines said) ==
+
+ * bdrung (83)
+ * micahg (55)
+ * meetingology (34)
+ * bregma (27)
+ * tumbleweed (26)
+ * stgraber (17)
+ * hallyn (14)
+ * cnd (12)
+ * jbicha (10)
+ * herton (10)
+ * geser (5)
+ * sconklin (5)
+ * ogasawara (3)
+ * Laney (2)
+ * apw (2)
+ * ajmitch (2)
+ * ubottu (1)
+ * tgardner (1)
+
+
+
+== Full Log ==
+
+
+ 19:03:47 <bdrung> #startmeeting
+
+ 19:03:47 <meetingology> Meeting started Mon Nov  7 19:03:47 2011 UTC.  The chair is bdrung. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 19:03:47 <meetingology> 
+
+ 19:03:47 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 19:04:26 <bdrung> [TOPIC] Review of previous action items
+
+ 19:04:53 <bdrung> cody-somerville isn't here. so we probably can skip the review of his items.
+
+ 19:05:31 <bdrung> [TOPIC] Continue discussion about our package set management workflows (review TB feedback)
+
+ 19:05:56 <bdrung> i haven't found the time to catch up the mails from the last few days
+
+ 19:06:54 <bdrung> should we move this point to the end?
+
+ 19:07:23 <stgraber> sure
+
+ 19:07:24 <tumbleweed> IIRC the only response was from sabdfl
+
+ 19:07:42 <bdrung> [TOPIC] Creation of new desktop-extra package set
+
+ 19:07:52 <stgraber> tumbleweed: well, it was discussed at the TB meeting, then sabdfl commented by e-mail after the meeting
+
+ 19:08:06 <bdrung> [LINK] https://lists.ubuntu.com/archives/ubuntu-desktop/2011-October/003374.html
+
+ 19:08:25 <tumbleweed> stgraber: ah, I was in the plenaries... Anyway, we can discuss it later
+
+ 19:09:23 <bdrung> do we have a sufficient package set description?
+
+ 19:10:06 <micahg> https://lists.ubuntu.com/archives/ubuntu-desktop/2011-November/003391.html
+
+ 19:10:56 <bdrung> micahg: where is the description for ubuntu-desktop?
+
+ 19:11:04 <micahg> the only thing that looks funny in there is ekiga, the rest is fine
+
+ 19:11:11 <micahg> bdrung: it's a seed, no description needed
+
+ 19:12:26 <bdrung> micahg: but desktop-extra wouldn't be a seed, would it?
+
+ 19:12:30 <micahg> ubuntu-desktop packageset = basically anything in ubuntu-desktop excluding stuff in desktop-core and core
+
+ 19:12:50 <micahg> bdrung: correct, so seb128 gave a rough description
+
+ 19:13:11 <micahg> NOT IN ubuntu-desktop, but needed for a vanilla GNOME
+
+ 19:13:56 <bdrung> is this precise enough? how sharp is "vanilla GNOME" defined?
+
+ 19:14:56 <micahg> idk, perhaps an upstream GNOME link with their base components would be enough?
+
+ 19:15:07 * micahg hunts for a SME
+
+ 19:15:25 <bdrung> SME?
+
+ 19:15:45 <micahg> subject matter expert
+
+ 19:17:52 <micahg> bdrung: maybe we should table until someone pops up that can give us more info
+
+ 19:18:00 <bdrung> k
+
+ 19:18:20 <tumbleweed> or if that fails, invite a desktop person to the next meeting
+
+ 19:18:51 <micahg> ideally the person who requested the packageset should be here, but maybe we didn't make that clear
+
+ 19:19:02 <bdrung> [TOPIC] Serge Hallyn's application for upload rights for the Ubuntu Server package set.
+
+ 19:19:09 <hallyn> \o
+
+ 19:19:13 <bdrung> [TOPIC] https://wiki.ubuntu.com/SergeHallyn/ServerDeveloperApplication
+
+ 19:19:32 <bdrung> hallyn: can you introduce yourself?
+
+ 19:20:06 <hallyn> Sure - I'm Serge Hallyn, member of server team.  I mainly watch the virtualization stack, libvirt, lxc, qemu-kvm, etc
+
+ 19:22:06 <hallyn> I rarely make any changes without discussing them with someone else first, but sponsoring is much more work to ask of someone, so it seemed best to ask for server set upload rights
+
+ 19:23:17 <bdrung> hallyn: how good is the relation between the server team and debian?
+
+ 19:23:46 <bdrung> hallyn: IIRC e.g. qemu-kvm has big difference in both distributions
+
+ 19:23:52 <hallyn> I like to think it's pretty good.  (getting ready to submit a bug back to debian from an ubuntu one right now)
+
+ 19:23:56 * ajmitch had thought that hallyn was core dev already, tbh :)
+
+ 19:24:06 <hallyn> yes, qemu-kvm is ac ompletely different package in ubuntu
+
+ 19:24:22 <hallyn> after this next TLS I want to think about merging back
+
+ 19:24:25 <hallyn> but not for LTS
+
+ 19:24:29 <hallyn> (s/TLS/LTS :)
+
+ 19:24:32 <stgraber> As I said on hallyn's wiki page, I've been sponsoring quite a few of his uploads (last being an lxc SRU last week), most were good to upload as-is, the few I changed were mostly to add some stuff that I wanted to bundle in the upload ;)
+
+ 19:24:44 * micahg wonders if there will be a new TLS after the LTS
+
+ 19:24:51 <bdrung> :)
+
+ 19:25:06 <hallyn> (better than a TPS report i guess)
+
+ 19:25:44 <bdrung> hallyn: is there something like a server team on the debian side or are you just working with a bunch of different maintainers?
+
+ 19:26:21 <hallyn> bdrung, different maintainers, though mostly I just work through the debian bug system.  (i do sit on the mailing lists)
+
+ 19:26:44 <bdrung> do the other dmb members have questions in the pipe?
+
+ 19:26:52 <stgraber> I don't
+
+ 19:26:52 <hallyn> I've said this before, but am intending to seek a sponsor soon to get debian DD so I can feel more closely involved
+
+ 19:27:23 <micahg> hallyn: do you have an interest in any of the other packages in the server packageset besides the few you've uploaded?
+
+ 19:27:28 <hallyn> (thank you for not pointing out redundancy)
+
+ 19:27:57 <hallyn> micahg, yes.  For general helping out in early-release syncs for instance
+
+ 19:28:27 <bdrung> ready to vote?
+
+ 19:28:30 <micahg> yep
+
+ 19:28:33 <stgraber> yep
+
+ 19:28:34 <tumbleweed> sure
+
+ 19:29:38 <bdrung> [VOTE] Should Serge Hallyn get upload rights for the Ubuntu Server package set?
+
+ 19:29:38 <meetingology> Please vote on: Should Serge Hallyn get upload rights for the Ubuntu Server package set?
+
+ 19:29:38 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 19:29:46 <bdrung> +1
+
+ 19:29:46 <meetingology> +1 received from bdrung
+
+ 19:29:47 <stgraber> +1
+
+ 19:29:47 <meetingology> +1 received from stgraber
+
+ 19:29:53 <tumbleweed> +1
+
+ 19:29:53 <meetingology> +1 received from tumbleweed
+
+ 19:29:56 <geser> +1
+
+ 19:29:56 <meetingology> +1 received from geser
+
+ 19:29:59 <micahg> +1
+
+ 19:29:59 <meetingology> +1 received from micahg
+
+ 19:30:26 <bdrung> [ENDVOTE]
+
+ 19:30:26 <meetingology> Voting ended on: Should Serge Hallyn get upload rights for the Ubuntu Server package set?
+
+ 19:30:26 <meetingology> Votes for:5 Votes against:0 Abstentions:0
+
+ 19:30:26 <meetingology> Motion carried
+
+ 19:30:37 <bdrung> hallyn: congrats
+
+ 19:30:40 <hallyn> thanks :)
+
+ 19:30:54 <micahg> bdrung: jbicha is here if you want to go back to the desktop-extra packageset
+
+ 19:31:03 <stgraber> hallyn: congrats!
+
+ 19:31:05 <micahg> at least I think he is
+
+ 19:31:07 <jbicha> hi, sorry for missing the beginning of the conversation
+
+ 19:31:13 <micahg> congrats hallyn
+
+ 19:31:17 <bdrung> [TOPIC] Creation of new desktop-extra package set
+
+ 19:31:18 <jbicha> http://git.gnome.org/browse/jhbuild/tree/modulesets
+
+ 19:31:58 <jbicha> we could use whatever is not in main from gnome-suites-core, gnome-suites-core-deps, and gnome-apps
+
+ 19:33:10 <bdrung> jbicha: does a script/tool exist to format the .modules file nicely for our usecase?
+
+ 19:34:03 <bdrung> micahg: ekiga is listed in gnome-apps
+
+ 19:35:13 <jbicha> I don't know what format you need it in, and I don't know if it comes in a simpler format
+
+ 19:35:55 <micahg> yeah, I see, I'm just wondering how related it is, but I guess that's fine
+
+ 19:36:53 <bdrung> a plain list of package instead of an xml file would be easier to read, but the xml is sufficient
+
+ 19:36:54 <jbicha> there's also http://git.gnome.org/browse/jhbuild/plain/modulesets/ but it's the same thing
+
+ 19:38:10 <bdrung> The description of desktop-extra would be then: "Every package that is NOT in ubuntu-desktop, but needed for a vanilla GNOME. Vanilla GNOME is defined by upstream in gnome-suites-core, gnome-suites-core-deps, and gnome-apps http://git.gnome.org/browse/jhbuild/tree/modulesets"
+
+ 19:38:58 <bdrung> this sound precise enough for me. thought?
+
+ 19:39:11 <bdrung> s/thought/thoughts/
+
+ 19:39:17 <jbicha> that's fine, how about "NOT in main" instead?
+
+ 19:39:19 <micahg> I wish I could see a textual list of those files before voting
+
+ 19:39:41 <micahg> yes, this would be a universe only packageset I think
+
+ 19:40:06 <stgraber> I also would like to see an actual list matching this criteria before voting. The description is fine to review additions afterwards though
+
+ 19:40:24 <stgraber> (especially as I'll likely be the one who needs to implement the package set, having a list makes it easier ;))
+
+ 19:40:34 <bdrung> the current list is posted here: https://lists.ubuntu.com/archives/ubuntu-desktop/2011-October/003374.html
+
+ 19:40:52 <jbicha> bdrung: that list wasn't compiled straight from the jhbuild list though
+
+ 19:41:46 <bdrung> we could decide on that list and modify it later using the package description
+
+ 19:41:57 <jbicha> I could make a list and email it to the DMB list
+
+ 19:42:25 <micahg> well, still, I'd prefer a textual list of those .module files before agreeing to use them as criteria for future additions
+
+ 19:42:38 <bdrung> jbicha: can i give you that action item?
+
+ 19:42:53 <jbicha> bdrung: yes
+
+ 19:43:04 <bdrung> jbicha: if you write a script, you could share that with us
+
+ 19:43:38 <bdrung> [ACTION] jbicha to create a list of packages from the .modules files
+
+ 19:43:38 * meetingology jbicha to create a list of packages from the .modules files
+
+ 19:44:03 <bdrung> then let's way with voting after getting the list
+
+ 19:44:55 <bdrung> [TOPIC] Herton Ronaldo Krzesinski's application for upload rights for linux-* packages.
+
+ 19:44:59 <herton> o/
+
+ 19:45:14 <bdrung> [LINK] https://wiki.ubuntu.com/HertonKrzesinski/PerPackageUploaderApplication
+
+ 19:45:15 <bdrung> herton: can you introduce yourself?
+
+ 19:45:50 <herton> I'm Herton R. Krzesinski, I work with ubuntu kernel stable team, looking at the stable updates, tracking regressions, etc.
+
+ 19:47:35 <herton> I'm doing a lot of stable updates lately, so it seemed a good thing to get upload rights, instead of bugging Steve Conklin or Brad Figg to sponsor them (they also work/worked on the stable kernel stuff)
+
+ 19:48:26 <sconklin> +1 - sponsoring Herton's uploads has become very boring in the last six months
+
+ 19:49:42 <bdrung> herton: are you involved in the community outside of the kernel area?
+
+ 19:51:06 <herton> not at the moment. I have been in UDS, talked with some people, but my are of expertise is more kernel, so I'm more interacting with community in the bug reports about it
+
+ 19:51:52 <micahg> herton: the earliest upload I see is at the beginning of June, is there evidence of earlier uploads?
+
+ 19:52:23 <bdrung> herton: you criticise the political structure inside the project. Does this criticism applies only for getting upload rights or are there other places, too?
+
+ 19:52:38 <herton> micahg: that sounds right, June is when I started pushing the ubuntu kernel updates
+
+ 19:54:28 <herton> bdrung: for a newcomer it's not very easy to understand everything at the start I think how to get involved, may be there is some improvements that could be done
+
+ 19:54:59 <micahg> herton: were you aware that we generally require 6 months of sustained contributions before granting upload rights?
+
+ 19:55:11 <bdrung> herton: did you started with contributing to the kernel package?
+
+ 19:56:02 <sconklin> Herton has been preparing kernels for longer than six months, and making contributions during that time. It's only that he's started actually doing uploads in the last 6 months
+
+ 19:57:08 <micahg> sconklin: in the Ubuntu kernel git tree?
+
+ 19:57:13 <sconklin> yes.
+
+ 19:57:20 <sconklin> looking for dates now
+
+ 19:57:49 <micahg> sconklin: I figured as much since he joined the team 10 months ago, but just wanted to be sure
+
+ 19:58:03 <micahg> er...9 months
+
+ 19:58:27 <cnd> micahg, I didn't know of any specific 6 months of work for PPU uploads
+
+ 19:58:38 <cnd> I thought that was for motu or more expansive sets
+
+ 19:58:44 <micahg> cnd: it's for membership in general not upload rights specifically
+
+ 19:59:33 * micahg is worried bdrung's question got lost above
+
+ 19:59:46 <cnd> ok, maybe this is butting up against the ppu vs ubuntu membership thing mentioned last week
+
+ 19:59:49 <apw> i will point out that herton has been contributing to the kernle since 2009 though outside of ubuntu
+
+ 20:00:02 <bdrung> sconklin: do you have a link handy to one commit as prove?
+
+ 20:00:11 <herton> my first contribution to the ubuntu kernel was to bug https://bugs.launchpad.net/ubuntu/+source/linux/+bug/636091
+
+ 20:00:13 <ubottu> Launchpad bug 636091 in linux (Ubuntu Maverick) "Touchpad stops working when wifi/3G connects" [Medium,Triaged]
+
+ 20:00:26 <tumbleweed> herton: I'm also interested in your comments about bureaucracy. I remember thinking that it was very bureaucratic before I got involved. But I can't remember quite where, and I wouldn't know what documentation needs changing
+
+ 20:00:38 <micahg> yep, noted in changelog for March
+
+ 20:01:13 <micahg> herton: thanks
+
+ 20:01:29 <sconklin> bdrung: no, I can't find it. Maybe I'm mistaken, but I can tell you he has contributed going back some time, as apw pointed out
+
+ 20:02:08 <bdrung> k
+
+ 20:02:35 <ogasawara> http://kernel.ubuntu.com/git?p=ubuntu/ubuntu-oneiric.git;a=commit;h=41d202d80e829c0a489119ad63d7ece08a9786da
+
+ 20:02:46 <ogasawara> ^^ he's actually been contributing since 2007
+
+ 20:02:52 <micahg> the bug that herton linked shows an upload where he was included in the changelog in March which IMHO is sufficient here
+
+ 20:03:00 <tgardner> commit 41d202d80e829c0a489119ad63d7ece08a9786da is July of 2007, the first of many
+
+ 20:03:15 <bdrung> herton: one of my questions got lost: did you start contributing to ubuntu by contributing to the kernel?
+
+ 20:03:30 <herton> tumbleweed: the wiki has a lot information scattered, it takes some time to read and understand all the membership process. May be a better description in one page of all memberships, a organization structure or picture could help
+
+ 20:03:32 <micahg> ogasawara: yes, but not to Ubuntu :), we were wondering about Ubuntu specific contributions
+
+ 20:03:36 <bdrung> e.g. can the bureaucracy come from the kernel package bureaucracy?
+
+ 20:04:00 <herton> bdrung: yes. In ubuntu I'm started contributing only with the kernel
+
+ 20:04:18 <tumbleweed> herton: yeah, we are planning on revamping that page
+
+ 20:05:17 <ogasawara> micahg: hrm, I'd consider a contribution to the upstream kernel a contribution to ubuntu as well since we do base all our bits on upstream
+
+ 20:05:48 <tumbleweed> ogasawara: sure, but that isn't related to Ubuntu membership
+
+ 20:06:29 <micahg> ogasawara: it's irrelevant in this case anyways, since he does have 6+ months of Ubuntu contribution
+
+ 20:06:35 <bdrung> ogasawara: contributing to an upstream project (here the kernel) doesn't grant you ubuntu membership
+
+ 20:07:51 <bdrung> i am wondering if we should have an other format for presenting the information than using a wiki
+
+ 20:08:09 <bdrung> a wiki tend to be not structured enough
+
+ 20:08:39 <geser> like?
+
+ 20:08:55 <tumbleweed> the packaging guide?
+
+ 20:09:04 <bdrung> that's the question.
+
+ 20:09:05 <stgraber> we're already past our allocated time for the DMB meeting, should we vote?
+
+ 20:09:20 <bdrung> k, let's vote.
+
+ 20:09:41 <bdrung> before vote: do we have a package set for the kernel?
+
+ 20:09:49 <apw> yes
+
+ 20:09:59 <micahg> http://people.canonical.com/~stgraber/package_sets/precise/kernel
+
+ 20:10:01 <stgraber> yes, we have a package set and associated team for the kernel
+
+ 20:10:37 <geser> IIRC they are the only one who can upload kernels (not sure if core-devs can do it or not)
+
+ 20:10:38 <stgraber> ouch, the uploaders part is a mess, yeah for LP bugs... /me goes to poke #launchpad to fix that one too
+
+ 20:11:05 <stgraber> geser: ubuntu-core-dev is part of ubuntu-kernel-uploaders
+
+ 20:11:27 <bdrung> [VOTE] Should Herton Ronaldo Krzesinski get upload rights for the kernel package set?
+
+ 20:11:27 <meetingology> Please vote on: Should Herton Ronaldo Krzesinski get upload rights for the kernel package set?
+
+ 20:11:27 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 20:11:35 <geser> +1
+
+ 20:11:35 <meetingology> +1 received from geser
+
+ 20:11:40 <tumbleweed> +1
+
+ 20:11:40 <meetingology> +1 received from tumbleweed
+
+ 20:11:59 <stgraber> +1
+
+ 20:11:59 <meetingology> +1 received from stgraber
+
+ 20:12:08 <bdrung> +1
+
+ 20:12:08 <meetingology> +1 received from bdrung
+
+ 20:12:34 <micahg> +0 I'm reluctant to give a +1 w/out a dev release sponsored upload
+
+ 20:12:34 <meetingology> +0 I'm reluctant to give a +1 w/out a dev release sponsored upload received from micahg
+
+ 20:12:52 <bdrung> [ENDVOTE]
+
+ 20:12:52 <meetingology> Voting ended on: Should Herton Ronaldo Krzesinski get upload rights for the kernel package set?
+
+ 20:12:52 <meetingology> Votes for:4 Votes against:0 Abstentions:1
+
+ 20:12:52 <meetingology> Motion carried
+
+ 20:13:17 <bdrung> herton: congrats
+
+ 20:13:32 <herton> thanks!
+
+ 20:13:56 <bdrung> should we end this meeting now and defer the remaining application to the next meeting?
+
+ 20:14:49 <tumbleweed> micahg: in the case of kernel packages, that doesn't concern me too much
+
+ 20:15:12 <micahg> tumbleweed: if not for the dev release, why are upload rights required?  kernel packages go through a PPA anyways
+
+ 20:15:14 <bdrung> SRUs need more care than -dev uploads
+
+ 20:15:28 <micahg> indeed
+
+ 20:16:11 <bdrung> anyone not having time to process the last applicant?
+
+ 20:16:29 * tumbleweed has time
+
+ 20:16:42 <Laney> I don't think you should be considering components for packagesets
+
+ 20:17:25 <micahg> Laney: in this case where it's shadowing a seed based packageset, it makes sense IMHO
+
+ 20:17:34 <stgraber> bdrung: yeah, I think I have time for one more
+
+ 20:17:48 <Laney> no, it makes sense in relation to the other set
+
+ 20:18:35 <bdrung> [TOPIC] Stephen M. Webb's application for upload rights for the uTouch package set
+
+ 20:19:16 <bdrung> [LINK] https://wiki.ubuntu.com/StephenMWebb/DeveloperApplication
+
+ 20:19:30 <bdrung> bregma: can you introduce yourself?
+
+ 20:19:51 <bregma> sure
+
+ 20:20:16 <bregma> I'm a software developer, a member of the uTouch team developing touch-based sofwtare for Ubuntu
+
+ 20:20:31 <bregma> I also occasionally fix other unrelated bugs, for Ubuntu and Debian
+
+ 20:21:32 <bregma> I have also spent the better part of a decade packaging all kinds of software for other Debian-based distros
+
+ 20:23:07 <micahg> bregma: what makes you want to join a "cabal of cliquish members"
+
+ 20:23:14 <bdrung> bregma: do you have a debian qa page?
+
+ 20:23:56 <bregma> micahg, cliques are only a problem when you're not a member
+
+ 20:25:18 <micahg> well, some would say that just their existence would be problematic which I think "cliques" is something we try to shy away from in Ubuntu
+
+ 20:25:19 <bdrung> bregma: are you active on the ubuntu devel irc channels?
+
+ 20:25:47 <bregma> bdrung, from time to time
+
+ 20:26:22 <bregma> I mean, I'm usually on the channel, but rarely can answer anything before someone better able can
+
+ 20:26:50 <jbicha> if Ubuntu development appears to be "a very closed cabal of cliquish members", then we're doing something very wrong
+
+ 20:27:23 <bregma> yes
+
+ 20:27:28 <bdrung> bregma: can you give an example in which the ubuntu development appeared as a "closed cabal of cliquish members"
+
+ 20:27:35 <bregma> but I wrote that on a day I was frustrated
+
+ 20:28:07 <bregma> well, I asked on #ubuntu-devel what the best format to submit a bug was
+
+ 20:28:19 <bregma> and the answer was "it doesn't matter" from several responses
+
+ 20:28:44 <bregma> so I submitted a merge request to the ubuntu source package
+
+ 20:29:06 <bregma> and the immediate response from a maintainer was 'we don't do things that way"
+
+ 20:29:44 <bregma> I guess I should have gone back to change my develop application when i was less annoyed but I got busy with UDS and I forgot
+
+ 20:29:51 <bdrung> some prefer patches and other merge proposals
+
+ 20:30:09 <tumbleweed> naah, it's good to shed light on problems, that's why that's in the t emplate
+
+ 20:30:28 <bregma> I understand, but it does not mean it' does not appear like a shibboleth
+
+ 20:30:29 <bdrung> it's important to talk about problem.
+
+ 20:30:40 * tumbleweed is guessing desktop team (which uses non-UDD bzr branches, but plans to migrate, from what I heard at UDS)
+
+ 20:30:48 <bregma> the docs and wiki are stymying
+
+ 20:30:56 <micahg> debcheckout can be your friend sometimes :-/
+
+ 20:31:07 <tumbleweed> and probably an enemy too :P
+
+ 20:31:43 <tumbleweed> bregma: hrm, how didyou get an @ubuntu.com address without membership?
+
+ 20:31:45 * ajmitch still gets confused as to the 'right' way to do things as well, it's not like you're alone in that
+
+ 20:32:07 <bregma> I've since seen all the changes proposed to the developer application process and other processes, so I realize it's just hard to know what's not easy to learn if you're already on the inside
+
+ 20:32:46 <bregma> tumbleweed, the guys at Canonical gave it to me, I assume so uploads don;t balk
+
+ 20:33:00 <bdrung> are there other problematic areas beside getting the correct format of your contribution?
+
+ 20:33:51 <bregma> just the problem of trying to figure out how the whole system works... I am not a fan of wikis for finding information
+
+ 20:34:34 <bregma> I didn;t intend to sound like a grouch or anything
+
+ 20:35:06 <bregma> but a lot of my experience with figuring out how things works ends up with a "well, you just gotta know"
+
+ 20:35:09 <bdrung> you are not the only one who finds wikis sub-optimal for presenting information
+
+ 20:35:14 <micahg> bregma: any address is fine for a changelog entry (ubuntu.com preferred once earned)
+
+ 20:36:06 <bregma> as a long-time Unix developer, I'm used to having to know what the command is before I can find which command to use, c'est la vie
+
+ 20:36:17 <cnd> micahg, it's a lintian warning if it's not @ubuntu.com, IIRC
+
+ 20:36:38 <micahg> cnd: only if DEBEMAIL is set to an ubuntu dot come address
+
+ 20:36:53 <micahg> oops..ubuntu.com
+
+ 20:37:12 <cnd> hmm? DEBEMAIL is used for the changelog entry
+
+ 20:37:25 <bdrung> yes if you use dch
+
+ 20:37:50 <bregma> I do not believe I've used my ubuntu.com mail address for anything except mailing list subscriptions any way
+
+ 20:37:56 <bdrung> every question asked?
+
+ 20:38:10 <tumbleweed> bregma: I see you've touched packages outside the packageset you are applying for
+
+ 20:38:25 <tumbleweed> are you intending to apply for MOTU at some point?
+
+ 20:38:43 <bregma> some day
+
+ 20:38:57 <micahg> bregma: is there a reason you've only had one sponsor and therefore one endoresement?
+
+ 20:39:15 <micahg> *for the utouch stuff at least
+
+ 20:39:20 <tumbleweed> micahg: I've sponsored uploads for bregma too
+
+ 20:39:32 <micahg> tumbleweed: yes, but you haven't commented on the APP
+
+ 20:39:51 <micahg> even as a character witness
+
+ 20:39:52 * tumbleweed tends to comment when asked. I was replying to "one sponsor"
+
+ 20:39:55 <cnd> micahg, for the utouch package set, the number of people available to sponsor is small
+
+ 20:40:16 <micahg> cnd: core devs can sponsor as can MOTUs depending on the package
+
+ 20:40:33 <bregma> I've had several sponsors, I just feel really uncomfortable asking for an endorsement
+
+ 20:40:50 <cnd> yes, I understand, it just seems like the criteria should be lower for ppu
+
+ 20:41:06 <bregma> there's room in Ubuntu for the less social, too
+
+ 20:41:17 <tumbleweed> heh
+
+ 20:41:46 <cnd> tbh, I'm tired of sponsoring bregma's uploads :)
+
+ 20:41:58 <cnd> he's quite capable
+
+ 20:42:02 <micahg> indeed, for one package I might agree, but for a set, I would think that there should be multiple people reviewing their work before agreeing
+
+ 20:42:19 * tumbleweed sees that he had no problem's with bregma's uploads either (2 sponsorships). They were in perfect shape
+
+ 20:42:37 <tumbleweed> but I wouldn't endorse from two uploads
+
+ 20:42:48 <cnd> there's only one person who uploads utouch packages outside of abnormal cases
+
+ 20:42:50 <bdrung> tumbleweed: even for a package set?
+
+ 20:43:07 <micahg> bregma: right, but part of uploading is knowing when to ask others and being able to ask others is important
+
+ 20:43:26 <cnd> and that person endorses bregma to add to the pool :)
+
+ 20:45:00 <tumbleweed> bdrung: yeah, I'd probably have left a comment
+
+ 20:45:10 <bdrung> are we are ready to vote or do we need more time to discuss this topic?
+
+ 20:45:39 <tumbleweed> ready
+
+ 20:45:50 * stgraber too
+
+ 20:45:56 <micahg> ready
+
+ 20:46:17 <bdrung> [VOTE] Should Stephen M. Webb get upload rights for the uTouch package set?
+
+ 20:46:17 <meetingology> Please vote on: Should Stephen M. Webb get upload rights for the uTouch package set?
+
+ 20:46:17 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 20:47:33 <tumbleweed> +1
+
+ 20:47:33 <meetingology> +1 received from tumbleweed
+
+ 20:48:19 <bdrung> +1 but more than one endorsement would be better
+
+ 20:48:19 <meetingology> +1 but more than one endorsement would be better received from bdrung
+
+ 20:48:34 <stgraber> +1
+
+ 20:48:34 <meetingology> +1 received from stgraber
+
+ 20:48:38 <geser> +1
+
+ 20:48:38 <meetingology> +1 received from geser
+
+ 20:48:43 <micahg> +0 the work itself seems fine and there have been no quick uploads subsequently to fix issues, but I'm concerned about communication with others, it's not just about being social, but about peer review as well, even comments by other sponsors would have been helpful
+
+ 20:48:43 <meetingology> +0 the work itself seems fine and there have been no quick uploads subsequently to fix issues, but I'm concerned about communication with others, it's not just about being social, but about peer review as well, even comments by other sponsors would have been helpful received from micahg
+
+ 20:49:05 <bdrung> [ENDVOTE]
+
+ 20:49:05 <meetingology> Voting ended on: Should Stephen M. Webb get upload rights for the uTouch package set?
+
+ 20:49:05 <meetingology> Votes for:4 Votes against:0 Abstentions:1
+
+ 20:49:05 <meetingology> Motion carried
+
+ 20:49:26 <bdrung> bregma: congrats.
+
+ 20:49:32 <micahg> bregma: congrats
+
+ 20:49:55 <cnd> thanks all!
+
+ 20:50:08 <bdrung> bregma: for your next application i recommend to take micahg's voting comment to heart
+
+ 20:50:09 <bregma> thank you
+
+ 20:50:24 <bdrung> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

@@ -1,0 +1,331 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 09 Feb at 16:00 &mdash; 16:48 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-02-09-16.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 16:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:09)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:16)
+
+=== proposed-migration ===
+
+Discussion started by jawn-smith at 16:23.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 16:23)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 16:43.
+
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (70)
+ * schopin (14)
+ * zhsj (7)
+ * slyon (7)
+ * adrien (6)
+ * waveform (6)
+ * bdmurray (5)
+ * ginggs (5)
+ * enr0n (4)
+ * bdrung (3)
+ * meetingology (2)
+ * dbungert (2)
+ * liushuyu (2)
+ * sil2100 (1)
+ * xypron (1)
+ * ogayot (1)
+ * danilogondolfo (1)
+
+
+
+== Full log ==
+
+
+ 16:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:00 <meetingology> Meeting started at 16:00:15 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:00 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-09-february-2023/33804
+
+ 16:00 <zhsj> o/
+
+ 16:00 <jawn-smith> Let's all take some time to read and ask questions
+
+ 16:00 <slyon> o/
+
+ 16:00 <schopin> o/
+
+ 16:02 <sil2100> o/
+
+ 16:02 <enr0n> adrien: Can you elaborate on what "side effects" you are seeing with systemctl show/status WRT bug 2006589?
+
+ 16:05 <adrien> enr0n: it's really weird, basically I would systemctl enable anacron.service and when using systemctl status anacron.service in my postrm script, I would get a "disabled"
+
+ 16:05 <adrien> buuut if I systemctl status anacron.service before the postrm (don't know what the latest point was), I would always get "enabled" and I would also get "enabled" from the postrm
+
+ 16:07 <adrien> it definitely makes no sense to me
+
+ 16:07 <bdmurray> I haven't posted my status but as you might imagine its all autopkgtest infrastructure related
+
+ 16:08 <enr0n> adrien: hm okay, I'm having a hard time parsing this right now. Is there a simple reproducer or test case you can show? (We can discuss it more later though)
+
+ 16:09 <jawn-smith> #topic Release incoming bugs
+
+ 16:09 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 16:09 <jawn-smith> bug 2003331
+
+ 16:10 <adrien> enr0n: well, the anacron patch should reproduce that issue but I haven't try on another machine that mine so I can't tell if it's not a local issue; I'll try to have a look; back to meeting for now
+
+ 16:10 <jawn-smith> We've agreed in past meetings that this is a desktop team issue
+
+ 16:10 <jawn-smith> So moving on
+
+ 16:10 <jawn-smith> bug 2004092
+
+ 16:12 <jawn-smith> enr0n: sounds like you're going to investigate this?
+
+ 16:12 <jawn-smith> Sounds like enr0n will look into the systemd side of this and dbungert will look into the casper side
+
+ 16:13 <dbungert> I can support that
+
+ 16:13 <enr0n> jawn-smith: Yeah, the summary is that in either case, casper needs a change so that it does not pick a UID/GID. But I need to look into systemd-sysusers behavior, because it does not allow changing UID boundaries at run time.
+
+ 16:14 <jawn-smith> So we've updated the tags to foundations-todo and assigned the bug
+
+ 16:14 <jawn-smith> bug 2002871
+
+ 16:15 <jawn-smith> waveform:
+
+ 16:16 <waveform> nothing to report on this yet
+
+ 16:16 <waveform> hopefully will get to it next week
+
+ 16:16 <jawn-smith> Okay, I'll leave it with you then
+
+ 16:16 <jawn-smith> That's it for ll
+
+ 16:16 <jawn-smith> kk is empty again \o/
+
+ 16:16 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:16 <jawn-smith> bug 1063589
+
+ 16:17 <bdmurray> See comment #8
+
+ 16:18 <jawn-smith> bdrung: you usually work on apport right?
+
+ 16:18 <bdrung> yes
+
+ 16:18 <jawn-smith> Do you have the bandwidth to investigate this?
+
+ 16:19 <bdrung> currently no. apport is not related to it.
+
+ 16:19 <jawn-smith> Oh it's update manager
+
+ 16:20 <jawn-smith> Who usually works on that? enr0n or bdmurray ?
+
+ 16:20 <bdmurray> The traceback is really with aptdaemon and dbus
+
+ 16:20 <jawn-smith> Should the affected packages be changed in the bug then?
+
+ 16:21 <bdmurray> Let me do a little more research into this but priority wise I think it'll not end up on foundations-todo
+
+ 16:21 <jawn-smith> Sounds good, thanks Brian
+
+ 16:21 <jawn-smith> Moving on then
+
+ 16:21 <jawn-smith> bug 1999345
+
+ 16:22 <jawn-smith> Last we discussed this it was with the security team
+
+ 16:23 <jawn-smith> doesn't look like there are any updates to the bug so it appears there's nothing for us to do
+
+ 16:23 <jawn-smith> #topic proposed-migration
+
+ 16:23 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:23 <jawn-smith> libarchive is with me
+
+ 16:23 <jawn-smith> I have some ideas but need to wait for queues to go down
+
+ 16:24 <jawn-smith> llvm-toolchain-14 is with doko
+
+ 16:24 <jawn-smith> adrien is working on the MIR for licensecheck
+
+ 16:24 <jawn-smith> slyon: Are you still working fuse3 and ostree?
+
+ 16:25 <slyon> jawn-smith: yes.. I got stuck
+
+ 16:25 <slyon> i created a update-excuse bug if somebody experienced with FUSE wants to have a look
+
+ 16:25 <jawn-smith> Anyone experienced with FUSE?
+
+ 16:26 <schopin> ginggs: didn't you do the fuse3 migration?
+
+ 16:27 <ginggs> i did, but that was more a pestering people job
+
+ 16:27 <ginggs> i can take a look though
+
+ 16:27 <schopin> I think you're supposed to say "coordinating an archive-wide effort" these days.
+
+ 16:27 <jawn-smith> waveform: still working on sbuild right?
+
+ 16:27 <waveform> yup
+
+ 16:27 <jawn-smith> hooray
+
+ 16:28 <jawn-smith> ginggs: you were working on setuptools last time
+
+ 16:28 <liushuyu> I am also open to take some proposed migrations
+
+ 16:28 <jawn-smith> It still has one regression
+
+ 16:28 <ginggs> jenkins-job-builder is fixed, just waiting on autopkgtests
+
+ 16:28 <jawn-smith> hooray
+
+ 16:28 <jawn-smith> curl has some regressions
+
+ 16:28 <jawn-smith> That we didn't assign last week
+
+ 16:29 <jawn-smith> Any volunteers?
+
+ 16:29 <ginggs> does it?
+
+ 16:29 <jawn-smith> oh right those are just waiting
+
+ 16:29 <ginggs> aren't those just waiting?
+
+ 16:29 <jawn-smith> Reading comprehension skills, yeah
+
+ 16:29 <jawn-smith> lsb-release-minimal has some regressions
+
+ 16:29 <jawn-smith> waveform: you synced this right?
+
+ 16:30 <waveform> yup
+
+ 16:30 <jawn-smith> Okay, but it sounds like your plate is already pretty full
+
+ 16:30 <jawn-smith> So any volunteers for lsb-release-minimal?
+
+ 16:30 <bdrung> i want to take update-manager (this one is related to PEP440)
+
+ 16:30 <waveform> oh, I can probably take it anyway
+
+ 16:30 <waveform> (I doubt there's much to it)
+
+ 16:30 <jawn-smith> Okay sounds great, thanks
+
+ 16:31 <jawn-smith> any volunteers for libselinux?
+
+ 16:32 <zhsj> i can take it
+
+ 16:32 <jawn-smith> Awesome, thanks
+
+ 16:32 <adrien> I'm on +1 next week, does that count?
+
+ 16:33 <jawn-smith> software-properties is FTBFS
+
+ 16:33 <jawn-smith> sounds like perhaps an enr0n task?
+
+ 16:33 <bdmurray> Its just python
+
+ 16:33 <enr0n> Yeah I will take that
+
+ 16:33 <jawn-smith> Thanks
+
+ 16:33 <adrien> I can take xz
+
+ 16:34 <jawn-smith> I'm working on the icu issues because I did the merge
+
+ 16:35 <jawn-smith> So let's talk about glibc
+
+ 16:35 <schopin> For glibc, I'll take most of it.
+
+ 16:35 <schopin> But I'd like some help for some.
+
+ 16:35 <schopin> e.g. libite
+
+ 16:35 <jawn-smith> slyon: libite?
+
+ 16:35 <slyon> ack
+
+ 16:36 <schopin> ipset
+
+ 16:36 <jawn-smith> liushuyu: ipset?
+
+ 16:36 <zhsj> schopin: i'll see go packages in glibc regression, like delve, mtail
+
+ 16:36 <schopin> notcurses
+
+ 16:36 <liushuyu> jawn-smith: Okay, I can take ipset
+
+ 16:36 <dbungert> schopin: I'm interested in notcurses
+
+ 16:37 <schopin> xypron: python-cryptography
+
+ 16:37 <xypron> ok
+
+ 16:37 <schopin> ogayot: xdp-tools ?
+
+ 16:37 <ogayot> ack
+
+ 16:38 <schopin> That's it for now, more will probably come when the queues empty up :)
+
+ 16:39 <schopin> zhsj: delve and mtail work locally so are probably either victims of the high load of the runners or the fact that the runners seem to use the 6.1 kernel?
+
+ 16:39 <jawn-smith> danilogondolfo: Do you want to start hcipping away at the libgd2 regressions?
+
+ 16:40 <jawn-smith> lots of "unknown" versions which should just need restarts
+
+ 16:40 <danilogondolfo> ack
+
+ 16:40 <zhsj> schopin: maybe. (i don't believe glibc can cause go packages regression)
+
+ 16:40 <jawn-smith> vpa1977: vim
+
+ 16:40 <schopin> zhsj: yeah that was my thought as well.
+
+ 16:42 <jawn-smith> juliank: pyicu
+
+ 16:42 <jawn-smith> schopin: xfsprogs
+
+ 16:42 <schopin> ack
+
+ 16:42 <jawn-smith> Sounds like everyone has one now
+
+ 16:43 <jawn-smith> at least one
+
+ 16:43 <jawn-smith> #topic AOB
+
+ 16:43 <zhsj> devscripts seems need a lot of mir
+
+ 16:43 <zhsj> oh, not "a lot"
+
+ 16:43 <slyon> zhsj: yes. I'm on that
+
+ 16:44 <slyon> trying to drop some of the deps first
+
+ 16:44 <slyon> and will bring it up to this meeting it it turns out to need real MIRs
+
+ 16:46 <zhsj> i want to remove consul. bug #2006724 thoughts?
+
+ 16:48 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

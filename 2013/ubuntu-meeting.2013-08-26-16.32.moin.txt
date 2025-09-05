@@ -1,0 +1,253 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 26 Aug at 16:32 &mdash; 17:24 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-08-26-16.32.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:33.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:13.
+
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:14.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (42)
+ * tyhicks (22)
+ * jjohansen (15)
+ * sarnold (11)
+ * sbeattie (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:32 <jdstrand> #startmeeting
+
+ 16:32 <meetingology> Meeting started Mon Aug 26 16:32:03 2013 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:32 <meetingology> 
+
+ 16:32 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:32 <jdstrand> The meeting agenda can be found at:
+
+ 16:32 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:33 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:33 <jdstrand> I'll go first
+
+ 16:33 <jdstrand> I'm on triage this week
+
+ 16:34 <jdstrand> I have several pending updates I'm working on
+
+ 16:34 <jdstrand> I plan to test/sponsor tyhicks' saucy uploads this week
+
+ 16:34 <jdstrand> I have a couple of august work items to do
+
+ 16:34 <jdstrand> and participate in vUDS
+
+ 16:34 <jdstrand> mdeslaur is not here today. sbeattie, you're up
+
+ 16:35 <sbeattie> I'm again working on apparmor testing this week, looking at IPC issues
+
+ 16:36 <sbeattie> I need to review work items, and make sure I don't have anything outstanding
+
+ 16:36 <sbeattie> as well as attend vUDS.
+
+ 16:36 <sbeattie> that's it for me, tyhicks?
+
+ 16:36 <jdstrand> sbeattie: how is the IPC testing going?
+
+ 16:36 <sbeattie> slow
+
+ 16:36 <sbeattie> making progress but slow.
+
+ 16:37 <jdstrand> sbeattie: you have one work item for august that I left for you. please focus on IPC
+
+ 16:37 <sbeattie> jdstrand: okay, will do
+
+ 16:37 <tyhicks> sbeattie: are you writing tests? if so, do you plan on incorporating the simplified socketpair() testcase that I wrote last week?
+
+ 16:37 <tyhicks> (or should I do that?)
+
+ 16:37 <jdstrand> sbeattie: it is the device-specific accesses. I may try to do soemthing with that, but will likely want to discuss it with you
+
+ 16:37 <sbeattie> tyhicks: yeah, I can take that.
+
+ 16:38 <jdstrand> might just postpone the work item. we'll see
+
+ 16:38 <jdstrand> tyhicks: please proceed
+
+ 16:38 <jdstrand> (with your status update)
+
+ 16:38 <tyhicks> I'll be handing jdstrand a couple debdiffs and test results for saucy uploads this morning
+
+ 16:39 <jdstrand> \o/
+
+ 16:39 <tyhicks> there's still one known bug in dbus, around how we're handling eavesdropping, I'll be working on fixing this this week
+
+ 16:40 <tyhicks> then I'll probably take a look at the 'update apparmor_parser to add v3 open rules to v2 policy' work item
+
+ 16:41 <tyhicks> I also need to spend a little time getting ecryptfs ready for the next merge window
+
+ 16:42 <jdstrand> tyhicks: so, you addressed the dbus rules in abstractions issue with the tools?
+
+ 16:42 <tyhicks> and I need to test jj's fix for a socketpair() labeling bug that I came across last week
+
+ 16:42 <tyhicks> jdstrand: yes - I need to send that patch out to the list
+
+ 16:42 <tyhicks> jdstrand: apparmor - 2.8.0-0ubuntu24+dbusdev4 contains the fix
+
+ 16:43 <jdstrand> tyhicks: iirc, there were some test-dbus.py failures. is that the socketpair() issue?
+
+ 16:44 <tyhicks> jdstrand: that was one issue
+
+ 16:44 <jdstrand> ok, let's back up
+
+ 16:44 <tyhicks> ok
+
+ 16:45 <jdstrand> tyhicks: you are going to give me pacakges to upload. it sounds like there are bugs that are known to exist. what are they?
+
+ 16:45 <tyhicks> jdstrand: the known bug remaining is around eavesdropping
+
+ 16:46 <tyhicks> jdstrand: when we grant permissions in policy, we imply some permissions
+
+ 16:46 <tyhicks> jdstrand: so when you have permission to send a message, you implicitly have permissions to receive a method_return or error message from the peer that you can send a message to
+
+ 16:47 <tyhicks> jdstrand: our short-circuit code in dbus to allow the method_return or error messages to slip through is too loose
+
+ 16:47 <jdstrand> I see
+
+ 16:47 <tyhicks> jdstrand: it also allows eavesdroppers to see those messages
+
+ 16:47 <jdstrand> so no problem uploading to saucy. we'll just fix that in the next upload
+
+ 16:47 <tyhicks> exactly
+
+ 16:48 <tyhicks> the only time that someone would see it is if they used dbus-monitor
+
+ 16:48 <tyhicks> it is a very important bug to fix, but it doesn't affect day to day use
+
+ 16:48 <jdstrand> yes
+
+ 16:48 <jdstrand> tyhicks: ok, I'm done. please proceed :)
+
+ 16:48 <tyhicks> I think that's it for me
+
+ 16:48 <tyhicks> jjohansen: you're up
+
+ 16:50 <jjohansen> I'm working on apparmor this week, specifically the ipc work items
+
+ 16:50 <jdstrand> tyhicks: btw, after we upload to saucy, can you file a bug on the eavesdropping issue?
+
+ 16:50 <tyhicks> jdstrand: yes
+
+ 16:52 <jdstrand> jjohansen: sorry for interrupting
+
+ 16:52 <jjohansen> jdstrand: heh thats fine
+
+ 16:53 * jjohansen will coordinate with tyhicks and sbeattie to get more testing of a couple of fixes I pushed out last week
+
+ 16:54 <jjohansen> I'll dump a bunch of kernel and parser patches for sarnold to review
+
+ 16:55 <jjohansen> hrmmm, I have some compatibility patches to update for 3.10, and 3.11 but some how I don't think I will get to that this week
+
+ 16:57 <jjohansen> to preempt jdstrand's question on how ipc is going, its slow once I get a major crash bug fixed we should be able to start playing with several parts of it this week
+
+ 16:57 <jdstrand> well, I wasn't going to ask this week-- you only worked last friday :)
+
+ 16:57 <jjohansen> that is other people can start playing with
+
+ 16:57 <jdstrand> jjohansen: but thanks! that sounds agreat :)
+
+ 16:57 <jjohansen> oh? I did?
+
+ 16:58 <jdstrand> jjohansen: ok, I was only aware that you worked one day last week
+
+ 16:58 <jdstrand> jjohansen is a sneaky one
+
+ 16:58 <jjohansen> vacation was last week? sigh that is so depressing
+
+ 16:58 <sarnold> take two they're small
+
+ 16:59 <jjohansen> alright so it feels like Its been a few weeks since vacation, anyways thats it for me sarnold your up
+
+ 16:59 <sarnold> I'm on community this week
+
+ 17:00 <sarnold> I'm also on MIR duty this week, I'm the blocker for six or seven audits.
+
+ 17:01 <sarnold> and I've got an apparmor parser patch to prepare for SRU for precise, the features buffer size problem -- and I'm curious if I should prepare packages for all releases or just precise, which is the current problem for kernel team preparing saucy-on-precise LTS kernels..
+
+ 17:02 <jjohansen> sarnold: precise is the important one
+
+ 17:02 <sarnold> jjohansen: okay, sounds good to me :)
+
+ 17:02 <sarnold> will any saucy-kernel installed on precise poke the problem?
+
+ 17:03 <jjohansen> sarnold: if you find yourself without something to do poking the other releases would be nice
+
+ 17:03 <jjohansen> sarnold: yes it will
+
+ 17:03 <sarnold> jjohansen: oh I don't think I'll be in that position this week, feature freeze is soon and I owe a lot of people ACKs or NACKs on MIRs..
+
+ 17:03 <sarnold> jjohansen: cool. thanks :)
+
+ 17:04 <jjohansen> err, that is any saucy kernel after the alpha4 apparmor sync, so all future saucy kernels
+
+ 17:05 <sarnold> jjohansen: would e.g.  3.11.0-3.8 do the job?
+
+ 17:06 <jjohansen> sarnold: yes that kernel will cause things to fail nicely
+
+ 17:07 <sarnold> jjohansen: woot! \o/
+
+ 17:07 <sarnold> okay, I think that's me finished, and chrisccoulson has time'd out, so jdstrand, back to you
+
+ 17:13 <jdstrand> thanks, sorry, got pulled aside
+
+ 17:13 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:13 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:14 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:14 <jdstrand> normally at this point I would provide a list of packages, but python-apt broke UCT so I don't have them atm.
+
+ 17:14 <jdstrand> I will update https://wiki.ubuntu.com/SecurityTeam/HighlightedPackages once I fix that
+
+ 17:14 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:14 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:24 <jdstrand> sbeattie, tyhicks, jjohansen, sarnold: thanks!
+
+ 17:24 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

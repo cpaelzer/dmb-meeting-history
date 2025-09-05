@@ -1,0 +1,561 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 02 Apr at 15:01 &mdash; 15:49 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-04-02-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:02.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:08.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:36.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:48.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (55)
+ * vorlon (39)
+ * juliank (38)
+ * xnox (23)
+ * rbalint (16)
+ * sil2100 (16)
+ * ubottu (16)
+ * slyon (11)
+ * doko (10)
+ * waveform (9)
+ * tdaitx (6)
+ * apw (4)
+ * meetingology (3)
+ * luna_ (1)
+ * seb128 (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started Thu Apr  2 15:01:49 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <bdmurray> #topic Lightning rounds
+
+ 15:02 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform slyon)
+
+ 15:02 <bdmurray> slyon tdaitx waveform doko bdmurray juliank vorlon sil2100 mwhudson rbalint infinity xnox
+
+ 15:02 <luna_> be back in 1 hour then sorry
+
+ 15:02 <bdmurray> slyon:
+
+ 15:02 <slyon> * implemented test suite for NetworkManager readwrite netplan plugin
+
+ 15:02 <slyon> -> first basic unit tests
+
+ 15:02 <slyon> -> enable r/w access to test config files
+
+ 15:02 <slyon> * implemented reading & writing of basic netplan YAML (MAC/IP4/IP6) inside NM plugin
+
+ 15:02 <slyon> * reworked and finalized netplan's GSM & CDMA support
+
+ 15:02 <slyon> * implemented missing netplan WiFi features: bssid/band/channel/seen-bssids
+
+ 15:02 <slyon> -> those are required by the NetworkManager readwrite plugin
+
+ 15:02 <slyon> * implemented missing netplan IP6 feature: addr-gen-mode
+
+ 15:02 <slyon> -> this is required by the NetworkManager readwrite plugin, too
+
+ 15:02 <slyon> * will continue working on netplan & NM plugin, to make it ready for release
+
+ 15:02 <slyon> (done)
+
+ 15:03 <bdmurray> tdaitx:
+
+ 15:03 <bdmurray> waveform:
+
+ 15:03 <tdaitx> not exactly done, but there it goes
+
+ 15:03 <tdaitx> * update excuses failures
+
+ 15:03 <tdaitx> * reviewed openjdk updates
+
+ 15:03 <tdaitx> * looked over upstream changes for jtreg/jtharness
+
+ 15:03 <tdaitx> * ftbfs
+
+ 15:03 <tdaitx> (done)
+
+ 15:03 <waveform> * Worked on uc20 boot sequence (setting up test bed, more tweaking of boot script)
+
+ 15:03 <waveform> * Updated boot partition for focal (audio enabled by default, cleaned up split of non-BT/BT config files on boot partition, added more examples to cloud-init seed)
+
+ 15:03 <waveform> * Prepped MIRs for things missing from main (u-boot-rpi, LP: #1869792, waiting on some feedback before filing the linux-raspi2 one)
+
+ 15:03 <waveform> * Final tweaks for pibootctl, including needs-packaging, LP: #1870100
+
+ 15:03 <waveform> * Investigating DHCP4 issue on Pi3's noticed by bdmurray - not sure which package it should be filed against yet - might be systemd related
+
+ 15:03 <waveform> * Wrote cloud-init blog post
+
+ 15:03 <ubottu> Launchpad bug 1869792 in u-boot (Ubuntu) "[MIR] u-boot-rpi" [Undecided,New] https://launchpad.net/bugs/1869792
+
+ 15:03 <ubottu> Launchpad bug 1870100 in Ubuntu "[needs-packaging] pibootctl" [Wishlist,New] https://launchpad.net/bugs/1870100
+
+ 15:03 <waveform> (done)
+
+ 15:03 <bdmurray> waveform: do you have a link to your blog post?
+
+ 15:04 <bdmurray> doko:
+
+ 15:04 <waveform> bdmurray, not yet - I'm setting up a pi to host it - so I can have a blog about ubuntu on a pi on ubuntu on a pi :)
+
+ 15:04 <doko> - fix remaining (?) python build-depends (~120 packages)
+
+ 15:04 <doko> - second focal test rebuild, filed bug reports
+
+ 15:04 <doko> - meeting with MAAS to organize some maintenance of MAAS related packages
+
+ 15:04 <doko> - gcc-N builds
+
+ 15:04 <doko> - fixing ftbfs
+
+ 15:04 <doko> - extracted and forwarded three GCC issue upstream
+
+ 15:04 <doko> (done)
+
+ 15:05 <bdmurray> bdmurray: !
+
+ 15:05 <bdmurray> reviewed, merged, uploaded xnox's u-r-u quirk for python-is-python2
+
+ 15:05 <bdmurray> much work on ubuntu-security-status (fixes for Ubuntu 16.04 LTS)
+
+ 15:05 <bdmurray> created a skeleton subiquity apport package hook to send bugs to the project
+
+ 15:05 <bdmurray> iso-testing - encountered http://launchpad.net/bugs/1869591
+
+ 15:05 <ubottu> Launchpad bug 1869591 in gnome-initial-setup (Ubuntu) "After install the window 'ready to go' is locked" [High,Fix released]
+
+ 15:05 <bdmurray> created an MP for http://launchpad.net/bugs/1845690
+
+ 15:05 <bdmurray> investigation into bluetoothd crashing and apport
+
+ 15:05 <bdmurray> updating of FocalFossa/ReleaseNotes wiki page
+
+ 15:05 <bdmurray> Beta release work
+
+ 15:05 <ubottu> Launchpad bug 1845690 in update-manager (Ubuntu) "Do not offer an upgrade from i386 systems" [High,In progress]
+
+ 15:05 <bdmurray> ✔ done
+
+ 15:05 <juliank> * merged apt-xapian-index
+
+ 15:05 <juliank> * investigated autopkgtest image creation failure, and why it did not notify anyone, built fixed images
+
+ 15:05 <juliank> * early implementation for LP: #1825000 - some privacy concerns over sending service names
+
+ 15:05 <ubottu> Launchpad bug 1825000 in apt (Ubuntu) "Add ability for mirrors to distinguish interactive and non-interactive apt runs" [High,In progress] https://launchpad.net/bugs/1825000
+
+ 15:05 <juliank> * added missing dh-python build depends to apt-clone (LP: #1870047) and aptdaemon (LP: #1870049)
+
+ 15:05 <ubottu> Launchpad bug 1870047 in apt-clone (Ubuntu) "apt-clone ftfbfs in focal" [High,In progress] https://launchpad.net/bugs/1870047
+
+ 15:05 <juliank> * resilient boot - support for multiple ESPs in grub (https://code.launchpad.net/~juliank/grub/+git/ubuntu/+merge/381462)
+
+ 15:05 <ubottu> Launchpad bug 1870049 in aptdaemon (Ubuntu) "aptdaemon ftbfs in focal" [High,In progress] https://launchpad.net/bugs/1870049
+
+ 15:05 <juliank> * preparing a FFe for powerpc-utils to merge the latest smt state preservation changes from upstream (LP: #1870311)
+
+ 15:05 <ubottu> Launchpad bug 1870311 in powerpc-utils (Ubuntu) "[FFe] Persistent SMT state" [Undecided,New] https://launchpad.net/bugs/1870311
+
+ 15:05 <juliank> * pinged shim-review issue (https://github.com/rhboot/shim-review/issues/92)
+
+ 15:05 <juliank> (done)
+
+ 15:05 <bdmurray> vorlon:
+
+ 15:06 <xnox> doko:  do we need to snapshot dist-check, and can i upload "provides: python" on python-is-python2? or like keep it blocked in proposed?
+
+ 15:06 <vorlon> * was out last week and on Tuesday, so short week
+
+ 15:06 <vorlon> * working on finalizing netplan spec for openvswitch support
+
+ 15:06 <vorlon> * processing package removal requests
+
+ 15:06 <vorlon> * queue reviews for beta
+
+ 15:06 <vorlon> * misc proposed-migration work
+
+ 15:06 <vorlon> (done)
+
+ 15:06 <sil2100> - SRU reviews and releases
+
+ 15:06 <sil2100> - A few NEW reviews
+
+ 15:06 <sil2100> - 20.04 Beta - ongoing, lots of stuff, virtual sprint, respins, reviews, infra fixes, holy cow!
+
+ 15:06 <sil2100> - netplan:
+
+ 15:06 <sil2100> * Reviewed the gsm to modems rename PR for Lukas
+
+ 15:06 <sil2100> * Refactored SR-IOV WIP code to move it into a separate module
+
+ 15:06 <sil2100> * Working on unit-testing - having a terrible experience
+
+ 15:06 <sil2100> * Browsed through available SR-IOV hardware, bought an SR-IOV NIC for testing
+
+ 15:06 <sil2100> - Working on some ubuntu-image changes for uc20
+
+ 15:06 <sil2100> - Looking into some pi gadget stuff, promoting latest pi gadget to stable
+
+ 15:06 <sil2100> - Fixed bileto to not enable all architectures on silos but only those supported by the destination archive
+
+ 15:06 <sil2100> - Reverted shim and shim-signed in the archive to the previous version
+
+ 15:06 <sil2100> (done)
+
+ 15:07 <bdmurray> rbalint:
+
+ 15:07 <rbalint> * unattended-upgrades 2.1 fixing a crash + speedups
+
+ 15:07 <rbalint> * proposed-migration: lintian fix (in unapproved), uchardet
+
+ 15:07 <rbalint> * fixing systemd bugs/regressions
+
+ 15:07 <rbalint> * prepared 245.3 to land in Focal, now preparing 245.4
+
+ 15:07 <rbalint> * partner work
+
+ 15:07 <rbalint> * last gardening of wslu bugs before reassigning the package to desktop team - good bye!
+
+ 15:07 <rbalint> (done)
+
+ 15:07 <rbalint> sil2100, could we have bileto require only builds enabled in ppa to trigger tests?>
+
+ 15:08 <bdmurray> xnox:
+
+ 15:08 <xnox> UC20 on Pi boots to initrd.... but fails to find SD-card to boot. Investigating
+
+ 15:08 <xnox> Fixing casper for all the things
+
+ 15:08 <xnox> Subiquity & console-conf review, and shipping improvements
+
+ 15:08 <xnox> Meetings about z, power, subiquity, maas
+
+ 15:08 <xnox> done
+
+ 15:08 <bdmurray> #topic Release incoming bugs
+
+ 15:08 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:08 <doko> xnox: can we wait with this until we have all b-d's removed?
+
+ 15:09 <sil2100> rbalint: I think we could, I guess at some point that was a plan
+
+ 15:09 <sil2100> Not sure what happened to that, will look
+
+ 15:09 <rbalint> sil2100, thanks, that would be great
+
+ 15:09 <xnox> doko:  ok
+
+ 15:09 <bdmurray> so there are a bunch of ftbfs bugs there
+
+ 15:09 <bdmurray> I don't think we need to go over those individually
+
+ 15:10 <rbalint> bdmurray, i think coordinating sharing them would be useful
+
+ 15:10 <bdmurray> Should we just card them though?
+
+ 15:10 <rbalint> bdmurray, that would work, too
+
+ 15:10 <juliank> card them and randomly assign them?
+
+ 15:10 <juliank> :D
+
+ 15:10 <vorlon> the busybox one was already fixed
+
+ 15:11 <vorlon> (because I wasn't working from a bug list, I was working from the report doko pointed us at)
+
+ 15:11 <bdmurray> who is working on bug 1870056?
+
+ 15:11 <ubottu> bug 1870056 in gnutls28 (Ubuntu) "gnutls28 ftbfs in focal" [High,In progress] https://launchpad.net/bugs/1870056
+
+ 15:11 <rbalint> juliank, then we can trade them for ones we like more :-)
+
+ 15:11 <juliank> I can but I'm not so far
+
+ 15:11 <doko> bdmurray: I did, in theq queue
+
+ 15:12 <bdmurray> okay
+
+ 15:12 <juliank> doko: please tag it fix committed after upload
+
+ 15:12 <juliank> and assign yourself
+
+ 15:12 <juliank> optimally
+
+ 15:12 <bdmurray> juliank: are yours fix committed then?
+
+ 15:12 <juliank> I know, I only moved the apt* oes to in progress
+
+ 15:12 <juliank> but I moved them to fix committed now
+
+ 15:13 <juliank> so yes now, but not like 10 mins ago
+
+ 15:13 <bdmurray> vorlon: did you close the busybox one then?
+
+ 15:13 <vorlon> bdmurray: just now, yes
+
+ 15:13 <xnox> bdmurray:  i think i was gnutls28 but didn't do it?
+
+ 15:13 <bdmurray> okay, so mclemenceau can you create cards for the other ftbfs bugs?
+
+ 15:14 <bdmurray> bug 1870018
+
+ 15:14 <ubottu> bug 1870018 in casper (Ubuntu) "Option (Ctrl-C) not shown to disable ISO verification" [Undecided,Confirmed] https://launchpad.net/bugs/1870018
+
+ 15:14 <bdmurray> xnox: did you say you might have a fix for that already?
+
+ 15:14 <xnox> me
+
+ 15:14 <xnox> yes, locally, not uploaded yet
+
+ 15:14 <xnox> fixing more things
+
+ 15:14 <bdmurray> okay, so targetting then
+
+ 15:14 <bdmurray> and assigning
+
+ 15:15 <juliank> I don't understand https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1869655
+
+ 15:15 <ubottu> Launchpad bug 1869655 in grub2 (Ubuntu) "Add an Ubuntu splash logo to supplement the BGRT logo" [Wishlist,New]
+
+ 15:15 <juliank> ah now i do
+
+ 15:15 <xnox> juliank:  it's post-focal
+
+ 15:15 <bdmurray> bug 1870060 seems important
+
+ 15:15 <ubottu> bug 1870060 in apport (Ubuntu) "systemd ProtectSystem/mount namespace makes apport fail (impact most of our default system services)" [High,New] https://launchpad.net/bugs/1870060
+
+ 15:16 <juliank> xnox: champagne is a useless tag :/
+
+ 15:16 <xnox> juliank:  changed it to rls-ff-notfixing
+
+ 15:20 <bdmurray> we'll take and card that.
+
+ 15:21 <bdmurray> have we looked at bug 1869187?
+
+ 15:21 <ubottu> bug 1869187 in shim-signed (Ubuntu) "mokutil ignores timeout parameter" [Undecided,New] https://launchpad.net/bugs/1869187
+
+ 15:22 <juliank> oh I saw it
+
+ 15:22 <juliank> card it
+
+ 15:22 <bdmurray> There is a patch too
+
+ 15:22 <juliank> we're not going to fix it though
+
+ 15:22 <juliank> before release
+
+ 15:22 <bdmurray> okay
+
+ 15:23 <juliank> because we're waiting on the new shim sig
+
+ 15:23 <bdmurray> bug 1835660 - xnox what is next there?
+
+ 15:23 <ubottu> bug 1835660 in linux (Ubuntu) "initramfs unpacking failed" [High,Confirmed] https://launchpad.net/bugs/1835660
+
+ 15:24 <xnox> bdmurray:  it'm talking about it with apw. he says something is missaligned, somebody needs to binwalk our initrds and validate if they are all rounded at the right boundries
+
+ 15:25 <apw> xnox, my local one is an odd length, so i'd not be supprised if that is wrong
+
+ 15:26 <xnox> Apr 01 14:50:15 ottawa kernel: Initramfs unpacking failed: Decoding failed
+
+ 15:26 <apw> xnox, i am not totally sure it doesn't continue to use the up to now extracted bits
+
+ 15:26 <xnox> apw: hmmmm
+
+ 15:27 <xnox> apw:  what do you want me to give you to try? something with rounded early; something rounded both early; something rounded overall?
+
+ 15:27 <apw> xnox, not sure, am going to try to reproduce it in a VM and see
+
+ 15:28 <xnox> apw:  my focal host has it.
+
+ 15:28 <vorlon> juliank: why can we not fix the mokutil invocation before release? it requires a packaging-only change to shim-signed
+
+ 15:28 <apw> oh sorry just realises i am fact-bombing your meeting
+
+ 15:28 <juliank> vorlon: I guess we can, but need to temporarily remove the other shim-signed from proposed pocket
+
+ 15:28 <vorlon> yes
+
+ 15:29 <vorlon> juliank: you have all the access to people who can do that :)
+
+ 15:29 <rbalint> apw, facts, comments, patches are welcome :-)
+
+ 15:29 <juliank> vorlon: i put it at the top of the secure boot lane
+
+ 15:30 <vorlon> juliank: ta
+
+ 15:30 <bdmurray> alright, anything else bug wise?
+
+ 15:30 <juliank> ~hmm
+
+ 15:30 <juliank> I thought I had something 2 hours ago, but don't remember, sorry
+
+ 15:30 * sil2100 loves moving around binary packages semi-randomly
+
+ 15:30 <xnox> apw:  we love meeting guests!
+
+ 15:30 <xnox> apw:  especially seb128 and Laney
+
+ 15:31 <juliank> Oh
+
+ 15:31 <juliank> Not on launchpad, but https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=817023 in os-prober should probably be fixed
+
+ 15:31 <ubottu> Debian bug 817023 in os-prober "os-prober doesn't detect EFI partition on MBR" [Normal,Fixed]
+
+ 15:31 <seb128> xnox, :-)
+
+ 15:31 <juliank> os-prober only recognizes ESPs on GPT disks, not MBR
+
+ 15:32 <xnox> quak
+
+ 15:32 <xnox> it should
+
+ 15:32 <xnox> there is no GPT requirmeents for ESP
+
+ 15:32 <juliank> xnox: Yes, but identifier changed from msdos to dos or was typoed
+
+ 15:32 <juliank> ID_PART_ENTRY_SCHEME in udevadm info
+
+ 15:32 <bdmurray> Should we bring up bug 1864293 with Wimpress ?
+
+ 15:32 <juliank> it checks for msdos, but udevadminfo now reports dos
+
+ 15:32 <ubottu> bug 1864293 in ubuntu-mate-meta (Ubuntu) "apt autoremove removes cryptsetup-initramfs which causes boot to drop to initramfs shell on machine with LVM and full disk encryption" [Undecided,Triaged] https://launchpad.net/bugs/1864293
+
+ 15:32 <juliank> :)
+
+ 15:33 <juliank> bdmurray: yes
+
+ 15:35 <bdmurray> Okay, if that's it for bugs...
+
+ 15:36 <bdmurray> #topic Team proposed-migration report
+
+ 15:36 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:37 <vorlon> shim is blocked intentionally (but why does the report not show a blocking bug?)
+
+ 15:37 <vorlon> python3-defaults, blocked by kazoo on arm64, who wants this?
+
+ 15:37 <bdmurray> I've failed to really look at kazoo
+
+ 15:38 <rbalint> bdmurray, should we reshuffle it?
+
+ 15:38 <vorlon> bdmurray: have you retried against the release pocket?  if it's a flaky test we should ignore
+
+ 15:38 <vorlon> (I see no retests against baseline)
+
+ 15:38 <bdmurray> Oh, is that what made the test pass on amd64?
+
+ 15:39 <vorlon> bdmurray: no
+
+ 15:40 <vorlon> but if it's flaky we should ignore it instead of just retrying forever
+
+ 15:40 <vorlon> I don't want to confirm that a retest against release pocket /passes/, I want to confirm that it /fails/
+
+ 15:42 <vorlon> sphinx has its autopkgtest regressions cleared, now just blocked by beta freeze
+
+ 15:43 <vorlon> gnutls28 has build failures, I think doko has this in progress?
+
+ 15:43 <vorlon> (per the ftbfs bug earlier)
+
+ 15:43 <vorlon> uchardet, blocked by beta freeze
+
+ 15:43 <doko> yes, the sync is in the unapproved queue
+
+ 15:43 <vorlon> pinentry, autopkgtest regressions; did someone take this last week?
+
+ 15:43 <bdmurray> I did but didn't get to it :-(
+
+ 15:44 <vorlon> bdmurray: taking it again, or do you want to hand it off?
+
+ 15:44 <bdmurray> I think handing it off is best
+
+ 15:44 <waveform> I'll take it if bdmurray wants?
+
+ 15:44 <vorlon> waveform: it's yours
+
+ 15:44 <vorlon> dpkg, python-apt, blocked by beta freeze
+
+ 15:44 <vorlon> debhelper has a bunch of regressions on armhf that look like they're all dkms-related
+
+ 15:45 <vorlon> so somebody could probably deal with those as a batch
+
+ 15:45 <vorlon> who wants?
+
+ 15:45 <rbalint> i take it
+
+ 15:45 <vorlon> rbalint: thanks
+
+ 15:46 <vorlon> python-werkzeug: blocked because python-flask-oldsessions still depends on the python2 package, someone needs to work out whether that's due for removal
+
+ 15:46 <rbalint> also triggered kazoo
+
+ 15:46 <vorlon> juliank: ^^ can you take python-werkzeug?
+
+ 15:47 <vorlon> libtimedate-perl, blocked by beta freeze
+
+ 15:47 <vorlon> and I'll take python-docutils vs sphinx
+
+ 15:47 <vorlon> juliank: can you confirm you're ok to take python-werkzeug?
+
+ 15:47 <juliank> i guess
+
+ 15:47 <vorlon> thanks
+
+ 15:47 <vorlon> and that's the list
+
+ 15:48 <bdmurray> thanks vorlon
+
+ 15:48 <bdmurray> #topic AOB
+
+ 15:48 <bdmurray> in case you hadn't heard its Beta week
+
+ 15:49 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

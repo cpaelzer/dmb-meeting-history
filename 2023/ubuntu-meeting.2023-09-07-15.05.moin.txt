@@ -1,0 +1,331 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 07 Sep at 15:05 &mdash; 15:56 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-09-07-15.05.log.html
+
+
+
+== Meeting summary ==
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-7-sep-2023/   (juliank, 15:06)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:15.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:15)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:29)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:29)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:30)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:31.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:31)
+
+=== AOB ===
+
+Discussion started by juliank at 15:36.
+
+ * ''LINK:'' https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20230830-mantic-mantic.html#foundations-bugs-team   (ginggs, 15:36)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1613482 lol maybe we close this bug  (vorlon, 15:39)
+
+
+
+== People present (lines said) ==
+
+ * juliank (74)
+ * vorlon (34)
+ * ginggs (6)
+ * bdrung (5)
+ * zhsj (3)
+ * adrien (3)
+ * liushuyu (3)
+ * meetingology (2)
+ * waveform (2)
+ * dbungert (1)
+ * pushkarnk (1)
+ * mclemenceau (1)
+ * mkukri (1)
+
+
+
+== Full log ==
+
+
+ 15:05 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:05 <meetingology> Meeting started at 15:05:56 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:05 <zhsj> haha
+
+ 15:05 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:06 <adrien> o/
+
+ 15:06 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-7-sep-2023/
+
+ 15:06 <dbungert> nice work
+
+ 15:10 <pushkarnk> o/
+
+ 15:10 <juliank> ah yes I also spent time this morning logging out and back into my desktop with various gnome component versions to bisect some regressions
+
+ 15:11 <juliank> which I've just been told have been fixed now (dark theme not working correctly)
+
+ 15:15 <juliank> let's move on, it's quiet today
+
+ 15:15 <juliank> #topic Release incoming bugs
+
+ 15:15 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:15 <juliank> bug 2033949
+
+ 15:15 <juliank> I'm not sure how I'd want to track that, we already have the issue in progress in Jira for it
+
+ 15:15 <juliank> but it's not linked to the bug
+
+ 15:15 <juliank> mclemenceau: Any idea?
+
+ 15:16 <mclemenceau> I would say we tag it foundations-todo
+
+ 15:16 <juliank> ok
+
+ 15:17 <juliank> bug 2033692
+
+ 15:18 <juliank> hmm
+
+ 15:18 <juliank> that is not true
+
+ 15:19 <juliank> Our signed binaries embed the file these days, so it makes no sense to ship on uefi
+
+ 15:19 <juliank> we can't load external fonts
+
+ 15:19 <juliank> it might make sense for BIOS PXE boots
+
+ 15:20 <vorlon> the netboot tarball covers BIOS as well fwiw
+
+ 15:20 <juliank> Well not on arm64 though
+
+ 15:20 <vorlon> I wasn't sure whether we would load external fonts in the UEFI case, yeah
+
+ 15:21 <vorlon> fwiw mwhudson had already raised an MP on this
+
+ 15:21 <juliank> I don't think it makes sense to tag unicode support on BIOS foundations-todo, it's not in our highest important bugs
+
+ 15:22 <juliank> I commented that MP to say arm64 makes no sense
+
+ 15:22 <juliank> and I just remove the tag
+
+ 15:22 <juliank> bug 2033700
+
+ 15:22 <vorlon> this came out of work to migrate a wiki page that hadn't been updated for the new netboot tarballs
+
+ 15:22 <vorlon> so was a regression vs the status quo there
+
+ 15:24 <juliank> cosmetic regression in menu rendering for bios users are low priority though ;)
+
+ 15:24 <juliank> So it makes sense to fix as needed
+
+ 15:25 <vorlon> 2033700 is basically that an autopkgtest trigger doesn't reliably take effect for an image build because of our NotAutomatic change to -proposed
+
+ 15:25 <juliank> The apt preferences bug sounds wrong, livecd-rootfs *tests* should replicate the autopkgtest preferences, but not if you build images on your system?
+
+ 15:25 <juliank> I mean if I want to build a mantic image on my mantic laptop it shouldn't be using my preferences
+
+ 15:26 <vorlon> oh you've managed to build images locally, have you
+
+ 15:26 <juliank> I think about 5 years ago I might but I certainly haven't tried since
+
+ 15:26 <vorlon> driving the build infra locally and getting an actual image out the other end is so fraught that I would treat this as lower priority
+
+ 15:27 <juliank> do the build hosts have potentially conflicting pinning?
+
+ 15:27 <vorlon> you can't build an image in a chroot because snapd has to run; you can't build an image in a container unless you get all the magic security settings right; and if you build it on your host system, well, ok, live dangerously I guess
+
+ 15:27 <juliank> but yes, I'll go ahead and tag it todo
+
+ 15:28 <vorlon> the build env in launchpad or autopkgtest isn't going to have any unrelated pins
+
+ 15:28 <juliank> bug 2017401
+
+ 15:28 <juliank> need to move the tag to nn
+
+ 15:28 <vorlon> yes
+
+ 15:29 <juliank> done
+
+ 15:29 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:29 <juliank> empty!
+
+ 15:29 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:29 <juliank> bug 1990798 is incomplete and with pro team, skip
+
+ 15:30 <juliank> (they are waiting for feedback)
+
+ 15:30 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:30 <juliank> just the livepatch one again
+
+ 15:30 <juliank> maybe we should drop that tag too, vorlon? Add a task instead?
+
+ 15:30 <vorlon> sounds reasonable to me
+
+ 15:31 <juliank> #topic Team proposed-migration report
+
+ 15:31 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:31 <juliank> very few items, vorlon
+
+ 15:32 <vorlon> tzdata uh this is assigned to mkukri ?  that didn't happen last week, did it? :)
+
+ 15:32 <vorlon> anyway, welcome mkukri we're putting you straight to work
+
+ 15:32 <liushuyu> I can take proposed-migrations if needed
+
+ 15:33 <bdrung> ubiquity is still on my plate
+
+ 15:33 <vorlon> right - reassigning the jira card to you
+
+ 15:33 <juliank> vorlon: I gave it to him as it turned out one simple upload and he needed something sponsored :)
+
+ 15:33 <vorlon> juliank: ack
+
+ 15:34 <vorlon> s390-tools is blocked by MIR still. schopin this is still with you?
+
+ 15:34 <bdrung> schopin is on vacation this week
+
+ 15:34 <vorlon> liushuyu: I had tpm2-tss listed as assigned to you from last week; any progress?
+
+ 15:34 <mkukri> That looks cooler than it is, it was a pretty easy thing Julian gave me. Either way, it was very useful for figuring out the tooling.
+
+ 15:35 <vorlon> "that looks cooler than it is" omg he has us pegged already
+
+ 15:35 <liushuyu> vorlon: it's still with me, I did not have time until now to put it on my list
+
+ 15:35 <vorlon> ok
+
+ 15:36 <vorlon> that's all for this week then
+
+ 15:36 <vorlon> juliank:
+
+ 15:36 <liushuyu> (and also lacking a s390x VM to test it)
+
+ 15:36 <juliank> #topic AOB
+
+ 15:36 <bdrung> "that looks cooler than it is" i could say about the temperature in my room as well
+
+ 15:36 <juliank> any other business?
+
+ 15:36 <ginggs> FTBFS party \o/
+
+ 15:36 <juliank> it reads 24.9°C here
+
+ 15:36 <juliank> ok 25°C now
+
+ 15:36 <ginggs> https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20230830-mantic-mantic.html#foundations-bugs-team
+
+ 15:36 <juliank> partay!
+
+ 15:37 <bdrung> 27°C inside, 29°C outside
+
+ 15:37 <juliank> oh can I fix aptdaemon again, lol
+
+ 15:37 <zhsj> golang-1.20 ftbfs -> gone
+
+ 15:37 <adrien> heh, there's strace in the list \o/
+
+ 15:37 <juliank> well I'm traveling next week and overly busy :(
+
+ 15:38 <vorlon> I wonder if we need some way to annotate the ones that will fail because of signatures (fwupd-signed, grub2-signed, shim-signed)
+
+ 15:38 <juliank> that would be useful yes
+
+ 15:39 <vorlon> https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1613482 lol maybe we close this bug
+
+ 15:39 <juliank> lol
+
+ 15:39 <vorlon> clearly we make excellent use of the ftbfs tags
+
+ 15:39 <ginggs> adrien volunteers for strace!
+
+ 15:40 <bdrung> i'll take ubiquity (hit the stone with two birds)
+
+ 15:40 <ginggs> pigeons?
+
+ 15:40 <zhsj> i can take libevent
+
+ 15:40 <ginggs> doko will take binutils
+
+ 15:40 <waveform> I'll take u-boot (fairly sure that's already reported as LP: #2023536)
+
+ 15:41 <waveform> doh, LP: #2034536
+
+ 15:41 <vorlon> adrien: fwiw you posted to ubuntu-devel about a general principle of FFes for strace which is harder to answer, but didn't file an FFe bug for the current one - do you want a formal FFe approval for right now
+
+ 15:41 <juliank> cd-boot-images I think we can just do after the next grub update (2.12~rc1-9ubuntu1)
+
+ 15:41 <vorlon> it just needs build-deps bumped as usual
+
+ 15:41 <juliank> yeah
+
+ 15:42 <juliank> don't want to do it today and then tomorrow again basically ;)
+
+ 15:42 <vorlon> or worse, do it today and forget to do it again tomorrow
+
+ 15:42 <juliank> yeah
+
+ 15:43 <juliank> I mean we could make the package have depends or turn on the policy for build depends to be satisfied in britney and then grub wouldn't migrate and I'd go like "huh I forgot something"
+
+ 15:43 <vorlon> -100 for turning on the build-depends policy
+
+ 15:44 <vorlon> I want reporting on this but not slowing down proposed-migration
+
+ 15:44 <juliank> I do have a reporting but never moved it to canonical infra
+
+ 15:44 <adrien> vorlon: I haven't prepared the 6.5 one yet but I was planning on asking for one if the general FFe wasn't granted quickly
+
+ 15:44 <ginggs> juliank: bugs tagged FTBFS for fwupd-signed, grub2-signed, shim-signed will show up when the FTBFS reports are generated
+
+ 15:44 <juliank> ginggs: we do not want them to be tested at all basically
+
+ 15:45 <juliank> ginggs: we know they fail no point running them or showing us
+
+ 15:45 <juliank> For any package copied from ~canonical-signing PPAs really
+
+ 15:45 <juliank> Not sure that can be queried sensibly but you get the idea
+
+ 15:46 <juliank> vorlon: We should setup my edos-distchecks reports on our infra properly so we can see unsat build-depends in release pockets (and Depends I guess, it happens with force demotions)
+
+ 15:47 <juliank> maybe we have time in november
+
+ 15:47 <juliank> it would be nice
+
+ 15:47 * juliank also hasn't updated https://magenta.jak-linux.org/ubuntu-archive/distcheck/ to run on anything newer than kinetic
+
+ 15:47 <vorlon> yes, that would be a very good thing to get done before the next LTS
+
+ 15:48 <vorlon> since statically checking unsat build-deps is something we can run constantly, unlike archive rebuilds
+
+ 15:48 <juliank> yeah it takes like 2-3 minutes or so on an EPYC thread
+
+ 15:48 <vorlon> juliank: can you put a card for that on the list of roadmap proposals?
+
+ 15:48 <juliank> aye
+
+ 15:49 <juliank> or is that something qa wants to run, bdmurray
+
+ 15:49 <vorlon> raise a card now so we don't lose track, we can horse-trade later :)
+
+ 15:50 <juliank> sure
+
+ 15:56 <juliank> I think that wraps this side of the meeting up?
+
+ 15:56 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

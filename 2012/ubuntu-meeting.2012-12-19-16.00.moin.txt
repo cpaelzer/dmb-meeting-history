@@ -1,0 +1,385 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:00:59 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-12-19-16.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *AOB
+''LINK:'' https://plus.google.com/u/1/103242523324036094862/posts/AKBdNSnyrv5   (slangasek, 16:19:43)
+
+
+
+Meeting ended at 16:21:28 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (34)
+ * slangasek (32)
+ * stgraber (32)
+ * stokachu (21)
+ * xnox (13)
+ * cjwatson (11)
+ * barry (6)
+ * doko (6)
+ * ubottu (4)
+ * jodh (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:00:59 <slangasek> #startmeeting
+
+ 16:00:59 <meetingology> Meeting started Wed Dec 19 16:00:59 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00:59 <meetingology> 
+
+ 16:00:59 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:14 * stgraber waves
+
+ 16:01:40 <slangasek> [TOPIC] Lightning round
+
+ 16:01:47 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 16:01:50 <slangasek> ogra stgraber barry cjwatson xnox jodh doko stokachu slangasek bdmurray ev
+
+ 16:01:55 <ev> win!
+
+ 16:02:00 <slangasek> ogra's busy sunning himself on a ski slope somewhere, so stgraber
+
+ 16:02:06 <stgraber> - Upstart
+
+ 16:02:06 <stgraber> - 3 days sprint (Monday -> Wednesday)
+
+ 16:02:06 <stgraber> - Got prctl branch merged.
+
+ 16:02:06 <stgraber> - libnih 'as' type fix merged and uploaded.
+
+ 16:02:06 <stgraber> - Various fixes to the tests to allow for reliable daily builds on virt and non-virt builders.
+
+ 16:02:09 <stgraber> - Got upstart-dbus-events merged.
+
+ 16:02:12 <stgraber> - Wrote new upstart-event-bridge, currently waiting for review/merge.
+
+ 16:02:14 <stgraber> - Container
+
+ 16:02:17 <stgraber> - Usual code reviews.
+
+ 16:02:19 <stgraber> - Release 0.9~alpha1 (and 0.9~alpha2 because of some communication problems ;))
+
+ 16:02:22 <stgraber> - Built a custom kernel to test for the uevent fix when network devices are moved to other namespaces.
+
+ 16:02:25 <stgraber> - Sent fix for LXC on nexus7 to the kernel team.
+
+ 16:02:28 <stgraber> - Started working on some changes to LXC upstream to allow building with alternate libc implementation (testing with bionic).
+
+ 16:02:31 <stgraber> - Other
+
+ 16:02:33 <stgraber> - Spent some time debugging a rather odd biosdevname issue, looks like it was a firmware issue on the specific machine.
+
+ 16:02:36 <stgraber> - Did some UEFI SecureBoot tests, running a locally built and signed shim.
+
+ 16:02:39 <stgraber> - Patch pilot on Friday.
+
+ 16:02:42 <stgraber> - TODO
+
+ 16:02:44 <stgraber> - Implement user socket for upstart session (to be used before dbus is started).
+
+ 16:02:47 <stgraber> - Cleanup and send a bunch of lxc patches for review (split libcap, bionic support, ...).
+
+ 16:02:50 <stgraber> - Go through the isc-dhcp and resolvconf bugs.
+
+ 16:02:53 <stgraber> - Try to apply redhat's fiberchannel patchset to our isc-dhcp.
+
+ 16:02:55 <stgraber> - Holidays
+
+ 16:02:58 <stgraber> - I'm working tomorrow (European time) and then will be off until the 2nd of January.
+
+ 16:03:01 <stgraber> (DONE)
+
+ 16:03:28 <barry> debian bug 695707 (virtualenv broken, with fixes for python2.7 #695958 and 3.3 #695959 proposed).  emacs bug 12765.  worked on whoosh for py3 (needs upstream fixes).  debugging friends service crashes for internal customer. done.
+
+ 16:03:31 <ubottu> Debian bug 695707 in libpython2.7-stdlib "[libpython2.7-stdlib] Breaks python-virtualenv" [Normal,Open] http://bugs.debian.org/695707
+
+ 16:03:32 <ubottu> bug 12765 in nautilus (Ubuntu) "Use full resolution thumbnails on desktop" [Wishlist,Fix released] https://launchpad.net/bugs/12765
+
+ 16:03:57 <cjwatson> Mostly on leave and/or in a virus-induced haze this week.  On leave for the rest of the year starting Thursday afternoon.
+
+ 16:04:00 <cjwatson> Fixed incorrect colours in d-i images (bug 1089331).
+
+ 16:04:02 <ubottu> bug 1089331 in cdebconf (Ubuntu) "ubuntu server d-i installer is blue, not purple" [Medium,Fix released] https://launchpad.net/bugs/1089331
+
+ 16:04:03 <cjwatson> Test-built all libssl-dev reverse-build-dependencies with a couple of different candidate patches for making libssl-dev Multi-Arch: same:
+
+ 16:04:06 <cjwatson> - Moving all headers to /usr/include/$(DEB_HOST_MULTIARCH) caused far too many failures (67).
+
+ 16:04:10 <cjwatson> - Moving just <openssl/opensslconf.h> causes two failures in unstable, both of which are easily tractable.  I've filed bugs with patches for both.
+
+ 16:04:13 <cjwatson> Working again on britney/autopkgtest integration, with Jean-Baptiste's help.  Not sure if I'll have something by EOY but we'll see.
+
+ 16:04:17 <cjwatson> Working on powerpc image changes requested by Ben Collins.
+
+ 16:04:19 <cjwatson> ..
+
+ 16:04:53 <xnox> * upstart sprint:
+
+ 16:04:53 <xnox> - finish xdg config dirs branch, now merged
+
+ 16:04:53 <xnox> - progressing on overrides from any config dir
+
+ 16:04:53 <xnox> - fixing unit tests & daily builds / adt
+
+ 16:04:53 <xnox> - refactor fixes from lp:ubuntu/libnih & propose them into lp:libnih
+
+ 16:04:54 <xnox> Sprint progress at http://pad.ubuntu.com/j5DPzIp5KP
+
+ 16:04:56 <xnox> * started cross-building fixes spree (3.5 so far, but it's fun)
+
+ 16:05:00 <xnox> ..
+
+ 16:05:05 <jodh> * Upstart Sprint: http://pad.ubuntu.com/j5DPzIp5KP
+
+ 16:05:05 <jodh> ✄
+
+ 16:05:21 <ev> surely that's cheating
+
+ 16:05:45 <stokachu> different area codes so its ok
+
+ 16:05:52 * jodh rummages for generate-random-buzzwords.pl...
+
+ 16:05:56 <stokachu> at least thats what ive been told
+
+ 16:06:01 <doko> - updated armhf cross toolchain
+
+ 16:06:01 <doko> - built arm64 and powerpc biarch cross toolchains
+
+ 16:06:01 <doko> - rewritten gcc control.m4 to make it easier to use runtime libs for the target arch, both for 4.7 NS 4.8
+
+ 16:06:01 <doko> - fixing gcc-4.8 (upstream) build and install issues.
+
+ 16:06:01 <doko> - GCC 4.8 ppa now ready for the test rebuild
+
+ 16:06:04 <doko> (done)
+
+ 16:06:14 <stokachu> - dput uploaded (bug 633109) needs approval
+
+ 16:06:15 <stokachu> - packaged firefox-esr 10/17 (this took up all of my time)
+
+ 16:06:15 <stokachu> - applied for Contributing Developer http://wiki.ubuntu.com/AdamStokes (testimonies welcomed :D)
+
+ 16:06:15 <stokachu> - Started backport process for sssd/sudo to Precise because of the new sudo ldap+caching features
+
+ 16:06:18 <stokachu> introduced. Still going through the rdeps list for sudo to see what needs to be tested.
+
+ 16:06:19 <ubottu> bug 633109 in dput (Ubuntu Precise) "No progress bar for sftp uploads" [Undecided,New] https://launchpad.net/bugs/633109
+
+ 16:06:21 <stokachu> - I expect high visibility bugs from me to pick back up at beginning of new year.
+
+ 16:06:24 <stokachu> 
+
+ 16:06:32 <stokachu> ..
+
+ 16:09:25 <slangasek> stokachu: hmm, you're only applying for contributing developer?
+
+ 16:09:35 <slangasek> I thought this was for core dev
+
+ 16:09:39 <stokachu> slangasek: micah recommended i did that
+
+ 16:09:50 <slangasek> but contributing developer gives you no upload rights :)
+
+ 16:10:43 <stokachu> slangasek: what membership board should i apply to
+
+ 16:10:57 * xnox thought contributing is a bit on the low side. Motu or core-dev is better.
+
+ 16:10:59 <slangasek> well, we can harrass micahg (and stgraber) about this afterwards
+
+ 16:11:07 <slangasek> stokachu: the membership board is the DMB in all cases
+
+ 16:11:11 <xnox> and ogra and barry =)
+
+ 16:11:34 <stokachu> slangasek: ok cool just point me in the right direction b/c i wasn't totally sure
+
+ 16:11:47 <stokachu> slangasek: it was initially posted to the main membership board
+
+ 16:11:51 <barry> stokachu: or ppu
+
+ 16:11:55 <ev> so what do you get by being a contributing developer if you don't get upload rights? A nice fruit basket?
+
+ 16:11:59 <barry> (per-package upload rights)
+
+ 16:12:10 <slangasek> but it doesn't seem optimal to me to go through the process for contributing developer if you're going to be applying for core-dev shortly regardless
+
+ 16:12:15 <slangasek> ev: Ubuntu Membership
+
+ 16:12:19 <slangasek> fruit basket optional
+
+ 16:12:23 <ev> ...
+
+ 16:12:41 <stokachu> slangasek: looks like i can just add my name to the core dev in the agenda
+
+ 16:12:43 <ev> oh dear
+
+ 16:12:46 <stokachu> applying is the same it looks like
+
+ 16:13:03 <barry> stokachu: different secret handshake
+
+ 16:13:04 <xnox> stokachu: yeah process is the same for all developer levels.
+
+ 16:13:08 <stgraber> stokachu: yeah, same board, different agenda item. Just move your application to coredev.
+
+ 16:13:41 <stokachu> stgraber: do i need to resend out an email to the list?
+
+ 16:13:44 <slangasek> stokachu: yes; though we should figure out why micahg is still steering you away from core-dev, since he gets to vote on the question of whether you get in ;)
+
+ 16:13:46 <stokachu> my original one said core dev
+
+ 16:13:49 <stgraber> stokachu: coredev will give you ubuntu membership automatically, so no need to first apply for contributing developer.
+
+ 16:14:26 <stgraber> stokachu: just reply to your e-mail to devel-permissions saying that you instead want to be considered for coredev.
+
+ 16:14:28 <barry> he prepares harder questions for coredev applicants :)
+
+ 16:14:29 <slangasek> stokachu: if informal polling of the DMB suggests you're not ready for core-dev, you probably want to find out what more they want to see from you, and focus on that so you don't have to go through the process twice
+
+ 16:14:49 <stokachu> ok
+
+ 16:15:11 <stgraber> stokachu: I haven't looked at your recent history, but last I checked the only thing that was missing was the "sustained" part which has definitely be solved since ;)
+
+ 16:15:20 <slangasek> I guess it's my turn to spam the channel
+
+ 16:15:22 <stgraber> (as I remember you last poking me 6 months or so ago)
+
+ 16:15:24 * xnox did go contributing -> core-dev jump. But I did apply for contributing dev way back when i was "green"
+
+ 16:15:30 <slangasek> * Following up on Samsung laptop EFI bricking; looking like we may want to disable samsung-laptop module as a workaround
+
+ 16:15:33 <slangasek> * UEFI Secure Boot updates.  Latest upstream version of gnu-efi+shim give a black screen and a reboot.  Still tracking down.
+
+ 16:15:36 <slangasek> * Doing my "fix 5 package cross-builds" work item; for one of them, fixed valac for use as a cross-build-dep
+
+ 16:15:39 <slangasek> * Working on gobject-introspection porting to python3, possibly tackling the cross-build-dep problem after that
+
+ 16:15:42 <slangasek> (done)
+
+ 16:16:12 <slangasek> ev:
+
+ 16:16:17 <ev> oh hi
+
+ 16:16:23 <cjwatson> slangasek: did you have a look to see whether any of the packages in question improved in the latest cross-builder run?
+
+ 16:16:28 <ev> - Going on holiday tomorrow. I'll be back in January. Have a wonderful holiday
+
+ 16:16:28 <ev> and New Year!
+
+ 16:16:29 <ev> - The retracers have been moved to autorestart hell, as they were bothering
+
+ 16:16:29 <ev> webops too much on the weekends. This was mostly because a Cassandra node was
+
+ 16:16:29 <ev> taken down, which was causing timeouts. Still, we'll need to make the
+
+ 16:16:29 <ev> retracers more resilient to database failure if we want to get them back into
+
+ 16:16:29 <ev> a normal service operation.
+
+ 16:16:36 <ev> - The queue is still massive (~6-8k per arch). We've started to remove some
+
+ 16:16:36 <ev> cores from it and Tom is working on getting Rabbit queue size hooked up to
+
+ 16:16:36 <ev> graphite (http://graphite.engineering.ubuntu.com). Trying to get everything
+
+ 16:16:36 <ev> ready for prodstack as quickly as possible to better remedy this.
+
+ 16:16:36 <ev> - Spent much of the week getting our charms and daisy in shape for deployment
+
+ 16:16:36 <ev> to prodstack, following the advice that Tom gave in RT 58019.
+
+ 16:16:41 <ev> - Fought gunicorn to the death. Discovered the hard way that gunicorn from
+
+ 16:16:41 <ev> precise is busted. Backported from Quantal.
+
+ 16:16:41 <ev> - Refactored our separate wsgi scripts for receiving crash reports and core
+
+ 16:16:41 <ev> dumps, unifying them under a single wsgi service and merging in the S3
+
+ 16:16:44 <slangasek> cjwatson: I didn't save the 'before' view :)
+
+ 16:16:46 <ev> support along the way. This makes running them under the gunicorn
+
+ 16:16:47 <ev> subordinate charm a lot easier.
+
+ 16:16:47 <ev> - Taught the daisy charm to handle multiple Cassandra nodes coming and going.
+
+ 16:16:51 <ev> - Daisy is *almost* ready. I just need to wire the Apache frontends to the
+
+ 16:16:51 <ev> HAProxy instances. Everything else seems to be working. Getting the
+
+ 16:16:54 <ev> retracer and Errors charms updated should be largely a matter of copying
+
+ 16:16:54 <ev> code around.
+
+ 16:16:54 <ev> - Worked a bit with Brian to dig at why getBugSubscriberPackages was not
+
+ 16:16:54 <ev> returning anything. Brian ultimately tracked down the root cause.
+
+ 16:16:56 <ev> (done)
+
+ 16:17:15 <cjwatson> slangasek: or "succeeded", even
+
+ 16:17:16 <ev> err graphite.engineering.canonical.com
+
+ 16:18:12 <slangasek> any questions on status?
+
+ 16:18:45 <slangasek> [TOPIC] AOB
+
+ 16:18:56 <slangasek> anyone have any plans for the end of the world on Friday?
+
+ 16:19:27 <cjwatson> I was planning to go to the pub tomorrow evening, if that counts :P
+
+ 16:19:43 <slangasek> https://plus.google.com/u/1/103242523324036094862/posts/AKBdNSnyrv5
+
+ 16:19:59 <barry> +1
+
+ 16:20:11 <stokachu> lol
+
+ 16:20:16 <slangasek> :-)
+
+ 16:20:39 * xnox is flying the day after, so I will be packing and doing last minute shopping.
+
+ 16:20:40 <stgraber> :)
+
+ 16:20:54 <stokachu> as long as we dont get an emp from a solar flare and i can still get on the internet im good
+
+ 16:21:06 <slangasek> ok, sounds like that's it for the year then :)
+
+ 16:21:18 <slangasek> happy holidays, everyone!  don't drink too much eggnog
+
+ 16:21:26 <slangasek> (drink just the right amount of eggnog)
+
+ 16:21:28 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

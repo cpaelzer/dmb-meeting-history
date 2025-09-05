@@ -1,0 +1,639 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by NCommander at 15:02:23 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-15-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/ARM/Meeting/2011/20111215   (NCommander, 15:03:17)
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html   (NCommander, 15:05:54)
+ *ARM Server Status (NCommander, Daviey)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *ARM Porting/FTBFS status (NCommander, janimo)
+
+ *ARM Hardfloat status (infinity)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *QA Status (GrueMaster, mahmoh)
+
+ *Linaro Updates (rsalveti)
+
+ *AOB
+
+
+
+Meeting ended at 15:43:48 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (107)
+ * infinity (36)
+ * rsalveti (36)
+ * NCommander (33)
+ * janimo (33)
+ * ppisati (16)
+ * GrueMaster (14)
+ * davidm (7)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 15:02:23 <NCommander> #startmeeting
+
+ 15:02:23 <meetingology> Meeting started Thu Dec 15 15:02:23 2011 UTC.  The chair is NCommander. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:02:23 <meetingology> 
+
+ 15:02:23 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:03:13 <NCommander> morning/evening all
+
+ 15:03:17 <NCommander> [link] https://wiki.ubuntu.com/ARM/Meeting/2011/20111215
+
+ 15:03:40 <ogra_> thats not what you sent ion the mail :P
+
+ 15:04:37 <NCommander> */grumble*
+
+ 15:05:24 * infinity shifts in his chair.
+
+ 15:05:31 * ogra_ twiddles thumbs
+
+ 15:05:37 <NCommander> anyway, we have no action items from last week
+
+ 15:05:40 * janimo bites fingernails
+
+ 15:05:48 <ogra_> ooooh that excitement
+
+ 15:05:54 <NCommander> [link] http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html
+
+ 15:06:05 <ogra_> we could look better there ...
+
+ 15:06:13 <ogra_> especially that doko guy :P
+
+ 15:06:42 <ogra_> but nothing fatal yet
+
+ 15:06:53 <ogra_> is anyone still missing specs ?
+
+ 15:06:54 <NCommander> indeed
+
+ 15:07:04 <NCommander> ogra_: I think they are all there
+
+ 15:07:09 <ogra_> k
+
+ 15:07:28 <ogra_> move ?
+
+ 15:07:29 <NCommander> [topic] ARM Server Status (NCommander, Daviey)
+
+ 15:07:32 <infinity> Oh, meh.  I still should break one of my work items out of image-build-pipeline into a proper spec.
+
+ 15:07:48 <NCommander> I don't have much to report aside from the fact we had A1 images
+
+ 15:07:51 <davidm> infinity, can you do that this week?
+
+ 15:08:05 <infinity> davidm: If by "this week" you mean "today", yeah, I suppose I have to. :P
+
+ 15:08:11 <ogra_> NCommander, well, thats quite a while ago
+
+ 15:08:21 <ogra_> we had meetings since :P
+
+ 15:08:31 <davidm> :)
+
+ 15:08:40 <infinity> Oh, as of this morning, netboot on amrhf should work again.
+
+ 15:08:48 <ogra_> \o/
+
+ 15:08:48 <infinity> That's vaguely server-related.:P
+
+ 15:08:56 <ogra_> and we have a shiny new eglibc
+
+ 15:09:04 <infinity> The two relate. :)
+
+ 15:09:07 <NCommander> yay
+
+ 15:09:12 <ogra_> really ?!? :P
+
+ 15:09:19 <NCommander> [topic] Kernel Status (cooloney, ppisati)
+
+ 15:10:02 <ppisati> not much to report, except that we got a new 3.2 kernel (3.2-rc5 + latest TI BSP), armel + amrhf of course
+
+ 15:10:09 * ogra_ swa a bunch of omap4 things passing by on the kernel ML
+
+ 15:10:15 <ogra_> *saw
+
+ 15:10:18 <ppisati> and the usual rounf of SRU kernels
+
+ 15:10:21 <ppisati> *round
+
+ 15:10:30 <janimo> ac100 migrated to 3.0 but has issues (does not appear to boot on many models) so a fix and a new upload are to be expected soon
+
+ 15:10:32 <ppisati> yep, this mroning
+
+ 15:10:33 <ogra_> janimo, a word on ac100 perhaps ?
+
+ 15:10:35 <ogra_> ah
+
+ 15:10:38 <ogra_> he beats me :)
+
+ 15:10:48 <janimo> long sentence :)
+
+ 15:11:00 <ogra_> you referred to toolchain in one of your comments yesterday
+
+ 15:11:15 <ogra_> did you try a native build instead of cross yet ?
+
+ 15:11:24 <janimo> ogra_, in the comment I mentioned I also have hynix. The toolchain issues was brought up today on the mailing list
+
+ 15:11:30 <janimo> I need to see if that could be it
+
+ 15:11:34 <ogra_> since your cross built kernel seemed to have worked from the former checkout
+
+ 15:11:47 <janimo> ogra_, no, I always built cross (<30 min vs a workday)
+
+ 15:11:53 <ogra_> ad that was built with the older cross toolchain
+
+ 15:12:00 <ogra_> *and
+
+ 15:12:32 <janimo> ogra_, did anyone else report that deb working?
+
+ 15:12:35 <ogra_> nope
+
+ 15:12:37 <janimo> besides me
+
+ 15:12:41 <ogra_> havent seen anyone
+
+ 15:12:46 <janimo> hmm, ok so much for community testing :)
+
+ 15:12:53 <ogra_> marvin24 did for the old build
+
+ 15:13:09 <ogra_> xranby and i tested the new build from the archive
+
+ 15:13:18 <ogra_> i actually havent tested the cross one
+
+ 15:13:18 <janimo> anyway it will get fixed, so far it only affects armhf users who explicitly update, I estimate that number to be 1 or 2
+
+ 15:13:41 <ogra_> well, there are more than 2 testing the hf ac100 images
+
+ 15:13:58 <ppisati> and is the armel version working fine?
+
+ 15:13:58 <janimo> anyway that's all from me on this topic :)
+
+ 15:13:58 <ogra_> but i agree, they wont explicitly update to the broken kernel
+
+ 15:14:12 * ogra_ has no armel precise install atm
+
+ 15:14:13 <janimo> ppisati, no, armel build was killed in time by infinity
+
+ 15:14:22 <janimo> as it would have probably lead to the same issues
+
+ 15:14:22 <ppisati> ah so we don't know
+
+ 15:14:23 <ppisati> ok
+
+ 15:14:44 <ogra_> its a brandnew checkout based on a new chromeos kernel ...
+
+ 15:14:53 <ogra_> so breakage is a bit expected anyway
+
+ 15:14:56 <ogra_> :)
+
+ 15:14:58 <ogra_> ..
+
+ 15:15:13 <NCommander> [topic] ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:15:13 <ogra_> mvoe ?
+
+ 15:15:17 <ogra_> ah :)
+
+ 15:15:31 * ogra_ did a bunch of fixes this week ...
+
+ 15:15:32 <NCommander> I have slight lag tonight. internetbeing tempermental
+
+ 15:15:34 <janimo> not much here, just filed some bugs on packages that FTBFS due to builder timeout
+
+ 15:15:38 <ogra_> and a big bunch of give backs
+
+ 15:15:47 <infinity> doko's going to announce today that we're using the armhf bootstrap as the first official archive rebuild.
+
+ 15:16:02 <janimo> now the number of armhf and armel FTBFS counts seem to be close to each other
+
+ 15:16:06 <infinity> If people can jump in and get fixing, that would be lovely.
+
+ 15:16:12 <ogra_> the amount of packages that havent been built since maverick is quite big
+
+ 15:16:23 <janimo> sounds fun
+
+ 15:16:29 <ogra_> janimo, err, they are 250 packages apart or so
+
+ 15:16:39 <ogra_> hf is way higher
+
+ 15:16:48 <janimo> infinity, on the real archive as opposed to some staging ones (IIRC doko used to have such builds earlier)
+
+ 15:16:49 <infinity> Most of the armhf failures fall into a few broad categories.
+
+ 15:16:51 <ogra_> but thats beacuse of the old binaries we have around for el
+
+ 15:17:04 <infinity> 1) Languages that haven't been ported yet (gnat, fpc, ocamlopt)
+
+ 15:17:22 <janimo> very popular languages I must say :)
+
+ 15:17:23 <infinity> 2) New compiler strictness (format-security)
+
+ 15:17:29 <ogra_> there are also a lot of deprecated functions in libs
+
+ 15:17:39 <infinity> 3) as-needed/linking issues (-lcurses, -lm)
+
+ 15:17:45 <ogra_> which only get hit on rebuilds
+
+ 15:17:59 <infinity> Number 3 isn't arm-related at all, and will fail on all arches.  Hence using this as the "rebuild test".
+
+ 15:18:04 <ogra_> g_thread and othert glib stuff mainly
+
+ 15:18:32 <ogra_> and often moved headers too
+
+ 15:18:42 <janimo> yes, since glib 2.31 you need explicit link to gthread
+
+ 15:18:44 <infinity> And number 2 isn't arm-specific either, obviously. :P
+
+ 15:18:48 <ogra_> (czrses specifically here ... just needs a b-dep added in most cases)
+
+ 15:18:56 <ogra_> *curses
+
+ 15:19:06 <infinity> Anyhoo.  Any help people can lend before we all run off for vacation would be lovely. ;)
+
+ 15:19:21 * ogra_ will do another round tomorrow
+
+ 15:19:29 * janimo wants an AI that fixes this repetitive boring work
+
+ 15:19:41 <ogra_> heh
+
+ 15:19:44 <ogra_> write one :)
+
+ 15:19:57 <ogra_> NCommander, move ?
+
+ 15:19:59 <NCommander> I thought we had infinity for that AI
+
+ 15:20:02 <NCommander> [topic] ARM Hardfloat status (infinity)
+
+ 15:20:03 <janimo> ogra_, it would pay off in the long term
+
+ 15:20:11 <ogra_> go then
+
+ 15:20:14 <janimo> NCommander, he is not A just I
+
+ 15:20:23 <ogra_> NCommander, i think we can strike that explicit category
+
+ 15:20:24 <infinity> *rimshot*
+
+ 15:20:40 * janimo googles rimshot
+
+ 15:20:42 <ogra_> just move on and drop it off the list for next meeting
+
+ 15:20:43 <infinity> We can probably remove armhf status from the agenda now, and just lump it in with everything else.
+
+ 15:20:49 * janimo hopes it is not NSFW
+
+ 15:21:09 <ogra_> new south f*ckin wales ?
+
+ 15:21:16 <infinity> janimo: Some odd interpretations might be, but it generally refers to thwacking the rim of a snare drum to punctuate a joke.
+
+ 15:21:17 <NCommander> not safe for work
+
+ 15:21:25 <janimo> no, the windows XP filesystem acronym
+
+ 15:21:35 <NCommander> thats NTFS
+
+ 15:21:53 <ogra_> move ?
+
+ 15:22:00 <infinity> Yes. :P
+
+ 15:22:05 <NCommander> [topic] ARM Image Status (ogra, NCommander)
+
+ 15:22:13 <ogra_> they all build !
+
+ 15:22:18 <ogra_> especially armhf
+
+ 15:22:19 <infinity> And work!
+
+ 15:22:25 <ogra_> apart from mx5 indeed
+
+ 15:22:26 <infinity> Well, as well as they've ever worked.
+
+ 15:22:31 <ogra_> still waiting for the kernel update
+
+ 15:22:45 <davidm> Very nice
+
+ 15:22:45 <janimo> TBD in the Linaro section I gues
+
+ 15:22:47 * ogra_ is stress testing userspace since yesterday
+
+ 15:22:47 <janimo> s
+
+ 15:22:50 <infinity> Still have that dbus timeout that sometimes makes oem-config-remove-gtk shoot itself in the head.
+
+ 15:22:56 <ogra_> and its just awesome !
+
+ 15:22:59 <infinity> I should escalate that on my TODO.
+
+ 15:23:07 <ogra_> feels a lot snappier than el on the UI front
+
+ 15:23:16 <ogra_> sadly it still doesnt improve the IO
+
+ 15:23:31 <infinity> ogra_: Yeah, I'm not sure how much of it is psychological and how much is real, but hf definitely feels snappier.
+
+ 15:23:33 <ogra_> infinity, before A2 is enough :)
+
+ 15:23:43 <ogra_> (read; aqt the sprint if you dont get to it earlier)
+
+ 15:23:46 <janimo> hf = hyper fast
+
+ 15:23:50 <infinity> ogra_: But in my case, I usually chalk it up to "I spent way too much time on this, so I have to fool myself into liking it".
+
+ 15:24:15 <ogra_> well, the hf isntall is the first one where i didnt feel the need to immediately replace FF with chromium
+
+ 15:24:31 <ogra_> it runs really smooth ... which it didnt on el on the ac100
+
+ 15:24:31 <infinity> Speaking of, markos should be re-running his hf benchmarks with Ubuntu versus Ubuntu soon, for some more solid numbers.
+
+ 15:24:44 <ogra_> yeah, that would be good
+
+ 15:25:00 <infinity> But, yeah.  Image status.  Everything we build works.  And (though I haven't tested it yet), netinst should work now too.
+
+ 15:25:08 <ogra_> ++
+
+ 15:25:08 <infinity> At least, I fixed the bug that was making it not work. :P
+
+ 15:25:10 <infinity> So, here's hoping.
+
+ 15:25:13 <ogra_> NCommander, move
+
+ 15:25:15 <ogra_> :)
+
+ 15:25:23 <GrueMaster> netinst is having trouble finding a kernel.
+
+ 15:25:24 <NCommander> [topic] QA Status (GrueMaster, mahmoh)
+
+ 15:25:28 * NCommander beats ogra_
+
+ 15:25:33 <ogra_> heh
+
+ 15:25:43 <ogra_> GrueMaster, pfft, whats a kernel ...
+
+ 15:25:58 <ogra_> largely overrated
+
+ 15:26:03 <GrueMaster> Currently running netinstall on precise HF.  Can't find a suitable kernel.  Trying to preseed around it.
+
+ 15:26:16 <ogra_> what arch ?
+
+ 15:26:30 <infinity> omap or omap4?
+
+ 15:26:31 <GrueMaster> omap4.
+
+ 15:26:36 <GrueMaster> panda
+
+ 15:26:44 <ogra_> hmm that should be there
+
+ 15:26:45 <infinity> Did we bump ABI on ti-omap4 again?
+
+ 15:26:54 <ppisati> yes
+
+ 15:26:54 <ogra_> unless -meta got stuck in universe once again or so
+
+ 15:26:59 <ppisati> almost every upload we bump it
+
+ 15:27:13 <GrueMaster> Could it be that netinstall is hardcoded to armel?
+
+ 15:27:17 <ppisati> the last pull was from this morning, but it didn't enter the archive yet
+
+ 15:27:21 <ogra_> shouldnt
+
+ 15:27:22 <GrueMaster> And not know about armhf?
+
+ 15:27:27 <NCommander> probably libd-i or base-installer need a stick
+
+ 15:27:29 <ogra_> iirc infinity foxed that
+
+ 15:27:33 <ogra_> (and fixed too)
+
+ 15:27:48 <ogra_> foxy infinity :)
+
+ 15:27:55 <ppisati> :)
+
+ 15:28:02 <GrueMaster> I'm running it again with linux-omap4 in the preseed for kernel override.  Should know if it works in ~10 minutes.
+
+ 15:28:23 <NCommander> I'll poke it if it still ails
+
+ 15:28:30 <ogra_> who uses netinst anyway :P
+
+ 15:28:31 <infinity> Sure.
+
+ 15:28:41 <GrueMaster> Automation of released images back to Maverick now working.  SRU testing automation near fully complete.
+
+ 15:28:42 * ogra_ ducks from possible things GrueMaster could throw
+
+ 15:29:23 <GrueMaster> QRT tests have been fixed up and all failing issues resolved either in the kernels or (mainly) the tests.
+
+ 15:30:02 <davidm> Nice work GrueMaster
+
+ 15:30:02 <GrueMaster> Found config issue on omap kernels where mmap_min_addr was incorrectly set.
+
+ 15:30:14 <ogra_> yeah
+
+ 15:30:44 <GrueMaster> netinstall still fails armhf.  Diverting attention to NCommander to look into.
+
+ 15:30:59 <NCommander> grukmble
+
+ 15:31:05 <GrueMaster> (less than 10 minutes to fail - not bad).
+
+ 15:31:20 <infinity> I'm looking.
+
+ 15:31:34 <infinity> Are we done meetinging early?
+
+ 15:31:38 <GrueMaster> The armhf install feels faster (to this point).
+
+ 15:31:53 <GrueMaster> I have nothing else.
+
+ 15:32:04 <ogra_> everything feels faster with armhf :)
+
+ 15:32:23 <NCommander> [topic] Linaro Updates (rsalveti)
+
+ 15:32:32 * rsalveti waves
+
+ 15:32:42 <rsalveti> not much from my side for this week
+
+ 15:32:47 <rsalveti> we're running to finish the release
+
+ 15:32:50 <rsalveti> and get things in place
+
+ 15:32:55 <rsalveti> but the cross toolchain seems to be fixed
+
+ 15:33:05 <infinity> rsalveti: When do we see armhf LEBs?
+
+ 15:33:08 <rsalveti> should have a better idea and a better status next meeting :-)
+
+ 15:33:18 <rsalveti> infinity: once a builder is enabled at offspring
+
+ 15:33:21 <rsalveti> inprogress
+
+ 15:33:25 <janimo> rsalveti, cross toolchain fixed as in a bug corrected?
+
+ 15:33:38 <rsalveti> janimo: cross toolchain was broken at precise
+
+ 15:34:15 <janimo> hmm ok. I used 4.6.1 so far in precise and 4.6.2 since yesterday
+
+ 15:34:15 <rsalveti> and for my previous action, anmar is talking with the vendors about getting the drivers available for armhf
+
+ 15:34:30 <rsalveti> janimo: guess 4.6.2 is the one that got updated
+
+ 15:34:44 <rsalveti> I think we have the bug numbers, can point you later
+
+ 15:34:48 <rsalveti> hrw should know better
+
+ 15:34:52 <rsalveti> he merged a bunch of patches
+
+ 15:35:03 <rsalveti> but it's still unable to look for multi-arch paths
+
+ 15:35:14 <rsalveti> that bug is still in progress
+
+ 15:35:35 <rsalveti> bug 799965
+
+ 15:35:36 <ubottu> Launchpad bug 799965 in Linaro-Ubuntu "cross-compiler doesn't have /usr/include on the search path" [High,In progress] https://launchpad.net/bugs/799965
+
+ 15:35:46 <rsalveti> once this bug is fixed I believe it should be all in place for multi-arch to work properly
+
+ 15:35:59 <rsalveti> without setting the paths and etc by hand
+
+ 15:36:22 <ogra_> any news about unity merging ?
+
+ 15:36:25 <janimo> rsalveti, thanks. I only cross built the kernel so maybe was not an issue for me
+
+ 15:36:40 <rsalveti> ogra_: still blocked by DX team :-(
+
+ 15:36:45 <rsalveti> with the test definitions and such
+
+ 15:36:59 <ogra_> yep, k
+
+ 15:37:00 <rsalveti> it's kind of the same state as we discussed last week
+
+ 15:37:06 <rsalveti> unfortunately
+
+ 15:37:23 <ogra_> yup, i didnt expect more ... but could have been that they asked for tests to be written or so
+
+ 15:37:23 <rsalveti> and panda for us is kind of broken
+
+ 15:37:32 <rsalveti> sound doesn't work, video decoding is broken, perf is also broken
+
+ 15:37:35 <rsalveti> and a few other issues
+
+ 15:37:50 <ogra_> on your oneiric builds ?
+
+ 15:38:03 <rsalveti> ogra_: both oneiric and precise
+
+ 15:38:07 <rsalveti> the tilt-linux-linaro-3.1 kernel
+
+ 15:38:08 <ogra_> wow
+
+ 15:38:12 <ogra_> ah
+
+ 15:38:22 <rsalveti> the same one that was used by ubuntu when merging to the omap 4 kernel
+
+ 15:38:36 <ogra_> right, but in precise
+
+ 15:38:42 <ogra_> wheer we expect such bugs :)
+
+ 15:38:49 <rsalveti> well, the kernel is broken :-)
+
+ 15:38:56 <ppisati> uh?
+
+ 15:39:00 <ogra_> as long as oneiric works as released, all is fine
+
+ 15:39:04 <rsalveti> so I'd avoid syncing with the LT kernel in the next few days
+
+ 15:39:06 <ppisati> actually andy told me these were fixed
+
+ 15:39:28 <ppisati> it was just a matter of ereversing some stuff (suspend & resume fix IIRC)
+
+ 15:39:32 <ppisati> this for 3.2
+
+ 15:39:33 <rsalveti> ppisati: not atm
+
+ 15:39:36 <ppisati> dunno about 3.1
+
+ 15:39:44 <rsalveti> 3.2 is still a work in progresss
+
+ 15:39:51 <rsalveti> but we should know better in the next few days
+
+ 15:40:02 <rsalveti> that's all from my side, need to go back and do the release ;-)
+
+ 15:40:16 <janimo> rsalveti, good luck with it
+
+ 15:40:24 <rsalveti> janimo: thanks :-)
+
+ 15:40:32 <ogra_> yeah
+
+ 15:41:01 <ogra_> NCommander, ?
+
+ 15:41:06 <NCommander> [topic] AOB
+
+ 15:41:10 * ogra_ has something
+
+ 15:41:15 <NCommander> please GET YOUR DAILY REPORTS ONTO THE WIKI
+
+ 15:41:29 <NCommander> sDAILY/WEEKLY/g
+
+ 15:41:29 <janimo> weekly?
+
+ 15:41:30 <ogra_> the nvidia tegra beta driver was uploaded to source NEW yesterday
+
+ 15:41:43 <ogra_> its armel only ... and precise
+
+ 15:42:03 <davidm> ogra_, nice
+
+ 15:42:05 <ogra_> i only have precise armhf around atm, and would appreciate some testing once infinity let it out of the cage
+
+ 15:42:11 <infinity> We're wikiing reports?
+
+ 15:42:19 * ogra_ sent his by mail
+
+ 15:42:27 <ogra_> to davidm
+
+ 15:42:30 <davidm> I have them so easy to add
+
+ 15:43:01 <NCommander> beyond that I hav enothing
+
+ 15:43:14 * ogra_ is done too
+
+ 15:43:29 <davidm> OK we are winding down for the end of the year so
+
+ 15:43:43 <NCommander> closing in 3
+
+ 15:43:44 <NCommander> 2
+
+ 15:43:45 <NCommander> 1
+
+ 15:43:48 <NCommander> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

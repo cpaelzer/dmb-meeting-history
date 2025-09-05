@@ -1,0 +1,662 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 26 Aug at 15:00 &mdash; 16:02 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-08-26-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:00.
+
+ * ''LINK:'' https://lists.denx.de/pipermail/u-boot/2021-August/459054.html   (xypron, 15:03)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:13.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html   (bdmurray, 15:13)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html   (bdmurray, 15:23)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html   (bdmurray, 15:23)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:31.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:31)
+
+=== AOB ===
+
+Discussion started by bdmurray at 16:01.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (75)
+ * bdmurray (56)
+ * sil2100 (36)
+ * doko (22)
+ * ubottu (18)
+ * dbungert (18)
+ * schopin (14)
+ * waveform (14)
+ * ginggs (14)
+ * jawn-smith (12)
+ * xypron (9)
+ * juliank (7)
+ * meetingology (2)
+ * mdeslaur (2)
+ * xnox (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:11 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:00 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert xypron ginggs schopin)
+
+ 15:00 <bdmurray> vorlon bdmurray slyon juliank doko mwhudson jawn-smith schopin xypron waveform dbungert sil2100 ginggs
+
+ 15:01 <bdmurray> vorlon:
+
+ 15:01 <vorlon> hmm :)
+
+ 15:01 <vorlon> might want to skip me for now
+
+ 15:01 <bdmurray> uploaded apport fixing a glibc 2.34 test failure
+
+ 15:01 <bdmurray> submitted MP regarding ubuntu-cdimage and Intel IoT images for focal only
+
+ 15:01 <bdmurray> sponsored wmanager for schopin
+
+ 15:01 <bdmurray> uploaded bionic SRU of update-notifier for LP: #1836475
+
+ 15:01 <ubottu> Launchpad bug 1836475 in update-notifier (Ubuntu Bionic) "[SRU] update-notifier-common weekly cron job runs at the same time for all computers across the globe" [High, Fix Committed] https://launchpad.net/bugs/1836475
+
+ 15:02 <bdmurray> uploaded u-r-u for waveform fixing LP: #1936401
+
+ 15:02 <bdmurray> updated focal upgrade instructions at help.u.c
+
+ 15:02 <bdmurray> Intel IoT conversations / work
+
+ 15:02 <bdmurray> finishing the 20.04.3 release
+
+ 15:02 <ubottu> Launchpad bug 1936401 in ubuntu-release-upgrader (Ubuntu Impish) "Migrate Pi users away from u-boot in impish" [Undecided, Fix Released] https://launchpad.net/bugs/1936401
+
+ 15:02 <bdmurray> sorting out my email configuration
+
+ 15:02 <bdmurray> retrospecting on Foundations work for 2021
+
+ 15:02 <bdmurray> ✔ done
+
+ 15:02 <bdmurray> slyon is out
+
+ 15:02 <xypron> I have been working on RISC-V secure boot
+
+ 15:02 <bdmurray> juliank:
+
+ 15:02 <juliank> I'm working on EFI boot management magic
+
+ 15:02 <xypron> There were some problems to solve in U-Boot resulting in a bunch of patches
+
+ 15:02 <juliank> (done)
+
+ 15:03 <xypron> https://lists.denx.de/pipermail/u-boot/2021-August/459054.html
+
+ 15:03 <xypron> Now I can build U-Boot with all security relevant variables inside
+
+ 15:03 <xypron> And it will check the signatures
+
+ 15:03 <xypron> Next is to setup shim
+
+ 15:03 <xypron> <done>
+
+ 15:04 <bdmurray> doko:
+
+ 15:04 <sil2100> xypron: o/ remember that we're going in the order that bdmurray mentions at the beginning, after shuffle ^
+
+ 15:04 <vorlon> ok I'm ready whenever
+
+ 15:04 <doko> - LP: #1939379, -march settings change, was: armv7-a, now armv7-a+fp
+
+ 15:04 <doko> - fixed the libdeflate ftbfs on armhf properly, using armv8-a+simd+crc32
+
+ 15:04 <doko> - LP: #1939413, packages not stripped on arm64, no idea yet why ...
+
+ 15:04 <doko> - OpenJDK security updates prepared and built, handed over to the security
+
+ 15:04 <doko> team
+
+ 15:04 <ubottu> Launchpad bug 1939379 in gcc-11 (Ubuntu) "ARM kernel builds fail with GCC 11" [Undecided, Confirmed] https://launchpad.net/bugs/1939379
+
+ 15:04 <doko> - dh-ada-library: https://bugs.debian.org/992241, no progress yet
+
+ 15:04 <ubottu> Launchpad bug 1939413 in protobuf (Ubuntu) "/usr/lib/aarch64-linux-gnu/libprotobuf.a’ generated with LTO version 9.2 instead of the expected 11.0" [Undecided, New] https://launchpad.net/bugs/1939413
+
+ 15:04 <doko> - LP: #1941710, the c-t-b builds produce a wrong libc.so for non-default
+
+ 15:04 <ubottu> Debian bug 992241 in src:dh-ada-library "dh-ada-library ftbfs with mismatching gcc/gnat versions" [Important, Open]
+
+ 15:04 <ubottu> Launchpad bug 1941710 in cross-toolchain-base (Ubuntu) "buggy libc.so created for non-default 32bit multlibs" [Undecided, New] https://launchpad.net/bugs/1941710
+
+ 15:04 <doko> 32bit multilibs, causing the gcc-N-cross-* packages failing to build
+
+ 15:04 <doko> - OpenJDK 18 snapshot
+
+ 15:04 <doko> - Attending some presentations at DebConf, Python BoF on Friday night
+
+ 15:04 <doko> (done)
+
+ 15:04 <jawn-smith> * aspectc++ regression with glibc 2.34. Actually needs an upstream patch in llvm-toolchain. Investigating other issues with this package now
+
+ 15:04 <jawn-smith> * Re-write ubuntu-image in go                                                                                             * Thanks sil2100 for merging bootfs_steps PR. Also got snapd PR merged
+
+ 15:04 <jawn-smith> * New PR opened for populate_prepare_partitions step
+
+ 15:04 <jawn-smith> * More code re-organization
+
+ 15:04 <jawn-smith> * Supporting field engineers with desktop image customization process
+
+ 15:04 <jawn-smith> * 20.04.3 iso testing on Pi and RISC-V hardware
+
+ 15:04 <jawn-smith> [done]
+
+ 15:05 <schopin> * glibc transition:
+
+ 15:05 <schopin> + fixed wmanager tests. LP: #1940816
+
+ 15:05 <ubottu> Launchpad bug 1940816 in wmanager (Ubuntu) "Autopkgtest fail with glibc 2.34" [Undecided, In Progress] https://launchpad.net/bugs/1940816
+
+ 15:05 <schopin> + worked a lot on the systemd armhf failure, so far no luck. LP: #1940635
+
+ 15:05 <ubottu> Launchpad bug 1940635 in systemd (Ubuntu) "systemd-networkd failing to acquire a DHCP6 lease from dnsmasq on armhf" [Undecided, New] https://launchpad.net/bugs/1940635
+
+ 15:05 <schopin> (done)
+
+ 15:05 <bdmurray> WaVeR:
+
+ 15:05 <bdmurray> sorry waveform
+
+ 15:05 <waveform> * Finished u-r-u quirk for migrating users from u-boot in impish (LP: #1936401)
+
+ 15:05 <waveform> * Investigated openzwave for glibc migration
+
+ 15:05 <waveform> * Focal .3 release ISO testing + JSON updates
+
+ 15:05 <waveform> * Working on tweaking some of the ISO test cases for next time (remove arm64 from pi2, add CM4, 400, etc.)
+
+ 15:05 <waveform> * Investigated possible serial console issues (probable hardware failure)
+
+ 15:05 <waveform> * Worked on sense-hat & sense-emu packaging for debian (just copyright checks)
+
+ 15:05 <ubottu> Launchpad bug 1936401 in ubuntu-release-upgrader (Ubuntu Impish) "Migrate Pi users away from u-boot in impish" [Undecided, Fix Released] https://launchpad.net/bugs/1936401
+
+ 15:05 <waveform> * Pi meetings
+
+ 15:05 <waveform> * Take home test
+
+ 15:05 <waveform> (done)
+
+ 15:05 <dbungert> * curtin: python3-apt conversion MP review in progress, will split out some
+
+ 15:05 <dbungert> smaller chunks to simplify a bit
+
+ 15:05 <dbungert> * ftbfs grep: - have a proposed upload (LP: #1940999), working with sponsor on
+
+ 15:05 <ubottu> Launchpad bug 1940999 in grep (Ubuntu) "FTBFS against glibc 2.34" [High, Confirmed] https://launchpad.net/bugs/1940999
+
+ 15:05 <dbungert> the details.  There is a question on if we should continue to build without
+
+ 15:05 <dbungert> using the grep included regex code - today that code is pulled in from glibc
+
+ 15:05 <dbungert> instead, but the glibc version fails one of the grep unittests (where the
+
+ 15:05 <dbungert> built-in regex code in grep does not fail - LP: #1940996)
+
+ 15:05 <ubottu> Launchpad bug 1940996 in grep "test failure - test-regex" [Medium, In Progress] https://launchpad.net/bugs/1940996
+
+ 15:05 <dbungert> * curl proposed-migration: start looking at the regressions, first is
+
+ 15:06 <dbungert> alertmanager-irc-relay - but in my attempts to repro that issue I found a new
+
+ 15:06 <dbungert> FTBFS
+
+ 15:06 <dbungert> * autoinstall-generator: fix LP: #1926292, split out into a secondary issue a
+
+ 15:06 <dbungert> different problem that is exposed when the first issue is not a factor
+
+ 15:06 <ubottu> Launchpad bug 1926292 in autoinstall-generator "App does not work at all" [High, Fix Committed] https://launchpad.net/bugs/1926292
+
+ 15:06 <dbungert> (LP: #1940856)
+
+ 15:06 <ubottu> Launchpad bug 1940856 in autoinstall-generator "Handle multiline directives" [Undecided, New] https://launchpad.net/bugs/1940856
+
+ 15:06 <dbungert> * focal: run thru 2 subiquity amd64 mandatory iso tests
+
+ 15:06 <dbungert> (done)
+
+ 15:06 <bdmurray> sil2100:
+
+ 15:06 <sil2100> * SRU reviews and releases
+
+ 15:06 <sil2100> * NEW reviews
+
+ 15:06 <sil2100> * DMB meeting (partially there)
+
+ 15:06 <sil2100> * Ubuntu Core discussion
+
+ 15:06 <sil2100> * 20.04.3:
+
+ 15:06 <sil2100> - Lots of coordination
+
+ 15:06 <sil2100> - Did a test install on my Nvidia-hardware, looked all goo
+
+ 15:06 <sil2100> - Tweaks to the isotracker download links
+
+ 15:06 <sil2100> - Generated changes list for .3, sorted the changes per categories (such wow, much manual)
+
+ 15:06 <sil2100> - Coordinated a respin of just subiquity images, made sure no other changes got pulled in
+
+ 15:06 <sil2100> - Verified arm64/armhf base tarballs
+
+ 15:06 <sil2100> - Prepublished images
+
+ 15:07 <sil2100> - ...and then published the images \o/
+
+ 15:07 <sil2100> - Archived all the previous point-releases
+
+ 15:07 <sil2100> - Tweaked the archive-image script, adjusted publish-image-set for the new image sets
+
+ 15:07 <sil2100> - Worked on some additional messaging (legacy server installer)
+
+ 15:07 <sil2100> - Sent out announcements after proper e-mail setup, yay!
+
+ 15:07 <sil2100> * Updated documentation regarding our CI/CD core snap setup (wiki)
+
+ 15:07 <sil2100> * Added missing ESM PPAs to britney ESM, but didn't finish the production deployment *yet*
+
+ 15:07 <sil2100> * ubuntu-image:
+
+ 15:07 <sil2100> - Reviewed bootfs creation PR for William
+
+ 15:07 <sil2100> - Started tweaking documentation on how to build custom classic preinstalled images
+
+ 15:07 <sil2100> - Discussions about image customization
+
+ 15:07 <sil2100> * Foundations retrospective preparation
+
+ 15:07 <sil2100> * UC22 pipeline opening:
+
+ 15:07 <sil2100> - Tweaked the UC22 pi gadget to build with the new base, finally!
+
+ 15:07 <sil2100> - Fixed core22 to build on LP after latest changes got deployed by Colin
+
+ 15:07 <sil2100> - UC22 pi images finally building, new core22 in edge
+
+ 15:07 <sil2100> * Working with the snapstore team trying to figure out why core20 reviews cause reviewing tooling crashes
+
+ 15:07 <sil2100> - Finally new core20 snaps are successfully getting uploaded!
+
+ 15:07 <sil2100> * A few lines of code to the simplestreams support for cdimage
+
+ 15:07 <sil2100> * Staffing discussions
+
+ 15:07 <sil2100> * Started my +1 maintenance
+
+ 15:07 <sil2100> * Looking into livecd-rootfs umount failures on UI CI again
+
+ 15:07 <sil2100> (done)
+
+ 15:08 <bdmurray> ginggs:
+
+ 15:08 <ginggs> * fixed fpc FTBFS with glibc 2.34
+
+ 15:08 <ginggs> * +1 Maintenance, Monday through Wednesday
+
+ 15:08 <ginggs> - sync'd delve/1.7.0-3
+
+ 15:08 <ginggs> - found pcre2 needed a transition, uploaded fixed package and no-change rebuilds of reverse dependencies
+
+ 15:08 <ginggs> - uploaded no-change rebuilds of rebuilds of ppp's reverse dependencies to complete transition
+
+ 15:08 <ginggs> - looked at cod-tools autopkgtest failure on ppc64el blocking diffutils and curl, submitted MP for a hint, but we decided to add it to big_packages instead
+
+ 15:08 <ginggs> - merged openmpi, uploaded to bileto, checked autopkgtest results and published
+
+ 15:08 <ginggs> * finished up preparing strace upload to fix FTBFS, filed LP: #1941750
+
+ 15:08 <ubottu> Launchpad bug 1941750 in strace (Ubuntu) "FFe: strace FTBFS with gcc 11 / glibc 2.34" [Undecided, New] https://launchpad.net/bugs/1941750
+
+ 15:08 <ginggs> (done)
+
+ 15:09 <bdmurray> any questions on status?
+
+ 15:10 <vorlon> I didn't go yet :)
+
+ 15:10 <vorlon> * archive work: NBS, processing Debian removals (including old and unused gccs), NEW processing, kernel cleanup in focal-proposed
+
+ 15:10 <vorlon> * license reviews for the ESM team
+
+ 15:10 <vorlon> * interviewing
+
+ 15:10 <vorlon> * trying to sort out breakage of ping (missing fscap) in armhf autopkgtest runners; ran instead into apparmor problems trying to build a new image
+
+ 15:10 <vorlon> (done)
+
+ 15:11 <schopin> vorlon: do you have a link to the ping breakage thing for armhf ?
+
+ 15:12 <vorlon> schopin: I think we have a jira card open for it now, with no details
+
+ 15:12 <vorlon> FR-1639
+
+ 15:13 <bdmurray> okay, moving on
+
+ 15:13 <bdmurray> #topic Release Incoming Bugs
+
+ 15:13 <schopin> thanks, I'll glance at it, on the off chance it's related to my DHCPv6 problem.
+
+ 15:13 <vorlon> and https://paste.ubuntu.com/p/2K2xqnBVm2/
+
+ 15:13 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html
+
+ 15:13 <vorlon> schopin: if your dhcpv6 problem involves a binary on the system that should have an fscap and now does not, then yes :)
+
+ 15:13 <bdmurray> bug 1876034
+
+ 15:13 <ubottu> Bug 1876034 in command-not-found (Ubuntu) "apt update crashes with 'KeyError: 'suite'' in cnf-update-db if index compression is enabled" [Medium, Confirmed] https://launchpad.net/bugs/1876034
+
+ 15:14 <bdmurray> I found this the other day and having command-not-found not work doesn't seem ideal
+
+ 15:14 <vorlon> "if index compression is enabled" - is that something that happens by default?
+
+ 15:15 <bdmurray> juliank: ?
+
+ 15:15 <juliank> on Docker images I think it is default?
+
+ 15:16 <bdmurray> Oh right, I found this via the sponsor report because there is an MP
+
+ 15:16 <bdmurray> So it seems like a low hanging fruit
+
+ 15:16 <vorlon> ok
+
+ 15:16 <juliank> We want a different fix where it uses apt-helper cat-file fwiw (I really should expose apt_pkg.FileFd)
+
+ 15:17 <bdmurray> "cat-file"? cows and cats? what's next?
+
+ 15:17 <jawn-smith> pythons
+
+ 15:17 <juliank> gophers
+
+ 15:17 <bdmurray> juliank: Seriously though if there is a different fix can you comment on that somewhere?
+
+ 15:18 <vorlon> lemurs
+
+ 15:18 <schopin> mutts.
+
+ 15:18 <waveform> indri surely? :)
+
+ 15:18 <juliank> bdmurray: It's not written, but it's trivial
+
+ 15:19 <bdmurray> bug 1865900
+
+ 15:19 <ubottu> Bug 1865900 in apache2 (Ubuntu) "apache 2.4.29-1ubuntu4.12 authentication with client certificate broken" [Undecided, In Progress] https://launchpad.net/bugs/1865900
+
+ 15:21 <bdmurray> It looks like there is a python3-requests patch here which might solve the issue
+
+ 15:22 <bdmurray> mdeslaur: do you have anything to add about this bug?
+
+ 15:23 <bdmurray> let's leave that open and I'll check with marc
+
+ 15:23 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html
+
+ 15:23 <bdmurray> that's empty
+
+ 15:23 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:24 <bdmurray> bug 1917062 showed up during iso testing
+
+ 15:24 <ubottu> Bug 1917062 in plymouth (Ubuntu) "Decryption passphrase prompt not displayed until escape is pressed (Xubuntu hirsute test case)" [High, Confirmed] https://launchpad.net/bugs/1917062
+
+ 15:24 <mdeslaur> bdmurray: I don't see any progress in the upstream bug, so I don't think there's anything we can do...
+
+ 15:25 <mdeslaur> oh, I didn't see the last comment
+
+ 15:25 <bdmurray> that's what I was looking at
+
+ 15:26 <bdmurray> During iso testing for 20.04.3 would the encryption passphrase have been tested with Ubuntu or something not Xubuntu?
+
+ 15:28 <bdmurray> If not could somebody test with Ubuntu and see if you have to press escape?
+
+ 15:28 <jawn-smith> I think there is a test case for FDE
+
+ 15:28 <bdmurray> jawn-smith: could you investigate and maybe check it then?
+
+ 15:29 <bdmurray> comment #28 seems to have good repro steps
+
+ 15:29 <jawn-smith> sure
+
+ 15:29 <waveform> jawn-smith, http://iso.qa.ubuntu.com/qatracker/milestones/425/builds/235539/testcases/1451/results seems to be the LVM+FDE test case
+
+ 15:30 <waveform> (for .3)
+
+ 15:31 <bdmurray> #topic Team proposed-migration report
+
+ 15:31 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:32 <vorlon> boost vs cmake: ginggs it looks like you've been triggering some retries of this recently, any insight?
+
+ 15:33 <ginggs> no, I was trying to test each package against the version of boost in -proposed
+
+ 15:34 <vorlon> ok
+
+ 15:34 <vorlon> doko: from your side do you know anything about this?
+
+ 15:34 <doko> no. can we remove boost1.71?
+
+ 15:35 <vorlon> oh, is this not the current version?
+
+ 15:35 <vorlon> there are some reverse-deps to sort out
+
+ 15:35 <vorlon> libui-gxmlcpp5v5 python3-libcegui-mk2-0.8.7 vitis-ai-runtime:arm64 ?
+
+ 15:35 <doko> snapcast, vitis-ai
+
+ 15:35 <vorlon> but I can follow up I suppose
+
+ 15:36 <vorlon> cmake also triggered llvm-toolchain-12 tests to fail, and a retry didn't fix it
+
+ 15:36 <vorlon> can someone investigate this?
+
+ 15:37 <doko> does this also show with llvm-13? if not, then maybe just ignore it
+
+ 15:38 <vorlon> it apparently doesn't.  but llvm-toolchain-12 is the one currently in main?
+
+ 15:38 <ginggs> there is a new llvm-toolchain-12 in -proposed
+
+ 15:38 <ginggs> (but not built everywhere yet)
+
+ 15:38 <vorlon> is there a reason to think that fixes things?
+
+ 15:39 <vorlon> I'd like someone to commit to follow up
+
+ 15:39 <vorlon> doko: will you?
+
+ 15:39 <doko> not me at this point
+
+ 15:39 <vorlon> ok
+
+ 15:39 <vorlon> ginggs: ?
+
+ 15:40 <ginggs> i'll take a look
+
+ 15:40 <vorlon> thanks
+
+ 15:40 <vorlon> glibc has a few failing autopkgtests still
+
+ 15:41 <vorlon> per discussion with mwhudson, the netplan.io is the only one that should be considered critical path, the others are believed to be bugs outside of glibc
+
+ 15:41 <vorlon> aspectc++: not a glibc bug and can be addressed by removing the package; jawn-smith any other comments?
+
+ 15:41 <doko> yes, mwhudson suggested to remove it
+
+ 15:42 <jawn-smith> no, it appears to be llvm related rather than glibc so I'm fine with the removal
+
+ 15:42 <vorlon> netplan.io: LP: #1940635 is filed by slyon. Who is following up on this one?
+
+ 15:42 <ubottu> Launchpad bug 1940635 in systemd (Ubuntu) "systemd-networkd failing to acquire a DHCP6 lease from dnsmasq on armhf" [Undecided, New] https://launchpad.net/bugs/1940635
+
+ 15:42 <schopin> I am
+
+ 15:42 <vorlon> ok, updating the bug assignee to match
+
+ 15:42 <doko> jawn-smith, I saw you backporting a gcc patch. is this related?
+
+ 15:43 <jawn-smith> in my ppa you mean? I thought it might be related but it turned out not to be
+
+ 15:43 <vorlon> schopin: and the netplan and systemd test failures are the same root cause?
+
+ 15:43 <vorlon> openzwave: waveform, any updates? otherwise we've confirmed this is removable
+
+ 15:43 <schopin> vorlon: very probably.
+
+ 15:44 <vorlon> and r-cran-sys is confirmed to be an infrastructure problem (ping), not a bug in glibc or r-cran-sys
+
+ 15:45 <vorlon> (apparently the testsuite still passed once on retry, so maybe one of the armhf runners has a non-buggy fs?!)
+
+ 15:45 <waveform> vorlon, I'd go ahead with removal -- found it fails to build under gcc-11 (which was already reported upstream, but sans fix), which was due to a call against a NULL object
+
+ 15:45 <vorlon> waveform: ok
+
+ 15:45 <doko> ok, removing
+
+ 15:46 <vorlon> ok; there's also boost1.71 blocking zlib, which if I work out a boost 1.71 removal, goes away
+
+ 15:47 <vorlon> zlib also blocked by the same llvm-toolchain-12 failure
+
+ 15:47 <vorlon> and by vg
+
+ 15:47 <vorlon> anyone want to dig into these zlib-triggered regressions?
+
+ 15:47 <vorlon> slyon: can you take these?
+
+ 15:47 <doko> didn't we ignore some vg failures before?
+
+ 15:48 <vorlon> no idea
+
+ 15:48 <bdmurray> slyon is out for the week
+
+ 15:48 <schopin> slyon isn't here
+
+ 15:48 <vorlon> ah
+
+ 15:48 <vorlon> xypron: could you take a look at these zlib-related failures?
+
+ 15:49 <doko> vorlon, why, these are same as for cmake
+
+ 15:49 <schopin> fwiw the zlib upload has only touched s390x-specific code paths
+
+ 15:49 <vorlon> doko: the vg isn't
+
+ 15:50 <vorlon> schopin: could be that something is misbuilt with the new toolchain though, so still needs investigated
+
+ 15:50 <doko> that's "failure", not "failures" ;p
+
+ 15:50 <vorlon> doko: fine :)
+
+ 15:50 <vorlon> xypron: are you ok to look into the vg failure triggered by zlib?
+
+ 15:50 <schopin> agreed, just giving some pointers for whoever looks into it.
+
+ 15:50 <vorlon> then we have a bunch of things blocked by glibc...
+
+ 15:50 <vorlon> schopin: you uploaded the openssl that's blocked; are you following through on that or do you need someone else to?
+
+ 15:51 <schopin> some help would be nice
+
+ 15:51 <vorlon> dbungert: can you help here?
+
+ 15:51 <dbungert> I'm happy to start on that, but had assumed that I would be looking at curl regressions - what's your preference?
+
+ 15:52 <vorlon> dbungert: ok, you can keep curl
+
+ 15:52 <dbungert> OK
+
+ 15:52 <vorlon> bdmurray: can you help with openssl?
+
+ 15:52 <bdmurray> I can certainly try
+
+ 15:53 <vorlon> doko: binutils vs glibc, is that something you can follow up on?
+
+ 15:53 <vorlon> boost1.74 is stuck in -proposed, I'm assuming that's mwhudson's
+
+ 15:54 <doko> that's wrong trigger, didn't mwhudson propose to ignore that one for now?
+
+ 15:54 <vorlon> doko: I didn't hear that from him; if it's the wrong trigger, can you follow up all the same to get it unstuck?
+
+ 15:55 <vorlon> xypron: e2fsprogs has failing autopkgtests in -proposed, can you follow up on this and let us know if you need help?
+
+ 15:56 <xypron> e2fsprogs is in my backlog
+
+ 15:56 <vorlon> is slyon back next week?  we probably should leave systemd to him
+
+ 15:56 <xypron> vorlon ^
+
+ 15:56 <vorlon> xypron: thanks
+
+ 15:56 <vorlon> ok sounds like slyon is still out next week
+
+ 15:56 <xnox> i wonder if systemd armhf is fcap too
+
+ 15:57 <vorlon> waveform: could you take a look at systemd, then?
+
+ 15:57 <waveform> vorlon, ack
+
+ 15:57 <vorlon> dbungert has curl
+
+ 15:57 <dbungert> ack
+
+ 15:57 <vorlon> juliank: could you look at icu vs boost?
+
+ 15:57 <schopin> xnox: yeah I had the same idea.
+
+ 15:57 <juliank> vorlon: I think I'm out of time
+
+ 15:59 <vorlon> can anyone else look at icu vs boost?
+
+ 15:59 <vorlon> the rest is kind of a mess, probably falls out from cleanup of systemd and a few other things so I'm not going to try to assign these out
+
+ 15:59 <vorlon> ginggs: could you look at the systemd-triggered autopgktest regressions?
+
+ 16:00 <ginggs> sure
+
+ 16:01 <vorlon> ok
+
+ 16:01 <vorlon> then let's stop there
+
+ 16:01 <vorlon> bdmurray:
+
+ 16:01 <bdmurray> #topic AOB
+
+ 16:01 <bdmurray> I'm out tomorrow
+
+ 16:01 <bdmurray> and we are over time
+
+ 16:02 <bdmurray> so thanks everybody!
+
+ 16:02 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

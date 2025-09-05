@@ -1,0 +1,214 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 06 Feb at 16:02 &mdash; 16:34 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-02-06-16.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2025-02-06/   (juliank, 16:02)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:11.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-pp-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:11)
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-oo-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:12)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:22.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:22)
+
+=== AOB ===
+
+Discussion started by juliank at 16:30.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (47)
+ * schopin (11)
+ * Skia (8)
+ * enr0n (3)
+ * meetingology (2)
+ * tobhe (2)
+ * waveform (2)
+ * adrien (2)
+ * andersson123 (1)
+ * bdrung (1)
+
+
+
+== Full log ==
+
+
+ 16:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:02 <meetingology> Meeting started at 16:02:10 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:02 <andersson123> o/
+
+ 16:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:02 <juliank> #topic Lightning rounds
+
+ 16:02 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2025-02-06/
+
+ 16:02 <tobhe> no matrix yet?
+
+ 16:02 <waveform> next month
+
+ 16:03 <schopin> We don't have a proper solution for publicly logging channels, and that's kind of the point of us having the meeting here in the first place ;)
+
+ 16:03 <adrien> \o
+
+ 16:04 <tobhe> schopin: makes sense
+
+ 16:05 * schopin can't remember the last time he'd posted a status report with actual links in it!
+
+ 16:06 <juliank> My commits will have to do
+
+ 16:06 <juliank> Also I just found a bug, brb
+
+ 16:07 <waveform> schopin, "maths is hard" :)
+
+ 16:07 <schopin> I knew you'd notice it ;)
+
+ 16:08 <juliank> auto a = std::move(b);
+
+ 16:08 <juliank> f(b); // no error
+
+ 16:08 <juliank> so annoying :D
+
+ 16:09 <juliank> Imagine spending an hour or so figuring out that oh no actually the code did nothing because the vector you were iterating over was moved away two lines above :D
+
+ 16:11 <juliank> #topic Release incoming bugs
+
+ 16:11 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-pp-incoming-bug-tasks.html#foundations-bugs
+
+ 16:11 <bdrung> enr0n, I am interested in your EOL upgrade support work (since you said something about distro-info)
+
+ 16:11 <juliank> ah just untagged by enr0n
+
+ 16:12 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-oo-incoming-bug-tasks.html#foundations-bugs
+
+ 16:12 <juliank> bug 2096914
+
+ 16:12 <enr0n> bdrung: I am no longer using that approach, since distro-info-data on e.g. kinetic was too old to have noble
+
+ 16:12 <enr0n> So now it's back to statically defining upgrade paths, but in a way that's easier to keep track of IMO
+
+ 16:14 <juliank> the tags seem wrong?
+
+ 16:14 <juliank> regression-release seems awkward
+
+ 16:15 <juliank> that bug is a bit of a mess, none of the comments make _any_ sense
+
+ 16:15 <schopin> Skia: ^
+
+ 16:16 <Skia> ack
+
+ 16:16 <Skia> let me look
+
+ 16:16 <juliank> comment #2 talks about a patch that introduces the issue which causes a FTBFS if anything
+
+ 16:16 <juliank> comment #4 has an rsync without ipv6
+
+ 16:16 <juliank> comment #5 claims rsync from debian, 3.3, is actually 3.4
+
+ 16:17 <Skia> oh, yeah, the rsync bug. I had hoped that server maybe would like to look at this
+
+ 16:17 <Skia> that's seems to be a build configuration issue
+
+ 16:17 <schopin> oh it's shared custody?
+
+ 16:17 <Skia> yes
+
+ 16:18 <juliank> It's a shared package, and the bug is a regression in a security update
+
+ 16:18 <schopin> Cue the 3 spidermen meme
+
+ 16:18 <Skia> XD
+
+ 16:18 <juliank> I can confirm Debian rsync package says 3.3 but rsync --version says 3.4
+
+ 16:19 <juliank> wth
+
+ 16:19 <juliank> let the other spidermen deal with it
+
+ 16:19 <juliank> No updates on the nn bugs
+
+ 16:19 <schopin> what's the process to get the Security team to look at it?
+
+ 16:19 <juliank> (bug 1888347, bug 2088268)
+
+ 16:20 <juliank> schopin: The security uploader has been subscribed to the bug?
+
+ 16:21 <juliank> but it's been 7 days
+
+ 16:21 <schopin> ¯\_(ツ)_/¯
+
+ 16:22 <juliank> I subscribed the team
+
+ 16:22 <adrien> does anyone know why the patch linked (about reconfigure) has been added?
+
+ 16:22 <juliank> shrug
+
+ 16:22 <juliank> #topic Team proposed-migration report
+
+ 16:22 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:22 <schopin> I just see SECURITY UPDATE in the changelog, my mind goes blank afterwards.
+
+ 16:22 <juliank> heh
+
+ 16:23 <juliank> 17 packages needing attention, 36 packages not yet considered late
+
+ 16:23 <juliank> and tired joalif
+
+ 16:23 <juliank> um
+
+ 16:23 <juliank> tired juliank
+
+ 16:23 <juliank> :D
+
+ 16:24 <juliank> recap: libgit2 is with schopin, vim with mwhudson, libpng1.6 vs gtk4 with uralt , xxhash with rkratky
+
+ 16:24 <schopin> numpy is with PS6 outage
+
+ 16:25 <Skia> I've retried all the regressions from this morning already, queue is still burning, will do again tomorrow
+
+ 16:26 <juliank> lapack  enr0n
+
+ 16:26 <enr0n> ack
+
+ 16:27 <juliank> systemd enr0n :D
+
+ 16:28 <juliank> ncurses: ginggs
+
+ 16:29 <juliank> dhcpcd : levihackerman
+
+ 16:30 <juliank> Leaving gcc and binutils
+
+ 16:30 <juliank> and that's all
+
+ 16:30 <juliank> #topic AOB
+
+ 16:32 <Skia> Noble .2 next week! :-)
+
+ 16:33 <schopin> If you wanted something in .2 and you haven't been pinged by the release team yet, it's probably too late :P
+
+ 16:34 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

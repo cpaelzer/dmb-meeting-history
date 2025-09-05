@@ -1,0 +1,674 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by pitti at 21:01:00 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-12-21.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/TechnicalBoardAgenda   (pitti, 21:01:38)
+ *action review
+
+ *edubuntu LTS application
+
+ *non-PAE kernel disposition
+
+ *Micro release Exception for Nova, Swift, Glance, and Keystone
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2011-November/001142.html   (pitti, 21:57:27)
+
+ *next meeting
+
+
+
+Meeting ended at 22:00:28 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (91)
+ * cjwatson (64)
+ * slangasek (30)
+ * kees (27)
+ * tgardner (26)
+ * stgraber (18)
+ * soren (18)
+ * mdz (12)
+ * highvoltage (7)
+ * meetingology (3)
+ * broder (2)
+ * jdstrand (2)
+ * Riddell (2)
+ * bjf (1)
+ * ScottK (1)
+
+
+
+== Full Log ==
+
+
+ 21:01:00 <pitti> #startmeeting
+
+ 21:01:00 <meetingology> Meeting started Mon Dec 12 21:01:00 2011 UTC.  The chair is pitti. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 21:01:00 <meetingology> 
+
+ 21:01:00 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 21:01:07 * stgraber waves
+
+ 21:01:13 <pitti> welcome everyone to Ubuntu Late Night Tech Talk
+
+ 21:01:23 <pitti> *cough* Tech Board
+
+ 21:01:38 <pitti> #link https://wiki.ubuntu.com/TechnicalBoardAgenda
+
+ 21:01:53 <pitti> (just updated with another agenda item)
+
+ 21:02:12 <pitti> kees: here by chance?
+
+ 21:02:22 <pitti> ah, you waved, nvm
+
+ 21:02:34 <pitti> #topic action review
+
+ 21:02:56 <pitti> sorry, I spectacularly failed with documenting the brainstorm review bits
+
+ 21:03:10 <pitti> will do first time tomorrow, promised (unless yet another thing blows up all over again :) )
+
+ 21:03:11 <highvoltage> if you're going to fail, at least do it spectacularly.
+
+ 21:03:25 * pitti has a huge paper note at his desk now
+
+ 21:03:34 <pitti> so, kees didn't start yet, so both carried
+
+ 21:03:42 <pitti> #topic edubuntu LTS application
+
+ 21:03:54 <pitti> stgraber: this is still blocked on Kubuntu LTS app, right?
+
+ 21:04:01 <pitti> or is there something else for this which we should talk about?
+
+ 21:04:05 <kees> yeah, sorry :(
+
+ 21:04:55 <stgraber> pitti: still blocked on Kubuntu and my inability to use germinate :)
+
+ 21:05:03 <highvoltage> Well, I see from the link earlier that Kubuntu now has a proposal on the way, so that's a good thing at least.
+
+ 21:05:18 <Riddell> bit late due to my ill health alas
+
+ 21:05:26 <highvoltage> I updated the apps list of what we currently ship on https://wiki.ubuntu.com/Edubuntu/12.04/LTS-Proposal
+
+ 21:05:33 <jdstrand> what is the proper forum to repsond to the https://wiki.kubuntu.org/Kubuntu/12.04/LTS-Proposal application?
+
+ 21:05:46 <stgraber> pitti: I have the full diff from Kubuntu+Ubuntu => Edubuntu which contains a lot of java stuff, so trying to re-generate the list without geogebra (that's pulling everything) but for some reason germinate doesn't seem to care about my local changes to the seed :)
+
+ 21:05:47 <pitti> highvoltage: ah, that list is very useful, thanks
+
+ 21:05:55 <Riddell> jdstrand: technical-board list?
+
+ 21:06:01 <highvoltage> there's also a link to packages that's installed that's not on the Ubuntu/Kubuntu discs: http://paste.ubuntu.com/768132/ (thanks to stgraber)
+
+ 21:06:08 <jdstrand> ok
+
+ 21:06:24 <pitti> stgraber: and freemind, presumably?
+
+ 21:06:24 <cjwatson> stgraber: contact me about that outside the context of the meeting and I expect I can help
+
+ 21:06:58 <pitti> dia-gnome and calibre seem rather hard to support, but otherwise the list looks pretty tame
+
+ 21:07:00 <stgraber> pitti: right, though apparently geogebra is the worst, I don't mind having a few java dependencies, having hundreds of them is a bit annoying though :)
+
+ 21:07:26 <broder> stgraber: have you cross-referenced that against the server seed? seems like there's probably a fair amount of server stuff in there
+
+ 21:07:28 <broder> err, java stuff
+
+ 21:07:33 <stgraber> cjwatson: will do, that was my next step :)
+
+ 21:07:43 <pitti> stgraber: ok, so should we carry that until the next meeting until Kubuntu has been discussed?
+
+ 21:08:09 <stgraber> broder: The output was diffing ubuntu.precise + kubuntu.precise to edubuntu.precise, I expect ubuntu-server to be part of ubuntu.precise (but should definitely check)
+
+ 21:08:14 <stgraber> pitti: yep
+
+ 21:08:31 <cjwatson> BTW you might find it easier to use python-germinate now that it exists
+
+ 21:08:45 <cjwatson> save on parsing
+
+ 21:09:01 <cjwatson> ubuntu-server is in the ubuntu.precise seed collection, yes
+
+ 21:09:01 <stgraber> oh right, forgot the new shiny stuff, will give it a try
+
+ 21:09:26 <pitti> #topic non-PAE kernel disposition
+
+ 21:09:37 <pitti> anyone from the kernel team here?
+
+ 21:09:46 <tgardner> who is driving the discussion ?
+
+ 21:09:48 <pitti> tgardner, bjf?
+
+ 21:09:51 <bjf> yes
+
+ 21:10:00 <pitti> ah, hello!
+
+ 21:10:14 * cjwatson sends a reminder to slangasek, since I know he wanted to weigh in here
+
+ 21:10:20 <slangasek> ah yes, hi
+
+ 21:10:22 <pitti> it was already discussed quite a bit on the lists (@devel, IIRC)
+
+ 21:10:34 <tgardner> we'd like to drop the non-pae kernel since we don't think its getting much use.
+
+ 21:10:38 <ScottK> It only felt like devel-discuss.
+
+ 21:11:06 <cjwatson> wait, I'm sorry, "we don't think it's getting much use" ?!
+
+ 21:11:11 <pitti> so my first question would be how much actual effort it would be to keep the flavour; if it's more than the kernel team can spend, we wouldn't have much to decide anyway
+
+ 21:11:24 <tgardner> plus, I think supporting it for another 5 years is a waste of resource.
+
+ 21:11:30 <pitti> from my outside POV it doesn't feel like a lot of extra maintenance, but IANAKD
+
+ 21:11:39 <tgardner> pitti, its all incremental.
+
+ 21:12:08 <cjwatson> not getting much use is obviously no kind of sense at all because it's the default up to oneiric.
+
+ 21:12:15 <pitti> second question: given that it is currently our default kernel, do we have a proven rock-solid way of migration, or determining when a CPU does not support PAE and stopping the upgrade?
+
+ 21:12:44 <kees> I have no memory of non-pae flavors ever causing ftbfs or other support problems. why not drop it in P+1 and then everyone is happy?
+
+ 21:13:05 <pitti> I'm certainly in favour of making the PAE one the default kernel in P as a first step
+
+ 21:13:06 <kees> pitti: non-pae will not boot a pae kernel at all.
+
+ 21:13:13 <pitti> kees: right
+
+ 21:13:15 <kees> yeah, me too
+
+ 21:13:20 <pitti> kees: I meant, what to do with upgrades?
+
+ 21:13:34 <kees> pitti: ah, the "pae" flag in cpuinfo should be sufficient.
+
+ 21:13:40 <pitti> we can't just do the upgrade and then leave the user with an unbootable system
+
+ 21:13:44 <pitti> so we'd need an update-manager quirk there
+
+ 21:13:51 <tgardner> pitti, I think the upgrade path is clear for those that have PAE capable CPUs.
+
+ 21:13:53 <pitti> which sounds rather easy to do
+
+ 21:14:01 <tgardner> we will have to check that its capable.
+
+ 21:14:04 <slangasek> my own concerns are twofold
+
+ 21:14:11 <cjwatson> It's only clear if you make the -generic kernel depend on -generic-pae, which makes it unclear for the rest
+
+ 21:14:15 <pitti> tgardner: the upgrade would be via switching linux-meta?
+
+ 21:14:30 <pitti> and keeping the non-PAE names as transitionals?
+
+ 21:14:36 <tgardner> pitti, taht, and the upgrade manager would have to detect PAE support
+
+ 21:14:47 <slangasek> - I don't understand why there's any measurable incremental cost to maintaining this flavor for the kernel team, and I don't get the impression this cost has actually been measured (I alluded to this in https://lists.ubuntu.com/archives/ubuntu-devel/2011-November/034463.html, but perhaps should have asked the question more directly)
+
+ 21:14:48 <cjwatson> This is too important to rely on update-manager
+
+ 21:15:51 <pitti> failing linux/linux-meta preinsts would be the "last line of defence", but quite ugly, too
+
+ 21:15:58 <tgardner> cjwatson, so how do you normally do this sort of thing when capabilities are being withdrawn ?
+
+ 21:16:21 <pitti> tgardner: I think we don't have much precedence here, we need to figure it out
+
+ 21:16:23 <cjwatson> It must go in packages themselves, not relying on update-manager
+
+ 21:16:36 <slangasek> - since feedback to the question on ubuntu-devel overwhelmingly indicated that there are users who care about having a pae kernel for precise (which is exactly the kind of feedback you'd expect in such a thread), it's not at all clear what the threshold actually is for "getting enough use" to be worth keeping
+
+ 21:16:38 <cjwatson> It is simply not acceptable to cause upgraders with apt-get to end up with unbootable systems
+
+ 21:17:16 <cjwatson> (In any case, I think it's incumbent on those developers who are withdrawing support to deal with this kind of thing)
+
+ 21:17:20 <tgardner> slangasek, nobody presented any hard facts. I expected a little howling anyways.
+
+ 21:17:59 <cjwatson> slangasek: do you mean "having a non-pae kernel for precise"?
+
+ 21:18:16 <tgardner> cjwatson, I agree. but we have to solve this problem now or later.
+
+ 21:18:20 <cjwatson> Why?
+
+ 21:18:26 <slangasek> tgardner: "I run a non-PAE machine that I care about running precise on" is certainly a hard fact; I'm not sure what you mean
+
+ 21:18:27 <kees> slangasek: you meant "having a non-pae kernel for precise" ?
+
+ 21:18:33 <slangasek> tgardner, kees: yes, I meant non-pae, sorry
+
+ 21:18:41 <cjwatson> Optimising the i386 architecture does not seem compelling to me.
+
+ 21:19:09 <cjwatson> I don't feel at all good about chopping off another percentage of users.  Sooner or later salami tactics are going to bite.
+
+ 21:19:24 <tgardner> slangasek, there a folks that ran sparc, ia64, and hppa. why did we drop those ?
+
+ 21:19:49 <cjwatson> Those had orders of magnitude fewer users and orders of magnitude greater difficulty in supporting them.
+
+ 21:20:00 <soren> I don't thikn the maintenance burden of those flavours compares very well to the non-PAE one.
+
+ 21:20:01 <mdz> is there any way we can get some data on this, so we don't have to make as many assumptions?
+
+ 21:20:31 <mdz> e.g. can we actually try to estimate the proportion of our user base who would be affected by this?
+
+ 21:20:58 <cjwatson> We could start a thread on -devel and assume that the people who reply are unrepresentative
+
+ 21:21:00 <tgardner> the one fact that I have is that non-PAE CPUs have not been in widespread production for 10 years. (I think tat was what Ben said on the list)
+
+ 21:21:01 <cjwatson> sorry
+
+ 21:21:27 <highvoltage> if I may chime in, in my dayjob we hava clients who use thin clients that weren't bought not too long ago (3-5 years ago) that uses via cpus that don't have pae support. we have one client that runs more then 5000 of these machines. upgrading them to stay on the latest lts right now would be quite costly
+
+ 21:21:36 <mdz> I think we have an excess of anecdotes and a dearth of data
+
+ 21:21:47 <highvoltage> (it's easier to say it's supported for now but in 5 years it will be dropped than it suddenly happening now)
+
+ 21:22:15 <highvoltage> (and sorry for adding another anectode :) )
+
+ 21:22:18 <mdz> how about counting the proportion of non-pae CPUs in hardware profile submissions?
+
+ 21:22:39 <slangasek> tgardner: I would also like to understand why this is a maintenance burden for the kernel team; since I can't see any reason it should be a measurable amount of work, if it actually *is*, I think that's a process bug that I'd like to see if I could help fix
+
+ 21:22:40 <tgardner> bjf might be able to have a look at that.
+
+ 21:22:49 <slangasek> (in its own right, and not just because of non-pae in particular)
+
+ 21:22:51 <pitti> mdz: wouldn't catch thin clients, but at least it's some data
+
+ 21:22:51 <kees> this isn't about if the machines exist or not (they do) since no one is talking about eliminating non-pae. the question, as I saw it, was _how_ to move it to universe for precise.
+
+ 21:23:01 <cjwatson> FWIW, while I'm totally unpersuaded as to the need to drop i386/generic, I'm happy to switch the installer default
+
+ 21:23:29 <mdz> pitti, I suggest only that it would be more representative than our individual opinions :-)
+
+ 21:23:41 <pitti> cjwatson: right; I'm not really concerned about new installs/live system here, much more about upgrades
+
+ 21:23:47 <tgardner> cjwatson, that only makes sense if we drop non-pae, right? otherwise it just won't boot
+
+ 21:23:47 <slangasek> kees: the proposal from tgardner was to assist someone in uploading a separate source package for a non-pae flavor to universe; I think that's tantamount to killing it (or ought to be
+
+ 21:23:48 <pitti> mdz: yes, fully agreed :0
+
+ 21:23:48 <cjwatson> kees: That has not been clear to me; I had been given to understand that this was the kernel team wanting to stop building i386/generic, which isn't -> universe, it's -> /dev/null
+
+ 21:23:49 <kees> it sounds like the kernel team wants -generic out of main. I have no problem with that, the default kernel for ubuntu should have been PAE a long time ago, so I'd support that.
+
+ 21:23:51 <slangasek> )
+
+ 21:24:02 <pitti> I don't believe in a separate universe package
+
+ 21:24:16 <pitti> it'll essentially double the maintenance effort without any benefit
+
+ 21:24:20 <cjwatson> tgardner: Huh?  It doesn't require the kernel packaging to drop the generic flavour at all.
+
+ 21:24:29 <kees> making non-pae unavailable for this release (an LTS) seems like a serious mistake. I see no evidence at all that it would help anything.
+
+ 21:24:33 <pitti> or, if we don't double it, then people can't run it as it wouldn't get security updates, etc.
+
+ 21:24:42 <cjwatson> d-i s/generic/generic-pae/, base-installer (or preseeds or something) s/generic/generic-pae/, done
+
+ 21:25:01 <slangasek> having a separate source package for non-pae might look good on paper from the kernel team's perspective, but with my archive admin hat on I think that would be a pretty broken thing to do, and I don't think anyone would actually step up to do it on those terms
+
+ 21:25:20 <kees> I here 3 topics: making PAE the default kernel (we seem to all agree +1), moving non-pae to universe, dropping non-pae completely.
+
+ 21:25:22 <cjwatson> Personally I'm not happy with kernels in universe as it's a pain for archive admins to manage which are in universe and which in main; it's a lot simpler if they're all in main
+
+ 21:25:28 <cjwatson> But I suppose we could solve that if we had to
+
+ 21:25:45 <mdz> from the perspective of someone who hasn't kept up with ubuntu-devel recently, it's surprising to me how heated this discussion is
+
+ 21:25:55 <kees> I'm completely against all-out dropping of non-pae.
+
+ 21:25:56 <mdz> can we try to dial it back a little?
+
+ 21:26:30 <kees> mdz: sure. can we do 1 topic at a time, then? I think that may help.
+
+ 21:26:32 <tgardner> slangasek, the maintenance burden is non-zero. its costs some amount of time to build it, there are config files to maintain, and so on. Its not a huge burden, but I'm trying to assess whether its worth while as all. time is money.
+
+ 21:26:39 <pitti> ah, you mean do build it from "linux", just have the binary in universe
+
+ 21:26:54 <pitti> above I meant that I don't believe in a separate source in universe
+
+ 21:27:02 <pitti> we tried that several times in the past, and it didn't work out
+
+ 21:27:16 <kees> pitti: agreed
+
+ 21:27:42 <slangasek> tgardner: I have a hard time believing that any maintenance costs to keep it in an LTS even approach the amount of time that's already been spent discussing ;)
+
+ 21:27:50 <cjwatson> While I understand that the kernel team specifically would probably save some small amount of time by dropping one i386 flavour, I question whether the net time benefit to the Ubuntu (development) community as a whole is positive
+
+ 21:28:10 <tgardner> slangasek, it does when you consider the repetetive nature of the maintenance process.
+
+ 21:28:35 <cjwatson> Not to mention the net time cost to users of affected systems if we were to drop the flavour entirely
+
+ 21:28:45 <tgardner> don't forget, I'm also looking forward to a number of ARM flavours, so I'm trying to shed some work.
+
+ 21:29:32 <kees> is there any objection to moving to pae-by-default?
+
+ 21:29:42 <pitti> well, at some point we need an upgrade mechanism to deprecate flavours
+
+ 21:29:52 <pitti> I just don't think we have that worked out properly yet
+
+ 21:30:00 <cjwatson> I do not object, although I anticipate some trickle of requests to be able to install on older systems, which will come in as regressions
+
+ 21:30:15 <cjwatson> That will take some amount of my time to diagnose before I determine that they are non-PAE
+
+ 21:30:38 <kees> okay, so, next is "drop non-pae entirely?"
+
+ 21:30:39 <pitti> my feeling is that we should switch to PAE by default first and have a few alphas/betas with that out for real field testing
+
+ 21:30:47 <stgraber> I don't object, though it's easier to switch to the PAE kernel post-install rather than finding a way to get a non-PAE installer
+
+ 21:30:52 <cjwatson> But on the whole PAE-by-default is probably a better default, at least, for precise
+
+ 21:30:53 <slangasek> tgardner: well, I still don't understand how you arrive at the conclusion that an extra flavor which is nearly identical to generic-pae in every way and should be maintainable in a scriptable fashion has a measurable impact, and I would like to understand that - but I don't necessarily want to take up the TB's time with that discussion
+
+ 21:31:11 <pitti> and can then drop non-PAE to universe in P+1 when we worked out an upgrade mechanism to safely stop upgrades for non-PAE systems
+
+ 21:31:32 <soren> If we actually intend to keep it around in universe, but not be the default, the install instructions will be embarassing. "First, install Oneiric. Then, upgrade to Precise." and it gets even worse for P+1.
+
+ 21:31:37 <stgraber> my guess is that having PAE the default for desktop is fine, alternate and server may be a bit trickier (and not having the same everywhere would be even worse)
+
+ 21:31:49 <soren> Can we have one kernel in the installer and another as the default in the installed system?
+
+ 21:31:52 <pitti> we'll need the same mechanism for the gazillions of armel flavours that we have at some point, too
+
+ 21:31:56 <cjwatson> stgraber: If we have the same everywhere it's not especially challenging
+
+ 21:31:56 <soren> Hm... I guess that'll be quite costly in ISO space.
+
+ 21:32:00 <cjwatson> soren: Yes, but it's a bad idea
+
+ 21:32:12 <cjwatson> soren: It means some people can boot the installer but not the installed system
+
+ 21:32:34 <soren> cjwatson: WEll, the installer could detect the non-PAE-ness of the system and install the non-PAE kernel, but again: ISO space.
+
+ 21:32:48 <cjwatson> soren: If the non-PAE flavour is in universe, then by definition the installer won't consider it
+
+ 21:32:52 <cjwatson> (And yes, ISO space)
+
+ 21:33:02 <soren> cjwatson: Ah, yes.
+
+ 21:33:03 <cjwatson> (But I think that's a secondary issue)
+
+ 21:33:28 <soren> Someone would need to provide a special iso for non-pae.
+
+ 21:33:32 <cjwatson> netboot
+
+ 21:33:44 <pitti> soren: why?
+
+ 21:33:46 <cjwatson> Although we can't build debian-installer for non-PAE if the non-PAE kernel is in universe.
+
+ 21:33:49 <kees> soren: yes, this is what already happens. the pae kernel is pulled from the network when pae+>3G RAM is seen.
+
+ 21:33:58 <soren> kees: Oh, ok.
+
+ 21:34:00 <cjwatson> So in reality, non-PAE -> universe means that it's upgrade-only, no fresh installs
+
+ 21:34:08 <cjwatson> kees: not on CD installs right now
+
+ 21:34:08 <soren> pitti: Why what?
+
+ 21:34:21 <kees> cjwatson: I thought that was a feature of the alt installer?
+
+ 21:34:25 <kees> I read the code for that...
+
+ 21:34:28 <cjwatson> kees: We prefer that CD installs are self-contained
+
+ 21:34:32 <pitti> soren: I mean, either we declare PAE as dead or not; if we do, then we shouldn't jump through hoops to actually do support it through the backdoor
+
+ 21:34:42 <pitti> (and my feeling is that Precise+1 is the right time to do that, not Precise0
+
+ 21:34:44 <soren> pitti: "someone" wouldn't be "us".
+
+ 21:34:45 <cjwatson> kees: The code to select it is there, but at that point the apt sources.list doesn't include a network source
+
+ 21:34:51 <kees> ah
+
+ 21:34:59 <cjwatson> Unless you're doing a network install
+
+ 21:35:12 <soren> pitti: Someone with a non-pae system who cared enough.
+
+ 21:35:20 <pitti> soren: ah, ok
+
+ 21:35:21 <cjwatson> Anyway, this feels like a digression to some extent, but I wanted to clarify the exact implications of moving to universe
+
+ 21:35:43 <pitti> tgardner: would it actually buy anything if the non-pae binary was in universe?
+
+ 21:35:50 <pitti> (because I fail to see the benefit of that)
+
+ 21:35:54 <kees> so, as for data, with bdmurray's help, I downloaded 7271 x86 cpuinfos from bug reports on LP about a year ago. 336 of those were non-pae. http://bazaar.launchpad.net/~cpu-checker-dev/cpu-checker/trunk/files/head:/test/
+
+ 21:35:55 <tgardner> pitti, not from my perspective
+
+ 21:35:59 <cjwatson> pitti: yes
+
+ 21:36:01 <pitti> we'll have a hard enough time sorting out components already
+
+ 21:36:08 <cjwatson> pitti: It would guarantee that anyone who's installed afresh with precise is not using a non-PAE kernel
+
+ 21:36:12 <kees> so that's just under 5%
+
+ 21:36:35 <tgardner> cjwatson, don't we guarentee that by making PAE the default boot kernel ?
+
+ 21:36:53 <pitti> cjwatson: so, ignoring community supported ISOs (soren's proposal)
+
+ 21:37:01 <cjwatson> tgardner: That would be a smaller change with probably a similar effect, yes
+
+ 21:38:02 <cjwatson> 5% is way more than I'm comfortable with saying can't upgrade to precise
+
+ 21:39:03 <pitti> and probably an underestimation, too
+
+ 21:39:14 * cjwatson wouldn't want to guess that either way
+
+ 21:39:20 <pitti> (thin clients, more technically savvy people having more modern machines, etc.)
+
+ 21:39:56 <pitti> a lot of kees' attachments coming from development releases (apport), etc.
+
+ 21:40:01 <mdz> kees, thank you!
+
+ 21:40:13 <tgardner> then the one thing we should come out of this discussion with is an approach to end-of-life 'cause this is going to happen in the ARM space as well.
+
+ 21:40:15 <kees> yeah, I'm not saying it's the best data, but it is something.
+
+ 21:40:40 <mdz> it gets us in the ballpark
+
+ 21:40:46 <cjwatson> There is some degree of precedent for doing things in libc6.preinst, which might also apply to a kernel preinst
+
+ 21:41:05 <cjwatson> It's a pretty ugly way to fail but it is a failsafe
+
+ 21:41:24 <soren> Well, for libc6, we're pretty sure it's going to attempt the update quite early on (due to lots and lots of dependencies on it), right?
+
+ 21:41:30 <cjwatson> update-manager could be used to apply more grace
+
+ 21:41:35 <pitti> agreed
+
+ 21:41:50 <cjwatson> (i.e. tell you before you start downloading anything)
+
+ 21:41:59 <slangasek> tgardner: for my part, I don't think we would be having this discussion for EOLing an ARM flavor
+
+ 21:42:00 <pitti> or just not offer to upgrade at all
+
+ 21:42:31 <slangasek> because each ARM flavor has its own kernel source package, so there's obviously a huge cost to maintain each one
+
+ 21:42:47 <tgardner> slangasek, why? dropping non-pae is no different dropping ti-omap4, is it ?
+
+ 21:42:58 <pitti> so I think I see consensus that TB members wouldn't like to drop non-pae support for precise already
+
+ 21:43:29 <pitti> at least not until (1) non-PAE is the default, and (2) the finer details of upgrades are implemented
+
+ 21:43:36 <kees> I think the right time to drop arch support is after LTS.
+
+ 21:43:37 <slangasek> tgardner: sure it is; ti-omap4 is a separate, non-upstream source tree which incurs a serious maintenance burden for security updates et al, and non-pae is a toggle in a kernel config
+
+ 21:44:08 <soren> I also expect the number of impacted users to be quite different?
+
+ 21:44:28 <slangasek> soren: I don't assume that to be the case going forward
+
+ 21:44:30 <tgardner> slangasek, from the users perspective I don't think its any different. it certainly is a much larger maint burden.
+
+ 21:44:39 <pitti> I think from an upgrade experience POV omap vs. non-PAE are quite similar indeed
+
+ 21:44:39 <slangasek> at some point, our omap4 userbase may well exceed 5% of our i386 userbase
+
+ 21:44:40 <cjwatson> FWIW, I do think that the right long-term story for the majority (not all) of PAE-capable systems is to figure out smooth crossgrades to amd64
+
+ 21:44:47 <stgraber> kees: +1 I'm more than happy to drop non-PAE for 12.10, the LTS is pretty much the worst possible time to do it (from our users' point of view)
+
+ 21:44:49 <pitti> we curently don't have a good story for deprecating arches
+
+ 21:44:55 <soren> slangasek: Yes, but now?
+
+ 21:45:05 <cjwatson> Hence my comment above about not seeing the need to optimise the i386 architecture much
+
+ 21:45:41 <slangasek> soren: certainly not now - I was trying to speak to the broader question tgardner raised, of how do we approach EOLing support of a kernel flavor
+
+ 21:45:57 <slangasek> soren: I don't believe that EOLing ti-omap4 is on the table for precise anyway
+
+ 21:46:14 <slangasek> lamont might be a bit peevish if we dropped support for all the new buildds ;)
+
+ 21:46:24 <tgardner> slangasek, indeed he would
+
+ 21:46:58 <soren> slangasek: Right. My point is just that the number of impacted users affects the gravity of decision.
+
+ 21:47:17 <soren> But I think that's been well established by now anyway :)
+
+ 21:47:58 <slangasek> soren: certainly.  I still believe there's a relevant *qualitative* difference between dropping a flavor from a kernel source package and dropping a heavily-patched BSP kernel source package that would take precedence
+
+ 21:48:33 <soren> slangasek: Certainly.
+
+ 21:48:42 <slangasek> if someone felt strongly that there should be a ti-omap4 tree that the kernel team didn't want to maintain, they could step up and do that
+
+ 21:48:55 <slangasek> and the net impact would be the same and everyone would be happy
+
+ 21:49:17 <pitti> slangasek: well, we'd still need to solve the very same upgrade issue
+
+ 21:49:24 <pitti> (but I think we discussed how to do that already)
+
+ 21:49:43 <slangasek> but when you're saying that someone who wants to continue support for non-pae should do it as a separate source package, that's much less efficient than if it were maintained in tree
+
+ 21:50:05 <slangasek> and costs the time not only of someone volunteering to maintain it, but also of the SRU, security, and (possibly) installer teams
+
+ 21:50:50 <slangasek> pitti: I don't think we would... if the ti-omap4 flavor went away, we wouldn't automatically upgrade them to the kernel flavor for an unrelated SoC
+
+ 21:51:03 <slangasek> there is no ARM "generic" kernel
+
+ 21:51:26 <pitti> slangasek: we can't call that supported, though
+
+ 21:51:34 <pitti> the installed kernel would never ever get any upgarde any more
+
+ 21:51:47 <pitti> so the only sensible thing there you can do is to stop upgrading altogether IMHO
+
+ 21:51:53 <pitti> (and at EOL just say "sorry")
+
+ 21:51:57 <cjwatson> I think we need to think about that separately; the upgrade questions seem quite dissimilar to the case at hand here
+
+ 21:52:19 <pitti> I actually think it's one of the main reasons why we can't drop it yet
+
+ 21:52:29 <cjwatson> We can derive some hints from our response to this case, but it doesn't give us a solution
+
+ 21:52:51 <tgardner> Is everyone comfortable that I can _for sure_ drop this flavour for 12.10 ?
+
+ 21:53:01 <slangasek> I would have no objection to that
+
+ 21:53:08 <pitti> no objection from me
+
+ 21:53:22 <stgraber> I'm definitely fine dropping it for 12.10, I'd like it if we announce it ASAP though
+
+ 21:53:33 <tgardner> count on that
+
+ 21:53:34 <pitti> also, any objectoin to switching to PAE by default in P?
+
+ 21:53:38 <stgraber> so people can plan to roll out 12.04 as their last release on that hardware
+
+ 21:54:00 <pitti> as I'd like some actual field testing of that; dropping the current default seems a bit too fast
+
+ 21:54:11 <stgraber> pitti: I'd like to still keep a documented way of installing non-PAE 12.04. I'm fine if that option is d-i's mini.iso though.
+
+ 21:54:17 <cjwatson> I'm comfortable with announcing plans for that, but I think there should be some level of negative feedback beyond which we reverse
+
+ 21:54:39 <cjwatson> It is not clear where the burden of proof for that lies
+
+ 21:55:25 <cjwatson> It would be feasible to (a) change installer default to PAE (b) add a non-PAE installer flavour which is netboot only (or maybe cdrom and selectable by flavours such as Lubuntu)
+
+ 21:55:32 <kees> tgardner: yeah, +1 from me too to drop non-pae in P+1
+
+ 21:55:39 <cjwatson> I am happy to do that fairly small amount of work
+
+ 21:56:28 <stgraber> good, sounds like we have a plan then!
+
+ 21:56:43 <cjwatson> (Hardly anyone will find that new installer flavour off their own bat, but it would be possible to direct people to it)
+
+ 21:56:44 <pitti> great
+
+ 21:56:56 <cjwatson> FWIW that's what we did before for the old -386 flavour
+
+ 21:57:15 <pitti> we have one more topic, but are running out of time
+
+ 21:57:22 <pitti> #topic Micro release Exception for Nova, Swift, Glance, and Keystone
+
+ 21:57:27 <pitti> https://lists.ubuntu.com/archives/technical-board/2011-November/001142.html
+
+ 21:57:34 <pitti> everyone ok with discussign that on the list?
+
+ 21:57:36 <kees> I wonder if might be possible to improve the "fail-to-boot-you're-missing-PAE" message the non-PAE kernel produces...
+
+ 21:58:05 * kees nods
+
+ 21:58:07 <stgraber> pitti: works for me
+
+ 21:58:20 <pitti> #topic next meeting
+
+ 21:58:38 <pitti> I figure we can safely assume that December 26 meeting won't happen?
+
+ 21:58:51 <pitti> (I certainly can't be there)
+
+ 21:58:57 * cjwatson will not be there
+
+ 21:59:17 <pitti> so the next one will be January 9, at the sprint
+
+ 21:59:18 <mdz> I probably won't be around either
+
+ 21:59:19 * soren neither
+
+ 21:59:36 <stgraber> pitti: skipping the 2nd of January too?
+
+ 21:59:39 <pitti> mdz: can you chair on Jan 9? You're next on the alphabetica llist
+
+ 21:59:44 <stgraber> pitti: doh, nevermind :)
+
+ 21:59:49 <mdz> pitti, I think so, let me confirm
+
+ 21:59:58 <mdz> pitti, yes
+
+ 22:00:02 <pitti> splendid
+
+ 22:00:12 <pitti> so, thanks everyone, and for that circle, happy christmas holidays!
+
+ 22:00:20 <kees> \o
+
+ 22:00:23 <slangasek> thanks for your time, guys
+
+ 22:00:24 <tgardner> later...
+
+ 22:00:28 <pitti> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

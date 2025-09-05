@@ -1,0 +1,455 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 26 Mar at 15:01 &mdash; 15:51 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-03-26-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:01.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:07.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:20.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:42.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (79)
+ * xnox (24)
+ * juliank (18)
+ * sil2100 (17)
+ * doko (11)
+ * waveform (11)
+ * ubottu (10)
+ * rbalint (9)
+ * slyon (8)
+ * tdaitx (7)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started Thu Mar 26 15:01:33 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <bdmurray> #topic Lightning rounds
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform slyon)
+
+ 15:02 <bdmurray> mwhudson juliank waveform bdmurray rbalint sil2100 vorlon xnox doko slyon infinity tdaitx
+
+ 15:02 <bdmurray> no mwhudson so juliank
+
+ 15:02 <juliank> wooohoo
+
+ 15:02 <juliank> * made the debian-cd oem work ready to land, take #2 (also handle kernel-flavour: default)
+
+ 15:02 <juliank> * apt 2.0.1 (colored error prefixes, wooohoo)
+
+ 15:02 <juliank> * synced python-apt 1.9.10
+
+ 15:02 <juliank> * worked around mypy 0.770 failures in python-apt; fixed failure in mypy: https://github.com/python/typeshed/pull/3882
+
+ 15:02 <juliank> * initial work on designing the interactive/non-interactive apt stuff
+
+ 15:02 <juliank> * initial work on the installing grub to multiple ESPs (copy and paste code from grub-pc to grub-efi...)
+
+ 15:02 <juliank> * some upstream grub emails
+
+ 15:02 <juliank> (done)
+
+ 15:02 <bdmurray> waveform:
+
+ 15:03 <waveform> * Worked on uc20 boot sequence (tweaked env vars in boot script to fit new snapd requirements)
+
+ 15:03 <waveform> * Added some bells and whistles to pibootctl (bash completion)
+
+ 15:03 <waveform> * Started work on pi configuration tool to sit on top of pibootctl
+
+ 15:03 <waveform> * Updated flash-kernel with new +raspi kernel flavor (LP: #1868071)
+
+ 15:03 <waveform> * Updated flash-kernel to make initrd optional on pi; improves boot speed by 4s but requires further work before we can switch to it (LP: #1867791)
+
+ 15:03 <waveform> * Preparing upgrade of linux-firmware-raspi2 (again!)
+
+ 15:03 <ubottu> Launchpad bug 1868071 in flash-kernel (Ubuntu Bionic) "flash-kernel needs to support 'raspi' kernel flavors" [Medium,Confirmed] https://launchpad.net/bugs/1868071
+
+ 15:03 <ubottu> Launchpad bug 1867791 in flash-kernel (Ubuntu Bionic) "initrd should be optional on pi" [Undecided,New] https://launchpad.net/bugs/1867791
+
+ 15:03 <waveform> * Testing bionic->focal and eoan->focal upgrades on the pi (slowly :)
+
+ 15:03 <waveform> (done)
+
+ 15:03 <bdmurray> waveform: what flash-kernel testing can I help with?
+
+ 15:03 <bdmurray> its a me!
+
+ 15:03 <bdmurray> SRU verifications for apport bug LP: #1814611
+
+ 15:03 <bdmurray> helped mclemenceau fix an apport autopkgtest failure
+
+ 15:03 <bdmurray> tested setting regulatory domain to fix LP: #1862760
+
+ 15:03 <bdmurray> special SRU review of glib2.0 - included badtesting packages
+
+ 15:03 <ubottu> Launchpad bug 1814611 in apport (Ubuntu Bionic) "turning off "Send error reports to Canonical" prevents using ubuntu-bug" [High,Fix committed] https://launchpad.net/bugs/1814611
+
+ 15:03 <ubottu> Launchpad bug 1862760 in linux-firmware-raspi2 (Ubuntu Focal) "Unreliable 802.11ac connection on our raspi images" [Undecided,Triaged] https://launchpad.net/bugs/1862760
+
+ 15:03 <bdmurray> emailed ubuntu-devel re langpacks on desktop ISOs
+
+ 15:03 <bdmurray> discussed RPi image symlinking
+
+ 15:03 <bdmurray> uploaded u-r-u with updated kernel and initrd fallback size calculations
+
+ 15:03 <bdmurray> much work on ubuntu-security-status
+
+ 15:03 <bdmurray> ✔ done
+
+ 15:04 <bdmurray> rbalint:
+
+ 15:04 <rbalint> * landed systemd 245.2 in Focal
+
+ 15:04 <rbalint> * uploads via Debian: kodi 18.6 and all rev deps
+
+ 15:04 <rbalint> * partner work
+
+ 15:04 <waveform> bdmurray, mostly just making sure that on all pis it works without crashing and then a reboot operates correctly - I've tested it on a reasonable selection here but more testing is always good
+
+ 15:04 <rbalint> * MIR: many lintian dependencies
+
+ 15:04 <rbalint> * emacs: switch to use Python 3
+
+ 15:04 <rbalint> (done)
+
+ 15:04 <bdmurray> sil2100:
+
+ 15:04 <sil2100> Oh, me
+
+ 15:04 <sil2100> - SRU reviews and releases
+
+ 15:04 <sil2100> - Kernel SRU reviews
+
+ 15:04 <sil2100> - netplan:
+
+ 15:04 <sil2100> * Cherry-picked and sponsored Lukases autopkgtest fixes for netplan.io focal
+
+ 15:04 <sil2100> * Some discussions on future netplan plans
+
+ 15:04 <sil2100> * Reading up on SR-IOV devices and their support
+
+ 15:04 <sil2100> * Finished base implementation, finalizing filtered vlan setup
+
+ 15:04 <sil2100> * Started working on unit-tests
+
+ 15:04 <sil2100> * Looked into some details for the read-write spec
+
+ 15:04 <sil2100> - Prepared release tracking document for 20.04 beta
+
+ 15:04 <sil2100> - Moved the BetaReleaseChecklist to the tracking document
+
+ 15:05 <sil2100> - Extended the GPG key for langpack builds, pushed to keyserver
+
+ 15:05 <sil2100> - Built first set of focal language-packs, made sure the new -ckb packs got accepted
+
+ 15:05 <sil2100> - Release team work, some FFe reviews
+
+ 15:05 <sil2100> - Stuff
+
+ 15:05 <sil2100> (done)
+
+ 15:05 <xnox> rbalint:  emacs python3? which bits?
+
+ 15:05 <bdmurray> vorlon is out for the week
+
+ 15:05 <bdmurray> xnox:
+
+ 15:05 <xnox> UC20 ubuntu-core-initramfs ftbfs debugging
+
+ 15:05 <xnox> UC20 snapd.mount is mounted for install mode, now needs to happen for run-mode too
+
+ 15:05 <xnox> Updating llvm-toolchain to final v10 release with s390x arch set to z13
+
+ 15:05 <xnox> Uploaded atlas with min-arch set at z13
+
+ 15:05 <xnox> Merge proposals for ubuntu-archive-scripts merged, switching GG series to single signed key
+
+ 15:05 <xnox> Made merge proposal for what-is-python migration
+
+ 15:05 <xnox> TODO: chat with mvo as to what is wrong with CNF data
+
+ 15:05 <xnox> Worked on drafting OEM archive spec
+
+ 15:05 <xnox> Working on OVS netplan spec
+
+ 15:05 <xnox> done
+
+ 15:05 <bdmurray> doko:
+
+ 15:06 <doko> - python b-d removals
+
+ 15:06 <doko> - MIRs
+
+ 15:06 <doko> - package removals
+
+ 15:06 <doko> - fixing ftbfs
+
+ 15:06 <doko> - OpenJDK updates
+
+ 15:06 <rbalint> xnox, it called out to "python" to run sripts, see the very simple diff
+
+ 15:06 <doko> (done)
+
+ 15:06 <bdmurray> slyon:
+
+ 15:06 <slyon> * fixed netplan's integration tests
+
+ 15:06 <slyon> * split netplan into libnetplan.so + binaries, making use of the lib
+
+ 15:06 <slyon> * verify and cleanup the packaging for libnetplan[-dev] and netplan.io
+
+ 15:06 <slyon> * setup test env for libnetplan <-> NetworkManager netplan plugin
+
+ 15:06 <slyon> * working on NetworkManager plugin code & creating unit tests
+
+ 15:06 <slyon> (done)
+
+ 15:06 <bdmurray> infinity isn't about
+
+ 15:06 <bdmurray> tdaitx:
+
+ 15:06 <xnox> rbalint:  tah!
+
+ 15:07 <tdaitx> Short week: worked only 2 half-days
+
+ 15:07 <tdaitx> * emails, checking and following up on new/updated bug reports
+
+ 15:07 <tdaitx> Other:
+
+ 15:07 <tdaitx> - limited connectivity; ISP disabled the old connection before enabling it in the new location, so my server cannot do any heavy lifting for now; expect to be fixed some time tomorrow morning
+
+ 15:07 <tdaitx> - will work half a day today (maybe again tomorrow, depending on ISP) and will compensate these hours over the weekend
+
+ 15:07 <tdaitx> (done)
+
+ 15:07 <bdmurray> #topic Release incoming bugs
+
+ 15:07 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:08 <bdmurray> bug 1867065
+
+ 15:08 <ubottu> bug 1867065 in casper (Ubuntu) "Installer hangs at boot on machine" [Critical,Confirmed] https://launchpad.net/bugs/1867065
+
+ 15:09 <bdmurray> this is related to the spinner theme stuff
+
+ 15:09 <bdmurray> so lets move on
+
+ 15:10 <bdmurray> bug 1868191
+
+ 15:10 <ubottu> bug 1868191 in ubiquity (Ubuntu) "Unchecking all optional media apps, install fails" [Undecided,New] https://launchpad.net/bugs/1868191
+
+ 15:10 <xnox> there has been some progres; but more casper work is needed
+
+ 15:11 <bdmurray> This one seems to be a dupe of bug 1851346 so next
+
+ 15:11 <ubottu> bug 1851346 in ubuntustudio-live (Ubuntu Focal) "Ubuntu Studio 19.10 Installer Causes Wanted Programs to be Removed" [Undecided,Confirmed] https://launchpad.net/bugs/1851346
+
+ 15:12 <bdmurray> bug 1868716
+
+ 15:12 <ubottu> bug 1868716 in git (Ubuntu) "git: fatal: mmap failed: Cannot allocate memory" [Undecided,New] https://launchpad.net/bugs/1868716
+
+ 15:13 <bdmurray> doko: you think we should be fixing this for Focal
+
+ 15:14 <doko> bdmurray: would be nice to have a working git?
+
+ 15:15 <bdmurray> Okay, lets target and card that then.
+
+ 15:15 <bdmurray> And lets all keep an eye out for issues with git
+
+ 15:16 <xnox> possibly a support issue
+
+ 15:16 <bdmurray> bug 1868240 - it looks like seb is investigating
+
+ 15:16 <ubottu> bug 1868240 in plymouth (Ubuntu) "No plymouth screens displayed at all after installing the Nvidia driver" [Undecided,Incomplete] https://launchpad.net/bugs/1868240
+
+ 15:17 <bdmurray> bug 1868409
+
+ 15:17 <ubottu> bug 1868409 in ubuntu-meta (Ubuntu) "gnome-{calculator,logs,characters} snaps not removed after the equivalent APT packages are installed on 20.04, and gnome-software APT package not replaced by snap-store" [Undecided,Confirmed] https://launchpad.net/bugs/1868409
+
+ 15:17 <bdmurray> I'm just gonna comment on that, I believe update-manager is supposed to sort this out
+
+ 15:20 <bdmurray> rls-ee and rls-bb are fine
+
+ 15:20 <bdmurray> #topic Team proposed-migration report
+
+ 15:21 <bdmurray> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:22 <bdmurray> is openssh still with security?
+
+ 15:23 <bdmurray> doko: ^^
+
+ 15:23 <doko> bdmurray: yes
+
+ 15:23 <xnox> mercurial -> i propose to reduce the autopkgtest to basic usage only
+
+ 15:23 <bdmurray> netplan.io I thought I just read the tests were fixed
+
+ 15:24 <xnox> yes
+
+ 15:24 <xnox> but the test retriggers didn't happen (or got lost)
+
+ 15:24 <slyon> netplan is fixed in 0.98-0ubuntu4
+
+ 15:24 <xnox> i retriggered again today, there should be results in a few hours
+
+ 15:24 <bdmurray> okay
+
+ 15:24 <xnox> if not something odd is happening
+
+ 15:24 <bdmurray> python3-defaults - kazoo
+
+ 15:25 <bdmurray> the failure on arm64 looks the same as the amd64 failure which retrying fixed
+
+ 15:25 <bdmurray> however retrying arm64 didn't help...
+
+ 15:26 <bdmurray> So if somebody could help me look at it that would be nice
+
+ 15:26 <bdmurray> xnox: did you look at python-fabio?
+
+ 15:28 <xnox> yes, and gave up
+
+ 15:28 <xnox> i don't understand it =(
+
+ 15:29 <bdmurray> maybe mwhudson can sort it out
+
+ 15:29 <bdmurray> what about scipy?
+
+ 15:29 <bdmurray> It didn't show up last week iirc
+
+ 15:32 <bdmurray> rbalint: can you look at beets?
+
+ 15:32 <rbalint> bdmurray, sure, taking it
+
+ 15:32 <bdmurray> xnox will take gnutls28
+
+ 15:32 <waveform> I'll take mu-editor
+
+ 15:32 <bdmurray> thanks
+
+ 15:33 <bdmurray> I'll look at django-axes
+
+ 15:33 <bdmurray> tdaitx: can you look at dune-common?
+
+ 15:33 <tdaitx> bdmurray: will do
+
+ 15:33 <doko> I'll look at beets
+
+ 15:33 <bdmurray> slyon: Do you time to look at anything?
+
+ 15:34 <slyon> I'm mostly busy with NetworkManager currently
+
+ 15:34 <bdmurray> okay
+
+ 15:34 <bdmurray> juliank: python-llfuse?
+
+ 15:35 <juliank> ok
+
+ 15:35 <bdmurray> I guess we need to loop around
+
+ 15:35 <bdmurray> python-nacl - doko?
+
+ 15:36 <bdmurray> scipy we'll leave for vorlon or mwhudson
+
+ 15:37 <bdmurray> lapack - anybody?
+
+ 15:37 <xnox> i'll take it
+
+ 15:37 <bdmurray> pcre3 ... php-mockery we'll ask server
+
+ 15:38 <bdmurray> uchardet - rbalint?
+
+ 15:38 <rbalint> bdmurray, ok
+
+ 15:38 <bdmurray> pinentry I'll have a look
+
+ 15:38 <bdmurray> dpkg - julian‽
+
+ 15:39 <juliank> mhh
+
+ 15:40 <xnox> sil2100:  lapack is no longer built on i386, so it should be badtested on i386, and then badtest removed, britney "missfired" i386 request
+
+ 15:40 <juliank> that seems a bit excessive
+
+ 15:40 <bdmurray> I'm sorry could you elaborate?
+
+ 15:41 <juliank> well, there are no related failures afaict, and they're spread across a lot of ecosystems
+
+ 15:42 <xnox> bdmurray:  i'll take dpkg to drive to resetting
+
+ 15:42 <bdmurray> xnox okay, thanks!
+
+ 15:42 <bdmurray> #topic AOB
+
+ 15:43 <bdmurray> Next week is Beta!
+
+ 15:43 <doko> yes, autopkg images
+
+ 15:43 <juliank> I'm off tomorrow
+
+ 15:43 <juliank> should we revert shim nowß
+
+ 15:43 <juliank> ?
+
+ 15:43 <doko> juliank: any progress with the update, or is it waiting on the kernel?
+
+ 15:43 <juliank> doko: well, i have not looked
+
+ 15:45 <bdmurray> how can we decide about shim?
+
+ 15:45 <juliank> shim is breaking fwupd (or well, any argument passed to it)
+
+ 15:46 <waveform> anybody that has a bit of time and a spare pi or three - feel free to test out pibootctl from ppa:waveform/pibootctl - now with (incomplete) bash completion :)
+
+ 15:47 <bdmurray> julian will look in the age of focal autopkg images
+
+ 15:50 <bdmurray> okay, lets wrap this up
+
+ 15:50 <bdmurray> 1
+
+ 15:51 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

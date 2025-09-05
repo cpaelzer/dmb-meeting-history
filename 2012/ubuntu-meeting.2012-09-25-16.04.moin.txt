@@ -1,0 +1,567 @@
+#title #ubuntu-meeting: ubuntu-server-team
+
+Meeting started by jimbaker at 16:04:44 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-09-25-16.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Review ACTION points from previous meeting
+
+ *Quantal Development
+''LINK:'' https://wiki.ubuntu.com/ServerTeam/KnowledgeBase#Team_policy under "IRC"  (arosales, 16:09:55)
+''LINK:'' https://launchpad.net/juju/+milestone/0.6 gives a nice overall picture of the target release we have  (SpamapS, 16:19:17)
+''ACTION:'' hallyn files and ideally resolves qxl bug... all in the same day!  (jimbaker, 16:28:19)
+  *Blueprints  (jimbaker, 16:34:28)
+''LINK:'' http://status.ubuntu.com/ubuntu-quantal/ubuntu-server.html   (jimbaker, 16:34:34)
+
+ *Ubuntu Server Team Events
+''LINK:'' http://omniti.com/surge/2012   (jimbaker, 16:49:08)
+''LINK:'' http://omniti.com/surge/2012   (Daviey, 16:49:13)
+
+ *Weekly Updates & Questions for the QA Team (hggdh)
+
+ *Weekly Updates & Questions for the Kernel Team (smb)
+
+ *Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ *Open Discussion
+
+ *Next meeting will be at the same time next week on Oct 2
+''ACTION:'' jimbaker picks chair for next meeting on the fly next week!  (jimbaker, 16:59:58)
+
+
+
+Meeting ended at 17:00:20 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * hallyn files and ideally resolves qxl bug... all in the same day!
+ * jimbaker picks chair for next meeting on the fly next week!
+
+
+
+== Action items, by person ==
+
+ * hallyn
+ ** hallyn files and ideally resolves qxl bug... all in the same day!
+ * jimbaker
+ ** jimbaker picks chair for next meeting on the fly next week!
+
+
+
+== People present (lines said) ==
+
+ * jimbaker (65)
+ * smb (40)
+ * hallyn (20)
+ * Daviey (20)
+ * arosales (18)
+ * SpamapS (18)
+ * jamespage (14)
+ * m_3_ (7)
+ * ubottu (7)
+ * cjwatson (7)
+ * utlemming (6)
+ * meetingology (5)
+ * rbasak (5)
+ * zul (4)
+ * hggdh (2)
+ * adam_g (1)
+
+
+
+== Full Log ==
+
+
+ 16:04:44 <jimbaker> #startmeeting ubuntu-server-team
+
+ 16:04:44 <meetingology> Meeting started Tue Sep 25 16:04:44 2012 UTC.  The chair is jimbaker. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:04:44 <meetingology> 
+
+ 16:04:44 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:56 <adam_g> o/
+
+ 16:05:23 <jimbaker> #topic Review ACTION points from previous meeting
+
+ 16:05:50 <Daviey> (m_3, were there any actions last week?)
+
+ 16:06:05 <jimbaker> jamespage, you were to look into aligning release team and server team trackign reports?
+
+ 16:06:13 <arosales> our logs are looking a little behind https://wiki.ubuntu.com/MeetingLogs/Server
+
+ 16:06:24 <jamespage> still looking at two reports - that can be dropped
+
+ 16:06:27 <jimbaker> (i'm just following ye old cut & paste here...)
+
+ 16:06:46 <arosales> jimbaker: thats the right direction :-)
+
+ 16:07:17 <jimbaker> were there any other action points i should be aware of?
+
+ 16:07:42 <jimbaker> seeing none...
+
+ 16:07:49 <zul> heylo
+
+ 16:08:03 <jimbaker> #topic Quantal Development
+
+ 16:08:51 <m_3_> Daviey: yes... don't know where they are though
+
+ 16:08:55 <jimbaker> arosales, you're right, the logs are not there from the last 2 meetings
+
+ 16:09:10 <arosales> logs from previous meeting are at http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-09-18-16.07.html
+
+ 16:09:16 <m_3_> did the meeting chair need to do something to make that happen?  #fail
+
+ 16:09:18 <arosales> or http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-09-18-16.07.moin.txt
+
+ 16:09:29 <rbasak> We need a checklist for meeting chairs to follow
+
+ 16:09:36 <arosales> jamespage look into running server with no elbow-room
+
+ 16:09:37 <rbasak> At the moment I get the impression that everyone does something slightly different
+
+ 16:09:38 <hallyn> we have one
+
+ 16:09:55 <arosales> https://wiki.ubuntu.com/ServerTeam/KnowledgeBase#Team_policy under "IRC"
+
+ 16:09:58 <m_3_> it was great copy/paste command cheatsheet (thanks serge!)
+
+ 16:10:03 <arosales> rbasak: ^
+
+ 16:10:19 <rbasak> Aha. thanks!
+
+ 16:10:22 <jimbaker> rbasak, that's the listing i'm following
+
+ 16:10:22 <arosales> so to back up one minute before quantal development
+
+ 16:10:27 <Daviey> Anyone would think this is the first time we've done this....
+
+ 16:10:41 <arosales> I think we covered jamespage to look into aligning release team and server team trackign reports
+
+ 16:10:48 * m_3_ whistles innocently
+
+ 16:10:53 <arosales> jamespage: any update on running server with no elbow-room
+
+ 16:11:09 <arosales> and investigate minimum memory requirements for i386 and amd64 server installs
+
+ 16:11:16 <jamespage> arosales, lots of analysis of actuall install sizes - things have def grown
+
+ 16:11:34 <jamespage> I'm going to request a document update that they propose we discuss the size targets at UDS
+
+ 16:11:42 <jamespage> that/then
+
+ 16:12:08 <jamespage> did any of that make sense?
+
+ 16:12:18 <jimbaker> jamespage, made eminent sense to me
+
+ 16:12:19 <jamespage> 1. Update docs to align with current size of installs
+
+ 16:12:28 <jamespage> 2. discuss at UDS if this needs attention
+
+ 16:13:00 <arosales> jamespage: do we need to continue investigating min memory for server installs?
+
+ 16:13:13 <jamespage> arosales, I think cjwatson is looking at that
+
+ 16:13:26 <jamespage> again I don't really have any objection to increasing the mins in the docs
+
+ 16:14:21 <jimbaker> jamespage, ok. what about bug 1049582?
+
+ 16:14:23 <ubottu> Launchpad bug 1049582 in ceph (Ubuntu) "radosgw crash on armhf architecture" [High,In progress] https://launchpad.net/bugs/1049582
+
+ 16:14:35 <arosales> jamespage: ok so perhaps tie that into the doc BP.
+
+ 16:14:39 <jamespage> testing a fix ATM
+
+ 16:14:42 <cjwatson> jamespage: yeah, got a kanban card for that which has pretty much risen to the top of my stack
+
+ 16:14:46 <cjwatson> probably won't fit into b2
+
+ 16:15:03 <jamespage> cjwatson, I don't think thats an issue
+
+ 16:15:12 <jamespage> (that it won't fit in b2)
+
+ 16:15:23 <cjwatson> I have an objection to increasing the minima in the docs before I've had a chance to review and adjust the limits in the software
+
+ 16:15:26 <cjwatson> fwiw
+
+ 16:15:39 <cjwatson> because the latter will likely affect the former
+
+ 16:15:56 <Daviey> cjwatson: Do you have an ETA?
+
+ 16:16:10 <cjwatson> this week
+
+ 16:16:29 <cjwatson> (since I anticipate lots of interruptions from b2)
+
+ 16:16:50 <Daviey> super
+
+ 16:16:53 <Daviey> thanks
+
+ 16:17:19 <jimbaker> any other updates on quantal dev? (i will go next otherwise on juju bugs)
+
+ 16:18:05 <jimbaker> so we have 3 critical bugs in progress on juju, https://bugs.launchpad.net/juju, that i'm working on
+
+ 16:19:17 <SpamapS> https://launchpad.net/juju/+milestone/0.6 gives a nice overall picture of the target release we have
+
+ 16:19:19 <jimbaker> i have identified the underlying problem for 2 out of 3 (openstack token expiry, relation state not found) and the third looks similar to a bug i fixed in juju in the past
+
+ 16:19:23 <SpamapS> (which, btw, was due yesterday)
+
+ 16:19:38 <SpamapS> jimbaker: can you mark those as In Progress if you are indeed working on them?
+
+ 16:20:05 <SpamapS> I plan to start dropping anything not In Progress tomorrow.
+
+ 16:20:14 <jimbaker> SpamapS, in the sense of, i'm working on too many things, yes :)
+
+ 16:20:36 <jimbaker> but i will reprioritize them so we can hit that deadline, nothing is big
+
+ 16:22:42 <SpamapS> jimbaker: we already missed the deadline.. we need to land and ship now and also apply for a FFE for quantal
+
+ 16:23:12 <jimbaker> SpamapS, understood
+
+ 16:23:32 <jimbaker> any other release bugs we should be considering at this time?
+
+ 16:24:02 <hallyn> qxl driver
+
+ 16:24:19 <hallyn> don't think a bug has been opened yet, but i'll work on it this afternoon (after meeting)
+
+ 16:24:33 <hallyn> stgraber found that qxl drive is not working right in quantal dvd image
+
+ 16:24:45 <SpamapS> there's a really nasty bug in lxc
+
+ 16:24:51 <hallyn> oh?
+
+ 16:24:56 <SpamapS> we talked about it yesterday
+
+ 16:25:01 <SpamapS> NS refcount thing
+
+ 16:25:02 <hallyn> oh.  that's not in lxc
+
+ 16:25:12 <SpamapS> when it hits, you are screwed, LXC no longer works and you can't even properly reboot
+
+ 16:25:13 <hallyn> smb is helping coolonely to look into it
+
+ 16:25:15 <SpamapS> sorry
+
+ 16:25:17 <SpamapS> kernel
+
+ 16:25:19 <smb> SpamapS, yep
+
+ 16:25:29 <hallyn> we can hopefully get an update ina few mins :)
+
+ 16:25:38 * SpamapS considers it LXC since LXC is what makes it happen
+
+ 16:25:47 <hallyn> so would vsftpd
+
+ 16:26:04 <smb> hallyn, Yes insofar that I cannot say more right now as I just started to think about it today
+
+ 16:26:15 <jimbaker> good to know we are finding root causes :)
+
+ 16:26:17 <hallyn> smb: ok
+
+ 16:27:40 <jimbaker> hallyn, so maybe action item you will file the qxl bug?
+
+ 16:27:55 <hallyn> jimbaker: k with me
+
+ 16:28:04 <hallyn> and hopefully resolve it too :)
+
+ 16:28:19 <jimbaker> #action hallyn files and ideally resolves qxl bug... all in the same day!
+
+ 16:28:19 * meetingology hallyn files and ideally resolves qxl bug... all in the same day!
+
+ 16:29:01 <hallyn> me and my big mouth
+
+ 16:29:11 <jimbaker> SpamapS, same with the lxc bug, so we know it's linked to the namespace (i take it) refcounting?
+
+ 16:29:31 <hallyn> jimbaker: that has open bug already, on kernel team's hotlist
+
+ 16:29:33 <smb> bug There are currently (at least) two design/technical decisions which have a quite bad impact on running Ubuntu desktop in a virtual machine:
+
+ 16:29:33 <smb> 1) Dropping unity2d in favour of unity+llvmpipe. Since there is no way (at least none that is easy to find) to disable playful effects this puts a considerable stress on the emulated cpu(s). On my desktop, which may not be state of the art but used to be usable for running unity2d desktops in VMs, doing even simple tasks is painfully slow. For example it takes about 3s(!) from when a window begins to fade in until it can be used. And the same
+
+ 16:29:33 <smb> when minimizing. On that machine I also see a lot of X crashes which might be related to overwhelming the cpus (bug 1056080) since a faster machine does not seem to suffer that badly.
+
+ 16:29:35 <ubottu> Error: Bug #1056080 is a duplicate of bug #1048304, but it is private (https://launchpad.net/bugs/1048304)
+
+ 16:29:36 <smb> 2) Adding the Amazon search to the dash search (again without any reasonably easy way to disable this). This further puts stress on the cpu(s) and on the same desktop every keypress is delayed about one second (at least). It also adds to network usage (not to mention any privacy or potential parental control issues).
+
+ 16:29:40 <smb> Those together currently make my experience rather bad. To get anything done within the desktop vm I seem to drag my feet through a pool of mud. And that is just one VM running. Anybody hosting virtual desktops will rip out lots of hair and likely leave for at least the ubuntu-gnome-desktop (classic unaccelerated) which would be rather sad and completely unhelpful in those cases where the ubuntu desktop was used in a VM for testing.
+
+ 16:29:47 <smb> I can understand that getting rid of a duplicated desktop framework will help to focus on the main unity project. But I think in that case there really should be options that allow to reduce the graphical overhead and the amount of feature overhead in a more user-friendly way.
+
+ 16:29:51 <smb> oops
+
+ 16:29:53 <smb> damn multi buffers
+
+ 16:30:00 <smb> bug 1021471
+
+ 16:30:02 <ubottu> Launchpad bug 1021471 in linux (Ubuntu Quantal) "clone() hang when creating new network namespace (dmesg show unregister_netdevice: waiting for lo to become free. Usage count = 2)" [High,Triaged] https://launchpad.net/bugs/1021471
+
+ 16:30:38 <jimbaker> smb, thanks for the link. actually i was thinking that SpamapS might put it in as a juju lxc provider bug since that's where we are observing it, so we can track as being impacted
+
+ 16:31:02 <SpamapS> smb: thanks for sharing tho!
+
+ 16:31:17 <utlemming> smb: I have follow-up on the cloud images
+
+ 16:31:19 <smb> no worries... sorry for the oversharing
+
+ 16:31:35 <SpamapS> jimbaker: nah, its all in the kernel.. I don't think we need to track it.
+
+ 16:31:36 <Daviey> a problem shared is a problem halved
+
+ 16:31:37 <utlemming> from last week -- about Unity working on the Desktop Images
+
+ 16:31:51 <jimbaker> SpamapS, cool
+
+ 16:32:02 <utlemming> short story: the Desktop Cloud images haven't had a desktop sharing solution since Oneiric. And Unity does not work on the desktop images.
+
+ 16:32:16 <utlemming> er -- unity does not work on the Desktop Cloud Images
+
+ 16:32:28 <jimbaker> utlemming, is this something actionable as a quantal release bug?
+
+ 16:33:16 <utlemming> jimbaker: no. The desktop cloud images are not supported. And for R, we're going to have a discussion about them.
+
+ 16:33:23 <smb> utlemming, As you probably noted from the involuntary ranting above I got somewhat depressed about the current situation running in a VM.
+
+ 16:33:39 <utlemming> smb: I noticed :)
+
+ 16:33:43 <jimbaker> utlemming, ok, just checking
+
+ 16:34:00 <jimbaker> any other bugs to discuss before blueprints subtopic?
+
+ 16:34:02 <jimbaker> ...
+
+ 16:34:28 <jimbaker> #subtopic Blueprints
+
+ 16:34:34 <jimbaker> #link http://status.ubuntu.com/ubuntu-quantal/ubuntu-server.html
+
+ 16:35:47 <Daviey> gah, wrong link - try http://status.ubuntu.com/ubuntu-quantal/group/topic-quantal-servercloud-overview.html
+
+ 16:37:05 <jimbaker> Daviey, thanks...
+
+ 16:38:11 <jimbaker> zul, any updates on https://blueprints.launchpad.net/ubuntu/+spec/servercloud-q-openstack-qa ?
+
+ 16:38:19 <zul> jimbaker: no
+
+ 16:39:00 <jimbaker> m_3_, https://blueprints.launchpad.net/ubuntu/+spec/servercloud-q-juju-charm-best-practices ?
+
+ 16:39:02 <jamespage> zul, adam_g: suggest we get together and decide what is going to happen for this cycle
+
+ 16:39:19 <zul> jamespage: sounds like a plan
+
+ 16:39:33 <jimbaker> m_3_, seems like there has been been some good mailing list activity re best practices
+
+ 16:39:54 <m_3_> looks good afaik
+
+ 16:39:56 <jimbaker> as well as documenting in the spreadsheet that jcastro put together
+
+ 16:40:37 <m_3_> some local container bugs outstanding (they'll be postponed most likely)
+
+ 16:40:45 <jimbaker> m_3_, right, just looks like this bp might need some corresponding updating
+
+ 16:40:53 <m_3_> ack
+
+ 16:41:40 <jimbaker> rbasak, any updates on https://blueprints.launchpad.net/ubuntu/+spec/servercloud-q-arm-deployment ?
+
+ 16:41:53 <rbasak> No updates. I'm still working on MAAS
+
+ 16:42:02 <jimbaker> rbasak, understood
+
+ 16:43:11 <jimbaker> SpamapS, https://blueprints.launchpad.net/ubuntu/+spec/servercloud-q-juju-charmstore-maintenance, maintainer assignment is more or less done in place right?
+
+ 16:43:57 <SpamapS> Yes
+
+ 16:44:01 <SpamapS> updating
+
+ 16:44:09 <jimbaker> SpamapS, thanks!
+
+ 16:44:44 <jimbaker> i'm just looking at the clock and your novice chair is seriously running out of time here. everyone else, please see if you can update your BPs
+
+ 16:45:12 <jimbaker> any other BPs that should be discussed at this time? otherwise... moving on
+
+ 16:45:26 <jimbaker> #topic Ubuntu Server Team Events
+
+ 16:46:17 <jimbaker> so i had a good presentation at the boulder big data user meetup - http://www.meetup.com/Boulder-Denver-Big-Data/events/81123992/
+
+ 16:46:42 <jimbaker> 75 people or so showed up, something like 4 hours all together including presentation and questions before, after
+
+ 16:47:15 <arosales> Surge coming up on the 27th
+
+ 16:47:31 <jimbaker> arosales, who will be at surge?
+
+ 16:47:46 <SpamapS> hazmat
+
+ 16:47:48 <Daviey> Oct 15 -> 18. Many Ubuntu Server dev's will be at ODS - http://www.openstack.org/summit/san-diego-2012/
+
+ 16:48:06 <SpamapS> Right, come to san diego, enjoy the beer. :)
+
+ 16:48:27 <jimbaker> SpamapS, it sounds like a very good plan :)
+
+ 16:48:28 <Daviey> Oct 29 -> 1st Nov.. UDS in Copenhagen.. Many Openstack dev's attending.
+
+ 16:48:41 <Daviey> (see what i did there? :)
+
+ 16:48:45 <zul> surge?
+
+ 16:49:08 <jimbaker> http://omniti.com/surge/2012
+
+ 16:49:12 * Daviey googles on behalf of zul
+
+ 16:49:13 <Daviey> http://omniti.com/surge/2012
+
+ 16:49:35 <hallyn> we need a 'tech conference' lens in the dash
+
+ 16:49:51 <smb> not more lenses... o_O
+
+ 16:49:59 <jimbaker> oh sure, http://lmgtfy.com/?q=surge :)
+
+ 16:50:01 <Daviey> jimbaker: can you action hallyn to make a lens ?
+
+ 16:50:12 <hallyn> NO
+
+ 16:50:19 <jimbaker> Daviey, i could in fact do that... it would be very cruel however
+
+ 16:50:42 <hallyn> s'ok i can delegate with the best of em
+
+ 16:50:43 <jimbaker> maybe what we really want a lens connected to http://lmgtfy.com/
+
+ 16:50:57 <Daviey> meh, logs can be edited to add it regardless.
+
+ 16:51:04 <hallyn> eh that looks nice
+
+ 16:51:05 <jimbaker> #topic Weekly Updates & Questions for the QA Team (hggdh)
+
+ 16:51:17 <hallyn> oh no it wants js, nm
+
+ 16:51:27 <hggdh> hello
+
+ 16:51:47 <hggdh> only thing to note is... it is beta2 week, so help testing is very welcome :-)
+
+ 16:52:01 <jimbaker> hggdh, thanks for that update
+
+ 16:52:09 <jimbaker> #topic Weekly Updates & Questions for the Kernel Team (smb)
+
+ 16:52:17 <smb> Yo!
+
+ 16:52:24 <smb> * I had been looking at bug 1023755. While I can see one potential
+
+ 16:52:24 <smb> problem, I could not reproduce the issue with the provided method.
+
+ 16:52:25 <ubottu> Launchpad bug 1023755 in linux (Ubuntu) "Precise kernel locks up while dd to /dev/mapper files > 1Gb (was: Unable to delete volume)" [Undecided,Confirmed] https://launchpad.net/bugs/1023755
+
+ 16:52:32 <smb> * Trying to also look into bug 1021471 this week. But wanted to
+
+ 16:52:32 <smb> complete other tasks before.
+
+ 16:52:32 <smb> Eric Biederman indicated two (inline) functions to check for
+
+ 16:52:32 <smb> balancing. Unfortunately those are "inline" so I need to build
+
+ 16:52:32 <smb> myself a debug kernel to do so.
+
+ 16:52:34 <ubottu> Launchpad bug 1021471 in linux (Ubuntu Quantal) "clone() hang when creating new network namespace (dmesg show unregister_netdevice: waiting for lo to become free. Usage count = 2)" [High,Triaged] https://launchpad.net/bugs/1021471
+
+ 16:52:43 <smb> * About bug 1038055: it looks like right now the way to go is to
+
+ 16:52:43 <smb> disable the drm qemu driver and go back to have X run by the
+
+ 16:52:44 <smb> cirrus driver (and hope it and llvm-pipe go together not too badly).
+
+ 16:52:44 <smb> Recent testing showed at least the initial startup crash been gone.
+
+ 16:52:44 <ubottu> Launchpad bug 1038055 in linux (Ubuntu) "graphics fail to initialise correctly, in kvm with cirrus graphics (after LUKS install)" [High,Confirmed] https://launchpad.net/bugs/1038055
+
+ 16:52:52 <smb> * While trying to pry some useful data from a Xen dump I pulled a few
+
+ 16:52:53 <smb> patches to crash from the Xen mailing list and prepared an updated
+
+ 16:52:53 <smb> package: bug 1054200. Though that needs some sponsor/reviewer.
+
+ 16:52:53 <ubottu> Launchpad bug 1054200 in crash (Ubuntu) "Pick some upstream patches for Xen" [Wishlist,New] https://launchpad.net/bugs/1054200
+
+ 16:53:00 <smb> and last but not least...
+
+ 16:53:05 <Daviey> drumroll
+
+ 16:53:08 <smb> * A certain person on the server team (starting with a capital D)
+
+ 16:53:08 <smb> has been cc'ed on a mail in the past that was asking for some
+
+ 16:53:08 <smb> patches pulled into the Xen package. While I may volunteer to
+
+ 16:53:08 <smb> do the dirty work, I am less inclined to do anything without the
+
+ 16:53:09 <smb> backing that this is acceptable at this stage (since some of the
+
+ 16:53:09 <smb> patches are introducing features). So as long as afore mentioned
+
+ 16:53:11 <smb> person remains silent on this mail exchange, I won't do anything. ;)
+
+ 16:53:30 <smb> ..
+
+ 16:53:34 <Daviey> smb: is that me?
+
+ 16:53:39 <smb> Yessir!
+
+ 16:53:54 <Daviey> smb: Subject?
+
+ 16:54:30 * smb wispers
+
+ 16:55:09 <Daviey> Ah, LP:1009098 AMD 12.10 Feature: Xen Recommended Patches
+
+ 16:55:10 <Daviey> thanks
+
+ 16:55:37 <jimbaker> cool, we are running quite late, so any bug followup with smb should happen outside of this channel
+
+ 16:55:42 <jimbaker> #topic Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ 16:56:05 <jimbaker> rbasak, any updates here?
+
+ 16:56:06 <rbasak> Nothing new to report. I'm continuing to work on landing ARM support in MAAS trunk and it is going well. Any questions for me?
+
+ 16:56:33 <jimbaker> rbasak, sounds good to me, let's just follow up in #ubuntu-server
+
+ 16:56:45 <jimbaker> #topic Open Discussion
+
+ 16:58:05 <jimbaker> #topic Next meeting will be at the same time next week on Oct 2
+
+ 16:58:18 <arosales> Tuesday 2012-10-02 at 1600 UTC
+
+ 16:58:29 <jimbaker> arosales, thanks for the utc
+
+ 16:58:34 <arosales> jimbaker: Thanks for chairing :-)
+
+ 16:58:39 <Daviey> thanks jimbaker, great effort
+
+ 16:59:08 <jimbaker> thanks everyone, i really just can't wait to do it again ;)
+
+ 16:59:17 <arosales> :-)
+
+ 16:59:31 <jimbaker> but i believe the previous chair gets to reserve the right to pick the next one, right?
+
+ 16:59:35 <hallyn> a new permanent chair!
+
+ 16:59:38 <jamespage> ta jimbaker
+
+ 16:59:58 <jimbaker> #action jimbaker picks chair for next meeting on the fly next week!
+
+ 16:59:58 * meetingology jimbaker picks chair for next meeting on the fly next week!
+
+ 17:00:01 <arosales> jimbaker: it just goes down the list on the wiki
+
+ 17:00:20 <jimbaker> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

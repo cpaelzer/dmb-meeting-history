@@ -1,0 +1,390 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by sil2100, 07 Apr at 15:04 &mdash; 15:58 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-04-07-15.04.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by sil2100 at 15:04.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-7-april-2022/27514/15   (schopin, 15:04)
+
+=== Release incoming bugs ===
+
+Discussion started by sil2100 at 15:10.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (sil2100, 15:10)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (sil2100, 15:35)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (sil2100, 15:36)
+
+=== Team proposed-migration report ===
+
+Discussion started by sil2100 at 15:40.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 15:40)
+
+=== AOB ===
+
+Discussion started by sil2100 at 15:54.
+
+
+
+
+== People present (lines said) ==
+
+ * sil2100 (60)
+ * vorlon (51)
+ * ubottu (12)
+ * juliank (9)
+ * enr0n (6)
+ * ogayot (6)
+ * ginggs (5)
+ * jawn-smith (4)
+ * mclemenceau (4)
+ * schopin (3)
+ * meetingology (2)
+ * Eickmeyer (2)
+ * bdrung (1)
+
+
+
+== Full log ==
+
+
+ 15:04 <sil2100> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:04 <meetingology> Meeting started at 15:04:23 UTC.  The chair is sil2100.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:04 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:04 <sil2100> #topic Lightning rounds
+
+ 15:04 <schopin> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-7-april-2022/27514/15
+
+ 15:05 <sil2100> Let's take a moment to read eachothers status
+
+ 15:07 <jawn-smith> mwhudson: Someone needs to SRU these snapd changes, right?
+
+ 15:09 <juliank> the snapd team should
+
+ 15:09 <juliank> :)
+
+ 15:10 <jawn-smith> Welcome bdrung o/
+
+ 15:10 <sil2100> Ok, I think it's time to move on!
+
+ 15:10 <sil2100> #topic Release incoming bugs
+
+ 15:10 <sil2100> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:11 <sil2100> LP: #1967593
+
+ 15:11 <ubottu> Launchpad bug 1967593 in cloud-initramfs-tools (Ubuntu) "kernel modules going missing after reboot" [Undecided, Confirmed] https://launchpad.net/bugs/1967593
+
+ 15:12 <sil2100> Looks like a cloud-initramfs-copymods issue? So not anything for us?
+
+ 15:13 <sil2100> I think I saw this being mentioned somewhere, where someone asked if we're actually using cloud-initramfs-copymods - or am I just misremembering?
+
+ 15:14 <sil2100> Should we card this?
+
+ 15:15 <sil2100> At least I think it's worth investigating by someone that has more context re: what we need it for
+
+ 15:15 <sil2100> Let's card it mclemenceau
+
+ 15:15 <mclemenceau> you got it
+
+ 15:15 <sil2100> LP: #1968131
+
+ 15:15 <ubottu> Launchpad bug 1968131 in swtpm (Ubuntu Jammy) "Starting VM with UEFI firmware fails with swtpm" [Critical, In Progress] https://launchpad.net/bugs/1968131
+
+ 15:16 <juliank> server is on that
+
+ 15:16 <mclemenceau> done sil2100
+
+ 15:16 <sil2100> I think that's under Christian right now, so let's leave it
+
+ 15:17 <sil2100> LP: #1958720
+
+ 15:17 <ubottu> Launchpad bug 1958720 in pyyaml (Ubuntu) "python3-yaml and python3-six are not co-installable with python-is-python2 in jammy" [High, Incomplete] https://launchpad.net/bugs/1958720
+
+ 15:17 <sil2100> Ok, this one's old and still INcomplete, let's move on
+
+ 15:18 <sil2100> The ubiquity one is also still Incomplete
+
+ 15:18 <sil2100> LP: #1962454
+
+ 15:18 <ubottu> Launchpad bug 1962454 in apport (Ubuntu) "Oops pages show wrong time window in JournalErrors" [Low, Triaged] https://launchpad.net/bugs/1962454
+
+ 15:18 <sil2100> Does anyone remember if this one is carded? Since Brian Triaged it for apport
+
+ 15:19 <mclemenceau> no it is not
+
+ 15:19 <sil2100> Let's leave it for now until Brian's back
+
+ 15:19 <sil2100> LP: #1968047
+
+ 15:19 <ubottu> Launchpad bug 1968047 in openssl (Ubuntu) "Ubuntu 22.04 Beta - Unable to compile ruby version 2.7.5, 3.0.3 and 3.3.3  problem with the openssl-dev package" [Undecided, New] https://launchpad.net/bugs/1968047
+
+ 15:20 <sil2100> schopin: ^ what do you think?
+
+ 15:20 <schopin> I marked this one because I was wondering if offering libssl1.1 in a PPA would be a good idea somehow? It'd be useful for CI setups with old interpreters I guess?
+
+ 15:20 <schopin> vorlon: any opinion on that?
+
+ 15:21 <vorlon> schopin: someone could provide it in a ppa, sure, but I don't think that's in scope for Foundations?
+
+ 15:22 <vorlon> they can't ship the resulting binaries on Ubuntu 22.04
+
+ 15:22 <sil2100> Maybe just mentioning that on the bug and then removing the tag?
+
+ 15:22 <juliank> Won't Fix
+
+ 15:23 <sil2100> I'll remove the tag, and I think Won't Fix + rationale would make sense I think
+
+ 15:23 <juliank> let's have a -forwardports pockets :D
+
+ 15:23 <vorlon> heh
+
+ 15:23 <sil2100> LP: #1926860
+
+ 15:23 <ubottu> Launchpad bug 1926860 in systemd (Ubuntu) "XP Pen Star 03 graphic tablet not running on Ubuntu later than 18.04" [Undecided, Confirmed] https://launchpad.net/bugs/1926860
+
+ 15:24 <enr0n> I saw this one and tagged it rls. I prepped a systemd patch for jammy assuming we want to include it.
+
+ 15:24 <sil2100> I see this is worked on already - enr0n is there a card in Jira for it already?
+
+ 15:25 <enr0n> sil2100: No not yet
+
+ 15:25 <sil2100> Since it's in progress, I adjusted the status + let's card it so we have a grasp on it
+
+ 15:25 <sil2100> mclemenceau: do your magic please! ;)
+
+ 15:26 <sil2100> LP: #1965652
+
+ 15:26 <ubottu> Launchpad bug 1965652 in ubuntu-release-upgrader (Ubuntu) "machine froze when upgrading impish->jammy" [Undecided, Confirmed] https://launchpad.net/bugs/1965652
+
+ 15:26 <mclemenceau> magic is done ;)
+
+ 15:26 <juliank> duplicate of dbus restart?
+
+ 15:26 <sil2100> I guess this is fixed?
+
+ 15:27 <sil2100> +1 on someone double-checking this per enr0n's proposition
+
+ 15:28 <sil2100> I'd leave this around and maybe contact the reporter to see if it's still the case
+
+ 15:28 <sil2100> LP: #1966589
+
+ 15:28 <ubottu> Launchpad bug 1966589 in ubuntu-release-upgrader (Ubuntu) "release upgrade fails due to `firefox package pre-installation script subprocess returned error exit status 1`" [Undecided, Confirmed] https://launchpad.net/bugs/1966589
+
+ 15:30 <sil2100> Do I understand correctly the last two comments that this is now working?
+
+ 15:30 <jawn-smith> If I'm understanding them correctly it looks like it's fixed only if you install the firefox snap before doing an upgrade
+
+ 15:31 <vorlon> do we believe this is an ubuntu-release-upgrader bug, though, or should it be referred to the desktop team for fixing in the firefox deb?
+
+ 15:32 <sil2100> Possibly
+
+ 15:32 <vorlon> perhaps mark the u-r-u task invalid then
+
+ 15:33 <sil2100> Let's leave it around for now, the desktop team will pick it up.
+
+ 15:33 <sil2100> +1 on that
+
+ 15:33 <sil2100> LP: #1966800
+
+ 15:33 <ubottu> Launchpad bug 1966800 in systemd (Ubuntu) "systemd locks up due to incorrect handling of time zone changes" [Undecided, Confirmed] https://launchpad.net/bugs/1966800
+
+ 15:33 <enr0n> This doesn't affect systemd in jammy or impish, but likely affects focal
+
+ 15:34 <vorlon> but is marked as rls-jj-incoming?
+
+ 15:34 <enr0n> I just looked at it this morning
+
+ 15:34 <vorlon> does that need switched to rls-ff-incoming?
+
+ 15:34 <enr0n> Yeah that would make sense
+
+ 15:35 <sil2100> Let's card it for focal
+
+ 15:35 <sil2100> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:35 <sil2100> Empty
+
+ 15:36 <sil2100> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:36 <sil2100> We just have LP: #1960089 here
+
+ 15:36 <ubottu> Launchpad bug 1960089 in ubiquity (Ubuntu Jammy) "Request 2.0 GiB Boot Partition for 22.04LTS FDE" [High, Confirmed] https://launchpad.net/bugs/1960089
+
+ 15:37 <sil2100> I don't think we agreed on these numbers, right?
+
+ 15:37 <sil2100> We did bump those slightly for 20.04.4
+
+ 15:37 <vorlon> we haven't; I would mark this rls-ff-notfixing
+
+ 15:38 <vorlon> the bug itself is targeted to focal already and I don't think there's anything here we should commit to fixing in focal
+
+ 15:39 <vorlon> (we haven't even committed to fixing it in jammy, after all)
+
+ 15:39 <sil2100> Agreed. Can you write a comment and switch it to rls-ff-notfix ?
+
+ 15:39 <vorlon> ok
+
+ 15:39 <sil2100> I see that Studio seems to be interested in this though, as per Erich's comments
+
+ 15:39 <sil2100> Anyway, that's all of the bugz
+
+ 15:39 <sil2100> Sorry for it being a bit bumpy
+
+ 15:40 <sil2100> #topic Team proposed-migration report
+
+ 15:40 <sil2100> I guess that's vorlon ? ;)
+
+ 15:40 <vorlon> yes
+
+ 15:40 <vorlon> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:40 <vorlon> short, but "interesting"
+
+ 15:41 <vorlon> boost1.74 vs esys-particle: this is somehow entangled with python3.9 removal fyi
+
+ 15:42 <ginggs> i still have esys-particle, it's a leaf package and could be removed, but it's failing in debian in the same way
+
+ 15:42 <ginggs> and has some eyes on it
+
+ 15:42 <ginggs> so i think we can wait a bit before removing it
+
+ 15:42 <vorlon> the behavior here is esys-particle links against libpython, and modules that are perfectly locatable on the python path when running python3.10 are failing to load inside esys-particle's env
+
+ 15:42 <vorlon> ginggs: esys-particle
+
+ 15:42 <vorlon> ginggs: not too long though :)
+
+ 15:43 <vorlon> ltrace: ogayot: this was mentioned in your weekly status, are you following this through?
+
+ 15:43 <Eickmeyer> sil2100: Hi! To claify, studio is not interested, I work for the company that makes the Kubuntu Focus computers.
+
+ 15:43 <ogayot> yes, I have submitted a patch to fix FTBFS for ppc64el. Still need to rework the patch though to get it sponsored
+
+ 15:43 <vorlon> (I confess I wasn't clear what "Requested changes to work on" meant - requested of whom, by whom?)
+
+ 15:43 <vorlon> ok
+
+ 15:43 <ogayot> LP 1967518
+
+ 15:43 <ubottu> Launchpad bug 1967518 in ltrace (Ubuntu) "ltrace - build on ppc64el fails" [Undecided, Confirmed] https://launchpad.net/bugs/1967518
+
+ 15:43 <vorlon> thanks
+
+ 15:44 <ogayot> xnos requested changes on ubuntu-devel
+
+ 15:44 <vorlon> python3-stdlib-extensions: there's mdtraj that I haven't looked at, but the main thing is we need to get python3.9 removed
+
+ 15:44 <sil2100> Eickmeyer: aah! Ok, apologies ;) Still, makes sense!
+
+ 15:44 <ogayot> xnox(
+
+ 15:44 <sil2100> (the interest)
+
+ 15:44 <vorlon> ogayot: are his requested changes documented also in the bug?
+
+ 15:44 <ogayot> negative
+
+ 15:44 <Eickmeyer> sil2100: cool, just wanted to make you all aware.
+
+ 15:44 <ginggs> mdtraj/arm64 just needs a retry (done)
+
+ 15:44 <vorlon> and python3.9 removal is blocked by: esys-particle gyoto csound
+
+ 15:44 <vorlon> esys-particle is ginggs
+
+ 15:45 <vorlon> gyoto is me unfortunately?  it's ppc64el which means you need access to a P9 instance to really debug it, but the meat of the problem as mentioned in my report is that something is copying dpkg-buildflags output into a binary somewhere and then using that for subsequent g++ invocations and I haven't pinpointed where
+
+ 15:46 <vorlon> so that aspect may be reproducible / debuggable on !ppc64el if someone wants to have a go
+
+ 15:46 <vorlon> ginggs: and did you want someone else to pick up csound?  We talked about XFAILing the new test that fails on s390x
+
+ 15:47 <ginggs> i can take csound
+
+ 15:47 <vorlon> ok
+
+ 15:47 <vorlon> ginggs: csound
+
+ 15:47 <vorlon> anyone else interested in looking at gyoto?  It's worth big Internet points
+
+ 15:47 <vorlon> these are in reverse-depends src:python3.9 output, btw
+
+ 15:48 <vorlon> libzstd blocked by a sole autopkgtest regression; juliank you uploaded, can you look?
+
+ 15:48 <vorlon> it was a no-change rebuild for ppc64el and the failing autopkgtest is ppc64el :)
+
+ 15:48 <juliank> I don't know what's going on there
+
+ 15:49 <vorlon> juliank: do you want to find out or do you need someone else to take it?
+
+ 15:49 <vorlon> it's a go package failing
+
+ 15:49 <enr0n> I can take a look
+
+ 15:49 <juliank> I think go test is broken, all tests pass but then it fails overall
+
+ 15:49 <juliank> so might be good for a go person to look at
+
+ 15:49 <vorlon> libzstd: enr0n
+
+ 15:49 <vorlon> ack
+
+ 15:49 <vorlon> enr0n: if you need access to hardware for debugging, let's sync in the mattermost channel
+
+ 15:51 <vorlon> oh, I skipped over libgc; this is an arm64 autopkgtest, looks like it might just be a timeout due to infra load so I've retried it
+
+ 15:51 <vorlon> so libgc: me
+
+ 15:51 <vorlon> and xz-utils; I just checked and this test isn't regressed in release, needs someone to look at it
+
+ 15:51 <vorlon> volunteers, or am I picking?
+
+ 15:52 <vorlon> bdrung: you don't have anything else to do yet, right? :)
+
+ 15:53 <bdrung> sounds okay
+
+ 15:53 <vorlon> xz-utils: bdrung
+
+ 15:53 <vorlon> and that's in
+
+ 15:53 <vorlon> *it
+
+ 15:53 <vorlon> libarchive is just waiting on autopkgtest results (and this was an FFe from the desktop team who did the upload)
+
+ 15:53 <vorlon> sil2100:
+
+ 15:54 <sil2100> o/
+
+ 15:54 <sil2100> #topic AOB
+
+ 15:54 <jawn-smith> I'll be out of office tomorrow and Monday
+
+ 15:55 <vorlon> ogayot: as an aside, I'm marking LP: #1967518 update-excuse so that it's more discoverable from proposed-migration
+
+ 15:55 <ubottu> Launchpad bug 1967518 in ltrace (Ubuntu) "ltrace - build on ppc64el fails" [Undecided, Confirmed] https://launchpad.net/bugs/1967518
+
+ 15:55 <ogayot> thanks
+
+ 15:55 <sil2100> Quick reminder to everyone: release is in just 2 week!
+
+ 15:55 <sil2100> s/week/weeks
+
+ 15:56 <sil2100> Which means Final Freeze is just in 1 week
+
+ 15:57 <sil2100> Ok, I think that's it!
+
+ 15:58 <sil2100> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

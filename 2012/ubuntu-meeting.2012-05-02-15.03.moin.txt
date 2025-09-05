@@ -1,0 +1,871 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:03:37 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-05-02-15.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *UDS blueprints
+
+ *Bugs
+''LINK:'' https://errors.ubuntu.com/ still lists that python-central bug, which has been floating near or at the top since release. Don't know if it's my parsing of the launchpad crash bugs data being broken or if we really still don't have a bug reported for it.  (ev, 15:54:39)
+''LINK:'' https://errors.ubuntu.com/oops/00104e3a-9071-11e1-b51d-2c768aafd08c   (ev, 15:55:04)
+
+ *AOB
+
+
+
+Meeting ended at 16:05:44 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (96)
+ * slangasek (95)
+ * infinity (42)
+ * ogra_ (37)
+ * cjwatson (31)
+ * bdmurray (23)
+ * stgraber (18)
+ * ubottu (18)
+ * jodh (16)
+ * xnox (12)
+ * doko (7)
+ * barry (5)
+ * meetingology` (3)
+ * Laney (1)
+
+
+
+== Full Log ==
+
+
+ 15:03:37 <slangasek> #startmeeting
+
+ 15:03:37 <meetingology`> Meeting started Wed May  2 15:03:37 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03:37 <meetingology`> 
+
+ 15:03:37 <meetingology`> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:04:20 <slangasek> [TOPIC] Lightning round
+
+ 15:04:55 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox)
+
+ 15:04:58 <slangasek> doko stgraber cjwatson slangasek barry xnox jodh ogra ev infinity bdmurray
+
+ 15:05:01 <slangasek> $
+
+ 15:05:07 <ogra_> €
+
+ 15:05:13 <slangasek> £
+
+ 15:05:38 <slangasek> doko: you first :)
+
+ 15:06:05 <doko> - gcc updates for quantal
+
+ 15:06:05 <doko> - investigate and fix arm biarch builds
+
+ 15:06:05 <doko> - may 1st was bank holiday
+
+ 15:06:08 <doko> (done)
+
+ 15:06:28 <stgraber> Was off Friday and Tuesday:
+
+ 15:06:28 <stgraber> - Blueprints
+
+ 15:06:28 <stgraber> - Registered community-q-edubuntu, foundations-q-ltsp, foundations-q-iso-tracker and foundations-q-networking
+
+ 15:06:32 <stgraber> - Installer
+
+ 15:06:34 <stgraber> - Merged some dconf improvements and turned on compositing in the installer.
+
+ 15:06:37 <stgraber> - Fixed some netboot bugs and turned on cifs support in casper.
+
+ 15:06:40 <stgraber> - Merged os-prober from Debian
+
+ 15:06:42 <stgraber> - Release
+
+ 15:06:45 <stgraber> - ISO testing
+
+ 15:06:47 <stgraber> - Ubuntu/Edubuntu 12.04 release.
+
+ 15:06:50 <stgraber> - TODO this week
+
+ 15:06:52 <stgraber> - Look for any missing blueprint and register them
+
+ 15:06:55 <stgraber> - Continue with merges (currently working on ifupdown)
+
+ 15:06:57 <stgraber> - Push some SRUs (nagios-nrpe and ldm are currently on my list)
+
+ 15:07:00 <stgraber> (DONE)
+
+ 15:07:05 <cjwatson> Release sprint.  Nothing went too badly wrong. :-)
+
+ 15:07:05 <cjwatson> Opened quantal and got auto-syncs running.  Some degree of fighting with Launchpad, but less than usual.  Piles of merges.
+
+ 15:07:08 <cjwatson> Removed the data.tar.xz dpkg Pre-Depends requirement from Launchpad.
+
+ 15:07:11 <cjwatson> Sorted out a few specs.
+
+ 15:07:13 <cjwatson> Got a bit carried away with update-manager and ubiquity Python 3 porting.  Lots of dependencies still, and I haven't got much into bytes/unicode data modelling, but making good progress on tests.
+
+ 15:07:17 <cjwatson> .
+
+ 15:08:30 <slangasek> * upstart in Debian:
+
+ 15:08:30 <slangasek> * prereq patches for lsb, sysvinit, and debhelper are done or pending
+
+ 15:08:30 * infinity nudges Mr Manager.
+
+ 15:08:30 <slangasek> * hacking on invoke-rc.d to implement the Debian policy proposal (doing what /lib/init/upstart-job does currently)
+
+ 15:08:33 <slangasek> * plymouth patches wanted for mountall, looking at it this week
+
+ 15:08:35 <slangasek> * SRUs for multiarch libraries, hdparm, other things
+
+ 15:08:38 <slangasek> * fix upgrade issue in libnfsidmap (bug #933870)
+
+ 15:08:39 <ubottu> Launchpad bug 933870 in libnfsidmap (Ubuntu) "libnfsidmap2 fails to install" [High,Fix released] https://launchpad.net/bugs/933870
+
+ 15:08:40 <slangasek> * don't restart kdm on eglibc upgrade (bug #985735)
+
+ 15:08:41 <ubottu> Launchpad bug 985735 in eglibc (Ubuntu) "update-manager restarts KDM and interrupts update process" [High,Fix released] https://launchpad.net/bugs/985735
+
+ 15:08:43 <slangasek> * help fix upgrade issues with python (bug #986374)
+
+ 15:08:44 <ubottu> Launchpad bug 986374 in python2.7 (Ubuntu) "oneiric->precise upgrade failed: E:Internal Error, Could not early remove python-minimal" [Critical,Fix released] https://launchpad.net/bugs/986374
+
+ 15:08:45 <slangasek> * sponsor upstart fixes from James
+
+ 15:08:48 <slangasek> * merges merges merges
+
+ 15:08:50 <slangasek> * python3 porting: bluez ported (thanks Laney for the upload), gdb breaking my brain
+
+ 15:08:53 <slangasek> * UDS planning - get those blueprints in, everybody!
+
+ 15:09:13 <barry> slangasek, cjwatson: \o/
+
+ 15:10:28 * barry assumes slangasek is done...
+
+ 15:10:30 <barry> (reporting for last two weeks)  py3 porting status: debian bug 669301 (py3 packaging for python-openssl, should probably temporarily delta this into quantal).  freedesktop bug 48904 (backward compat problem w/ dbus.gobject_service).  worked on packaging for python-mode.el for sid.  released flufl.* packages with updated cheeseshop py3 trove classifiers.  also spent some time on bug 924079 before release, but punted.  reviewed debian bug
+
+ 15:10:30 <barry> 625509 (debian-python port).  reviewed slangasek's patch for bluez py3.  bug 990145 (remove gwibber dependency on mx.DateTime).  bug 992195 (remove duplicity dependency on GnuPGInterface).  TODO: will be sprinting w/local pythonistas tomorrow on pep 420 (namespace packages for py3.3) and continue with bug 992195.  done.
+
+ 15:10:34 <slangasek> er yes, sorry
+
+ 15:10:35 <ubottu> Debian bug 669301 in pyopenssl "pyopenssl: Build the Python 3 version of the package" [Wishlist,Open] http://bugs.debian.org/669301
+
+ 15:10:37 <ubottu> Freedesktop bug 48904 in python "switching from pygobject2 to pygi in 1.0 was an incompatible change" [Normal,Reopened: ] http://bugzilla.freedesktop.org/show_bug.cgi?id=48904
+
+ 15:10:38 <ubottu> Launchpad bug 924079 in apt (Ubuntu Oneiric) "do-release-upgrade fails to upgrade from Oneiric to Precise: Couldn't configure pre-depend libtinfo5 for libncurses5, probably a dependency cycle" [High,Triaged] https://launchpad.net/bugs/924079
+
+ 15:10:39 <ubottu> Launchpad bug 990145 in Gwibber "Remove dependency on mx.DateTime" [Undecided,New] https://launchpad.net/bugs/990145
+
+ 15:10:40 <ubottu> Launchpad bug 992195 in Duplicity "Remove dependency on GnuPGInterface" [Undecided,In progress] https://launchpad.net/bugs/992195
+
+ 15:11:20 <xnox> did hr/new employee procedure tasks, some are still pending
+
+ 15:11:21 <xnox> - finished testing lvm2 merge, it got updated in debian,
+
+ 15:11:21 <xnox> remerged, needs further retest
+
+ 15:11:22 <xnox> - did one sync request (libgpg-error)
+
+ 15:11:22 <xnox> - finishing up merging sudo, should be ready for sponsorship later
+
+ 15:11:23 <xnox> - created uds spec, wrt failing hardware notifications
+
+ 15:11:23 <xnox> - just did a merge proposal for boost1.49 transition tracker
+
+ 15:11:24 <xnox> NEXT
+
+ 15:12:03 <infinity> jodh: You're up, since you were disconnected for the randomizer. ;)
+
+ 15:12:07 <slangasek> xnox: I'd like to upload lvm2 .88 now and worry about .95 later, especially since .88 is the most recent version that I know upstream recommends
+
+ 15:12:21 <xnox> slangasek: ok.
+
+ 15:12:26 <slangasek> xnox: but I'll test it on my own system first before doing so
+
+ 15:13:02 <slangasek> either way, good to have one of our top packages knocked off of http://qa.ubuntuwire.org/oldmerges/ :)
+
+ 15:13:31 * ogra_ wonders if there is actually a human being behind the jodh nick :)
+
+ 15:13:59 * ogra_ just moves forward for now
+
+ 15:14:03 <ogra_> done:
+
+ 15:14:03 <ogra_> * more compiz upgrades right before/on release
+
+ 15:14:03 <ogra_> * omap, omap4 and ac100 release image tests
+
+ 15:14:03 <ogra_> * may 1st was labour day in germany ...
+
+ 15:14:03 <ogra_> * packaged the new nvidia tegra armhf driver (sadly very buggy on the ac100 atm (suspiciously looks like the GPU hardlocks
+
+ 15:14:05 <ogra_> after a while, nvidia devs are notified)) (the test package can be found at http://people.canonical.com/~ogra/nvidia-tegra/ atm)
+
+ 15:14:08 <ogra_> todo:
+
+ 15:14:10 <ogra_> * merges: i only have procps on the list, feel free to drop stuff on me, else i'll randomly grab bits off the list
+
+ 15:14:13 <ogra_> * pondering if we shouldnt have a spec for MBR and partition table backup/restore
+
+ 15:14:15 <ogra_> (i know that came up various times in the past but i couldnt find a spec for it)
+
+ 15:14:17 <ogra_> UDS:
+
+ 15:14:19 <ogra_> registered https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-embedded-rootfs
+
+ 15:14:21 <ogra_> registered https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-hwpack-integration
+
+ 15:14:25 <ogra_> (done)
+
+ 15:15:58 <slangasek> ev:
+
+ 15:15:59 <ev> - http://errors.ubuntu.com is live, though due to a programming error, things
+
+ 15:16:00 <ev> went down over the weekend. Fortunately, the system is designed to cope with
+
+ 15:16:01 <ev> this and clients resent crashes when it came back up on Monday. We're still
+
+ 15:16:03 <ev> getting things hooked into the webops pager system.
+
+ 15:16:04 <ev> - Fixed a few bugs that have arisen in the web side of the crash database
+
+ 15:16:06 <ev> since release.
+
+ 15:16:07 <ev> - Fixed a critical bug in apport as version 2.0.1-0ubuntu7. We were directing
+
+ 15:16:09 <ev> people to launchpad.net post-release.
+
+ 15:16:10 <ev> - We now have (the start of) a web API for the crash reporting statistics.
+
+ 15:16:12 <ev> This was initially written to provide webops with a means on monitoring the
+
+ 15:16:13 <ev> health of the retracers.
+
+ 15:16:13 <ev> - Created the 12.04 USB disks for the store.
+
+ 15:16:20 <ev> - As it turns out, 4 i386 and 4 amd64 retracer instances wasn't enough
+
+ 15:16:20 <ev> post-release. Initial testing suggests we could get by with about 16 of
+
+ 15:16:22 <ev> each. We'll also need a lot more disk space, as between the backlog of core
+
+ 15:16:23 <ev> dumps and the per-retracer per-release caches we're quickly eating up the
+
+ 15:16:25 <ev> existing disk. Worked with webops to rememedy the immediate problem. New
+
+ 15:16:26 <ev> hardware is on order.
+
+ 15:16:27 <ev> - Registered blueprints for UDS:
+
+ 15:16:29 <ev> - https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-crash-database
+
+ 15:16:30 <ev> - https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-metrics
+
+ 15:16:32 <ev> - https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-updates-from-crash-reports
+
+ 15:16:33 <ev> - https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-fix-ddebs
+
+ 15:16:35 <ev> - https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-bucketing-improvements
+
+ 15:16:36 <ev> - https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-phased-updates
+
+ 15:16:39 <ev> - Worked with Matthew to try to write a better mean time between failures
+
+ 15:16:41 <ev> algorithm. Mathematicians wanted.
+
+ 15:16:42 <ev> - Built out support to collect statistics on the release, package, version,
+
+ 15:16:44 <ev> year, month, and day level (and combinations therein).
+
+ 15:16:45 <ev> - Started moving the web UI to consuming its own API to generate the charts,
+
+ 15:16:47 <ev> in support of being able to switch chart views via fancy-pants AJAX.
+
+ 15:16:48 <ev> - Discussed the http://errors.ubuntu.com design with Matthew, Kate, and Colin.
+
+ 15:16:50 <ev> If you get a chance, I'd love your thoughts in reply to the email I sent
+
+ 15:16:51 <ev> about it on April 13th.
+
+ 15:16:52 <ev> (done)
+
+ 15:16:53 <ev> I'll post some fun stats during AOB
+
+ 15:16:57 <infinity> ev: When will errors.ubuntu.com be usable by !canonical people (or will it ever?)
+
+ 15:17:27 <infinity> - Release sprint last week:
+
+ 15:17:28 <infinity> - 12.04 got released, rather uneventfully
+
+ 15:17:28 <infinity> - 12.10 got opened while no one was looking
+
+ 15:17:28 <infinity> - This week:
+
+ 15:17:28 <infinity> - Fixed d-shlibs to deal with the armhf linker
+
+ 15:17:30 <infinity> - Fixed a few bugs in the fpc/armhf bootstrap
+
+ 15:17:33 <infinity> - Worked on fixing some llvm/clang-on-arm issues
+
+ 15:17:35 <infinity> - Rebootstrapped the tex* stack to sort out an
+
+ 15:17:38 <infinity> accidental out-of-order sync that blew up the world
+
+ 15:17:40 <infinity> - Registered and fiddled with spec for UDS.
+
+ 15:17:43 <infinity> ...
+
+ 15:17:46 <ev> infinity: well, I'm not shouting about it from the rooftops yet as the code could use some performance improvements
+
+ 15:17:56 <ev> and I really, really, really don't want Hacker News hitting it
+
+ 15:17:58 <ev> just yet
+
+ 15:18:02 <slangasek> ev: speaking of retracers, I noticed the backtraces shown in the errors reports don't appear to be a 'bt full' - is there any plan to make this available?
+
+ 15:18:09 <infinity> ev: Sure, but I mean it's currently behind SSO demanding that you're in the canonical group. :)
+
+ 15:18:19 <slangasek> it's relevant often enough that I think we should have it by default
+
+ 15:18:45 <ev> infinity: but the game plan is canonical group + bug control being able to access the actual reports
+
+ 15:18:48 <ev> just like on launchpad
+
+ 15:18:53 * infinity nods.
+
+ 15:19:03 <Laney> use ubuntu-dev instead for now, or bugcontrol?
+
+ 15:19:14 <ev> slangasek: can you provide me with an example?
+
+ 15:19:22 <ev> it's definitely not intentional
+
+ 15:20:43 <slangasek> ev: looking
+
+ 15:20:50 * bdmurray starts then
+
+ 15:20:53 <bdmurray> bug triage of ubiquity, iso-testing and update-manager bug reports
+
+ 15:20:53 <bdmurray> investigation into reporters submitting dist-upgrade bugs multiple times
+
+ 15:20:53 <bdmurray> closed apport-package reports regarding package install failures due to not a debian package
+
+ 15:20:56 <bdmurray> wrote a bugbot routine for 'not a debian format archive bug reports'
+
+ 15:21:03 <bdmurray> closed texinfo bug reports due to a syntax error in /etc/environment
+
+ 15:21:04 <bdmurray> whoopsie apport-package duplicate bug consolidation into bug 988995
+
+ 15:21:04 <bdmurray> tried to recreate bug 987956 regarding ubiquity
+
+ 15:21:04 <bdmurray> wrote a bug pattern for bug 937546
+
+ 15:21:06 <ubottu> Launchpad bug 988995 in whoopsie-daisy (Ubuntu) "package whoopsie 0.1.32 failed to install/upgrade: el subproceso instalado el script post-installation devolvió el código de salida de error 1" [Undecided,Confirmed] https://launchpad.net/bugs/988995
+
+ 15:21:07 <ubottu> Launchpad bug 987956 in ubiquity (Ubuntu) "Installer Deletes Contents from Separate HOME partition without WARNING!" [High,Incomplete] https://launchpad.net/bugs/987956
+
+ 15:21:08 <ubottu> Launchpad bug 937546 in nautilus-dropbox (Ubuntu) "package nautilus-dropbox (not installed) failed to install/upgrade: subprocess installed post-removal script returned error exit status 2" [Undecided,Invalid] https://launchpad.net/bugs/937546
+
+ 15:21:15 <bdmurray> reported apport bug 989929 regarding checking if a package is an ubuntu package
+
+ 15:21:16 <ubottu> Launchpad bug 989929 in apport (Ubuntu) "does not check ubuntuness of packages being removed or upgraded" [High,Confirmed] https://launchpad.net/bugs/989929
+
+ 15:21:18 <bdmurray> conversion of harvest opportunities from direct launchpad database queries to using the api
+
+ 15:21:21 <bdmurray> blogged regarding duplicate bug title consolidation
+
+ 15:21:23 <bdmurray> created a list of people who improved bug reports during the precise dev cycle for skaet
+
+ 15:21:32 <bdmurray> investigation into remastersys and emailed contact person regarding bug 984276
+
+ 15:21:33 <ubottu> Launchpad bug 984276 in casper (Ubuntu Precise) "installing casper on a non live system causes update-initramfs to fail" [Medium,Confirmed] https://launchpad.net/bugs/984276
+
+ 15:21:35 <bdmurray> created a launchpad development virtual machine
+
+ 15:21:37 <bdmurray> created a couple of blueprints for Q
+
+ 15:21:48 <bdmurray> done
+
+ 15:21:58 <slangasek> ev: "no symbol table info available", so maybe this was a missing debug symbol problem. https://errors.ubuntu.com/oops/008aa98e-92ea-11e1-b399-2c768aafd08c
+
+ 15:22:18 <doko> msg infinity did you give back gcc-4.7? these mysterious give backs become annoying ...
+
+ 15:22:22 <doko> oops
+
+ 15:22:45 <slangasek> bdmurray: texinfo> can you give us a bug about fixing texinfo to not muck around in /etc/environment where it doesn't belong?
+
+ 15:22:46 <infinity> doko: I did a mass-give-back of the world yesterday, nothing today...
+
+ 15:23:05 <infinity> doko: But that wouldn't have hit PPAs, if your PPA upload is what got given-back.
+
+ 15:23:09 <doko> right
+
+ 15:23:10 <bdmurray> slangasek: yes, will do
+
+ 15:23:13 <slangasek> ta
+
+ 15:24:21 <slangasek> jodh: your turn, if you're around :)
+
+ 15:24:28 <jodh> - boot/upstart: - Raised MP on quantal upstart to fix compile error.
+
+ 15:24:28 <jodh> - planning/blueprints:
+
+ 15:24:28 <jodh> - discussions around multiseat.
+
+ 15:24:28 <jodh> - service readiness:
+
+ 15:24:31 <jodh> https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-upstart-service-readiness
+
+ 15:24:35 <jodh> - ptrace limitations:
+
+ 15:24:38 <jodh> https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-upstart-overcome-ptrace-limitations
+
+ 15:24:41 <jodh> - libs/nih: bug 776532 (required for Upstart quantal work). Wrote tests and
+
+ 15:24:44 <jodh> tested. Approved by Keybuk.
+
+ 15:24:45 <ubottu> Launchpad bug 776532 in libnih "nih_dir_walk_scan passes incorrect value to file filter" [Undecided,Triaged] https://launchpad.net/bugs/776532
+
+ 15:24:48 <jodh> - TODO:
+
+ 15:24:51 <jodh> - ConsoleKit+logind investigations + multiseat blueprint with robert_ancell.
+
+ 15:24:54 <jodh> - upstart job disabling blueprint.
+
+ 15:24:57 <jodh> - upstart state passing blueprint.
+
+ 15:25:00 <jodh> ⨌
+
+ 15:25:58 * slangasek feels all integrated
+
+ 15:26:16 * infinity feels dirty
+
+ 15:26:29 <stgraber> jodh: can you make sure I'm subscribed to the multiseat blueprint? (I have an interest because of past experience with these and because of LTSP)
+
+ 15:27:09 <jodh> stgraber: will do.
+
+ 15:27:13 <slangasek> jodh: please also register a general "upstart roadmap" blueprint - we should have that session again just to make sure we're still aligned with what people need
+
+ 15:27:14 <cjwatson> I didn't even know there *was* a quadruple integral operator.
+
+ 15:27:25 <jodh> slangasek: ack.
+
+ 15:28:16 <stgraber> jodh: thanks
+
+ 15:28:22 <slangasek> anyone have questions over the above?
+
+ 15:30:29 <slangasek> [TOPIC] UDS blueprints
+
+ 15:31:04 <slangasek> so with UDS half a week away, any remaining blueprints you mean to have on the schedule need to get in the system ASAP
+
+ 15:31:07 <slangasek> tomorrow at the latest
+
+ 15:31:18 <cjwatson> I've got "btrfs sync-up with server team" and "automated bootloader testing" to do from our call yesterday
+
+ 15:31:24 <cjwatson> will register those today
+
+ 15:31:46 <slangasek> and by Friday at the latest, please have a look at what's on the schedule for UDS and get yourself subscribed to the sessions you need to be at
+
+ 15:31:53 <slangasek> so that the autoscheduler can do its work over the weekend
+
+ 15:32:04 <slangasek> instead of having it throw conflicts at us Monday :)
+
+ 15:32:09 <slangasek> cjwatson: thanks
+
+ 15:32:29 <infinity> (For the record, if people have sessions they think I should be at, feel free to subscribe me)
+
+ 15:33:23 <ogra_> infinity, do we have an arm v8 spec btw ?
+
+ 15:33:41 <infinity> Yep.
+
+ 15:33:43 <slangasek> I expect that as usual none of you should have any trouble finding things to occupy your time at UDS; but if anyone should happen to feel they don't have enough that they're participating in, let me know
+
+ 15:33:44 <ogra_> (assuming it would be yours if it exists)
+
+ 15:33:51 <infinity> ogra_: https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-aarch64-porting
+
+ 15:33:54 <ogra_> thx
+
+ 15:34:05 * ogra_ subscribes
+
+ 15:34:12 <infinity> Cleverly hidden under the arch name that no one knows.
+
+ 15:34:20 <ogra_> hehe
+
+ 15:34:50 <cjwatson> Anyone know if wookey's already planning to set up a quantal sbuild-ma buildd in time for UDS?
+
+ 15:34:52 <slangasek> ev, bdmurray: incidentally, do you think one session about the crashdb is sufficient? (https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-crash-database)
+
+ 15:34:58 <cjwatson> I'd ask him directly but he's not on IRC right now
+
+ 15:35:12 <slangasek> he's on #multiarch@OFTC :)
+
+ 15:35:19 <slangasek> (I don't know)
+
+ 15:35:24 <ev> slangasek: as in should we have foundations-q-crash-database-2?
+
+ 15:35:28 <infinity> I was just about to mention he was on oftc. :P
+
+ 15:35:36 * ogra_ sees him in #linaro
+
+ 15:35:36 <ev> or are you asking if we should split it out into more specs?
+
+ 15:35:38 <slangasek> ev: as in, are there subtopics that warrant an hour of their own :)
+
+ 15:35:49 <cjwatson> ah, I'll ask him there
+
+ 15:36:01 <ev> slangasek: I'll give that a think tonight
+
+ 15:36:05 <ev> it does link to some subtopics
+
+ 15:36:26 <ev> but yeah, maybe the mean time between failures is an hour talk itself
+
+ 15:37:20 <slangasek> ev: if it's simpler we can just block out multiple hours for the umbrella blueprint
+
+ 15:37:28 <ev> yeah, lets do that
+
+ 15:37:42 <slangasek> though sometimes that just means the first topic takes two hours and you never get to the end of the list ;)
+
+ 15:37:47 <ev> heh
+
+ 15:37:56 <ev> I'll still think about how we can further break this down tonight
+
+ 15:38:03 <ev> but lets tentatively plan for two hours
+
+ 15:38:05 <slangasek> any other concerns about blueprints at the moment?
+
+ 15:38:43 <ogra_> any suggestions about hving a blueprint for a partition table and MBR backup restore ?
+
+ 15:38:47 <ogra_> *having
+
+ 15:38:58 <ogra_> (mentioned in my report above)
+
+ 15:39:16 <slangasek> ogra_: I wasn't sure I understood the use case for this
+
+ 15:39:41 <ogra_> having backups of your partition table in case you falsely change it ?
+
+ 15:39:49 <slangasek> who does that though? :)
+
+ 15:39:57 <ogra_> being able to restore a messed up MBR a user fiddled to death
+
+ 15:40:22 <ogra_> dunno, i kno win the past having grub do backups on grub-update came up
+
+ 15:40:30 <cjwatson> update-grub doesn't touch the partition table or the MBR
+
+ 15:40:35 <ogra_> (and we had such discussions for u-boot as well)
+
+ 15:40:37 <cjwatson> You may be thinking of grub-install
+
+ 15:40:47 <ogra_> oh, indeed, wrong term, sorry
+
+ 15:41:02 <slangasek> right, and grub-install doesn't get run except at install time
+
+ 15:41:10 <cjwatson> I dunno, it seems like a special case of having good system backups
+
+ 15:41:11 <ogra_> k, so its moot
+
+ 15:41:21 * xnox .oO(UEFI)
+
+ 15:41:35 <slangasek> ogra_: I suspect we can't justify a session for it - but thanks for bringing it up
+
+ 15:41:38 <ogra_> right, might make more sense in context of an advanced backup tool
+
+ 15:41:40 <cjwatson> ... which we still don't do well
+
+ 15:42:00 <slangasek> do we want system backups on the agenda?
+
+ 15:42:11 <slangasek> or would that need to be desktop / server instead of foundations?
+
+ 15:42:13 <ev> don't we have deja dup?
+
+ 15:42:19 <ev> it sometimes manages to back up to u1
+
+ 15:42:26 <cjwatson> ev: Have you ever tried to do system restores based on duplicity backups?
+
+ 15:42:31 <cjwatson> I have.  It doesn't work.
+
+ 15:42:37 <ev> cjwatson: yikes
+
+ 15:42:37 <ogra_> heh ... sometimes
+
+ 15:43:23 <cjwatson> (Among its faults, it stores file ownership by user/group name rather than number, so you can't reliably restore from a live CD without having to spend ages fiddling with permissions afterwards.  It's obviously meant as a single-user backup tool, not a system backup tool.)
+
+ 15:44:06 <cjwatson> slangasek: I suspect nobody has time for it this cycle :-)
+
+ 15:44:15 <slangasek> right-o
+
+ 15:44:18 <slangasek> moving on then
+
+ 15:44:22 <slangasek> [TOPIC] Bugs
+
+ 15:44:24 <cjwatson> Maybe I should talk to mterry and see if duplicity can be bludgeoned into the right shape, since it's clearly desktop's direction
+
+ 15:44:32 <ev> cjwatson: noted - my experience with it has been fairly light
+
+ 15:44:37 * xnox bacula - is ok for system backups
+
+ 15:44:56 <slangasek> bdmurray: are there any bugs showing up post-release that we should be worrying about SRUing?
+
+ 15:44:57 <barry> duplicity is one of those py3 application ports, so there's even more to bludgeon mterry with :)
+
+ 15:45:00 <slangasek> (ones that we aren't already)
+
+ 15:45:13 * stgraber uses a central backuppc server with rsync for all the Linux systems, works great but not exactly something we can fit in the default install
+
+ 15:45:51 <bdmurray> slangasek: well, I ran across bug 988995 which reminded me of another bug
+
+ 15:45:52 <ubottu> Launchpad bug 988995 in whoopsie-daisy (Ubuntu) "package whoopsie 0.1.32 failed to install/upgrade: el subproceso instalado el script post-installation devolvió el código de salida de error 1" [Undecided,Confirmed] https://launchpad.net/bugs/988995
+
+ 15:46:00 <bdmurray> bug 523896
+
+ 15:46:01 <ubottu> Launchpad bug 523896 in shadow (Ubuntu) "useradd: cannot lock /etc/passwd; try again later." [Medium,Confirmed] https://launchpad.net/bugs/523896
+
+ 15:47:12 <cjwatson> stgraber: Right, roughly me too, but it's all home-grown
+
+ 15:47:18 <ev> yeah, I did ask about that in #ubuntu-devel
+
+ 15:47:30 <ev> I'm not sure what else we can do if /etc/passwd is locked
+
+ 15:47:47 <slangasek> 523896> the blocker there was that we haven't reached consensus with the upstream yet, so I was reluctant to diverge :/
+
+ 15:48:37 <slangasek> ev, bdmurray: what's surprising is the large number of reports of it *being* locked, all of a sudden
+
+ 15:49:48 <slangasek> Why should users not be seeing locked /etc/passwd until installing whoopsie?  Is it just that the stale lock has been there for years, but nothing has tried to add a new user on upgrade?
+
+ 15:50:14 <infinity> Could be that.
+
+ 15:50:20 <infinity> We don't add new users all that often.
+
+ 15:50:31 <infinity> Unless you install something that does so, of course.
+
+ 15:51:34 <cjwatson> Quite a few packages add users; odd that whoopsie would be a particularly common victim
+
+ 15:51:40 <slangasek> so unless we think whoopsie is somehow misbehaving and *causing* the lock, the right thing to do is to fix the underlying lock
+
+ 15:51:51 <slangasek> cjwatson: quite a few packages in the default desktop install that will add them on upgrade?
+
+ 15:51:53 <cjwatson> I suppose it could be like man-db being victimised by trigger bugs
+
+ 15:52:05 <cjwatson> Maybe not upgrade, no, though whoopsie's surely not the first
+
+ 15:52:14 <cjwatson> Well, first in this case :)
+
+ 15:52:38 <cjwatson> Anyway, I see no relevant misbehaviour in whoopsie.postinst
+
+ 15:52:42 <slangasek> yep
+
+ 15:53:02 <slangasek> and whoopsie certainly shouldn't be working around the lock if it's not buggily causing it in the first place
+
+ 15:53:16 <slangasek> so the thing to do is to get the lock cleared (e.g., at boot)
+
+ 15:53:44 <slangasek> cjwatson: any objections to clearing that lock file at boot?
+
+ 15:54:04 <cjwatson> Seems fair
+
+ 15:54:27 <infinity> Seems reasonable (ish) to me, if we've confirmed that shadow/passwd inconsistency is avoided in other ways.
+
+ 15:54:30 <slangasek> ok
+
+ 15:54:35 <slangasek> bdmurray: any others?
+
+ 15:54:39 <ev> https://errors.ubuntu.com/ still lists that python-central bug, which has been floating near or at the top since release. Don't know if it's my parsing of the launchpad crash bugs data being broken or if we really still don't have a bug reported for it.
+
+ 15:54:43 <bdmurray> Is that thought that there may be some deliquent package leaving the lock?
+
+ 15:54:44 <ev> apols for jumping in there
+
+ 15:55:01 <infinity> ev: doko uploaded a fix, we just need to get it through SRU land.
+
+ 15:55:04 <ev> https://errors.ubuntu.com/oops/00104e3a-9071-11e1-b51d-2c768aafd08c
+
+ 15:55:05 <ev> ah yay
+
+ 15:55:14 <infinity> ev: And his fix *did* reference a bug, so maybe your matching isn't working?
+
+ 15:55:26 <ev> well it will only match apport filed bugs
+
+ 15:55:33 <infinity> I think it was.
+
+ 15:55:40 <ev> okay, I'll have a look then
+
+ 15:55:58 <ev> I'm sure I'm failing to parse a special character properly
+
+ 15:56:04 <slangasek> I thought doko hand-filed the bug
+
+ 15:56:17 <infinity> ev: https://bugs.launchpad.net/ubuntu/+source/python-central/+bug/955936
+
+ 15:56:19 <ubottu> Launchpad bug 955936 in python-central (Ubuntu) "pycentral crashed with NameError in run(): global name 'arch' is not defined" [High,In progress]
+
+ 15:56:28 <ev> cheers
+
+ 15:56:28 <infinity> slangasek: Nope.
+
+ 15:56:38 <slangasek> bdmurray: well, one of the scenarios that caused the lock was if there's a crash while using the guest session
+
+ 15:56:57 <slangasek> bdmurray: so there's a bug there somewhere, but I wasn't able to spot it when I looked at the time
+
+ 15:57:11 <infinity> slangasek: Yeah, one might wonder why the guest session is locking passwd?
+
+ 15:57:14 <ev> infinity: added a note to investigate - thanks
+
+ 15:57:21 <slangasek> infinity: yep
+
+ 15:57:47 <bdmurray> ev: is it because the bug has a python traceback and the error doesn't?
+
+ 15:57:59 <slangasek> infinity: where exactly is the fix for bug #955936?  it's not in the unapproved queue
+
+ 15:58:00 <ubottu> Launchpad bug 955936 in python-central (Ubuntu) "pycentral crashed with NameError in run(): global name 'arch' is not defined" [High,In progress] https://launchpad.net/bugs/955936
+
+ 15:58:07 <cjwatson> it's in -proposed
+
+ 15:58:07 <infinity> slangasek: Accepted.
+
+ 15:58:11 <infinity> ^
+
+ 15:58:14 <slangasek> oh
+
+ 15:58:20 <slangasek> sorry, was confused by the 'in progress'
+
+ 15:58:30 <slangasek> which is from the wrong task
+
+ 15:58:33 <cjwatson> I guess we'll auto-copy it to quantal once it's verified
+
+ 15:58:38 <slangasek> ok then
+
+ 15:58:41 <ev> bdmurray: no, the signatures are not matched somehow. I think it's because I'm incorrectly parsing the signature on our end to what people.canonical.com/~ubuntu-archive/apport... is expecting
+
+ 15:59:20 <bdmurray> slangasek: that's all I had for bugs
+
+ 15:59:33 <slangasek> ok, thanks
+
+ 15:59:41 <slangasek> [TOPIC] AOB
+
+ 15:59:46 <slangasek> one minute, talk fast ;)
+
+ 15:59:53 <ev> Some crash database statistics for you:
+
+ 15:59:58 <ev> - 5,066,166 crashes received since March 20th. That's right, 5 million.
+
+ 15:59:58 <ev> - 263,280 crashes received on release day and 426,729 the next day.
+
+ 16:00:00 <ev> - Thanks to having to constantly purge the cache, we're retracing one 12.04
+
+ 16:00:01 <ev> crash every 47.44 seconds. Our best time was on release day with a full
+
+ 16:00:03 <ev> cache. We retraced one crash every 25.15 seconds.
+
+ 16:00:04 <ev> - 8,874 unique problems were seen today (with many instances of those
+
+ 16:00:06 <ev> seen). Yesterday we saw 12,468 unique problems. Keep in mind that this is
+
+ 16:00:07 <ev> greatly influenced by how quickly we can retrace crashes (and it currently
+
+ 16:00:09 <ev> incorrectly places the crashes in the day bucket for today, regardless of
+
+ 16:00:10 <ev> whether it actually happened days ago and we've only just retraced it). On
+
+ 16:00:11 <ev> release day we only saw 1,604 unique problems.
+
+ 16:00:12 <ev> - We've received reports from 364,359 people.
+
+ 16:00:16 <slangasek> wow
+
+ 16:00:29 <ogra_> geez, 5mio !
+
+ 16:00:52 <infinity> Take-home message: (A) we actually have users, (B) software sucks?
+
+ 16:01:04 <slangasek> what's the distribution of duplicates look like?  https://errors.ubuntu.com/ seems to only give a rolling frequency
+
+ 16:01:04 <ev> the retracer hardware is causing serious pain. The numbers will shoot up much higher once we sort that.
+
+ 16:01:21 <xnox> (C) we can now act in more real-time to real problems users are hitting *right now*
+
+ 16:01:22 <ogra_> still if we say we have 20mio users thats like a quater of them having crashes :)
+
+ 16:01:38 <slangasek> i.e., I'm pretty sure there've been more than 858 instances of the python-central issue, and that the number shown was higher yesterday :)
+
+ 16:01:38 <ev> infinity: yes, and yes
+
+ 16:01:41 <cjwatson> (D) maybe we need a more agile SRU process
+
+ 16:01:47 <infinity> cjwatson: Indeed.
+
+ 16:01:52 <ogra_> ++ on that
+
+ 16:01:56 <infinity> cjwatson: Do we have a bikeshed session for that?
+
+ 16:02:02 <slangasek> not currently
+
+ 16:02:06 <ev> slangasek: yeah, the counts look a bit suspicious. I've been investigating but everything checks out so far.
+
+ 16:02:07 <infinity> We probably should.
+
+ 16:02:09 <slangasek> someone want to schedule one?
+
+ 16:02:12 <ev> the code for month and year ranges will land soon
+
+ 16:02:15 <slangasek> infinity: thanks for volunteering :)
+
+ 16:02:19 <ev> in the web ui that is, it's already on the backend
+
+ 16:02:21 <infinity> >:(
+
+ 16:02:24 * infinity goes to register.
+
+ 16:02:37 <ev> xnox: yes, this is entirely realtime data and we'll soon have realtime updates on the page itself
+
+ 16:02:41 <ev> so you can watch a crash climb
+
+ 16:03:09 <slangasek> ev: well, I'm *sure* the numbers were higher when I loaded the page yesterday - I remember a four-digit count for the top crashers
+
+ 16:03:20 <ev> it's per day at the moment
+
+ 16:03:31 <ev> you'll be able to select month and year soon
+
+ 16:03:40 <ev> and break down by releases, packages, and versions
+
+ 16:04:16 <slangasek> ok
+
+ 16:04:53 <ev> and matthew is working on a mockup UI to be able to select date ranges, I believe
+
+ 16:04:58 <slangasek> would be good to understand things like: what percentage of all crashes does a given crash represent, are users likely to run into this same crash multiple times or just as a one-off, etc
+
+ 16:05:02 <ev> as that was one of skaet 's requirements
+
+ 16:05:11 <ev> slangasek: reply to my email :)
+
+ 16:05:19 <slangasek> heh :)
+
+ 16:05:23 <slangasek> noted ;)
+
+ 16:05:25 <ev> IRC is far too lossy for this sort of thing
+
+ 16:05:32 <ev> cheers!
+
+ 16:05:44 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

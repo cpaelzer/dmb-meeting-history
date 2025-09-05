@@ -1,0 +1,460 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by ara at 15:14:59 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-09-26-15.14.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *AGENDA
+
+ *I want my 3 stars!!
+''LINK:'' https://wiki.ubuntu.com/UbuntuFriendly/Process   (ara, 15:16:13)
+''LINK:'' http://91.189.93.109/   (ara, 15:16:25)
+''LINK:'' https://bugs.launchpad.net/checkbox/+bug/855382   (brendand, 15:20:47)
+''LINK:'' https://bugs.launchpad.net/checkbox/+bug/855538   (brendand, 15:21:36)
+''ACTION:'' jedimike and cr3 to talk about how to get a list of failing tests  (ara, 15:29:14)
+''LINK:'' https://bugs.launchpad.net/checkbox/+bug/855382   (ara, 15:41:50)
+
+ *Any Other Business?
+
+
+
+Meeting ended at 16:03:09 UTC.
+
+
+
+== Votes ==
+
+
+ * Postpone the investigation and fix or workaround for bug 855382 for P
+   For: 2 Against: 0 Abstained: 3
+
+ * defer the problem with the atheros wifi cards to 12.04 LTS
+   For: 1 Against: 0 Abstained: 0
+
+
+
+== Action items ==
+
+ * jedimike and cr3 to talk about how to get a list of failing tests
+
+
+
+== Action items, by person ==
+
+ * cr3
+ ** jedimike and cr3 to talk about how to get a list of failing tests
+ * jedimike
+ ** jedimike and cr3 to talk about how to get a list of failing tests
+
+
+
+== People present (lines said) ==
+
+ * ara (75)
+ * brendand (37)
+ * cr3 (20)
+ * meetingology (20)
+ * roadmr (19)
+ * jedimike (18)
+ * ubottu (5)
+
+
+
+== Full Log ==
+
+
+ 15:14:59 <ara> #startmeeting
+
+ 15:14:59 <meetingology> Meeting started Mon Sep 26 15:14:59 2011 UTC.  The chair is ara. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:14:59 <meetingology> 
+
+ 15:14:59 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:15:15 <ara> Getting started, we only have 45 minutes this time
+
+ 15:15:24 <ara> #topic AGENDA
+
+ 15:15:35 <ara> * I want my 3 stars!!
+
+ 15:15:37 <ara> * AOB
+
+ 15:16:04 <ara> #topic I want my 3 stars!!
+
+ 15:16:13 <ara> As you guys know (or if not you know now), a system that reports all its core components as working gets a minimum of three stars.
+
+ 15:16:13 <ara> #link https://wiki.ubuntu.com/UbuntuFriendly/Process
+
+ 15:16:25 <ara> If one or more core components are reported as not working, the system gets the minimum rating (1 star). What happens at this point:
+
+ 15:16:25 <ara> #link http://91.189.93.109/
+
+ 15:16:51 <ara> It is clear that some tests that are associated with core components are still failing.
+
+ 15:16:51 <ara> This meeting is an attempt to coordiante between the people working on the client side and the people working on the server side to know exactly what needs to be done in order for this to work correctly.
+
+ 15:16:51 <ara> Anyone has an idea where to look?
+
+ 15:17:05 <ara> ..
+
+ 15:17:05 <roadmr> o/
+
+ 15:17:07 <brendand> o/
+
+ 15:17:10 <ara> roadmr, go ahead
+
+ 15:17:16 <roadmr> I guess everyone has something to say on this :)
+
+ 15:17:23 <jedimike> o/
+
+ 15:17:29 <ara> :)
+
+ 15:18:04 <roadmr> We should look at submissions from systems we know from experience are mostly working, see which tests are marked as failing, and either improve the tests so they don't fail, or have the calculation script not consider them as fail-worthy
+
+ 15:18:31 <roadmr> I know for instance a lot of systems fail the cpu_frequency_governors test by a small percentage, but they still work fine
+
+ 15:18:43 <roadmr> since this test is in the cpu category it is considered core
+
+ 15:19:22 <roadmr> it's just an example though, I'd still say to review the submissions and make any tweaks necessary is a possible way to go
+
+ 15:19:25 <roadmr> ..
+
+ 15:19:31 <ara> thanks roadmr
+
+ 15:19:33 <ara> brendand, ?
+
+ 15:19:38 <brendand> hi
+
+ 15:19:58 <brendand> first of all, roadmr - frequency_governor isn't in the whitelist ;)
+
+ 15:20:12 <brendand> i'll just clear that up
+
+ 15:20:31 <brendand> but what i was going to say is, take the example of this Samsung N310 i have
+
+ 15:20:36 <brendand> i have two bugs:
+
+ 15:20:47 <brendand> https://bugs.launchpad.net/checkbox/+bug/855382
+
+ 15:20:48 <ubottu> Ubuntu bug 855382 in checkbox "Some wireless cards are not reported as being in the WIRELESS category by udev_resource" [Undecided,New]
+
+ 15:21:15 <brendand> the wireless on this system works perfectly but because of this bug the tests don't run
+
+ 15:21:26 <brendand> second, and this is a question as well:
+
+ 15:21:36 <brendand> https://bugs.launchpad.net/checkbox/+bug/855538
+
+ 15:21:37 <ubottu> Ubuntu bug 855538 in checkbox "camera/detect and camera/still don't run because they depend on xawtv which is not installed by default" [Undecided,New]
+
+ 15:22:02 <brendand> the question being does that impact the stars (i didn't think camera was a core component)?
+
+ 15:22:23 <brendand> also that one is easily workaroundable (by installing xawtv)
+
+ 15:22:24 <brendand> ...
+
+ 15:22:43 <ara> jedimike, ?
+
+ 15:23:42 <jedimike> at the moment, in UF I just store if a certain category of test has passed or failed. What I'd like to do is store the names of the tests that caused a category to fail, so we can see what we need to do for specific systems to get the 3 stars and above.
+
+ 15:24:11 <jedimike> I feel like that's starting to duplicate the results tracker's functionality though, so I'd like cr3 to feedback on that before i do anything
+
+ 15:24:13 <jedimike> ...
+
+ 15:24:37 <ara> cr3, around?
+
+ 15:25:31 <ara> it looks like he's not around
+
+ 15:25:36 <cr3> ara: I'm there, thinking
+
+ 15:26:12 <jedimike> cr3: it's not something i'd display on the site, just something i'd record so we can get a breakdown of failures easily based on the definitions of systems that UF has
+
+ 15:26:20 <cr3> jedimike: I'm not sure about the implications of what you propose, does this need to be solved here?
+
+ 15:27:06 <ara> in the mean time I have a question about brendan's wireless. If his wifi card is not recognize as wireless, it shouldn't count as core component, shouldn't it?
+
+ 15:27:13 <ara> it is like it is not there
+
+ 15:27:13 <jedimike> cr3: it doesn't need to be solved on the UF side if you already know which tests are the troublesome ones, or have an easy way of finding that out
+
+ 15:28:08 <cr3> jedimike: I meant "here" as in "within the 30 minutes of this meeting". this is the first time I hear about this request, so I'd like to better understand it and having to raise hand to talk is going to make that rather long
+
+ 15:28:34 <jedimike> cr3: ok, it's an idea i came up with in the last 5 mins, which is why this is the first mention of it :)
+
+ 15:28:48 <cr3> jedimike: no problem, lets talk about the implementation details after the meeting
+
+ 15:29:12 <brendand> o/
+
+ 15:29:14 <ara> #action jedimike and cr3 to talk about how to get a list of failing tests
+
+ 15:29:14 * meetingology jedimike and cr3 to talk about how to get a list of failing tests
+
+ 15:29:14 <cr3> ..
+
+ 15:29:20 <ara> brendand, ?
+
+ 15:30:12 <brendand> i think it would be better if wireless was a seperate category so we can make the distinction between it not working on a laptop and it not working on a desktop
+
+ 15:30:23 <brendand> but
+
+ 15:30:50 <brendand> wouldn't it be the case that *all* tests in a category would need to pass to say the component is working?
+
+ 15:31:07 <ara> yes, that's the case
+
+ 15:31:17 <brendand> so as long as we test each of the network interfaces, having them all bundled under NETWORKING would be okay
+
+ 15:31:26 <brendand> since both the wifi and ethernet would have to work
+
+ 15:31:39 <ara> brendand, but wifi is not core in a desktop
+
+ 15:32:51 <brendand> yeah, see it's a tricky one. well as i said in the bug, the only way may be to relax the requires on the wireless test. if a system doesn't have wireless then the user will just have to say that, since there doesn't seem to be a perfectly reliable way to detect it
+
+ 15:32:53 <brendand> ...
+
+ 15:33:05 <roadmr> o/
+
+ 15:33:11 <ara> roadmr, go ahead
+
+ 15:33:46 <roadmr> as far as I could see, looking at the output of iwconfig is pretty reliable to identify wireless. Just a thought.
+
+ 15:33:49 <roadmr> ..
+
+ 15:34:00 <ara> o/
+
+ 15:34:26 <ara> I think that it is clear that we need a better solution for the atheros wifi, but I am afraid that it is too late for that :(
+
+ 15:34:38 <ara> do you think a fix is feasible for Oneiric?
+
+ 15:34:39 <ara> ..
+
+ 15:34:56 <brendand> o/
+
+ 15:35:05 <ara> brendand, go ahead
+
+ 15:35:48 <brendand> roadmr, that's true - i meant using the info in udev_resource. we'd have to write a new resource script. as ara said, feasible in the next couple of days?
+
+ 15:36:14 <brendand> may be better to relax the requirement and put whatever better fix there is in the PPA version
+
+ 15:36:16 <brendand> ...
+
+ 15:36:49 <ara> I was voting for not even relax the requirement ;-)
+
+ 15:36:59 <ara> atheros will have 1 star
+
+ 15:37:03 <ara> known issue
+
+ 15:37:08 <ara> (we will be in Beta, anyway)
+
+ 15:37:09 <ara> ..
+
+ 15:37:48 <brendand> fair enough, i don't agree - but your call ;)
+
+ 15:37:59 <ara> no, let's vote
+
+ 15:38:40 <ara> #vote defer the problem with the atheros wifi cards to 12.04 LTS
+
+ 15:38:40 <meetingology> Please vote on: defer the problem with the atheros wifi cards to 12.04 LTS
+
+ 15:38:40 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 15:39:33 <ara> nobody votes?
+
+ 15:39:45 <roadmr> +1
+
+ 15:39:45 <meetingology> +1 received from roadmr
+
+ 15:39:51 <brendand> ara - i don't think the question is well worded
+
+ 15:39:59 <cr3> ara: I'm still trying to understand how significant the changes really are
+
+ 15:40:03 <ara> #endvote
+
+ 15:40:03 <meetingology> Voting ended on: defer the problem with the atheros wifi cards to 12.04 LTS
+
+ 15:40:03 <meetingology> Votes for:1 Votes against:0 Abstentions:0
+
+ 15:40:03 <meetingology> Motion carried
+
+ 15:40:04 <brendand> -1
+
+ 15:40:17 <ara> OK, let's discuss it a bit further before voting
+
+ 15:40:25 <ara> and brendand, you do the wording ;)
+
+ 15:40:31 <brendand> ara - sure
+
+ 15:40:32 <roadmr> o/
+
+ 15:40:38 <ara> roadmr, go ahead
+
+ 15:40:55 <cr3> o/
+
+ 15:40:57 <roadmr> there are many tweaks to be done, I think if we scram to fix this particular one when there are so many to handle is not good
+
+ 15:41:25 <roadmr> so I'd say working on those tweaks for the P cycle (and maybe making progress available in a checkbox-stable ppa) would be better than rushing to meet O release
+
+ 15:41:29 <roadmr> ..
+
+ 15:41:38 <ara> cr3, your turn
+
+ 15:41:39 <cr3> is there a bug open about atheros wireless cards?
+
+ 15:41:40 <cr3> ..
+
+ 15:41:50 <ara> https://bugs.launchpad.net/checkbox/+bug/855382
+
+ 15:41:51 <cr3> o/
+
+ 15:41:51 <ubottu> Ubuntu bug 855382 in checkbox "Some wireless cards are not reported as being in the WIRELESS category by udev_resource" [Undecided,New]
+
+ 15:42:00 <ara> cr3, go ahead :)
+
+ 15:42:44 <jedimike> o/
+
+ 15:42:56 <cr3> should systems with these cards be reported with one star or, if the card is detected as NETWORKING instead of WIRELESS, could the device be ignored and reported as 3 stars?
+
+ 15:43:52 <ara> cr3, I thought that it would be 3 stars, as UF thinks that there is no wireless card
+
+ 15:43:54 <cr3> ..
+
+ 15:44:01 <ara> jedimike, go
+
+ 15:44:31 <jedimike> cr3: if there's no wireless card, and no wireless tests run, it would still be possible to get 3 stars, yes
+
+ 15:44:33 <jedimike> also
+
+ 15:44:47 <jedimike> I'm wondering what cards this bug affects
+
+ 15:45:05 <jedimike> because http://91.189.93.109/11.10/ASUSTeK%20Computer%20Inc./U36SD/p:E4:I8g:B4w:BFJp:h:B5G:Cw9:BkT/ reports an atheros wireless card, and one unit has the tests passing for it too
+
+ 15:45:30 <jedimike> so perhaps it's only a certain model of atheros card?
+
+ 15:45:31 <jedimike> ...
+
+ 15:46:22 <cr3> o/
+
+ 15:46:27 <ara> cr3, go ahead :)
+
+ 15:46:54 <cr3> after looking at the bug, I personally don't have enough information to determine the scope of the change necessary to make this work. so, if we vote, I'm: 0
+
+ 15:46:56 <cr3> ..
+
+ 15:47:40 <brendand> o/
+
+ 15:47:44 <ara> brendand, go ahead
+
+ 15:48:21 <brendand> to answer jedimikes question, i have two netbooks though i'm not sure if they have the same card or a different one - and they are both affected by this
+
+ 15:48:30 <brendand> the exact model is shown in the bug
+
+ 15:48:58 <brendand> but for the purpose of voting people should assume only one model of atheros card is affected
+
+ 15:49:01 <brendand> ...
+
+ 15:49:28 <ara> OK, let's vote, this is taking too much time
+
+ 15:49:41 <ara> brendand, what should be the wording?
+
+ 15:50:54 <brendand> ara - now that i'm trying to think of one it's quite difficult!
+
+ 15:51:34 <ara> shall I give a try?
+
+ 15:52:12 <brendand> ara - i'll go with your wording now that we all understand the issue better
+
+ 15:52:34 <ara> #vote Postpone the investigation and fix or workaround for bug 855382 for P
+
+ 15:52:34 <meetingology> Please vote on: Postpone the investigation and fix or workaround for bug 855382 for P
+
+ 15:52:34 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 15:52:35 <ubottu> Launchpad bug 855382 in checkbox "Some wireless cards are not reported as being in the WIRELESS category by udev_resource" [Undecided,Incomplete] https://launchpad.net/bugs/855382
+
+ 15:53:14 <roadmr> +1 we need more data to decide on this, tweaking for specific systems piecemeal is going to be too much work
+
+ 15:53:14 <meetingology> +1 we need more data to decide on this, tweaking for specific systems piecemeal is going to be too much work received from roadmr
+
+ 15:53:30 <jedimike> 0, because i'm not sure if we have enough information to prove the fix or not
+
+ 15:53:30 <meetingology> 0, because i'm not sure if we have enough information to prove the fix or not received from jedimike
+
+ 15:53:32 <ara> +1, we don't even know if this issue is causing those systems to have one star
+
+ 15:53:32 <meetingology> +1, we don't even know if this issue is causing those systems to have one star received from ara
+
+ 15:53:32 <cr3> 0
+
+ 15:53:32 <meetingology> 0 received from cr3
+
+ 15:53:59 <brendand> 0
+
+ 15:53:59 <meetingology> 0 received from brendand
+
+ 15:54:14 <ara> #endvote
+
+ 15:54:14 <meetingology> Voting ended on: Postpone the investigation and fix or workaround for bug 855382 for P
+
+ 15:54:14 <meetingology> Votes for:2 Votes against:0 Abstentions:3
+
+ 15:54:14 <meetingology> Motion carried
+
+ 15:54:15 <ubottu> Launchpad bug 855382 in checkbox "Some wireless cards are not reported as being in the WIRELESS category by udev_resource" [Undecided,Incomplete] https://launchpad.net/bugs/855382
+
+ 15:54:36 <ara> OK,  moved to P
+
+ 15:54:39 <ara> o/
+
+ 15:55:21 <ara> Before we end the meeting I would like to know if it would be easy to cr3 to get a list of tests in the RT that are failing, and jedimike a list of core categories that are failing
+
+ 15:55:30 <ara> so we can concentrate if fixing those
+
+ 15:55:31 <ara> ..
+
+ 15:55:48 <jedimike> o/
+
+ 15:56:14 <ara> jedimike, go ahead
+
+ 15:56:17 <cr3> o/
+
+ 15:56:53 <jedimike> it would be relatively easy for me to record the failing tests against the failing categories in UF, and that's what our action is about discussing
+
+ 15:56:57 <jedimike> ...
+
+ 15:57:21 <ara> cr3, ?
+
+ 15:57:40 <cr3> ara: could what jedimike is proposing meet both requirements, ie absolving me of that action item? :)
+
+ 15:57:47 <cr3> ..
+
+ 15:58:48 <ara> cr3, jedimike: I would prefer if you guys could talk about it, so we make sure that we are not putting stuff in UF that should be in LR
+
+ 15:59:00 <ara> but we need it, urgently :)
+
+ 15:59:18 <ara> OK, anything else on this topic?
+
+ 15:59:21 <cr3> ara: ok, feel free to add another action item for both of us to coordinate
+
+ 15:59:47 <ara> it was about that :)
+
+ 16:00:10 <ara> moving on to the next topic?
+
+ 16:00:32 <ara> #topic Any Other Business?
+
+ 16:00:46 <roadmr> o/
+
+ 16:00:59 <ara> roadmr, go ahead
+
+ 16:01:24 <roadmr> Just a last call for testing, if you get a minute to add the checkbox ppa to your oneiric system and run it, to make sure we don't have any nasty showstoppers at this point. Thanks!
+
+ 16:01:29 <roadmr> ..
+
+ 16:02:15 <ara> thanks roadmr :)
+
+ 16:02:22 <ara> Anything else?
+
+ 16:03:09 <ara> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

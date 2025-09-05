@@ -1,0 +1,198 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 30 Nov at 16:01 &mdash; 16:37 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-11-30-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:01.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-30-november-2023/   (juliank, 16:01)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:10.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:11)
+ * ''LINK:'' (ish) rls-mm-incoming-bug-tasks.html  (juliank, 16:28)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:34.
+
+
+=== AOB ===
+
+Discussion started by juliank at 16:36.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (42)
+ * schopin (8)
+ * bdmurray (6)
+ * enr0n (4)
+ * bdrung (3)
+ * meetingology (2)
+ * adrien (2)
+ * ravikant_ (1)
+ * zhsj (1)
+ * dviererbe (1)
+ * ginggs (1)
+
+
+
+== Full log ==
+
+
+ 16:01 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:32 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <bdrung> \o
+
+ 16:01 <juliank> #topic Lightning rounds
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:01 <bdmurray> o/
+
+ 16:01 <ravikant_> o/
+
+ 16:01 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-30-november-2023/
+
+ 16:05 <zhsj> o/
+
+ 16:06 <bdmurray> I have no questions
+
+ 16:07 <juliank> People are still writing :)
+
+ 16:08 <bdmurray> Then my question is why?
+
+ 16:08 <schopin> Because we always think we have enough time, even though we clearly don't.
+
+ 16:10 <dviererbe> o/
+
+ 16:10 <bdmurray> dviererbe: what is a "release timeline tool"?
+
+ 16:10 <juliank> #topic Release incoming bugs
+
+ 16:11 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 16:11 <juliank> (sorry real links are internal right now)
+
+ 16:11 <bdmurray> I'll sort it today.
+
+ 16:11 <juliank> bug 2044623 we are basically done already
+
+ 16:11 <juliank> This will get fixed with 2.12 final shortly
+
+ 16:12 <juliank> bug 1969394 I think is desktop
+
+ 16:12 <juliank> bug 2042790 - schopin
+
+ 16:13 <schopin> Oh right, that. Yes, we should do that.
+
+ 16:13 <schopin> (it's already somewhere in my todolist)
+
+ 16:14 <juliank> schopin: I'll go tag and target it anyhow
+
+ 16:14 <schopin> thanks :)
+
+ 16:14 <juliank> bug 2043713 I suppose is more armhf security gcc flag fallout?
+
+ 16:15 <juliank> ah yes I remember
+
+ 16:16 <juliank> So the issue is that valgrind doesn't support the right stack layout or something I read earlier today
+
+ 16:16 <adrien> "maybe"? tbh I didn't try to fully understand the root cause
+
+ 16:17 <bdrung> this should be the -fstack-clash-protection issue
+
+ 16:23 <juliank> bug 2045250
+
+ 16:24 <schopin> fheimes was notified about that bug off-band, and figured we'd want to fix this *before* we get customer complaints :)
+
+ 16:24 <juliank> sounds gtm
+
+ 16:24 <adrien> (for fstack-clash-protection: asked the security team again over mattermost, and will maybe switch to another communication channel if I don't get an answer)
+
+ 16:25 <juliank> tagging todo
+
+ 16:25 <juliank> bug 2015538
+
+ 16:25 <juliank> seems SEG is interested now
+
+ 16:26 <juliank> Let's skip that
+
+ 16:26 <schopin> Why is this on Foundations' radar? The MIR has been filed by Desktop.
+
+ 16:26 <juliank> dbus is foundations
+
+ 16:26 <juliank> like dbus-daemon is right now, so dbus-broker should be when it replaces it
+
+ 16:27 <schopin> Oh and there's an issue of reimplementing a missing feature, which would be for us to do according to slyon.
+
+ 16:27 <juliank> bug 2017401 I do not know what to do right now and I'm supposed to write a spec on this I think but need to find notes from Riga
+
+ 16:28 <juliank> Need to get to January to reconnect with vor_lon
+
+ 16:28 <juliank> #link (ish) rls-mm-incoming-bug-tasks.html
+
+ 16:28 <juliank> bug 2041518
+
+ 16:28 <juliank> this is for desktop
+
+ 16:29 <juliank> bug 2041831
+
+ 16:31 <juliank> I believe this seems like a pygobject issue for desktop to investigate, probably a type declared wrong somewhere?
+
+ 16:31 <juliank> I left comment to that effect on the bug
+
+ 16:31 <juliank> That's all for mm, ff is empty too, we only have one bug  left for jj
+
+ 16:31 <juliank> bug 2039083
+
+ 16:32 <juliank> enr0n: systemd-networkd blocks on empty list when waiting for online ifaces in jammy it says
+
+ 16:33 <enr0n> juliank: this is a can of worms. We need to implement our network-online spec basically.
+
+ 16:33 <enr0n> systemd-networkd-wait-online is behaving correctly in that case, but people have been used to it being a no-op basically for a while
+
+ 16:33 <enr0n> but I should comment on that so I will do so
+
+ 16:34 <juliank> OK I'll leave that with you
+
+ 16:34 <schopin> so, basically, they're holding it wrong?
+
+ 16:34 <juliank> #topic Team proposed-migration report
+
+ 16:34 <juliank> Unfortunately we don't have good data from last week and it's going to take forever to get through the list so...
+
+ 16:34 <juliank> I propose we skip this in the meeting and create an epic tomorrow with tasks in it
+
+ 16:34 <juliank> Then everyone can just pick one
+
+ 16:35 <bdrung> sounds like a good plan.
+
+ 16:36 <juliank> #topic AOB
+
+ 16:36 <enr0n> I will be out tomorrow
+
+ 16:36 <bdmurray> As will I
+
+ 16:36 <ginggs> me too
+
+ 16:37 <juliank> Alright, that wraps this up I suppose
+
+ 16:37 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,293 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdrung, 14 Sep at 15:02 &mdash; 16:01 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-09-14-15.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by bdrung at 15:03.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-14-sep-2023/38635   (bdrung, 15:03)
+
+=== Release incoming bugs ===
+
+Discussion started by bdrung at 15:27.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:27)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:48)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:50)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:53)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdrung at 15:53.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdrung, 15:53)
+
+=== AOB ===
+
+Discussion started by bdrung at 15:56.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (38)
+ * bdrung (37)
+ * bdmurray (10)
+ * adrien (5)
+ * schopin (5)
+ * sil2100 (5)
+ * zhsj (4)
+ * ogayot (3)
+ * liushuyu (3)
+ * meetingology (2)
+ * waveform (2)
+ * mclemenceau (1)
+ * upils (1)
+
+
+
+== Full log ==
+
+
+ 15:02 <bdrung> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:02 <meetingology> Meeting started at 15:02:59 UTC.  The chair is bdrung.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:03 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:03 <bdrung> #topic Lightning rounds
+
+ 15:03 <bdrung> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-14-sep-2023/38635
+
+ 15:04 <bdmurray> With the -security pocket fix will that end up in the jammy version of the snap?
+
+ 15:04 <mclemenceau> o/
+
+ 15:04 <bdmurray> ogayot: ^^
+
+ 15:05 <ogayot> bdmurray: when the snap is promoted to latest/stable, it should
+
+ 15:05 <bdrung> bdmurray, looking at https://code.launchpad.net/~ubuntu-release/autopkgtest/+git/development/+merge/450971 - jq will be much better at parsing json and spitting out what you want
+
+ 15:06 <bdmurray> bdrung: Yes, see the line above. We are just sorting out issues installing jq in the charms...
+
+ 15:06 <ogayot> or a more specific channel if there is one for jammy - but the intention is indeed to have a refresh available for jammy
+
+ 15:06 <bdmurray> I just don't want to have to think about this in February
+
+ 15:06 <adrien> \o
+
+ 15:07 <adrien> zhsj: I love OCaml :)
+
+ 15:07 <bdmurray> waveform: Started filling out release notes for mantic - yeah \o/
+
+ 15:08 <zhsj> adrien: 😯😯
+
+ 15:11 <schopin> zhsj: if that's about the ocaml thing, it's oddly popular among French programmers, because it's widely used as a teaching language.
+
+ 15:12 <bdmurray> I wish discourse would tell me the bug title on mouseover
+
+ 15:16 <bdrung> all finished reading?
+
+ 15:17 <adrien> zhsj: I don't have much time to checkout that and debug it but overall the debian ocaml team is very good; I'd be surprised this isn't already noticed and planned
+
+ 15:19 <zhsj> adrien: same error in debian, and liquidsoap has been removed testing. Debian bug #1042099
+
+ 15:20 <zhsj> actually it's no longer problem for nbs, as it has been removed from mantic-release. i'm just on an old nbs.html when i did the work
+
+ 15:22 <vorlon> upils: discourse pointedly reminds me to say welcome :)
+
+ 15:22 <upils> thanks :)
+
+ 15:22 <bdrung> zhsj, you mentioned https://code.launchpad.net/~zhsj/ubuntu/+source/libevent/+git/libevent/+merge/451102 which is not sponsored yet but it does not appear on https://reports.qa.ubuntu.com/reports/sponsoring/
+
+ 15:23 <schopin> bdrung: he pinged us directly in -devel
+
+ 15:23 <vorlon> upils: could be helpful if you give us a realname mapping in your IRC client and discourse profile
+
+ 15:24 <adrien> zhsj: unfortunately the debian release schedule is not the same as ours :'(   I'd need to checkout the sources and build myself which I can maybe do tomorrow
+
+ 15:25 <zhsj> adrien: awesome
+
+ 15:27 <bdrung> #topic Release incoming bugs
+
+ 15:27 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:27 <bdrung> bug #2034986
+
+ 15:28 <bdmurray> vorlon suggested I report that
+
+ 15:28 <vorlon> \o/
+
+ 15:29 <vorlon> longstanding issue where fonts go wonky after things are upgraded on disk
+
+ 15:29 <vorlon> my 10,000ft suspicion is that it's triggered by the update to the system fontconfig cache
+
+ 15:29 <vorlon> but I don't really *know*; I just know that it's a recurring issue
+
+ 15:30 <bdrung> I have seen such behaviour on upgrade in the past as well
+
+ 15:31 <vorlon> if we can put some time into investigating it this cycle, that will serve us for 24.04
+
+ 15:31 <vorlon> because if it happens on 23.04->23.10 it will also happen on 22.04->24.04
+
+ 15:33 <bdrung> I agree that we will expect that bug to appear on 22.04->24.04
+
+ 15:33 <bdmurray> I also agree it should be sorted
+
+ 15:34 <vorlon> ok let's take it \o/
+
+ 15:36 <bdrung> next: bug #2033440
+
+ 15:36 <vorlon> that's a desktop team decision
+
+ 15:36 <vorlon> also, it's targeted to mantic
+
+ 15:36 <vorlon> so the tag should be cleared
+
+ 15:37 <vorlon> also I would wontfix it if it were me
+
+ 15:37 <bdrung> it targets lunar and mantic.
+
+ 15:38 <bdrung> leaving it for the desktop team (ubuntu-meta is in their list as well)
+
+ 15:38 <vorlon> ok there's ambiguity about whether removing the tag drops it from the desktop team's incoming queue
+
+ 15:39 <bdrung> next: bug #2034759
+
+ 15:40 <vorlon> there was clarification that they set a default l/p but disable ssh password authentication
+
+ 15:41 <vorlon> and in fact I thought riscv64 was worse that pi but it was the other way around :)
+
+ 15:41 <sil2100> +1 on that. I'd love us using ubuntu-image for riscv64 images too
+
+ 15:42 <vorlon> anyway I think this is not actionable for mantic
+
+ 15:42 <vorlon> because "make riscv64 as good as pi" was what I meant and there's nothing to be done
+
+ 15:43 <vorlon> I'm fine to just close it invalid
+
+ 15:43 <sil2100> Would like to revisit this for nn though
+
+ 15:44 <vorlon> sil2100: I think we need to sink with local-optimum before we could commit to anything
+
+ 15:44 <vorlon> sink?
+
+ 15:44 <vorlon> sync
+
+ 15:45 <sil2100> Let's do that :) I might forget though..!
+
+ 15:45 <vorlon> it's basically only solvable if we integrate console-conf (or equivalent) + give users a good UX for preseeding
+
+ 15:45 <vorlon> which is out of scope for livecd-rootfs
+
+ 15:45 <waveform> I should add some context in that bug (the livecd-rootfs bits haven't been used on the pi for a loooong time now; our defaults for that have been set in the cloud-init seed)
+
+ 15:46 <sil2100> waveform: it's all in the raspi-settings package, right?
+
+ 15:46 <vorlon> waveform: please do
+
+ 15:46 <vorlon> bdmurray: next?
+
+ 15:46 <vorlon> eh
+
+ 15:46 <vorlon> bdrung: next?
+
+ 15:46 <sil2100> Ah, I guess in the gadget..?
+
+ 15:46 <waveform> no -- most of the hacks from livecd-rootfs migrated there, but the initial authentication settings have been in the cloud-init seed (from the gadget) for yonks
+
+ 15:47 <bdrung> next: bug #2034986
+
+ 15:47 <bdmurray> We talked about that.
+
+ 15:48 <bdrung> yes
+
+ 15:48 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:48 <bdrung> nothing there for us
+
+ 15:49 <bdrung> but there are three under unknown
+
+ 15:49 <bdrung> for timidity, virtualbox, and marco
+
+ 15:50 <vorlon> we can take that out of band and follow up with the taggers that they're following a process that won't work for them
+
+ 15:50 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:50 <vorlon> (I'll do that)
+
+ 15:51 <bdrung> bug #1990798
+
+ 15:51 <bdmurray> heh, one is tagged champagne
+
+ 15:52 <bdrung> it is incomplete and with pro team, skip
+
+ 15:53 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:53 <bdrung> nothing for foundation, but 13 in unknown category
+
+ 15:53 <bdrung> #topic Team proposed-migration report
+
+ 15:53 <bdrung> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:54 * bdrung hands over the baton to vorlon
+
+ 15:54 <liushuyu> I can probably take one proposed-migration
+
+ 15:54 <vorlon> s390-tools*: MIR.  schopin, is this still on your todo?
+
+ 15:54 <schopin> There aren't that many to take :)
+
+ 15:54 <schopin> vorlon: yes :)
+
+ 15:55 <vorlon> ginggs isn't here to make cards for us, but maybe you want to make one manually for tracking if you don't already have one?
+
+ 15:55 <vorlon> llvm-toolchain-15 is "just" waiting for a riscv64 build, nothing to do
+
+ 15:55 <schopin> I might actually have several -_-
+
+ 15:55 <vorlon> haha
+
+ 15:55 <vorlon> glibc is blocking linux-raspi-meta, I'll take a look at that
+
+ 15:55 <vorlon> done
+
+ 15:55 <vorlon> bdrung:
+
+ 15:56 <bdrung> #topic AOB
+
+ 15:56 <bdrung> zsh 5.9-5 FTBFS on i386. Someone could look at that.
+
+ 15:57 <vorlon> any volunteers?
+
+ 15:57 <liushuyu> I can take a look
+
+ 15:57 <bdrung> undefined reference to `fmod'
+
+ 15:57 <liushuyu> (probably another fp math issue?)
+
+ 15:57 <adrien> ah, doko pushed an update to strace but I'm surprised he didn't hit the same build issue as I did
+
+ 16:00 <bdrung> Speak now or forever hold your peace.
+
+ 16:00 <ogayot> adrien: the changelog entry says: "New upstream version, fixing FTBFS". So maybe he did?
+
+ 16:01 <bdrung> 3
+
+ 16:01 <bdrung> 2
+
+ 16:01 <bdrung> 1
+
+ 16:01 <bdrung> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

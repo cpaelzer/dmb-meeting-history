@@ -1,0 +1,641 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 10 Jan at 16:02 &mdash; 16:57 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-01-10-16.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:02.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 16:18.
+
+
+=== 18.04.2 ===
+The discussion about "18.04.2" started at 16:35.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/bionic/ actually shows no bugs targeted to 18.04.2 at all
+
+=== AOB ===
+The discussion about "AOB" started at 16:49.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (78)
+ * cyphermox (37)
+ * bdmurray (33)
+ * juliank (32)
+ * sil2100 (28)
+ * doko (21)
+ * ubottu (16)
+ * tdaitx (14)
+ * rbalint (13)
+ * gaughen (8)
+ * waveform (7)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:02 <vorlon> #startmeeting
+
+ 16:02 <meetingology> Meeting started Thu Jan 10 16:02:16 2019 UTC.  The chair is vorlon. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02 <meetingology> 
+
+ 16:02 <meetingology> Available commands: action commands idea info link nick
+
+ 16:02 <vorlon> [TOPIC] Lightning round
+
+ 16:02 <vorlon> $ echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson juliank waveform)
+
+ 16:02 <vorlon> rbalint mwhudson xnox infinity juliank cyphermox waveform doko tdaitx vorlon sil2100 bdmurray
+
+ 16:02 <sil2100> Not sure if rbalint is still around
+
+ 16:02 <rbalint> o/
+
+ 16:02 <sil2100> Oh!
+
+ 16:03 <rbalint> * update-excuses:
+
+ 16:03 <rbalint> - fixed hidden ABI breakage in imagemagick in disco
+
+ 16:03 <rbalint> - triaged and added hint for twisted
+
+ 16:03 <rbalint> * verified unattended-upgrades srus
+
+ 16:03 <rbalint> * partner work and other discussions
+
+ 16:03 <rbalint> * delayed NMU-d imagemagick in Debian
+
+ 16:03 <rbalint> * uploaded forked-daapd 26.4-1, wireshark 2.6.6-1, libnfs 3.0.0-1
+
+ 16:03 <rbalint> * performed the libnfs transition in Debian and Ubuntu
+
+ 16:03 <rbalint> * helped with resolving the imagemagick ABI breakage in Debian and asked for rebuilds in Debian and did them in Ubuntu
+
+ 16:03 <rbalint> * updated and sru-d gce-compute-image-packages
+
+ 16:03 <rbalint> * reported LP: #1811210
+
+ 16:03 <ubottu> Launchpad bug 1811210 in initramfs-tools (Ubuntu Bionic) "intramfs-tools 0.130ubuntu3.3 in bionic-security breaks netplan.io in -security or in release" [High,New] https://launchpad.net/bugs/1811210
+
+ 16:03 <rbalint> (done)
+
+ 16:04 <bdmurray> no mwhudson or xnox
+
+ 16:04 <bdmurray> don't see infinity so juliank is up
+
+ 16:04 <juliank> * Some update_excuses triaging to get stuff migrated, especially gnutls28; also uploads for that (in below)
+
+ 16:04 <juliank> * merged wpa, wget, lz4, amd64-microcode (still needs SRUs I think), packagekit, gnupg2, dnsmasq
+
+ 16:04 <juliank> * fixed bugs in hddemux, gnupg2, mariadb-10.1 autopkgtests
+
+ 16:04 <juliank> * prepared fix for mysql-5.7 autopkgtests, rbasak uploaded to sid and synced it
+
+ 16:04 <juliank> * apt stuff:
+
+ 16:04 <juliank> - improved the apt-mark minimize-manual merge request
+
+ 16:04 <juliank> - sent an email to deity@l.d.o to move discussion of repo enable/disablement forward (-32768 pinning)
+
+ 16:04 <juliank> - sent an email to deity@l.d.o to discuss new versioning scheme / pkg-config compatibility
+
+ 16:04 <juliank> - (also look forward to a ~5% performance improvement on cache open on 2011+ x86 [sse4.2 crc32c cache hashing] I achieved for christmas :D)
+
+ 16:04 <juliank> * stuff forwarded to Debian:
+
+ 16:04 <juliank> - debian bug 918666: wine hardcodes /run/user/$UID directory (which I fixed in gnupg2 for the time being, not sure if /run/user/$UID is supposed to exist everywhere)
+
+ 16:04 <juliank> - debian bug 918608: hddemux: testsuite: Avoid failure when https_proxy is set
+
+ 16:04 <ubottu> Debian bug 918666 in src:wine "wine hardcodes /run/user/$UID directory" [Normal,Open] http://bugs.debian.org/918666
+
+ 16:04 <ubottu> Debian bug 918608 in hddemux "hddemux: testsuite: Avoid failure when https_proxy is set" [Normal,Open] http://bugs.debian.org/918608
+
+ 16:04 <juliank> - reason for debian bug 918722 - caused recent upstream debootstrap to fail to bootstrap ubuntu (that upload was then reverted)
+
+ 16:04 <ubottu> Debian bug 918722 in debootstrap "debootstrap: says InRelease file expired" [Serious,Fixed] http://bugs.debian.org/918722
+
+ 16:04 <juliank> (done)
+
+ 16:05 <vorlon> cyphermox:
+
+ 16:05 <cyphermox> [HIGHLIGHT] netplan.io is now in Debian; synced to Disco for now.
+
+ 16:05 <cyphermox> paperwork:
+
+ 16:05 <cyphermox> - shim-review: CPSD, todo today: ROSA, CentOS, SUSE, OS ALT.  send help^H^H^H^H^H^H
+
+ 16:05 <cyphermox> - small fixes to DKMS doc
+
+ 16:05 <cyphermox> - merging Debian netplan changes into upstream git tree
+
+ 16:05 <doko> juliank: how are these implemented, ifunc?
+
+ 16:05 <cyphermox> disco:
+
+ 16:05 <cyphermox> - grub2: added breadcrumbs for grub-mkconfig (parsing which files when generating conf)
+
+ 16:05 <cyphermox> - grub2: fixing up grub-check-signatures to compare against known keys in firmware
+
+ 16:05 <juliank> doko: function multiversioning
+
+ 16:05 <cyphermox> bionic, cosmic:
+
+ 16:05 <cyphermox> - attempting to fix syslinux -- patch for gnu-efi 3.0.8 apparently needs update
+
+ 16:05 <cyphermox> but new patch FTBFS... annoying and hard to validate this SRU
+
+ 16:05 <cyphermox> xenial:
+
+ 16:05 <cyphermox> - verified shim-signed update to finish upgrade to shim 15
+
+ 16:05 <cyphermox> - dkms + shim-signed to finish Secure Boot signing changes
+
+ 16:06 <cyphermox> trusty:
+
+ 16:06 <cyphermox> - updated grub2 patchset for UEFI Secure Boot
+
+ 16:06 <cyphermox> - apply patches for chainloading issues
+
+ 16:06 <cyphermox> - dkms + shim-signed to finish Secure Boot signing changes
+
+ 16:06 <cyphermox> (✓ done)
+
+ 16:06 <juliank> doko: one is defined with __attribute__((target("sse4.2")), one with __attribute__((target("default"))
+
+ 16:06 <juliank> see https://salsa.debian.org/apt-team/apt/commit/37ae749b20485b6c8237d5b5a08cfdd58a2364e1
+
+ 16:06 <juliank> and https://salsa.debian.org/apt-team/apt/commit/fb1c5167f1a69fc47ca8e741b86fab1ae7c08309 with a fix
+
+ 16:07 <vorlon> waveform: hi, did anyone warn you about this?  any status you want to share?
+
+ 16:08 <sil2100> I think I forgot to mention to waveform to prepare notes beforehand!
+
+ 16:08 <tdaitx> besides drinking from the firehose
+
+ 16:08 <vorlon> :)
+
+ 16:08 <waveform> ahhh, that would've been ... erm ... useful :)
+
+ 16:08 <vorlon> no worries
+
+ 16:08 <vorlon> doko:
+
+ 16:08 <doko> - finished the disco / disco-gcc9 test rebuilds
+
+ 16:08 <doko> - start submitting compiler issues for GCC 9
+
+ 16:08 <doko> - GCC 8 & 9 updates
+
+ 16:08 <doko> - jpeg-turbo update to fix ftbfs
+
+ 16:08 <doko> (done)
+
+ 16:08 <waveform> anyway, irqbalance issue found in aarch64 rpi3 image, grabbed fix from upstream
+
+ 16:08 <sil2100> waveform: sorry! Well, I was writing those by hand in real time in the past as well when I first joined the team
+
+ 16:08 <cyphermox> \m/
+
+ 16:09 <vorlon> tdaitx:
+
+ 16:09 <cyphermox> that means I should go update my rpi3 now I guess
+
+ 16:09 <tdaitx> A happy new year to you all! And warm welcome to waveform =)
+
+ 16:09 <tdaitx> * openjdk security update
+
+ 16:09 <tdaitx> - openjdk 8 and 11 from oracle, openjdk 7 from icedtea update
+
+ 16:09 <tdaitx> - patch was made available during the holidays
+
+ 16:09 <tdaitx> * openjdk-lts autopkgtest disk space issues
+
+ 16:09 <tdaitx> - cosmic have autopkgtest enabled but it is not cleaning up tests
+
+ 16:09 <tdaitx> - checking a fix for disco (which also enabled autopkgtests)
+
+ 16:09 <sil2100> cyphermox: not yet! ;p
+
+ 16:09 <tdaitx> Other:
+
+ 16:09 <tdaitx> - classes by EOD today and again in two weeks (22-24th January)
+
+ 16:09 <waveform> and built u-boot 2018.07-rc3 (working on 3b and 3b+)
+
+ 16:09 <tdaitx> - apartment under renovation pushing me to work on odd hours sometimes, also need to run some errands every now and then, will notify on irc when something big is ahead
+
+ 16:09 <tdaitx> (done)
+
+ 16:09 <cyphermox> sil2100: ;.;
+
+ 16:09 <sil2100> cyphermox: ...soon
+
+ 16:10 <waveform> anyway, that's it from me - working on building images otherwise
+
+ 16:10 <bdmurray> vorlon:
+
+ 16:10 <vorlon> * happy new year!
+
+ 16:10 <vorlon> * deep dive on fstrim support in scalingstack to debug a complaint from IS about autopkgtest instance disk usage
+
+ 16:11 <vorlon> * ubuntu-drivers,cloud-init design review
+
+ 16:11 <vorlon> * a little bit of transition wrangling
+
+ 16:11 <vorlon> * first Debian MU of pam in a while
+
+ 16:11 <vorlon> * prep for Cape Town Sprint
+
+ 16:11 <vorlon> * upcoming:
+
+ 16:11 <vorlon> * out tomorrow for travel to cape town; back Jan 28
+
+ 16:11 <vorlon> (done)
+
+ 16:11 <bdmurray> sil2100:
+
+ 16:11 <sil2100> - Some kernel SRU reviews and releases
+
+ 16:11 <sil2100> - SRU reviews and releases
+
+ 16:11 <sil2100> - Giving Dave some work to do!
+
+ 16:11 <sil2100> - core18 PR reviews for additional testing and making travis CI happy
+
+ 16:11 <sil2100> - Verification of the ubuntu-image 1.6 SRU, bumping hints
+
+ 16:11 <sil2100> - raspi3 'upstreaming':
+
+ 16:11 <sil2100> * Pushed flash-kernel changes to disco
+
+ 16:11 <cyphermox> vorlon: oh, so I get to chair the meeting next week?
+
+ 16:11 <sil2100> * Filled in SRU bugs for flash-kernel and uploaded SRUs to cosmic and bionic
+
+ 16:11 <sil2100> * Fetched ubuntu-core's raspi3-firmware version and SRUed it to bionic
+
+ 16:11 <sil2100> * Checked Dave's u-boot packages based on the ubuntu-core's version
+
+ 16:11 <sil2100> * Enabled disco raspi3 builds on cdimage, added missing livecd-rootfs changes
+
+ 16:11 <sil2100> * Started working on enabling multiverse during raspi3 gadget tree builds
+
+ 16:12 <sil2100> - Looked into the Bileto outage after code update (settings got wiped)
+
+ 16:12 <sil2100> * Bileto still not completely 'fixed', some issues with redirects still
+
+ 16:12 <sil2100> - Reviewed Brian's quick-fix for sru-report
+
+ 16:12 <sil2100> - Discussion regarding core18 beta->candidate test feedback fetching
+
+ 16:12 <sil2100> (done)
+
+ 16:12 <bdmurray> Why are we fixing bileto?
+
+ 16:12 <cyphermox> huh, speaking of rpi3, is this still only for the rpi3 b+ or something? some newer rev of the hardware?
+
+ 16:12 <bdmurray> This includes some stuff I did before the break
+
+ 16:12 <sil2100> bdmurray: because people are using it
+
+ 16:12 <vorlon> cyphermox: if you wish, and the week after too :)
+
+ 16:13 <cyphermox> vorlon: zug zug
+
+ 16:13 <bdmurray> sil2100: I thought we wanted to get rid of it
+
+ 16:13 <bdmurray> tested and converted three daisy scripts from pycassa to python-cassandra
+
+ 16:13 <bdmurray> submitted MP regarding mojo spec update for daisy code revno
+
+ 16:13 <bdmurray> submitted RT regarding update of daisy code in production and testing cronjobs
+
+ 16:13 <bdmurray> worked with webops regarding issues with daisy code update
+
+ 16:13 <bdmurray> uploaded B,C fixes for software-properties-gtk crash LP: #1807373
+
+ 16:13 <ubottu> Launchpad bug 1807373 in software-properties (Ubuntu Cosmic) "/usr/bin/software-properties-gtk:AttributeError:on_driver_selection_changed" [High,Fix released] https://launchpad.net/bugs/1807373
+
+ 16:13 <bdmurray> SRU verifications of LP: #1807373, LP: #1807043, LP: #1773637
+
+ 16:13 <ubottu> Launchpad bug 1807043 in ubuntu-release-upgrader (Ubuntu Bionic) "when rewriting sources.list ubuntu-release-upgrader doesn't check to see if new release is available" [Medium,Triaged] https://launchpad.net/bugs/1807043
+
+ 16:13 <ubottu> Launchpad bug 1773637 in ubuntu-release-upgrader (Ubuntu Cosmic) "Distribution upgrade to 18.04: used nvidia display driver is commented out" [Undecided,Fix committed] https://launchpad.net/bugs/1773637
+
+ 16:13 <bdmurray> investigated and uploaded fix for nvidia driver upgrade issue LP: #1773637
+
+ 16:13 <bdmurray> reported ubuntu-drivers-common bug LP: #1808874
+
+ 16:13 <bdmurray> worked on, uploaded fixes for issues with apport autopkgtests in disco
+
+ 16:13 <bdmurray> worked on migration for part of oopses.py from oopsrepository to python-cassandra
+
+ 16:13 <bdmurray> modified daisy to use renamed oopsrepository module
+
+ 16:13 <bdmurray> submitted RT re update of daisy and oopsrepository in production
+
+ 16:13 <bdmurray> fixed another apport test issue due to usrmerge
+
+ 16:13 <bdmurray> ✔ done
+
+ 16:14 <ubottu> Launchpad bug 1808874 in ubuntu-drivers-common (Ubuntu) "nvidia-detector doesn't seem to detect nvidia" [Low,New] https://launchpad.net/bugs/1808874
+
+ 16:14 <sil2100> bdmurray: there's no decision regarding that yet
+
+ 16:14 <waveform> cyphermox, for the 3b and 3b+ (and allegedly 2b but I haven't tested that)
+
+ 16:15 <waveform> but none of the single-core models
+
+ 16:15 <sil2100> bdmurray: we're doing bare maintenance for now, so only fixing stuff when it breaks, but even then with not super high priority
+
+ 16:15 <cyphermox> waveform: thanks; I'll have to check again which rev I have... if it's not the right one I'll repurpose for legacy gaming anyway
+
+ 16:15 <cyphermox> waveform: I'll go add you to my meeting script now, too, I guess
+
+ 16:15 <doko> tdaitx: is the 11 update already released? can't find a tag
+
+ 16:15 <gaughen> sil2100, bdmurray we weren't doing any new work on bileto, but were keeping the lights on.
+
+ 16:15 <tdaitx> doko: no, not yet released, comes from partner
+
+ 16:15 <gaughen> but we had discussed that if at some point keeping the lights on got really hard, we would need to look at ending it
+
+ 16:15 <bdmurray> gaughen: so the lights went off and we turned them back on?
+
+ 16:16 <gaughen> bdmurray, we jiggled the switch
+
+ 16:16 <vorlon> other questions over status?
+
+ 16:17 <gaughen> cyphermox, did you push netplan.io to debian?
+
+ 16:17 <bdmurray> no questions here
+
+ 16:17 <cyphermox> negative, andrewsh did; he did put me up as uploader though
+
+ 16:18 <gaughen> excellent
+
+ 16:18 <cyphermox> I had caught up with him at Plumbers
+
+ 16:18 <gaughen> vorlon, that's all for me.
+
+ 16:18 <cyphermox> this is good.
+
+ 16:18 <gaughen> it is good.
+
+ 16:18 <vorlon> [TOPIC] Bugs
+
+ 16:18 <vorlon> bdmurray: I wonder if we should talk valgrind
+
+ 16:18 <gaughen> there are none.
+
+ 16:18 <bdmurray> vorlon: I was thinking we sould
+
+ 16:18 <bdmurray> should
+
+ 16:18 <cyphermox> Zarro boogs found.
+
+ 16:19 <vorlon> LP: #1808508
+
+ 16:19 <ubottu> Launchpad bug 1808508 in valgrind (Ubuntu) "Valgrind doesn't work in disco [Fatal error at startup: a function redirection which is mandatory for this platform-tool combination cannot be set up.]" [Critical,Triaged] https://launchpad.net/bugs/1808508
+
+ 16:20 <bdmurray> So that's keeping apport stuck in -proposed
+
+ 16:20 <vorlon> and it's fundamentally not an apport or valgrind bug, it's a bug in the filesystem as a result of usrmerge
+
+ 16:21 <vorlon> so I could probably see my way to a skiptest hint around apport currently, to unblock development
+
+ 16:21 <vorlon> but this is important to fix for release
+
+ 16:22 <bdmurray> vorlon: you also mentioned this would affect gdb too
+
+ 16:22 <vorlon> yes
+
+ 16:23 <doko> I hate the gdb debug symbols lookup code ...
+
+ 16:26 <vorlon> so one question is, if gdb and valgrind are the only things that need it, should we just extend their debug symbol lookup paths
+
+ 16:27 <vorlon> libunwind was suggested, but:
+
+ 16:27 <vorlon> $ strings /usr/lib/x86_64-linux-gnu/libunwind.so.8|grep usr/lib/debug
+
+ 16:27 <vorlon> $
+
+ 16:27 <vorlon> so no hits there
+
+ 16:27 <vorlon> ah, and gdb actually uses /usr/lib/debug/.build-id
+
+ 16:27 <vorlon> so maybe only valgrind needs changing
+
+ 16:28 <juliank> vorlon: src/dwarf/Gfind_proc_info-lsb.c:      static const char *debugdir = "/usr/lib/debug";
+
+ 16:29 <juliank> but maybe it's disabled
+
+ 16:29 <doko> build id is used by debhelper v9 and above
+
+ 16:29 <vorlon> so we might as well fix valgrind and then we can have a philosophical discussion later about whether /usr/lib/debug should be usrmerged
+
+ 16:29 <juliank> I think I saw google-perftools broken once
+
+ 16:29 <vorlon> juliank: libc6-dbg  has .build-id
+
+ 16:29 <juliank> that was on my usrmerged debian system, though
+
+ 16:29 <vorlon> so I think the common case is handled
+
+ 16:29 <vorlon> alright, I think the quick path is to just fix valgrind
+
+ 16:30 <vorlon> any volunteers?
+
+ 16:30 <cyphermox> one other option might be to have the debug package generate the symlinks as needed?
+
+ 16:30 <vorlon> cyphermox: please no :)
+
+ 16:30 <cyphermox> oh, wait, no
+
+ 16:30 <cyphermox> yeah, no
+
+ 16:30 <cyphermox> ;)
+
+ 16:30 <cyphermox> I'm happy to fix valgrind
+
+ 16:31 <vorlon> cyphermox: assigning, thanks
+
+ 16:31 <cyphermox> card?
+
+ 16:31 <bdmurray> I can make a card for you buddy
+
+ 16:32 <vorlon> :)
+
+ 16:32 <bdmurray> tdaitx: Should there be a card for bug 1808383
+
+ 16:32 <ubottu> bug 1808383 in ant (Ubuntu Disco) "Java 9+ multi-release jars are not supported in ant tasks" [Undecided,Confirmed] https://launchpad.net/bugs/1808383
+
+ 16:34 <tdaitx> bdmurray: sure, I will create one for it
+
+ 16:34 <bdmurray> tdaitx: cool
+
+ 16:34 <bdmurray> that's it from me regarding bugs then
+
+ 16:35 <vorlon> [TOPIC] 18.04.2
+
+ 16:35 <vorlon> specifically bugs for 18.04.2, so maybe a subtopic :)
+
+ 16:35 <vorlon> do we have anything that we think should be fixed in point release but is not yet targeted?
+
+ 16:36 <vorlon> https://bugs.launchpad.net/ubuntu/bionic/ actually shows no bugs targeted to 18.04.2 at all
+
+ 16:38 <vorlon> there are some subiquity cards targeted, which is understood
+
+ 16:38 <bdmurray> maybe I should get this u-r-u SRU done before the point release
+
+ 16:39 <juliank> My goal is to get bug 1787460 fixed
+
+ 16:39 <ubottu> bug 1787460 in linux-meta-hwe (Ubuntu) "Unattended upgrades removed linux-image-generic" [Critical,Triaged] https://launchpad.net/bugs/1787460
+
+ 16:39 <juliank> the apt part of it
+
+ 16:40 <juliank> feature bug 1811120 is also interesting, but could also wait
+
+ 16:40 <vorlon> juliank: is that in a card?
+
+ 16:40 <ubottu> bug 1811120 in apt (Ubuntu Cosmic) "Backport auth.conf.d" [Low,Triaged] https://launchpad.net/bugs/1811120
+
+ 16:40 <juliank> vorlon: it is
+
+ 16:40 <vorlon> juliank: can you put the 18.04.2 tag on the card?
+
+ 16:40 <juliank> vorlon: done
+
+ 16:40 <vorlon> the card for LP: #1793671 is targeted to 18.04.2 but is marked blocked
+
+ 16:40 <ubottu> Launchpad bug 1793671 in ubiquity (Ubuntu Bionic) "Proprietary drivers are installed locally and not on the target system" [Undecided,New] https://launchpad.net/bugs/1793671
+
+ 16:41 <sil2100> I think we need https://bugs.launchpad.net/ubuntu/+source/livecd-rootfs/+bug/1805668 on the milestone
+
+ 16:41 <ubottu> Launchpad bug 1805668 in u-boot (Ubuntu Cosmic) "Building armhf and arm64 Raspberry Pi 3 images" [Undecided,Confirmed]
+
+ 16:41 <waveform> gets my vote :)
+
+ 16:41 <juliank> I'm untargeting "Make images not mark all task packages as manually installed" for 18.04.2
+
+ 16:41 <vorlon> sil2100: agreed, milestone set
+
+ 16:42 <juliank> because #ubuntu-devel just had some potentially related regressions
+
+ 16:43 <vorlon> juliank: doh, ok
+
+ 16:43 <juliank> (bug bug 1801629 fwiw)
+
+ 16:43 <ubottu> bug 1801629 in xubuntu-meta (Ubuntu) "xubuntu-core needs to depend on cryptsetup and lvm2 or 'apt autoremove' will make a LUKS+LVM encrypted root partition non-bootable" [Undecided,Confirmed] https://launchpad.net/bugs/1801629
+
+ 16:43 <juliank> Should import as a card
+
+ 16:44 <vorlon> was https://bugs.launchpad.net/cryptsetup/+bug/1767527 mentioned already?
+
+ 16:44 <ubottu> Launchpad bug 1767527 in cryptsetup (Ubuntu) "[18.04] Installation boot failure. WARNING: invalid line in /etc/crypttab" [Critical,In progress]
+
+ 16:44 <vorlon> we have an 18.04.2-targeted card for that
+
+ 16:44 <sil2100> vorlon: thanks!
+
+ 16:45 <vorlon> cyphermox: ^^ that cryptsetup bug has a card in progress that lies somewhere between you and xnox
+
+ 16:46 <vorlon> is it in progress from your POV?
+
+ 16:47 <vorlon> my question on the bug in October was never answered; marking it incomplete for now
+
+ 16:47 <vorlon> ok so anything else for 18.04.2?
+
+ 16:48 <vorlon> targeted bug list is now: https://bugs.launchpad.net/ubuntu/bionic/?field.milestone%3Alist=86800
+
+ 16:48 <vorlon> going once...
+
+ 16:49 <vorlon> twice...
+
+ 16:49 <vorlon> [TOPIC] AOB
+
+ 16:49 <doko> wait, before AOB ...
+
+ 16:49 <doko> devel-proposed: https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:49 <bdmurray> I'll be out tomorrow / swapping for some other holiday
+
+ 16:50 <vorlon> right
+
+ 16:50 <vorlon> apport already discussed
+
+ 16:50 <doko> the only one we addressed is the valgrind one
+
+ 16:50 <vorlon> anyone want to sort out autopkgtest/autodep8 regressing itself?
+
+ 16:52 <doko> the other high profile one is ros-ros-comm
+
+ 16:52 <doko> and systemd of course
+
+ 16:52 <vorlon> doko: feel free to follow up out-of-band, but are the linux/binutils autopkgtest regressions ignorable?
+
+ 16:53 <vorlon> ros-ros-comm looks like something that just needs a badtest hint rather than a regression we've caused
+
+ 16:53 <vorlon> paramiko is also blocked by sahara test failures which might be more real
+
+ 16:54 <doko> and foundations needs to file some MIRs: http://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 16:54 <vorlon> I don't think we should try to go through all of the rest right now, we clearly have a backlog due to the break
+
+ 16:55 <doko> that's fine, but then we should reserve some time next week
+
+ 16:55 <vorlon> doko: uchardet?
+
+ 16:56 <doko> yes, kronosnet, intel-ipset-*
+
+ 16:56 <doko> mailutils?
+
+ 16:56 <doko> maybe just a suggests
+
+ 16:56 <vorlon> how are those foundations? the mouseover says server
+
+ 16:56 <vorlon> emacs is desktop
+
+ 16:56 <vorlon> ;P
+
+ 16:56 <juliank> doko: I'm doing some autopkgtest stuff I could probably have a look at that
+
+ 16:56 <doko> ohh, even better =)
+
+ 16:57 <vorlon> anyway, someone want to volunteer please to open the MIR for uchardet?
+
+ 16:57 <doko> ok, then I'll write uchardet myself
+
+ 16:57 <vorlon> ok
+
+ 16:57 <vorlon> and then we'll close the meeting
+
+ 16:57 <vorlon> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,243 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 29 Jan at 16:31 &mdash; 16:59 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2018/ubuntu-meeting.2018-01-29-16.31.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:31.
+
+
+=== Ways to contribute ===
+The discussion about "Ways to contribute" started at 16:56.
+
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 16:56.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * tyhicks (27)
+ * jdstrand (13)
+ * cpaelzer (12)
+ * mdeslaur (11)
+ * sbeattie (10)
+ * ratliff (7)
+ * leosilva (5)
+ * sarnold (3)
+ * chrisccoulson (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:31 <tyhicks> #startmeeting
+
+ 16:31 <meetingology> Meeting started Mon Jan 29 16:31:01 2018 UTC.  The chair is tyhicks. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:31 <meetingology> 
+
+ 16:31 <meetingology> Available commands: action commands idea info link nick
+
+ 16:31 <tyhicks> The meeting agenda can be found at:
+
+ 16:31 <tyhicks> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:31 <tyhicks> [TOPIC] Weekly stand-up report
+
+ 16:31 <tyhicks> jdstrand: you're up
+
+ 16:31 <jdstrand> hi
+
+ 16:32 <jdstrand> Last week I spent most of my developement time on layouts reviews but other work was preempted by the steam-support interface, which required a lot of investigation. This week I plan to:
+
+ 16:32 <jdstrand> - travel to/from and attend snapcraft sprint
+
+ 16:32 <jdstrand> - continue the steam-support interface investigation/design
+
+ 16:32 <jdstrand> - snapd portals reviews
+
+ 16:32 <jdstrand> - LSM stacking demo preparation as have time
+
+ 16:32 <jdstrand> - lxd snap regression wrt confinement as have time
+
+ 16:32 <jdstrand> - create screencast interface as have time
+
+ 16:32 <jdstrand> - strict mode snaps on livecd as have time
+
+ 16:32 <jdstrand> that's it from me. mdeslaur, you're up
+
+ 16:33 <mdeslaur> I'm on bug trige this week
+
+ 16:33 <mdeslaur> I'm still working on qemu/libvirt updates
+
+ 16:34 <mdeslaur> I'm currently trying to get artful installed inside a trusty vm, but it's not working well
+
+ 16:34 <mdeslaur> since I don't have real hardware I can update microcode on
+
+ 16:34 <mdeslaur> I'm also working on clamav updates
+
+ 16:34 <cpaelzer> sorry to interrupt - jdstrand: you also did the chrony apparmor profile - which btw is fully picke dup by Debian already
+
+ 16:34 <mdeslaur> that's about it, sbeattie, you're up
+
+ 16:35 <sbeattie> cpaelzer: what's the question?
+
+ 16:35 <ratliff> cpaelzer: since you are here :) Can you help mdeslaur with qemu ^^?
+
+ 16:35 <jdstrand> cpaelzer: yes I did and this is captured in trello. Thanks for mentioning the debian sync-- I noticed the bug this morning
+
+ 16:36 <tyhicks> sbeattie: he was just pointing out the chrony profile since Jamie didn't list it in his work from last week
+
+ 16:37 <sbeattie> last week? that's old news.
+
+ 16:37 <sbeattie> :)
+
+ 16:37 <cpaelzer> ratliff: what is the help that is needed atm?
+
+ 16:38 <cpaelzer> I usually run some extra tests once mdeslaur pings me
+
+ 16:38 <mdeslaur> cpaelzer: we need to make sure libvirt and qemu expose the new microcode bits to guests
+
+ 16:38 <cpaelzer> we synced on HW - I don't have any that has the microcode update either
+
+ 16:38 <mdeslaur> cpaelzer: do you have hardware that supports the 20180108 intel microcode update?
+
+ 16:38 <cpaelzer> well I have my laptop
+
+ 16:38 <cpaelzer> as most of us do
+
+ 16:38 <cpaelzer> I suggested on Friday to use lxd on that to drive a testbed for KVM
+
+ 16:38 <cpaelzer> with a bit of a how-to
+
+ 16:39 <jdstrand> cpaelzer: do note that I had already incorporated the Debian feedback into ubuntu3 of chrony. looking at -2, I see the only difference to the profile is that Debian used utf8 quotes in a comment :)
+
+ 16:39 <cpaelzer> jdstrand: yep
+
+ 16:39 <cpaelzer> I found the same and synced it today jdstrand
+
+ 16:39 <cpaelzer> ratliff: so the only microcode capable system I have is the same that mdeslaur has (at least according to our talk on Friday)
+
+ 16:40 <cpaelzer> mdeslaur: did you try the kvm in lxd I suggested?
+
+ 16:40 <mdeslaur> cpaelzer: i didn't no
+
+ 16:40 <ratliff> cpaelzer: ok
+
+ 16:40 * jdstrand nods
+
+ 16:40 <mdeslaur> not yet
+
+ 16:40 <tyhicks> I have some hardware that we can possibly use
+
+ 16:41 <tyhicks> I also have lxd set up, on a xenial host, which I use to run a container with VMs inside of it
+
+ 16:41 <tyhicks> mdeslaur: lets talk after the meeting
+
+ 16:41 <mdeslaur> ack
+
+ 16:41 <tyhicks> sbeattie: go ahead
+
+ 16:42 <sbeattie> I'm on cve triage this week, in addition to usual kernel triage bits
+
+ 16:42 <sbeattie> Apparently, the kernel team published a linux-kvm kernel this morning, so I have a USN to publish for that.
+
+ 16:43 <sbeattie> I'm working on the gcc retpoline backports, still trying to figure out why my gcc-4.8 backport segfaults.
+
+ 16:44 <sbeattie> We should be able to push the gcc-5/xenial and gcc-7/artful to -proposed today, I just want to double-check the test results first.
+
+ 16:44 <tyhicks> sbeattie: lets also get a bionic upload ready
+
+ 16:45 <sbeattie> tyhicks: doko uploaded gcc-7.3 to bionic-proposed, which has the retpoline bits in it.
+
+ 16:45 <tyhicks> nice
+
+ 16:46 <tyhicks> sbeattie: am I up now?
+
+ 16:46 <sbeattie> I'm still waiting on openjdk packages from td aitx, which I'll probably hand off to someone els.e
+
+ 16:46 <sbeattie> tyhicks: yeah, that's my week pretty well covered. go for it.
+
+ 16:47 <tyhicks> yeah, you've got your hands too full w/ cve triage, gcc, kernel bits, and openjdk
+
+ 16:47 <tyhicks> ratliff: ^ we need to spread Steve's responsibilities this week
+
+ 16:48 <ratliff> tyhicks: yep
+
+ 16:48 <tyhicks> for my week, I will continue to help coordinate Meltdown and Spectre fixes (test, investigate, meet w/ CPU vendors, etc.)
+
+ 16:48 <sarnold> I could grab cve triage this week
+
+ 16:48 <tyhicks> I also need to work on an LSM stacking demo
+
+ 16:48 <tyhicks> sarnold: I think that's probably a good idea - we'll chat after
+
+ 16:49 <tyhicks> jj is out today
+
+ 16:49 <tyhicks> sarnold: you're up
+
+ 16:50 <sarnold> I'm in the happy place this week, but happy to take cve triage off steve. I'm goign to finish chrony mir and then move on down the list once that's done.
+
+ 16:50 <sarnold> that's it for me, chrisccoulson?
+
+ 16:51 <chrisccoulson> I've got to finish up the thunderbird publication, and then I'm doing webkit updates
+
+ 16:52 <chrisccoulson> and then rust 1.23 updates and apparmor audit work again
+
+ 16:52 <chrisccoulson> I think that's me done
+
+ 16:52 <ratliff> I'm in the happy place this week.
+
+ 16:53 <ratliff> I have some internal work and I plan to get the historic data for cve triage loaded into InfluxDB.
+
+ 16:53 <ratliff> leosilva: on to you
+
+ 16:53 <leosilva> I'm in the community this week.
+
+ 16:54 <leosilva> I'm working in the curl update, seems only be aplicable to one release (artful) it breaks in all the old ones. Still need to re-check and see before discards
+
+ 16:54 <leosilva> besides that I'm keeping an eye on cve-list to get some other pkg to update.
+
+ 16:54 <leosilva> that's it for me
+
+ 16:54 <leosilva> tyhicks: you are back!
+
+ 16:56 <tyhicks> [TOPIC] Ways to contribute
+
+ 16:56 <tyhicks> The Ubuntu Security team suggests that contributors look into merging Debian security updates in community-supported packages. If you would like to help Ubuntu but are not sure where to start, this is a great way to do so. See http://people.canonical.com/~ubuntu-security/d2u/ for available merges and https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details on preparing Ubuntu security
+
+ 16:56 <tyhicks> updates. If you have any questions, feel free to ask in #ubuntu-hardened. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:56 <tyhicks> [TOPIC] Miscellaneous and Questions
+
+ 16:56 <tyhicks> Does anyone have any other questions or items to discuss?
+
+ 16:59 <tyhicks> jdstrand, mdeslaur, sbeattie, sarnold, ChrisCoulson, ratliff, leosilva: Thanks!
+
+ 16:59 <ratliff> thank you, tyhicks!
+
+ 16:59 <tyhicks> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

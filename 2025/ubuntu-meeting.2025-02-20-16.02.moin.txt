@@ -1,0 +1,189 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 20 Feb at 16:02 &mdash; 16:26 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-02-20-16.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2025-02-20/55546   (juliank, 16:02)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:14.
+
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:22.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:22)
+
+=== AOB ===
+
+Discussion started by juliank at 16:23.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (37)
+ * dviererbe (13)
+ * adrien (6)
+ * enr0n (6)
+ * meetingology (2)
+ * Skia (1)
+ * mkukri (1)
+ * xypron (1)
+ * bdrung (1)
+
+
+
+== Full log ==
+
+
+ 16:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:02 <meetingology> Meeting started at 16:02:02 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:02 <juliank> #topic Lightning rounds
+
+ 16:02 <dviererbe> o/
+
+ 16:02 <Skia> o7
+
+ 16:02 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2025-02-20/55546
+
+ 16:02 <mkukri> o/
+
+ 16:02 <adrien> o/
+
+ 16:03 <dviererbe> #2098797
+
+ 16:03 <dviererbe> LP: #2098750
+
+ 16:04 <dviererbe> LP: #2098797
+
+ 16:04 <dviererbe> these should be rls-pp-incoming
+
+ 16:04 <juliank> They are but they are not owned by foundations but by nobody
+
+ 16:05 <dviererbe> Oh, well the MIR team asked me to raise this within foundations
+
+ 16:11 <enr0n> dviererbe: what's the request? Whether we will be the owning team? Or actually driving the MIR(s)?
+
+ 16:12 <dviererbe> LP: #2098797 is about if we want to have nghttp3 for curl than we should do this before beta freze
+
+ 16:13 <dviererbe> LP: #2098750 is about re-review. The mir team wants to do re-reviews for packages that do not have an mir bug or an very old one. That is less time sensitive
+
+ 16:14 <juliank> OK so
+
+ 16:14 <juliank> #topic Release incoming bugs
+
+ 16:14 <dviererbe> I can take the re-review
+
+ 16:14 <enr0n> My guess is that security review for nghttp3 would be bottleneck, no?
+
+ 16:14 <juliank> Regarding nghttp3, this is no longer needed?
+
+ 16:14 <dviererbe> enr0n: yes
+
+ 16:14 <dviererbe> juliank: that would also be fine with me and the MIR team
+
+ 16:15 <enr0n> juliank: why exactly?
+
+ 16:15 <juliank> curl does not depend on nghttp3, so this is not needed.
+
+ 16:16 <juliank> So I am tagging it rls-pp-wontfix
+
+ 16:16 <enr0n> isn't the whole point of the bug that Ubuntu has a delta to make that so?
+
+ 16:17 <adrien> btw, re http3, I need to go through https://daniel.haxx.se/blog/2025/02/16/openssl-does-a-quic-api/ and links
+
+ 16:18 <juliank> GnuTLS is not an option for the curl binary
+
+ 16:18 <juliank> (IMO)
+
+ 16:18 <juliank> (too many stuff breaks with GnuTLS)
+
+ 16:18 <dviererbe> so, won't fix for pp and taking this for qq
+
+ 16:18 <enr0n> +1
+
+ 16:19 <juliank> Not yet
+
+ 16:19 <juliank> Debian does it because they use the gnutls backend for the curl binary, which is a bad idea
+
+ 16:19 <juliank> But we don't yet know if we need it for the OpenSSL one
+
+ 16:19 <juliank> ?
+
+ 16:19 <juliank> So we need to wait until the OpenSSL version has HTTP/3 support
+
+ 16:20 <enr0n> ahh
+
+ 16:21 <dviererbe> then just let it as incomplete until we know and leave a comment that we may take this for qq
+
+ 16:21 <adrien> ath's openssl 3.5
+
+ 16:21 <adrien> that's*
+
+ 16:21 <adrien> in two months
+
+ 16:22 <juliank> #topic Team proposed-migration report
+
+ 16:22 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:22 <juliank> recap:
+
+ 16:22 <juliank> * vim is with mwhudson
+
+ 16:22 <juliank> * libuv1 is with mateus-morais
+
+ 16:22 <juliank> * libsepol is with waveform
+
+ 16:22 <juliank> * media-types is with andersson123
+
+ 16:22 <juliank> new:
+
+ 16:22 <juliank> * git: xypron
+
+ 16:22 <juliank> * dpkg: bdrung (double check the elf metadata stuff is correct oooh)
+
+ 16:22 <juliank> * openssl: adrien
+
+ 16:22 <juliank> * pyasn1: dviererbe
+
+ 16:22 <juliank> * libsemanage: schopin, could you please simply remove from proposed, needs libselinux 3.8 which has not been merged?
+
+ 16:22 <juliank> - pcre2: tobhe
+
+ 16:22 <xypron> ok
+
+ 16:22 <juliank> - usbmuxd: rkratky
+
+ 16:22 <juliank> - glibc: schopin (duh)
+
+ 16:22 <bdrung> ack
+
+ 16:23 <juliank> Ah yes I already asked for libsemanage removal in ubuntur-release, schopin
+
+ 16:23 <adrien> openssl is waiting to migrate already
+
+ 16:23 <juliank> Nothing to do then I suppose
+
+ 16:23 <juliank> #topic AOB
+
+ 16:26 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

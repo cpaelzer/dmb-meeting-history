@@ -1,0 +1,547 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 14 May at 15:01 &mdash; 16:01 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-05-14-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:01.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:09.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:48.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/groovy/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:00.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (61)
+ * vorlon (46)
+ * slyon (34)
+ * ubottu (27)
+ * doko (26)
+ * xnox (14)
+ * juliank (10)
+ * rbalint (10)
+ * waveform (9)
+ * mclemenceau (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started Thu May 14 15:01:38 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <bdmurray> #topic Lightning rounds
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform slyon)
+
+ 15:02 <bdmurray> sil2100 waveform doko mwhudson tdaitx infinity juliank bdmurray vorlon slyon xnox rbalint
+
+ 15:02 <bdmurray> sil2100 sent his status by email
+
+ 15:02 <bdmurray> waveform:
+
+ 15:02 <waveform> * Lots more work in uc20 boot issues...
+
+ 15:02 <waveform> * Investigated how NOOBS directs the pi's boot firmware to different partitions
+
+ 15:02 <waveform> * ... and whether Ubuntu can do this (yes, allegedly, but no successful replication yet)
+
+ 15:02 <waveform> * ... and whether u-boot can currently do this (no) or could do this (probably)
+
+ 15:02 <waveform> * Wrote up a fairly detailed description of the Pi's boot process; writing a full spec based on that (incomplete)
+
+ 15:02 <waveform> * Figured out what was broken in the prior u-boot merge; working on 2020.04 merge
+
+ 15:02 <waveform> (done)
+
+ 15:02 <bdmurray> doko:
+
+ 15:03 <bdmurray> lets skip him now
+
+ 15:03 <bdmurray> tdaitx sent in his by email
+
+ 15:03 <bdmurray> juliank: !
+
+ 15:04 <juliank> * sponsored python-apt SRUs for waveform (LP: #1311056)
+
+ 15:04 <ubottu> Launchpad bug 1311056 in python-apt (Ubuntu Eoan) "[SRU] apt-add-repository adds duplicate commented/disabled source lines" [High,In progress] https://launchpad.net/bugs/1311056
+
+ 15:04 <juliank> * apt security update (LP: #1866113)
+
+ 15:04 <ubottu> Launchpad bug 1866113 in dino-im (Ubuntu Bionic) "CVE-2019-16235, CVE-2019-16236, CVE-2019-16237" [Undecided,Fix released] https://launchpad.net/bugs/1866113
+
+ 15:04 <juliank> * migrating APT CI to use autopkgtest to test as-installed, instead of in-tree
+
+ 15:04 <juliank> - the test for ^ passed on CI but failed on autopkgtest
+
+ 15:04 <juliank> I forgot what happened friday
+
+ 15:04 <juliank> (done)
+
+ 15:04 <doko> sorry, late
+
+ 15:04 <bdmurray> that's okay, ready now?
+
+ 15:04 <doko> - started looking into GCC test results:
+
+ 15:04 <doko> - Fixed gnat testsuite not finding the shared libgnat_util under test
+
+ 15:04 <doko> - Fixed the openmp related test failures in the g++ tests, turned out
+
+ 15:04 <doko> a test setup issue with the offload compilers, requiring some packaging
+
+ 15:04 <doko> changes.
+
+ 15:04 <doko> - Reported gm2 test failures upstream.
+
+ 15:04 <doko> - Fixed including the libstdc++ test results in the gcc-test-results package
+
+ 15:04 <doko> - Include the jit test results
+
+ 15:04 <doko> - Fixed two libphobos test failures
+
+ 15:04 <doko> - Reported an issue with the amdgcn offload compiler upstream, requiring
+
+ 15:04 <doko> a fix in LLVM and GCC.
+
+ 15:04 <doko> - binutils:
+
+ 15:04 <doko> - Update from the 3.34 branch
+
+ 15:05 <doko> - First try at packaging trunk/2.35.
+
+ 15:05 <doko> - Python 3.8.3 release, python3.8 and python3-stdlib-extensions uploads.
+
+ 15:05 <doko> - meetings about +1 maintenance
+
+ 15:05 <doko> (done)
+
+ 15:05 <juliank> CORRECTION: oops I linked the wrong security bug, it was LP: #1878177
+
+ 15:05 <ubottu> Launchpad bug 1878177 in apt (Ubuntu) "CVE-2020-3810 out-of-bound stack reads in arfile" [Undecided,Fix released] https://launchpad.net/bugs/1878177
+
+ 15:05 <bdmurray> updated meta-release files for 20.04 and groovy
+
+ 15:05 <bdmurray> review of bug reports re upgrades from 19.10
+
+ 15:05 <bdmurray> merged and uploaded groovy apport fix for LP: 1871185
+
+ 15:05 <bdmurray> uploaded focal SRU fix for the above
+
+ 15:05 <ubottu> Launchpad bug 1871185 in apport (Ubuntu Focal) "urls in ubuntu-bug's dialog not really clickable" [Medium,In progress] https://launchpad.net/bugs/1871185
+
+ 15:05 <bdmurray> accidental investigation of LP: #1871800
+
+ 15:05 <bdmurray> uploaded aptdaemon to groovy fixing LP: #1700810
+
+ 15:05 <bdmurray> uploaded aptdaemon SRUs for the above to X, B, E, F
+
+ 15:05 <ubottu> Launchpad bug 1871801 in ubuntu-release-upgrader (Ubuntu Focal) "duplicate for #1871800 ubuntu-release-upgrader translation is broken focal" [High,Incomplete] https://launchpad.net/bugs/1871801
+
+ 15:05 <ubottu> Launchpad bug 1700810 in aptdaemon (Ubuntu Focal) "aptdaemon's crash.py file is not working" [Medium,In progress] https://launchpad.net/bugs/1700810
+
+ 15:05 <bdmurray> uploaded tzdata 2020a update for X, B, E, F, G
+
+ 15:05 <bdmurray> SRU verification of the above
+
+ 15:05 <bdmurray> prepared a tzdata 2020a update for T
+
+ 15:05 <bdmurray> uploaded a fix for LP: #1774843 to B, E, and G
+
+ 15:05 <ubottu> Launchpad bug 1774843 in apport (Ubuntu Eoan) "apport python exception for python versions which python-apt is not built on" [Undecided,In progress] https://launchpad.net/bugs/1774843
+
+ 15:05 <bdmurray> ✔ done
+
+ 15:06 <bdmurray> vorlon:
+
+ 15:06 <vorlon> * short week, was out Tuesday and half of Wednesday
+
+ 15:06 <vorlon> * SRU work
+
+ 15:06 <vorlon> * nudging proposed-migration along for the various archive opening transitions still in progress
+
+ 15:06 <vorlon> * relatedly, discussions around restaffing +1 maintenance
+
+ 15:06 <vorlon> * UC20 release discussions
+
+ 15:06 <vorlon> * discussing ssh environment bug LP: #1659719
+
+ 15:06 <ubottu> Launchpad bug 1659719 in snapd (Ubuntu) "ssh can't call a binary from a snap without the full path" [Undecided,Confirmed] https://launchpad.net/bugs/1659719
+
+ 15:06 <vorlon> (done)
+
+ 15:07 <bdmurray> slyon:
+
+ 15:07 <slyon> == Distro ==
+
+ 15:07 <slyon> - Researched bug #1871801 and #1871800
+
+ 15:07 <slyon> * Seems to be invalid.
+
+ 15:07 <slyon> * English dpkg messages in the embedded terminal on purpose.
+
+ 15:07 <slyon> (It has been that way since many years.)
+
+ 15:07 <slyon> * Broken translation in UI/screenshot could not be reproduced.
+
+ 15:07 <slyon> - Researched bug #1876884
+
+ 15:07 <ubottu> bug 1871801 in ubuntu-release-upgrader (Ubuntu Focal) "duplicate for #1871800 ubuntu-release-upgrader translation is broken focal" [High,Incomplete] https://launchpad.net/bugs/1871801
+
+ 15:07 <slyon> * Related to dropbear-initramfs / initramfs-tools
+
+ 15:07 <ubottu> bug 1871801 in ubuntu-release-upgrader (Ubuntu Focal) "ubuntu-release-upgrader translation is broken focal" [High,Incomplete] https://launchpad.net/bugs/1871801
+
+ 15:07 <ubottu> bug 1876884 in dropbear (Ubuntu Groovy) "netplan using incorrect renderer" [Undecided,New] https://launchpad.net/bugs/1876884
+
+ 15:07 <slyon> * Initramfs network config is not cleaned up propery, before booting
+
+ 15:07 <slyon> into the real system.
+
+ 15:07 <slyon> - Fixed autopkgtests for python-httplib2 (again)
+
+ 15:07 <slyon> * Now using upstream's non-deprecated test-suite
+
+ 15:07 <slyon> * Debdiff awaiting review/sponsor:
+
+ 15:07 <slyon> https://paste.ubuntu.com/p/T2vBYYjgpG/
+
+ 15:07 <slyon> == Netplan ==
+
+ 15:07 <slyon> - Prepared patch & SRU for bond mode regression: bug #1877643
+
+ 15:07 <slyon> * Only affects Bionic series.
+
+ 15:07 <ubottu> bug 1877643 in netplan.io (Ubuntu Bionic) "netplan.io 0.98 introduced more strict parsing of bonding mode, causing failures at boot for existing systems" [High,In progress] https://launchpad.net/bugs/1877643
+
+ 15:07 <slyon> * Pending in Unapproved queue.
+
+ 15:07 <slyon> - Researched & fixed bug #1874494
+
+ 15:07 <slyon> * PR is merged upstream
+
+ 15:07 <ubottu> bug 1874494 in netplan.io (Ubuntu Focal) "netplan apply does not remove systemd service for wlan0 after config removed" [High,Triaged] https://launchpad.net/bugs/1874494
+
+ 15:07 <slyon> - Researched & fixed bug #1817651
+
+ 15:07 <slyon> * Reported by Juju guys in #server
+
+ 15:07 <ubottu> bug 1817651 in netplan.io (Ubuntu) "Primary slave on the bond not getting set." [Undecided,In progress] https://launchpad.net/bugs/1817651
+
+ 15:07 <slyon> * PR#136 is awaiting review upstream
+
+ 15:07 <slyon> - Documented release version of new config keys
+
+ 15:07 <slyon> * PR#137 is awaiting review upstream
+
+ 15:07 <slyon> - Initial review & feedback for PR#84
+
+ 15:08 <slyon> * nm: support route attributes "from", "onlink", and "table"
+
+ 15:08 <slyon> and "match.interface-name"
+
+ 15:08 <slyon> * Brings NM/networkd feature parity for match/routes
+
+ 15:08 <slyon> * Requires NetworkManager > 1.10 (bionic) for some parts
+
+ 15:08 <slyon> - Working on first feedback for NM netplan r/w plugin
+
+ 15:08 <slyon> (done)
+
+ 15:08 <bdmurray> xnox:
+
+ 15:08 <xnox> Subiquity reviews for cve / i18n
+
+ 15:08 <xnox> UC20 fun with fixing reported bugs from cert/qa
+
+ 15:08 <xnox> too much modules or not enough firmware
+
+ 15:08 <xnox> unmounting mounted things
+
+ 15:08 <xnox> subiquity netboot improvements
+
+ 15:08 <xnox> subiquity bootspeed improvements
+
+ 15:08 <xnox> pi package reviews
+
+ 15:08 <xnox> done
+
+ 15:08 <bdmurray> rbalint:
+
+ 15:09 <rbalint> (short week)
+
+ 15:09 <rbalint> * uploads via Debian: unattended-upgrades 2.4, meld 3.20.2-2
+
+ 15:09 <rbalint> * systemd 245.5-2ubuntu2
+
+ 15:09 <rbalint> * syncs: breezy-debian, ssmtp
+
+ 15:09 <rbalint> * partner work
+
+ 15:09 <rbalint> (don)
+
+ 15:09 <rbalint> e
+
+ 15:09 <bdmurray> #topic Release incoming bugs
+
+ 15:09 <bdmurray> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html
+
+ 15:10 <bdmurray> sorting by importance ;-)
+
+ 15:10 <bdmurray> the first one I targetted this morning as we talked about it last week
+
+ 15:10 <bdmurray> the dbus one we said was desktop
+
+ 15:10 <bdmurray> bug 1877175 - doko what is the status of this?
+
+ 15:10 <ubottu> bug 1877175 in gcc-10 (Ubuntu) "lib32stdc++6 is not installable with 10-20200502-1ubuntu1" [High,In progress] https://launchpad.net/bugs/1877175
+
+ 15:11 <doko> bdmurray: as documented in the bug, in progress.
+
+ 15:11 <bdmurray> bug 1875501 - does anybody remember budapest?
+
+ 15:11 <ubottu> bug 1875501 in command-not-found (Ubuntu) "Remove empty lines from output" [Medium,New] https://launchpad.net/bugs/1875501
+
+ 15:11 <bdmurray> doko: should we have a card for it?
+
+ 15:11 <doko> gcc-10 is trying to build since May 7
+
+ 15:12 <doko> I'd like to avoid the overhead
+
+ 15:12 <bdmurray> okay as long as the changelog closes it! ;-)
+
+ 15:12 <doko> seriously, the bug was submitted after the upload
+
+ 15:14 <bdmurray> we'll target and card bug 1875501
+
+ 15:14 <ubottu> bug 1875501 in command-not-found (Ubuntu) "Remove empty line from output" [Medium,New] https://launchpad.net/bugs/1875501
+
+ 15:15 <bdmurray> bug 1860826
+
+ 15:15 <ubottu> bug 1860826 in pam (Ubuntu) "pam_unix(sudo:auth): Couldn't open /etc/securetty: No such file or directory" [Low,Confirmed] https://launchpad.net/bugs/1860826
+
+ 15:15 <vorlon> card it
+
+ 15:16 <mclemenceau> ok
+
+ 15:16 <bdmurray> bug 1876182
+
+ 15:16 <ubottu> bug 1876182 in ubuntu-release-upgrader (Ubuntu) "Running do-release-upgrade displays text two-decades out-of-date" [Low,Triaged] https://launchpad.net/bugs/1876182
+
+ 15:17 <rbalint> +1
+
+ 15:17 <bdmurray> Maybe have design look at it?
+
+ 15:17 <vorlon> seems like a reasonable bug to fix but not a high enough priority to warrant targeting
+
+ 15:18 <vorlon> I don't think I've ever read that text before in my life
+
+ 15:18 <bdmurray> tagged notfixing
+
+ 15:18 <bdmurray> bug 1862503
+
+ 15:18 <ubottu> bug 1862503 in ubiquity (Ubuntu) "Installer crashed" [Undecided,New] https://launchpad.net/bugs/1862503
+
+ 15:24 <bdmurray> bug 1867542 - too many zsys snapshots?
+
+ 15:24 <ubottu> bug 1867542 in grub2 (Ubuntu) "grub stuck on loading kernel, fails to ls zfs and swap partitions" [Undecided,New] https://launchpad.net/bugs/1867542
+
+ 15:25 <vorlon> I think that needs to be assigned to the Desktop Team to look at; while there may be something that needs fixing in grub, having the list of snapshots grow without bounds is unreasonable
+
+ 15:25 <vorlon> so open a task on zsys?
+
+ 15:26 <bdmurray> are they subscribed to that?
+
+ 15:26 <bdmurray> oh, yes they are
+
+ 15:26 <bdmurray> vorlon: can you add a comment to that affect?
+
+ 15:26 <vorlon> also I think I saw sarnold report this bug somewhere else
+
+ 15:26 <vorlon> yeah
+
+ 15:27 <bdmurray> bug 1874287
+
+ 15:27 <ubottu> bug 1874287 in ubiquity (Ubuntu) "ubiquity must allow debconf database access when ubuntu-drivers executes apt-get install" [Undecided,New] https://launchpad.net/bugs/1874287
+
+ 15:29 <xnox> we should take it
+
+ 15:29 <xnox> card it
+
+ 15:29 <bdmurray> xnox could you expand on what it means though?
+
+ 15:29 <xnox> bdmurray:  typing in the bug
+
+ 15:30 <bdmurray> bug 1874310
+
+ 15:30 <ubottu> bug 1874310 in ubiquity (Ubuntu) "downloading and installing updates may result in stray packages installed" [Undecided,New] https://launchpad.net/bugs/1874310
+
+ 15:33 <mclemenceau> carded
+
+ 15:33 <bdmurray> bug 1874714
+
+ 15:33 <ubottu> bug 1874714 in ubiquity (Ubuntu) "Display an information when filesystem check failed or has been skipped" [Undecided,New] https://launchpad.net/bugs/1874714
+
+ 15:37 <bdmurray> bug 1876035 - julian have you seen this?
+
+ 15:37 <ubottu> bug 1876035 in apt (Ubuntu) "Consider making '-o Acquire::Retries=3' the default for 'apt-get update/install/dist-upgrade'" [Undecided,New] https://launchpad.net/bugs/1876035
+
+ 15:38 <juliank> need to investigate
+
+ 15:39 <bdmurray> taking that one
+
+ 15:39 <bdmurray> bug 1877618
+
+ 15:39 <ubottu> bug 1877618 in ubiquity (Ubuntu) "20.04 fails to boot via PXE (amd64) - "hidden .disk not found, and hard to discover"" [Undecided,New] https://launchpad.net/bugs/1877618
+
+ 15:46 <bdmurray> vorlon so that one doesn't seem worth carding
+
+ 15:47 <vorlon> bdmurray: agreed at this point
+
+ 15:48 <bdmurray> #topic Team proposed-migration report
+
+ 15:48 <vorlon> [LINK] https://people.canonical.com/~ubuntu-archive/proposed-migration/groovy/update_excuses_by_team.html#foundations-bugs
+
+ 15:48 <vorlon> juliank: apt-clone vs python-apt was yours from last week, did you look at it?
+
+ 15:48 <juliank> Unfortunately not
+
+ 15:48 <vorlon> will you look at it this week?
+
+ 15:48 * doko has still to do the *-perl packages
+
+ 15:49 <juliank> I shall think so
+
+ 15:49 <vorlon> ok
+
+ 15:49 <vorlon> doko: yes; libmoox-struct-perl and its dependency MIR?
+
+ 15:49 <vorlon> doko: you'll do that this week?
+
+ 15:50 <doko> yes
+
+ 15:50 <vorlon> ok
+
+ 15:50 <doko> tomorrow
+
+ 15:50 <vorlon> pyyaml
+
+ 15:50 <bdmurray> xnox: you did add a ubiquity task to bug 1870408 but I'll close that in favor of jibel's bug
+
+ 15:50 <ubottu> bug 1870408 in casper (Ubuntu) "casper-md5check should leave a breadcrumb which apport, ubiquity, subiquity could use" [Undecided,In progress] https://launchpad.net/bugs/1870408
+
+ 15:51 <vorlon> this one needs some follow-through due to old versions of llvm that we can't get rid of from the archive, and they build binaries depending on the python2 bindings
+
+ 15:51 <xnox> bdmurray:  ack
+
+ 15:51 <vorlon> so who would like to take pyyaml
+
+ 15:51 <vorlon> xnox: ?
+
+ 15:51 <rbalint> i take pyyaml
+
+ 15:51 <vorlon> ok, rbalint, thanks!
+
+ 15:52 <vorlon> re2 is a lib transition with tentacles
+
+ 15:52 <vorlon> xnox can have that one
+
+ 15:52 <xnox> thanks....
+
+ 15:53 <bdmurray> vim looks like a timeout
+
+ 15:53 <vorlon> vim is missing build on riscv64 and cyrus-imapd autopkgtest regression; I'll have a look
+
+ 15:53 <waveform> gallery-dl on requests could be a timeout on armhf - not sure
+
+ 15:54 <doko> w grant changed the riscv64 buildds, might be worth a retry first
+
+ 15:54 <vorlon> requests, autopkgtest regression: waveform you can look into this
+
+ 15:54 <waveform> will do
+
+ 15:55 <vorlon> libxcrypt: reproducible autopkgtest regression, could be flakiness but it's very flaky
+
+ 15:55 <vorlon> bdmurray: ^^ ?
+
+ 15:56 <bdmurray> vorlon: okay
+
+ 15:56 <vorlon> sphinx needs libjs-mathjax promoted, so that's probably a real MIR
+
+ 15:57 <vorlon> slyon: would you like to learn the MIR process this week?
+
+ 15:57 <slyon> vorlon, yes
+
+ 15:57 <vorlon> slyon: thanks :)
+
+ 15:57 <slyon> will look into it
+
+ 15:58 <vorlon> libyaml-libyaml-perl, (real) autopkgtest regressions
+
+ 15:58 <vorlon> rbalint: ^^ would you like another?
+
+ 15:58 <rbalint> vorlon, sure, taking
+
+ 15:58 <vorlon> apt-clone, probably shakes out from juliank's investigation vs python-apt
+
+ 15:58 <vorlon> libre-engine-re2-perl, tied to re2
+
+ 15:59 <xnox> ack
+
+ 15:59 <vorlon> libgd2, autopkgtest regressions, I'll look
+
+ 15:59 <vorlon> numpy: mclemenceau: would you like this?
+
+ 15:59 <mclemenceau> I will give it a shot
+
+ 16:00 <vorlon> gcc-10, already discussed
+
+ 16:00 <vorlon> and libberkeleydb-perl, looks like i386 binary cleanup, I'll follow through
+
+ 16:00 <vorlon> and done
+
+ 16:00 <vorlon> bdmurray:
+
+ 16:00 <bdmurray> #topic AOB
+
+ 16:01 <bdmurray> okay let's wrap then since we are over
+
+ 16:01 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

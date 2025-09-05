@@ -1,0 +1,237 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by ara at 16:01:23 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-03-12-16.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/UbuntuFriendly/Meetings   (ara, 16:02:00)
+ *Testing Checkbox 0.13.4
+
+ *Any Other Business?
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/checkbox/+bug/951054   (roadmr, 16:14:03)
+''ACTION:'' roadmr or tiagosh to talk to the U1 team to see how to handle translations  (ara, 16:18:29)
+
+
+
+Meeting ended at 16:25:38 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * roadmr or tiagosh to talk to the U1 team to see how to handle translations
+
+
+
+== Action items, by person ==
+
+ * roadmr
+ ** roadmr or tiagosh to talk to the U1 team to see how to handle translations
+
+
+
+== People present (lines said) ==
+
+ * ara (44)
+ * roadmr (25)
+ * cr3 (16)
+ * meetingology (4)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 16:01:23 <ara> #startmeeting
+
+ 16:01:23 <meetingology> Meeting started Mon Mar 12 16:01:23 2012 UTC.  The chair is ara. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01:23 <meetingology> 
+
+ 16:01:23 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:34 <ara> Agenda:
+
+ 16:01:36 <ara> Testing Checkbox 0.13.4
+
+ 16:01:36 <ara> AOB
+
+ 16:01:51 <ara> As usual, please, remember to add your agenda topics to the wiki page
+
+ 16:02:00 <ara> #link https://wiki.ubuntu.com/UbuntuFriendly/Meetings
+
+ 16:02:12 <ara> #topic Testing Checkbox 0.13.4
+
+ 16:02:29 <ara> We have landed a new version of Checkbox into Ubuntu Precise
+
+ 16:02:43 <ara> As you know, the default UI interface is now checkbox-qt
+
+ 16:03:12 <ara> This is the UI version that we are going to be promoting for Ubuntu Friendly, so testing is more than welcome
+
+ 16:03:30 <ara> If you are running Precise, please, upgrade and run
+
+ 16:03:32 <ara> checkbox-qt
+
+ 16:03:47 <ara> Should you find any bugs, please, file them as usual:
+
+ 16:03:51 <ara> $ ubuntu-bug checkbox
+
+ 16:03:54 <ara> ..
+
+ 16:04:02 <ara> Any questions/ comments?
+
+ 16:04:50 <roadmr> o/
+
+ 16:04:56 <ara> roadmr, go ahead!
+
+ 16:05:07 <roadmr> so you said type checkbox-qt and it occurred to me
+
+ 16:05:26 <roadmr> are we expecting people who use it in the command line to figure that out by themselves?
+
+ 16:05:52 <roadmr> I'd say yes, but I wonder if we should maybe think about providing a "checkbox" command that symlinks to the preferred UI, maybe using the alternatives mechanism
+
+ 16:06:07 <roadmr> for GUI users (vast majority, I guess) checkbox is still findable as system testing
+
+ 16:06:10 <roadmr> ..
+
+ 16:06:32 <ara> mmm, that's a good idea
+
+ 16:06:44 <ara> is checkbox currently a binary?
+
+ 16:07:15 <roadmr> there's no "checkbox" command right now
+
+ 16:07:32 <roadmr> you need to explicitly use one of the frontends: checkbox-gtk, checkbox-qt or even checkbox-cli
+
+ 16:08:23 <ara> the problem is that it would require a FFe
+
+ 16:08:48 <ara> maybe something to think about for 0.14 ;-)
+
+ 16:09:15 <roadmr> sure, let's see how people get by using it as it is now. Also, no point doing the work if it's not needed. Just something to consider.
+
+ 16:10:09 <ara> maybe I should stop asking people to "run checkbox-qt" and start talking properly and say "run System Testing"
+
+ 16:10:19 <ara> my mistake
+
+ 16:10:20 <ara> :)
+
+ 16:10:28 <cr3> ara: +1 :)
+
+ 16:10:55 <cr3> besides, the command-line might give the impression that checkbox is not user friendly
+
+ 16:11:17 <cr3> ... which would be ironic for something so closely related to Ubuntu Friendly :)
+
+ 16:11:26 <ara> :)
+
+ 16:11:34 <ara> OK, anything else on this topic?
+
+ 16:12:36 <ara> OK, let's move on
+
+ 16:12:45 <ara> #topic Any Other Business?
+
+ 16:13:30 <roadmr> o/
+
+ 16:13:36 <ara> roadmr, yes?
+
+ 16:13:56 <roadmr> hehe :) just want to call attention to this bug
+
+ 16:14:03 <roadmr> https://bugs.launchpad.net/ubuntu/+source/checkbox/+bug/951054
+
+ 16:14:05 <ubottu> Launchpad bug 951054 in Ubuntu Translations "Most of the Checkbox UI is not translatable" [Critical,Triaged]
+
+ 16:14:36 <roadmr> the new checkbox UI needs some work to make it translatable, and as you can see from the comments there's no clear-cut way to solve it
+
+ 16:14:57 <ara> roadmr, can you give us a quick summary?
+
+ 16:15:30 <cr3> roadmr: does this apply to the composite jobs or is there more?
+
+ 16:15:42 <roadmr> sure: basically the Qt frontend's strings are not imported into the pot file
+
+ 16:15:56 <roadmr> thus they can't be translated
+
+ 16:16:36 <cr3> roadmr: isn't that trivial to fix? not that I would know, but there's plenty of precedent for C++ code to be translated
+
+ 16:16:41 <roadmr> there have been a few suggestions on how to get the strings into the pot file and used by the frontend, but since most of our expertise seems to focus on Gtk apps, I notice a bit of uncertainty on how best to tackle it
+
+ 16:17:02 <roadmr> some of the comments point to looking into how Unity or Ubuntu One do it.
+
+ 16:17:29 <roadmr> cr3: yes, but there's also the issue of the .ui file. One option is to translate that to C++ and then pull the strings from that
+
+ 16:17:39 <ara> roadmr, can you take the action item about talking to the u1 team about how they do it?
+
+ 16:17:55 <roadmr> roadmr: sure, either I or tiago can handle that
+
+ 16:18:01 <roadmr> er, ara ^^
+
+ 16:18:10 <ara> hehehe
+
+ 16:18:29 <cr3> roadmr is talking to himself again, we're fine as long as he agrees with himself
+
+ 16:18:29 <ara> #action roadmr or tiagosh to talk to the U1 team to see how to handle translations
+
+ 16:18:29 * meetingology roadmr or tiagosh to talk to the U1 team to see how to handle translations
+
+ 16:18:35 <roadmr> cr3: and to answer your question, this is only about the checkbox-qt ui (new code), nothing else is affected (or at least wasn't reported as such)
+
+ 16:19:39 <roadmr> so to sum up this topic, we need some work / help on translating the Qt UI, and since there's a bug filed about it (external, even, not by us) it should make it into Ubuntu, as long as we commit a fix before either feature or string freeze
+
+ 16:19:57 <ara> OK, thanks roadmr for raising this critical issue
+
+ 16:20:01 <roadmr> np :)
+
+ 16:20:02 <roadmr> ..
+
+ 16:20:03 <ara> Anything else?
+
+ 16:20:06 <cr3> roadmr: it can also be seen as a regression, so it should be FFe worthy
+
+ 16:20:44 <cr3> o/
+
+ 16:21:08 <ara> cr3, go ahead
+
+ 16:21:29 <cr3> will the comments in the frontend make it to Precise, or at least is a FFe intended to be requested?
+
+ 16:21:32 <cr3> ..
+
+ 16:22:11 <cr3> if we consider that a new feature, we might be able to sneak it as a regression too
+
+ 16:22:21 <ara> cr3, I don't think it is a critical issue to request a FFe
+
+ 16:22:25 * cr3 is in a sneaky mood today
+
+ 16:22:36 <ara> but that's just my opinion
+
+ 16:22:49 <cr3> ara: it's pretty critical for the unity folks, they threatened to not use checkbox-qt because of that
+
+ 16:23:21 <cr3> ara: would you mind if we try to request a FFe but not hold our breath?
+
+ 16:23:56 <ara> I am fine with it, but as a separate upload, to not delay the bug fixes upload in case it is not accepted
+
+ 16:24:19 <cr3> ara: good point! roadmr, you cool with that?
+
+ 16:24:27 <roadmr> yes, sounds ok :)
+
+ 16:24:32 <cr3> that's it for me then
+
+ 16:24:40 <ara> awesome! thanks :)
+
+ 16:24:43 <ara> any other topics?
+
+ 16:25:21 <ara> going once
+
+ 16:25:31 <ara> going twice...
+
+ 16:25:38 <ara> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

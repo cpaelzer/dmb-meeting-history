@@ -1,0 +1,796 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 09 Oct at 15:03 &mdash; 15:58 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-10-09-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:04.
+
+  * ''LINK:'' https://launchpadlibrarian.net/183721050/apport.rtm-hack.debdiff 
+
+=== AOB ===
+The discussion about "AOB" started at 15:39.
+
+
+=== click native-dbus ===
+The discussion about "click native-dbus" started at 15:41.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (83)
+ * slangasek (78)
+ * mvo (44)
+ * infinity (37)
+ * bdmurray (26)
+ * sil2100 (20)
+ * doko (16)
+ * bhuey (16)
+ * ubottu (15)
+ * jodh (10)
+ * barry (10)
+ * Laney (6)
+ * stgraber (3)
+ * meetingology (3)
+ * shadeslayer (1)
+
+
+
+== Full Log ==
+
+
+ 15:03 <slangasek> #startmeeting
+
+ 15:03 <meetingology> Meeting started Thu Oct  9 15:03:58 2014 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:04 <slangasek> [TOPIC] Lightning round
+
+ 15:04 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson caribou infinity mvo bhuey sil2100 robru)
+
+ 15:04 <slangasek> caribou jodh cjwatson slangasek doko infinity stgraber sil2100 robru barry mvo bdmurray bhuey
+
+ 15:04 <slangasek> no caribou this morning
+
+ 15:04 <slangasek> jodh: care to start us off?
+
+ 15:04 <jodh> * system-image:
+
+ 15:04 <jodh> - Fixed missing /home issue.
+
+ 15:04 <jodh> - Rewrote system-image-upgrader in python (needs testing).
+
+ 15:04 <jodh> - Enabled cloud-init.
+
+ 15:04 <jodh> - Testing, testing, testing.
+
+ 15:04 <jodh> ᜦ
+
+ 15:05 <slangasek> is the new system-image-upgrader in the image now?
+
+ 15:05 <infinity> Was that in shell before?
+
+ 15:05 <jodh> slangasek: not yet - we're waiting to get the image into a stable state so we can test it :)
+
+ 15:05 <jodh> infinity: yeah
+
+ 15:05 <slangasek> jodh: oh.  what's "stable"?
+
+ 15:06 <jodh> slangasek: bootable with network, etc :)
+
+ 15:06 <infinity> jodh: What was the argument for making it use a heavier interpreter?  shell just ran out of tricks?
+
+ 15:06 <mvo> like that it actually boots *cough*
+
+ 15:06 <jodh> infinity: it had to be as it was running in the initramfs way back then.
+
+ 15:06 <infinity> jodh: Ahh, it's moved out of the initrd?  Kay.  That makes a bit more sense, I guess.
+
+ 15:07 <mvo> infinity: json parsing in sh is not great
+
+ 15:07 <stgraber> mvo: come on, my greps were totally fine at parsing json ;)
+
+ 15:07 <slangasek> I just use jsonsh
+
+ 15:07 <slangasek> (jshon?)
+
+ 15:07 <slangasek> cjwatson:
+
+ 15:07 <infinity> s/ in sh.*//
+
+ 15:07 <doko> write a shell plugin
+
+ 15:07 <mvo> stgraber: heh :) right - I must say it worked just fine :)
+
+ 15:08 <slangasek> imported as an environment function
+
+ 15:08 <slangasek> cjwatson: help come save us
+
+ 15:08 <stgraber> actually, the original environment for system-image-upgrader was android busybox with any binary you need having to be statically linked as there's no C library in that environment...
+
+ 15:08 <cjwatson> A couple of hours of patch piloting.
+
+ 15:08 <cjwatson> Upgraded iprutils to 2.4.4.
+
+ 15:08 <cjwatson> Fixed grub-installer bug 1376973 on ppc64el, caused by grub-ieee1275.postinst improvements.
+
+ 15:08 <ubottu> bug 1376973 in grub-installer (Ubuntu) "ppc64el: The 'grub-ieee1275' package failed to install" [High,Fix released] https://launchpad.net/bugs/1376973
+
+ 15:08 <cjwatson> Chased down a couple of lost copies due to Launchpad librarian outage.
+
+ 15:08 <cjwatson> Tested man-db SRU (bug 1372673).
+
+ 15:08 <ubottu> bug 1372673 in man-db (Ubuntu Trusty) "excessive debconf use when triggered" [High,Fix released] https://launchpad.net/bugs/1372673
+
+ 15:08 <cjwatson> Some more work on a native D-Bus interface for click.  Split https://code.launchpad.net/~cjwatson/click/info-extension/+merge/237385 out from this.  Still in progress.
+
+ 15:08 <cjwatson> Reviewed https://code.launchpad.net/~cwayne18/phablet-tools/clickbuddy-with-sessions/+merge/237477.
+
+ 15:08 <cjwatson> Upgraded OpenSSH to 6.7p1, released earlier this week.  Spent a while shoehorning the upstream regression test suite into autopkgtest, which was long overdue.  Some work on getting interoperability tests to work (including changes to putty and twisted), though this isn't all in place yet.
+
+ 15:08 <mvo> slangasek: thanks, I was not aware of this one
+
+ 15:08 <cjwatson> Lots of odds and ends of support, freeze upload reviews, etc.
+
+ 15:08 <cjwatson> ..
+
+ 15:08 <cjwatson> sorry, buried in another window
+
+ 15:09 <slangasek> mvo: oh, if jsonsh is actually a thing, I apologize ;)
+
+ 15:09 <cjwatson> slangasek: jq I think
+
+ 15:09 <mvo> slangasek: yeah, there is jshon!
+
+ 15:10 <slangasek> heh
+
+ 15:10 <slangasek> * working on an embargoed security update; more details later!
+
+ 15:10 <slangasek> * tinkering yesterday with system-image server due to utf8 breakage (ubuntu-core images broke the world)
+
+ 15:10 <slangasek> * working to get click core apps split into a custom tarball, so that they're installed by default for community images but not for krillin
+
+ 15:10 <slangasek> * scheduling interviews this week for the open role
+
+ 15:10 <infinity> Huh, jq looks handy.
+
+ 15:10 <slangasek> * other stuff I've forgotten
+
+ 15:10 <slangasek> (done)
+
+ 15:10 <slangasek> doko: your turn
+
+ 15:10 <doko> - Python 3.4.2!
+
+ 15:10 <doko> - bash update, and preparing a test rebuild with a non-essential bash
+
+ 15:10 <doko> - prepare gdb and hardening-wrapper trusty SRUs
+
+ 15:10 <doko> - again, a lot of ftbfs nagging, fixing, syncing
+
+ 15:10 <doko> - GCC 4.9 update (will prepare one more for 14.10, not yet 4.9.2)
+
+ 15:10 <doko> - llvm merges and updates
+
+ 15:10 <doko> - gdb 7.8 branch updates
+
+ 15:11 <doko> - openjdk-8 update
+
+ 15:11 <doko> - libtool-bin split NMUs
+
+ 15:11 <doko> (done)
+
+ 15:11 <infinity> - queue reviews
+
+ 15:11 <infinity> - updated a bunch of ppc packages
+
+ 15:11 <infinity> - more queue reviews
+
+ 15:11 <infinity> - experimented with powerpc on sapphire
+
+ 15:11 <infinity> - working on fixing up all the cross-toolchain stuff
+
+ 15:11 <infinity> - kernel SRU wrangling
+
+ 15:11 <infinity> - stuff and things
+
+ 15:11 <infinity> (done)
+
+ 15:11 <slangasek> doko: hmm, why a test rebuild with non-essential bash?  Are you doing this against Debian or Ubuntu?
+
+ 15:11 <sil2100> My turn?
+
+ 15:11 <stgraber> sil2100: yeah, go ahead, I'm not supposed to be here :)
+
+ 15:11 <sil2100> Ah ;)
+
+ 15:12 <sil2100> - Landing team work, preparing landing e-mails
+
+ 15:12 <sil2100> - CI Train maintenance and features:
+
+ 15:12 <sil2100> * Not much free cycles to finish up existing branches
+
+ 15:12 <sil2100> * Tweaking the unit tests for the dual-landing publishing
+
+ 15:12 <sil2100> * In-preprod tests of dual landing mode
+
+ 15:12 <sil2100> * Looking into an issue with sync silos build progress tracking
+
+ 15:12 <doko> slangasek, I can't currently in Ubuntu, pending some action from wgrant. so Debian it will be
+
+ 15:12 <sil2100> - Patch pilot duty:
+
+ 15:12 <sil2100> * Commenting on bug-1284111 MR for ristretto
+
+ 15:12 <sil2100> * Checking the eiciel release bug and patches, changing it to a FFe
+
+ 15:12 <sil2100> * Some clean-up on bugs
+
+ 15:12 <sil2100> - Writing CI Train landing process documentation
+
+ 15:12 <sil2100> - Updating the NewbieGuide for trainguards regarding the sync functionality
+
+ 15:12 <doko> why? to make the bash usage explit
+
+ 15:12 <sil2100> - Coordinating some big landings this week
+
+ 15:12 <sil2100> - Fixes to the commitlog generation scripts to accomodate changes to the spreadsheet
+
+ 15:12 <doko> explicit even
+
+ 15:12 <sil2100> - Multiple discussions on the landing process
+
+ 15:12 <sil2100> - More packaging advice and reviews
+
+ 15:12 <sil2100> (done)
+
+ 15:13 <bhuey> Previous week
+
+ 15:13 <bhuey> -TCK runtime work, worked on a basic lxc creation script to create that environment on a QA machine
+
+ 15:13 <bhuey> -got JCK-compiler/devtools working perfectly across precise/trusty/utopic
+
+ 15:13 <bhuey> -got JCK-runtime working but still need configuration
+
+ 15:13 <bhuey> Last week
+
+ 15:13 <bhuey> -learned about Replaces: and Breaks:, fixed LP: #1359078
+
+ 15:13 <bhuey> -compiled libphonenumber and regenerate results to close LP: #1366685
+
+ 15:13 <ubottu> Launchpad bug 1359078 in openjdk-7 (Ubuntu) "package openjdk-7-jdk 7u55-2.4.7-1ubuntu1 failed to install/upgrade: trying to overwrite '/usr/lib/jvm/java-7-openjdk-i386/src.zip', which is also in package openjdk-7-source 7u55-2.4.7-1ubuntu1" [Undecided,Triaged] https://launchpad.net/bugs/1359078
+
+ 15:13 <bhuey> This week
+
+ 15:13 <ubottu> Launchpad bug 1366685 in openjdk-7 (Ubuntu Utopic) "libphonenumber fails to build on arm64" [Undecided,Fix released] https://launchpad.net/bugs/1366685
+
+ 15:13 <bhuey> -create a branch for the TCK container environment, https://code.launchpad.net/~bill-huey/+junk/lxc-tck-script
+
+ 15:13 <bhuey> -move to icedtea7-2.5.3, resolved a number of patch conflicts. Got clean compile but I need to update a few patches to fix build issues with jamvm
+
+ 15:13 <bhuey> -focus on applying the latest security update
+
+ 15:13 <bhuey> (done)
+
+ 15:13 <bhuey> (done)
+
+ 15:14 <slangasek> doko: ok, well I was going to say that it makes no sense to do this only in Ubuntu and *should* be done against Debian ;)
+
+ 15:14 <barry> robru around?
+
+ 15:15 <slangasek> doko: but also that I think the first step should be moving bash from essential to build-essential, which doesn't require any rebuild tests
+
+ 15:15 <cjwatson> I still think a test rebuild won't show up very much
+
+ 15:15 <infinity> ^
+
+ 15:15 <infinity> Most of the problems will be runtime, not buildtime.
+
+ 15:15 <cjwatson> as soon as you have something that does need to (build-)depends: bash, then all failures above that will become invisible
+
+ 15:15 <slangasek> robru's on vac
+
+ 15:15 <slangasek> barry: your turn
+
+ 15:15 <cjwatson> things like checkbashisms seem like a better way to scan for this
+
+ 15:15 <barry> trainguarding, monkeypushing, spreadsh*ting, dashboardsurfing, wikiwhacking
+
+ 15:15 <barry> system-image: LP: #1373467.  internal discussions and conference calls.
+
+ 15:15 <ubottu> Launchpad bug 1373467 in Ubuntu system image "Support config.d directory" [High,In progress] https://launchpad.net/bugs/1373467
+
+ 15:16 <barry> debuntu: LP: #1376736 and pycurl 7.19.5-2ubuntu1.
+
+ 15:16 <ubottu> Launchpad bug 1376736 in pycurl (Ubuntu) "[FFe] update to pycurl 7.19.5" [High,Fix released] https://launchpad.net/bugs/1376736
+
+ 15:16 <barry> --done--
+
+ 15:16 <slangasek> cjwatson: by this point, checkbashisms is probably moot and what we really need to scan for is #!/bin/bash
+
+ 15:16 <cjwatson> well either way yeah
+
+ 15:16 <cjwatson> also of course SHELL = /bin/bash etc.
+
+ 15:16 <doko> yep, I'll do that first then
+
+ 15:16 <infinity> Scanning for #!/bin/bash will catch most, and then you have the pain of wading through a grep of "bash .*" and filtering out everything that's a documentation string instead of someone calling a script with bash.
+
+ 15:17 <cjwatson> and a ton of things where autotools likes to use bash if it can find it
+
+ 15:17 <slangasek> but of course, SHELL = /bin/bash is only at build time, which again is why I think that, given that this is severable we should treat it separately
+
+ 15:17 <slangasek> mvo: your turn
+
+ 15:17 <mvo> Short week, friday was a public holiday in germany
+
+ 15:17 <mvo> apt:
+
+ 15:17 <mvo> - Cve-CVE-2014-7206 (precise, trusty, utopic, wheezy) symlink attack
+
+ 15:17 <mvo> - Debug/fix Bug#764442 and check for possible security implications
+
+ 15:17 <mvo> - Review/merge donkult/feature/_apt_for_partial
+
+ 15:17 <mvo> - Review/merge patch for Bug#764467
+
+ 15:17 <mvo> - Work on feature/expected-size (ensure we fail if more than max.
+
+ 15:17 <mvo> data is written)
+
+ 15:17 <ubottu> ** RESERVED ** This candidate has been reserved by an organization or individual that will use it when announcing a new security problem.  When the candidate has been publicized, the details for this candidate will be provided. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7206)
+
+ 15:17 <mvo> - Work on feature/acq-trans
+
+ 15:17 <mvo> click:
+
+ 15:17 <mvo> - make app stop on remove in lp:~mvo/click/lp1232130-kill-on-remove-2,
+
+ 15:17 <mvo> (tricky as ubuntu-app-stop needs the session bus)
+
+ 15:18 <mvo> - add click info --remote to get details about a click
+
+ 15:18 <mvo> (lp:~mvo/click/repository)
+
+ 15:18 <mvo> - add click (sso) login command (lp:~mvo/click/sso)
+
+ 15:18 <mvo> - Merge acquire+sso (lp:~mvo/click/sso+acquire) but not useful yet
+
+ 15:18 <mvo> because public.apps.ubuntu.com has a gnutls issue (MP pending)
+
+ 15:18 <mvo> - Review/merge lp:~cjwatson/click/info-extension
+
+ 15:18 <mvo> misc:
+
+ 15:18 <mvo> - review lp:~cwarner/unattended-upgrades/whitelisting
+
+ 15:18 <mvo> system-image:
+
+ 15:18 <mvo> - Add --keyboard-layout option to create-ubuntu-core-image.py
+
+ 15:18 <mvo> - Build the system-image without recommends
+
+ 15:18 <mvo> - Fixes in the system-image seed
+
+ 15:18 <mvo> - Create ssh host keys in create-ubuntu-core-image.py (first boot not
+
+ 15:18 <mvo> a option due to insufficient entropy, thanks Colin!)
+
+ 15:18 <slangasek> oh, that reminds me, no one's mentioned yet - this coming Monday is a bank holiday in the US, we're celebrating Canadian Thanksgiving
+
+ 15:18 <mvo> - Debug/fix /userdata/cache creation
+
+ 15:18 <mvo> - Ensure /etc/hosts has sensible defaults
+
+ 15:18 <mvo> - Ensure dbus machie-id is available via ExecStartPre line in systemd unit
+
+ 15:18 <mvo> - lp:~mvo/livecd-rootfs/no-recommends-for-system-image
+
+ 15:18 <mvo> - lp:~mvo/livecd-rootfs/system-image-include-hosts
+
+ 15:18 <mvo> - Debug boot problem (still in progress)
+
+ 15:18 <mvo> (done)
+
+ 15:18 <infinity> mvo: Your "short weeks" make me feel very inadequate.
+
+ 15:18 <infinity> slangasek: You're doing what now?
+
+ 15:19 <slangasek> infinity: you didn't know we celebrate Canadian Thanksgiving?
+
+ 15:19 <infinity> slangasek: (And yeah, remind me that I need to take a swap day for that)
+
+ 15:19 <barry> infinity: isn't every week a shorts week?  oh wait, we're not talking about pants
+
+ 15:19 <mvo> infinity: haha, it was actually a long week with a day off :)
+
+ 15:19 <slangasek> infinity: though down here, we call it Peter Falk Day
+
+ 15:20 <barry> slangasek: yeah, me too
+
+ 15:20 <bdmurray> landed daisy r541: daisy/retracer.py: workaround apport AssertionError when retracing a crash with an invalid key
+
+ 15:20 <bdmurray> r453 daisy/submit.py: return bad response for crash reports that cause a memory error when trying to decode them
+
+ 15:20 <bdmurray> updated oopsrepository and daisy to prevent submission of duplicate crash reports from the same system
+
+ 15:20 <bdmurray> updated daisy-charm to run oopsrepository's schema.py so that new column families are created
+
+ 15:20 <bdmurray> searched for OOPSes with corrupt COREs in the Error Tracker that can be removed
+
+ 15:20 <bdmurray> modified accepted CORE reviewer to mark crashes w/o a package, release or executable path for deletion
+
+ 15:20 <bdmurray> investigation into not receiving crash notifications from Trusty UVT machine
+
+ 15:20 <bdmurray> uploaded update-notifier crash notification race condition (file not writable yet) fix
+
+ 15:20 <bdmurray> uploaded Trusty SRU fix for LP: #1378134 regarding crash notifications
+
+ 15:20 <ubottu> Launchpad bug 1378134 in update-notifier (Ubuntu Trusty) "update-notifier crash detection checks for writable crash files" [Medium,Fix committed] https://launchpad.net/bugs/1378134
+
+ 15:20 <bdmurray> nvestigation into status of apport and whoopsie smoke tests (passing!)
+
+ 15:20 <bdmurray> research into RTM crashes failure to retrace this is due to (LP: #1362496)
+
+ 15:20 <ubottu> Launchpad bug 1362496 in base-files (Ubuntu-rtm 14.09) "LSB release and /etc/os-release still say "Utopic", needs to be RTM" [High,Triaged] https://launchpad.net/bugs/1362496
+
+ 15:20 <bdmurray> discussion with evan and pitti regarding crash reporting for click packages
+
+ 15:20 <bdmurray> SRU verification and release of fix for apport bug LP: #1354571
+
+ 15:20 <ubottu> Launchpad bug 1354571 in apport (Ubuntu Precise) "apport-retrace ignores warnings from gdb" [Medium,Triaged] https://launchpad.net/bugs/1354571
+
+ 15:20 <bdmurray> uploaded utopic curl bug fix for LP: #1375663
+
+ 15:20 <bdmurray> uploaded apport fixes for LP: #1376374, LP: #1345569
+
+ 15:20 <ubottu> Launchpad bug 1375663 in curl (Ubuntu) "curl handles EINTR wrong" [Medium,Fix released] https://launchpad.net/bugs/1375663
+
+ 15:20 <ubottu> Launchpad bug 1376374 in apport (Ubuntu) "whoopsie-upload-all will run hooks on a corrupt crash file multiple times" [Medium,Fix released] https://launchpad.net/bugs/1376374
+
+ 15:21 <ubottu> Launchpad bug 1345569 in apport (Ubuntu) "recoverable_problem crashed with ValueError in add_proc_info(): invalid process" [High,Fix released] https://launchpad.net/bugs/1345569
+
+ 15:21 <bdmurray> And I'm actually taking tomorrow not Monday off.
+
+ 15:21 <bdmurray> ✔ done
+
+ 15:21 <slangasek> no Peter Falk movies for you
+
+ 15:21 <slangasek> bhuey: hi
+
+ 15:22 <bhuey> slangasek: hey
+
+ 15:22 <slangasek> bhuey: oh, you went earlier, didn't you
+
+ 15:22 <bhuey> yes
+
+ 15:22 <slangasek> you were out of order! throwing me off :)
+
+ 15:22 <slangasek> Ok.  Any questions from anyone re: status?
+
+ 15:22 <bhuey> sorry
+
+ 15:23 <barry> slangasek: i have princess bride and made in my netflix queue
+
+ 15:23 <slangasek> any more Columbo jokes?
+
+ 15:23 <slangasek> barry: haha
+
+ 15:23 <bdmurray> cjwatson: I've heard that you did some researchin into bug 1362496 and changing base-files?
+
+ 15:23 <ubottu> bug 1362496 in base-files (Ubuntu-rtm 14.09) "LSB release and /etc/os-release still say "Utopic", needs to be RTM" [High,Triaged] https://launchpad.net/bugs/1362496
+
+ 15:23 <slangasek> barry: we seem to be the only two finding this funny
+
+ 15:24 <cjwatson> bdmurray: → infinity really; the issue is that a bunch of packages conditionalise on lsb_release at build time, and we can't just make a bunch of stuff fail to build or worse even misbuild just before RTM
+
+ 15:24 <barry> slangasek: we're the only ones getting falked i guess
+
+ 15:24 <cjwatson> even though it's ugly it's safer to work around it elsewhere for now
+
+ 15:24 <bdmurray> with the hope of doing the less ugly thing later?
+
+ 15:24 <cjwatson> yeah
+
+ 15:25 <cjwatson> basically I looked into it sufficiently to decide that it was too scary at the moment
+
+ 15:25 <slangasek> conditionalize on lsb_release > project to port these to dpkg-vendor?
+
+ 15:25 <bdmurray> cjwatson: okay, that wasn't clear from the information in the bug report
+
+ 15:25 <infinity> bdmurray: To be fair, my hope is that "later", phone releases *are* based on stable Ubuntu releases, and not massive forks, but I get the impression that utopia won't exist for a while. :(
+
+ 15:25 <cjwatson> slangasek: dpkg-vendor doesn't give you series information
+
+ 15:25 <slangasek> right
+
+ 15:26 <cjwatson> I think this should go in the derived distro post-mortem when we do one of those
+
+ 15:26 <infinity> bdmurray: But the massive engineering burden in maintaining two parallel distros is something we can't keep up forever either.
+
+ 15:28 <slangasek> the current problem is that nothing on RTM is retracing because apport doesn't like it; that's a critical problem
+
+ 15:28 <cjwatson> does apport use os-release in preference to lsb-release?
+
+ 15:29 <slangasek> so we need a short-term solution
+
+ 15:29 <cjwatson> it *is* possible that we could change JUST os-release, I think
+
+ 15:29 <slangasek> I think pitti implied that it does, on the bug log
+
+ 15:29 <cjwatson> I still think it probably needs an archive grep for safety
+
+ 15:29 <bdmurray> https://launchpadlibrarian.net/183721050/apport.rtm-hack.debdiff
+
+ 15:29 <cjwatson> is that Canonistack instance with the archive search engine still up somewhere?
+
+ 15:30 <bdmurray> that's the change to apport that would work and it mentions "This is read from /etc/os-release, or if that doesn't exist..."
+
+ 15:30 <infinity> bdmurray: That works too.
+
+ 15:30 <cjwatson> I've lost the URL
+
+ 15:30 <slangasek> cjwatson, infinity: btw, "derived distribution post-mortem" added to the sprint agenda
+
+ 15:30 <cjwatson> oh thanks
+
+ 15:31 <bdmurray> so it looks to me like apport prefers /etc/os-release
+
+ 15:31 <Laney> I shut it down because it was giving incomplete results, which is misleading
+
+ 15:31 <Laney> Need time to resurrect
+
+ 15:32 <cjwatson> infinity: would you be happier with just an os-release change?  I do still think we need to search for it somehow
+
+ 15:32 <cjwatson> Laney: how long would that take?
+
+ 15:32 <Laney> Don't know, sorry, I didn't even really look into what the problem was
+
+ 15:32 <slangasek> maybe you just want to run an instance of the security team's archive grep as a one-off?
+
+ 15:33 <Laney> jdstrand can do archive greps, advise doing that for now
+
+ 15:33 <slangasek> as they have well-exercised tooling for unpacking the world and grepping it
+
+ 15:33 <bdmurray> I had that setup at one point in time too
+
+ 15:33 <Laney> Sprint might be a good time to go away and try to fix it
+
+ 15:33 <Laney> (said everyone ever)
+
+ 15:34 <infinity> cjwatson: I think that would still need a grep, but I bet the hits for 'os-release' in the entire distro will be only a few, and hopefully mostly irrelevant.
+
+ 15:35 <slangasek> bdmurray: can you do that archive grep for os-release, and we'll discuss (w/ infinity, cjwatson) the findings if necessary?
+
+ 15:36 <bdmurray> slangasek: yes, but it'd be utopic not the rtm archive
+
+ 15:36 <infinity> bdmurray: Close enough.
+
+ 15:36 <slangasek> bdmurray: if that's the easiest for you to run, JFDI and we can pare down the results afterwards
+
+ 15:37 <infinity> My guess is that you'll find a reference or two in systemd and maybe GNOME, and then our own tools (like apport) that opportunistically started looking at it.
+
+ 15:37 <infinity> And none of those would be cause for concern.
+
+ 15:37 <slangasek> (I don't expect there to be any *new* uses of os-release in rtm that we care about)
+
+ 15:37 <infinity> But definitely want to be sure.
+
+ 15:39 <slangasek> [TOPIC] AOB
+
+ 15:39 <slangasek> anything else under "general business"?
+
+ 15:39 <slangasek> as mentioned, Monday's a holiday for US and Canada
+
+ 15:39 <bdmurray> bug 1265192 - cjwatson will you be looking at it?
+
+ 15:39 <ubottu> bug 1265192 in ubiquity (Ubuntu Trusty) "Install/reinstall wipes out all/other partitions" [Critical,Triaged] https://launchpad.net/bugs/1265192
+
+ 15:39 <slangasek> and next week is Plumbers/Kontinental Kernel Kongress
+
+ 15:39 <cjwatson> bdmurray: yeah, on my "RSN" todo
+
+ 15:40 <slangasek> so we're going to be a bit skeleton crew for the next week
+
+ 15:41 <slangasek> [TOPIC] click native-dbus
+
+ 15:41 <slangasek> in the meantime, trying to get us back in the rhythm of having presentations at the meetings
+
+ 15:41 <cjwatson> yeah, apparently I stepped back slowest
+
+ 15:41 <slangasek> cjwatson is going to talk a bit about the work he's doing with click's "native dbus" support
+
+ 15:41 * sil2100 readies his eyes
+
+ 15:42 <cjwatson> ok, so I've been working on adding a native D-Bus interface to click, aiming to replace its use of PackageKit
+
+ 15:42 <cjwatson> up to now we've got away with relying on PK (mostly pkcon, its CLI client) for this
+
+ 15:42 <cjwatson> unfortunately PK upstream is about to drop plugin support, which is going to kick the chair-legs out from under us in the V cycle
+
+ 15:42 <cjwatson> cf. http://blog.tenstral.net/2014/09/listaller-back-to-the-future.html
+
+ 15:42 <doko> slangasek, one more thing for AOB, are the tutorial/workshop proposals for the sprint decided?
+
+ 15:42 <cjwatson> I'd always intended to have a more natural native interface anyway - using PK was expedient at the time, but it has some assumptions that don't *quite* fit, esp. for command-line use
+
+ 15:43 <cjwatson> things like the weird way you have to figure out IDs in order to remove packages, for instance
+
+ 15:43 <slangasek> doko: I haven't heard
+
+ 15:43 <cjwatson> we also don't actually need the fancier things we get from PK, really, like searching both apt and click in a single view
+
+ 15:43 <cjwatson> given that we're trying to make click work on the server now, we need a nice CLI, and this is just forcing the issue for us.
+
+ 15:43 <cjwatson> so, I've been working on adding a native service.  Vala makes this quite nice and this broadly seems to let me install and remove packages via dbus-send
+
+ 15:43 <cjwatson> $ wc -l lib/click/dbus-*.vala
+
+ 15:43 <cjwatson> 66 lib/click/dbus-interface.vala
+
+ 15:43 <cjwatson> 296 lib/click/dbus-service.vala
+
+ 15:43 <cjwatson> 362 total
+
+ 15:44 <cjwatson> it's basically com.ubuntu.Click.{InstallFile,RemovePackage} right now
+
+ 15:44 <cjwatson> the next thing is to have click notice when it's being called from its own service.  if not, it'll call itself under the hood, and the service will detect the calling user
+
+ 15:44 <cjwatson> that way, rather than needing to do:
+
+ 15:44 <cjwatson> pkcon install-local foo.click
+
+ 15:44 <cjwatson> or:
+
+ 15:45 <cjwatson> sudo click install --user=$USER foo.click
+
+ 15:45 <cjwatson> you'll be able to just do:
+
+ 15:45 <cjwatson> click install foo.click
+
+ 15:45 <cjwatson> Michael has been working on a companion to this, package acquisition support from the store or from URLs
+
+ 15:45 <cjwatson> combining these, you'll be able to do:
+
+ 15:45 <cjwatson> click install foo
+
+ 15:45 <cjwatson> click install http://example.org/foo.click
+
+ 15:45 <cjwatson> (conditional on signing etc.)
+
+ 15:45 <cjwatson> the PK plugin will stick around for a while, not least because unity-scope-click is relying on it - I want a graceful transition.  but its days are numbered
+
+ 15:46 <cjwatson> that's it, any questions?
+
+ 15:46 <mvo> is there a branch available to play with it yet :) ?
+
+ 15:46 <cjwatson> will try to get that up by tomorrow - I want to at least sketch the client side to make sure it works properly
+
+ 15:47 * mvo nods
+
+ 15:47 <mvo> no real rush from my side, I'm just curious about it
+
+ 15:47 <cjwatson> yeah, I need to finish it before the release rush starts anyway otherwise it'll fall by the wayside
+
+ 15:48 * mvo nods again
+
+ 15:50 <slangasek> no other questions from me
+
+ 15:50 <slangasek> sounds really straightforward and awesome
+
+ 15:50 <slangasek> oh
+
+ 15:50 <slangasek> what's the ratio of lines of vala to lines of test code? :)
+
+ 15:50 <cjwatson> er cough ask me that next week :P
+
+ 15:50 <slangasek> :-)
+
+ 15:51 <cjwatson> it will be unit-tested somehow but I didn't exactly TDD it
+
+ 15:51 <barry> vala seems cool
+
+ 15:52 <infinity> Cool, but a bit on the scary magic side too.
+
+ 15:52 <slangasek> is there an idiomatic test harness for testing vala, or does one just use a generic one for C-ish things?
+
+ 15:52 <mvo> its interessting, sometimes I wish for a bit more documentation
+
+ 15:52 <cjwatson> click in general has about a 1.3:1 ratio of test code to code under test
+
+ 15:52 <infinity> Compilers that compile to other languages so you can have a compiler in your compiler tend to have some of the most fascinating misfeatures.
+
+ 15:52 <cjwatson> slangasek: click uses its own entertaining harness
+
+ 15:52 <cjwatson> it's perhaps worth a talk by itself, though I've mentioned it around here before
+
+ 15:53 <cjwatson> we generate LD_PRELOAD modules on the fly which allow Python methods to stand in as mocks for C functions
+
+ 15:53 <slangasek> infinity: http://www.yodawgyo.com/wp-content/uploads/2009/03/xzibit-yo-dawg-i-heard-you-like-math.jpg
+
+ 15:53 <cjwatson> and then indeed you just treat Vala like C
+
+ 15:53 <slangasek> cjwatson: ah, so this would be integrated with the existing click harness, sure
+
+ 15:53 <cjwatson> it's ... not perfect
+
+ 15:53 <slangasek> :)
+
+ 15:53 <cjwatson> but it does the job if you're careful
+
+ 15:54 <slangasek> cool
+
+ 15:54 <cjwatson> using ctypes for it was a bad idea
+
+ 15:54 <slangasek> any other questions?
+
+ 15:54 <infinity> s/for it //
+
+ 15:54 <cjwatson> what it really needs is the other half of pygobject exposed so that it can marshal things that way
+
+ 15:54 <cjwatson> since it's already relying on gobject-introspection
+
+ 15:54 <infinity> Mentions of python ctypes are a PTSD trigger for me.
+
+ 15:54 <cjwatson> infinity: I didn't realise it wasn't properly 64-bit clean!  I mean for goodness' sake it's 2014
+
+ 15:55 <cjwatson> but by the time I realised that I'd already sunk several days into it ...
+
+ 15:55 <infinity> cjwatson: It is, indeed, 2014.  Say, how do you feel about threads? :)
+
+ 15:55 <cjwatson> eeeeeeeeeeeeeeeeeevil
+
+ 15:56 <shadeslayer> e^vil
+
+ 15:56 <infinity> Somewhere, there's a kettle screaming your name.
+
+ 15:56 <slangasek> but, but.  we have to do *something* with all that yak wool
+
+ 15:56 <cjwatson> come back to me when somebody proves a pthreads program correct
+
+ 15:56 <infinity> cjwatson: Much easier to prove them 99% not incorrect.
+
+ 15:56 <infinity> cjwatson: I call it faith-based programming.
+
+ 15:57 <cjwatson> it's the 1% that worries me :)
+
+ 15:57 <slangasek> infinity: which is better than faith-based debugging, where you gather the community and everyone lays hands on the laptop lid
+
+ 15:57 <slangasek> ok.  done here? :)
+
+ 15:58 <cjwatson> generally Vala has been fine for me though.  I gather it's scary if you pile on the features too much, but for what I'm doing it's easy enough and it's nice to be able to look at its compiled code
+
+ 15:58 <infinity> slangasek: Keep your weird oils off my laptop.
+
+ 15:58 <cjwatson> yep, I think so
+
+ 15:58 <infinity> cjwatson: How prety (or not) is the intermediate code?
+
+ 15:58 <slangasek> cjwatson: thanks for filling us in on this cool bit of work
+
+ 15:58 <slangasek> y'all can keep talking, but some of us have other meetings to get to ;)
+
+ 15:58 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,488 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 04 Sep at 15:04 &mdash; 15:30 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-09-04-15.04.log.html]]
+
+
+
+== Meeting summary ==
+
+=== lightning round ===
+The discussion about "lightning round" started at 15:05.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/debian-installer/+bug/833994/comments/8 
+
+=== AOB ===
+The discussion about "AOB" started at 15:27.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * stgraber (35)
+ * slangasek (29)
+ * ubottu (28)
+ * ev (26)
+ * cjwatson (24)
+ * stokachu (21)
+ * xnox (19)
+ * bdmurray (14)
+ * doko (13)
+ * barry (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:04 <slangasek> #startmeeting
+
+ 15:04 <meetingology> Meeting started Wed Sep  4 15:04:39 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:04 <meetingology> 
+
+ 15:04 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:05 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:05 <slangasek> doko ev jodh stgraber slangasek cjwatson stokachu barry bdmurray xnox
+
+ 15:05 <slangasek> [TOPIC] lightning round
+
+ 15:05 <slangasek> doko: you're first :)
+
+ 15:06 <doko> - Some unexpected GCC work, looking at regressions in the testsuite:
+
+ 15:06 <doko> - Testsuite wasn't enabled, so it was difficult to track down :-/
+
+ 15:06 <doko> - Fix libjava test failures, seen with binutils 2.23
+
+ 15:06 <doko> - Fix boehm-gc test failure
+
+ 15:06 <doko> - Look at gcc and g++ test failures only seen with hardening defaults, and fix
+
+ 15:06 <doko> - Re-discovered that -Wformat-security is disabled in GCC 4.8, because the boo
+
+ 15:06 <doko> tstrap failed with this default.  Now enable that in the specs instead of the op
+
+ 15:06 <doko> tions processing, and it builds ...
+
+ 15:06 <doko> - Ignore the additional mudflap test failures. Will work on removing mudflap u
+
+ 15:06 <doko> pstream alltogether now that the sanitizer is available in 4.8.
+
+ 15:06 <doko> - Upload is pending
+
+ 15:06 <doko> - Restart on cmake cross builds.
+
+ 15:06 <doko> (done)
+
+ 15:07 <ev> - Tail end of vUDS. Had a very productive discussion around the next steps for
+
+ 15:07 <ev> continuous integration.
+
+ 15:07 <ev> - Mostly spent the week getting ready for the Lexington QA sprint next week.
+
+ 15:07 <ev> - Calls with jibel, Martin, Francis, and Adam.
+
+ 15:07 <ev> - Meeting with IS to discuss Cassandra cluster next steps. They've asked to
+
+ 15:07 <ev> delay the final steps of migrating the data from our existing clusters into a
+
+ 15:07 <ev> new one. This is because they're working on building Prodstack 4.0 and doing
+
+ 15:07 <ev> these steps now would mean having to move a lot of data around once the new
+
+ 15:07 <ev> Prodstack is ready. I've in turn asked that more attention be given to moving
+
+ 15:07 <ev> daisy, errors, and the retracers onto prodstack and opening up access to the
+
+ 15:07 <ev> Cassandra nodes again, so we can at least continue with feature development
+
+ 15:07 <ev> while we wait.
+
+ 15:07 <ev> - Patch piloting. Woo.
+
+ 15:07 <ev> - Discussion around reporting runaway applications.
+
+ 15:07 <ev> Other:
+
+ 15:07 <ev> - Note: I am in Boston from this Sunday for the QA sprint and then on holiday
+
+ 15:07 <ev> for two weeks after that in somewhat remote territory (Nevada and Arizona
+
+ 15:07 <ev> desert). If you need my help with something, we have until Friday :)
+
+ 15:07 <ev> - Attended a talk by Adrian Cockcroft at Cassandra London on how they have
+
+ 15:07 <ev> built Netflix. A lot of it was a repeat of the Cassandra SF talk that I
+
+ 15:07 <ev> summarised on canonical-tech, but there were definitely some useful bits in
+
+ 15:07 <ev> there, like their Zuul API proxy tier. Didn't get a chance to ask him how the
+
+ 15:07 <ev> move of all their systems to Ubuntu was going :-/
+
+ 15:07 <ev> (done)
+
+ 15:08 <stgraber> Blueprint-related work:
+
+ 15:08 <stgraber> - Image based updates (BLUEPRINT: foundations-1305-image-based-updates)
+
+ 15:08 <stgraber> - Landed the daily-proposed channel
+
+ 15:08 <stgraber> - Re-numbered all the current channels (base version is 1 instead of YYYYMM00)
+
+ 15:08 <stgraber> - Bumped system partition size from 1.2GB to 2GB
+
+ 15:08 <stgraber> - Following-up with QA to get this landed by default this week
+
+ 15:08 <cjwatson> (jodh is on holiday)
+
+ 15:08 <stgraber> Other work:
+
+ 15:08 <stgraber> - LXC
+
+ 15:08 <stgraber> - Linux Plumbers mini-conference preparation
+
+ 15:08 <stgraber> - Licensing review and fixes
+
+ 15:08 <stgraber> - Python attach API review and fixes
+
+ 15:09 <stgraber> - Some code review
+
+ 15:09 <stgraber> - Android port fixes (building again with current NDK)
+
+ 15:09 <stgraber> - Prepared and pushed out the LXC 1.0~alpha1 pull request
+
+ 15:09 <stgraber> (FFe already accepted for once it's released)
+
+ 15:09 <stgraber> - Network
+
+ 15:09 <stgraber> - Merged ifupdown from Debian. Thanks to Steve for fixing the conffile handling of /etc/init.d/networking!
+
+ 15:09 <stgraber> - Other
+
+ 15:09 <stgraber> - vUDS
+
+ 15:09 <stgraber> 
+
+ 15:09 <stgraber> TODO (hopefully this week):
+
+ 15:09 <stgraber> - Land LXC 1.0~alpha1 in the archive ASAP (need to nag Daniel to process my pull request)
+
+ 15:09 <stgraber> - Implement the boot-time hooks for Ubuntu touch
+
+ 15:09 <stgraber> - Help QA run tests against touch_ro so we can switch to it by default
+
+ 15:09 <stgraber> - Re-design channels.json to be flexible enough to support channel aliases and hidden channels
+
+ 15:09 <stgraber> - Blog/g+/email about the version number changes as soon as we get a new phablet-flash landed in the archive
+
+ 15:09 <stgraber> (DONE)
+
+ 15:10 <stokachu> stgraber: what do you think about backporting ifupdown to precise?
+
+ 15:11 <stgraber> stokachu: a straight backport wouldn't work because of other changes that happened around it, so we'd have to compare the effort to cherry-pick the fixes you care about vs the work required to backport saucy to precise.
+
+ 15:11 <xnox> stgraber: (android src package rebuild has landed in .deb package as well now, if still needed)
+
+ 15:11 <stokachu> stgraber: ok ive got a bug on ifupdown in precise where using simple service networking restart fails
+
+ 15:12 <stokachu> stgraber: you have time after the meeting to discuss it a bit?
+
+ 15:12 <stgraber> xnox: thanks! I didn't actually need it since we aren't using the binaries from the android package yet, but that means that once we do, we won't regress (which was the goal here).
+
+ 15:13 <slangasek> * short week, Labor Day was on Monday
+
+ 15:13 <slangasek> * revisiting the status of UEFI netboot support; currently arguing with a machine that only wants to netboot over IPv6
+
+ 15:13 <stgraber> stokachu: I don't see how backporting a more recent version of ifupdown would solve that
+
+ 15:13 <slangasek> * finally getting the partition resizing work done for phablet-flash, though too late to make it for the initial switch to system images
+
+ 15:13 <slangasek> * poking around the edges of beta1, want to revisit the freeze rules for optional milestones based on some of the experiences here
+
+ 15:13 <slangasek> * patch piloting today
+
+ 15:13 <slangasek> (done)
+
+ 15:13 <stgraber> stokachu: considering we don't actually support restarting networking to begin with
+
+ 15:14 <stokachu> stgraber: dont support restarting networking?
+
+ 15:14 <stgraber> stokachu: right
+
+ 15:14 <stokachu> even for server
+
+ 15:14 <stgraber> stokachu: we support bringing individual interfaces up and down, but as the networking in Ubuntu is event based, we can't support restarting the whole thing sequentially
+
+ 15:14 * ev steps out to chat with IS
+
+ 15:15 <barry> have you tried `sudo service networking restart`?  don't! ;)
+
+ 15:15 <slangasek> cjwatson:
+
+ 15:15 <cjwatson> Launchpad:
+
+ 15:15 <cjwatson> - Landed build cancellation (bug 54730) and retrieval of build logs for cancelled builds (bug 1050514).
+
+ 15:15 <stgraber> stokachu: I mean, it may work and for simple systems it'll, just don't expect it to really work when using bridges, vlans or bond interfaces
+
+ 15:15 <stokachu> stgraber: ok good to know, thanks
+
+ 15:15 <ubottu> bug 54730 in launchpad-buildd "launchpad buildd abort does not work as expected" [High,Fix released] https://launchpad.net/bugs/54730
+
+ 15:15 <cjwatson> - Implemented automatic ppa-reset of failing virtual builders (bug 1039935), which has made the PPA build farm significantly more stable.
+
+ 15:15 <ubottu> bug 1050514 in Launchpad itself "Cancelling build loses log file" [High,Fix released] https://launchpad.net/bugs/1050514
+
+ 15:15 <ubottu> bug 1039935 in Launchpad itself "buildd-manager failure counting is too trigger-happy when killing virtual builders" [High,Fix released] https://launchpad.net/bugs/1039935
+
+ 15:15 <cjwatson> - Wrote blog entry on recent work: http://blog.launchpad.net/general/launchpad-build-farm-improvements
+
+ 15:15 <cjwatson> - Removed limits on the percentage of available builders that a given public PPA can take up, which now do more harm than good (bug 666308).  Will be in the next deployment.
+
+ 15:15 <ubottu> bug 666308 in Launchpad itself "public non-virtual ppas are unnecessarily limited on builders per architecture" [High,Fix committed] https://launchpad.net/bugs/666308
+
+ 15:15 <cjwatson> Click:
+
+ 15:15 <cjwatson> - Added "icon" (optional) and "installed-size" (automatically generated) to manifest for the benefit of UI code.
+
+ 15:15 <cjwatson> - Cleaned up various bugs in the preloaded wrapper.
+
+ 15:15 <cjwatson> - Added support for multiple installation root directories, which we'll use for preinstalled apps.  Much internal heavy lifting to make this work but no incompatible interface changes.
+
+ 15:15 <cjwatson> TODO:
+
+ 15:15 <cjwatson> - Finish deploying preinstalled app handling in click.
+
+ 15:15 <cjwatson> - Removal support in click, since UI work on this is due to start soon.
+
+ 15:15 <cjwatson> - Big pile of OEM bugs, probably involving all the coffee :-/
+
+ 15:15 <cjwatson> ..
+
+ 15:15 <stgraber> barry: haha, yeah, then you notice that dbus is "stop on deconfiguring-interfaces" taking down the whole system :)
+
+ 15:16 <stokachu> bug 833994 ϟ needs discussion on latest comments
+
+ 15:16 <stokachu> bug 1157943 ϟ Needs more prodding of David (apt upstream)
+
+ 15:16 <stokachu> bug 1204507 ϟ Verification completed, needs promotion out of -proposed queue.
+
+ 15:16 <ubottu> bug 833994 in debian-installer-utils (Ubuntu) "debian-installer does not support https when using with preseed files" [Medium,Triaged] https://launchpad.net/bugs/833994
+
+ 15:16 <stokachu> bug 1179781 ϟ Needs apt uploaded in order to test.
+
+ 15:16 <ubottu> bug 1157943 in apt (Ubuntu Precise) "apt-get update fails hash checks on https repositories when file size changes" [Undecided,New] https://launchpad.net/bugs/1157943
+
+ 15:16 <stokachu> (done)
+
+ 15:16 <ubottu> bug 1204507 in maas (Ubuntu Quantal) "MAAS rejects empty files" [Undecided,Confirmed] https://launchpad.net/bugs/1204507
+
+ 15:16 <stokachu> bug 1160490 ϟ uploaded to saucy, needs sponsorship in precise, quantal, and raring.
+
+ 15:16 <ubottu> bug 1179781 in apt (Ubuntu Raring) "If-Modfied-Since undhandled case causes apt lists corruption with https repositories" [Medium,Triaged] https://launchpad.net/bugs/1179781
+
+ 15:16 <ubottu> bug 1160490 in ifupdown (Ubuntu Raring) "race condition updating statefile" [Medium,In progress] https://launchpad.net/bugs/1160490
+
+ 15:16 <barry> stgraber: i think it's shorthand for `ssh deadmachine sudo reboot`
+
+ 15:17 <barry> Short week due to USA holiday.  vUDS.
+
+ 15:17 <barry> system-image: LP: #1208909; LP: #1218612. fixed traceback when -c gives a bad channel name.  system-image 1.3 and 1.4.  various meetings.  update blueprints.
+
+ 15:17 <ubottu> Launchpad bug 1208909 in Ubuntu system image "Add support for forcing full image update" [High,Fix released] https://launchpad.net/bugs/1208909
+
+ 15:17 <ubottu> Launchpad bug 1218612 in Ubuntu system image "Support new version number scheme" [Critical,Fix released] https://launchpad.net/bugs/1218612
+
+ 15:17 <barry> This week: LP: #1196991
+
+ 15:17 <ubottu> Launchpad bug 1196991 in Ubuntu system image "Support the new download dbus service" [High,Triaged] https://launchpad.net/bugs/1196991
+
+ 15:17 <barry> done
+
+ 15:17 <bdmurray> uploaded apport SRU (R) fix for bug 1168849
+
+ 15:17 <bdmurray> uploaded ubuntu-release-upgrader SRU (Q and R) fix for bug 1215526, bug 1210649
+
+ 15:17 <ubottu> bug 1168849 in apport (Ubuntu Raring) "crashes while reporting a Synaptics bug - fills up /tmp" [High,Fix committed] https://launchpad.net/bugs/1168849
+
+ 15:17 <ubottu> bug 1215526 in ubuntu-release-upgrader (Ubuntu Raring) "/usr/lib/ubuntu-release-upgrader/check-new-release-gtk:ImportError:new_dist_available:build_ui" [Undecided,Fix committed] https://launchpad.net/bugs/1215526
+
+ 15:17 <bdmurray> uploaded fixed SRU (Q and R) for bug 1035136
+
+ 15:17 <ubottu> bug 1210649 in ubuntu-release-upgrader (Ubuntu) "/usr/lib/ubuntu-release-upgrader/check-new-release-gtk:TypeError:on_button_upgrade_now_clicked:run:error:error:__init__:__init__:function" [High,Triaged] https://launchpad.net/bugs/1210649
+
+ 15:17 <ubottu> bug 1035136 in lsb (Ubuntu Raring) "[SRU] Fix lsb-core for 12.10 and 13.04" [Medium,Fix committed] https://launchpad.net/bugs/1035136
+
+ 15:17 <bdmurray> uploaded oneconf fix for bug 1051935
+
+ 15:17 <ubottu> bug 1051935 in ubiquity (Ubuntu Saucy) "Fails with SystemError when too many files are open" [Undecided,Confirmed] https://launchpad.net/bugs/1051935
+
+ 15:17 <bdmurray> sponsored patches in bug 1191704
+
+ 15:17 <bdmurray> review of unsubscribed packages
+
+ 15:17 <bdmurray> fix of tz issue with comparing dates in sru-report
+
+ 15:17 <bdmurray> investigation into bug 1209442 (not phased update issue)
+
+ 15:17 <ubottu> bug 1191704 in heimdal (Ubuntu Raring) "KDCs complain about not having enough file handles for /var/lib/heimdal-kdc/heimdal" [High,Fix committed] https://launchpad.net/bugs/1191704
+
+ 15:17 <ubottu> bug 1209442 in Unity "compiz crashed with SIGSEGV in getCompPluginVTable20090315_unityshell()" [High,Triaged] https://launchpad.net/bugs/1209442
+
+ 15:17 * slangasek buys some Bosnian coffee from Brazil at the European deli and drop-ships it to cjwatson
+
+ 15:17 <cjwatson> stokachu: 1204507> blocked on a slew of other verifications, as shown on http://people.canonical.com/~ubuntu-archive/pending-sru.html
+
+ 15:17 <cjwatson> fwiw
+
+ 15:17 <bdmurray> investigation into, fixing bug 1211511
+
+ 15:17 <bdmurray> reported errors bug 1217521
+
+ 15:17 <bdmurray> reported update-notifier bug 1220435 regarding crash reporting from Live CDs
+
+ 15:17 <ubottu> bug 1211511 in update-manager (Ubuntu) "update-manager hides but wants to install ignored phased updates" [High,Triaged] https://launchpad.net/bugs/1211511
+
+ 15:17 <ubottu> bug 1217521 in Errors "Include repository information in package versions table on a problem page" [Wishlist,New] https://launchpad.net/bugs/1217521
+
+ 15:17 <stokachu> cjwatson: thanks checking now
+
+ 15:17 <bdmurray> research into apport bug 1098844
+
+ 15:17 <ubottu> bug 1220435 in update-notifier (Ubuntu) "not notified of a crash when running a saucy live cd" [High,Triaged] https://launchpad.net/bugs/1220435
+
+ 15:17 <ubottu> bug 1098844 in apport (Ubuntu Raring) "apport-gtk crashed with PermissionError in thread_collect_info(): [Errno 1] Operation not permitted: '/var/crash/openafs-modules-dkms.0.crash'" [Medium,Triaged] https://launchpad.net/bugs/1098844
+
+ 15:18 <bdmurray> tested multiple kernels for bug 1218004
+
+ 15:18 <ubottu> bug 1218004 in linux (Ubuntu) "Apple Wireless Trackpad causes kernel oops" [High,Confirmed] https://launchpad.net/bugs/1218004
+
+ 15:18 <bdmurray> ✔ done
+
+ 15:20 * xnox notices it's me
+
+ 15:20 <slangasek> cjwatson: do you have any thoughts on the latest comments on bug #833994 (from stokachu)?
+
+ 15:20 <ubottu> bug 833994 in debian-installer-utils (Ubuntu) "debian-installer does not support https when using with preseed files" [Medium,Triaged] https://launchpad.net/bugs/833994
+
+ 15:21 * ev back
+
+ 15:21 <xnox> imho it's unwise to introduce insecure https, and at the moment using gnu wget fails all installations (due to exact text parsing) so that linked bug should really be fixed first.
+
+ 15:21 <xnox> ..
+
+ 15:21 <xnox> - sent off summary to promote 64bit images by default on the website
+
+ 15:21 <xnox> - finished proof-of-concept cross-compiling qml extensions, send of
+
+ 15:21 <xnox> email to ubuntu-phone mailing list. Further changes are required in
+
+ 15:21 <xnox> qt* & packaging
+
+ 15:21 <xnox> - help out landing (and testing) upstart 1.10 in the archive for FFe, ubiquity
+
+ 15:21 <cjwatson> I remain concerned that providing HTTPS when there's no way to make it secure is inviting people to do it wrong
+
+ 15:21 <xnox> uploads for FFe/Beta1, unbreak boost-python linking, unbreak
+
+ 15:21 <xnox> dh-python, sponsor patches for a few bugs.
+
+ 15:21 <xnox> - continuing work on emulator, emulator config is now using kernel
+
+ 15:21 <xnox> from the archive.
+
+ 15:21 <xnox> ..
+
+ 15:21 <cjwatson> And yeah, as xnox said
+
+ 15:21 <cjwatson> I really don't have time to take on a fix for this set of things at the moment though :-/
+
+ 15:22 <stokachu> if we could possibly get a definitive stance on the subject that would help i think
+
+ 15:22 * slangasek nods
+
+ 15:22 <stokachu> posted to the bug publicly
+
+ 15:22 <slangasek> stokachu: I think cjwatson's / xnox's stance has been pretty consistent / definitive
+
+ 15:22 <slangasek> "we're not going to give users a false sense of security about https"
+
+ 15:22 <xnox> stokachu: bug 1172101 must be fixed.
+
+ 15:22 <ubottu> bug 1172101 in wget (Ubuntu) "wget-udeb should install to /usr/bin/wget instead of /usr/bin/wget.gnu" [Low,Triaged] https://launchpad.net/bugs/1172101
+
+ 15:23 <cjwatson> This is it, my stance has been definitive, just not popular
+
+ 15:23 <xnox> stokachu: then we can further proceed with remaining https cert issues.
+
+ 15:23 <cjwatson> And I did propose a solution in comment #8
+
+ 15:23 <stokachu> ok
+
+ 15:23 <xnox> stokachu: and then yeah, implement cjwatson's comment #8
+
+ 15:23 <cjwatson> (Which certainly needs implementation from our end)
+
+ 15:23 <xnox> https://bugs.launchpad.net/ubuntu/+source/debian-installer/+bug/833994/comments/8
+
+ 15:23 <ubottu> Launchpad bug 833994 in debian-installer-utils (Ubuntu) "debian-installer does not support https when using with preseed files" [Medium,Triaged]
+
+ 15:24 <slangasek> tb is technically right about links that are sniffable but not pwnable, but that basically requires a webserver that does PFS, and very few of them actually do and most admins have no idea if theirs does or not
+
+ 15:24 <slangasek> so the vast majority of people who would see this functionality and try to use it would probably still be doing it wrong
+
+ 15:25 <stokachu> ok -- i can pass this along and do we want to leave this case as is for a potentional resolution from comment 8 down the road?
+
+ 15:25 <cjwatson> it's certainly still open
+
+ 15:27 <slangasek> ok
+
+ 15:27 <xnox> yeah, and supporting gnu wget is also useful (with & without https)
+
+ 15:27 <slangasek> any other topics for today?
+
+ 15:27 <slangasek> [TOPIC] AOB
+
+ 15:27 <slangasek> ?
+
+ 15:27 <stokachu> just confirmation on the rest of those bugs
+
+ 15:27 <stokachu> theres a few low hanging fruit ones i believe
+
+ 15:28 <slangasek> stokachu: bug #1179781> I'll sponsor those today
+
+ 15:28 <ubottu> bug 1179781 in apt (Ubuntu Raring) "If-Modfied-Since undhandled case causes apt lists corruption with https repositories" [Medium,Triaged] https://launchpad.net/bugs/1179781
+
+ 15:28 <stokachu> slangasek: thanks!
+
+ 15:29 <slangasek> (chiluk probably should have resubbed ubuntu-sponsors for the reupload, but that's ok)
+
+ 15:29 <stokachu> slangasek: ah i missed that sorry!
+
+ 15:29 <slangasek> nothing else?
+
+ 15:30 <slangasek> going...
+
+ 15:30 <slangasek> going...
+
+ 15:30 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,753 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jono at 18:00:20 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-07-12-18.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://code.launchpad.net/~mfisch/ubuntu-accomplishments-daemon/ubuntu-accomplishments-daemon-new-unittests/   (mfisch, 18:04:08)
+
+
+
+Meeting ended at 18:52:14 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jono (167)
+ * mfisch (101)
+ * cielak (41)
+ * imbrandon (36)
+ * meetingology (3)
+ * gigix (1)
+ * ubottu (1)
+ * AlanBell (1)
+ * bkerensa (1)
+
+
+
+== Full Log ==
+
+
+ 18:00:20 <jono> #startmeeting
+
+ 18:00:20 <meetingology> Meeting started Thu Jul 12 18:00:20 2012 UTC.  The chair is jono. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:00:20 <meetingology> 
+
+ 18:00:20 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:00:29 <jono> hi everyone, and welcome to the Ubuntu Accomplishments meeting!
+
+ 18:00:43 <jono> I know cielak is going to be a bit late to join us
+
+ 18:00:47 <jono> but who is here for the meeting?
+
+ 18:00:55 * mfisch is
+
+ 18:00:55 * imbrandon waves o/
+
+ 18:01:02 <AlanBell> o/
+
+ 18:01:14 <jono> awesome
+
+ 18:01:35 <jono> I wanted to first discuss quality
+
+ 18:01:47 <jono> recently we have been working to improve the quality across our codebases
+
+ 18:01:57 <jono> I wrote an admin UI for visibility on server-side issues
+
+ 18:02:06 <jono> and we are moving towards unit testing
+
+ 18:02:11 <jono> mfisch, can you summarize your work on this?
+
+ 18:02:23 <mfisch> yes
+
+ 18:02:34 <mfisch> so I basically gutted the unit tests for the daemon
+
+ 18:02:56 <mfisch> the setup for the daemon was much simpler back then.  I spent a few hours last night perfecting the directory structure
+
+ 18:03:03 <mfisch> writing config files
+
+ 18:03:05 <mfisch> ABOUT files
+
+ 18:03:08 <mfisch> extrainformation directorys
+
+ 18:03:13 <mfisch> ies I mean
+
+ 18:03:23 <mfisch> then today I wrote 10 tests, so far
+
+ 18:03:38 <mfisch> there's probably 10-15 more to be writt8en
+
+ 18:03:44 <mfisch> I found 2 small bugs already
+
+ 18:04:08 <mfisch> first of all my code is here:
+
+ 18:04:08 <mfisch> https://code.launchpad.net/~mfisch/ubuntu-accomplishments-daemon/ubuntu-accomplishments-daemon-new-unittests/
+
+ 18:04:17 <mfisch> the bugs are:
+
+ 18:04:20 <jono> mfisch, so the setUp is completely created in /tmp?
+
+ 18:04:28 <mfisch> jono: yes
+
+ 18:04:32 <mfisch> the bugs are:
+
+ 18:04:40 <mfisch> 1) if you have an icon without a file extenstion you get an exception
+
+ 18:04:54 <mfisch> I think this is unlikely and was just due to my fake accomplishment, so I commented it only
+
+ 18:05:03 <cielak> hello everyone, sorry for being late
+
+ 18:05:09 <jono> hey cielak
+
+ 18:05:13 <imbrandon> heya
+
+ 18:05:19 <jono> cielak, we are just discussing mfisch's unit testing work:
+
+ 18:05:22 <mfisch> bug 2)
+
+ 18:05:23 <ubottu> Error: Launchpad bug 2 could not be found
+
+ 18:05:27 <mfisch> lol
+
+ 18:05:27 <jono> so I basically gutted the unit tests for the daemon
+
+ 18:05:27 <jono> the setup for the daemon was much simpler back then.  I spent a few hours last night perfecting the directory structure
+
+ 18:05:27 <jono> writing config files
+
+ 18:05:27 <jono> ABOUT files
+
+ 18:05:28 <jono> extrainformation directorys
+
+ 18:05:30 <jono> ies I mean
+
+ 18:05:32 <jono> then today I wrote 10 tests, so far
+
+ 18:05:34 <jono> there's probably 10-15 more to be writt8en
+
+ 18:05:36 <jono> I found 2 small bugs already
+
+ 18:05:38 <jono> first of all my code is here:
+
+ 18:05:40 <jono> https://code.launchpad.net/~mfisch/ubuntu-accomplishments-daemon/ubuntu-accomplishments-daemon-new-unittests/
+
+ 18:06:02 <imbrandon> :)
+
+ 18:06:07 <jono> mfisch, so are you running quickly test to run the tests?
+
+ 18:06:22 <mfisch> the 2nd bug is if the mediafile doesn't exist, you set media_filename to None and then try to concat Str + None
+
+ 18:06:45 <mfisch> jono: right now they're run manually, after I finish writing tests I will set this up so that the package build runs them
+
+ 18:07:01 <mfisch> the standard is that if the tests fail, the package build fails
+
+ 18:07:08 <jono> mfisch, if you used the same class and file, quickly test should run them all anyway
+
+ 18:07:13 <jono> mfisch, right
+
+ 18:07:17 <mfisch> so I'd recommend everyone either build the package or run the tests before checkin
+
+ 18:07:22 <imbrandon> we can likely have automated ci jenkins.ubuntu.com run them too
+
+ 18:07:28 <mfisch> jono: yes, I'm using python's unit test
+
+ 18:07:43 <jono> mfisch, so these bugs...are they bugs in unit testing or this is where the unit tests have identified failures?
+
+ 18:07:44 <mfisch> I was going to use nosetests in the package build, but maybe quickly does that already?
+
+ 18:07:55 <jono> using jenkins might be useful
+
+ 18:08:16 <mfisch> jono: both bugs are cases that could happen, but were found due to incomplete tests
+
+ 18:08:29 <mfisch> jono: like "icon=foo", if you do that in a accomp, you will get an exception
+
+ 18:08:35 <jono> mfisch, right
+
+ 18:08:40 <mfisch> because: a, b = icon.split(".")
+
+ 18:08:41 <jono> so these are good testings to have
+
+ 18:08:48 <jono> which already will improve our quality
+
+ 18:08:54 <imbrandon> i'm familar with it is none else is so can help setup the ci scripts to run the test once mfisch has them more completed
+
+ 18:09:03 <imbrandon> ( for jenkins )
+
+ 18:09:10 <jono> mfisch, I will definitely take a look at your branch
+
+ 18:09:24 <mfisch> one large thing is missing so far from these tests
+
+ 18:09:27 <mfisch> they do not start the service
+
+ 18:09:35 <mfisch> they're just testing the Accomplishments class
+
+ 18:09:44 <mfisch> so things like the accomplish() method, don't work
+
+ 18:10:04 <jono> mfisch, right
+
+ 18:10:15 <jono> so I am not sure if we need to start the service
+
+ 18:10:18 <imbrandon> corectino its https://jenkins.qa.ubuntu.com/ btw sorry :)
+
+ 18:10:33 <mfisch> jono: we can do a lot of testing without it
+
+ 18:10:34 <jono> this is why we would use setUp to generate the data and then pass it to the function
+
+ 18:10:47 <mfisch> I chose a different route
+
+ 18:10:50 <jono> mfisch, so maybe right now we focus on the testing that can just do assertEqual checks
+
+ 18:11:02 <mfisch> I end up creating an accomplishment object in each test so I can mess around with stuff, like the ABOUT file
+
+ 18:11:05 <mfisch> for example
+
+ 18:11:15 <mfisch> I have a test that removes the ABOUT file and asserts that we get an exception
+
+ 18:11:33 <cielak> well, that makes sense for me too - all the service stuff is mosty done by twistd, and there is very little we actually mess with it
+
+ 18:11:48 <mfisch> jono: and I have tests for your config writer/reader stuff
+
+ 18:11:53 <jono> mfisch, cool
+
+ 18:12:24 <jono> I think this is going to help us to get to a culture where all functions have tests and documentation
+
+ 18:12:25 <imbrandon> is there plans for a linter for the accomplishments or do we think the tests are enough
+
+ 18:12:30 <mfisch> jono: I also removed all the "homedir = " references which are not needed since you added that environment vairable
+
+ 18:12:42 <mfisch> imbrandon: personally I think a linter will help
+
+ 18:12:50 <jono> mfisch, which homedir refs?
+
+ 18:12:56 <mfisch> imbrandon: the code will throw exceptions when it sees stuff it doesnt like
+
+ 18:13:04 <mfisch> jono: look at checkin #100 in my branch
+
+ 18:13:24 <imbrandon> yea we can do thinkgs like E: and W: with a linter tho :)
+
+ 18:13:34 <cielak> jono: http://bazaar.launchpad.net/~mfisch/ubuntu-accomplishments-daemon/ubuntu-accomplishments-daemon-new-unittests/revision/100#accomplishments/daemon/api.py
+
+ 18:13:52 <mfisch> imbrandon: here's some examples that I've found
+
+ 18:13:57 <imbrandon> k
+
+ 18:13:59 <mfisch> imbrandon: one call will fail if there's no icon field
+
+ 18:14:08 <jono> mfisch, I see, as we already have self.dir_<whatever> set earlier in the code
+
+ 18:14:09 <mfisch> imbrandon: another will fail if icon doesn't have a . in it
+
+ 18:14:15 <mfisch> jono: yep
+
+ 18:14:18 <jono> cool
+
+ 18:14:43 <jono> mfisch, how much test coverage do you think we can get without requiring the service?
+
+ 18:14:47 <jono> just pure unit testing
+
+ 18:15:19 <mfisch> we can easily test every public API
+
+ 18:15:22 <mfisch> well
+
+ 18:15:25 <mfisch> except accomplish()
+
+ 18:15:30 <jono> right
+
+ 18:15:30 <mfisch> thats the only one I'm sure we can't test
+
+ 18:15:35 <imbrandon> i'll start on a basic linter this afternoon then, thats something i can easily fit into my schedule and then post to the list once i have the basics working and we can discuss things to check
+
+ 18:15:36 <mfisch> I have a huge list at the top of the tests
+
+ 18:15:49 <jono> mfisch, so that list is acting as the TODO?
+
+ 18:15:53 <mfisch> a list of public API calls
+
+ 18:15:53 <mfisch> yeah
+
+ 18:15:56 <jono> imbrandon, cool
+
+ 18:15:57 <mfisch> it's a TODO
+
+ 18:16:00 <cielak> I guess that's enough to test all the 'logic' of all functions... mfisch, why there is an exception for accomplish() ?
+
+ 18:16:01 <mfisch> I hope to knock a few more out today
+
+ 18:16:27 <mfisch> cielak: when you instantiate the Accomplishment class you're supposed to pass a service reference
+
+ 18:16:34 <mfisch> self.service = service
+
+ 18:16:38 <mfisch> I'm passing None because I don't have one
+
+ 18:16:59 <jono> cielak, indeed
+
+ 18:17:10 <cielak> yeah, but why does it stop you from testing accomplish() ?
+
+ 18:17:16 <jono> and that is going to be the primary focus on these unit tests, to ensure that the result is as expected
+
+ 18:17:25 <cielak> how does it differ from other methods?
+
+ 18:18:11 <mfisch> accomplish calls service routines
+
+ 18:18:12 <mfisch> self.service.trophy_received(accomID)
+
+ 18:18:22 <mfisch> since self.service is None, bad things happen
+
+ 18:18:31 <mfisch> I'd eventually like to fix that
+
+ 18:18:32 <cielak> ah, right, that's true
+
+ 18:18:37 <mfisch> but we can get some low hanging fruit without it
+
+ 18:18:47 <jono> thanks for your efforts on this, mfisch
+
+ 18:18:50 <mfisch> np
+
+ 18:18:54 <cielak> what about we passed it a fake service instance?
+
+ 18:18:58 <jono> this is going to be really helpful in ensuring we don't break things
+
+ 18:19:11 <cielak> that would have a fake, empty trophy_received() method?
+
+ 18:19:23 <imbrandon> yea mock
+
+ 18:19:32 <mfisch> something like that would work
+
+ 18:19:36 <jono> perfect
+
+ 18:19:51 <mfisch> so let me do this
+
+ 18:20:00 <mfisch> let me write more tests this afternoon and then do a MP
+
+ 18:20:05 <mfisch> and then we can discuss next steps
+
+ 18:20:16 * cielak just read some code from that branch, and it looks very promising
+
+ 18:20:20 <jono> mfisch, perfect, if you file a MP we can then merge in your work so far and then you can just iterate with more tests
+
+ 18:20:31 <jono> and before long we should have full test coverage
+
+ 18:20:36 <imbrandon> yup
+
+ 18:20:44 <mfisch> so I do have one request, or something to watch for
+
+ 18:20:49 <jono> mfisch, sure
+
+ 18:21:11 <mfisch> it is confusing for people reading the code when we use acc, accs, accom, accomp, accomps, accoms, and accomplishments
+
+ 18:21:23 <jono> yeah we need to fix this
+
+ 18:21:31 <jono> mfisch, you mean in api.py?
+
+ 18:21:33 <mfisch> so when you're designing your API and writing your code, it's better to agree on one abbreviation
+
+ 18:21:49 <mfisch> jono: thats the only one I've really been looking at
+
+ 18:21:53 <jono> makes sense
+
+ 18:21:55 <mfisch> just a thought
+
+ 18:21:56 <jono> we should fix these
+
+ 18:22:04 <cielak> yup, agreed
+
+ 18:22:05 <jono> mfisch, could you file a bug against the daemon for this
+
+ 18:22:11 <jono> my hunch is that we use 'accom'
+
+ 18:22:13 <mfisch> sure, will do
+
+ 18:22:15 <cielak> but it's not just the daemon
+
+ 18:22:20 <jono> thanks mfisch
+
+ 18:22:20 <cielak> it's us too
+
+ 18:22:32 <jono> cielak, indeed :-)
+
+ 18:22:36 <jono> so I have a related topic
+
+ 18:22:41 <jono> documentation
+
+ 18:22:47 <cielak> we need to standartize not only appearances in the code, but out vocabulary too :)
+
+ 18:22:52 <cielak> our*
+
+ 18:22:55 <jono> cielak, agreed
+
+ 18:23:13 <jono> this week I started putting together developer documentation
+
+ 18:23:18 <imbrandon> sphinx ROCKS! , we've been using it in juju, omg i'm in love with sphinx docs ... that is all :)
+
+ 18:23:24 <jono> I want to ensure that our daemon API is fully documented
+
+ 18:23:39 <jono> and I talked with cielak a little about this
+
+ 18:23:41 <jono> imbrandon, indeed
+
+ 18:23:46 <jono> so the plan is this:
+
+ 18:23:57 <jono> * we want to document the following core things:
+
+ 18:24:13 <jono> - api.py - this is the internal implementation, and these docs will be designed for people hacking on the daemon
+
+ 18:24:30 <jono> - dbusapi.py - this generates our client documentation that client devs will use
+
+ 18:24:58 <jono> you can see this work evolving at http://213.138.100.229/ubuntu-accomplishments-daemon/docs/_build/html/index.html#module-accomplishments.daemon
+
+ 18:25:16 <jono> take a look at http://213.138.100.229/ubuntu-accomplishments-daemon/docs/_build/html/clientref.html
+
+ 18:25:19 <jono> this is the client docs
+
+ 18:25:39 <jono> I spent some time adding this earlier this week, I still need to finish
+
+ 18:25:47 <jono> cielak, did you get a chance to document api.py?
+
+ 18:26:06 <jono> the docs in api.py might be useful for mfisch when writing tests and knowing what a function should return
+
+ 18:26:14 <cielak> jono: not yet, but that's on top of my priority list now, so I'll do it really soon
+
+ 18:26:21 <jono> awesome cielak
+
+ 18:26:33 <jono> one thing I wanted ask re. this
+
+ 18:26:48 <jono> so our functions in dbusapi.py typically output dbus data
+
+ 18:26:49 <mfisch> yes, docs would help
+
+ 18:27:07 <jono> but I have been showing the examples just outputting the plain lists to show it simplifiied
+
+ 18:27:27 <jono> do you think this makes sense?
+
+ 18:27:48 <cielak> jono: do you have an example of that?
+
+ 18:28:30 <jono> cielak, as an example: http://213.138.100.229/ubuntu-accomplishments-daemon/docs/_build/html/clientref.html#accomplishments.daemon.dbusapi.AccomplishmentsDBusService.get_acc_categories
+
+ 18:28:39 <imbrandon> jono as a side note, the ubuntu theme i created for http://juju.ubuntu.com/docs/ ( sphinx ) is at lp:ubuntu-community-webthemes/light-sphinx-theme if when its time to publish you want to make it follow branding etc
+
+ 18:28:42 <jono> I show this just outputting a straight list
+
+ 18:29:04 <jono> imbrandon, oh cool, could you merge it into ubuntu-accomplishments-daemon and submit a MP?
+
+ 18:29:06 <cielak> jono: aah, and it should actually be [dbus.String("Launchpad")], or something like that?
+
+ 18:29:11 <jono> cielak, right
+
+ 18:29:12 <imbrandon> jono: aure thing
+
+ 18:29:16 <imbrandon> sure*
+
+ 18:29:21 <jono> but I am not sure if I should show the full dbus output, cielak
+
+ 18:29:28 <jono> or keep it simple, as it is still a list
+
+ 18:29:32 <jono> my hunch is to keep it simple
+
+ 18:29:45 <jono> thanks imbrandon!
+
+ 18:30:21 <cielak> well, if we will state clearly enough that this actually are dbus data types, then any developer familiar with dbus will know what does that mean
+
+ 18:30:31 <jono> cielak, that makes sense
+
+ 18:30:38 <jono> we can mention that in the general docs
+
+ 18:30:44 <jono> I can put that at the top of the docs page
+
+ 18:30:54 <cielak> and of course, being consistent is the key:  http://213.138.100.229/ubuntu-accomplishments-daemon/docs/_build/html/clientref.html#accomplishments.daemon.dbusapi.AccomplishmentsDBusService.build_viewer_database
+
+ 18:31:02 <jono> cielak, indeed
+
+ 18:31:14 <jono> we will want to give them all a look for accuracy
+
+ 18:31:34 <jono> ok cool, so cielak, you are going to work on docs next?
+
+ 18:31:40 <jono> and I will finish off the client docs too
+
+ 18:31:42 <cielak> I think a general note about the AccomplishmentsDBusSrvice class will do the trick
+
+ 18:31:49 <jono> cielak, yup
+
+ 18:31:58 <cielak> yup, that's what I'm gonna do next :)
+
+ 18:32:04 <imbrandon> also note i can make it "look" liek anything with the CSS :)
+
+ 18:32:14 <jono> cielak, it might make sense if you can start documentating the functions that mfisch has not written tests for yet
+
+ 18:32:20 <jono> so he knows the return values to expect
+
+ 18:32:29 <jono> imbrandon, cool!
+
+ 18:32:54 <mfisch> good idea
+
+ 18:33:01 <cielak> okay, sure - but documenting all this shouldn't take much time anyway
+
+ 18:33:18 <cielak> but I'll start with these that are missing test, to ensure mfisch will get them as soon as possible
+
+ 18:33:33 <jono> mfisch, would it helpful for cielak to just list all the return details first for all the missing tests and then fill the docs afterwards?
+
+ 18:33:37 <jono> cielak, cool!
+
+ 18:34:52 <mfisch> yeah that works
+
+ 18:34:58 <mfisch> most so far I've figured out from reading the python
+
+ 18:35:08 <mfisch> cielak: the "to do" list is at the top of the unit tests
+
+ 18:35:11 <cielak> yeah, in most cases that's not complicated at all
+
+ 18:35:29 <cielak> thanks mfisch, will follow it
+
+ 18:35:32 <mfisch> so I have another topic
+
+ 18:35:43 <mfisch> depending on what jono has
+
+ 18:35:45 <jono> thanks
+
+ 18:35:49 <jono> mfisch, sure
+
+ 18:36:11 <mfisch> does the accomp linter remove the need for the daemon to be more bullet proof?
+
+ 18:36:34 <mfisch> i know it helps
+
+ 18:36:45 <mfisch> but when I wrote my accomplishments I was greeted by lots of crashing
+
+ 18:36:59 <jono> mfisch, accomp linter?
+
+ 18:37:11 <imbrandon> hrm, i think it would help devs more than needing to be bulletproof
+
+ 18:37:29 <mfisch> accomplishment checker/verifier
+
+ 18:37:35 <imbrandon> jono: the new linter i talked about earlier
+
+ 18:37:39 <jono> mfisch, oh you mean battery?
+
+ 18:38:01 <mfisch> I think its a tool that will read 1 accomp file and tell you if something required is missing or broken
+
+ 18:38:09 <jono> mfisch, we have that
+
+ 18:38:15 <cielak> more or less
+
+ 18:38:15 <jono> I wrote a tool called Accomplishments Battery
+
+ 18:38:18 <imbrandon> jono: no , like "lintian" for ebian packageing only this will be for ubuntu accompilshment writers
+
+ 18:38:22 <imbrandon> ahhh
+
+ 18:38:27 <imbrandon> well maybe so then
+
+ 18:38:36 <cielak> actually, I think the battery should be expanded with the funcionality of a linter
+
+ 18:38:37 <mfisch> ok
+
+ 18:38:46 <imbrandon> yea
+
+ 18:38:50 <imbrandon> that sounds like ti
+
+ 18:38:51 <jono> let me explain:
+
+ 18:39:05 <jono> so I wrote this tool called accomplishments-battery that can do a full test run over all accoms
+
+ 18:39:21 <cielak> there is a lot of other checks it might perform to help accomplishment devs to ensure their accomplishment works
+
+ 18:39:22 <jono> and you can use it to test a specific accomplishment
+
+ 18:39:37 <cielak> okay, but now the battery makes sense only for global accomplishments
+
+ 18:39:40 <jono> I also added a check which tells you if you missed fields in your .accomplishment file
+
+ 18:39:57 <jono> cielak, yes, we need to make it work better for local accoms
+
+ 18:39:59 <mfisch> perfect
+
+ 18:40:01 <cielak> oh, I didn't know about that feature
+
+ 18:40:05 <imbrandon> yuo perfect
+
+ 18:40:12 <jono> mfisch, imbrandon https://wiki.ubuntu.com/Accomplishments/Creating/Guide/Testing
+
+ 18:40:18 <mfisch> let me explain my thought
+
+ 18:40:31 <jono> mfisch, sure
+
+ 18:40:34 <mfisch> right now, a missing = sign in 1 accomp file will take the whole daemon down
+
+ 18:40:43 <jono> mfisch, right
+
+ 18:40:48 <mfisch> it sounds like we have tools to help you test that (we didn't back in my day!)
+
+ 18:41:02 <jono> mfisch, well, we have a tool that checks if the script works
+
+ 18:41:09 <mfisch> so, I guess just keep that in mind when we're writing code, we might need more exception handling
+
+ 18:41:12 <jono> we don't currently do syntax checking in bettery
+
+ 18:41:15 <jono> which would be handy
+
+ 18:41:35 <jono> mfisch, although I think the daemon should not go down when it finds a syntax issue
+
+ 18:41:53 <jono> we might want to throw some badly formed accomplishments at it as part of the unit tests
+
+ 18:41:58 <mfisch> I have some
+
+ 18:42:06 <mfisch> but now I only assert that they do throw exceptions
+
+ 18:42:09 <jono> the goal of battery is to help the accom dev submit a perfectly working accom
+
+ 18:42:13 <jono> mfisch, gotcha
+
+ 18:42:19 <mfisch> I had a plan to do this
+
+ 18:42:26 <jono> mfisch, what would be handy is if you could file bugs for these issues
+
+ 18:42:30 <jono> we should definitely fix them
+
+ 18:42:32 <mfisch> have 3 good accomps, make sure we see 3, add 1 bad one, make sure we still see 3
+
+ 18:42:42 <mfisch> ok
+
+ 18:42:45 <jono> mfisch, cool
+
+ 18:42:47 <mfisch> right now 3+ 1 bad one = crash
+
+ 18:42:49 <jono> mfisch, good point though
+
+ 18:42:51 <jono> right
+
+ 18:42:55 <cielak> very true
+
+ 18:43:05 <mfisch> I'll file a few more today then
+
+ 18:43:05 <cielak> daemon does indeed depend on the accoms correctness
+
+ 18:43:07 <jono> fortunatley, these should be simple fixes
+
+ 18:43:08 <jono> thanks mfisch
+
+ 18:43:23 <cielak> also, it can be crashed with a wrong config file
+
+ 18:43:27 <jono> cielak, would you be happy to look at these bugs and I will fix it in battery?
+
+ 18:43:38 <cielak> of course
+
+ 18:43:41 <jono> maybe we can look at this when our docs are finalized
+
+ 18:43:52 <jono> mfisch, cool, so if you can file the bugs and assign them to cielak
+
+ 18:43:58 <cielak> this may require some tricks, but is really needed
+
+ 18:44:00 <mfisch> ok
+
+ 18:44:07 <jono> I will try to get better syntax checking in battery
+
+ 18:44:12 <jono> thanks guys
+
+ 18:44:38 <jono> I will be out at OSCON next week, so my battery work may be a little later
+
+ 18:44:53 <jono> cielak, good news is I am not seeing any server failures
+
+ 18:45:51 <cielak> neither I do :-)
+
+ 18:46:05 <jono> ok, just to recap:
+
+ 18:46:33 <jono> * cielak - you will add the return types to the api.py docs first and mfisch can use that to continue building the tests
+
+ 18:46:44 <jono> * cielak - you will then flesh out the api.py docs
+
+ 18:46:54 <jono> * mfisch - you will continue to grow our unit tests
+
+ 18:47:05 <jono> * imbrandon - you will add ubuntu theming support to sphinx
+
+ 18:47:19 <jono> * me - I will finish off the docs for the client side
+
+ 18:47:25 <imbrandon> jono: yup, just about done actually :)
+
+ 18:47:35 <jono> * cielak - you will look at the syntax bugs in the daemon and I will fix this in battery
+
+ 18:47:44 <jono> this should keep us busy until the next meeting
+
+ 18:47:54 <cielak> yeah, exactly ;)
+
+ 18:47:59 <jono> awesome
+
+ 18:48:07 <jono> also, I am expanding https://wiki.ubuntu.com/Accomplishments/GetInvolved/Hacking more and more where I can
+
+ 18:48:14 <jono> so we can have good docs for new devs joining us
+
+ 18:48:16 <jono> any other topics?
+
+ 18:49:34 <imbrandon> nope , not here
+
+ 18:49:38 <jono> ok cool
+
+ 18:49:39 <imbrandon> jono: http://api.websitedevops.com/accomplishments-docs/
+
+ 18:49:47 <cielak> does anyone lurking want to ask us anything? ;-)
+
+ 18:49:52 <jono> imbrandon, haha!
+
+ 18:49:54 <jono> nice!
+
+ 18:50:06 <imbrandon> needs some tweeks but its almost ready :)
+
+ 18:50:14 <cielak> imbrandon: oh, wow!
+
+ 18:50:22 <imbrandon> :)
+
+ 18:50:31 * imbrandon loves web stuff
+
+ 18:50:32 <jono> imbrandon, looks like there are a few tweaks that need to happen in there
+
+ 18:50:35 <jono> a few layout issues
+
+ 18:50:38 <jono> imbrandon, thanks so much
+
+ 18:50:44 <jono> this is going to rock when we get this online
+
+ 18:50:49 <imbrandon> yup, its talored to juju docs now, but yea
+
+ 18:50:56 <bkerensa> imbrandon: rocking job man!
+
+ 18:51:00 <imbrandon> hour or two of touchups and it will rock
+
+ 18:51:09 <jono> thanks imbrandon
+
+ 18:51:11 <imbrandon> heya bkerensa
+
+ 18:51:13 <imbrandon> np jono
+
+ 18:51:16 <jono> any other questions, folks?
+
+ 18:51:41 <jono> I guess we can wrap
+
+ 18:51:52 <jono> thanks everyone for joining us, awesome meeting!
+
+ 18:52:00 <jono> and as ever, we are in #ubuntu-accomplishments
+
+ 18:52:02 <gigix> jono, I might come back and ask for a summary though
+
+ 18:52:12 <cielak> thanks everyone, thanks jono!
+
+ 18:52:13 <jono> gigix, this meeting will be logged
+
+ 18:52:14 <jono> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,629 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by NCommander at 14:59:53 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-01-14.59.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/ARM/Meeting/2011/20111201   (NCommander, 15:00:24)
+ *Standing Items
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html   (NCommander, 15:03:18)
+
+ *ARM Server Status (NCommander, Daviey)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *ARM Porting/FTBFS status (NCommander, janimo)
+''LINK:'' http://qa.ubuntuwire.org/ftbfs/primary-precise-armhf.html   (ogra_, 15:13:14)
+
+ *ARM Hardfloat status (infinity)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *QA Status (GrueMaster, mahmoh)
+
+ *Linaro Updates (rsalveti)
+''LINK:'' https://launchpad.net/linaro-dev-platform/+milestone/11.12   (rsalveti, 15:34:26)
+''LINK:'' https://blueprints.launchpad.net/linaro-ubuntu/+spec/push-multiarch-changes-for-cross-precise   (rsalveti, 15:37:30)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/ubuntu-arm-p-cross-compilable-packages   (rsalveti, 15:39:36)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/replace-libjpeg-by-libjpeg-turbo   (rsalveti, 15:41:59)
+''LINK:'' http://qa.ubuntuwire.org/ftbfs/primary-precise-armhf.html   (ogra_, 15:47:49)
+
+ *AOB
+
+
+
+Meeting ended at 15:51:19 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (110)
+ * rsalveti (56)
+ * NCommander (46)
+ * infinity (33)
+ * GrueMaster (21)
+ * meetingology (6)
+ * jhobbs (3)
+ * ubottu (1)
+ * fabo (1)
+ * ogra (0)
+
+
+
+== Full Log ==
+
+
+ 14:59:53 <NCommander> #startmeeting
+
+ 14:59:53 <meetingology> Meeting started Thu Dec  1 14:59:53 2011 UTC.  The chair is NCommander. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 14:59:53 <meetingology> 
+
+ 14:59:53 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:00:24 <NCommander> #link https://wiki.ubuntu.com/ARM/Meeting/2011/20111201
+
+ 15:01:12 <NCommander> so who's here?
+
+ 15:01:18 <ogra_> o/
+
+ 15:01:42 * GrueMaster is self-caffinating.
+
+ 15:02:57 <NCommander> ok, I think we have enough people
+
+ 15:03:05 <NCommander> We have no action items from last meeting, so
+
+ 15:03:12 <NCommander> [topic] Standing Items
+
+ 15:03:18 <NCommander> #link http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html
+
+ 15:03:20 <ogra_> just because you didnt note them down :P
+
+ 15:03:32 <ogra_> i was supposed to get the Wi tracker filled :)
+
+ 15:03:46 <ogra_> if anyone is missing a spec he works on, please let me know
+
+ 15:04:02 <infinity> I probably need to go through all mine and make them sane.
+
+ 15:04:07 <NCommander> ogra_: oh d'oh. I  grepped for #action in the log but I used [action] >.<;
+
+ 15:04:12 <infinity> I've been too busy working to work.
+
+ 15:04:14 <NCommander> I need to be consistent or my greps break
+
+ 15:04:21 <ogra_> well, at least make sure they are targeted for precise and approved
+
+ 15:04:44 <ogra_> (thats for everyone, to have your spec show up these two need to be true)
+
+ 15:05:18 <ogra_> and it helps if they have an owner ... i think there is one jani spec that doesnt yet
+
+ 15:05:38 <ogra_> (i'll talk to him when he is around)
+
+ 15:05:41 <ogra_> NCommander, move
+
+ 15:05:50 <NCommander> [topic] ARM Server Status (NCommander, Daviey)
+
+ 15:06:06 <NCommander> Not muchto say here
+
+ 15:06:46 <NCommander> so
+
+ 15:06:52 <NCommander> [topic] Kernel Status (cooloney, ppisati)
+
+ 15:07:09 <ogra_> paolo is moving and not online until monday
+
+ 15:07:23 <ogra_> afaik he spammed GrueMaster with some SRU kernels though :)
+
+ 15:07:47 <ogra_> cooloney was working on an internal project for me so i doubt he would have much to report
+
+ 15:07:54 <GrueMaster> Only SRU kernel I currently have is for Oneiric omap4.  Finished testing yesterday.
+
+ 15:08:40 <GrueMaster> I also tested a slew of test kernels for bug 861296.
+
+ 15:08:42 <ubottu> Launchpad bug 861296 in linux (Ubuntu) "mmap fails to allocate 2030Mb heap on ARM" [High,Confirmed] https://launchpad.net/bugs/861296
+
+ 15:08:53 <GrueMaster> It should make the next SRU release.
+
+ 15:10:17 <ogra_> well, its mainly important for the buildds
+
+ 15:10:30 <GrueMaster> yes.
+
+ 15:11:16 <NCommander> #optic ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:11:25 <NCommander> #topic ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:11:28 <NCommander> helps if I spell it right
+
+ 15:11:47 <jhobbs> what is FTBFS
+
+ 15:11:59 <NCommander> jhobbs: Failure to Build from Source
+
+ 15:12:00 <infinity> jhobbs: Failure To Build From Source.
+
+ 15:12:08 <jhobbs> thanks
+
+ 15:12:27 <ogra_> well, we should all help on armhf currently
+
+ 15:12:32 <infinity> And with a new port online, I'd like to encourage everyone to look at the armhf FTBFS lists and go to town.
+
+ 15:12:36 <ogra_> just grab a failed build
+
+ 15:13:04 <infinity> (There will be a mass-give-back in a couple of hours, so... After that) :P
+
+ 15:13:14 <ogra_> http://qa.ubuntuwire.org/ftbfs/primary-precise-armhf.html
+
+ 15:13:20 <ogra_> there is the overview
+
+ 15:13:39 <jhobbs> thanks, i was about to ask for that =)
+
+ 15:14:30 <ogra_> how about the "normal" ftbfs ... NCommander anything noticeable ?
+
+ 15:14:42 <NCommander> jhobbs: feel free to poke any of us in #ubuntu-arm if you need help with FTBFS fixing
+
+ 15:14:56 <NCommander> ogra_: I haven't reviewed the list extensively since last week
+
+ 15:16:23 * ogra_ neither, i was watching hf all the time
+
+ 15:16:56 <ogra_> ruby needs some love there
+
+ 15:17:01 <ogra_> on the non hf
+
+ 15:17:12 <ogra_> and ooooh surprise !!!
+
+ 15:17:16 <ogra_> telepathy-glib
+
+ 15:17:28 <ogra_> :P
+
+ 15:17:50 <NCommander> if anyone says mono, I'm jumping off the tallest building I can find
+
+ 15:18:08 <ogra_> mono is over and out :P
+
+ 15:18:14 <GrueMaster> I think doko pinged us about ruby a few days ago in #ubuntu-arm.
+
+ 15:18:22 <ogra_> for hf i thought
+
+ 15:18:27 <infinity> mono has a few more testsuite failures on armhf than it does on armel, otherwise fine.
+
+ 15:18:28 <ogra_> where it has a timeout
+
+ 15:18:29 * GrueMaster shouts "MONO LIVES"
+
+ 15:18:36 <ogra_> lol
+
+ 15:18:51 <infinity> ruby is suffering testsuite timeouts, yeah.
+
+ 15:18:55 <infinity> We'll have to poke at that.
+
+ 15:19:00 <infinity> I'm told it might be a kernel bug. :/
+
+ 15:19:20 <infinity> Related to the test timeouts I saw with python and perl (transiently, apparently) as well.
+
+ 15:19:40 <ogra_> well, is that true for non hf ?
+
+ 15:20:00 <infinity> Sometimes, maybe.
+
+ 15:20:00 <ogra_> ah, yeah
+
+ 15:20:03 <infinity> It's a bit vague.
+
+ 15:20:05 <ogra_> it is
+
+ 15:20:11 <ogra_> same error message in the log
+
+ 15:20:57 <ogra_> well, lets move
+
+ 15:21:00 <ogra_> NCommander, ...
+
+ 15:21:19 <NCommander> [topic] ARM Hardfloat status (infinity)
+
+ 15:21:28 <ogra_> it builds !!!
+
+ 15:21:36 <ogra_> (some packages at least)
+
+ 15:21:50 <GrueMaster> How close are we to getting armhf images?  I would imagine core would be first.
+
+ 15:21:52 <ogra_> i have also added info about it to the A1 announcement
+
+ 15:22:09 <ogra_> GrueMaster, a week or two for core i would guess
+
+ 15:22:27 <infinity> Core could be only a few days away, depending on effort put in.
+
+ 15:22:29 <infinity> And luck.
+
+ 15:22:35 <infinity> Other images, dunno.
+
+ 15:22:52 <ogra_> yeah, others will take lots of time i would guess
+
+ 15:22:53 <infinity> We have two toolchain bugs we're still fixing, but other than that, it's just a lot of grunt work and CPU time.
+
+ 15:23:02 <GrueMaster> Need kernel support, I would assume?
+
+ 15:23:03 <ogra_> not in A2 timeframe i bet
+
+ 15:23:14 <infinity> kernels would be nice.
+
+ 15:23:26 <ogra_> according to kernel team they are uploaded
+
+ 15:23:35 <infinity> ogra_: Kernel team only does omap.
+
+ 15:23:42 <ogra_> omap4 too
+
+ 15:23:47 <ogra_> paolo ...
+
+ 15:24:04 <ogra_> i talked to jani, he is aware that we should get ac100 onto hf as well
+
+ 15:24:13 <ogra_> not sure what to do for mx5
+
+ 15:24:18 <infinity> Yeah, there's been no linux-ti-omap4 upload yet.
+
+ 15:24:37 <infinity> jcrigby would be the man to bug about mx5.
+
+ 15:24:48 <infinity> Anyhow.  We'll sort it.
+
+ 15:24:51 <ogra_> yep
+
+ 15:25:03 <GrueMaster> We are still running the Oneiric omap4 kernel.  Should be resolved next week though.
+
+ 15:25:08 <infinity> Kernels don't do us much good just yet anyway.  If they land in a week or so, I'm happy.
+
+ 15:25:25 <ogra_> GrueMaster, hopefully soon, we need 4460 fixes
+
+ 15:26:10 <ogra_> NCommander, move ?
+
+ 15:26:16 <NCommander> ARM Image Status (ogra, NCommander)
+
+ 15:26:19 <NCommander> [topic] ARM Image Status (ogra, NCommander)
+
+ 15:26:57 <ogra_> we have A1's !!
+
+ 15:27:13 <ogra_> apart from the omap network issue seems they look all good
+
+ 15:27:21 <ogra_> *really* good given its A1
+
+ 15:27:31 <ogra_> kudos to GrueMaster for the test effort !!!
+
+ 15:27:35 <ogra_> awesome work
+
+ 15:27:44 <GrueMaster> heh
+
+ 15:27:49 <NCommander> +1 GrueMaster
+
+ 15:27:57 <ogra_> nothing else from me
+
+ 15:28:00 <GrueMaster> The images oddly are not much different from Oneiric.
+
+ 15:28:04 <ogra_> yeah
+
+ 15:28:09 <infinity> Good. :P
+
+ 15:28:14 <ogra_> we didnt change a thing but general package updates
+
+ 15:28:32 <ogra_> NCommander, move
+
+ 15:29:11 <NCommander> [topic] QA Status (GrueMaster, mahmoh)
+
+ 15:29:17 <GrueMaster> On the daily image build issue, I only show 1 fewer on armel vs x86 since the opening of P
+
+ 15:29:29 <GrueMaster> sigh.
+
+ 15:29:39 <NCommander> ?
+
+ 15:29:46 <GrueMaster> Automation work on SRU testing is going strong.  Lot of fixes to the wrt test suite.
+
+ 15:29:47 <infinity> This is an upsetting statistic?
+
+ 15:29:49 <NCommander> GrueMaster: seems the archive skew patch is doing its job
+
+ 15:30:08 <NCommander> Archive skew though isn't the only reason images may fail to exist, just the most common
+
+ 15:30:09 <GrueMaster> s/wrt/qrt
+
+ 15:30:10 <ogra_> yeah
+
+ 15:30:16 <ogra_> pretty well it seems
+
+ 15:30:54 <NCommander> #chair ogra
+
+ 15:30:54 <meetingology> Warning: Nick not in channel: ogra
+
+ 15:30:54 <meetingology> Current chairs: NCommander ogra
+
+ 15:30:58 <NCommander> #chair ogra_
+
+ 15:30:58 <meetingology> Current chairs: NCommander ogra ogra_
+
+ 15:31:04 <GrueMaster> With NCommander's help, I can now automate Natty installs for SRU testing.  Once we have Maverick, I can automate 90% of the SRU process.
+
+ 15:31:04 <NCommander> brb
+
+ 15:31:34 <ogra_> awesome !!!
+
+ 15:32:08 <NCommander> back, sorry about that
+
+ 15:32:10 <GrueMaster> Still running into issues with the qrt tests.  For every 3 fixes to make them work on arm, a new "feature" gets added that breaks.
+
+ 15:32:35 <ogra_> fun
+
+ 15:32:48 <GrueMaster> Which means I need to review and figure out why they broke.
+
+ 15:33:00 <NCommander> I'm working on cooking the maverick voodoo now
+
+ 15:33:52 <ogra_> move ?
+
+ 15:33:57 <GrueMaster> I would like to propose that going forward, we enable netinstall for all supported platforms, as it will greatly help in future SRU testing efforts.
+
+ 15:34:00 <NCommander> #topic Linaro Updates (rsalveti)
+
+ 15:34:06 * rsalveti waves
+
+ 15:34:22 <rsalveti> our planning for the 11.12 is done already!
+
+ 15:34:25 <NCommander> GrueMaster: we almost always do, omap was an exception to that rule (I always do enablement with netboot images, but the omap4 booting from SD card pre-empted that design at first)
+
+ 15:34:26 <rsalveti> https://launchpad.net/linaro-dev-platform/+milestone/11.12
+
+ 15:34:37 <rsalveti> please have a look at the blueprints we have
+
+ 15:34:50 <rsalveti> and subscribe if you want to be updated about the progress
+
+ 15:35:11 <rsalveti> the u-boot related ones are the most interesting for the images I believe
+
+ 15:35:28 <NCommander> rsalveti: is there a status.linaro.org page or something?
+
+ 15:35:28 <rsalveti> we'll try to enable SPL for omap 3 and also try to have only one SPL that would work for omap 3 and 4
+
+ 15:35:47 <rsalveti> NCommander: yes, but still need some rework
+
+ 15:35:54 <ogra_> rsalveti, is the settop box stuff being worked on with the #ubuntu-tv team ?
+
+ 15:35:55 <rsalveti> because we changed our process a little bit
+
+ 15:36:20 <rsalveti> ogra_: not yet I believe, something we need to discuss with them
+
+ 15:36:27 <rsalveti> don't know if they are interested on xmbc for now
+
+ 15:36:34 <rsalveti> or if they want to create a different solution
+
+ 15:36:46 <ogra_> well, they are working on UI elements on top of the player SW
+
+ 15:36:46 <rsalveti> what we're trying to do is to enable the needed patches to make it working fine wiht omap 4
+
+ 15:36:54 <rsalveti> like, making it to work with glesv2 and gstreamer
+
+ 15:37:14 <rsalveti> ogra_: oh, ok, so will sync with them
+
+ 15:37:18 <ogra_> i.e. unity adjustments to run on top of a running stream/tv show etc
+
+ 15:37:30 <rsalveti> https://blueprints.launchpad.net/linaro-ubuntu/+spec/push-multiarch-changes-for-cross-precise
+
+ 15:37:36 <rsalveti> this is also going to affect precise
+
+ 15:37:49 <ogra_> thats the one smagoun is intrested in, right =
+
+ 15:37:51 <ogra_> ?`
+
+ 15:37:59 <rsalveti> and hopefully firefox will be cross-buildable at precise at the end of the month
+
+ 15:38:03 <rsalveti> ogra_: yes
+
+ 15:38:19 <rsalveti> ogra_: but the other one that smagoun created is still to be approved it seems
+
+ 15:38:24 <rsalveti> let me try to find it
+
+ 15:38:30 <ogra_> not sure who has to do that
+
+ 15:39:10 <rsalveti> maybe foundations?
+
+ 15:39:20 <ogra_> might be
+
+ 15:39:36 <ogra_> wasnt that cross live-build stuff ?
+
+ 15:39:36 <rsalveti> https://blueprints.launchpad.net/ubuntu/+spec/ubuntu-arm-p-cross-compilable-packages
+
+ 15:39:49 <ogra_> ah
+
+ 15:39:53 <rsalveti> this is the one related with cross build enablement
+
+ 15:40:04 <ogra_> well, if yours gets implemented i dont see a reason to have an ubuntu one as well
+
+ 15:40:18 <rsalveti> sure, but ours is more related with firefox atm
+
+ 15:40:22 <ogra_> effectively they will implement the same
+
+ 15:40:24 <rsalveti> this was related with ubuntu-core and a few other packages
+
+ 15:40:35 <ogra_> right
+
+ 15:40:36 <rsalveti> I was just worried that this is not yet approved
+
+ 15:40:44 <rsalveti> and don't know who is responsible for it at the ubuntu side
+
+ 15:40:52 <ogra_> well, we wont have resources i bet ...
+
+ 15:41:02 <rsalveti> something to check with smagoun
+
+ 15:41:02 <ogra_> once there are hf images etc we will get very very busy
+
+ 15:41:06 <ogra_> yup
+
+ 15:41:09 <rsalveti> ogra_: yeah
+
+ 15:41:32 <rsalveti> another one that we just need to be approved is the libjpeg-turbo one
+
+ 15:41:35 <rsalveti> let me find the link
+
+ 15:41:36 <ogra_> though server is currently on halt ... probably NCommander is bored enough to look at this spec :)
+
+ 15:41:48 <ogra_> why does that need a spec ?
+
+ 15:41:59 <rsalveti> https://blueprints.launchpad.net/ubuntu/+spec/replace-libjpeg-by-libjpeg-turbo
+
+ 15:42:06 <ogra_> i thought thats just a transition and already approved
+
+ 15:42:06 <rsalveti> ogra_: kate request this blueprint to be created
+
+ 15:42:11 <ogra_> k
+
+ 15:42:14 <rsalveti> tom gall is working on it
+
+ 15:42:18 <ogra_> yep
+
+ 15:42:19 * NCommander wimpers
+
+ 15:42:23 <rsalveti> but she also wanted a bp to track the work
+
+ 15:42:24 <fabo> ogra_: it ins't approved yet
+
+ 15:42:30 <rsalveti> davidm: can you approve this blueprint?
+
+ 15:42:35 <ogra_> tell him to ping me if he needs sponsoring
+
+ 15:42:43 <rsalveti> ogra_: sure
+
+ 15:42:56 <infinity> ogra_: It's already well underway with Foundations.
+
+ 15:43:04 <infinity> ogra_: Including much back and forth review and critique.
+
+ 15:43:04 <ogra_> yeah, thoght so
+
+ 15:43:16 <rsalveti> guess this is just to track the work
+
+ 15:43:17 <ogra_> so probably foundations should own it
+
+ 15:43:22 <rsalveti> so it can be part of status and so on
+
+ 15:43:34 <ogra_> doesnt really seem arm related given we will switch for all arches
+
+ 15:43:42 <rsalveti> yeah, fair enough
+
+ 15:43:54 <rsalveti> so will check the other with smagoun and this with foundations
+
+ 15:44:09 <rsalveti> guess that's all form my side then
+
+ 15:44:11 <rsalveti> any question?
+
+ 15:44:30 <ogra_> any heavy u-boot breakage we need to be prepared for ?
+
+ 15:44:37 <rsalveti> ogra_: not atm
+
+ 15:44:40 <ogra_> apart from changing the build scripts for new MLO
+
+ 15:44:53 <ogra_> great !
+
+ 15:45:05 <rsalveti> ogra_: once we have a newer version or a big change, we'll let you know about it
+
+ 15:45:06 <ogra_> oh
+
+ 15:45:18 <ogra_> rsalveti, have you seen the hf discussion above ?
+
+ 15:45:22 <NCommander> thanks rsalveti
+
+ 15:45:26 <ogra_> we will need hf as target arch in mx5
+
+ 15:45:43 <ogra_> since linaro maintains that kernel
+
+ 15:45:46 <rsalveti> ogra_: sure
+
+ 15:45:54 <ogra_> i guess you want a bug ?
+
+ 15:45:57 <rsalveti> ogra_: we just need to know when we'll be able to push the package
+
+ 15:46:04 <ogra_> now :)
+
+ 15:46:08 <infinity> rsalveti: Yesterday.
+
+ 15:46:11 <ogra_> or tomorrow
+
+ 15:46:12 <rsalveti> ogra_: great
+
+ 15:46:15 <ogra_> or so :)
+
+ 15:46:28 <rsalveti> so are we able to bootstrap armhf already?
+
+ 15:46:37 <ogra_> no hurry, but it should happen at some point
+
+ 15:46:40 <infinity> Almost.
+
+ 15:46:41 <NCommander> rsalveti: we have it building in LP
+
+ 15:46:42 <rsalveti> last I saw infinity was still fighting with it
+
+ 15:46:44 <ogra_> rsalveti, we're building already
+
+ 15:47:01 <rsalveti> great then, will talk with jcrigby then
+
+ 15:47:05 <rsalveti> thanks for the heads up
+
+ 15:47:08 <infinity> --variant=minbase should work in about an hour. :P
+
+ 15:47:16 <infinity> (And I'll have core images building tonight)
+
+ 15:47:16 <rsalveti> infinity: :-)
+
+ 15:47:21 <infinity> GrueMaster: --^
+
+ 15:47:29 <GrueMaster> Yea.
+
+ 15:47:31 <NCommander> go infinity go
+
+ 15:47:49 <ogra_> http://qa.ubuntuwire.org/ftbfs/primary-precise-armhf.html
+
+ 15:47:56 <ogra_> rsalveti, ^^
+
+ 15:48:06 <rsalveti> ogra_: thanks
+
+ 15:48:09 <infinity> Okay, maybe in two hours.
+
+ 15:48:27 <ogra_> NCommander, move
+
+ 15:48:27 <infinity> I'll just settle for "tonight". ;)
+
+ 15:48:52 * ogra_ translates "tonight -> monday" :P
+
+ 15:49:11 <rsalveti> monday is still fine ;-)
+
+ 15:49:15 <ogra_> infinite optimism ... ;)
+
+ 15:49:29 <ogra_> ... from infinity
+
+ 15:49:44 <NCommander> #topic AOB
+
+ 15:50:07 * ogra_ has nothing
+
+ 15:50:14 * NCommander also has nothing
+
+ 15:50:20 <ogra_> anyone ?
+
+ 15:50:36 <NCommander> going once
+
+ 15:50:39 <NCommander> twice
+
+ 15:51:04 <NCommander> three times
+
+ 15:51:04 <NCommander> #endemeeting
+
+ 15:51:08 <ogra_> heh
+
+ 15:51:13 <ogra_> try again
+
+ 15:51:19 <ogra_> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

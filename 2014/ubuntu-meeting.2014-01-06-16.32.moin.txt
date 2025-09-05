@@ -1,0 +1,333 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 06 Jan at 16:32 &mdash; 17:08 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-01-06-16.32.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 16:33.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:35.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:04.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pyfribidi.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/graphite2.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libjgroups-java.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/sleuthkit.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/mc.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:05.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (55)
+ * tyhicks (23)
+ * mdeslaur (15)
+ * jjohansen (14)
+ * sbeattie (11)
+ * chrisccoulson (6)
+ * sarnold (4)
+ * meetingology (3)
+ * ubottu (1)
+ * Riddell (1)
+ * ogra_ (1)
+
+
+
+== Full Log ==
+
+
+ 16:32 <jdstrand> #startmeeting
+
+ 16:32 <meetingology> Meeting started Mon Jan  6 16:32:59 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:32 <meetingology> 
+
+ 16:32 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:33 <jdstrand> The meeting agenda can be found at:
+
+ 16:33 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:33 <jdstrand> [TOPIC] Announcements
+
+ 16:33 <jdstrand> Happy new year! Welcome back and I hope everyone had a nice break :)
+
+ 16:33 <mdeslaur> happy new year!
+
+ 16:33 <jdstrand> thanks to Jonathan Riddell (Riddell) provided debdiffs for precise-saucy for qt4-x11 (LP: #1259577)
+
+ 16:33 <ubottu> Launchpad bug 1259577 in qtbase-opensource-src (Ubuntu Trusty) "Security: XML Entity Expansion Denial of Service" [Undecided,Fix released] https://launchpad.net/bugs/1259577
+
+ 16:34 <jdstrand> thanks to Jonathan Riddell (Riddell) provided debdiffs for raring-saucy for qtbase-opensource-src (LP: #1259577)
+
+ 16:34 <jdstrand> thanks to Stefan Bader (smb) provided debdiffs for precise-saucy for xen
+
+ 16:34 <jdstrand> Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)"
+
+ 16:35 * Riddell bows
+
+ 16:35 <jdstrand> heh :)
+
+ 16:35 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:35 <jdstrand> I'll go first
+
+ 16:36 <jdstrand> I'm apparently in the happy place this week. not sure how I got here, but I'll take it :)
+
+ 16:36 <mdeslaur> jdstrand: you won the dice roll :)
+
+ 16:36 <chrisccoulson> congratulations!
+
+ 16:36 <jdstrand> I have pending updates and work items, though most of the beginning of this week will be working on going through my holiday backlog
+
+ 16:36 <jdstrand> \o/
+
+ 16:36 <jdstrand> mdeslaur: you're next
+
+ 16:36 <mdeslaur> I'm on triage this week
+
+ 16:37 <mdeslaur> I have a couple of pending updates I'm testing which should get released this week
+
+ 16:37 <mdeslaur> like puppet this afternoon probably
+
+ 16:37 <mdeslaur> I also have some catching up to do
+
+ 16:37 <mdeslaur> and I think I'm on patch piloting on friday
+
+ 16:37 <mdeslaur> that's about it
+
+ 16:37 <mdeslaur> sbeattie: you're up
+
+ 16:37 <sbeattie> I'm on apparmor again this week
+
+ 16:38 <sbeattie> I need to sync up with jjohansen on IPC stuff
+
+ 16:38 <sbeattie> I also need to review his dfa minimization patch (and the bug fix for the issue it exposed) as it gives a pretty big policy compilation win.
+
+ 16:39 <mdeslaur> oh cool...do we know how big?
+
+ 16:39 <jjohansen> it varies with the dfa
+
+ 16:39 <jjohansen> but there are several examples
+
+ 16:40 <sbeattie> another 20%-ish gain, though for certain things like the evince profile with likewise-open variables added, it shaves 50-60% off of compilation time.
+
+ 16:40 <jdstrand> that is the one that doesn't do much for the click apps, correct?
+
+ 16:40 <mdeslaur> oh, nice!
+
+ 16:40 <sbeattie> (23 seconds down to 9 seconds or so)
+
+ 16:40 <jdstrand> or was that something else?
+
+ 16:40 <sbeattie> (on my laptop)
+
+ 16:40 <jdstrand> btw, these compilation speedups are truly awesome :)
+
+ 16:40 <sbeattie> jdstrand: yeah, I didn't see much gain for the click profiles you posted to the list.
+
+ 16:40 <jdstrand> ok
+
+ 16:41 <jjohansen> jdstrand: no, that is a different one, this one does a little more for the click apps
+
+ 16:41 <jdstrand> we got big gains on them in the previously patches though
+
+ 16:41 <jdstrand> ah
+
+ 16:41 <jjohansen> weather applet profile from ubuntu touch    0.618s   105673 bytes  to    0.432s   89300 bytes
+
+ 16:41 <sbeattie> jjohansen: oh? Maybe I'm confused.
+
+ 16:41 <jdstrand> well, good :)
+
+ 16:41 * sbeattie kicks monday
+
+ 16:41 <sbeattie> anyway, I have some other stuff to catch up on as well.
+
+ 16:41 <jjohansen> not a huge improvement but better than the diff-encode which did almost nothin
+
+ 16:41 <tyhicks> that improvement should be pretty nice on ARM :)
+
+ 16:42 <jdstrand> yeah
+
+ 16:42 <jdstrand> and the emulator
+
+ 16:42 <tyhicks> good point
+
+ 16:42 <sbeattie> Anyway, that's all I have. tyhicks, you're up.
+
+ 16:42 <tyhicks> I'm playing catch up this morning
+
+ 16:43 <tyhicks> I was disconnected nearly the entire break
+
+ 16:43 <tyhicks> I've gotten through most email - the big thread that is coming up next is the kdbus thread
+
+ 16:43 <tyhicks> I've got to tie up some loose ends from before the holiday
+
+ 16:44 <tyhicks> benchmarking ext4 and ecryptfs on ARM is done - I need to figure out how best to do a LUKS-based partition
+
+ 16:44 <jdstrand> nice
+
+ 16:44 <mdeslaur> tyhicks: good luck with the kdbus thread
+
+ 16:45 <jdstrand> so, since kdbus lit up over the holidays, it occurred to me that it might be wise to send up our apparmor patches to the dbus mailing list
+
+ 16:45 <tyhicks> jdstrand: that would be good
+
+ 16:45 <jdstrand> that said, I am a few days our of date on said thread
+
+ 16:46 <tyhicks> I've kept them in an upstreamable form in our dbus package, so it shouldn't be much work for me to get them organized and sent out
+
+ 16:46 <jdstrand> while not completely unsurprised, the tenor of the mailing list discussion is considerably different than what I thought we had with kdbus upstream at plumbers
+
+ 16:47 <tyhicks> we only spoke with gregkh at plumbers and I don't think he's been involved in the thread
+
+ 16:47 <jdstrand> again, I am out of date, but it seems clear we need to continue having these discussions
+
+ 16:47 <tyhicks> agreed
+
+ 16:47 <jdstrand> (and thanks to mdeslaur for responding over the holidays)
+
+ 16:47 <tyhicks> I'm a little blocked on sending out the yama and config patches for Touch because I don't have a device to run the autopilot tests on (and the emulator doesn't seem to work, either)
+
+ 16:48 <jdstrand> tyhicks: what devices do you need?
+
+ 16:49 <tyhicks> jdstrand: umm... any of the better supported devices
+
+ 16:49 <jdstrand> tyhicks: so, you have grouper? it tests ok there?
+
+ 16:49 <tyhicks> jdstrand: I have grouper but that's the old kernel that requires a complete yama backport, which I didn't do
+
+ 16:49 <jdstrand> ah
+
+ 16:50 <jdstrand> so you need manta and mako, correct?
+
+ 16:50 <tyhicks> yes, those would be best
+
+ 16:50 <jdstrand> perhaps you could provide test instructions to jjohansen and chrisccoulson, and they can each do one?
+
+ 16:50 <tyhicks> ok
+
+ 16:51 <tyhicks> I can do that
+
+ 16:51 <jdstrand> I have a mako and am running trusty, but it is my dogfood device so I'd rather not break it :) that said, if it is helpful, you can give me the instructions too
+
+ 16:51 <tyhicks> it will also probably be a bit of an issue for user data encryption
+
+ 16:52 <tyhicks> I'll follow up with the team when I have debs and instructions
+
+ 16:52 <tyhicks> that'll probably keep me busy for this week
+
+ 16:52 <tyhicks> that's it for me
+
+ 16:52 <tyhicks> jjohansen: you're up
+
+ 16:52 <jjohansen> well it looks like I'll be testing for tyhicks this week ;)
+
+ 16:53 <tyhicks> jjohansen: you're the lucky guy with all the hardware :)
+
+ 16:53 <jdstrand> hopefully it will be nearly automatable
+
+ 16:53 <jjohansen> there is some catch up to do from vacation and then its back to apparmor
+
+ 16:53 <mdeslaur> \m/ AppArmor rocks! \m/
+
+ 16:53 <jdstrand> \m/ *rock* \m/
+
+ 16:54 <jjohansen> I've got the rest of the dfa stuff I need to push out so that we can start build some new tests
+
+ 16:54 <ogra_> that gives metal as a service a totally new meaning
+
+ 16:54 <mdeslaur> hehe
+
+ 16:54 <sarnold> good idea!
+
+ 16:54 <jjohansen> haha
+
+ 16:55 <jjohansen> and there is of course the outstanding ipc work
+
+ 16:56 <jjohansen> and coordination with sbeattie on tests there
+
+ 16:56 <jjohansen> and probably more bludgeoning of ones self against a certain thread
+
+ 16:58 <mdeslaur> hehe
+
+ 16:58 <jjohansen> I think thats it from /me sarnold your up
+
+ 16:58 <jdstrand> jjohansen: oh, thank you for also responding to the thread over the holiday
+
+ 16:59 <jdstrand> like I said, I am behind and didn't see that part of the thread
+
+ 16:59 * jjohansen is only sorry he didn't get to it earlier, but then again Amanda would have made /me even sorrier to have responded earlier
+
+ 16:59 <jdstrand> heh
+
+ 17:00 <jdstrand> we got some responses out-- I think we are ok :)
+
+ 17:00 <sarnold> I'm on community this week, it's been a while since I've checked in on email, so I'll have a fair amount of digging-out to be done this week. but don't let that deter anyone from sending in patches :) I know there's some MIR audits needing attention, some old and some new, and iirc some apparmor patches needing review
+
+ 17:01 <sarnold> I suspect that'll be the week, but it's getting around time to dust off the old objectives and see how those are going.
+
+ 17:02 <sarnold> I think that's it for me, chrisccoulson?
+
+ 17:02 <chrisccoulson> hi :)
+
+ 17:02 <chrisccoulson> so, i left for vacation with a saucy build of oxide on arm which didn't work, and an attempted build for trusty which didn't succeed ;)
+
+ 17:02 <chrisccoulson> i'm fixing those this week
+
+ 17:03 <chrisccoulson> i started work over the holiday to remove the run-time dependency on X, which I need to do to make it work on ubuntu touch in any case
+
+ 17:04 <chrisccoulson> i don't think there's anything else from me
+
+ 17:04 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:05 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:05 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/pyfribidi.html
+
+ 17:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/graphite2.html
+
+ 17:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libjgroups-java.html
+
+ 17:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/sleuthkit.html
+
+ 17:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/mc.html
+
+ 17:05 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:05 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:08 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold, ChrisCoulson: thanks!
+
+ 17:08 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

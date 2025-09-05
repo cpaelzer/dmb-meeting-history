@@ -1,0 +1,770 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:02:03 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-02-06-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *work item
+
+ *work items
+
+ *Bugs
+''LINK:'' https://errors.ubuntu.com/bucket/?id=/usr/bin/apturl-gtk:AttributeError:parseArgs:parse:%3Cmodule%3E:main:parseArgs   (bdmurray, 16:40:48)
+''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-r-tracking-bug-tasks.html   (bdmurray, 16:50:53)
+
+ *AOB
+
+
+
+Meeting ended at 16:58:46 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (66)
+ * xnox (45)
+ * ogra_ (42)
+ * stgraber (36)
+ * bdmurray (35)
+ * ev (33)
+ * ubottu (24)
+ * jodh (16)
+ * infinity (15)
+ * barry (15)
+ * stokachu (14)
+ * doko (9)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:02:03 <slangasek> #startmeeting
+
+ 16:02:03 <meetingology> Meeting started Wed Feb  6 16:02:03 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02:03 <meetingology> 
+
+ 16:02:03 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:02:04 <jodh> o/
+
+ 16:02:12 <slangasek> [TOPIC] Lightning round
+
+ 16:02:16 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 16:02:19 <slangasek> barry bdmurray ogra slangasek doko cjwatson stokachu ev xnox jodh stgraber
+
+ 16:02:35 <barry> win!
+
+ 16:02:42 <barry> various ue sprint tasks.  file debian bugs 699491 and 699498 (adding -OO to py{,3}compile).  more possibly to come there.  reviewed stokachu's pytz merge and eventually syncpackaged it (bug 1116418).  submitted branch for bug 1112496, with updates to come.  worked on py3 whoosh and reached out to debian maintainer.  various upstream pypi security discussions.
+
+ 16:02:46 <ubottu> Debian bug 699491 in python-defaults "pycompile: Support -OO to suppress docstrings in .pyo files" [Wishlist,Open] http://bugs.debian.org/699491
+
+ 16:02:47 <ubottu> Debian bug 699498 in python3-defaults "python3-defaults: Support -OO to suppress docstrings in .pyo files" [Wishlist,Open] http://bugs.debian.org/699498
+
+ 16:02:48 <ubottu> bug 1116418 in python-tz (Ubuntu) "Sync python-tz 2012c-1 (main) from Debian unstable (main)" [Wishlist,Fix released] https://launchpad.net/bugs/1116418
+
+ 16:02:50 <ubottu> bug 1112496 in python-imaging (Ubuntu Raring) "python-imaging broken in raring" [High,Triaged] https://launchpad.net/bugs/1112496
+
+ 16:02:56 <barry> * foundations-r-python33: done.
+
+ 16:03:02 <barry> * foundations-r-python3-oauth: bug 1077094 marked invalid as the package is going away.  bug 1077087 bug 1077089 and bug 1077092 branches in various states of review.
+
+ 16:03:08 <ubottu> bug 1077094 in ubuntuone-couch "Switch from python-oauth to python-oauthlib" [Undecided,Invalid] https://launchpad.net/bugs/1077094
+
+ 16:03:09 <ubottu> bug 1077087 in Ubuntu Single Sign On Client "Switch from python-oauth to python-oauthlib" [Undecided,In progress] https://launchpad.net/bugs/1077087
+
+ 16:03:10 <ubottu> bug 1077089 in Ubuntu One Client "Switch from python-oauth to python-oauthlib" [Undecided,In progress] https://launchpad.net/bugs/1077089
+
+ 16:03:11 <ubottu> bug 1077092 in Ubuntu One storage protocol "Switch from python-oauth to python-oauthlib" [Undecided,In progress] https://launchpad.net/bugs/1077092
+
+ 16:03:18 <barry> * foundations-r-python-versions: new python-imaging (pillow) package provides py3 support, but see above bugs for backward compatibility fixes needed.   in conversations about software-center and session-installer re: wtf to do about python-xapian.  we may not be able to replace it  :(
+
+ 16:03:26 <barry> done.
+
+ 16:03:43 <bdmurray> failed to recreate nexus7 bug 1092734
+
+ 16:03:44 <bdmurray> worked on an upstart job to watch for an hp printer to replace update-notifier job
+
+ 16:03:45 <ubottu> bug 1092734 in ubuntu-nexus7 "Software updater crashes, cannot update software graphically." [High,Fix released] https://launchpad.net/bugs/1092734
+
+ 16:03:47 <bdmurray> removed unused firmware paths from uevent.c in update-notifier
+
+ 16:03:49 <bdmurray> investigation into bug 1112496 (since comix doesn't work :-()
+
+ 16:03:51 <ubottu> bug 1112496 in python-imaging (Ubuntu Raring) "python-imaging broken in raring" [High,Triaged] https://launchpad.net/bugs/1112496
+
+ 16:03:52 <bdmurray> investigation into and testing of bug 1096022
+
+ 16:03:52 <bdmurray> removed running-unity tag from the ubuntu general apport hook and upstream apport
+
+ 16:03:53 <ubottu> bug 1096022 in update-manager (Ubuntu) ""E:Error, pkgProblemResolver::Resolve generated breaks" during lucid->precise universe upgrade of amd64" [Medium,Triaged] https://launchpad.net/bugs/1096022
+
+ 16:03:55 <bdmurray> verified P SRU for bug 984276
+
+ 16:03:56 <ubottu> bug 984276 in casper (Ubuntu Quantal) "installing casper on a non live system causes update-initramfs to fail" [High,Fix released] https://launchpad.net/bugs/984276
+
+ 16:03:57 <bdmurray> bug triage of update-manager bugs with ubuntu-release-upgrade-core symptom
+
+ 16:04:03 <bdmurray> improved the speed at which the user parameter works at errors
+
+ 16:04:03 <bdmurray> resovled an issue on errors where + in package names and versions wasn't being encoded for using in a url
+
+ 16:04:06 <bdmurray> worked on bucketsystems column family code
+
+ 16:04:09 <bdmurray> created a new canonistack environment for errors since my previous one had died
+
+ 16:04:13 <bdmurray> tested and modified bucketsystems column family code in canonistack
+
+ 16:04:29 <bdmurray> blueprint wise I am working on foundations-r-phased-updates
+
+ 16:04:45 <bdmurray> ✔ done
+
+ 16:04:57 <ogra_> done:
+
+ 16:04:57 <ogra_> * various nx7 bugfixes
+
+ 16:04:57 <ogra_> * worked with kernel team and diwic to make sound work on boot on the nx7
+
+ 16:04:57 <ogra_> * worked with kernel team to quieten the massive dmesg noise the interactive governor causes
+
+ 16:04:57 <ogra_> * held UDW talk about image build infrastructure (will start a wikipage with the notes as base for proper build system documentation)#
+
+ 16:04:59 <ogra_> * hunting down livefs breakage (again)
+
+ 16:05:01 <ogra_> todo:
+
+ 16:05:03 <ogra_> * port nx7 images to xz compression
+
+ 16:05:05 <ogra_> * discuss livefs builder situation with infinity (carried over from last week, blocked on builder)
+
+ 16:05:07 <ogra_> * fix plymouth vs console-setup racing somehow
+
+ 16:05:16 <ogra_> done
+
+ 16:05:51 <slangasek> barry: not able to replace python-xapian - hmm, have new requirements emerged, or are the alternatives proving to be inadequate?
+
+ 16:06:47 <slangasek> bdmurray: planning to upload that new update-notifier upstart job soon?
+
+ 16:06:53 <barry> slangasek: probably a conversation to have a bit later ;)
+
+ 16:07:15 <slangasek> xnox: speaking of which, is usb-creator getting an upload with the fixed job that's in bzr?
+
+ 16:07:26 <infinity> ogra_: It's been pointed out that, if you plan to use xz, depending on pxz and using that might make things slightly less painful.
+
+ 16:07:27 <xnox> slangasek: yes. today.
+
+ 16:07:32 <slangasek> xnox: yay :)
+
+ 16:07:53 <ogra_> infinity, like ... being able to use it on the panda itself ?
+
+ 16:08:03 <bdmurray> slangasek: well, I thought it should really go in hplip and haven't heard from til, additionally waiting for the user session work seems fine.
+
+ 16:08:12 <infinity> ogra_: Yeah.  It'll still be slower than gzip, but potentially acceptably so.
+
+ 16:08:21 <ogra_> infinity, what holds me back from the switch is that i have to re-work so much stuff for it on both sides if i want nusakan to do xz
+
+ 16:08:22 <slangasek> bdmurray: ah, ok
+
+ 16:08:37 <ogra_> infinity, great, i'll try it then
+
+ 16:08:45 <infinity> ogra_: Easy enough to take your rootfs tarball and do some local testing on a Panda.
+
+ 16:08:56 <ogra_> yep
+
+ 16:08:58 <infinity> ogra_: See if you can find a sweet spot.
+
+ 16:09:08 <ogra_> after i fixed the installer from being completely unusable
+
+ 16:09:19 <slangasek> ogra_: hunting down livefs breakage> are things currently broken, or currently working?
+
+ 16:09:25 * ogra_ notes cjwatson isnt iun -desktop
+
+ 16:09:38 <ogra_> slangasek, not working since we dropped a tar option
+
+ 16:09:47 <ogra_> i just heard about it now
+
+ 16:09:50 <slangasek> ogra_: hmm. eta for fix?
+
+ 16:10:18 <ogra_> well, worst case i can roll that back immediately and we lose some memory gains cjwatson introduced
+
+ 16:10:20 <infinity> ogra_: Err, wait.  What?  The dropping of the tar option from the installer?
+
+ 16:10:33 <xnox> ac100-tarball-installer that is
+
+ 16:10:36 <infinity> ogra_: How did that "break" the livefs?
+
+ 16:10:37 <ogra_> infinity, droppiing of -m seems to make tar crazy
+
+ 16:11:01 <slangasek> * systemd packaging: slow progress
+
+ 16:11:01 <slangasek> * ovmf packaging nearly done; edk2 is clearly not structured with distributions in mind
+
+ 16:11:04 <slangasek> * reviewing UbuntuKylin package submissions; will mail the TB to ask this to be an official flavor as soon as the core set is accepted
+
+ 16:11:05 <ogra_> i havent digged deeper yet (or seen it myself)... i know about it since the meeting started :P
+
+ 16:11:07 <slangasek> (done)
+
+ 16:11:12 <infinity> ogra_: Is there a bug or any sort of analysis?
+
+ 16:11:14 <xnox> well it worked without -m, but not "without -m and adding --warning=no-timestamp" or so the report says.
+
+ 16:11:24 <ogra_> infinity, only chat in #ubuntu-desktop yet
+
+ 16:13:13 <slangasek> doko: your turn
+
+ 16:13:32 <doko> - fix ftbfs for older gcc releases (changed kernel headers, missing struct siginfo)
+
+ 16:13:32 <doko> - llvm/clang updates
+
+ 16:13:32 <doko> - upload pillow for python3
+
+ 16:13:32 <doko> - openjdk security update
+
+ 16:13:33 <doko> - FOSDEM
+
+ 16:13:35 <doko> (done)
+
+ 16:13:44 <doko> will follow-up on FOSDEM later
+
+ 16:14:08 <ogra_> slangasek, oh, the "hunting down livefs breakage" from my report was supposed to be "hunting down livefs builder breakage" its unrelated to the current issue
+
+ 16:14:27 <ogra_> (was just a coincident that you asked while i was told its broken :) )
+
+ 16:15:31 <slangasek> ah, cjwatson is off this afternoon, so stokachu:
+
+ 16:15:40 <stokachu> ok
+
+ 16:15:41 <slangasek> ogra_: hmm!
+
+ 16:15:58 <stokachu> Followed up bug 1052038, awaits verification
+
+ 16:16:00 <ubottu> bug 1052038 in eCryptfs "ecryptfs_fnek_sig missing when login at the same time on cron session close" [Medium,In progress] https://launchpad.net/bugs/1052038
+
+ 16:16:00 <stokachu> Need a little more information on bug 923876 if we are planning on applying this to precise and quantal? Or whats the overall consensus on removing old kernels on a system during upgrades?
+
+ 16:16:02 <ubottu> bug 923876 in apt (Ubuntu) "FR: Limit and clean-up kernel images and headers automatically in LTS" [Wishlist,Fix released] https://launchpad.net/bugs/923876
+
+ 16:16:02 <stokachu> Did my first sync package request though im not sure how to tell if I got credit for the request or not other than looking at the bug itself.
+
+ 16:16:04 <stokachu> (done)
+
+ 16:16:34 <ogra_> slangasek, the builder was off for two days again this week ... thanks to elmo and infinity its back in business though
+
+ 16:17:12 <xnox> stokachu: https://launchpad.net/~adam-stokes/+synchronised-packages
+
+ 16:17:13 <ogra_> (it seems to always die on saturdays ... probably going out to party on weekends or so )
+
+ 16:17:26 <stokachu> xnox: ah ok sweet
+
+ 16:17:30 <infinity> ogra_: It's probably just cause it can't count: http://sourceware.org/ml/glibc-cvs/2013-q1/msg00115.html
+
+ 16:17:38 <ubottu> sourceware.org bug 2013 in libc "memccpy() gives inconsistent results on mmapped files" [Normal,Resolved: fixed]
+
+ 16:17:46 <ogra_> oha
+
+ 16:17:57 <ogra_> "Fix the value of TWO"
+
+ 16:18:01 <stokachu> xnox: there we go :D
+
+ 16:18:06 <ogra_> it couls just count one by one then :P
+
+ 16:18:12 <ogra_> *could
+
+ 16:18:54 <stokachu> re: apt removing older kernels is starting to make its way through internally so any thoughts on that would be appreciated
+
+ 16:19:50 <infinity> stokachu: Oh, crap.  So, yeah.  I was meant to backport the apt stuff last week, and got distracted by other work.
+
+ 16:20:00 <infinity> stokachu: I can still do that today, and maybe Colin will accept it.
+
+ 16:20:05 <ev> - Feedback to Martin's code review of the grouped reports branch of apport.
+
+ 16:20:05 <ev> This, if you don't recall, is for showing system internal errors as part of
+
+ 16:20:05 <ev> the next regular application error.
+
+ 16:20:05 <ev> - Code review for Brian.
+
+ 16:20:05 <ev> - Wrote a tool to bootstrap the postgres database for local copies of Errors.
+
+ 16:20:05 <ev> - Taught the prodstack-prep branches to talk to Swift natively when running on
+
+ 16:20:06 <ev> canonistack/prodstack.
+
+ 16:20:13 <ev> - Added the bulk of the Canonical engineering teams to the ACL for stacktrace
+
+ 16:20:14 <ev> access on errors.ubuntu.com. Added code to Errors and the prodstack charms to
+
+ 16:20:14 <ev> manage further additions to the ACL with minimal code changes.
+
+ 16:20:14 <ev> - Big improvements to the average errors per calendar day graph over the
+
+ 16:20:14 <ev> weekend. The text for the milestones and dates finally all fits. We now also
+
+ 16:20:15 <ev> set the domain to (0, 0.4) so the difference between 12.04 and 12.10 should
+
+ 16:20:22 <ev> be much more discernable. There's a few more improvements to be made that
+
+ 16:20:23 <ev> I'll fit in while other work compiles or in the evening. I've also cleaned up
+
+ 16:20:23 <ev> the call stack representation in the most common problems table.
+
+ 16:20:23 <ev> - More fixes to whoopsie. Trying to get a new build out, but the tests are
+
+ 16:20:29 <ev> failing only in sbuild due to leaks detected by valgrind. Fixed one already,
+
+ 16:20:29 <ev> so this new memcheck test addition is already proving useful.
+
+ 16:20:29 <ev> - If we can move the connectivity check and inotify watch into upstart, we
+
+ 16:20:29 <ev> save about 0.8 MB of memory in whoopsie (though admittedly whoopsie no
+
+ 16:20:34 <ev> longer runs all the time and its memory usage becomes less important).
+
+ 16:20:35 <ev> - Not pulling in CURL takes us down to running in 200K, but we kind of need
+
+ 16:20:35 <ev> that :). I suspect its the SSL stuff taking up the lion's share.
+
+ 16:20:40 <ev> - More fixes to the prodstack charms. JuanJo is making good headway on getting
+
+ 16:20:40 <ev> these deployed to stagingstack.
+
+ 16:20:40 <ev> - Trying to build the universe to get a recent version of python-swiftclient
+
+ 16:20:40 <ev> working in precise.
+
+ 16:20:43 <ev> (done)
+
+ 16:20:59 <stokachu> infinity: ok no worries i was just pinged internally about this yesterday so its not really heating up yet and your confirmation of it is good enough
+
+ 16:21:01 <stokachu> thanks
+
+ 16:21:24 <xnox> * Short week due to Fosdem Fri-Mon
+
+ 16:21:24 <xnox> - loads of people met and conversations held
+
+ 16:21:24 <xnox> - everyone is talking about aarch64
+
+ 16:21:24 <xnox> - everyone is waiting for aarch64 hw
+
+ 16:21:24 <xnox> - interesting talks on init systems & [e]udev
+
+ 16:21:25 <xnox> - keysigning...
+
+ 16:21:27 <xnox> .
+
+ 16:21:29 <xnox> * Last week, poked pyo optimisation with barry a little.
+
+ 16:21:31 <xnox> I want to run one last test (i think i didn't have everything
+
+ 16:21:33 <xnox> without docstrings), but it looks likes on currently idle python
+
+ 16:21:35 <xnox> processes there isn't much ram savings.
+
+ 16:21:37 <xnox> * Also gave a talk on making/fixing packages to cross-build. Need to
+
+ 16:21:41 <xnox> convert to blog post / packaging guide section.
+
+ 16:21:43 <xnox> .
+
+ 16:21:45 <xnox> * Precise:
+
+ 16:21:45 <stokachu> infinity: will this be for quantal and precise?
+
+ 16:21:47 <xnox> Uploaded SRU for 2 clustered LVM issues. Not critical for 12.04.2 as
+
+ 16:21:49 <xnox> clvm is not on the server cds. bug #833368 and bug #988881 .
+
+ 16:21:51 <xnox> .
+
+ 16:21:52 <ubottu> bug 833368 in lvm2 (Ubuntu Precise) "clustered lvm commands fail with "activation/monitoring=0 is incompatible with clustered Volume Group" error" [High,In progress] https://launchpad.net/bugs/833368
+
+ 16:21:53 <xnox> * foundations-r-arm-usb-creator-fastboot-support:
+
+ 16:21:53 <ubottu> bug 988881 in lvm2 (Ubuntu Precise) "/etc/init.d/clvm status exitcode always 0" [Medium,In progress] https://launchpad.net/bugs/988881
+
+ 16:21:55 <xnox> udisks2 backend created a few sticks now. Porting/Testing last
+
+ 16:21:57 <xnox> pieces in the -helper and then we can drop udisks from CD.
+
+ 16:21:59 <xnox> .
+
+ 16:22:01 <xnox> * foundations-r-software-raid
+
+ 16:22:03 <xnox> mdadm initial merge ready, should upload by the end of the week.
+
+ 16:22:05 <xnox> (done)
+
+ 16:22:11 <infinity> stokachu: That's the general plan.
+
+ 16:22:15 <jodh> * blueprints
+
+ 16:22:15 <stokachu> ok sounds good
+
+ 16:22:15 <jodh> - foundations-r-upstart-user-session-enhancements:
+
+ 16:22:15 <jodh> - Merged lp:~jamesodhunt/upstart/setenv+getenv.
+
+ 16:22:15 <jodh> - Finished and raised MP for lp:~jamesodhunt/upstart/event-prefixes.
+
+ 16:22:18 <jodh> - Wrote and raised MP on
+
+ 16:22:20 <stokachu> ill relay that information
+
+ 16:22:22 <jodh> lp:~jamesodhunt/upstart/remove-initctl-job+instance-options
+
+ 16:22:25 <jodh> - Working on upstart shutdown.
+
+ 16:22:28 <jodh> - foundations-r-upstart-roadmap: no progress
+
+ 16:22:31 <jodh> - foundations-r-arm-ubiquity: no progress
+
+ 16:22:35 <jodh> * other:
+
+ 16:22:38 <jodh> - FOSDEM 2013 (away Fri-Mon)
+
+ 16:22:41 <jodh> - MP for restarting Upstart on libjson0 upgrade
+
+ 16:22:44 <jodh> https://code.launchpad.net/~jamesodhunt/ubuntu/raring/json-c/restart-upstart/+merge/146868
+
+ 16:22:47 <jodh> Ꭸ
+
+ 16:22:48 <jodh> 
+
+ 16:23:02 <slangasek> bah, ok, this is the second time since upgrading this machine to raring that the desktop has completely locked up for minutes at a time... not even the cursor moves
+
+ 16:23:07 <slangasek> anybody else seeing this?
+
+ 16:23:24 <stgraber> Feature work:
+
+ 16:23:25 <stgraber> - Upstart (BLUEPRINT: foundations-r-upstart-user-session-enhancements)
+
+ 16:23:25 <stgraber> - No progress done last week, planning on testing it this week.
+
+ 16:23:25 <stgraber> - Container (BLUEPRINT: servercloud-r-lxc)
+
+ 16:23:25 <stgraber> - libseccomp was promoted to main
+
+ 16:23:27 <stgraber> - Worked on a fix for bug 1113821
+
+ 16:23:29 <ubottu> bug 1113821 in libvirt (Ubuntu Raring) "libvirt-bin deletes /etc/dnsmasq.d/libvirt-bin on upgrade" [Medium,Triaged] https://launchpad.net/bugs/1113821
+
+ 16:23:29 <stgraber> - Code reviews.
+
+ 16:23:32 <stgraber> - Preparing 0.9~alpha3 to be released next week.
+
+ 16:23:34 <stgraber> - Discussed plan for container/security/lxc micro-conference at LPC2013
+
+ 16:23:35 <barry> slangasek: nope.  what h/w do you have?
+
+ 16:23:37 <stgraber> - Networking (BLUEPRINT: foundations-r-networking)
+
+ 16:23:40 <stgraber> - Still waiting on test results for the infiniband support, no other progress there.
+
+ 16:23:43 <stgraber> Other work:
+
+ 16:23:45 <stgraber> - Networking
+
+ 16:23:48 <stgraber> - Spent quite a bit of time getting Ofono to work with NetworkManager, slowly getting there.
+
+ 16:23:51 <stgraber> (glib + gobject + dbus in NM can be the source of rather bad headaches...)
+
+ 16:23:54 <stgraber> - QATracker
+
+ 16:23:55 <slangasek> stokachu: on the apt kernel autoremoval, I thought we already did backport that to precise+quantal, no?
+
+ 16:23:56 <stgraber> - Helped setup some other internal instances of the tracker.
+
+ 16:23:59 <stgraber> - Meetings/Talks
+
+ 16:24:01 <stgraber> - Had an Ubuntu Development Hangout yesterday
+
+ 16:24:04 <stgraber> - Will have an LXC IRC meeting tomorrow to present the user namespace work and discuss some of the next steps.
+
+ 16:24:07 <stgraber> TODO:
+
+ 16:24:09 <stgraber> - Continue the ofono/NM work.
+
+ 16:24:12 <stgraber> - Try to finish any LXC feature work for this cycle (1 item left).
+
+ 16:24:14 <stgraber> - Prepare some upstart user session debs with all our patches and the initial Xsession scripts and upstart jobs.
+
+ 16:24:17 <stgraber> (DONE)
+
+ 16:25:13 <stokachu> slangasek: ill double check but tmk it wasn't
+
+ 16:25:24 <stgraber> if it was, it's not working ;)
+
+ 16:25:42 * stgraber had to manually wipe a few kernels on a dozen machine over the weekend to clear some space in /boot
+
+ 16:26:15 * barry too
+
+ 16:26:25 <bdmurray> heh, me too!
+
+ 16:26:29 <bdmurray> just one machine though
+
+ 16:28:25 * xnox currently has 9 kernels on my machine in raring.... i thought i should have less.
+
+ 16:28:38 <slangasek> barry: hw> standard intel mobile graphics, I forget the model
+
+ 16:29:02 * ogra_ has 12 on precise
+
+ 16:29:42 <slangasek> heh, ok - and infinity 'fessed up that it's still on his todo, so
+
+ 16:30:07 * slangasek gets to the bottom of scrollback finally
+
+ 16:30:10 <stgraber> slangasek: if that's your x201, then it's first gen i7 graphics (Arrandale chipset with Ironlake graphics, product id 0046)
+
+ 16:30:20 <slangasek> yeah, that ;)
+
+ 16:30:40 <infinity> xnox: Before you go manually doing anything to those kernels, talk to me out of band.
+
+ 16:30:41 <slangasek> so there seem to be two entangled problems here
+
+ 16:31:08 <xnox> infinity: ack. My install is not typical by any means, so it could be of my wrong doing.
+
+ 16:31:11 <barry> slangasek: i've got a radeon
+
+ 16:31:15 <slangasek> one is that firefox is helpfully using 100% of a CPU; the other is that X is using 100% of a CPU and not responding interactively
+
+ 16:31:28 <slangasek> I guess I should file a critical bug, when I can get back to the desktop
+
+ 16:31:30 <xnox> stgraber: do you want to help out specing a machine for me?! =)
+
+ 16:32:17 <ogra_> you should definitely get more cores then ... one per app or so
+
+ 16:32:18 <slangasek> [TOPIC] work item
+
+ 16:32:20 <slangasek> [TOPIC] work items
+
+ 16:32:38 <slangasek> ogra_: X already has a core to itself, it's not doing anything *useful* with it :P
+
+ 16:32:50 <ogra_> heh
+
+ 16:33:12 <stgraber> xnox: hehe, I just happen to have used a pretty much identical laptop to slangasek's for the past two years and had some X problems in the past ;)
+
+ 16:33:15 <slangasek> so I was going to pull up some numbers to see how we're all doing individually wrt the burndown trend line
+
+ 16:33:33 <slangasek> but with my laptop being coy, those numbers are currently not at my fingertips
+
+ 16:33:35 <stgraber> xnox: now I'm on a x230 with a different set of problem (mostly caused by me only using displayport displays which apparently nobody does...)
+
+ 16:34:01 <slangasek> instead, I'll just say that you should all be checking your personal status.ubuntu.com page and making sure that you are below the trendline, as of *today*
+
+ 16:34:25 <slangasek> if you aren't, that doesn't mean you need to work overtime, it means you need to talk to me to figure out what we need to postpone or move around on the team
+
+ 16:34:55 <slangasek> the team's burndown is above the line, and realistically, we're going to be seeing demands on our time for work not shown on that chart (i.e., work to support the mobile effort)
+
+ 16:35:23 <slangasek> so we need to get our priorities squared away wrt the stuff from UDS, so that people know what we are actually delivering this cycl
+
+ 16:35:26 <slangasek> e
+
+ 16:35:35 <slangasek> any questions?
+
+ 16:35:50 <stgraber> slangasek: not sure if that also impacts the team's trendline, but I have 10 Edubuntu work items in my personal chart which if ignored makes me below the trendline
+
+ 16:35:58 <barry> slangasek: do in progress count? :)
+
+ 16:36:27 <slangasek> also, note that even with everyone on the team down below the trendline, we'll be above the trendline for the team as a whole because of workitems on our blueprints that are assigned to people not on the team
+
+ 16:36:56 <doko> tex-common at version 3.15? that looks wrong ...
+
+ 16:36:57 <ev> should we add workitems for things that have come up? For example, I wasn't expecting to do all this prodstack stuff.
+
+ 16:37:02 <slangasek> so if you're the assignee for a blueprint that has external workitems, please be sure to check with those folks on how they're doing and if they'll still deliver this cycle
+
+ 16:37:22 <slangasek> ev: no, burndown charts shouldn't be an exercise in paperwork to make us look productive :)
+
+ 16:37:32 <slangasek> barry: no ;)
+
+ 16:37:33 <infinity> doko: Wrong, how?
+
+ 16:37:54 * xnox ponders what to do with Low and Undefined priority specs which was mostly community/nice-to-haves
+
+ 16:37:56 <slangasek> stgraber: it does impact the team's trendline, but I'll mentally subtract
+
+ 16:38:02 <doko> doesn't approach Pi anymore
+
+ 16:38:11 <infinity> Hahaha.
+
+ 16:38:16 <slangasek> stgraber: so don't worry about faking up the state just to make the trendline happy
+
+ 16:38:30 <xnox> infinity: it's not hahaha, but a real problem. it should never been 3.15.
+
+ 16:38:35 <stgraber> slangasek: good ;)
+
+ 16:38:36 <infinity> doko: There's a 4.xx in experimental, if you really want to be sad about the versions inflating.
+
+ 16:38:51 <xnox> /o\ did TeX community go crazy?!
+
+ 16:39:11 <slangasek> xnox: realistically, they should probably be postponed; if you run out of todo work items early, you can always rescue them from the postponed pile
+
+ 16:39:16 <slangasek> any other qs?
+
+ 16:40:02 <slangasek> [TOPIC] Bugs
+
+ 16:40:12 <slangasek> bdmurray: what news?
+
+ 16:40:43 <bdmurray> I believe this is our top error at the moment
+
+ 16:40:48 <bdmurray> https://errors.ubuntu.com/bucket/?id=/usr/bin/apturl-gtk:AttributeError:parseArgs:parse:%3Cmodule%3E:main:parseArgs
+
+ 16:41:48 <stgraber> oh nice, .decode() on a python3 string, that won't quite work ;)
+
+ 16:42:03 <xnox> bdmurray: so we should check latest apt-urls posted on OMGubuntu to find the culprit =)
+
+ 16:42:27 <barry> ouch ;)
+
+ 16:42:46 <xnox> ev: we don't have server side hooks yet to query what sting is failing?!
+
+ 16:43:04 <bdmurray> 
+
+ 16:43:06 <bdmurray> /usr/bin/python3 /usr/bin/apturl-gtk /home/whoever/Downloads/MediaPlayerClassic_RocketFuelInstaller (1).exe
+
+ 16:43:24 <ev> xnox: I am but one man, busy getting everything ready for the cloud.
+
+ 16:43:25 <bdmurray> I guess we could look at the proccmdlines?
+
+ 16:44:01 <barry> is the str.decode() bug filed?
+
+ 16:44:08 <xnox> ev: True. prodstack is a lot of "prod" in it.
+
+ 16:44:15 <bdmurray> barry: no
+
+ 16:44:16 <ev> :)
+
+ 16:44:52 <bdmurray> oh, maybe its because apturl is being used with local files?
+
+ 16:45:00 <slangasek> oh this is special
+
+ 16:45:05 <slangasek> killall -9 firefox, and it keeps going
+
+ 16:45:34 <ogra_> lovely
+
+ 16:45:43 <barry> slangasek: i saw a lot of ineffective kill -9s on the nexus
+
+ 16:45:46 <ogra_> sudo harder :)
+
+ 16:45:50 <xnox> bdmurray: not quite. it looks like some browser extension went crazy cause all files are (a) local (b) in download or .cache locations
+
+ 16:45:52 <slangasek> barry: !
+
+ 16:45:55 <ogra_> barry, bug # ?
+
+ 16:45:56 <ogra_> :)
+
+ 16:46:05 <slangasek> sounds like we need to file a critical bug against the kernel for that, too
+
+ 16:46:18 <ogra_> nx7 is a different kernel though
+
+ 16:46:45 <xnox> bdmurray: but apt-url should handle that fine, but it won't help if browser has now defaulted to open everything with apt-url instead of other mime-handlers.
+
+ 16:46:49 <barry> yeah, you know which kernel i'm talkin' 'bout.   i wasn't shaving the yak that day though
+
+ 16:46:56 <ogra_> (which doesnt say much, might be present since before the nx7 kernel, who knows)
+
+ 16:46:59 <stgraber> well, kill -9 can be ineffective if the process is stuck in I/O wait (D state)
+
+ 16:47:27 <stgraber> now the source of the I/O wait is usually the bug (and in some cases it's a kernel bug)
+
+ 16:47:36 <bdmurray> xnox: you seem to be knowledgeable about this and in a good position to look at...
+
+ 16:47:41 <slangasek> stgraber: it's not in I/O wait, it's actively consuming my CPU
+
+ 16:48:06 <xnox> bdmurray: ok. I'll chat with -desktop folks and try to investigate it.
+
+ 16:48:09 <stgraber> slangasek: hmm, ok, that's really special then ;)
+
+ 16:48:15 <slangasek> xnox: assign the bug to yourself?
+
+ 16:48:29 <slangasek> (er, if there is a bug yet)
+
+ 16:49:13 <slangasek> bdmurray: any other bugs/crashes you're worried about?
+
+ 16:49:22 <bdmurray> ev: oh maybe there should a create bug link on the bucket page
+
+ 16:49:36 <ev> bdmurray: yes, definitely
+
+ 16:49:41 <bdmurray> ev: because you'd have to go to ?package=apturl and then find the right bucket
+
+ 16:50:13 <bdmurray> slangasek: the rls r tracking bugs are looking a bit long
+
+ 16:50:22 <bdmurray> there are 3 critical ones
+
+ 16:50:28 <bdmurray> bug 1066480
+
+ 16:50:30 <ubottu> bug 1066480 in ubiquity (Ubuntu Raring) "Installer doesn't show encrypted partitions" [Critical,Confirmed] https://launchpad.net/bugs/1066480
+
+ 16:50:35 <bdmurray> bug 1013798
+
+ 16:50:37 <ubottu> bug 1013798 in libgcrypt11 (Ubuntu Raring) "Blink SIP client segfaults with libgcrypt11 1.5.0-3ubuntu0.1" [Critical,In progress] https://launchpad.net/bugs/1013798
+
+ 16:50:46 <slangasek> bdmurray: sorry, can you pass the link to the report too?
+
+ 16:50:53 <bdmurray> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-r-tracking-bug-tasks.html
+
+ 16:51:04 <bdmurray> and bug 1084063
+
+ 16:51:06 <ubottu> bug 1084063 in ubuntu-defaults-nexus7 (Ubuntu Raring) "plymouth in raring causes system hardlock if console_setup is not run in the initramfs on nexus7 prior to starting plymouthd" [Critical,In progress] https://launchpad.net/bugs/1084063
+
+ 16:53:10 <ogra_> yeah, thats a bad one, i think colin took a look but we didnt talk about it yet
+
+ 16:53:17 <slangasek> 1084063 is already on ogra's todo list, AIUI
+
+ 16:53:22 <ogra_> yeah
+
+ 16:53:25 <slangasek> stokachu: any luck with bug #1013798?
+
+ 16:53:27 <ubottu> bug 1013798 in libgcrypt11 (Ubuntu Raring) "Blink SIP client segfaults with libgcrypt11 1.5.0-3ubuntu0.1" [Critical,In progress] https://launchpad.net/bugs/1013798
+
+ 16:53:36 <slangasek> xnox: can you take bug #1066480?
+
+ 16:53:37 <ubottu> bug 1066480 in ubiquity (Ubuntu Raring) "Installer doesn't show encrypted partitions" [Critical,Confirmed] https://launchpad.net/bugs/1066480
+
+ 16:53:43 <xnox> bug 1066480 is on me. but can be worked on post ff.
+
+ 16:54:13 <xnox> The solution is to correctly try and call existing partman-crypto api call that colin pointed out to me previously.
+
+ 16:54:17 * slangasek assigns
+
+ 16:55:12 <bdmurray> I looked at some of the ubiquity ones yesterday and also noticed that bug 1080701 is still getting regular metoos
+
+ 16:55:14 <ubottu> bug 1080701 in ubiquity (Ubuntu Raring) "After 'Preparing to install Ubuntu' screen, raring installation hangs" [High,Confirmed] https://launchpad.net/bugs/1080701
+
+ 16:55:49 <slangasek> already assigned to xnox - are you missing any information to be able to work on that one?
+
+ 16:56:07 <xnox> bdmurray: there are two hang fixes in os-prober I uploaded. Which needs to be uploaded as part of ubiquity.
+
+ 16:56:34 <xnox> it is random for me and I cannot reliable reproduce it with debugging on to see what hangs.
+
+ 16:57:34 <slangasek> [TOPIC] AOB
+
+ 16:57:46 <slangasek> anything else to discuss?
+
+ 16:58:46 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

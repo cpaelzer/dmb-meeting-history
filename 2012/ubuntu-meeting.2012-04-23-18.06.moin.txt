@@ -1,0 +1,216 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:06:33 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-04-23-18.06.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:06:51)
+ *Announcements
+
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/dstat.html   (jdstrand, 18:21:50)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/phpgroupware.html   (jdstrand, 18:21:53)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/barnowl.html   (jdstrand, 18:21:55)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/roundup.html   (jdstrand, 18:21:58)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libpar-packer-perl.html   (jdstrand, 18:22:01)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:28:38 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (29)
+ * mdeslaur (12)
+ * micahg (8)
+ * tyhicks (8)
+ * jjohansen (7)
+ * sbeattie (6)
+ * meetingology (3)
+ * ubottu (2)
+ * kirkland (2)
+
+
+
+== Full Log ==
+
+
+ 18:06:33 <jdstrand> #startmeeting
+
+ 18:06:33 <meetingology> Meeting started Mon Apr 23 18:06:33 2012 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:06:33 <meetingology> 
+
+ 18:06:33 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:06:51 <jdstrand> The meeting agenda can be found at:
+
+ 18:06:51 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:06:52 <jdstrand> [TOPIC] Announcements
+
+ 18:07:05 <jdstrand> Friendly reminder, we are releasing this week, so be sure to do your ISO testing :)
+
+ 18:07:14 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:07:17 <jdstrand> I'll go first
+
+ 18:07:27 <jdstrand> I'm on community this week
+
+ 18:07:44 <jdstrand> I'm also patch piloting (not sure how that is supposed to work this week...)
+
+ 18:07:53 <jdstrand> I need to do final install audits
+
+ 18:07:58 <jdstrand> iso testing
+
+ 18:08:09 <jdstrand> finish up the last bits on work items
+
+ 18:08:29 <jdstrand> and get back to some updates
+
+ 18:08:34 <jdstrand> that's it from me
+
+ 18:08:38 <jdstrand> mdeslaur: you're up
+
+ 18:08:45 <mdeslaur> I'm in the happy place
+
+ 18:08:50 <mdeslaur> I'm working on jetty updates
+
+ 18:08:58 <mdeslaur> and will release mysql from -proposed most likely
+
+ 18:09:02 <mdeslaur> and will pick something else
+
+ 18:09:07 <mdeslaur> and will test isos
+
+ 18:09:11 <mdeslaur> that's it for me
+
+ 18:09:13 <mdeslaur> sbeattie: you're up
+
+ 18:09:25 <sbeattie> I'm also in the happy place
+
+ 18:09:50 <sbeattie> I'm working on fixes for an apparmor SRU
+
+ 18:10:03 <sbeattie> I need to finish up one work item
+
+ 18:10:21 <sbeattie> and test isos and get back to updates
+
+ 18:10:30 <sbeattie> I think that's it for me.
+
+ 18:10:36 <sbeattie> micahg: you're up
+
+ 18:11:49 <micahg> It's mozilla release week, Thunderbird 11 should go out to -updates for lucid/natty tonight, with Thunderbird 12 (barring nasty CVEs) going out late Thursday, Firefox updates going out as well, then back to webkit
+
+ 18:12:18 <micahg> that's it for me
+
+ 18:12:24 <mdeslaur> micahg: what do you mean tb11 and tb12?
+
+ 18:13:06 <micahg> mdeslaur: Thunderbird 11 is in -proposed, I'll run the final tests today and push to -updates, then 12 is the security update for that (releasing tomorrow), that we'll push out at the end of the week
+
+ 18:13:21 <micahg> this is for the stable release migration
+
+ 18:13:36 <mdeslaur> you're going to push two updates in the same week?
+
+ 18:13:47 <mdeslaur> why don't you just push 12 directly instead of making everyone upgrade twice?
+
+ 18:13:48 <micahg> yes, unfortunately
+
+ 18:14:39 <micahg> well, I'd like some bake time in -updates in case we missed anything with the 3.1 -> 11 update
+
+ 18:14:51 <micahg> that hopefully prevents a regression in the security pocket
+
+ 18:15:46 <mdeslaur> I'm not quite sure how that helps any, besides piss off users getting a GUI change twice in the same week
+
+ 18:16:02 <micahg> mdeslaur: second update isn't a GUI change
+
+ 18:16:12 <mdeslaur> ok
+
+ 18:16:37 <tyhicks> I'm handling triage this week
+
+ 18:17:19 <tyhicks> I'm currently working on an eCryptfs bug that leaves zero length files in the lower filesystem when ecryptfs_create() fails
+
+ 18:17:35 <kirkland> tyhicks: \o/
+
+ 18:17:43 <tyhicks> I think it is the underlying cause behind the recent uptick in users getting zero length file warnings in their logs
+
+ 18:18:00 * kirkland hugs tyhicks
+
+ 18:18:27 <tyhicks> I also have 2 small eCryptfs work items left
+
+ 18:18:28 <jdstrand> tyhicks: are you getting close to a fix on that one?
+
+ 18:18:52 <tyhicks> jdstrand: Yeah - I just realized the underlying cause late Friday and I should have a fix ready by EOD today
+
+ 18:19:37 <tyhicks> and I'll take another update this week
+
+ 18:19:42 <tyhicks> I think that it is
+
+ 18:19:48 <tyhicks> jjohansen: You're up
+
+ 18:19:51 <jjohansen> I have Bug #987371 that is causing problem for lxc in the cloud to look into more. I think we may already have a fix but it hasn't been verified.
+
+ 18:19:51 <jjohansen> I still have a couple of other apparmor bugs to finish up testing and get fixes committed for Bug #955892 in particular may be causing problems when used with eCryptfs
+
+ 18:19:53 <ubottu> Launchpad bug 987371 in lxc (Ubuntu) "unconfined containers are not starting" [Critical,Confirmed] https://launchpad.net/bugs/987371
+
+ 18:19:54 <ubottu> Launchpad bug 955892 in apparmor (Ubuntu) "Failed name lookup - disconnected path error for long path names" [Undecided,Confirmed] https://launchpad.net/bugs/955892
+
+ 18:20:02 <jjohansen> I have a whole lot of UDS prep to do and will be refreshing the dbus prototype against current, so that testing and further development can continue
+
+ 18:20:02 <jjohansen> I still have 2 work items to finish off, and I will try to finish them
+
+ 18:20:02 <jjohansen> up this week.
+
+ 18:20:02 <jjohansen> oh and I suppose there is some iso testing to do too
+
+ 18:21:15 <jjohansen> I think that is it from /me jdstrand back to you
+
+ 18:21:21 <jdstrand> thanks
+
+ 18:21:36 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:21:39 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:21:43 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:21:50 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/dstat.html
+
+ 18:21:53 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/phpgroupware.html
+
+ 18:21:55 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/barnowl.html
+
+ 18:21:58 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/roundup.html
+
+ 18:22:01 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libpar-packer-perl.html
+
+ 18:22:18 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:23:06 <jdstrand> another friendly reminder that we should be adding items to the wiki for UDS preparation so we can get this all prepared next week (possibly late this week)
+
+ 18:23:12 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:28:38 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

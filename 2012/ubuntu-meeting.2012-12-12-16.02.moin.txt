@@ -1,0 +1,672 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:02:08 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-12-12-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' https://errors.ubuntu.com/bucket/?id=%2Fusr%2Fbin%2Fsoftware-properties-gtk%3ASystemError%3A%3Cmodule%3E%3A__init__%3A__init__%3Aopen   (bdmurray, 16:31:48)
+''LINK:'' https://errors.ubuntu.com/oops/013c3eee-3284-11e2-b1c9-2c768aafd08c   (infinity, 16:38:58)
+
+ *AOB
+
+
+
+Meeting ended at 16:44:20 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (112)
+ * stgraber (39)
+ * slangasek (38)
+ * xnox (30)
+ * bdmurray (28)
+ * ubottu (27)
+ * doko (10)
+ * infinity (9)
+ * cjwatson (9)
+ * meetingology (3)
+ * barry (2)
+
+
+
+== Full Log ==
+
+
+ 16:02:08 <slangasek> #startmeeting
+
+ 16:02:08 <meetingology> Meeting started Wed Dec 12 16:02:08 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02:08 <meetingology> 
+
+ 16:02:08 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:02:22 <slangasek> [TOPIC] lightning round
+
+ 16:04:30 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 16:04:33 <slangasek> barry cjwatson ev stgraber stokachu xnox ogra doko slangasek bdmurray jodh
+
+ 16:04:42 <barry> win!
+
+ 16:04:45 <barry> bug 1061149 (more debugging, seems related to landscape). bug 1077076 (oneconf ported to py3 landed in trunk, bug 1088536 m-p for packaging). bug 1088535.  patch piloting (status sent to mlist).  done.
+
+ 16:04:46 <infinity> Isn't ogra on holidays?
+
+ 16:04:50 <ubottu> Launchpad bug 1061149 in lightdm (Ubuntu) "boot occasionally hangs while "Checking battery state..."" [Undecided,Confirmed] https://launchpad.net/bugs/1061149
+
+ 16:04:50 <ubottu> Launchpad bug 1077076 in oneconf (Ubuntu) "Switch from python-oauth to python-oauthlib" [High,Fix committed] https://launchpad.net/bugs/1077076
+
+ 16:04:52 <ubottu> Launchpad bug 1088536 in oneconf (Ubuntu) "Updating packaging for Python 3" [High,In progress] https://launchpad.net/bugs/1088536
+
+ 16:04:53 <slangasek> yes, as is jodh
+
+ 16:04:53 <ubottu> Launchpad bug 1088535 in oneconf (Ubuntu) "Two test failures" [High,Fix committed] https://launchpad.net/bugs/1088535
+
+ 16:05:08 <slangasek> and stokachu is also not making the meeting today
+
+ 16:05:39 <cjwatson> Knocked out for part of this week by persistent cough/cold.
+
+ 16:05:39 <cjwatson> Further progress on 12.04 SB backport.  Seems to be mostly done now.
+
+ 16:05:39 <cjwatson> Fixed some embarrassingly old debconf regressions from work I did on dpkg-reconfigure earlier this year.
+
+ 16:05:43 <cjwatson> Half a dozen more cross-building fixes.
+
+ 16:05:45 <cjwatson> debmirror patch to limit mirroring to arbitrary field names by package.
+
+ 16:05:48 <cjwatson> Started work on publishing package set information in archive index files.
+
+ 16:05:51 <cjwatson> Followed up to Jean-Baptiste's autopkgtest integration mail with a few questions; should be able to start proposed-migration work after getting those answers.
+
+ 16:05:54 <cjwatson> Helped out with Upstart 1.6.1 release.
+
+ 16:05:56 <cjwatson> ..
+
+ 16:06:15 <ev> This is going to be a long one. Maybe go fetch yourself a nice hot kwahfee ☕
+
+ 16:06:15 <ev> Week of December 6th
+
+ 16:06:16 <ev> - Ubuntu Error Tracker sprint. Wrap up email forthcoming.
+
+ 16:06:16 <ev> - Managed to get through most of the sprint agenda:
+
+ 16:06:16 <ev> https://docs.google.com/a/canonical.com/document/d/1BWOIRdJvUueJa4cWV68UEY3nlmHgAVJY6aNGo6YSCQg/edit?pli=1#
+
+ 16:06:16 <ev> - We came up with an implementation plan for stopping phased updates:
+
+ 16:06:16 <ev> https://wiki.ubuntu.com/ErrorTracker/PhasedUpdates
+
+ 16:06:17 <ev> - And server-side hooks. This will let you request that additional
+
+ 16:06:17 <ev> information be sent for a package or problem (bucket ID) automatically, or
+
+ 16:06:18 <ev> request that a user file a bug in Launchpad with a link back to the error
+
+ 16:06:18 <ev> tracker, so that you have someone to converse with:
+
+ 16:06:19 <ev> https://wiki.ubuntu.com/ErrorTracker/ServerSideHooks
+
+ 16:06:27 <ev> - Thanks to Martin, we now have end-to-end system tests up and running on
+
+ 16:06:27 <ev> canonistack \o/:
+
+ 16:06:28 <ev> https://wiki.ubuntu.com/ErrorTracker/Deployment
+
+ 16:06:28 <ev> - Did code review for Brian and Martin, and countless pastebin discussions
+
+ 16:06:28 <ev> over IRC.
+
+ 16:06:37 <ev> - We're going to be setting up Tarmac on canonistack to drive the end to
+
+ 16:06:37 <ev> end system testing on each new merge proposal. This is blocked on us
+
+ 16:06:37 <ev> getting canonistack credentials for the Tarmac instance, so that it can
+
+ 16:06:37 <ev> drive juju to spin up the nodes for testing (RT 57881).
+
+ 16:06:37 <ev> - We also did some pair programming (crowded around my laptop - damn you
+
+ 16:06:37 <ev> tmux) to create a mapping between bugs and crash signatures:
+
+ 16:06:37 <ev> lp:~ev/errors/bug-to-crash-signature
+
+ 16:06:45 <ev> - We're moving the retracers to prodstack (RT 58019) after doing some
+
+ 16:06:45 <ev> investigations around a copy on write backend using LVM or overlayfs. This
+
+ 16:06:45 <ev> will fix the disk space problems we've been encountering, according to
+
+ 16:06:45 <ev> James.
+
+ 16:06:54 <ev> - Worked on improving error handling around open ID logins. I've also
+
+ 16:06:54 <ev> restricted access to the full stack traces to just
+
+ 16:06:54 <ev> ~canonical-ubuntu-engineering, per James' request (bug 1087361). In a later
+
+ 16:06:54 <ev> change, which I'm working on, we'll provide sanitised stack traces and
+
+ 16:06:54 <ev> instance pages for anyone in ~ubuntu-bugcontrol to view.
+
+ 16:06:56 <ubottu> Error: Launchpad bug 1087361 could not be found
+
+ 16:07:04 <ev> - Worked through the implementation plan for a view of all the errors that
+
+ 16:07:04 <ev> your team is responsible for with Brian.
+
+ 16:07:04 <ev> - Came up with a plan to handle statistical noise from more developers using
+
+ 16:07:04 <ev> a particular error type or a bug fix causing more reports of a particular
+
+ 16:07:04 <ev> error type.
+
+ 16:07:14 <ev> - Worked with Ivanka to come up with more friendly messaging and started to
+
+ 16:07:14 <ev> build a persona for communicating errors to the user (think of the Google
+
+ 16:07:15 <ev> Chrome robot).
+
+ 16:07:15 <ev> - Call with Rick to fill him in on the sprint's progress.
+
+ 16:07:22 <ev> - Came up with a plan for receiving crashes from unpackaged software (like
+
+ 16:07:22 <ev> Steam games).
+
+ 16:07:22 <ev> - Came up with a plan to clean up the chain of bug duplicates as it relates
+
+ 16:07:22 <ev> to errors.ubuntu.com (this will provide steady footing for the 'prompting
+
+ 16:07:22 <ev> for software updates for the crashes they fix' functionality):
+
+ 16:07:22 <ev> https://bugs.launchpad.net/errors/+bug/1086754
+
+ 16:07:25 <ubottu> Ubuntu bug 1086754 in Apport "Some linked bug reports are private duplicates" [Medium,Triaged]
+
+ 16:07:33 <ev> - We decided there's no programmatic way of untangling errors from libraries
+
+ 16:07:33 <ev> and the applications that consume them, but will surface likely library
+
+ 16:07:33 <ev> issues using map/reduce jobs:
+
+ 16:07:33 <ev> https://bugs.launchpad.net/errors/+bug/1072854
+
+ 16:07:36 <ubottu> Ubuntu bug 1072854 in Errors "Handle bugs in libraries better" [High,Confirmed]
+
+ 16:07:43 <ev> - Talked through the security implications of allowing users to see their
+
+ 16:07:43 <ev> crashes given just the system UUID. We could technically blacklist any IP
+
+ 16:07:43 <ev> with multiple 404s against the system page (brute force SHA512 guessing),
+
+ 16:07:43 <ev> but we'll likely just let users see a table of basic information about each
+
+ 16:07:43 <ev> crash. Providing further access would imply also letting them delete the
+
+ 16:07:43 <ev> data, which has the same trust problem of not absolutely knowing the person
+
+ 16:07:44 <ev> viewing the data is the owner.
+
+ 16:07:55 <ev> - Came up with a really nice solution with James (RT 55518) for providing a
+
+ 16:07:55 <ev> secondary/analytics cluster and a development cluster using sstableloader
+
+ 16:07:55 <ev> and single beefy machines to represent each additional cluster. This
+
+ 16:07:55 <ev> creates one directional pipes of the data from the core Cassandra cluster
+
+ 16:07:55 <ev> to each additional cluster. So it means we cannot use the analytics cluster
+
+ 16:07:55 <ev> to do back population. We'll therefore still install Hadoop on the core
+
+ 16:07:56 <ev> cluster as well, and just use it for the back population map/reduce jobs
+
+ 16:07:56 <ev> (putting all other M/R jobs on the analytics cluster).
+
+ 16:08:06 <ev> - We came up with several actionable items for getting more teams using
+
+ 16:08:06 <ev> errors.ubuntu.com. If you have any ideas on this, do let me know! I really
+
+ 16:08:06 <ev> want to ensure everyone has at least considered making it part of their
+
+ 16:08:06 <ev> daily routine and know what the blockers are to people using it more.
+
+ 16:08:15 <ev> - Attended a Cassandra London meetup on moving from MongoDB to Cassandra.
+
+ 16:08:16 <ev> - Full report forthcoming, but here are my notes (there may also be a video
+
+ 16:08:16 <ev> at some point):
+
+ 16:08:16 <ev> http://paste.ubuntu.com/1427650/
+
+ 16:08:22 <ev> - Met a few guys from Meta Broadcast after their talk. They seem well suited
+
+ 16:08:22 <ev> for juju, so I've sent them along to Jorge. They also want to work with us
+
+ 16:08:22 <ev> on bringing multimedia to the dash and TV, so I set up their CEO with John
+
+ 16:08:22 <ev> L.
+
+ 16:08:28 <ev> - From talking to some other Hadoop users at the meetup, I learned that the
+
+ 16:08:28 <ev> released version of Pig has a number of thorny issues that can be avoided
+
+ 16:08:28 <ev> by building from trunk.
+
+ 16:08:34 <ev> - No one has a better idea of how to recreate a Column Family with the
+
+ 16:08:34 <ev> correct comparators other than just pointing all requests at both the old
+
+ 16:08:34 <ev> and the new CF while siphoning off data from the old into the new as a
+
+ 16:08:34 <ev> background task.
+
+ 16:08:42 <ev> - Started fleshing out tasks to complete at the end and beginning of each
+
+ 16:08:42 <ev> release:
+
+ 16:08:42 <ev> https://wiki.ubuntu.com/ErrorTracker/UbuntuReleasePreparation
+
+ 16:08:42 <ev> - Chased down getting http://graphite.engineering.ubuntu.com up and running,
+
+ 16:08:42 <ev> which is now is! Filed RT 57837 for a graph of column family sizes, per
+
+ 16:08:42 <ev> James' request. Filed RT 58016 for getting a statsd instances feeding
+
+ 16:08:42 <ev> Cassandra timeouts and errors.ubuntu.com access data into graphite.
+
+ 16:08:48 <ev> - Moved packages from my personal PPA to the new daisy-pluckers daisy-seeds
+
+ 16:08:48 <ev> PPA, pulling in changes from raring where possible.
+
+ 16:08:48 <ev> - Tested and pushed out a new pycassa to the retracers. This will hopefully
+
+ 16:08:48 <ev> help us understand why we're seeing only a single retry on Cassandra
+
+ 16:08:48 <ev> connection attempts when we have it explicitly set to 5.
+
+ 16:09:00 <ev> - Countless other things. It's been a very busy two weeks and I'm still trying
+
+ 16:09:00 <ev> to get everything codified on the wiki, in bugs, in RT tickets, and in a big
+
+ 16:09:00 <ev> writeup of all the progress we've made. The sprint was one of the most
+
+ 16:09:00 <ev> productive weeks of my time at Canonical and I was elated to hear that Rick
+
+ 16:09:00 <ev> made a point of keeping money in the budget for small-group sprints in 2013.
+
+ 16:09:00 <ev> A massive thanks to Steve, Rick, and Pete for approving this and Brian,
+
+ 16:09:00 <ev> Martin, Dmitrijs, Ivanka, and James for lending their time.
+
+ 16:09:04 <ev> done \o/
+
+ 16:09:38 <stgraber> - Upstart
+
+ 16:09:38 <stgraber> - Some cleanup of the prctl branch, sent an e-mail to upstart-devel and ted about it, waiting for final review.
+
+ 16:09:41 <stgraber> - Dug into the libnih dbus code generator and fixed the 'as' type issue, sent MP, reviewd and accepted by James, still needs uploading.
+
+ 16:09:44 <stgraber> - Merged gdbus port of the dconf bridge, cleaned up the code a bit after that.
+
+ 16:09:47 <stgraber> - Container
+
+ 16:09:49 <stgraber> - Quite a lot of code review for patches being sent upstream.
+
+ 16:09:52 <stgraber> - Did a lot of code cleanup, dropped any hardcoded path in the code, using autoconf everywhere.
+
+ 16:09:55 <stgraber> - Updated the upstream documentation for the new contribution workflow.
+
+ 16:09:58 <stgraber> - Improved locking in lxc-create to allow for concurent creation of containers using different templates.
+
+ 16:10:01 <stgraber> - Update python bindings for the new set/get_cgroup_item API, rebased some of the code on the new API.
+
+ 16:10:04 <stgraber> - Discussed the release plan upstream and sent the 0.9~alpha1 pull request to Daniel.
+
+ 16:10:07 <stgraber> - Finished porting arkose to python3, released 1.6 and uploaded to the archive.
+
+ 16:10:10 <stgraber> - Release
+
+ 16:10:12 <stgraber> - Released alpha-1 for Edubuntu and Kubuntu.
+
+ 16:10:15 <stgraber> - Fixed a few bugs in the QA Tracker related to images auto-publishing based on manifest.
+
+ 16:10:18 <stgraber> - Extended the manifest in the tracker to support an active/disabled flag so entries can remain on the manifest even when not planned for release in the current milestone.
+
+ 16:10:22 <stgraber> - Networking
+
+ 16:10:24 <stgraber> - Wrote patch to make bridge-utils work with any init system (well, at least sysvinit and upstart)
+
+ 16:10:27 <stgraber> - Uploaded a new ifenslave-2.6 fixing all the remaining bugs on Launchpad.
+
+ 16:10:30 <stgraber> - Uploaded a new ifupdown fixing a bunch of bugs in ifupdown and the upstart jobs, changes forwarded to Debian.
+
+ 16:10:33 <stgraber> - Went through bridge-utils and vlan bugs.
+
+ 16:10:36 <stgraber> - Reviewed redhat's fiberchannel patchset for isc-dhcp, will need quite a lot of changes to apply.
+
+ 16:10:39 <stgraber> - Other
+
+ 16:10:41 <stgraber> - Did some more precise UEFI secureboot testing for Colin, it actually works now!
+
+ 16:10:44 <stgraber> - TODO
+
+ 16:10:47 <stgraber> - Upload new libnih.
+
+ 16:10:49 <stgraber> - Add test for Restarted event to the dbus-events upstart branch and propose for merging.
+
+ 16:10:52 <stgraber> - Go through the isc-dhcp and resolvconf bugs.
+
+ 16:10:55 <stgraber> - Try to apply redhat's fiberchannel patchset to our isc-dhcp.
+
+ 16:10:57 <stgraber> - Figure out how to build the shim locally and sign it with a local key, then work with slangasek to figure out what's the exact bug I'm having.
+
+ 16:11:00 <stgraber> - Travel/Sprint/...
+
+ 16:11:03 <stgraber> - I'll have a slightly weird work schedule on Friday as I'll be traveling to Montreal, will still be working as usual and be available on IRC.
+
+ 16:11:06 <stgraber> - I'm arriving in Europe on Saturday (15th) and will be back in Canada on the 2nd of January.
+
+ 16:11:09 <stgraber> - Monday through Wednesday next week, we'll have an upstart sprint on European time.
+
+ 16:11:12 <stgraber> - Thursday I'll be working as usual but on European time.
+
+ 16:11:14 <stgraber> - Then I'll be off from Friday (21st) until I'm back in Canada on the 2nd of January.
+
+ 16:11:17 <stgraber> - So if you need anything non-upstart related from me this year, make sure to talk to me this week or Thursday next week.
+
+ 16:11:20 <stgraber> (DONE)
+
+ 16:12:01 <slangasek> ev: why are we damning tmux?
+
+ 16:12:16 <ev> slangasek: because setting up multiuser tmux was eating up way too much time
+
+ 16:12:30 <slangasek> ev: ah, so tmux isn't actually better than screen :)
+
+ 16:12:34 <ev> slangasek: it has a real fun time trying to negotiate the screen size
+
+ 16:12:41 <xnox> slangasek: and /me killing the group session by accident did not help either.
+
+ 16:12:43 <ev> slangasek: if anyone exits tmux, EVERYONE DIES
+
+ 16:12:44 <slangasek> ev: +1 on retracers moving to prodstack - very cool
+
+ 16:12:58 <ev> slangasek: yup! We're moving the whole stack minus cassandra, actually
+
+ 16:13:02 <ev> just talked through it with Tom
+
+ 16:13:52 <xnox> * Fix UTAH ISO smoke testing:
+
+ 16:13:52 <xnox> - correct bind mounts for DHCP (bug 1061242)
+
+ 16:13:52 <xnox> - re-enable wubi test (lp:~xnox/utah/wubi-still-exists)
+
+ 16:13:52 <xnox> - pep8 fixes (lp:~xnox/utah/new-pep8)
+
+ 16:13:52 <xnox> * Requesting separate & more comprehensive static ISO image validation
+
+ 16:13:53 <xnox> in UTAH without blocking other tests (bug 1088444)
+
+ 16:13:53 <ubottu> Launchpad bug 1061242 in ubiquity (Ubuntu) "apt-install fails during success-command because target environment cannot resolve DNS" [High,Incomplete] https://launchpad.net/bugs/1061242
+
+ 16:13:55 <xnox> * Fix racy upstart test for dep8, but a different one failed in
+
+ 16:13:56 <ubottu> Launchpad bug 1088444 in UTAH "ISO static validation non-critical tests" [Low,Triaged] https://launchpad.net/bugs/1088444
+
+ 16:13:57 <xnox> jenkins =( (bug 1089159)
+
+ 16:13:58 <ubottu> Launchpad bug 1089159 in upstart (Ubuntu) "ADT test-suite failure" [Medium,Confirmed] https://launchpad.net/bugs/1089159
+
+ 16:13:59 <xnox> * Upload new procenv and identify cause for upstart test suite failure
+
+ 16:14:01 <xnox> in debian on amd64/xfs
+
+ 16:14:03 <xnox> * Fix above with a libnih merge proposal (bug 672643)
+
+ 16:14:04 <ubottu> Launchpad bug 672643 in libnih "make test fails on xfs filesystem" [Low,Triaged] https://launchpad.net/bugs/672643
+
+ 16:14:07 <xnox> * Verify ubiquity SRUs (bug 792652) (bug 887879) (bug 1027648)
+
+ 16:14:09 <xnox> (bug 1055967) (bug 1070427)
+
+ 16:14:10 <ubottu> Launchpad bug 792652 in ubiquity (Ubuntu Precise) "ubiquity crashed with ValueError in command(): I/O operation on closed file" [High,Fix committed] https://launchpad.net/bugs/792652
+
+ 16:14:11 <xnox> * Add quantal/raring to manpages.ubuntu.com and file RT#57985 for
+
+ 16:14:12 <ubottu> Launchpad bug 887879 in ubiquity (Ubuntu Precise) "ubiquity crashed with ValueError in raw_decode(): No JSON object could be decoded" [Medium,Fix committed] https://launchpad.net/bugs/887879
+
+ 16:14:13 <xnox> deployment
+
+ 16:14:13 <ubottu> Launchpad bug 1027648 in ubiquity (Ubuntu Precise) "ubiquity crashed with ValueError in command(): I/O operation on closed file." [High,Fix committed] https://launchpad.net/bugs/1027648
+
+ 16:14:14 <ubottu> Launchpad bug 1055967 in ubiquity (Ubuntu Precise) "ubiquity kde frontend is broken in current kubuntu daily builds" [Critical,Fix committed] https://launchpad.net/bugs/1055967
+
+ 16:14:15 <xnox> * Made merge proposal to avoid partman hanging in the reuse/replace
+
+ 16:14:15 <ubottu> Launchpad bug 1070427 in ubiquity (Ubuntu Quantal) "Ubiquity removes kernel headers, fails to build nonfree drivers" [High,Triaged] https://launchpad.net/bugs/1070427
+
+ 16:14:17 <xnox> recipes. (bug 1085991)
+
+ 16:14:18 <ubottu> Launchpad bug 1085991 in ubiquity (Ubuntu) "Partitioning options do not come up in ubiquity & d-i" [High,Confirmed] https://launchpad.net/bugs/1085991
+
+ 16:14:19 <xnox> * Upstart continuing to add support in upstart to parse and load
+
+ 16:14:21 <xnox> config sources for user sessions.
+
+ 16:14:39 <xnox> done.
+
+ 16:16:24 <xnox> ogra is off, doko?
+
+ 16:16:51 <doko> - getting gcc-4.7 cross built (just needed two upstream fixes)
+
+ 16:16:51 <doko> - trying to understand cross build setups
+
+ 16:16:51 <doko> - modifying the armhf cross compiler to install into a different location than t
+
+ 16:16:51 <doko> he armhf native compiler
+
+ 16:16:51 <doko> - more gcc-4.7 packaging changes, fallout from the libxxx-4.7-dev splits, that s
+
+ 16:16:51 <doko> hould be all for now
+
+ 16:16:53 <doko> - moving the gcc-4.7 changes to gcc-4.8
+
+ 16:16:55 <doko> - python m-a same/allowed changes
+
+ 16:16:57 <doko> - gcc-linaro merge
+
+ 16:16:59 <doko> (done)
+
+ 16:22:14 <slangasek> * Processing SRU backlog for precise; the X backport stack is now in
+
+ 16:22:14 <slangasek> * Ongoing discussions about the UEFI Samsung bricking bug.  Possibly an issue with the samsung-laptop module.
+
+ 16:22:17 <slangasek> * Helped get upstart 1.6.1 ready for raring
+
+ 16:22:20 <slangasek> * TODO:
+
+ 16:22:22 <slangasek> * updating shim for: MOK support, fixing noisiness on boot, trying to debug stgraber's unsigned kernel boot bug
+
+ 16:22:25 <slangasek> * looking at getting edk2 (ovmf) packaged for raring
+
+ 16:23:22 <slangasek> (done)
+
+ 16:23:27 <stgraber> slangasek: do you already have a branch of the new shim that I could build+sign here and try to boot?
+
+ 16:23:40 <slangasek> stgraber: no, will try to do that today
+
+ 16:23:47 <bdmurray> crashdb sprint (lots of discussions there)
+
+ 16:23:48 <bdmurray> wrote pycassa code to query cassandra crashdb over an ssh tunnel
+
+ 16:23:48 <bdmurray> pushed new version of whoopsie fixing bug 1084311
+
+ 16:23:48 <bdmurray> worked on fixing bug 1078801 and sorting of package versions on buckets page
+
+ 16:23:50 <ubottu> Launchpad bug 1084311 in Whoopsie "modifies .uploaded time every time whoopsie starts" [Medium,Fix released] https://launchpad.net/bugs/1084311
+
+ 16:23:50 <bdmurray> updated bug 1088587 (apport/errors) with research
+
+ 16:23:51 <ubottu> Launchpad bug 1078801 in Errors "Not clear which Ubuntu versions an error affects" [Medium,Triaged] https://launchpad.net/bugs/1078801
+
+ 16:23:53 <ubottu> Launchpad bug 1088587 in Apport "crashes still appearing regarding os.unlink(uploaded)" [Undecided,New] https://launchpad.net/bugs/1088587
+
+ 16:23:59 <bdmurray> reported and fixed bug 1089083 regarding version ordering on buckets page of errors
+
+ 16:24:00 <ubottu> Launchpad bug 1089083 in Errors "versions on bucket page are not ordered" [Medium,In progress] https://launchpad.net/bugs/1089083
+
+ 16:24:02 <bdmurray> pushed errors branch fixing html title on buckets page - bug 1086796
+
+ 16:24:03 <ubottu> Launchpad bug 1086796 in Errors "html title does not change" [Medium,Fix committed] https://launchpad.net/bugs/1086796
+
+ 16:24:04 <bdmurray> pushed daisy branch fixing UnicodeEncodeError regarding DupeSig
+
+ 16:24:07 <bdmurray> pushed errors branch to view bucketids with unicode in them
+
+ 16:24:09 <bdmurray> tested a new rollout of errors and daisy with thedac
+
+ 16:24:20 <bdmurray> updated bug bot on cranberry to comment on ubiquity bug reports
+
+ 16:24:20 <bdmurray> discovered an issue with the SRU for bug 1084296
+
+ 16:24:20 <bdmurray> SRU verification of bug 1084296 and bug 1084996
+
+ 16:24:20 <bdmurray> SRU verification of bug 1048059
+
+ 16:24:20 <bdmurray> with slangasek clean-up of the old unverified SRUs
+
+ 16:24:23 <ubottu> Launchpad bug 1084296 in apport (Ubuntu Quantal) "possible for a 2nd occurrence of a crash not to be sent to errors" [High,Fix committed] https://launchpad.net/bugs/1084296
+
+ 16:24:24 <ubottu> Launchpad bug 1084996 in apport (Ubuntu Quantal) " StacktraceAddressSignature is missing" [Undecided,Fix committed] https://launchpad.net/bugs/1084996
+
+ 16:24:25 <ubottu> Launchpad bug 1048059 in udisks "Adding ACLs to /media/$user does not work" [Undecided,New] https://launchpad.net/bugs/1048059
+
+ 16:24:35 <bdmurray> merging and testing fix for bug 1071388
+
+ 16:24:36 <ubottu> Launchpad bug 1071388 in ubuntu-release-upgrader (Ubuntu Quantal) "UnicodeDecodeError in askYesNoQuestion of DistUpgradeViewText.py" [High,Triaged] https://launchpad.net/bugs/1071388
+
+ 16:24:38 <ev> ow, my highlight
+
+ 16:24:46 <bdmurray> ⁂ done⁂
+
+ 16:25:31 <slangasek> any questions over the above?
+
+ 16:26:00 <xnox> bdmurray: what did ubiquity bug commenter bot learned to do?
+
+ 16:27:00 <bdmurray> xnox: set crashes to high, tag bugs with the release and ubiquity version, mark hardware errors as invalid, tell oneiric installers to try precise
+
+ 16:27:07 <bdmurray> xnox: probably some more stuff too
+
+ 16:27:20 <bdmurray> xnox: it had be accidentally disabled for a bit :-(
+
+ 16:28:34 <slangasek> [TOPIC] Bugs
+
+ 16:28:57 <xnox> bdmurray: i see. thanks.
+
+ 16:29:06 <slangasek> bdmurray: any bugs we should be worrying about?
+
+ 16:29:12 <bdmurray> xnox: we can talk about it more later if you'd like
+
+ 16:30:03 <bdmurray> slangasek: not specifically however generally where does bug 1087630 belong?
+
+ 16:30:06 <ubottu> Launchpad bug 1087630 in ubuntu-meta (Ubuntu) "server minimal virtual installations are bloated" [High,Confirmed] https://launchpad.net/bugs/1087630
+
+ 16:30:22 <infinity> ubuntu-meta, but assigned to the server team.
+
+ 16:30:30 <slangasek> bdmurray: right, what infinity said
+
+ 16:30:35 <bdmurray> okay, thanks
+
+ 16:30:58 <bdmurray> it actually looks like an issue with the qa team setup from what I can tell
+
+ 16:31:38 <xnox> bdmurray: and I think jamespage was looking into that. E.g. the testing framework makes the minimal install bloated, not the installation itself.
+
+ 16:31:44 <bdmurray> this is interesting but I'll dig into it
+
+ 16:31:48 <bdmurray> https://errors.ubuntu.com/bucket/?id=%2Fusr%2Fbin%2Fsoftware-properties-gtk%3ASystemError%3A%3Cmodule%3E%3A__init__%3A__init__%3Aopen
+
+ 16:32:35 * xnox ponders if d-i can report total used space after tasksel but before late-commands.... or somehow subtract testing overlay size.
+
+ 16:34:01 <slangasek> bdmurray: interesting indeed; I've got nothing, will leave you to dig into it :)
+
+ 16:34:05 <slangasek> anything else?
+
+ 16:34:35 <bdmurray> the Problem with MergeList issue shouldn't happen in 12.10 iirc
+
+ 16:35:21 <slangasek> well, this one looks at least superficially different from the ones we had before
+
+ 16:35:30 <slangasek> claiming that a record in the file is invalid
+
+ 16:36:15 <xnox> en%5fUS is interesting ending of the filename. why is it processing translations?
+
+ 16:36:42 <infinity> That's just straight up stream/file corruption, isn't it?
+
+ 16:37:09 <infinity> Not that apt/libapt/python-apt shouldn't deal with that tons better than it currently does, but...
+
+ 16:37:14 <slangasek> xnox: because the translations should also be merged into the database that you see with 'apt-cache show' etc?
+
+ 16:37:42 <slangasek> infinity: it's a bit surprising for that to happen so frequently with that one URL
+
+ 16:37:56 <slangasek> er, assuming it's all that one url
+
+ 16:37:59 <xnox> slangasek: and I don't see any en_US translations present for quantal multiverse here http://archive.ubuntu.com/ubuntu/dists/quantal/multiverse/i18n/
+
+ 16:38:03 <infinity> Oh, indeed.
+
+ 16:38:50 <infinity> Those signatures aren't all the same at all.
+
+ 16:38:58 <infinity> https://errors.ubuntu.com/oops/013c3eee-3284-11e2-b1c9-2c768aafd08c
+
+ 16:39:07 <infinity> It's just taking the traceback, not the error.
+
+ 16:39:11 <slangasek> ok
+
+ 16:39:28 <slangasek> anyway, let's not try to dissect this here
+
+ 16:40:25 <slangasek> take it to #ubuntu-devel afterwards if you want to kibitz bdmurray's investigation ;)
+
+ 16:40:46 <slangasek> bdmurray: any other bugs?
+
+ 16:41:01 <bdmurray> slangasek: nope
+
+ 16:41:07 <slangasek> ok, cool
+
+ 16:41:08 <slangasek> thanks
+
+ 16:41:09 <xnox> ev: mis-bucketing ^^^^^ stuff is bucketed by traceback instead of error message.
+
+ 16:41:12 <slangasek> [TOPIC] AOB
+
+ 16:42:40 <slangasek> anything else?
+
+ 16:42:43 <infinity> So, in the AOB realm for me, my last day of the year is today.  I'll be "around" here and there, if someone needs me for Ubuntuy or Debiany things, but don't expect responses before Jan 02.
+
+ 16:43:25 <xnox> infinity: so with you & ogra gone #ubuntu-arm will be almost unresponsive =))))
+
+ 16:43:40 <slangasek> well, I guess the rest of us will have to pitch in there :)
+
+ 16:44:20 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

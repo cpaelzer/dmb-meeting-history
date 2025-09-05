@@ -1,0 +1,531 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 04 Mar at 16:01 &mdash; 16:45 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-03-04-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 16:01.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 16:12.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html   (bdmurray, 16:12)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 16:28.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 16:28)
+ * ''LINK:'' https://autopkgtest.ubuntu.com/packages/d/dgit/hirsute/amd64 looks like it passed now, after doko retriggered it  (xnox, 16:32)
+
+=== AOB ===
+
+Discussion started by bdmurray at 16:43.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (83)
+ * sil2100 (31)
+ * ubottu (22)
+ * tdaitx_ (22)
+ * rbalint (16)
+ * xnox (14)
+ * slyon (14)
+ * JawnSmith (12)
+ * juliank (11)
+ * dbungert (8)
+ * meetingology (2)
+ * mclemenceau (2)
+
+
+
+== Full log ==
+
+
+ 16:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:07 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:01 <bdmurray> #topic Lightning Round
+
+ 16:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint mwhudson juliank waveform slyon jawnsmith dbungert)
+
+ 16:01 <bdmurray> bdmurray tdaitx xnox mwhudson slyon doko juliank dbungert jawnsmith rbalint vorlon sil2100 waveform
+
+ 16:01 <bdmurray> \o/
+
+ 16:01 <bdmurray> submitted phased-updater MP re improved logging
+
+ 16:01 <bdmurray> sponsored u-r-u fix for LP: #1907713
+
+ 16:01 <bdmurray> with William found an issue with python-apt / apt and KeyboardInterrupt
+
+ 16:01 <bdmurray> uploaded u-r-u to restore sources.list on SIGINT where possible LP: #1898026
+
+ 16:02 <ubottu> Launchpad bug 1907713 in ubuntu-release-upgrader (Ubuntu Hirsute) "aufs support is deprecated and should be handled on upgrade" [High,Fix released] https://launchpad.net/bugs/1907713
+
+ 16:02 <ubottu> Launchpad bug 1898026 in ubuntu-release-upgrader (Ubuntu Hirsute) "interruption of dist-upgrade can leave you next release in sources.list" [High,In progress] https://launchpad.net/bugs/1898026
+
+ 16:02 <bdmurray> with IS tested the fix for LP: #1914465, merged it to the bzr branch
+
+ 16:02 <bdmurray> submitted RT #129952 regarding updating the iso-tracker with the above fix
+
+ 16:02 <ubottu> Launchpad bug 1914465 in Ubuntu QA Website "Download links refers to MD5 checksum - it actually refers to a SHA256 checksum" [Low,Fix released] https://launchpad.net/bugs/1914465
+
+ 16:02 <bdmurray> uploaded gnutls with autopkgtest fix for expired cert LP: #1910255
+
+ 16:02 <ubottu> Launchpad bug 1910255 in gnutls28 (Ubuntu Groovy) "autopkgtest fails due to an expired certificate" [Low,Fix committed] https://launchpad.net/bugs/1910255
+
+ 16:02 <bdmurray> improved a bug reporter fix for sources list and ports LP: #1917220
+
+ 16:02 <ubottu> Launchpad bug 1917220 in ubuntu-release-upgrader (Ubuntu) "ports.ubuntu.com not selected for arm64 architecture" [Medium,In progress] https://launchpad.net/bugs/1917220
+
+ 16:02 <bdmurray> submitted sru-report MP fixing a KeyError w/ autopkg_fails
+
+ 16:02 <bdmurray> sru-review of google-osconfig-agent
+
+ 16:02 <bdmurray> investigation into devel Error Tracker and django request being empty
+
+ 16:02 <bdmurray> ✔ done
+
+ 16:02 <bdmurray> tdaitx_:
+
+ 16:02 <tdaitx_> jck-11
+
+ 16:02 <tdaitx_> * creation of lxc instances for server + test platform
+
+ 16:02 <tdaitx_> * self-contained network tests in the jck server: remote agents using OpenJDK 11 Reference Implementation, http, ftp, and kerberos
+
+ 16:02 <tdaitx_> * xpra for display tests for jck runtime tests, will come in handy for interactive tests
+
+ 16:02 <tdaitx_> * sshfs sharing jck server directories (unprivileged containers can't mount smb/nfs)
+
+ 16:02 <tdaitx_> * triggered multiple builds to establish new baseline: slow going, 4 to 7 hours per test, 4 releases, 2 tests for each
+
+ 16:02 <tdaitx_> * some issues:
+
+ 16:02 <tdaitx_> - lxc failing to access indexes and images, now know to be caused by lxd/lxc somehow losing the proxy config keys, now under investigation by IS
+
+ 16:02 <tdaitx_> -  jenkins node going offline all the time (also highly affected by the bos zone outage) crashes the job but does not kill the script it started
+
+ 16:02 <tdaitx_> * pexpect ftbfs:
+
+ 16:02 <tdaitx_> - lp builder user' group not in /etc/group and /usr/bin/groups complains loudly
+
+ 16:02 <tdaitx_> - /etc/bash.bashrc calls /usr/bin/groups
+
+ 16:02 <tdaitx_> - bash --rcfile should not call any other rc file (according to help, man page, and assorted docs)
+
+ 16:02 <tdaitx_> - bash 2.03-1 added patch to *always* load /etc/bash.bashrc before the rcfile, contrary to man, help, docs; changelog mentions "it is empty by default" back then
+
+ 16:02 <tdaitx_> - pexpect uses bash --rcfile, which loads /etc/bash.bashrc, calling /usr/bin/groups to add some lovely grumpiness to the output, causing the 4 tests to fail
+
+ 16:03 <tdaitx_> - no way to use --rcfile without also loading system bashrc
+
+ 16:03 <tdaitx_> - all tests were disabled in the previous version
+
+ 16:03 <tdaitx_> - fix: builder? bash? tests?
+
+ 16:03 <tdaitx_> Other:
+
+ 16:03 <tdaitx_> - looked over jenkins job builders from server team, neat, tried it myself in our jenkins jck but sso login shouted 403, need to reach IS for support/permission
+
+ 16:03 <tdaitx_> - out tomorrow and Wednesday next week
+
+ 16:03 <tdaitx_> (done)
+
+ 16:03 <xnox> one moment
+
+ 16:03 <xnox> fixing one-grub uploads to build i386 packages in hirsute, otherwise launchpad doesn't allow migrating them from -proposed to -release.
+
+ 16:03 <xnox> working on casper improvements w.r.t. cdrom.mount & md5checks
+
+ 16:03 * bdmurray waits expectantly
+
+ 16:03 <xnox> working on core-initrd updates to support more server-like hardware
+
+ 16:03 <xnox> done
+
+ 16:03 <xnox> btw how do i get rid of freenode PM spam?
+
+ 16:04 <slyon> - Fixed lvm2 initramfs issue, bug #1915579
+
+ 16:04 <slyon> - +1 maintenance (Wed/Thu)
+
+ 16:04 <slyon> + working on rust FTBFS/transition
+
+ 16:04 <slyon> + working on auto-wlroots transition
+
+ 16:04 <slyon> - Working on s390x HMC access with Frank & IS
+
+ 16:04 <slyon> === Netplan ===
+
+ 16:04 <bdmurray> slyon:
+
+ 16:04 <ubottu> bug 1915579 in lvm2 (Ubuntu) "lvm2 version 2.03.11-2ubuntu1 breaks initramfs" [Critical,Fix committed] https://launchpad.net/bugs/1915579
+
+ 16:04 <slyon> - Supporting different people on IRC
+
+ 16:04 <slyon> - Fixed DNS resolver autopkgtest issue in 0.101-4ubuntu3
+
+ 16:04 <slyon> - Review & merge of "Duplicate ARPIPTargets" PR#199, bug #1915837
+
+ 16:04 <slyon> - Prepared final PR#193 for NetworkManager backend integration
+
+ 16:04 <slyon> - Working on 'netplan set' CLI, writing back to (multiple) existing files
+
+ 16:04 <slyon> (done)
+
+ 16:04 <ubottu> bug 1915837 in netplan "Duplicate values set to ARPIPTargets property in NetDev files" [Undecided,Triaged] https://launchpad.net/bugs/1915837
+
+ 16:04 <bdmurray> doko:
+
+ 16:06 <bdmurray> how about juliank?
+
+ 16:06 <juliank> * apt 2.2.1
+
+ 16:06 <juliank> * finalizing apt groovy SRU preparations
+
+ 16:06 <juliank> * reviewed merge request for autopkgtest-cloud from rbalint
+
+ 16:06 <juliank> * cleaned up a pile of emails
+
+ 16:06 <juliank> * fixed setuptools migration
+
+ 16:06 <juliank> - weirdness with macsyfinder becoming amd64-only (from all) breaking autopkgtest ability to find source package
+
+ 16:06 <juliank> (done)
+
+ 16:06 <dbungert> * LP: #1913321 - Done!
+
+ 16:06 <dbungert> * LP: #1915866 - 2 non-MIR blocking items fixed here, pending review
+
+ 16:06 <ubottu> Launchpad bug 1913321 in iniparser (Ubuntu Hirsute) "[MIR] iniparser (dependency of mtd-utils)" [Undecided,Fix released] https://launchpad.net/bugs/1913321
+
+ 16:06 <dbungert> * autoinstall-generator - snap, documentation and CLI help, debug diagnostics,
+
+ 16:06 <ubottu> Launchpad bug 1915866 in iniparser (Ubuntu) "non-blocking items from MIR of iniparser: tests, 1 byte stack overflow" [Low,In progress] https://launchpad.net/bugs/1915866
+
+ 16:06 <dbungert> schema verification, fixes for schema incorrectness, first step handling for
+
+ 16:06 <dbungert> d-i partitioning, launchpad setup
+
+ 16:06 <dbungert> * subiquity - fix schema generation and verify schema in CI
+
+ 16:06 <dbungert> (done)
+
+ 16:06 <JawnSmith> * LP: #1571506 SRU to focal
+
+ 16:06 <ubottu> Launchpad bug 1571506 in initramfs-tools (Ubuntu Focal) "update-initramfs should include firmware from /lib/firmware/updates" [Undecided,In progress] https://launchpad.net/bugs/1571506
+
+ 16:06 <JawnSmith> * LP: #1901043 SRU verification for focal
+
+ 16:06 <ubottu> Launchpad bug 1901043 in ubiquity (Ubuntu Focal) "No sound in ubiquity-dm with nomodeset" [Medium,Fix committed] https://launchpad.net/bugs/1901043
+
+ 16:06 <JawnSmith> * LP: #1912718 SRU verification for focal and groovy
+
+ 16:06 <ubottu> Launchpad bug 1912718 in update-manager (Ubuntu Hirsute) "update-manager: clicks do not toggle checkboxes for "Remove old kernels"" [High,Fix released] https://launchpad.net/bugs/1912718
+
+ 16:06 <JawnSmith> * LP: #1913476 SRU verification for focal and groovy
+
+ 16:07 <ubottu> Launchpad bug 1913476 in update-manager (Ubuntu Focal) "/usr/bin/update-manager:TypeError:/usr/bin/update-manager@118:start_update:start_available:refresh_cache:update:_make_groups:__contains__" [High,Fix committed] https://launchpad.net/bugs/1913476
+
+ 16:07 <JawnSmith> * Proposed migration: man-db (success)
+
+ 16:07 <JawnSmith> * Raspberry pi GPIO work
+
+ 16:07 <JawnSmith> * SPI and RPi.GPIO are working without sudo in
+
+ 16:07 <JawnSmith> hirsute with kernel 5.10
+
+ 16:07 <JawnSmith> * i2c not working yet, still investigating
+
+ 16:07 <JawnSmith> [done]
+
+ 16:07 <rbalint> * Uploaded libcec 6.0.2-2 via Debian
+
+ 16:07 <rbalint> * partner work
+
+ 16:07 <rbalint> * triaged and fixed LP: #1917631
+
+ 16:07 <ubottu> Launchpad bug 1917631 in gcl (Ubuntu) "gcl abort on start in hirsute" [Undecided,Fix released] https://launchpad.net/bugs/1917631
+
+ 16:07 <rbalint> * uploaded 247.3-1ubuntu4 with a few targeted fixes
+
+ 16:07 <rbalint> * preparing glibc SRU for Focal and next upload for Hirsute
+
+ 16:07 <rbalint> * partly fixed sbuild to migrate
+
+ 16:07 <rbalint> * dicussions around unattended-upgrades
+
+ 16:07 <rbalint> (done)
+
+ 16:07 <bdmurray> vorlon:
+
+ 16:08 <bdmurray> how about sil2100?
+
+ 16:09 <sil2100> - Partially out on Tuesday - dentist
+
+ 16:09 <sil2100> - SRU reviews and releases
+
+ 16:09 <sil2100> - FFe reviews
+
+ 16:09 <sil2100> - ESM britney discussions, mostly regarding the spec and possible improvements
+
+ 16:09 <sil2100> - Sending e-mail to kernel team regarding the dkms -security SRU copies - no reply yet
+
+ 16:09 <sil2100> - Grading
+
+ 16:09 <sil2100> - britney stuff:
+
+ 16:09 <sil2100> * Added support for private PPAs (for the ESM case), started writing unit tests
+
+ 16:09 <sil2100> * Looked into .db generation via download-results
+
+ 16:09 <sil2100> * Discussed some of the approaches with Iain
+
+ 16:09 <sil2100> * Hacking on the autopkgtest-cloud worker portion
+
+ 16:09 <sil2100> - Investigating a bileto hang due to a stale lockfile
+
+ 16:09 <sil2100> - needrestart MIR:
+
+ 16:09 <sil2100> * Subscribing foundations to the packages
+
+ 16:09 <sil2100> * Iterating throught feedback, looking into test-ability
+
+ 16:09 <sil2100> - Helping out with some AA/SRU package copies for the grub2 CVE
+
+ 16:09 <sil2100> - Proposed migration retries and hints
+
+ 16:09 <sil2100> - Slowly going through the NM libnetplan main PR from Lukas
+
+ 16:09 <sil2100> (done)
+
+ 16:09 <sil2100> Dave's status:
+
+ 16:09 <sil2100> * Tested lgpio packaging and layer for gpio-zero on RaspiOS and Ubuntu
+
+ 16:10 <sil2100> * Landed lgpio layer for gpio-zero upstream
+
+ 16:10 <sil2100> * Working on updated packaging for gpio-zero in Ubuntu
+
+ 16:10 <sil2100> * Investigating issue with "native" GPIO pin driver in Ubuntu (works
+
+ 16:10 <sil2100> happily in RaspiOS but has a *weird* failure on Ubuntu which includes
+
+ 16:10 <sil2100> breaking eth temporarily!)
+
+ 16:10 <sil2100> * lgpio/rgpio packaging ready for review (LP: #1916901)
+
+ 16:10 <ubottu> Launchpad bug 1916901 in Ubuntu "[needs-packaging] lg (lgpio, rgpio, rgpiod, rgs)" [Wishlist,New] https://launchpad.net/bugs/1916901
+
+ 16:10 <sil2100> * Submitted PPU application \o/
+
+ 16:10 <sil2100> (done)
+
+ 16:10 <sil2100> (sent by e-mail)
+
+ 16:11 <bdmurray> vorlon? doko?
+
+ 16:12 <bdmurray> #topic Release Incoming Bugs
+
+ 16:12 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html
+
+ 16:12 <bdmurray> bug 1915579
+
+ 16:12 <ubottu> bug 1915579 in lvm2 (Ubuntu) "lvm2 version 2.03.11-2ubuntu1 breaks initramfs" [Critical,Fix committed] https://launchpad.net/bugs/1915579
+
+ 16:12 <slyon> this one is fixed
+
+ 16:13 <bdmurray> Well since its fixed let's just remove the tag.
+
+ 16:13 <bdmurray> bug 1917220
+
+ 16:13 <ubottu> bug 1917220 in ubuntu-release-upgrader (Ubuntu) "ports.ubuntu.com not selected for arm64 architecture" [Medium,In progress] https://launchpad.net/bugs/1917220
+
+ 16:14 <bdmurray> So I've fixed this in ubuntu-release-upgrader for hirsute.
+
+ 16:14 <bdmurray> However, its not clear to me how they got these sources.list entries that were not ports.ubuntu.com
+
+ 16:15 <juliank> I don't like the fix
+
+ 16:15 <bdmurray> So the bad thing is people can't upgrade at all in this scenario but they had to do something weird to get their sources.list file in such a state.
+
+ 16:15 <juliank> We have the opposite one in python-apt
+
+ 16:16 <bdmurray> I was just modifying what ever existing code there was so take it up with Michael? ;-)
+
+ 16:17 <juliank> :D
+
+ 16:17 <juliank> self.arch not in ("amd64", "i386") is probably more future proof :D
+
+ 16:18 <bdmurray> Let's let it sit until we find out how the user got in this situation. I don't know if its worth SRU'ing.
+
+ 16:18 <bdmurray> juliank: ah, that sounds nice
+
+ 16:18 <bdmurray> bug 1916418
+
+ 16:18 <ubottu> bug 1916418 in systemd (Ubuntu) "Custom properties set with ENV{WHATEVER} in parent no longer imported with IMPORT{parent} in udev rule" [Undecided,New] https://launchpad.net/bugs/1916418
+
+ 16:19 <bdmurray> MachineType: Acer Predator G6-710
+
+ 16:19 <bdmurray> Predator!
+
+ 16:19 <rbalint> i'll check that
+
+ 16:19 <rbalint> the bug, not the predator :-)
+
+ 16:19 <bdmurray> okay, do you think it is worth carding or just testing?
+
+ 16:19 <rbalint> i'd card it
+
+ 16:20 <mclemenceau> Ok I can do that
+
+ 16:20 <bdmurray> bug 1874824
+
+ 16:20 <ubottu> bug 1874824 in procps (Ubuntu) "pgrep reports error "cannot allocate" when run without stack limit" [Undecided,Triaged] https://launchpad.net/bugs/1874824
+
+ 16:21 <bdmurray> Looks like it'd need SRU'ing too
+
+ 16:21 <bdmurray> Let's target and card that
+
+ 16:21 <bdmurray> bug 1913763
+
+ 16:21 <ubottu> bug 1913763 in systemd (Ubuntu) "hyperv: unable to distinguish PTP devices" [Undecided,Fix committed] https://launchpad.net/bugs/1913763
+
+ 16:21 <rbalint> uploaded already
+
+ 16:22 <bdmurray> Is it a candidate for SRU'ing?
+
+ 16:22 <rbalint> ddstreet, prepared the fix and probably the srus as well
+
+ 16:22 <bdmurray> Okay, but not work for Foundations?
+
+ 16:23 <rbalint> not, after it migrated in Hirsute
+
+ 16:23 <mclemenceau> I got ping about this one today, bug 1917665
+
+ 16:23 <ubottu> bug 1917665 in grub2 (Ubuntu) "PXE booting exits into grub command-line" [Undecided,New] https://launchpad.net/bugs/1917665
+
+ 16:25 <bdmurray> This sounds like something with grub2 and not MAAS.
+
+ 16:25 <bdmurray> so not taking
+
+ 16:25 <bdmurray> Oops, I mean the other way around!
+
+ 16:25 <bdmurray> something with maas
+
+ 16:27 <bdmurray> We've talked about rls-gg before
+
+ 16:27 <bdmurray> rls-ff had a left over one so skipping that
+
+ 16:28 <bdmurray> #topic Team proposed-migration report
+
+ 16:28 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:29 <bdmurray> tdaitx_: pexpect is still yours afaict
+
+ 16:29 <bdmurray> Do you need / want to hand it off?
+
+ 16:30 <xnox> i had stuff from there, which i didn't do yet.
+
+ 16:30 <xnox> sigh
+
+ 16:31 <bdmurray> dpkg and dgit wasn't previously discussed was it?
+
+ 16:32 <xnox> https://autopkgtest.ubuntu.com/packages/d/dgit/hirsute/amd64 looks like it passed now, after doko retriggered it
+
+ 16:32 <bdmurray> cool
+
+ 16:32 <bdmurray> attr and livecd-rootfs
+
+ 16:33 <bdmurray> I'll take that
+
+ 16:33 <bdmurray> freetype - JawnSmith?
+
+ 16:33 <JawnSmith> o/
+
+ 16:33 <bdmurray> gnupg2 - xnox?
+
+ 16:34 <bdmurray> libbsd has a dep on something in universe. Does anybody know if that is being looked at / addressed?
+
+ 16:34 <xnox> bdmurray:  sure.
+
+ 16:36 <bdmurray> ah bug 1915009
+
+ 16:36 <ubottu> bug 1915009 in libmd (Ubuntu) "[MIR] libmd (dependency of libbsd)" [High,New] https://launchpad.net/bugs/1915009
+
+ 16:36 <bdmurray> which is with security
+
+ 16:36 <bdmurray> libffi - any takers?
+
+ 16:36 <slyon> yes, I can take that
+
+ 16:36 <bdmurray> great
+
+ 16:37 <bdmurray> libgcrypt20 - dbungert ?
+
+ 16:37 <dbungert> bdmurray: OK
+
+ 16:37 <bdmurray> libselinux - rbalint are you looking at this?
+
+ 16:38 <rbalint> no, but i can :-)
+
+ 16:38 <bdmurray> thanks!
+
+ 16:38 <bdmurray> libxcrypt let's give to mwhudson
+
+ 16:38 <bdmurray> libzstd sil2100?
+
+ 16:39 <sil2100> ACK o/
+
+ 16:39 <bdmurray> What's going on with fwupd-signed and fwupd?
+
+ 16:40 <bdmurray> fwupd looks stuck in -proposed
+
+ 16:40 <bdmurray> Depends on glib2.0
+
+ 16:40 <bdmurray> okay, answered my own question!
+
+ 16:40 <bdmurray> xnox: openssl?
+
+ 16:41 <xnox> bdmurray:  no.
+
+ 16:41 * bdmurray gasps
+
+ 16:41 <xnox> bdmurray:  i fixed everything that is caused by openssl. these are not ssl related ones.
+
+ 16:41 <xnox> to people need to look into those as to why they are flakey / regressed in release / etc.
+
+ 16:42 <xnox> (i have done enough of regressions / incompat with openssl already, i.e. all things that used to fail on all arches with openssl trigger)
+
+ 16:42 <bdmurray> alrighty
+
+ 16:43 <bdmurray> so let's stop there but feel free to pick up other things!
+
+ 16:43 <bdmurray> #topic AOB
+
+ 16:43 <JawnSmith> I'll be out Monday
+
+ 16:44 <rbalint> i'll be out tomorrow
+
+ 16:45 <bdmurray> Alright, thanks everybody!
+
+ 16:45 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

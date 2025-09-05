@@ -1,0 +1,321 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 24 Sep at 15:03 &mdash; 15:18 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-09-24-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== lightning round ===
+The discussion about "lightning round" started at 15:04.
+
+
+=== sprint update ===
+The discussion about "sprint update" started at 15:11.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:13.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * barry (32)
+ * pitti (22)
+ * cyphermox (21)
+ * robru (18)
+ * tdaitx (17)
+ * ubottu (10)
+ * caribou (10)
+ * meetingology (3)
+ * doko (1)
+
+
+
+== Full Log ==
+
+
+ 15:03 <barry> #startmeeting
+
+ 15:03 <meetingology> Meeting started Thu Sep 24 15:03:43 2015 UTC.  The chair is barry. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <tdaitx> barry, pelase =)
+
+ 15:04 <barry> #topic lightning round
+
+ 15:04 <barry> tdaitx: go for it
+
+ 15:04 <tdaitx> Current/Past
+
+ 15:04 <tdaitx> - squid3 FTBFS; fix warning; revert libecap3-dev dependency to libecap2-dev; workaround netfilter and glibc header mismatch; build with -D_GLIBCXX_USE_CXX11_ABI=0 since libecap2 (0.20) was not transitioned; (LP: #1496223, LP: #1496924); this is on hold since rbasak is working in merging newer squid3 from debian to ubuntu
+
+ 15:04 <tdaitx> - reviewed motu, debian maint guide, and a few blogs
+
+ 15:04 <tdaitx> - worked in TCK on canonistack
+
+ 15:04 <tdaitx> Next steps
+
+ 15:04 <tdaitx> - FTBFS fixes and triaging
+
+ 15:04 <tdaitx> - level up my juju charm skills
+
+ 15:04 <ubottu> Launchpad bug 1496223 in linux (Ubuntu) "squid3 FTBFS due to linux-libc-dev and libc6-dev headers mismatch" [High,Triaged] https://launchpad.net/bugs/1496223
+
+ 15:04 <tdaitx> - find a way to share files in canonistack as volumes are not shareable and there seems to be a limit to the amount of snapshots (very low priority)
+
+ 15:04 <tdaitx> Waiting/On hold
+
+ 15:04 <ubottu> Launchpad bug 1496924 in squid3 (Ubuntu) "squid3 FTBFS due to bad libecap3 dependency and logical-not-parentheses warning" [Undecided,Triaged] https://launchpad.net/bugs/1496924
+
+ 15:05 <tdaitx> - remove libecap3 (1.0) and transition libecap2 (0.2) in case we keep the current squid3 version instead of merging from debian newest one
+
+ 15:05 <tdaitx> - waiting OCA to submit webrevs for 7093640 backport (set TLS 1.1 as default for JDK 6 and TLS 1.2 as default for JDK 7); not blocking anything for now, just waiting
+
+ 15:05 <tdaitx> (done)
+
+ 15:05 <barry> flufl.i18n 1.1.3-4, flufl.bounce 2.3-4, emacs24 24.5+1-1ubuntu2, debian bug #789670, zope.i18n 4.0.1-2, zope.testing 4.5.0-1, zope.exceptions 4.0.8-1, LP: #1496887
+
+ 15:05 <ubottu> Debian bug 789670 in python-future,python-pies2overrides "python-future,python-pies2overrides: error when trying to install together" [Serious,Open] http://bugs.debian.org/789670
+
+ 15:05 <ubottu> Launchpad bug 1496887 in pyke (Ubuntu) "pyke ftbfs in wily" [Undecided,Confirmed] https://launchpad.net/bugs/1496887
+
+ 15:05 <barry> LP: #1495688 & system-image 3.0.2.  working on debugging the intermittent test_pause failure which only happens on the buildds.
+
+ 15:05 <ubottu> Launchpad bug 1495688 in system-image (Ubuntu) "system-image-cli tool fails on dangling symlink" [High,Triaged] https://launchpad.net/bugs/1495688
+
+ 15:05 <barry> worked on python venv issues a bit
+
+ 15:06 <barry> looked into cpustream2distro w/robru
+
+ 15:06 <barry> interviews
+
+ 15:06 <barry> --done--
+
+ 15:06 <barry> bdmurray: you're up
+
+ 15:07 <barry> hmm, maybe bdmurray isn't around?
+
+ 15:07 <barry> i know slangasek isn't around
+
+ 15:07 <barry> doko: ?
+
+ 15:07 <tdaitx> doko was at connect
+
+ 15:07 <tdaitx> *is
+
+ 15:07 <barry> ah, right
+
+ 15:07 <barry> thx
+
+ 15:07 <doko> very short, still at Linaro connect. doing some archive work
+
+ 15:08 <barry> doko: thanks
+
+ 15:08 <barry> i know sil2100 is also not around
+
+ 15:08 <barry> apparently infinity isn't either
+
+ 15:08 <pitti> autopkgtest/britney:
+
+ 15:08 <pitti> - Take test triggers into account when evaluating whether a result applies to a request; this now properly tracks per-kernel results for e. g. DKMS packages or linux-meta
+
+ 15:08 <pitti> - Rebuild debci web UI on bigger instance, wrangle with stuck juju unit
+
+ 15:08 <pitti> - in progress: Show currently running tests with life logtail on debci
+
+ 15:08 <pitti> - lots of maintenance/fixing of workers, we ran into large backlogs this week due to linux and KDE; discussed with Andy how to avoid the linux-meta uninstallability in the future
+
+ 15:08 <pitti> misc:
+
+ 15:08 <pitti> - apport: fix two security issues (#1492570), new upstream release
+
+ 15:08 <pitti> - apport: Filter out watchdog restarts (#1433320)
+
+ 15:08 <pitti> - patch piloting most of Friday
+
+ 15:08 <pitti> - some bug fixing in pkgbinarymangler, systemd, langpack-o-matic, dbconfig-common
+
+ 15:08 <pitti> - prepare sprint demo and talk for classic container on snappy
+
+ 15:08 <pitti> NOTE: I'll be in Budapest at the Snappy sprint next week, so spotty IRC presence
+
+ 15:08 <pitti> ~ END ~
+
+ 15:08 <pitti> FYI, crappy prototype: http://autopkgtest.ubuntu.com/running.html
+
+ 15:09 <pitti> cyphermox: ?
+
+ 15:09 <barry> pitti: that looks nice
+
+ 15:09 <cyphermox> oi!
+
+ 15:09 <pitti> barry: wow, you have low standards :)
+
+ 15:09 <cyphermox> - fwupdate work (getting it signed...)
+
+ 15:09 <cyphermox> - fixed os-prober bug LP: #1482851
+
+ 15:09 <cyphermox> - fixing bcmwl detection for XPS13
+
+ 15:09 <ubottu> Launchpad bug 1482851 in os-prober (Ubuntu) "Windows 10 is detected as Windows 8" [Medium,Fix released] https://launchpad.net/bugs/1482851
+
+ 15:10 <cyphermox> - sponsored sudo fix.
+
+ 15:10 <cyphermox> - d-i update for user-setup / kernel ABI
+
+ 15:10 <cyphermox> - removed biosdevname from d-i base image.
+
+ 15:10 <cyphermox> - ubiquity update
+
+ 15:10 <caribou> barry uses w3m as a web browser
+
+ 15:10 <barry> pitti: i'm easy to please
+
+ 15:10 <cyphermox> - grub2 SRU for LP: #1311247 (in trusty queue)
+
+ 15:10 <cyphermox> - sponsored network-manager-strongswan
+
+ 15:10 <ubottu> Launchpad bug 1311247 in grub2 (Ubuntu Trusty) "[Grubenv] error: malformed file, press any key to continue" [High,In progress] https://launchpad.net/bugs/1311247
+
+ 15:10 <cyphermox> - debugging grub-installer issues
+
+ 15:10 <cyphermox> - installing PReP on a md device.
+
+ 15:10 <cyphermox> (done)
+
+ 15:10 <robru> lp:cupstream2distro
+
+ 15:10 <robru> - Eliminate last vestiges of local json blobs: jenkins is now fully bileto-powered
+
+ 15:10 <robru> - Lots of various small improvements, dropped vestigial things, streamlined some trivial methods
+
+ 15:10 <robru> - Implement a basic ramdisk cache to speed up the slowest function in the train, speeding up all jobs by several minutes
+
+ 15:10 <robru> - make error reporting a little more robust
+
+ 15:10 <robru> - implemented a handy atomic_write() function that simplified/unified a few places doing atomic writes.
+
+ 15:10 <robru> - dramatically overhauled prepare-job to make it work better with bileto
+
+ 15:10 <robru> - created new abandon job that marks requests as abandoned unconditionally, and frees the silo, if any.
+
+ 15:10 <robru> - prevent publishing silo that are in an error state, including QA Failed.
+
+ 15:10 <robru> - prevent publishing silos that have dirty packages
+
+ 15:10 <robru> - fix a bug in the diff logic that was causing dual silos to diff the local vivid version against the wily archive version
+
+ 15:10 <robru> - fix up staleness report that was totally bitrotty ever since dashboard went away.
+
+ 15:10 <robru> lp:bileto
+
+ 15:10 <robru> - resurrect linking migration status to excuses page, a feature which regressed when dashboard went away
+
+ 15:10 <robru> - fix sync request display
+
+ 15:10 <robru> - fix a bug in the status colorizer which was causing some error states not to be red.
+
+ 15:10 <robru> - show silos needing ack on the "publishable" page, makes requests not vanish mid-publish
+
+ 15:10 <robru> (done)
+
+ 15:10 <caribou> Bugfix :
+
+ 15:10 <caribou> - Bug #1494141 - haproxy 1.5 does not terminate SRU to Trusty on Bug #1481737
+
+ 15:10 <ubottu> bug 1494141 in trusty-backports "HAProxy 1.5 init script does not terminate processes" [Medium,In progress] https://launchpad.net/bugs/1494141
+
+ 15:11 <ubottu> bug 1481737 in haproxy (Ubuntu Trusty) "HAProxy init script does not work correctly with nbproc configuration option" [Medium,In progress] https://launchpad.net/bugs/1481737
+
+ 15:11 <caribou> - Bug #1496317 Wily failed kdump crash
+
+ 15:11 <caribou> Working with kernel team on a kernel hook to generate
+
+ 15:11 <ubottu> bug 1496317 in kexec-tools (Ubuntu) "kexec fails with OOM killer with the current crashkernel=128 value" [High,In progress] https://launchpad.net/bugs/1496317
+
+ 15:11 <caribou> smaller initrd for kdump
+
+ 15:11 <caribou> - Investigate VM boot failure for STS support
+
+ 15:11 <caribou> Working on adding autopkgtests to makedumpfile/kdump-tools
+
+ 15:11 <caribou> (done)
+
+ 15:11 <barry> #topic sprint update
+
+ 15:11 <tdaitx> pitti, nice prototype
+
+ 15:11 <barry> just to say, i haven't heard anything about location or confirmation yet
+
+ 15:12 <pitti> tdaitx: the joy of AMQP fanout queues, learned about that new toy today :)
+
+ 15:12 <caribou> barry I saw it scheduled in Austin, dunno if it is definitive
+
+ 15:12 <tdaitx> the doc says austin, tx
+
+ 15:12 <pitti> barry: ah, so it's not even clear that we'll have it in that week in the first place?
+
+ 15:12 * pitti urgently needs to buy tickets for the systemd conf (or not, if it's in that week and in the US
+
+ 15:12 <barry> caribou: ah, cool thanks.  i thought it was likely austin given the new office
+
+ 15:12 <pitti> Austin? ok, then definiitvely no double-conf, this is utterly hard to get to
+
+ 15:13 <barry> pitti: the last i heard from slangasek, confirmation is still pending, but if it happens it'll be that week
+
+ 15:13 <pitti> barry: ack, thanks
+
+ 15:13 <barry> #topic AOB
+
+ 15:13 <barry> anybody else have anything fun for this week?
+
+ 15:13 <cyphermox> still harvesting tomatoes.
+
+ 15:14 <pitti> cyphermox: me too! we've had plenty this year with this fantastic summer
+
+ 15:14 <cyphermox> indeed.
+
+ 15:14 <barry> cyphermox: i'm jealous.  i was just telling pitti how weak our tomato harvest was this year
+
+ 15:14 <cyphermox> and cucumbers were going quite well too.
+
+ 15:14 <barry> beautiful fall weather tho, so i'm working out on the porch today
+
+ 15:15 <cyphermox> lucky
+
+ 15:15 <cyphermox> that's all I have in OB anyway :)
+
+ 15:15 <barry> cool, anyone else?
+
+ 15:16 <cyphermox> oh actually
+
+ 15:16 <cyphermox> if someone with SRU powers could review the grub SRU in trusty queue
+
+ 15:17 <barry> so, dates are locked down, but location is still tbd with austin the current target
+
+ 15:18 <cyphermox> fun..
+
+ 15:18 <barry> and with that...
+
+ 15:18 <barry> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

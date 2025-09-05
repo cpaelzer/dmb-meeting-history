@@ -1,0 +1,263 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 12 Apr at 14:30 &mdash; 14:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-04-12-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 14:31.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/gnome-bluetooth3/+bug/1964600   (cpaelzer, 14:41)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:46.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:46)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:47)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/gnome-bluetooth3/+bug/1964600   (cpaelzer, 14:48)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:49.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (76)
+ * jbicha (10)
+ * didrocks (8)
+ * meetingology (2)
+ * ubottu (2)
+ * Trevinho (1)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:23 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:31 <cpaelzer> hello sarnold (not didrocks - see above) joalif jamespage (not slyon - unavailable)
+
+ 14:31 <cpaelzer> This part of the cycle has only two kind of cases, calm and easy or super-urgent
+
+ 14:31 <cpaelzer> so let us have a look
+
+ 14:31 <cpaelzer> #topic Review of previous action items
+
+ 14:31 <cpaelzer> none but reviews and process on bugs move forward - which we have all done
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <cpaelzer> all known, except llvm-toolchain-13 -> z3
+
+ 14:32 <cpaelzer> having a look
+
+ 14:33 <cpaelzer> This is a dependency form the llvm-13-dev package which most likely is only in main due to auto-include
+
+ 14:34 <cpaelzer> hmm the seed has
+
+ 14:34 <cpaelzer> Extra-Exclude: lldb-* liblldb-* clang* libclang* libllvm-* libfuzzer-* liblld-* libomp-* lld-* libc++-* libc++abi-* llvm-*
+
+ 14:34 <cpaelzer> the latter should exclude the auto-depends
+
+ 14:35 <cpaelzer> all the other llvm-xx-dev are in universe
+
+ 14:35 <cpaelzer> maybe this should not have been promoted
+
+ 14:37 <cpaelzer> doko: would you be able to have a look?
+
+ 14:37 <cpaelzer> I can't ping slyon and you have sometimes looked for llvm
+
+ 14:37 * cpaelzer wonders if this will be a monologue today :-/
+
+ 14:38 <cpaelzer> #topic New MIRs
+
+ 14:38 <jbicha> hi, it feels like some things get automatically put in main like I think every time webkit2gtk gets uploaded to jammy, the 4.1 lib and dev are temporarily in main, attempting to pull in libsoup3
+
+ 14:38 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:38 <jbicha> but it works when those are manually pushed back to universe
+
+ 14:38 <cpaelzer> jbicha: there are two potential mistakes usually
+
+ 14:39 <cpaelzer> jbicha: one is to miss to flag -dev / -doc packages in Extra-Exclude
+
+ 14:39 <cpaelzer> without that germinate will pull them in
+
+ 14:39 <cpaelzer> the other chance is archive admins promoting all binaries (we should not) to then remove those not dependend on next time
+
+ 14:39 <cpaelzer> but "everytime we upload" sounds wrong
+
+ 14:40 <cpaelzer> neither of the two situations I know cuasing this are "on upload"
+
+ 14:40 <cpaelzer> jbicha: would you mind pinging me next time this happens?
+
+ 14:40 <cpaelzer> just curious about it
+
+ 14:40 <jbicha> sure. there shouldn't be another webkit2gtk upload before jammy release at least :) it does have Extra-Exclude set for it
+
+ 14:41 <cpaelzer> yeah we'll look then
+
+ 14:41 <cpaelzer> the other case is also yours
+
+ 14:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/gnome-bluetooth3/+bug/1964600
+
+ 14:41 <ubottu> Launchpad bug 1964600 in gnome-bluetooth3 (Ubuntu) "[MIR] gnome-bluetooth3" [Undecided, New]
+
+ 14:41 <cpaelzer> joalif: had a look and it was an ack with a few constraints
+
+ 14:41 <cpaelzer> you added tests, just simple ones but at least some
+
+ 14:41 <cpaelzer> subscription will be a requirement to promote it, but is not *strictly* needed before
+
+ 14:42 <cpaelzer> ack - I'll update the bug
+
+ 14:42 <jbicha> it has a bug subscriber now
+
+ 14:42 <cpaelzer> did the FFE get approved?
+
+ 14:42 <cpaelzer> ok seen it
+
+ 14:42 <jbicha> yes, the FFE is approved as long as the MIR is approved (really soon)
+
+ 14:42 <cpaelzer> Let me re-read this a bit and then most likely give you the yes
+
+ 14:43 * didrocks back
+
+ 14:43 <jbicha> T_revinho is planning to do the gnome-shell upload late today to switch the dependency if this is approved
+
+ 14:44 <cpaelzer> jbicha: done, bug updated
+
+ 14:44 <cpaelzer> jbicha: move it to "Fix Committed" once the dependency shows in component mismatch
+
+ 14:45 <cpaelzer> IIUC that will - at the same time - demote gnome-bluetooth (without the 3) right?
+
+ 14:45 <jbicha> thank you all
+
+ 14:45 <Trevinho> 🎆
+
+ 14:45 <cpaelzer> wb didrocks
+
+ 14:45 <jbicha> no, unfortunately we need to keep the old gnome-bluetooth for jammy but it should be in universe for 22.10
+
+ 14:46 <jbicha> *for gnome-control-center
+
+ 14:46 <cpaelzer> ok, please take it as a personal mission to get rid of it
+
+ 14:46 <jbicha> got it
+
+ 14:46 <cpaelzer> thanks
+
+ 14:46 <cpaelzer> going on then ...
+
+ 14:46 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:46 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:46 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:47 <cpaelzer> only updates around rust
+
+ 14:47 <cpaelzer> which is due to demotion7promotion done by v_orlon
+
+ 14:47 <cpaelzer> no action for us here
+
+ 14:47 <cpaelzer> everything else was before the last meeting
+
+ 14:47 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:47 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:47 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:47 <cpaelzer> well without sarnold here there is not much to do here
+
+ 14:48 <didrocks> indeed
+
+ 14:48 <cpaelzer> sadly so, as this would have been the say I praise sarnold and sbeattie for having cleared all 22.04 tasks !
+
+ 14:48 <didrocks> \o/
+
+ 14:48 <cpaelzer> please consume my thanks and those of many others from the log later
+
+ 14:48 <didrocks> well done security team :)
+
+ 14:48 <cpaelzer> with the only twist being: next time maybe let us do this earlier
+
+ 14:48 <cpaelzer> but really, well done and thank you
+
+ 14:48 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/gnome-bluetooth3/+bug/1964600
+
+ 14:48 <ubottu> Launchpad bug 1964600 in gnome-bluetooth3 (Ubuntu) "[MIR] gnome-bluetooth3" [Undecided, In Progress]
+
+ 14:49 <cpaelzer> wrong copy & paste :-/
+
+ 14:49 <cpaelzer> #topic Any other business?
+
+ 14:49 <cpaelzer> that was the right one
+
+ 14:49 <cpaelzer> no bonus topic from me
+
+ 14:49 <cpaelzer> anyone else having an emergency request just before final freeze?
+
+ 14:49 <didrocks> cpaelzer: just on the meeting time. My delayed arrival should not be reoccuring, but as said doing the sprint it clashes with school hours, which is normally fine for this day (apart from exceptions…)
+
+ 14:49 <didrocks> nothing for me on 22.04 LTS topic for me otherway
+
+ 14:50 <didrocks> otherwise*
+
+ 14:50 <cpaelzer> ok
+
+ 14:50 <cpaelzer> if it becomes a regular pain for you or anyone else we can try to find a new slot
+
+ 14:50 <cpaelzer> hope is low but we can try
+
+ 14:51 <cpaelzer> so let me know if you think it reaches that level
+
+ 14:51 <didrocks> sure, will do
+
+ 14:51 <cpaelzer> with that - thanks everyone and until next time
+
+ 14:51 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

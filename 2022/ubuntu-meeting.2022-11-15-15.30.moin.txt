@@ -1,0 +1,479 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 15 Nov at 15:30 &mdash; 16:07 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-11-15-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:31)
+ * ''LINK:'' https://www.irccloud.com/pastebin/5bQnDDfV/   (joalif, 15:36)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:44.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:44)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libheif/+bug/1827442   (cpaelzer, 15:47)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:49.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:49)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/ruby-eventmachine/+bug/1990580   (cpaelzer, 15:50)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:54.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:54)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:55)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 16:02.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (137)
+ * eslerm (26)
+ * slyon (20)
+ * joalif (11)
+ * didrocks (11)
+ * meetingology (2)
+ * jamespage (1)
+
+
+
+== Full log ==
+
+
+ 15:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:10 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:30 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 15:30 <slyon> o/
+
+ 15:30 <cpaelzer> o/
+
+ 15:30 <jamespage> o/
+
+ 15:30 <eslerm> o/
+
+ 15:30 <eslerm> (sarnold is out)
+
+ 15:31 <joalif> o/
+
+ 15:31 <cpaelzer> welcome eslerm
+
+ 15:31 <cpaelzer> #topic current component mismatches
+
+ 15:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:31 <eslerm> thanks :D
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:32 <cpaelzer> lots of jdk things
+
+ 15:32 <cpaelzer> slyon: I expect that to be doko, or is this now within some dedicated team/people?
+
+ 15:32 <slyon> cpaelzer: yeah, lots of c-m in general. I investigated jdk a bit. seems to be mostly related to the -doc package, maybe we can demote that. I'll try to get it cleared with doko (he's off today)
+
+ 15:33 <cpaelzer> yes, if it really is a new -doc then add to extra excludes and be happy
+
+ 15:33 <cpaelzer> next I see is glm -> highlights-js
+
+ 15:33 <joalif> re glm->highlight.js I looked at it, glm pulls in highlight.js to enable syntax highlighting in a doc page
+
+ 15:33 <joalif> it comes from debian https://salsa.debian.org/science-team/glm/-/commit/72cedac91ede1eac284796a5e1e1dcd0effb6303
+
+ 15:33 <cpaelzer> glm itself is the mir team (not us, the Ui ones)
+
+ 15:33 <joalif> the relevant upstream commit  https://github.com/g-truc/glm/pull/1120
+
+ 15:34 <cpaelzer> does anyone have connections to them to ask?
+
+ 15:34 <didrocks> (hey)
+
+ 15:34 <cpaelzer> hi didrocks
+
+ 15:35 <cpaelzer> having you here, do you still have connections to mir people?
+
+ 15:35 <cpaelzer> to ask how to deal with glm?
+
+ 15:35 <slyon> joalif: I wonder what happens if highlight.js is not installed? seems like "just" the highlighting wouldn't work?
+
+ 15:35 <slyon> In this case we might be able to drop it to a suggests..
+
+ 15:35 <slyon> (or rather the mir team should do this)
+
+ 15:36 <cpaelzer> yeah, I'm looking for someone to own this - no matter how exactly it will be resolved
+
+ 15:36 <didrocks> well, apart from RAOF, I don't, I can ping him, but he is kind of at the opposite side of the world :p
+
+ 15:36 <joalif> that for sure, i'm not sure if it would impact the success of the build thoigh
+
+ 15:36 <joalif> i haven't checked
+
+ 15:36 <joalif> because it's used in debian/rules
+
+ 15:36 <didrocks> let me try to follow up with saviq at worst
+
+ 15:36 <joalif> https://www.irccloud.com/pastebin/5bQnDDfV/
+
+ 15:37 <cpaelzer> let me ping on #ubuntu-release
+
+ 15:37 <cpaelzer> done, let us continue
+
+ 15:37 <cpaelzer> policykit-1 -> duktape
+
+ 15:38 <slyon> joalif: ack I saw that... maybe we need to update that snippet to fail gracefully in case highlight.js is not found in /usr/share/javascript/highlight.js/*
+
+ 15:38 <cpaelzer> thanks joalif and didrocks for getting glm analyzed and handled
+
+ 15:38 <cpaelzer> last time we have seen policykit it was a false positive
+
+ 15:38 <didrocks> correct
+
+ 15:39 <cpaelzer> didrocks: do you want to look if this is one again?
+
+ 15:39 <cpaelzer> slyon: libnet-dns-perl is for foundations
+
+ 15:39 <slyon> if duktape is a false positive, we should add it to https://bugs.launchpad.net/ubuntu/+source/plzip/+bug/1980663
+
+ 15:40 <slyon> ACK. I wasn't able to investigate any c-m besides jdk. but will take care of the foundations ones eventually
+
+ 15:40 <cpaelzer> ok
+
+ 15:40 <cpaelzer> wow
+
+ 15:40 <cpaelzer> there are more when we scroll right
+
+ 15:41 <cpaelzer> well that is how opening the archive feels
+
+ 15:41 <cpaelzer> libsoup3 -> sysprof
+
+ 15:41 <cpaelzer> desktop package
+
+ 15:41 <didrocks> cpaelzer: I will double check policykit again
+
+ 15:41 <cpaelzer> but I guess libsoup could be anywhere
+
+ 15:42 <cpaelzer> let me grab checking libsoup
+
+ 15:42 <cpaelzer> as the next is foundations again and I do not want to overload slyon
+
+ 15:42 <cpaelzer> slyon: nvme-cli
+
+ 15:42 <slyon> ok
+
+ 15:42 <cpaelzer> -> libnvme libhugetlbfs
+
+ 15:43 <cpaelzer> foundations has some items around nvme anyway
+
+ 15:43 <cpaelzer> maybe you can pass this item on to whoever owns these this cycle after you made an initial check what is going on
+
+ 15:43 <cpaelzer> looks like a new major version
+
+ 15:43 <slyon> yes, I heard people talking about it in our standup today .)
+
+ 15:43 <slyon> :)
+
+ 15:44 <cpaelzer> ok, chase them down :-P
+
+ 15:44 <cpaelzer> looking at the clock
+
+ 15:44 <cpaelzer> oO
+
+ 15:44 <cpaelzer> going on
+
+ 15:44 <cpaelzer> #topic New MIRs
+
+ 15:44 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:44 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:44 <cpaelzer> eslerm: is here and smartcard is in this list
+
+ 15:44 <cpaelzer> oh I see
+
+ 15:45 <cpaelzer> so the decision was "no need for now"
+
+ 15:45 <cpaelzer> I've marked it incomplete
+
+ 15:45 <cpaelzer> otherwise it looks as if it would wait on us
+
+ 15:45 <eslerm> noted, thank you
+
+ 15:45 <cpaelzer> dh-cargo is back up here
+
+ 15:45 <cpaelzer> didrocks: you look afte rcargo - right?
+
+ 15:45 <didrocks> yeah, cargo itself needed a second look
+
+ 15:46 <didrocks> it’s the next one on my list, I need to refresh my memory first
+
+ 15:46 <cpaelzer> ok and dh-cargo - wasn't assigned last time
+
+ 15:46 <cpaelzer> probably due to the sprint keeping all of us busy
+
+ 15:46 <cpaelzer> anyone always wanted to look at a dh tool?
+
+ 15:46 <didrocks> I think I can, but would not commit it for next week
+
+ 15:46 <cpaelzer> well you have the other one
+
+ 15:46 <cpaelzer> let me take it instead
+
+ 15:47 <didrocks> ack then :)
+
+ 15:47 <cpaelzer> dh-cargo to me
+
+ 15:47 <cpaelzer> but there is more
+
+ 15:47 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libheif/+bug/1827442
+
+ 15:47 <slyon> thanks, I was hesitnat to take it due to being "foundations internal"
+
+ 15:47 <cpaelzer> agreed
+
+ 15:47 <slyon> ^ this was brought up by steve the other day.
+
+ 15:48 <eslerm> (dh-cargo was part of LP#1957932)
+
+ 15:48 <cpaelzer> but he correctly said "probably want to have it updated using the new template in order to do a new review"
+
+ 15:48 <cpaelzer> I expect someone in foundations doing the mentioned update
+
+ 15:48 <cpaelzer> then we assign it here for a review
+
+ 15:48 <cpaelzer> WDYT?
+
+ 15:48 <slyon> sounds good. I'll find somebody in foundations
+
+ 15:48 <cpaelzer> I updated the bug
+
+ 15:49 <cpaelzer> also let them check if it is just heif or heif + the 265 libs
+
+ 15:49 <cpaelzer> thanks slyon
+
+ 15:49 <cpaelzer> gogin on
+
+ 15:49 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:49 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:49 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:50 <cpaelzer> all from just now except ..
+
+ 15:50 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/ruby-eventmachine/+bug/1990580
+
+ 15:50 <cpaelzer> is there something left for the server team?
+
+ 15:50 <cpaelzer> reading ...
+
+ 15:51 <cpaelzer> ok, lucas waits for joalif to confirm " I hope the explanation above clarifies everything for you."
+
+ 15:51 <cpaelzer> does it @ joalif ?
+
+ 15:52 <joalif> sorry in other mtg at the same time
+
+ 15:52 <joalif> can you repeat
+
+ 15:52 <cpaelzer> joalif: did the answer on https://bugs.launchpad.net/ubuntu/+source/ruby-eventmachine/+bug/1990580 satisfy you
+
+ 15:52 <joalif> ok i'll look at it in a bit
+
+ 15:53 <cpaelzer> If it does, assign security as they will be next to process it
+
+ 15:53 <cpaelzer> if it does not - tell Lucas what is missing still
+
+ 15:54 <cpaelzer> updated the bug to match that
+
+ 15:54 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:54 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:54 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:54 <cpaelzer> Internal link
+
+ 15:54 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:55 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:55 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:55 <cpaelzer> and here we have eslerm stepping in for Seth for a while
+
+ 15:55 <cpaelzer> he wanted to ask for new/other ways to express priorities - is that correct eslerm?
+
+ 15:55 <cpaelzer> this is trhe moment to de-confuse all of us so we can agree on it :-)
+
+ 15:55 <eslerm> during the sprint the Security Team discussed how to become more consistent with our response time to MIRs
+
+ 15:55 <eslerm> we decided to write a status update each pulse (every two weeks) to update the MIR Team
+
+ 15:55 <eslerm> I would like to publish the status report to a repo, but that will wait until Seth is back
+
+ 15:56 <eslerm> I can email the status report to MIR Team members as well
+
+ 15:56 <eslerm> the reports cannot be public, as there could be sensitive information in them
+
+ 15:56 <eslerm> e.g., there is a novel security disclosure in the initial report
+
+ 15:56 <eslerm> Open to questions, criticisms, and comments :)
+
+ 15:56 <eslerm> the initial report is in Seth's vacation email
+
+ 15:56 <cpaelzer> will that replace https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594 then ?
+
+ 15:57 <cpaelzer> that was used to prioritize
+
+ 15:57 <eslerm> no, we could integrate the two
+
+ 15:57 <cpaelzer> or will it only help to show your "answer" but not change any of your planning?
+
+ 15:57 <eslerm> so that, everything pertinent is in jira but we would also have a higher level overview to put everything together
+
+ 15:58 <cpaelzer> It sounds nice, but it also sounds complex
+
+ 15:58 <cpaelzer> if this costs you a lot of time, then I'd say do not do it
+
+ 15:58 <cpaelzer> if it helps you to organize yourself, then it is good
+
+ 15:58 <slyon> I feel like the level of detail from seth's email is not really needed at the MIR meeting
+
+ 15:58 <slyon> if so we could probably look it up in the jira card updates/comments?
+
+ 15:58 <cpaelzer> as a TL;DR the MIR team never cared too much "how" you do it - as long as we can insert bugs into your todo-queue and have a feeling on when they will complete
+
+ 15:59 <slyon> ^ this.
+
+ 15:59 <didrocks> I agree with the point cpaelzer made
+
+ 15:59 <cpaelzer> I agree to slyon that the meeting does not need that detail
+
+ 15:59 <cpaelzer> that detail goes to the MIR - bugs
+
+ 15:59 <cpaelzer> that is the one place - one per case
+
+ 15:59 <eslerm> okay, if it sounds good, I'll do the status report internally to get security on one page and then update jira cards that way
+
+ 15:59 <cpaelzer> that sounds fine to me eslerm
+
+ 16:00 <cpaelzer> essentially it will stay an "implementation detail" of yours
+
+ 16:00 <slyon> yes it should end up in the MIR LP bug when finished. And if we need status updates, we could probably look at the jira card (e.g. "security team is working with upstream about XXX")
+
+ 16:00 <cpaelzer> if any of the things we know (lp bugs and to some extend that jira board to prioritize) will change let us know
+
+ 16:00 <eslerm> okay, can do
+
+ 16:01 <cpaelzer> ok, then let us do it this way
+
+ 16:01 <cpaelzer> summary: you do stuff, we are ok with it as nothing changes for us :-)
+
+ 16:01 <eslerm> +1
+
+ 16:01 <cpaelzer> but in any case, thanks for bringing it up and discussing it eslerm
+
+ 16:01 <cpaelzer> whenever you want to change the process or anything related down the road, bring it up here as well
+
+ 16:02 <cpaelzer> if we pre-agree but it needs details it becomes a PR to the github repo
+
+ 16:02 <eslerm> I have one question
+
+ 16:02 <cpaelzer> now going on
+
+ 16:02 <cpaelzer> oh well put that question into ...
+
+ 16:02 <cpaelzer> #topic Any other business?
+
+ 16:02 <eslerm> a lot of the ruby packages are dependent on pcs, which Seth has a question to
+
+ 16:02 <cpaelzer> yeah, ask me eslerm
+
+ 16:02 <cpaelzer> kanashiro[m]: ^^ watch this
+
+ 16:03 <eslerm> is it okay to set the priority of all those ruby packages to wishlist until pcs is resolved?
+
+ 16:03 <cpaelzer> not really, we need all of them to complete (we can only move it as one)
+
+ 16:03 <cpaelzer> if we set them all to wishlist then we will not make it in time
+
+ 16:04 <cpaelzer> but I'm fine if you keep them all as high as PCS, but order it in PCS itself first - and if passed then do the rest
+
+ 16:04 <eslerm> I mean, resolve Seth's question (not promote pcs first)
+
+ 16:04 <cpaelzer> but I'm afraid if you mark them wishlist ever too many other things will slip in betwene
+
+ 16:04 <cpaelzer> we already failed to promote it last cycle
+
+ 16:04 <cpaelzer> I'll be in well-earned trouble if we miss it again
+
+ 16:04 <cpaelzer> eslerm: yeah, promote pcs first is not an option
+
+ 16:05 <cpaelzer> as I said they all belong together
+
+ 16:05 <cpaelzer> and are of high prio and importance
+
+ 16:05 <cpaelzer> towards 24.04 we need this transition early (hence we wanted 22.10 before) as SW using it will need to adapt
+
+ 16:05 <cpaelzer> and that kind of SW isn't the most trivial usually
+
+ 16:05 <cpaelzer> did that solve the question eslerm?
+
+ 16:05 <eslerm> okay, I'll do some more research. iirc, Seth was concerned that the codebase was moving to python
+
+ 16:06 <cpaelzer> not that I know
+
+ 16:06 <eslerm> for now yes :D
+
+ 16:06 <eslerm> thank you
+
+ 16:06 <cpaelzer> ok
+
+ 16:06 <cpaelzer> anyone else something to talk about?
+
+ 16:06 <slyon> nothing.
+
+ 16:06 <cpaelzer> eslerm: and if the codebase moves we still would not have the time to wait
+
+ 16:06 <cpaelzer> we would move with it when it does
+
+ 16:06 <eslerm> understood
+
+ 16:06 <cpaelzer> nothing else from me
+
+ 16:06 <didrocks> nothing either
+
+ 16:06 <cpaelzer> ok that sounds good then
+
+ 16:06 <slyon> thanks cpaelzer, all!
+
+ 16:06 <cpaelzer> thanks and sorry for the long meeting
+
+ 16:07 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

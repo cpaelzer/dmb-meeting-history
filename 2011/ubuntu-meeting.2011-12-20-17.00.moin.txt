@@ -1,0 +1,287 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jsalisbury at 17:00:18 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-20-17.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/Meeting   (jsalisbury, 17:00:19)
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise   (jsalisbury, 17:00:19)
+ *ARM Status (ppisati)
+
+ *Release Metrics and Incoming Bugs (jsalisbury)
+''LINK:'' http://people.canonical.com/~kernel/reports/kt-meeting.txt   (jsalisbury, 17:01:18)
+
+ *Milestone Targeted Work Items (ogasawara)
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/canonical-kernel-team-precise-alpha-2.html   (jsalisbury, 17:02:01)
+
+ *Blueprint: hardware-p-kernel-power-management (cking)
+
+ *Status: Precise Development Kernel (ogasawara)
+
+ *Status: CVE's (apw)
+''LINK:'' http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt   (apw, 17:03:59)
+
+ *Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ *Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+
+
+Meeting ended at 17:09:13 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jsalisbury (58)
+ * apw (35)
+ * cking (10)
+ * ppisati (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 17:00:18 <jsalisbury> #startmeeting
+
+ 17:00:18 <meetingology> Meeting started Tue Dec 20 17:00:18 2011 UTC.  The chair is jsalisbury. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 17:00:18 <meetingology> 
+
+ 17:00:18 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 17:00:19 <jsalisbury> ##
+
+ 17:00:19 <jsalisbury> ## This is the Ubuntu Kernel Team weekly status meeting.
+
+ 17:00:19 <jsalisbury> ##
+
+ 17:00:19 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/Meeting
+
+ 17:00:19 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise
+
+ 17:00:21 <jsalisbury> # Meeting Etiquette
+
+ 17:00:23 <jsalisbury> #
+
+ 17:00:27 <jsalisbury> # NOTE: '..' indicates that you are finished with your input.
+
+ 17:00:29 <jsalisbury> #       'o/' indicates you have something to add (please wait until you are recognized)
+
+ 17:00:31 <jsalisbury> [TOPIC] ARM Status (ppisati)
+
+ 17:00:36 <ppisati> P/omap4: a new kernel (3.2.0-1403.3) based off 3.2-rc5 (Ubuntu-3.2.0-4.10)
+
+ 17:00:39 <ppisati> has been released.
+
+ 17:00:41 <ppisati> SRU kernels: besides natty/omap4 and lucid/imx51 finally getting the
+
+ 17:00:44 <ppisati> "large mmap()" fix, there's nothing else to report.
+
+ 17:00:46 <ppisati> ..
+
+ 17:01:07 <jsalisbury> [TOPIC] Release Metrics and Incoming Bugs (jsalisbury)
+
+ 17:01:18 <jsalisbury> Release metrics and incomming bug data can be reviewed at the following link:
+
+ 17:01:18 <jsalisbury> [LINK] http://people.canonical.com/~kernel/reports/kt-meeting.txt
+
+ 17:01:23 <jsalisbury> ..
+
+ 17:01:39 <jsalisbury> [TOPIC] Milestone Targeted Work Items (ogasawara)
+
+ 17:01:49 <jsalisbury> I'll provide a status for ogasawara.
+
+ 17:02:01 <jsalisbury> Status: Work Items
+
+ 17:02:01 <jsalisbury> ==================
+
+ 17:02:01 <jsalisbury> [LINK] http://status.ubuntu.com/ubuntu-precise/canonical-kernel-team-precise-alpha-2.html
+
+ 17:02:01 <jsalisbury> || apw        || hardware-p-kernel-boot                || 1 work item  ||
+
+ 17:02:01 <jsalisbury> ||            || hardware-p-kernel-config-review       || 7 work items ||
+
+ 17:02:02 <jsalisbury> ||            || hardware-p-kernel-delta-review        || 4 work items ||
+
+ 17:02:04 <jsalisbury> ||            || foundations-p-ipv6                    || 1 work item  ||
+
+ 17:02:08 <jsalisbury> || cking      || hardware-p-kernel-delta-review        || 1 work item  ||
+
+ 17:02:12 <jsalisbury> || jsalisbury || other-p-bug-workflows                 || 1 work item  ||
+
+ 17:02:14 <jsalisbury> || ogasawara  || hardware-p-kernel-version-and-flavors || 1 work item  ||
+
+ 17:02:16 <jsalisbury> ||            || hardware-p-kernel-config-review       || 10 work items||
+
+ 17:02:18 <jsalisbury> || tgardner   || hardware-p-kernel-delta-review        || 1 work item  ||
+
+ 17:02:20 <jsalisbury> If your name is in the above table, please review your Alpha-2 work
+
+ 17:02:22 <jsalisbury> items.  Note that Alpha-2 is Thurs Feb 2.
+
+ 17:02:24 <jsalisbury> ..
+
+ 17:02:30 <jsalisbury> [TOPIC] Blueprint: hardware-p-kernel-power-management (cking)
+
+ 17:02:36 <cking> * Write eventstat to accurately monitor and log wakeup events
+
+ 17:02:36 <cking> git://kernel.ubuntu.com/cking/eventstat.git and
+
+ 17:02:36 <cking> https://launchpad.net/~colin-king/+archive/powermanagement
+
+ 17:02:36 <cking> * HDD busy results:
+
+ 17:02:36 <cking> http://zinc.canonical.com/~cking/power-benchmarking/hdd-wakeups
+
+ 17:02:36 <cking> * Wakeup Event results:
+
+ 17:02:38 <cking> http://zinc.canonical.com/~cking/power-benchmarking/events
+
+ 17:02:40 <cking> * UEFI vs BIOS power management testing:
+
+ 17:02:42 <cking> http://zinc.canonical.com/~cking/power-benchmarking/legacy-bios-vs-uefi-firmware
+
+ 17:02:44 <cking> ..
+
+ 17:03:10 <jsalisbury> [TOPIC] Status: Precise Development Kernel (ogasawara)
+
+ 17:03:21 <jsalisbury> Status: Precise Development Kernel
+
+ 17:03:21 <jsalisbury> ==================================
+
+ 17:03:21 <jsalisbury> We've recently uploaded the 3.2.0-5.11 and 3.2.0-6.12 Ubuntu kernels.
+
+ 17:03:21 <jsalisbury> Notable changes in these uploads include rebasing to v3.2-rc6, setting
+
+ 17:03:21 <jsalisbury> DEFAULT_MMAP_MIN_ADDR=32k on arm, adding overlayfs and veth to -virtual,
+
+ 17:03:22 <jsalisbury> and misc config updates.  Please test and let us know your results.
+
+ 17:03:24 <jsalisbury> Important Upcoming Dates:
+
+ 17:03:28 <jsalisbury> * Thurs Feb 2 - Alpha 2 (~7 weeks)
+
+ 17:03:34 <jsalisbury> ..
+
+ 17:03:47 <jsalisbury> [TOPIC] Status: CVE's (apw)
+
+ 17:03:59 <apw> [LINK] http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt
+
+ 17:04:01 <apw> 
+
+ 17:04:03 <apw> Currently open CVEs for each supported branch:
+
+ 17:04:05 <apw> 
+
+ 17:04:07 <apw> || Package                                  || Open      ||
+
+ 17:04:09 <apw> ||                                          ||           ||
+
+ 17:04:11 <apw> || linux Hardy                              ||   13 (+3) ||
+
+ 17:04:13 <apw> || linux Lucid                              ||   10 (+3) ||
+
+ 17:04:15 <apw> || linux Maverick                           ||   10 (+3) ||
+
+ 17:04:17 <apw> || linux Natty                              ||   10 (+3) ||
+
+ 17:04:19 <apw> || linux Oneiric                            ||    8 (+3) ||
+
+ 17:04:21 <apw> || linux Precise                            ||    8 (+3) ||
+
+ 17:04:23 <apw> || linux-ec2 Lucid                          ||   10 (+3) ||
+
+ 17:04:25 <apw> || linux-fsl-imx51 Lucid                    ||   11 (+4) ||
+
+ 17:04:27 <apw> || linux-mvl-dove Lucid                     ||   10 (+3) ||
+
+ 17:04:29 <apw> || linux-mvl-dove Maverick                  ||   10 (+3) ||
+
+ 17:04:31 <apw> || linux-ti-omap4 Maverick                  ||   11 (+4) ||
+
+ 17:04:33 <apw> || linux-ti-omap4 Natty                     ||   10 (+3) ||
+
+ 17:04:35 <apw> || linux-ti-omap4 Oneiric                   ||    8 (+3) ||
+
+ 17:04:37 <apw> || linux-ti-omap4 Precise                   ||    8 (+3) ||
+
+ 17:04:39 <apw> || linux-lts-backport-maverick Lucid        ||   10 (+3) ||
+
+ 17:04:41 <apw> || linux-lts-backport-natty Lucid           ||   10 (+3) ||
+
+ 17:04:43 <apw> || linux-lts-backport-oneiric Lucid         ||    8 (+3) ||
+
+ 17:04:45 <apw> 
+
+ 17:04:47 <apw> We have had a five new CVEs this week.  Two have been resolved via
+
+ 17:04:49 <apw> upstream stable.  The remainder do not yet have any upstream fixes.
+
+ 17:04:51 <apw> We continue to have one CVE with fix outstanding.
+
+ 17:04:53 <apw> 
+
+ 17:04:55 <apw> ..
+
+ 17:05:20 <jsalisbury> [TOPIC] Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ 17:05:48 <jsalisbury> No update this week.
+
+ 17:05:51 <jsalisbury> ..
+
+ 17:06:05 <jsalisbury> [TOPIC] Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+ 17:06:11 <apw> o/
+
+ 17:06:17 <jsalisbury> apw, go ahead
+
+ 17:06:28 <apw> just a question of when is the next meeting?
+
+ 17:06:31 <apw> ..
+
+ 17:06:51 <jsalisbury> The next meeting will be January 3rd.
+
+ 17:06:54 <jsalisbury> ..
+
+ 17:07:08 <apw> as that misses one week, that should be announced probabally, as in cancelling the 27th
+
+ 17:07:11 <apw> ..
+
+ 17:07:46 <jsalisbury> I'll send out a notice.  Unless folks think we should still have a meeting on the 27th?
+
+ 17:07:49 <jsalisbury> ..
+
+ 17:08:00 <apw> no, thats great, cancel it
+
+ 17:08:21 <jsalisbury> will, do.
+
+ 17:08:22 <jsalisbury> ..
+
+ 17:08:36 <jsalisbury> Any other open comments?
+
+ 17:09:09 <jsalisbury> Great, have a safe and happy holidays everyone!
+
+ 17:09:13 <jsalisbury> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

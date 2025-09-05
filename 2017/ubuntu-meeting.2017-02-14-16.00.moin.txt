@@ -1,0 +1,587 @@
+== Meeting information ==
+ * #ubuntu-meeting: ubuntu-server-team, 14 Feb at 16:00 &mdash; 16:34 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2017/ubuntu-meeting.2017-02-14-16.00.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Review ACTION points from previous meeting ===
+The discussion about "Review ACTION points from previous meeting" started at 16:00.
+
+  * No actions from previous meeting.
+
+=== Development Release ===
+The discussion about "Development Release" started at 16:00.
+
+  * ''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core 
+  * Various feature freeze sensitive uploads are stuck in proposed.
+  * Various things are blocked on MIRs that are pending review.
+  * ''ACTION:'' rbasak to review jgrimm's iproute2 MR
+  * ''ACTION:'' nacc to review jgrimm's openvpn MR
+  * ''ACTION:'' rbasak to review caribou's nut merge
+  * ''ACTION:'' rbasak to review powersj's etckeeper merge
+  * ''ACTION:'' jgrimm to review server packages for anything new (or missed) that needs merging
+ * '''Pending MIRs''' (16:17)
+  * iotop and nicstat are done
+  * htop and python-elftools wait on security review
+  * ''ACTION:'' rbasak to look at seeding iotop & nicstat with powersj
+  * sssd is missing the "secrets service", a new feature resulting in a component mismatch. This may be able to land in an FFe, or next cycle.
+ * '''Active work that may need wider communication''' (16:20)
+  * None
+
+=== Server & Cloud Bugs & SRU/Pending Uploads (caribou) ===
+The discussion about "Server & Cloud Bugs & SRU/Pending Uploads (caribou)" started at 16:21.
+
+
+=== Weekly Updates & Questions for the QA Team (powersj) ===
+The discussion about "Weekly Updates & Questions for the QA Team (powersj)" started at 16:21.
+
+
+=== Weekly Updates & Questions for the Kernel Team (smb, sforshee) ===
+The discussion about "Weekly Updates & Questions for the Kernel Team (smb, sforshee)" started at 16:22.
+
+  * Nothing new to report kernel-wise
+  * The bundle of xen-libvirt-qemu for zesty did finally move out of proposed yesterday.
+
+=== Ubuntu Server Team Events ===
+The discussion about "Ubuntu Server Team Events" started at 16:24.
+
+  * None of note.
+
+=== Development Release ===
+The discussion about "Development Release" started at 16:24.
+
+ * '''nginx''' (16:24)
+  * nginx 1.10.3 (not a merge) was uploaded a couple days ago, due to some pretty evil/nasty HTTP/2 things that got fixed
+  * A merge is more involved that usual; we think an FFe may be appropriate to get dynamic module support in
+  * We hope to have a build-test of the merge probably by EOD tomorrow (22:00 UTC-5)
+  * ''LINK:'' https://wiki.ubuntu.com/ServerTeam/NGINX now exists
+  * see https://wiki.ubuntu.com/ServerTeam/NGINX for packaging details and bug triaging information on the nginx package in Ubuntu
+
+=== Open Discussion ===
+The discussion about "Open Discussion" started at 16:31.
+
+  * 16.04.2 is late..targetting this thursday now
+
+=== Announce next meeting date, time and chair ===
+The discussion about "Announce next meeting date, time and chair" started at 16:33.
+
+  * The next meeting will be at Tue 21 Feb 16:00:00 UTC 2017. rharper will chair.
+
+
+
+== Vote results ==
+
+
+
+
+== Action items, by person ==
+
+ * jgrimm
+  * rbasak to review jgrimm's iproute2 MR
+  * nacc to review jgrimm's openvpn MR
+  * jgrimm to review server packages for anything new (or missed) that needs merging
+ * nacc
+  * nacc to review jgrimm's openvpn MR
+ * powersj
+  * rbasak to review powersj's etckeeper merge
+  * rbasak to look at seeding iotop & nicstat with powersj
+ * rbasak
+  * rbasak to review jgrimm's iproute2 MR
+  * rbasak to review caribou's nut merge
+  * rbasak to review powersj's etckeeper merge
+  * rbasak to look at seeding iotop & nicstat with powersj
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * rbasak (108)
+ * teward (37)
+ * jgrimm (28)
+ * nacc (19)
+ * cpaelzer (14)
+ * meetingology (9)
+ * powersj (7)
+ * rharper (4)
+ * ubottu (3)
+ * smoser (1)
+ * Guest15776 (1)
+
+
+
+== Full Log ==
+
+
+ 16:00 <rbasak> #startmeeting ubuntu-server-team
+
+ 16:00 <meetingology> Meeting started Tue Feb 14 16:00:02 2017 UTC.  The chair is rbasak. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00 <meetingology> 
+
+ 16:00 <meetingology> Available commands: action commands idea info link nick
+
+ 16:00 <rharper> supposedly rbasak was
+
+ 16:00 <rharper> and it is so
+
+ 16:00 <rharper> o/
+
+ 16:00 <rbasak> #topic Review ACTION points from previous meeting
+
+ 16:00 <rbasak> o/
+
+ 16:00 <rbasak> I see no actions.
+
+ 16:00 <rbasak> #info No actions from previous meeting.
+
+ 16:00 <rbasak> #topic Development Release
+
+ 16:00 <rbasak> #link https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core
+
+ 16:00 <rbasak> The blueprint is looking pretty good now I think.
+
+ 16:01 <jgrimm> indeed
+
+ 16:01 <rbasak> Shall we go through the outstanding items?
+
+ 16:01 <rbasak> caribou: "Add secureboot support for kdump-tools : INPROGRESS"
+
+ 16:01 <rbasak> Is that needed before feature freeze?
+
+ 16:02 <rbasak> squid3 merge: INPROGRESS
+
+ 16:02 <rbasak> This is done.
+
+ 16:02 <rbasak> (and landed)
+
+ 16:02 <jgrimm> nice
+
+ 16:02 <rbasak> nacc: python-django merge (LP: #1605278): INPROGRESS
+
+ 16:02 <ubottu> Launchpad bug 1605278 in python-django (Ubuntu Zesty) "Merge python-django 1:1.10.3 from Debian unstable" [Wishlist,In progress] https://launchpad.net/bugs/1605278
+
+ 16:02 <rbasak> nacc: also apache2 merge (LP: #1663425): INPROGRESS
+
+ 16:02 <ubottu> Launchpad bug 1663425 in libapache2-mod-perl2 (Ubuntu) "Please merge with 2.4.25-3 from Debian unstable" [High,Fix committed] https://launchpad.net/bugs/1663425
+
+ 16:03 <jgrimm> i can give status on django
+
+ 16:03 <rbasak> jgrimm: iproute2 merge (LP: #1659039): INPROGRESS - this is at MP stage I think? In my backlog to look that up.
+
+ 16:03 <ubottu> Launchpad bug 1659039 in iproute2 (Ubuntu) "iproute2 catch up with upstream" [Undecided,New] https://launchpad.net/bugs/1659039
+
+ 16:03 <rbasak> jgrimm: also nspr merge: INPROGRESS
+
+ 16:03 <rbasak> Is that the same?
+
+ 16:03 <jgrimm> no
+
+ 16:03 <rbasak> I think I also need to look at caribou's nut merge.
+
+ 16:04 <jgrimm> wrt django, nacc has PPA and has been in holding pattern for maas to figure test/work with it
+
+ 16:04 <nacc> apache2 is uploaded, just stuck in proposed, it's tied to the openldap merge
+
+ 16:04 <jgrimm> maas team said they'd look at it tod
+
+ 16:04 <jgrimm> today even
+
+ 16:05 <jgrimm> i'll let nacc talk, ping me and i'll give my status on the above
+
+ 16:05 <smoser> o/
+
+ 16:05 <rbasak> nacc: how's the openldap merge going?
+
+ 16:07 <nacc> also uploaded, also stucck in proposed
+
+ 16:07 <nacc> autopkgtest regressions, not all due to openldap
+
+ 16:07 <nacc> z-p is kind of a mess right now
+
+ 16:07 <cpaelzer> ack on that
+
+ 16:07 <nacc> working with debian maintainers of some pkgs to figure them out
+
+ 16:07 <rbasak> OK. For FF we can at least focus on getting stuff into proposed.
+
+ 16:07 <nacc> looks like we also have an ada regression in z-p :/
+
+ 16:07 <rbasak> What's not in proposed but needs to be?
+
+ 16:07 <nacc> rbasak: nothing on my side
+
+ 16:08 <nacc> that i know of (other than my curtin changes...)
+
+ 16:08 <cpaelzer> how about the discussion on postgres-9.6 that has to go OUT of proposed for this cycle?
+
+ 16:08 <rbasak> My Firefox has hung trying to load the excuses page :-/
+
+ 16:08 * rbasak now can't see the agenda.
+
+ 16:08 <jgrimm> rbasak, wrt to nspr -> its blocked on the dogtag-pki/tomcat failures like a half a dozen other packages
+
+ 16:09 <jgrimm> but its in proposed
+
+ 16:09 <nacc> cpaelzer: we can presumably leave it in -proposed, right? it just won't migrate unti 17.04
+
+ 16:09 <nacc> s/17.04/17.10/
+
+ 16:09 <rbasak> I see we have a ton of MIRs blocked.
+
+ 16:09 <jgrimm> python-boto also merged and in proposed, but failing autopkgtests (but those failures have been around before my merge) something to still sort out
+
+ 16:09 <cpaelzer> nacc: we can leve it, but there are dependent builds and none of them will migtrate
+
+ 16:09 <cpaelzer> nacc: I can't decide if that is ok as well
+
+ 16:09 <rbasak> #info Various feature freeze sensitive uploads are stuck in proposed.
+
+ 16:10 <cpaelzer> nacc: that is why I assumed it might be required to drop it there
+
+ 16:10 <rbasak> #info Various things are blocked on MIRs that are pending review.
+
+ 16:10 <rbasak> jgrimm: do you have a list of your assigned items that aren't in proposed yet?
+
+ 16:11 <rbasak> jgrimm: I see iproute2, nspr (for which you've answered), openvpn
+
+ 16:11 <cpaelzer> I would like to discuss shortly on the MIRs once we are over the "in proposed" topic
+
+ 16:11 <jgrimm> iproute is the only one not merged, but there is MR awaiting your review
+
+ 16:11 <rbasak> cpaelzer: ack
+
+ 16:11 <rbasak> OK
+
+ 16:11 <jgrimm> and openvpn which is in nacc's review queue
+
+ 16:11 <rbasak> #action rbasak to review jgrimm's iproute2 MR
+
+ 16:11 * meetingology rbasak to review jgrimm's iproute2 MR
+
+ 16:11 <rbasak> #action nacc to review jgrimm's openvpn MR
+
+ 16:11 * meetingology nacc to review jgrimm's openvpn MR
+
+ 16:12 <jgrimm> thank you
+
+ 16:12 <nacc> cpaelzer: yeah, we should review what all hits it
+
+ 16:12 <nacc> cpaelzer: we'll need an AA to help if so (and to blacklist it for now, iiuc)
+
+ 16:12 <rbasak> It looks like memcached is merged?
+
+ 16:12 <cpaelzer> nacc: ack
+
+ 16:12 <jgrimm> rbasak, i think sitting in excuses tho. :/
+
+ 16:13 <rbasak> memcached has made it to the release pocket.
+
+ 16:13 <jgrimm> oh yay! that's new to me
+
+ 16:14 <rbasak> I'll update the blueprint (later) to note what is in proposed, so we know.
+
+ 16:14 <powersj> rbasak: can you add etckeeper to your list of MR to review?
+
+ 16:14 <jgrimm> rbasak, i plan to review server packages today for anything new (or missed) that needs handled
+
+ 16:14 <rbasak> Great, thanks.
+
+ 16:14 <nacc> rbasak: feel free to reassign some of those to me
+
+ 16:14 <rbasak> #action rbasak to review caribou's nut merge
+
+ 16:14 * meetingology rbasak to review caribou's nut merge
+
+ 16:15 <rbasak> #action rbasak to review powersj's etckeeper merge
+
+ 16:15 * meetingology rbasak to review powersj's etckeeper merge
+
+ 16:15 <powersj> thx
+
+ 16:15 <rbasak> #action jgrimm to review server packages for anything new (or missed) that needs merging
+
+ 16:15 * meetingology jgrimm to review server packages for anything new (or missed) that needs merging
+
+ 16:15 <jgrimm> thanks!
+
+ 16:15 <rbasak> jgrimm: also python-boto?
+
+ 16:16 <nacc> i'm going to spend some time today trawling -proposed as well, trying to get a story for as mucch that is stuck as possible
+
+ 16:16 <rbasak> And nginx.
+
+ 16:16 <nacc> teward: --^
+
+ 16:16 <rbasak> teward: how's the nginx merge going?
+
+ 16:16 <jgrimm> rbasak, in -proposed, autopkgtest failure  <- nacc if interested
+
+ 16:16 <rbasak> nacc: thanks
+
+ 16:16 <rbasak> OK
+
+ 16:16 <nacc> i believe teward was working on it yestreday, but also has other priorities right now (school)
+
+ 16:16 <rbasak> That's everything I see on the blueprint that is FF-critical.
+
+ 16:16 <nacc> (per ubuntu-server IRC yeserday)
+
+ 16:17 <rbasak> OK
+
+ 16:17 <cpaelzer> MIRs ?
+
+ 16:17 <rbasak> #subtopic Pending MIRs
+
+ 16:17 <cpaelzer> I just checked iotop & nicstat is actually DONE
+
+ 16:17 <cpaelzer> are
+
+ 16:17 <powersj> yeah just need to be added to seed though I believe
+
+ 16:17 <cpaelzer> but htop and python-elftools wait on security review.
+
+ 16:17 <cpaelzer> For the latter I unblocked DPDK by keeping the delta that drops the dependency to a suggest - Debian was so kind to accept that now
+
+ 16:17 <rbasak> Great, thanks!
+
+ 16:17 <rbasak> #info iotop and nicstat are done
+
+ 16:17 <rbasak> #info htop and python-elftools wait on security review
+
+ 16:18 <rbasak> To get sssd merged I dropped the "secrets service" due to a component mismatch, and left a work item there.
+
+ 16:18 <jgrimm> rbasak: powersj will need some help with seeding iotop & nicstat
+
+ 16:18 <rbasak> That's also blocked on a MIR. I don't know whether to drop that in after FF, or next cycle.
+
+ 16:19 <rbasak> It seems relatively safe since it'll be a new feature.
+
+ 16:19 <rbasak> #action rbasak to look at seeding iotop & nicstat with powersj
+
+ 16:19 * meetingology rbasak to look at seeding iotop & nicstat with powersj
+
+ 16:19 <jgrimm> thanks
+
+ 16:19 <rbasak> Anything else on MIRs?
+
+ 16:19 <rbasak> #info sssd is missing the "secrets service", a new feature resulting in a component mismatch. This may be able to land in an FFe, or next cycle.
+
+ 16:20 <rbasak> #subtopic Active work that may need wider communication
+
+ 16:20 <rbasak> Anything to mention? Seems we're all busy with merges.
+
+ 16:20 <rbasak> #info None
+
+ 16:21 <rbasak> #topic Server & Cloud Bugs & SRU/Pending Uploads (caribou)
+
+ 16:21 <teward> shoot i'm late
+
+ 16:21 <teward> (we'll catch up on nginx at "AOB")
+
+ 16:21 <rbasak> teward: sure, thanks.
+
+ 16:21 <rbasak> caribou: around?
+
+ 16:21 <rbasak> Let's circle back if caribou appears
+
+ 16:21 <rbasak> #topic Weekly Updates & Questions for the QA Team (powersj)
+
+ 16:21 <rbasak> powersj: o/
+
+ 16:21 <powersj> Last week was very productive curtin/cloud-init sprint. Got some new testing going and running for curtin and learned to do merges with jgrimm.
+
+ 16:22 <powersj> This week working on ISO testing and getting some zesty tests (raid1, lvm, multi-lvm) going again. Completed some overdue bug triage and will be picking up bugs for the release. Finally, some work on the KVM backend for cloud-init integration testing.
+
+ 16:22 <powersj> questions? comments?
+
+ 16:22 <rbasak> Thanks! Any questions for powersj?
+
+ 16:22 <jgrimm> thanks!
+
+ 16:22 <rbasak> I keep doing that!
+
+ 16:22 <rbasak> #topic Weekly Updates & Questions for the Kernel Team (smb, sforshee)
+
+ 16:23 <Guest15776> Right now, nothing new to report kernel-wise. Side note that the bundle of xen-libvirt-qemu for zesty did finally move out of proposed yesterday. Are there questions?
+
+ 16:23 <jgrimm> great!
+
+ 16:23 <rbasak> Thanks smb!
+
+ 16:23 <rbasak> #info Nothing new to report kernel-wise
+
+ 16:23 <rbasak> #info The bundle of xen-libvirt-qemu for zesty did finally move out of proposed yesterday.
+
+ 16:24 <rbasak> #topic Ubuntu Server Team Events
+
+ 16:24 <rbasak> Anything worth mentioning?
+
+ 16:24 <rbasak> #info None of note.
+
+ 16:24 <rbasak> #topic Development Release
+
+ 16:24 <rbasak> #subtopic nginx
+
+ 16:24 <rbasak> teward: o/
+
+ 16:24 <teward> Hello again!
+
+ 16:25 <teward> Firstly, nginx 1.10.3 (not a merge) was uploaded a couple days ago
+
+ 16:25 <teward> due to some pretty evil/nasty HTTP/2 things that got fixed
+
+ 16:25 <teward> (SRUs pending review for Xenial and Yakkety, also)
+
+ 16:25 <rbasak> Great. Thanks for that!
+
+ 16:25 <teward> as for the merge, I'm working on it, but it's not as easy as a straight merge
+
+ 16:25 <teward> basically, rebuilding the delta we added for 14.04 into pure-Debian packages.
+
+ 16:25 <rbasak> teward: how do you feel this is going in relation to feature freeze?
+
+ 16:26 <teward> rbasak: when's feature freeze again?
+
+ 16:26 <nacc> two days away, iirc
+
+ 16:26 <rbasak> Thursday.
+
+ 16:26 <nacc> (16.2.17)
+
+ 16:26 <teward> rbasak: unlikely, at this rate, given the time it took to fix the evils of the fPIE/fPIC thing
+
+ 16:26 <rbasak> teward: do you feel an FFe is appropriate? Or should we skip to next cycle?
+
+ 16:26 <teward> and that *still* crops up in the updated 3rd-party modules somehow, working on fixing that (I think it's Ubuntu-specific)
+
+ 16:27 <teward> rbasak: FFe would probably be appropriate, I'd like to get dynamic module support in
+
+ 16:27 <rbasak> #info nginx 1.10.3 (not a merge) was uploaded a couple days ago, due to some pretty evil/nasty HTTP/2 things that got fixed
+
+ 16:27 <teward> rbasak: I'll have a build-test of the merge probably by EOD tomorrow (which is 22:00 UTC-5)
+
+ 16:28 <rbasak> #info A merge is more involved that usual; we think an FFe may be appropriate to get dynamic module support in
+
+ 16:28 <rbasak> #info We hope to have a build-test of the merge probably by EOD tomorrow (22:00 UTC-5)
+
+ 16:28 <teward> if that doesn't blow up in my face, it'll get a few reviews by me to compare against existing deltas, and then made available.  Though, the Release team and archive admins will have to move some things to Main
+
+ 16:28 <teward> and some to Universe
+
+ 16:28 <rbasak> teward: great. Thanks! If we have a candidate ready, I think that'll give the release team more confidence in granting an FFe, so that's very helpful./
+
+ 16:28 <teward> (since some dynamic modules are in nginx-core)
+
+ 16:29 <rbasak> teward: thank you for the update, and as ever for all your work on this.
+
+ 16:29 <teward> rbasak: half the work is done, NGINX PPAs confirm that some of the things work fine, the existing 'merge' delta is introducing something maybe and breaking things, working on that tomorrow (today's a busyiish day)
+
+ 16:29 <teward> rbasak: no problem.
+
+ 16:29 <rbasak> Anything else on nginx?
+
+ 16:29 <teward> OH tidbit for triagers and team members:
+
+ 16:29 <teward> https://wiki.ubuntu.com/ServerTeam/NGINX now exists
+
+ 16:29 <teward> details some things about nginx, and special bug triage cases
+
+ 16:29 <powersj> ^^ +1
+
+ 16:30 <teward> powersj got a note about it directly, then I went ahead and documented special Triage cases for bugs and how to handle those types of bug reports.
+
+ 16:30 <jgrimm> teward, very nice!
+
+ 16:30 <rbasak> #info see https://wiki.ubuntu.com/ServerTeam/NGINX for packaging details and bug triaging information on the nginx package in Ubuntu
+
+ 16:30 <rbasak> I really like that page. We should have one for every package :-)
+
+ 16:30 <teward> There's a corresponding link in https://wiki.ubuntu.com/Bugs/Triage to the special-case for the nginx package, so it's general knowledge for bug squad as well.
+
+ 16:30 <teward> outside of those special cases, triage as normal.
+
+ 16:30 <jgrimm> cpaelzer, something like that would be nice for qemu and include git repo and special handling etc
+
+ 16:30 <rbasak> Good job linking the wiki together!
+
+ 16:31 <teward> </end, goes to absorb massive quantities of caffeine>
+
+ 16:31 <teward> rbasak: thank you!
+
+ 16:31 <rbasak> Thanks teward!
+
+ 16:31 <cpaelzer> jgrimm: I actually have that on the migration types already, will extend to general handling - good idea
+
+ 16:31 <rbasak> caribou: are you in now?
+
+ 16:31 <rbasak> I guess not, so...
+
+ 16:31 <rbasak> #topic Open Discussion
+
+ 16:31 <rbasak> AOB?
+
+ 16:31 <jgrimm> cpaelzer, excellent!
+
+ 16:32 <jgrimm> worth mentioning that 16.04.2 is late..targetting this thursday now
+
+ 16:32 <rbasak> #info 16.04.2 is late..targetting this thursday now
+
+ 16:32 <rbasak> Mentioned! :-)
+
+ 16:32 <jgrimm> :)
+
+ 16:32 <teward> rbasak: only if we can add things to the lxc tools, I wrote a custom bootstrapper and a "shut off *and* destroy" wrapper script around existing functions.  I got annoyed at `lxc-destroy` not stopping a container, and `lxc-create` being annoying to bootstrap a server in userspace.
+
+ 16:32 <teward> s/bootstrap/customize and configure/
+
+ 16:33 <rbasak> teward: I don't think there's any plan to change the old lxc command interfaces now.
+
+ 16:33 <teward> still in development, but usable :p
+
+ 16:33 <teward> indeed.
+
+ 16:33 <rbasak> teward: but lxd does that with "lxc delete -f <name>"
+
+ 16:33 <teward> rbasak: LXD wouldn't work on my 16.04 system... not sure why.
+
+ 16:33 <teward> just saying, still investigating.
+
+ 16:33 <teward> now i'm done :)
+
+ 16:33 <rbasak> OK
+
+ 16:33 <rbasak> #topic Announce next meeting date, time and chair
+
+ 16:33 <rbasak> rharper: will you be available to chair next week?
+
+ 16:33 <rharper> sure
+
+ 16:33 <rbasak> Great. Thanks!
+
+ 16:34 <teward> rbasak: I won't be at next meeting unfortunately
+
+ 16:34 <teward> travel
+
+ 16:34 <cpaelzer> thanks rbasak for leading this so controlled
+
+ 16:34 <rbasak> #info The next meeting will be at Tue 21 Feb 16:00:00 UTC 2017. rharper will chair.
+
+ 16:34 <teward> feel free to email me for a status update by Friday evening
+
+ 16:34 <rbasak> teward: ack.
+
+ 16:34 <teward> anyone may do that ^
+
+ 16:34 <rbasak> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

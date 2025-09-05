@@ -1,0 +1,200 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 22 Jun at 15:02 &mdash; 15:30 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-06-22-15.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-22-jun-2023/36471   (juliank, 15:02)
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-22-jun-2023/36471   (juliank, 15:02)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:09)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:17.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:17)
+
+=== AOB ===
+
+Discussion started by juliank at 15:25.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (28)
+ * juliank (19)
+ * bdrung (6)
+ * schopin (4)
+ * ogayot (3)
+ * slyon (3)
+ * meetingology (2)
+ * bdmurray (2)
+ * mateus-morais (1)
+ * danilogondolfo (1)
+ * enr0n (1)
+ * dviererbe (1)
+
+
+
+== Full log ==
+
+
+ 15:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:02 <meetingology> Meeting started at 15:02:28 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:02 <juliank> #topic Lightning rounds
+
+ 15:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:02 <juliank> https://discourse.ubuntu.com/t/foundations-team-updates-thursday-22-jun-2023/36471
+
+ 15:02 <juliank> uh
+
+ 15:02 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-22-jun-2023/36471
+
+ 15:03 <juliank> I missed the chance to write status being involved in too much mattermost chatter
+
+ 15:05 <bdmurray> Part of me feels like codespell will make it harder for people to contribute.
+
+ 15:07 <vorlon> schopin: where is GNU Cauldron this year?
+
+ 15:07 <schopin> bdmurray: the same argument could be made of code formatters
+
+ 15:07 <schopin> vorlon: Cambridge. Damn Brexit.
+
+ 15:07 <bdmurray> schopin: That's true
+
+ 15:08 <vorlon> schopin: lol
+
+ 15:09 <juliank> #topic Release incoming bugs
+
+ 15:09 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <juliank> bug 2021531
+
+ 15:14 <schopin> This autopkgtest failure is very probably a rustc issue. The question is whether it's an issue in the general unwind code, or just the libtest framework, in which case it would only affect the distro development, not production code.
+
+ 15:15 <schopin> liushuyu accepted to investigate to at least determin that. I'll take care of patching out the rust-gio test in the mean time to get the package moving.
+
+ 15:17 <juliank> ll, jj, ff are empty, hooray
+
+ 15:17 <juliank> #topic Team proposed-migration report
+
+ 15:17 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:18 <bdrung> i'll take python-tz
+
+ 15:18 <vorlon> fwupd is in progress (bdmurray, liushuyu), being investigated upstream
+
+ 15:19 <vorlon> btrfs-progs looks like it may be regressed on s390x.  any volunteers?
+
+ 15:19 <vorlon> ok rolling dice
+
+ 15:19 <vorlon> mateus-morais: can you take btrfs-progs?
+
+ 15:20 * juliank is running behind his plans and off tomorrow so prefers not to pick anything
+
+ 15:21 <mateus-morais> vorlon: yeah
+
+ 15:21 <vorlon> libwww-mechanize-perl: interestingly this seems to have made it into Debian testing without the autopkgtests ever running :P https://ci.debian.net/packages/libw/libwww-mechanize-perl/
+
+ 15:22 <vorlon> danilogondolfo: can you take libwww-mechanize-perl?
+
+ 15:22 <danilogondolfo> vorlon, sure
+
+ 15:22 <vorlon> libwww-perl has an outstanding MIR, nothing for us right now
+
+ 15:22 <vorlon> python-tz: bdrung
+
+ 15:22 <ogayot> I can take pyparted
+
+ 15:22 <ogayot> pyparted / parted I guess
+
+ 15:23 <slyon> well.. the libwww-mechanize-perl 2.17-1 did run on DebCi (and passed), but there wasn't yet a migration-reference/0 run since then.
+
+ 15:23 <vorlon> setuptools: enr0n?
+
+ 15:23 <enr0n> vorlon: ack
+
+ 15:23 <vorlon> slyon: ah ok - versions reported on the main page as 2.16-1 everywhere
+
+ 15:23 <vorlon> ogayot: will you take care of parted vs livecd-rootfs as part of that?
+
+ 15:24 <ogayot> vorlon: yes
+
+ 15:24 <vorlon> pyparted / parted / livecd-rootfs: ogayot
+
+ 15:24 <slyon> right. I think the main page only shows the last migration-reference/0 but danilogondolfo should have a look at https://ci.debian.net/packages/libw/libwww-mechanize-perl/testing/amd64/ and compare that to our failing tests
+
+ 15:24 <vorlon> ogayot: thanks
+
+ 15:24 <vorlon> initramfs-tools is a candidate but hasn't migrated yet, I'll take a look there
+
+ 15:24 <vorlon> that leaves python-reportlab vs python-biopython
+
+ 15:24 <vorlon> anyone want one who doesn't have one yet?
+
+ 15:25 <slyon> I can
+
+ 15:25 <vorlon> python-reportlab: slyon
+
+ 15:25 <vorlon> thanks!
+
+ 15:25 <vorlon> juliank: back to you
+
+ 15:25 <juliank> #topic AOB
+
+ 15:25 <bdrung> vorlon, I am interested in the reason why initramfs-tools did not migrate.
+
+ 15:26 <vorlon> bdrung: https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_output.txt says it makes livecd-rootfs uninstallable on i386
+
+ 15:26 <juliank> I'm out tomorrow
+
+ 15:27 <vorlon> bdrung: do you want to just mark the isc-dhcp-client dep !i386?
+
+ 15:27 <dviererbe> I'm out tomorrow too
+
+ 15:27 <bdrung> vorlon, yes
+
+ 15:27 <vorlon> ok sorted then \o/
+
+ 15:28 <juliank> final call!
+
+ 15:28 <vorlon> bdrung: btw I believe we previously relied on isc-dhcp-client being a dependency of ubuntu-minimal, so didn't worry about a direct dep from initramfs-tools
+
+ 15:28 <vorlon> and oi what are you doing introducing deps on deprecated things? :)
+
+ 15:29 <bdrung> vorlon, for the transition: move the isc-dhcp-client dependency from ubuntu-minimal to initramfs-tools. Second step: replace isc-dhcp-client by dhcpcd-base there.
+
+ 15:29 <vorlon> ah I don't see much need for the intermediate step but, well
+
+ 15:30 <bdrung> vorlon, for the added autopkgtests
+
+ 15:30 <vorlon> ok (could also be just a test dep, but enough bikeshedding)
+
+ 15:30 <bdrung> either the package or the test case needs to depend on it.
+
+ 15:30 <juliank> so the autopkgtest pass first, then you upload new one and if they fail they block?
+
+ 15:30 <juliank> oh well I think this is details now we don't need to group discuss :)
+
+ 15:30 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

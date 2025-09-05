@@ -1,0 +1,172 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 20:03:19 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-04-29-20.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *action review
+''LINK:'' https://lists.ubuntu.com/archives/ubuntu-devel-announce/2013-April/001033.html was the last set of minutes and contains no actions  (cjwatson, 20:03:45)
+
+ *mailing list review
+''LINK:'' https://lists.ubuntu.com/archives/ubuntu-devel-announce/2013-February/001012.html   (cjwatson, 20:10:16)
+
+ *AOB
+
+
+
+Meeting ended at 20:27:51 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (31)
+ * ScottK (17)
+ * kees (6)
+ * stgraber (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 20:03:19 <cjwatson> #startmeeting
+
+ 20:03:19 <meetingology> Meeting started Mon Apr 29 20:03:19 2013 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:03:19 <meetingology> 
+
+ 20:03:19 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 20:03:37 <cjwatson> #topic action review
+
+ 20:03:45 <cjwatson> https://lists.ubuntu.com/archives/ubuntu-devel-announce/2013-April/001033.html was the last set of minutes and contains no actions
+
+ 20:04:09 <cjwatson> #topic mailing list review
+
+ 20:04:22 <cjwatson> the only thing I see here is the owncloud question: https://lists.ubuntu.com/archives/technical-board/2013-April/001595.html
+
+ 20:04:49 <ScottK> Riddell: ^^^
+
+ 20:05:22 <ScottK> I can speak to the issue if he's not around.
+
+ 20:05:27 <cjwatson> I think I loosely concur with kees if it's practical to update those libraries, although Mark may also have a point if it's possible to run owncloud on top of juju+lxc or similar (it may not be, I don't know the details and this would require tech analysis)
+
+ 20:05:42 <cjwatson> OTOH this has gone on for a long time and I'm not sure that the outcome of sitting on it is best for our users
+
+ 20:06:56 <cjwatson> juju+lxc may not be practical for older releases.  But we shouldn't be bothering with something like this for oneiric now, IMO, given that it's about to drop out of support
+
+ 20:07:07 <ScottK> I think we'd rather have it in Ubuntu if it's supportable and we have the older releases anyway.
+
+ 20:07:27 * kees is here.
+
+ 20:07:35 <kees> I'm so confused about when this meeting is. :P
+
+ 20:07:41 <ScottK> Now
+
+ 20:07:47 <ScottK> ;-)
+
+ 20:07:50 <cjwatson> Has anyone worked out how much work it'd be to update the dependent libraries directly?  That would certainly be the most regular approach within Ubuntu
+
+ 20:07:54 <kees> ScottK: heh, thanks
+
+ 20:08:14 <kees> my prior attempt to move it to 2100 london in my calendar seems to have failed. anyway, I'm here now.
+
+ 20:08:31 <ScottK> We did look into a bit.  It's a lot of packages that have other rdepends.
+
+ 20:08:45 <cjwatson> Is the analysis recorded anywhere?
+
+ 20:08:53 <ScottK> And it's not needing newer packages JUST because of security issues.
+
+ 20:09:01 <cjwatson> New interfaces?
+
+ 20:09:03 <ScottK> I think it's locked in Riddell's brain/laptop.
+
+ 20:09:13 <ScottK> API changes, I think.
+
+ 20:09:22 <cjwatson> What was the last package we had this debate about?  Was it maas?
+
+ 20:09:32 <ScottK> IIRC, yes.
+
+ 20:09:36 <cjwatson> Something in that cluster at least
+
+ 20:10:16 <cjwatson> https://lists.ubuntu.com/archives/ubuntu-devel-announce/2013-February/001012.html
+
+ 20:10:25 <ScottK> What I think would be reasonable would be to embed code copies for updates (as was done with $LAST_ANNOYING_PACKAGE) and update libraries that are API/ABI stable but have security/functional issues.
+
+ 20:10:47 <cjwatson> "If any of the changes can reasonably be handled within MAAS instead, then they should be, since that would involve the least total risk to 12.04 users."
+
+ 20:10:49 <ScottK> Then we'd have a path forward that didn't involve breaking other stuff.
+
+ 20:11:07 <cjwatson> Steve provided a compelling argument for why the requirements for SRU processing were opposed to those for MIR processing, IIRC
+
+ 20:11:31 <ScottK> Right, I think something similar makes sense here.
+
+ 20:12:00 <cjwatson> So I agree that security fixes should be applied directly, but it seems to me that the same argument applies: non-security changes that are required for owncloud should be bundled
+
+ 20:12:14 <cjwatson> It would be nice to have a complete analysis that breaks down the two cases
+
+ 20:12:31 <cjwatson> agree> with kees, I mean
+
+ 20:12:35 <ScottK> Agreed.  I think all Riddell was looking for was a policy statement to that effect and then the details can be worked out with the SRU team.
+
+ 20:13:10 <cjwatson> So that's my personal position.  I think it's backed by precedent but it would be nice to know if other TB members could get behind that.
+
+ 20:14:01 * ScottK looks around.
+
+ 20:16:11 * kees nods
+
+ 20:16:48 <cjwatson> I'd whack pitti if I could see him ...
+
+ 20:18:06 <stgraber> sorry, wifi problems, reading scrolback
+
+ 20:21:06 <cjwatson> How about I write this up by mail and people can tear it apart if they disagree?
+
+ 20:21:16 <ScottK> Sounds good to me.
+
+ 20:21:25 <cjwatson> I'd in general like TB decisions to be consistent with previous ones unless there's a compelling reason not to :-)
+
+ 20:21:45 <stgraber> so as I just told cjwatson in person, I'd be happy to make the MAAS exception more of a general case and allowing that kind of things as SRU
+
+ 20:22:05 <cjwatson> I'm wary of a degree of floodgate-opening
+
+ 20:22:43 <cjwatson> But, well, we've still only been forced to do this in a pretty small minority of cases
+
+ 20:23:22 <stgraber> the SRU team would still have the go/no-go on that and I expect them to ask for a very detailed list of problems and explenation as to why the changes couldn't be cherry-picked
+
+ 20:24:24 <ScottK> As I said when I applied for the clamav update exception, there are some upstreams you give an exception to because they are so sane about their maintenance practices.  Sometimes it ends up being the opposite.
+
+ 20:25:44 <cjwatson> Heh, yeah.
+
+ 20:25:52 <cjwatson> OK, I think we've exhausted this for now
+
+ 20:25:53 <cjwatson> #topic AOB
+
+ 20:27:01 <cjwatson> anyone?  anyone?  Bueller?
+
+ 20:27:06 <kees> nothing from me
+
+ 20:27:50 <cjwatson> OK, thanks all
+
+ 20:27:51 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

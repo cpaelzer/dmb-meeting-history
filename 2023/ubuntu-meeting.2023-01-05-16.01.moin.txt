@@ -1,0 +1,288 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 05 Jan at 16:01 &mdash; 16:44 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-01-05-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 16:10.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:10)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:14)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:17)
+
+=== proposed-migration ===
+
+Discussion started by jawn-smith at 16:25.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 16:25)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 16:40.
+
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (74)
+ * slyon (10)
+ * bdmurray (7)
+ * adrien (7)
+ * schopin (5)
+ * enr0n (4)
+ * waveform (3)
+ * meetingology (2)
+ * danilogondolfo (1)
+ * mclemenceau_ (1)
+ * ogayot (1)
+ * ginggs (1)
+ * xypron (1)
+
+
+
+== Full log ==
+
+
+ 16:01 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:00 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:01 <danilogondolfo> o/
+
+ 16:01 <slyon> o/
+
+ 16:01 <jawn-smith> The weekly status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-5-january-2023/33029
+
+ 16:01 <jawn-smith> Let's all take our usual time to read and ask questions
+
+ 16:02 <slyon> waveform: FYI (libcamera), I rejected that MIR recently: https://bugs.launchpad.net/ubuntu/+source/libcamera/+bug/1997560
+
+ 16:02 <slyon> hopefully we'll get it approved in Lunar+1
+
+ 16:03 <bdmurray> enr0n: was there anything interesting in the upgrade bugs?
+
+ 16:04 <enr0n> bdmurray: No, just the usual suspects
+
+ 16:04 <waveform> slyon, ah, interesting -- I was looking into the state vs upstream (raspios has quite a bit in libcamera that we haven't but then they're actively working on getting the pi camera modules working on it)
+
+ 16:04 <enr0n> Though there was a request to modernize some warning, let me find the bug number
+
+ 16:05 <enr0n> bdmurray: bug 2000416
+
+ 16:05 <bdmurray> schopin: is there a timeline for this glibc SRU? he said worrying about the queues
+
+ 16:05 <adrien> slyon: the version number (v0.0.x) is not very representative I think: it does a lot of things already and I think it's been fairly stable
+
+ 16:05 <schopin> bdmurray: not yet, but I'm very aware of that :)
+
+ 16:06 <jawn-smith> bdmurray: was pyside2 causing the s390x queue issues?
+
+ 16:06 <slyon> adrien: right. but they didn't have a release process at all up until recently. and there were some other factors that made me feel it's not yet stable enough (though getting more solid now)
+
+ 16:07 <waveform> yeah, it's definitely not "stable" yet :)
+
+ 16:08 <bdmurray> enr0n: removing packages can take a long time https://bugs.launchpad.net/ubuntu/+source/ubuntu-release-upgrader/+bug/1874272
+
+ 16:08 <adrien> slyon: yup, and it's frustrating because the existing alternatives are quite lacking imho
+
+ 16:09 <mclemenceau_> o/
+
+ 16:09 <slyon> full ack. we now have the desktop team signed up to this, and they'll help getting it into a better shape inside Debian & Ubuntu
+
+ 16:10 <jawn-smith> #topic Release incoming bugs
+
+ 16:10 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 16:11 <jawn-smith> bug 1998095
+
+ 16:11 <jawn-smith> We talked about this last year
+
+ 16:11 <jawn-smith> The plan is to wait for pkgconf's new version to migrate, right?
+
+ 16:11 <slyon> I think we can untag that.
+
+ 16:11 <slyon> we made the decission to take ownership
+
+ 16:12 <bdmurray> Did we subscribe to the package?
+
+ 16:12 <slyon> we are subscribed
+
+ 16:13 <jawn-smith> Okay slyon can you untag it?
+
+ 16:13 <slyon> done.
+
+ 16:13 <jawn-smith> Thanks!
+
+ 16:13 <jawn-smith> That's it for ll
+
+ 16:14 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 16:14 <jawn-smith> bug 1842439
+
+ 16:14 <jawn-smith> I feel like we've talked about this like 5 times
+
+ 16:14 <schopin> you're low on your count...
+
+ 16:14 <jawn-smith> Looks like the last time we discussed it there was an action item for bdmurray to bring it up at the desktop sync
+
+ 16:14 <jawn-smith> did that happen?
+
+ 16:15 <bdmurray> yes, and they said apport should protect against this type of crash
+
+ 16:15 <jawn-smith> So does that mean there's a task for foundations here?
+
+ 16:16 <schopin> bdrung: didn't you say it wasn't possible to detect the bad case from Python?
+
+ 16:16 <bdmurray> "apport should catch the error and work around the issue" he read from the notes
+
+ 16:16 <schopin> catch a segfault? oO
+
+ 16:17 <jawn-smith> Okay bdmurray to update the bug, and we'll discuss again when b_drung is available
+
+ 16:17 <jawn-smith> That's it for kk then
+
+ 16:17 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:17 <jawn-smith> bug 1957863
+
+ 16:18 <jawn-smith> bdmurray: you tagged this one
+
+ 16:18 <jawn-smith> It appears the submitter has suggested a fix
+
+ 16:19 <bdmurray> It seems like it should be pretty straight forward
+
+ 16:19 <jawn-smith> So we just need a person to work on this
+
+ 16:21 <jawn-smith> bdmurray says someone who is seeking upload rights should work on this
+
+ 16:21 <jawn-smith> enr0n ?
+
+ 16:21 <jawn-smith> I'll review and sponsor
+
+ 16:22 <jawn-smith> Moving on then
+
+ 16:22 <jawn-smith> bug 1999345
+
+ 16:22 <jawn-smith> juliank says no
+
+ 16:22 <jawn-smith> apparently juliank says maybe
+
+ 16:23 <jawn-smith> juliank to touch base with the security team (specifically Chris)
+
+ 16:23 <adrien> re update-notifier, shellcheck only complains about one instance of that typo (and it's a better way to develop than -u)
+
+ 16:23 <jawn-smith> adrien: good to know, thanks
+
+ 16:25 <jawn-smith> #topic proposed-migration
+
+ 16:25 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:25 <jawn-smith> This will be slightly different from normal
+
+ 16:25 <jawn-smith> The s390x and arm64 queues are struggling, so we're going to skip any regressions on those architectures for now
+
+ 16:26 <jawn-smith> dbus-glib has one amd64 regression
+
+ 16:26 <jawn-smith> I just retriggered it because it looks like flakiness
+
+ 16:27 <jawn-smith> git has a few regressions we can look into
+
+ 16:27 <schopin> I can take git.
+
+ 16:27 <jawn-smith> Thanks!
+
+ 16:29 <jawn-smith> adduser has a few that aren't s390 or arm64
+
+ 16:29 <jawn-smith> I'll take adduser
+
+ 16:29 <jawn-smith> python-werkzeug has some as well
+
+ 16:29 <slyon> I can take that
+
+ 16:29 <jawn-smith> any volunteers?
+
+ 16:29 <jawn-smith> Thanks!
+
+ 16:30 <jawn-smith> sysvinit has some we can look at
+
+ 16:30 <jawn-smith> any volunteers?
+
+ 16:30 <ogayot> I can have a look
+
+ 16:30 <jawn-smith> Excellent, thanks
+
+ 16:30 <jawn-smith> systemd has one ppc64el regression
+
+ 16:30 <jawn-smith> enr0n ?
+
+ 16:30 <enr0n> yeah
+
+ 16:31 <jawn-smith> debootstrap: any volunteers?
+
+ 16:31 <waveform> I can take that; given the u-u regression is already on my plate
+
+ 16:32 <jawn-smith> Thanks
+
+ 16:32 <adrien> I can ha... too slow
+
+ 16:32 <jawn-smith> devscripts is missing builds
+
+ 16:32 <jawn-smith> on all architectures it seems
+
+ 16:32 <ginggs> i'll take it
+
+ 16:32 <jawn-smith> ginggs to work that one
+
+ 16:32 <jawn-smith> coreutils, any volunteers?
+
+ 16:33 <adrien> I'm quite curious as to what "missing builds" mean
+
+ 16:33 <jawn-smith> Generally FTBFS
+
+ 16:33 <adrien> I can look at it
+
+ 16:33 <jawn-smith> perhaps it would be more accurate for it to say "failed builds"
+
+ 16:33 <adrien> nice thing is that coreutils makes coreutils fail
+
+ 16:33 <jawn-smith> but I think that "missing builds" might also include packages that just haven't built yet?
+
+ 16:33 <jawn-smith> Anyway, thanks for taking coreutils adrien
+
+ 16:34 <jawn-smith> libconfig-inifiles-perl
+
+ 16:34 <jawn-smith> Any takers?
+
+ 16:35 <jawn-smith> danilogondolfo: libconfig-inifiles-perl
+
+ 16:36 <jawn-smith> zope.interface: vpa
+
+ 16:36 <jawn-smith> libnet-domain-tld-perl
+
+ 16:37 <jawn-smith> xypron: can you take that one?
+
+ 16:37 <xypron> ok
+
+ 16:37 <jawn-smith> Thanks!
+
+ 16:37 <jawn-smith> apport: bdrung
+
+ 16:38 <jawn-smith> juliank: sbuild?
+
+ 16:40 <jawn-smith> Everyone has one now
+
+ 16:40 <jawn-smith> #topic AOB
+
+ 16:44 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

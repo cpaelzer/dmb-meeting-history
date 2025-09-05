@@ -1,0 +1,657 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 26 Jun at 15:01 &mdash; 16:02 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-06-26-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:01.
+
+
+=== system image updates ===
+The discussion about "system image updates" started at 15:24.
+
+  * ''LINK:'' https://wiki.ubuntu.com/ImageBasedUpgrades 
+  * ''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/foundations-1305-image-based-updates 
+  * ''LINK:'' https://launchpad.net/ubuntu-system-image 
+
+=== AOB ===
+The discussion about "AOB" started at 15:58.
+
+  * ''LINK:'' http://status.ubuntu.com/ubuntu-s/canonical-foundations-ubuntu-13.06.html is still looking a bit unrealistic vs. the trendline... though better than yesterday
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * stgraber (72)
+ * slangasek (55)
+ * xnox (26)
+ * stokachu (23)
+ * ubottu (22)
+ * barry (21)
+ * ev (21)
+ * bdmurray (20)
+ * cjwatson (18)
+ * jodh (12)
+ * cyphermox (4)
+ * meetingology (3)
+ * Laney (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Wed Jun 26 15:01:36 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01 <slangasek> [TOPIC] Lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:02 <slangasek> barry doko ev slangasek xnox stgraber jodh bdmurray stokachu cjwatson
+
+ 15:03 <barry> win!
+
+ 15:03 <barry> image based updates: better logging; consistency in nomenclature between wiki and code.  LP: #1191150.  LP: #1192586.  Fixing checksum checking.  weekly meeting.
+
+ 15:03 <ubottu> Launchpad bug 1191150 in Ubuntu system image "Save the.tar.xz and tar.xz.asc keyring files" [High,Fix committed] https://launchpad.net/bugs/1191150
+
+ 15:03 <ubottu> Launchpad bug 1192586 in Ubuntu system image "Add the current build number to the User-Agent" [Low,Fix committed] https://launchpad.net/bugs/1192586
+
+ 15:03 <barry> python bug 16499 (-I "isolation mode")
+
+ 15:03 <ubottu> bug 8727 in linux-source-2.6.15 (Ubuntu) "duplicate for #16499 [ACPI] Can't connect network with 3Com 3c556B" [Medium,Fix released] https://launchpad.net/bugs/8727
+
+ 15:03 <barry> flufl.bounce 2.2.1-1
+
+ 15:03 <barry> objectives; patch pilot; random bits of system administration; being evil w/my new debian beta capsule
+
+ 15:03 <barry> done
+
+ 15:05 <slangasek> doko's on holiday
+
+ 15:05 <slangasek> ev:
+
+ 15:05 <slangasek> ... "debian beta capsule"?
+
+ 15:05 <ev> ah right
+
+ 15:06 <ev> - Lots of planning our way out of the Cassandra ENOSPC hell with the webops
+
+ 15:06 <ev> team:
+
+ 15:06 <ev> https://wiki.canonical.com/InformationInfrastructure/OSA/Projects/InProgress/UE/CassandraSpace
+
+ 15:06 <ev> - Simplified: we're moving to Cassandra on Prodstack and Ceph, fast.
+
+ 15:06 <ev> - We're going to keep under 1TB per node, which should help us quite
+
+ 15:06 <ev> significantly with compactions, enabling compression, general performance,
+
+ 15:06 <ev> and dealing with losing a node.
+
+ 15:06 <ev> - The existing DC cluster will become the testbed for compression and
+
+ 15:06 <ev> Cassandra 1.2.5, then will get absorbed into Prodstack.
+
+ 15:06 <ev> - We'll build a secondary cluster on Prodstack, in prep for having a hot
+
+ 15:06 <ev> standby, further experimentation, and Hadoop.
+
+ 15:06 <ev> - Increasing our metrics via statsd and graphite significantly in preparation
+
+ 15:06 <ev> for the Ceph move, so we can get a deep understanding of the performance
+
+ 15:06 <ev> penalty. Also moving away from Cassandra for storing metrics as a matter of
+
+ 15:06 <ev> consistency.
+
+ 15:06 <ev> - Added a path to graphite on the retracers.
+
+ 15:06 <barry> slangasek: http://en.wikipedia.org/wiki/Ultraman
+
+ 15:06 * barry is probably dating himself ;)
+
+ 15:06 <slangasek> :)
+
+ 15:06 <ev> I've been catching up on Cassandra SF and Cassandra NYC '13 videos in my free time, making thorough notes in the hope I can point people at the better talks
+
+ 15:06 <ev> (done)
+
+ 15:07 <ev> already proving helpful in discussions with James and Tom though
+
+ 15:08 <slangasek> * discovering plymouth is somewhat on the floor on i386 (bug #1187318) and spending an inordinate amount of time trying to debug this
+
+ 15:08 <ubottu> bug 1187318 in plymouth (Ubuntu) "Splash skips text when asking for LUKS password" [Undecided,Confirmed] https://launchpad.net/bugs/1187318
+
+ 15:08 <slangasek> * ongoing work on supporting repartitioning of android devices at bootstrap time
+
+ 15:08 <slangasek> * N7 has been given lower priority, so I no longer have to deal with the madness of the completely non-standard GPT on there
+
+ 15:08 <slangasek> * instead, focused on worrying about getting parted support into the recovery image so we can use it
+
+ 15:08 <slangasek> * objectives-wrangling
+
+ 15:08 <slangasek> (done)
+
+ 15:09 <xnox> * Upstart:
+
+ 15:09 <xnox> - code review and merges for 1.9 release
+
+ 15:09 <xnox> - discussions about plumbers upstart talk
+
+ 15:09 <xnox> - upstart in debian, raising discussion about init scripts
+
+ 15:09 <xnox> development + ongoing job forwarding / replying to maintainers'
+
+ 15:09 <xnox> questions.
+
+ 15:09 <xnox> * android-cross-toolchain:
+
+ 15:09 <xnox> - gcc4.8 built android images do not boot, whilst other compilations
+
+ 15:09 <xnox> are ok (e.g. busybox binary works). Identified
+
+ 15:09 <xnox> http://gcc.gnu.org/bugzilla/show_bug.cgi?id=57221 in progress to
+
+ 15:09 <ubottu> gcc.gnu.org bug 57221 in libgcc "[4.8/4.9 regression] libgcc symbol visibility changes break Android blobs" [Normal,Unconfirmed]
+
+ 15:09 <xnox> recompile and try toolchain with patch from above bug.
+
+ 15:09 <xnox> * miscellanious:
+
+ 15:09 <xnox> - fixed fallout from ubiquity moving from gksudo to pkexec.
+
+ 15:09 <xnox> bug #1193526 . Turns out pkexec, doesn't exec much on lxde/xfce.
+
+ 15:09 <ubottu> bug 1193526 in ubiquity (Ubuntu) "Clicking "Install Xubuntu 13.10" in live session doesn't work." [Undecided,Fix released] https://launchpad.net/bugs/1193526
+
+ 15:09 <xnox> - synchronising packages & forwarding my ubuntu patches to debian.
+
+ 15:09 <xnox> - merged e2fsprogs, uploaded hyphen-ru & oo.o-hyphenation to fix
+
+ 15:09 <xnox> bug #1187250
+
+ 15:09 <ubottu> bug 1187250 in openoffice.org-hyphenation (Ubuntu) "package hyphen-ru (not installed) failed to install/upgrade: trying to overwrite '/usr/share/hyphen/hyph_ru_RU.dic', which is also in package openoffice.org-hyphenation 0.6" [High,Fix released] https://launchpad.net/bugs/1187250
+
+ 15:09 <xnox> done
+
+ 15:10 <jodh> * misc:
+
+ 15:10 <jodh> - On holiday until Thursday 20th.
+
+ 15:10 <jodh> - Working on Debconf and Plumbers presentations.
+
+ 15:10 <jodh> * Upstart:
+
+ 15:10 <jodh> - Fixed and merged lp:~jamesodhunt/upstart/bug-1188642
+
+ 15:10 <jodh> - Merged lp:~jamesodhunt/upstart/bug-1159895
+
+ 15:10 <jodh> - Merged lp:~jamesodhunt/upstart/libupstart.
+
+ 15:10 <jodh> - Worked on lp:~jamesodhunt/upstart/allow-multiple-cmdline-confdirs
+
+ 15:10 <jodh> with xnox.
+
+ 15:10 <jodh> - Release prep for Upstart 1.9 with xnox.
+
+ 15:10 <jodh> 𐎪
+
+ 15:10 <jodh> stgraber: oops - sorry! :)
+
+ 15:10 <stgraber> jodh: hey, that was my turn ;)
+
+ 15:10 * bdmurray will wait
+
+ 15:10 <stgraber> Blueprint-related work:
+
+ 15:10 <stgraber> - Image based updates (BLUEPRINT: foundations-1305-image-based-updates)
+
+ 15:10 <stgraber> - Implemented some more tools (trigger the mirrors, generate keyring signatures, switched to sha256, ...)
+
+ 15:10 <stgraber> - Pushed a few test images to the production server
+
+ 15:10 <stgraber> - Opened RT to get the production GPG keys setup, should happen this week
+
+ 15:11 <stgraber> - Had a couple of meetings on the subject
+
+ 15:11 <stgraber> - Clarified some details in the specs
+
+ 15:11 <stgraber> Other work:
+
+ 15:11 <stgraber> - Ubuntu touch
+
+ 15:11 <stgraber> - Updated my test code for loop-mount images to work on nexus4 and nexus7
+
+ 15:11 <stgraber> - Some more discussions on partitioning and containers
+
+ 15:11 <stgraber> - Looked into cherry-picking pidns and mntns patches into the 3.4 kernel used on mako (to get lxc-attach working), seems trickier than expected but will spend some more time on it today.
+
+ 15:11 <stgraber> - Discussed udev vs ueventd
+
+ 15:11 <stgraber> - LXC
+
+ 15:11 <stgraber> - Prototyped a minimal dbus service for LXC
+
+ 15:11 <stgraber> - Discussed integration of upstream LXC with OpenStack
+
+ 15:11 <stgraber> - Usual code reviews
+
+ 15:11 <stgraber> - Release
+
+ 15:11 <stgraber> - Alpha-1 release engineering work
+
+ 15:11 <stgraber> - Landed a couple of fixes and tweaks to the QATracker for the self-service rebuild feature
+
+ 15:11 <stgraber> - Landed the first version of the self-service rebuild tool on nusakan, running every 5 minutes
+
+ 15:11 <stgraber> - Other
+
+ 15:11 <stgraber> - Fixed openvpn component mismatch
+
+ 15:11 <stgraber> - Did SRU validation of an ubiquity bug
+
+ 15:11 <stgraber> 
+
+ 15:11 <stgraber> TODO:
+
+ 15:11 <stgraber> - TODAY: Try to cherry-pick pidns+mntns support into our mako kernel (needs a few changes to the code to strip userns references)
+
+ 15:11 <stgraber> - TODAY: Objectives
+
+ 15:12 <stgraber> - THIS WEEK: Switch to production GPG keys
+
+ 15:12 <stgraber> - THIS WEEK: Write a tool to convert Android system.img into .tar.xz format (similar to what we have for the rootfs)
+
+ 15:12 <stgraber> - THIS WEEK: Integrate the system-image module with cdimage to publish updates to the daily channel as they appear
+
+ 15:12 <stgraber> - Write some tools for manual actions on system-image (manage channels, manage keyrings, manually publish updates, ...)
+
+ 15:12 <stgraber> - Process some pending merges (ifupdown and resolvconf)
+
+ 15:12 <stgraber> 
+
+ 15:12 <stgraber> (DONE)
+
+ 15:12 <bdmurray> code reviews for evan
+
+ 15:12 <bdmurray> reported errors bug 1193022 regarding NotFound exception
+
+ 15:12 <bdmurray> worked around LP: #1186215 by adding laney to list of cached teams
+
+ 15:12 <bdmurray> modified phased-updater to account for something already set to 0
+
+ 15:12 <bdmurray> modified phased-updater email code to keep track of package versions
+
+ 15:12 <bdmurray> modified phased-updater to use a tmpfile during html report writing
+
+ 15:12 <ubottu> bug 1193022 in Errors "tastypie not returning NotFound exception error message" [Medium,New] https://launchpad.net/bugs/1193022
+
+ 15:12 <ubottu> Launchpad bug 1186215 in Daisy "Timed out while loading subscriptions for most-common-problems" [High,In progress] https://launchpad.net/bugs/1186215
+
+ 15:12 <bdmurray> modified phased updater to control sending email via a switch
+
+ 15:12 <bdmurray> modified phased-updater to have a switch for displaying full updates
+
+ 15:12 <bdmurray> merge proposal for phased-updater code
+
+ 15:12 <bdmurray> resolution of issue with date updated in arsenal team assigned report
+
+ 15:12 <bdmurray> readded update-notifier watching for avahi disabled for non upstart user sessions
+
+ 15:12 <bdmurray> worked on making package hooks part of update-notifier be an upstart user job
+
+ 15:13 <slangasek> xnox: so I noticed you said the toolchain won't be uploaded to the archive until next month... are you hedging?  What are the chances it'll still be uploaded this week?
+
+ 15:13 * Laney giggles
+
+ 15:13 <bdmurray> tested bug 1181424 regarding dist-upgrades and rsyslog
+
+ 15:13 <bdmurray> tested bug 1062688 regarding apport (seems edubuntu specific)
+
+ 15:13 <bdmurray> triage of bug 1187250, 1193346
+
+ 15:13 <bdmurray> SRU verification of bug 1192332
+
+ 15:13 <ubottu> bug 1181424 in rsyslog (Ubuntu) "cannot upgrade i386 raring to saucy" [Medium,Incomplete] https://launchpad.net/bugs/1181424
+
+ 15:13 <ubottu> bug 1062688 in apport (Ubuntu) "cannot submit bugs through ubuntu-bug program in live session when localized" [Medium,Triaged] https://launchpad.net/bugs/1062688
+
+ 15:13 <ev> thanks for looking into those, bdmurray
+
+ 15:13 <ubottu> bug 1187250 in openoffice.org-hyphenation (Ubuntu) "package hyphen-ru (not installed) failed to install/upgrade: trying to overwrite '/usr/share/hyphen/hyph_ru_RU.dic', which is also in package openoffice.org-hyphenation 0.6" [High,Fix released] https://launchpad.net/bugs/1187250
+
+ 15:13 <ubottu> bug 1193346 in ubiquity (Ubuntu) "oem config shortcut not present in oem installations" [High,Incomplete] https://launchpad.net/bugs/1193346
+
+ 15:13 <ubottu> bug 1192332 in update-manager (Ubuntu Raring) "SRU of change to phased updater percentage calculation to consider source not binary packages" [Medium,Fix committed] https://launchpad.net/bugs/1192332
+
+ 15:13 <bdmurray> ubuntu-classroom session regarding good bug reports
+
+ 15:13 <bdmurray> irc discussion with security team regarding bug 1094777 and copying the package to security
+
+ 15:13 <ubottu> bug 1094777 in ubuntu-release-upgrader (Ubuntu) "Can't use c-n-r-gtk to initiate Quantal -> Raring update" [High,Fix released] https://launchpad.net/bugs/1094777
+
+ 15:13 <bdmurray> ⌁ done ⌁
+
+ 15:13 <stokachu> Need nomination approval for bug 1062265, Need Sponsorship for python-boto in the precise unapproved queue, Would like to get status update from cyphermox or others wrt bug 1004775, Need Upload/Sponsorship for bug 1187524
+
+ 15:13 <ubottu> Error: Launchpad bug 1062265 could not be found
+
+ 15:13 <ubottu> bug 1004775 in network-manager (Ubuntu Precise) "NetworkManager restarts dnsmasq and adds host route on every IPv6 route lookup" [High,In progress] https://launchpad.net/bugs/1004775
+
+ 15:13 <ubottu> bug 1187524 in wpasupplicant (Ubuntu Precise) "Frequent disconnects under certain network conditions" [Medium,Triaged] https://launchpad.net/bugs/1187524
+
+ 15:14 <stokachu> sec
+
+ 15:14 <cjwatson> there's no nomination on bug 1062265, private bug
+
+ 15:14 <cjwatson> 1194901?
+
+ 15:14 <stokachu> yea copied the wrong one
+
+ 15:14 <cjwatson> no, that doesn't have any noms either ...
+
+ 15:14 <stokachu> bug 1068145
+
+ 15:14 <ubottu> bug 1068145 in puppet (Ubuntu Precise) "Fix for CVE-2012-3867 (puppet) is too restrictive - TLS certificates now break" [High,Triaged] https://launchpad.net/bugs/1068145
+
+ 15:14 <stokachu> there we go
+
+ 15:14 <stokachu> (done)
+
+ 15:15 <cyphermox> stokachu: I uploaded a NM to precise queue for 1004775
+
+ 15:15 <cyphermox> (last week)
+
+ 15:15 <cjwatson> approved those nominations
+
+ 15:15 <xnox> slangasek: if it compiles something that can be executed and doesn't segfault, if can be uploaded this week. working on making that to happen. Not sure what hedging means.... gardening term?!
+
+ 15:15 <stokachu> cjwatson: thanks
+
+ 15:15 <stokachu> cyphermox: was that to address comment 23 in that bug?
+
+ 15:16 <cyphermox> stokachu: yes
+
+ 15:16 <stokachu> (sorry i havent looked at the upload changelog)
+
+ 15:16 <stokachu> cyphermox: awesome thanks a bunch!
+
+ 15:16 <slangasek> xnox: hedging a bet, so that you don't lose everything if you bet wrong :)
+
+ 15:16 <slangasek> nothing related to shrubberies with a nice two-level effect
+
+ 15:16 <stokachu> oh and if anyone is friends with debian ftpmasters to please have them approve sosreport :D
+
+ 15:17 <cjwatson> community-s-autopkgtesting: Spent a fair bit of time on support, and chasing down strange migration failures.  Almost there now.  There's still a problem with failures getting lost, I think, although it seems to be on jibel's side.
+
+ 15:17 <cjwatson> foundations-1305-click-package: Finalised click-package 0.1 format; uploaded to saucy.  Discussed QtCreator integration with bzoltan.
+
+ 15:17 <cjwatson> foundations-r-phased-updates: Implemented "set phased update percentage on copy" API in LP.  Awaiting review (https://code.launchpad.net/~cjwatson/launchpad/copy-set-phase/+merge/170775).
+
+ 15:17 <cjwatson> foundations-1305-arm64-bringup: Trying to resurrect my autobuilder again.  Having trouble with Canonistack not doing what it's told.  Again.
+
+ 15:17 <cjwatson> Fixed https://launchpad.net/builders occasionally returning Forbidden (https://code.launchpad.net/~cjwatson/launchpad/builders-visibility/+merge/170818, https://code.launchpad.net/~cjwatson/launchpad/testfix-builders-visibility/+merge/170941).
+
+ 15:17 <cjwatson> Added another small LP API export required to allow managing chroots over the API (https://code.launchpad.net/~cjwatson/launchpad/das-removechroot-api/+merge/171125) and wrote a manage-chroot client tool for ubuntu-archive-tools.
+
+ 15:17 <cjwatson> Merges/syncs: mlocate, nginx, pacemaker, openhpi, patchutils, syslinux, java3d, collectd, sqlite3, haskell-hoogle, git-annex, raincat, haskell98-report, haskell-readline, libgdchart-gd2, hocr, findutils, console-tools, man-db, manpages-zh, libgd-gd2-perl, pytables, libgd-gd2-noxpm-perl, automake1.11, php-horde-whups, php-horde-wicked, crystalspace, polybori
+
+ 15:17 <cjwatson> Fixed software-properties autopkgtest.  I think.  Took several tries.
+
+ 15:17 <cjwatson> ..
+
+ 15:18 <slangasek> stokachu: 1062265 appears to be the private bug; is there a corresponding public bug filed against the package for this?
+
+ 15:18 <slangasek> ah, 1194901
+
+ 15:18 <cjwatson> no, 1068145, you're behind :)
+
+ 15:18 <stokachu> slangasek: cjwatson got it
+
+ 15:18 <stokachu> lol
+
+ 15:18 <slangasek> ok
+
+ 15:19 <xnox> slangasek: not intentionally.
+
+ 15:19 <stokachu> slangasek: cyphermox uploaded a new network-manager for bug 1004775
+
+ 15:19 <ubottu> bug 1004775 in network-manager (Ubuntu Precise) "NetworkManager restarts dnsmasq and adds host route on every IPv6 route lookup" [High,In progress] https://launchpad.net/bugs/1004775
+
+ 15:21 <slangasek> xnox: well, I would say yes you're hedging, which is fine ;)  Just wanted to understand where things were and if you were still hoping to make progress this week
+
+ 15:21 <slangasek> stokachu: ack - will try to help get that SRU queue down this week (since I didn't last week, meh)
+
+ 15:22 <slangasek> any further discussion over statuses?
+
+ 15:22 <stokachu> cyphermox: bug 1187524 is that on your list to upload soon?
+
+ 15:22 <ubottu> bug 1187524 in wpasupplicant (Ubuntu Precise) "Frequent disconnects under certain network conditions" [Medium,Triaged] https://launchpad.net/bugs/1187524
+
+ 15:22 <stokachu> slangasek: awesome, thanks man
+
+ 15:22 <cyphermox> stokachu: also in the queue: http://launchpadlibrarian.net/142753746/wpasupplicant_0.7.3-6ubuntu2.2_source.changes
+
+ 15:23 <stokachu> cyphermox: awesome, thanks again
+
+ 15:24 <slangasek> [TOPIC] system image updates
+
+ 15:24 <slangasek> ok, so we discussed last week having topics for deeper discussion
+
+ 15:24 <slangasek> I picked an easy one to start us off... stgraber and barry have plenty to tell us about system image updates :)
+
+ 15:24 <slangasek> remember, this isn't a lecture... ask questions!
+
+ 15:24 * slangasek cedes the floor
+
+ 15:25 <barry> does anybody not know what system image updates is generally about?
+
+ 15:25 <slangasek> barry: maybe drop a blueprint / spec link, just in case?
+
+ 15:25 <barry> sure, sec...
+
+ 15:25 <stgraber> https://wiki.ubuntu.com/ImageBasedUpgrades
+
+ 15:26 <stgraber> https://blueprints.launchpad.net/ubuntu/+spec/foundations-1305-image-based-updates
+
+ 15:26 <barry> https://launchpad.net/ubuntu-system-image
+
+ 15:26 <barry> stgraber: do you want to start? :)
+
+ 15:26 <stgraber> sure
+
+ 15:27 <stgraber> So basically we're working on the update mechanism for touch devices. Those won't use the good old apt+dpkg combo but instead have that done in the DC and delta images pushed out to the users.
+
+ 15:28 <stgraber> the infrastructure is split into 3 main pieces, the server, the client and the upgrader
+
+ 15:28 <stgraber> barry is in charge of the client, ondra is in charge of the upgrader and recovery environment and I'm doing the server side of things
+
+ 15:29 <stgraber> What that means is that at least initially touch devices won't touch archive.ubuntu.com, instead they'll get full system updates from system-image.ubuntu.com and apps from the click package repository
+
+ 15:29 <slangasek> do you guys have an estimate of how much download savings this would give us today?
+
+ 15:31 <stgraber> probably not much as in the end we grab the same content, though in .tar.xz form so maybe slightly more compressed than some of our current packages and we'll skip some paths in the near future
+
+ 15:31 <barry> two things to consider, overall download size and number of connections.  certainly on the latter, it's vastly reduced (but not entirely trivial due to having to grab multiple data files and signature files)
+
+ 15:31 * slangasek nods
+
+ 15:32 <stokachu> stupid question but will this be limited to wifi only?
+
+ 15:32 <slangasek> but a big benefit is increased reliability, and a less disruptive cadence of applying the updates
+
+ 15:32 <stgraber> the main advantage is on the install time/CPU side of things as we install those in the DC and then push a delta of the installed system, we don't need to run any maintainer script and so should be much faster at actually applying changes
+
+ 15:32 <slangasek> stokachu: I think that'll be configurable
+
+ 15:32 <stgraber> the other main advantage is that we know exactly what's on every devices as they're all identical
+
+ 15:32 <barry> stokachu: so, there's also this related thing called the download service
+
+ 15:32 <stgraber> this should make testing much much easier
+
+ 15:33 <stokachu> ah ok
+
+ 15:33 <stgraber> the downside however is that we required a reboot to apply updates as we're doing that from the recovery environment
+
+ 15:33 <stgraber> *require
+
+ 15:33 <barry> mainly it's being developed for apps, but we think it won't be too hard to adapt it to image updates too.  it'll be a generic dbus service that interfaces w/ui and settings, and downloads files for us.  it will support wifi-only, suspend/resume, etc.
+
+ 15:34 <barry> for now at least mandel is developing the download service
+
+ 15:35 <stokachu> its this a totally separate build infrastructure?
+
+ 15:35 <stgraber> at this point we have a working command line client thanks to barry, we have a mostly working server and have some test images of the updated recovery environment
+
+ 15:35 <xnox> QUESTION: in a flipped model what will be recovery environment? something akin android recovery or ubuntu's own recovery?
+
+ 15:35 <stgraber> I have hope of having all three pushed to test images by early next week so we can test the whole thing
+
+ 15:35 <stgraber> xnox: currently it's based on CWM, so Android
+
+ 15:36 <xnox> ack.
+
+ 15:36 <stgraber> it's not out of the question to switch to an Ubuntu based initrd for recovery, but we'd then have to port the Google tools to it (to allow for rollback to Android)
+
+ 15:36 <slangasek> stokachu: the image updates are built in much the same way as the install images; they'll be constructed from packages in the archive
+
+ 15:36 <stokachu> slangasek: gotcha
+
+ 15:36 <stgraber> so for now it seemed easier to hack the existing environment to include the tools we need (tar, xz and gpg)
+
+ 15:38 <slangasek> stgraber, barry: what's the overall plan for dealing with packages that have maintainer scripts that need to be run at upgrade time?
+
+ 15:39 <stgraber> slangasek: we haven't looked into that specifically, however we have a "bootme" flag we can set which forces a reboot after applying the update, so in such case, we'd need to have something trigger at boot, run the action and write a stamp file
+
+ 15:39 <slangasek> ok
+
+ 15:40 <stgraber> as far as I know, we haven't run into any of those yet as the number of files and directories I'm marking as persistent is very limited (basically just log files and NetworkManager config/state)
+
+ 15:40 <stgraber> but I expect we'll see some of that in the future
+
+ 15:40 <slangasek> I think you'll want to look at this sooner rather than later, as maintainer scripts can find themselves needing to do random things on the filesystem at any time :)
+
+ 15:40 <slangasek> and for the rest of the team, note this means that if you're adding things to maintainer scripts in the base system, you might want to flag those to stgraber + barry for consideration on how to handle in the image update case
+
+ 15:41 <stgraber> I expect we'll have a list of all persistent paths published somewhere once we've done the flip to read-only rootfs
+
+ 15:41 <cjwatson> Some kind of written guidance on which kinds of things matter would be good, yes
+
+ 15:41 <cjwatson> Since we'll have to keep up with Debian changes too, perhaps\
+
+ 15:41 <barry> these probably won't have any impact on the client, but will have a bigger impact on the recovery/updater
+
+ 15:41 <slangasek> barry: true
+
+ 15:41 <stgraber> after that, we'll need to be told of any maintainer script afecting some of those
+
+ 15:42 * slangasek nods
+
+ 15:43 <xnox> ... and dpkg triggers
+
+ 15:43 <xnox> (to a lesser extend than interesting upgrade scripts)
+
+ 15:43 <slangasek> so I think this is going to need to be automated somewhere along the line... probably by something that examines the before/after while generating the update tarball
+
+ 15:43 <stgraber> now, something I didn't mention here yet, is that we have two types of updates we support, delta and full. Most users will be using delta images to get from where they are to the latest version. Full images are there for initial installation and for cases where we can't resolve a path using deltas (or where such a path would be larger than a full).
+
+ 15:44 <slangasek> and can give us a report of what needs to be handled
+
+ 15:45 <xnox> stgraber: interesting thought can't the cdimage builder take old image & upgrade it, instead of building afresh? thus executing maintainer scripts, at least to compare to a fresh build one to detect anomalies.
+
+ 15:45 <barry> the client looks at all possible paths from where you are to the latest version, then applies a configurable heuristic to the candidates to choose a winning upgrade path
+
+ 15:46 <stgraber> xnox: it could but I don't see what that'd give us. We're interested in maintainer scripts that change files that aren't in the base image, so analyzing changes to the base image won't help us there.
+
+ 15:46 <xnox> i see. ack.
+
+ 15:46 <barry> candidate selection does not take into account the bootme flag, but downloading/reboot does, so it's possible that a phone may need to do multiple such calculations to get to the latest version
+
+ 15:49 <stgraber> oh, one more thing worth mentioning, we plan on letting developers move to "developer mode"
+
+ 15:49 <stgraber> doing so will grab any required files we removed from the base image (such as /var/lib/dpkg /var/lib/apt), then write a stamp file letting the initrd know that / should be read-write
+
+ 15:50 <stgraber> from that point on, you can do whatever you want on the rootfs but won't be able to use barry's tool anymore (until you flash a new full image and remove the stamp file)
+
+ 15:50 <barry> LP: #1192577
+
+ 15:50 <ubottu> Launchpad bug 1192577 in Ubuntu system image "Support for switching to apt-get mode" [Low,Triaged] https://launchpad.net/bugs/1192577
+
+ 15:51 <slangasek> and then somewhere down the line, having some magic that let us install packages with apt-get *without* having to be in "developer mode" would be rather nice, for convergence
+
+ 15:51 <slangasek> but that's not a problem to solve for this cycle :)
+
+ 15:52 <stgraber> right, I have a work item to look into that for 14.04 but it's tricky :)
+
+ 15:52 <stgraber> if any of you want to test loop-mounted read-only saucy flipped image on your nexus4 or nexus7, you can use: http://paste.ubuntu.com/5801861/
+
+ 15:53 <stgraber> it needs a bunch of tools to be installed: abootimg, android-tools-adb, android-tools-fastboot and android-tools-fsutils
+
+ 15:54 <slangasek> and I understand flipped images are becoming the default this week some time
+
+ 15:54 <slangasek> (hurray!)
+
+ 15:54 <stgraber> it'll basically grab the current saucy rootfs and the current android for your device, patch those to work with loop-mount+read-only then generate a boot image and a system.img file to be uploaded to the data partition
+
+ 15:55 <stgraber> just boot your device into recovery mode before you run the script and it'll do everything for you
+
+ 15:55 <stgraber> slangasek: yeah, and hopefully flipped+read-only a bit after that
+
+ 15:55 <slangasek> indeed
+
+ 15:56 <stgraber> any questions? (4min left to the meeting)
+
+ 15:56 <slangasek> stgraber, barry: very exciting stuff, thanks for giving us a glimpse into your progress
+
+ 15:57 <barry> np!
+
+ 15:57 <stokachu> when can i start playing candy crush :)
+
+ 15:57 * stokachu hides
+
+ 15:57 <stgraber> :)
+
+ 15:58 <slangasek> [TOPIC] AOB
+
+ 15:58 <slangasek> ok - anything else we should cover today?  (sorry, I should probably have asked for this /before/ going deep on system images)
+
+ 15:59 <slangasek> thanks to everyone who updated their work item status today
+
+ 15:59 <slangasek> and if you haven't already done so, please do :)
+
+ 15:59 <cjwatson> When Canonistack stops hating me I should be able to finish off my last couple
+
+ 16:00 <slangasek> http://status.ubuntu.com/ubuntu-s/canonical-foundations-ubuntu-13.06.html is still looking a bit unrealistic vs. the trendline... though better than yesterday
+
+ 16:00 <cjwatson> We should get the trendlines updated to reflect a realistic start point, mind
+
+ 16:01 <slangasek> that too :)
+
+ 16:02 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

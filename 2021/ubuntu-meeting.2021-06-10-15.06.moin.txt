@@ -1,0 +1,436 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 10 Jun at 15:06 &mdash; 15:43 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-06-10-15.06.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:06.
+
+ * ''LINK:'' https://code.launchpad.net/%7Eubuntu-release/britney/+git/hints-ubuntu/+ref/devel/+activereviews   (laney, 15:17)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:19.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html   (bdmurray, 15:20)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:21.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:21)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:36.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (55)
+ * sil2100 (25)
+ * jawn-smith (22)
+ * juliank (20)
+ * vorlon (20)
+ * ubottu (15)
+ * dbungert (13)
+ * waveform (8)
+ * doko (8)
+ * meetingology (2)
+ * laney (2)
+
+
+
+== Full log ==
+
+
+ 15:06 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:06 <meetingology> Meeting started at 15:06:39 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:06 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:06 <bdmurray> #topic Lightning Round
+
+ 15:07 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert)
+
+ 15:07 <bdmurray> jawnsmith juliank waveform doko mwhudson vorlon dbungert bdmurray sil2100 slyon
+
+ 15:07 <jawn-smith> * proposed migration: systemd vs isc-dhcp. Thank you mdeslaurs for retriggering tests a bunch of times
+
+ 15:07 <jawn-smith> * proposed migration: a handful of flakey tests blocking procps. Thank you bdmurray for retriggering tests
+
+ 15:07 <jawn-smith> * LP: #1912371 flashrom MIR. Fixed Lintian errors/warnings and removed duplicate udev rules file
+
+ 15:07 <ubottu> Launchpad bug 1912371 in libftdi1 (Ubuntu) "[MIR] flashrom + libftdi" [Undecided, New] https://launchpad.net/bugs/1912371
+
+ 15:07 <jawn-smith> * ubuntu-image golang rewrite:
+
+ 15:07 <jawn-smith> * New version of skeleton project pushed. This version uses go-flags instead of cobra to improve formatting
+
+ 15:07 <jawn-smith> * Still investigating strange behavior of dh_strip with this new version
+
+ 15:07 <jawn-smith> * Booting Focal on HiFive Unmatched:
+
+ 15:07 <jawn-smith> * SRUing patches from LP: #1923162 and some other hirsute changes into u-boot
+
+ 15:07 <ubottu> Launchpad bug 1923162 in u-boot (Ubuntu Focal) "riscv64 images fail to boot in qemu" [Undecided, New] https://launchpad.net/bugs/1923162
+
+ 15:07 <jawn-smith> * Successfully built new u-boot-sifive, but haven't built an image to test it yet
+
+ 15:07 <jawn-smith> [done]
+
+ 15:08 <bdmurray> juliank:
+
+ 15:08 <juliank> * apt:
+
+ 15:08 <juliank> - 2.3.6 and 2.2.4
+
+ 15:08 <juliank> - PoC/WIP embedded keys in sources files https://salsa.debian.org/apt-team/apt/-/merge_requests/176
+
+ 15:08 <ubottu> Merge 176 in apt-team/apt "Draft: Add support for embedding PGP keys into Signed-By in deb822 sources" [Opened]
+
+ 15:08 <juliank> * shim:
+
+ 15:08 <juliank> - submitted new shim for review
+
+ 15:08 <juliank> - did not find an acceptable fix for fwupd loading yet that's acceptable for xenial regression wise
+
+ 15:08 <juliank> * autopkgtest-cloud outage stuff
+
+ 15:08 <juliank> (done)
+
+ 15:08 <bdmurray> waveform:
+
+ 15:08 <waveform> * Merge rpi-eeprom (LP: #1931552)
+
+ 15:08 <waveform> * Working on merge for linux-firmware-raspi2
+
+ 15:08 <waveform> * Working on reproduction and testing fix for USB failure on Pi (LP: #1930629)
+
+ 15:08 <waveform> * Uploaded drafts of colorzero, gpiozero, and lg-gpio packages to debian-python (working on draft of RFS)
+
+ 15:08 <waveform> * Working on updated spec for piboot on core
+
+ 15:09 <waveform> * Pi meetings
+
+ 15:09 <ubottu> Launchpad bug 1931552 in rpi-eeprom (Ubuntu Impish) "Please merge rpi-eeprom 12.4 from RaspiOS main" [Undecided, New] https://launchpad.net/bugs/1931552
+
+ 15:09 <ubottu> Launchpad bug 1930629 in linux-raspi (Ubuntu Focal) "Raspberry pi 4 USB controller randomly crashes" [Undecided, Confirmed] https://launchpad.net/bugs/1930629
+
+ 15:09 <waveform> (done)
+
+ 15:09 <bdmurray> doko:
+
+ 15:09 <doko> - evaluate test rebuilds for GCC and Python SRUs
+
+ 15:09 <doko> - gcc-9, gcc-10 SRUs for impish and groovy
+
+ 15:09 <doko> - python3.8 SRU for groovy, had to remove it
+
+ 15:09 <doko> - binutils 2.37 snapshot in -proposed, blocked like anything else
+
+ 15:09 <doko> (done)
+
+ 15:10 <bdmurray> vorlon:
+
+ 15:10 <vorlon> * working on grub SRUs to unblock closing of xenial archive (LP: #1930742, LP: #1926748)
+
+ 15:10 <ubottu> Launchpad bug 1930742 in shim-signed (Ubuntu Xenial) "cloud images in xenial do not get their boot path updated because we don't call grub-install --force-extra-removable" [Undecided, New] https://launchpad.net/bugs/1930742
+
+ 15:10 <vorlon> * interviews/hiring
+
+ 15:10 <ubottu> Launchpad bug 1926748 in grub2-unsigned (Ubuntu Trusty) "regression in xenial updates - grub2 cannot handle new arm64 relocations" [Undecided, New] https://launchpad.net/bugs/1926748
+
+ 15:10 <vorlon> * planning a trip to Seattle for keyshard holder meeting
+
+ 15:10 <vorlon> (done)
+
+ 15:10 <dbungert> * Subiquity Set Timezone - fix return type, working on review items by sending
+
+ 15:10 <dbungert> smaller PRs.  GeoIP, client variant, cloud-config generation done, working
+
+ 15:10 <dbungert> on asyncio usage improvements
+
+ 15:10 <dbungert> * Subiquity - fix github test builds by changing test to not need an
+
+ 15:10 <dbungert> unprivileged container.
+
+ 15:10 <dbungert> * Subiquity bitlocker detection - suitable test VM setup and ready
+
+ 15:10 <dbungert> * LP: #1929449 - help verify
+
+ 15:10 <dbungert> (done)
+
+ 15:10 <ubottu> Launchpad bug 1929449 in ubuntu-release-upgrader (Ubuntu Hirsute) "do not allow upgrades to hirsute for Apple hardware" [High, Fix Released] https://launchpad.net/bugs/1929449
+
+ 15:12 <bdmurray> reported aptdaemon autopkgtest failure LP: #1930741
+
+ 15:12 <bdmurray> overrode some phased-update false positives
+
+ 15:12 <bdmurray> special grub SRU releases
+
+ 15:12 <bdmurray> special SRU reviews of pacemaker, neutron, livecd-rootfs, pacemaker
+
+ 15:12 <ubottu> Launchpad bug 1930741 in aptdaemon (Ubuntu) "autopkgtest failures on all (most?) releases" [Undecided, New] https://launchpad.net/bugs/1930741
+
+ 15:12 <bdmurray> sponsored openssl-ibmca SRUs
+
+ 15:12 <bdmurray> badtested ranger, u-r-u for focal, groovy and hirsute
+
+ 15:12 <bdmurray> badtested postorius for hirsute
+
+ 15:12 <bdmurray> worked with a community bug triager on u-r-u bugs
+
+ 15:12 <bdmurray> committed a fix for LP: #1930901, LP: #1931112
+
+ 15:12 <bdmurray> updated meta-release files for precise's EoL
+
+ 15:12 <bdmurray> merged: usrmerge
+
+ 15:12 <ubottu> Launchpad bug 1930901 in ubuntu-release-upgrader (Ubuntu) "ubuntu upgrade tool silently exits if snapd is not running" [Undecided, In Progress] https://launchpad.net/bugs/1930901
+
+ 15:12 <ubottu> Launchpad bug 1931112 in ubuntu-release-upgrader (Ubuntu Hirsute) "Apple vendor quirk check for LP#1928434 incorrectly fails on all non-DMI hardware" [Critical, Fix Released] https://launchpad.net/bugs/1931112
+
+ 15:12 <bdmurray> ✔ done
+
+ 15:12 <bdmurray> sil2100:
+
+ 15:12 <sil2100> Please skip, didn't have time to prepare it, still working on it!
+
+ 15:13 <bdmurray> slyon:
+
+ 15:13 <jawn-smith> - Plusone: pypy, iotjs, zziplib, python-linecache2, python-pbr, nss, ...
+
+ 15:13 <jawn-smith> - Interviews & Take-home tests
+
+ 15:13 <jawn-smith> - Some discussion with Intel wrt. iwd
+
+ 15:13 <jawn-smith> - Canonistack issues cRT#131289
+
+ 15:13 <jawn-smith> - NM snap support: LP#1931168, LP#1931539
+
+ 15:13 <jawn-smith> - Azure vs snapd investigation
+
+ 15:13 <jawn-smith> - Some administrative emails
+
+ 15:13 <jawn-smith> === Netplan ===
+
+ 15:13 <jawn-smith> - Triaged bug #1930413
+
+ 15:13 <ubottu> Bug 1930413 in netplan "Implement numtxqueues & numrxqueues" [Wishlist, Triaged] https://launchpad.net/bugs/1930413
+
+ 15:13 <jawn-smith> - Working on NM keyfile parser, PR#212
+
+ 15:13 <jawn-smith> (done)
+
+ 15:14 <bdmurray> sil2100:
+
+ 15:14 <sil2100> - Shorter week, on holidays
+
+ 15:14 <sil2100> - SRU reviews and releases
+
+ 15:14 <sil2100> - Doing some netplan reviews
+
+ 15:14 <sil2100> - Verification of the systemd networkd SRUs, investigating a possible issue
+
+ 15:15 <sil2100> * Talked with Dan to just let it through
+
+ 15:15 <sil2100> - Started modifying netplan to add RequiredForOnline=no when activation-mode is used
+
+ 15:15 <sil2100> - ESM britney:
+
+ 15:15 <sil2100> * Moved the private-tests autopkgtest-cloud changes to use X-Auth-Token as the only cred
+
+ 15:15 <sil2100> * Did the same for the britney parts
+
+ 15:15 <sil2100> * Discussed some with Iain and Julian on how to proceed
+
+ 15:15 <sil2100> - Working on some Ubuntu Core documentation regarding the release process
+
+ 15:15 <sil2100> - Ubuntu Core discussions
+
+ 15:15 <sil2100> - Investigating failing images for impish server raspi
+
+ 15:15 <sil2100> * Fixed seed/task usage, but spent some time trying to figure out the root cause
+
+ 15:15 <sil2100> - Interviews
+
+ 15:15 <sil2100> - Test grading
+
+ 15:15 <sil2100> - Stuff
+
+ 15:15 <sil2100> (done)
+
+ 15:15 <sil2100> Ah, new reviews too!
+
+ 15:15 <sil2100> And some hint reviews...
+
+ 15:16 <bdmurray> Any questions on status?
+
+ 15:16 <bdmurray> Is there a good way to get a list of hints which need merging?
+
+ 15:16 <bdmurray> Like the outstanding list of merges
+
+ 15:17 <bdmurray> sil2100, vorlon : ?
+
+ 15:17 <laney> https://code.launchpad.net/%7Eubuntu-release/britney/+git/hints-ubuntu/+ref/devel/+activereviews
+
+ 15:17 * vorlon nods
+
+ 15:18 <bdmurray> Is that only for devel?
+
+ 15:18 <vorlon> yeah it's per-branch
+
+ 15:18 <bdmurray> hunh, okay
+
+ 15:19 <laney> you could e.g. integrate it into one of the reports to make it easier to see in one place
+
+ 15:19 <bdmurray> Yeah, that might be a good idea - or make a KPI!
+
+ 15:19 <bdmurray> #topic Release Incoming Bugs
+
+ 15:20 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html
+
+ 15:20 <bdmurray> And there is nothing for us there
+
+ 15:20 <bdmurray> or on hh
+
+ 15:21 <bdmurray> or on ff
+
+ 15:21 <bdmurray> #topic Team proposed-migration report
+
+ 15:21 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:22 <bdmurray> vorlon:
+
+ 15:23 <doko> both sqlite and aptdaemon had assignments, the reset is in waiting state ...
+
+ 15:23 <bdmurray> sqlite3 was waveform
+
+ 15:23 <vorlon> waveform: ok to keep this one?
+
+ 15:23 <bdmurray> aptdaemon is also failing for stable releases
+
+ 15:23 <waveform> vorlon, yup
+
+ 15:23 <vorlon> and who's on aptdaemon?
+
+ 15:23 <bdmurray> I reported bug 1930741
+
+ 15:23 <ubottu> Bug 1930741 in aptdaemon (Ubuntu) "autopkgtest failures on all (most?) releases" [Undecided, New] https://launchpad.net/bugs/1930741
+
+ 15:24 <bdmurray> The test is interacting with ubuntu-advantage-tools
+
+ 15:24 <bdmurray> juliank: have you looked at this?
+
+ 15:25 <vorlon> glibc also has a substantial list of regressions that will need going through
+
+ 15:25 <juliank> no
+
+ 15:25 <juliank> interesting
+
+ 15:26 <juliank> should be trivial to fix
+
+ 15:26 <vorlon> who wants to help play whack-a-mole with the glibc-triggered regressions?
+
+ 15:26 <doko> wait until the queues are empty
+
+ 15:26 <vorlon> why wait?
+
+ 15:26 <jawn-smith> I can help
+
+ 15:26 <doko> then retry. no need to look at those earlier
+
+ 15:27 <juliank> let's card the aptdaemon
+
+ 15:28 <vorlon> juliank: are you carding it (and taking it)?
+
+ 15:28 <juliank> vorlon: I thought somebody runs the script, but I can find it
+
+ 15:30 <juliank> aptdaemon is FR-1434 now
+
+ 15:31 <vorlon> LP: #1931088 w/ systemd is going to need attention; not sure if there's a reason to believe it's caused by infra overcommit
+
+ 15:31 <ubottu> Launchpad bug 1931088 in systemd (Ubuntu) "boot-and-services tests fails in impish on armhf (248.3)" [Undecided, Incomplete] https://launchpad.net/bugs/1931088
+
+ 15:32 <vorlon> the first failure was on June 2 before glibc was uploaded, so probably not
+
+ 15:33 <juliank> +1
+
+ 15:33 <vorlon> hmm actually, the glibc upload was /on/ June 2
+
+ 15:33 <vorlon> does anyone want to dig into this?
+
+ 15:33 <vorlon> otherwise we can leave it to next week when the queues are down
+
+ 15:33 <juliank> _armhf_ ones are down
+
+ 15:34 <vorlon> juliank: do you want to look into this one?
+
+ 15:34 <juliank> kind of, yeah
+
+ 15:34 <vorlon> ok
+
+ 15:35 <vorlon> and that's it for this week
+
+ 15:35 <sil2100> \o/
+
+ 15:35 <sil2100> EOW it is!
+
+ 15:35 <sil2100> Oh, no, wait...
+
+ 15:35 <sil2100> ;)
+
+ 15:35 <bdmurray> heh
+
+ 15:36 <bdmurray> #topic AOB
+
+ 15:36 <dbungert> LP: #1931487 - irssi bug tagged security.  Irssi news does point out typical C memory safety issues but doesn't call out anything as security.
+
+ 15:36 <ubottu> Launchpad bug 1931487 in irssi (Ubuntu) "Please update to irssi 1.2.3 for security fixes" [Undecided, New] https://launchpad.net/bugs/1931487
+
+ 15:36 <dbungert> Do we turn that over to security or just SRU it?
+
+ 15:37 <bdmurray> juliank: What did you card?
+
+ 15:37 <juliank> bdmurray: the aptdaemon proposed migration bug
+
+ 15:37 <juliank> bdmurray: LP#1930741
+
+ 15:37 <bdmurray> juliank: hmm, the bug didn't get tagged
+
+ 15:37 <bdmurray> they usually get tagged fr-1234
+
+ 15:37 <juliank> bdmurray: maybe the script did not run yet?
+
+ 15:38 <bdmurray> its part of the carding process aiui
+
+ 15:38 <bdmurray> dbungert: that release would need 1.2.3?
+
+ 15:38 <dbungert> bdmurray: yes
+
+ 15:38 <bdmurray> hrm, I meant what
+
+ 15:40 <dbungert> bdmurray: submitter is requesting having the fix on focal/bionic/etc I believe
+
+ 15:40 <dbungert> which seems reasonable
+
+ 15:40 <bdmurray> We could do impish and leave the reest for security
+
+ 15:42 <bdmurray> Anything else?
+
+ 15:43 <bdmurray> Okay, thanks everybody!
+
+ 15:43 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

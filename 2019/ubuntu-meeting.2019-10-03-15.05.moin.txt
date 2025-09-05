@@ -1,0 +1,514 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 03 Oct at 15:05 &mdash; 15:56 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-10-03-15.05.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:05.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:14.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:42.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:50.
+
+  * ''LINK:'' https://wiki.ubuntu.com/TechnicalBoardAgenda 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (71)
+ * sil2100 (46)
+ * xnox (24)
+ * juliank (18)
+ * rbalint (13)
+ * vorlon (13)
+ * ubottu (12)
+ * waveform (10)
+ * cyphermox (10)
+ * tdaitx (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:05 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:05 <meetingology> Meeting started Thu Oct  3 15:05:44 2019 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:05 <meetingology> 
+
+ 15:05 <meetingology> Available commands: action commands idea info link nick
+
+ 15:05 <bdmurray> #topic Lightning rounds
+
+ 15:06 <bdmurray> xnox doko mwhudson cyphermox bdmurray tdaitx waveform vorlon juliank infinity rbalint sil2100
+
+ 15:06 <bdmurray> xnox: your turn
+
+ 15:06 <xnox> skip
+
+ 15:07 <bdmurray> doko is out for a national holiday
+
+ 15:07 <bdmurray> cyphermox:
+
+ 15:07 <cyphermox> - off tomorrow, Mon, Tue, Wed next week
+
+ 15:07 <cyphermox> - netplan read-write plugin for NetworkManager
+
+ 15:07 <cyphermox> - verified netplan.io, nplan SRUs
+
+ 15:07 <cyphermox> - debugging DNS resolution issue (search domains not showing from DHCP) (LP: #1846509)
+
+ 15:07 <cyphermox> - continued work on shim snapshot: one more patch from Chris, now ready to submit to the review board
+
+ 15:07 <cyphermox> - did one last round of fixing grub2 to install UEFI boot artefacts correctly to the ESP
+
+ 15:07 <cyphermox> - ubiquity translation update, will do ubiquity slideshow translation update today
+
+ 15:07 <cyphermox> (done)
+
+ 15:07 <ubottu> Launchpad bug 1846509 in systemd (Ubuntu) "networkd doesn't take into account search domain received by DHCP" [Undecided,New] https://launchpad.net/bugs/1846509
+
+ 15:07 <cyphermox> rbalint: this one is for you I think ^
+
+ 15:08 <bdmurray> I did managerial things
+
+ 15:08 <cyphermox> it's easily reproducible
+
+ 15:08 <bdmurray> Also the testing of the daisy code w/o python-pycassa went well
+
+ 15:08 * xnox is ready
+
+ 15:08 <bdmurray> So I submitted an RT about update the daisy servers in production
+
+ 15:08 <bdmurray> xnox:
+
+ 15:08 <xnox> IBM s390x escalations:
+
+ 15:08 <xnox> * https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1846219
+
+ 15:08 <ubottu> Launchpad bug 1846219 in linux (Ubuntu) "Revert ESE DASD discard support" [Critical,Incomplete]
+
+ 15:08 <xnox> * https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1845323
+
+ 15:08 <ubottu> Launchpad bug 1845323 in Ubuntu on IBM z Systems "Trying to online dasd drive results in invalid input/output from the kernel on z/VM" [Critical,In progress]
+
+ 15:08 <xnox> - prepared & submitted patch+sru-bug to kernel team
+
+ 15:08 <xnox> Casper:
+
+ 15:08 <xnox> * url=proto://*/path/to.iso ip=dhcp is now supported netboot option
+
+ 15:08 <xnox> works with http & ftp across many architectus (amd64, ppc64le, s390x)
+
+ 15:08 <rbalint> cyphermox, will follow up
+
+ 15:08 <xnox> * https://bugs.launchpad.net/ubuntu/+source/casper/+bug/1840122
+
+ 15:08 <ubottu> Launchpad bug 1840122 in linux (Ubuntu Eoan) "System fails to reboot from live session or ubiquity-dm - squashfs_read_data failed to read block" [High,Confirmed]
+
+ 15:08 <xnox> Subiquity:
+
+ 15:08 <xnox> * code-reviews & merges
+
+ 15:09 <xnox> * bootstrapped mwhudson to HMC to look at colors & lines
+
+ 15:09 <xnox> done
+
+ 15:09 <xnox> above two linux bugs, caused us to not have s390x beta
+
+ 15:09 <tdaitx> * working on apport lock file fix
+
+ 15:09 <tdaitx> * openjdk-8 autopkgtest mostly done
+
+ 15:09 <tdaitx> - s390x zero fix still missing
+
+ 15:09 <tdaitx> * moving and testing autopkgtest fixes to openjdk-11
+
+ 15:09 <tdaitx> * getting jck installed on jenkins
+
+ 15:09 <tdaitx> (done)
+
+ 15:09 <xnox> rbalint:  also we should have had uploaded DVE fix..... which i thought we are not uploading, but looks like we are.
+
+ 15:09 <bdmurray> waveform:
+
+ 15:10 <waveform> * Discussed potential Core20 snapd changes (to support u-boot scripts, and potentially Pi4) with Zygmunt on the snapd team
+
+ 15:10 <waveform> * Reviewed nitrogen 6 gadget (MP: https://code.launchpad.net/~fisterra-team/fisterra/+git/nitrogen6x-gadget/+merge/371450)
+
+ 15:10 <waveform> * Filed FFe for u-boot 2019.07 for Pi4 support (LP: #1846329)
+
+ 15:10 <waveform> * Prepped updated firmware package for Pi4 support
+
+ 15:10 <waveform> * Cert team discovered new u-boot breaks on CM3/3+ - currently investigating (may be dt-related)
+
+ 15:10 <ubottu> Launchpad bug 1846329 in u-boot (Ubuntu) "[FFe] 2019.07 to support Pi4 boot" [Undecided,New] https://launchpad.net/bugs/1846329
+
+ 15:10 <waveform> (done)
+
+ 15:10 <bdmurray> vorlon:
+
+ 15:11 <bdmurray> waveform: has that FFe been reviewed / approved?
+
+ 15:11 <vorlon> * discussions around ZFS in ubiquity
+
+ 15:11 <vorlon> * proposed-migration
+
+ 15:11 <vorlon> * NBS for the badly-managed texlive transitions
+
+ 15:11 <vorlon> * unapproved queue reviews for eoan
+
+ 15:11 <vorlon> * livecd-rootfs tweaks for i386 to accomodate removal of linux kernel packages
+
+ 15:11 <vorlon> (done)
+
+ 15:11 <waveform> bdmurray, not yet
+
+ 15:11 <bdmurray> juliank should be out for the holiday
+
+ 15:11 <bdmurray> infinity isn't here
+
+ 15:11 <bdmurray> rbalint:
+
+ 15:12 <bdmurray> is there somebody who can review that FFe?
+
+ 15:12 <rbalint> (very short week)
+
+ 15:12 <rbalint> * systemd SRU with reintroducing several lost fixes
+
+ 15:12 <rbalint> * updated systemd to 242 in eoan and pushing in one last round of fixes now
+
+ 15:12 <sil2100> I could, in theory
+
+ 15:12 <rbalint> * wrote SRU exception proposal https://wiki.ubuntu.com/wslu-Updates
+
+ 15:12 <rbalint> * some bug gardening
+
+ 15:12 <rbalint> (done)
+
+ 15:12 <sil2100> - Back from being sick, feeling a bit better now
+
+ 15:12 <sil2100> - Eoan queue reviews
+
+ 15:12 <sil2100> - SRU reviews and releases
+
+ 15:12 <sil2100> - Kernel reviews
+
+ 15:12 <sil2100> - Code reviews of ubuntu-image PRs for little-kernel support
+
+ 15:12 <bdmurray> sil2100: "in theory"?
+
+ 15:12 <sil2100> - Reviewing Dave's classic pi-gadget improvements, investigating flash-kernel
+
+ 15:12 <sil2100> - Reviewing Dimitri's core20 tweaks to ld symlinking
+
+ 15:12 <sil2100> - Finalize the UC20 ubuntu-image changes spec
+
+ 15:12 <sil2100> - Implement ubuntu-image UC20 changes
+
+ 15:12 <sil2100> * Base pieces done but still working on tests. Also, this might need a few iterations.
+
+ 15:13 <sil2100> - Meetings regarding device enablement and image building
+
+ 15:13 <sil2100> - Looking at the license of the IMX6-required GPU binary firmware blobs
+
+ 15:13 <sil2100> - Kicking around Bileto to fix expired tokens
+
+ 15:13 <sil2100> - Refactoring and fixing tests for latest ubuntu-release-upgrader changes, uploading to eoan
+
+ 15:13 <sil2100> - Touching base with Gunnar regarding state of translations for the upcoming release
+
+ 15:13 <sil2100> - Starting the review of the IMX6 gadget
+
+ 15:13 <sil2100> - Phasing out new core18 to stable
+
+ 15:13 <sil2100> (done)
+
+ 15:13 * xnox has AOB item
+
+ 15:13 <bdmurray> Are there any questions on status other than mine re: the FFe
+
+ 15:13 <bdmurray> xnox: we aren't there yet!
+
+ 15:13 <sil2100> bdmurray: ok, in practice as well! I said 'in theory', since we're from the same team and not sure if anyone wouldn't object for me to review the FFe
+
+ 15:14 <sil2100> Since it's quite obvious I'd be +1 on it ;p
+
+ 15:14 <bdmurray> sil2100: I expect your review to be harder(?) since you *are* from the same team
+
+ 15:14 <bdmurray> #topic Release incoming bugs
+
+ 15:14 <sil2100> bdmurray: yessir!
+
+ 15:15 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html#foundations-bugs
+
+ 15:15 <bdmurray> sil2100: but maybe we should give it until Friday
+
+ 15:15 <bdmurray> bug 1838525 is being worked by the server team
+
+ 15:15 <ubottu> bug 1838525 in lvm2 (Ubuntu) "LVM setup fails to install grub on virtio storage" [Critical,In progress] https://launchpad.net/bugs/1838525
+
+ 15:15 <bdmurray> bug 1779767 I'm not convinced is really fixed in Eoan - xnox
+
+ 15:15 <ubottu> bug 1779767 in cron (Ubuntu) "Default cron PATH does not include /snap/bin" [Medium,Confirmed] https://launchpad.net/bugs/1779767
+
+ 15:16 <xnox> i see comments from him
+
+ 15:16 <xnox> juliank:  something about udev rules we started shipping =)
+
+ 15:18 <bdmurray> bug 1834501 is about "air gapped" release upgrades so I think we can punt that to Funky. agreed?
+
+ 15:18 <ubottu> bug 1834501 in ubuntu-release-upgrader (Ubuntu Eoan) "do-release-upgrade from bionic->any disables lxd without snapstore access" [Undecided,New] https://launchpad.net/bugs/1834501
+
+ 15:19 <bdmurray> vorlon: ^
+
+ 15:19 <vorlon> bdmurray: agreed
+
+ 15:19 <bdmurray> bug 1845571 is new
+
+ 15:19 <ubottu> bug 1845571 in partman-auto (Ubuntu) "ubiquity offers installation media as an install target" [Undecided,New] https://launchpad.net/bugs/1845571
+
+ 15:19 <sil2100> Feels like it at least
+
+ 15:20 <bdmurray> the reporter of bug 1845571 seems trust worthy
+
+ 15:23 <vorlon> pulling this into the prioritized queue
+
+ 15:23 <bdmurray> thanks
+
+ 15:24 <bdmurray> I also wanted to talk about a bug targetted to Eoan
+
+ 15:24 <bdmurray> a bug or two ;-)
+
+ 15:24 <bdmurray> bug 1844651
+
+ 15:24 <ubottu> bug 1844651 in command-not-found (Ubuntu Eoan) "command-not-found-data package is unnecessary" [Medium,Triaged] https://launchpad.net/bugs/1844651
+
+ 15:25 <bdmurray> This was discovered when looking at the mlocate changes
+
+ 15:26 <bdmurray> the c-n-f-data package is out of date so will still tell you about locate from two different packages
+
+ 15:26 <bdmurray> even though I blacklisted it from one of them
+
+ 15:26 <juliank> With my Debian c-n-f maintainer hat on I can say that there are a few bugs if the database does not exist yes, but they'll need fixing anyway.
+
+ 15:27 <bdmurray> Does dropping c-n-f-data before the release of 19.10 seem possible?
+
+ 15:27 <vorlon> I think so
+
+ 15:27 <xnox> Yeah +1
+
+ 15:28 <bdmurray> juliank: Like producing an error re "commands.db does not exist"?
+
+ 15:28 <juliank> bdmurray: Yeah. like "run apt update to ... the database"
+
+ 15:29 <juliank> ... because I'm missing a word
+
+ 15:30 <juliank> At leasttthe bionic version just crashes with cnf unbound: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=927338
+
+ 15:30 <ubottu> Debian bug 927338 in command-not-found "command-not-found: local variable 'cnf' referenced before assignment" [Important,Open]
+
+ 15:31 <bdmurray> So we've decided this is worth fixing is there somebody who can take the card associated with this?
+
+ 15:31 <bdmurray> Maybe somebody familiar with c-n-f?
+
+ 15:31 * bdmurray eyes the team
+
+ 15:32 <juliank> if it's just the error message, I'll take it as I have to fix Debian anyway
+
+ 15:32 <juliank> if we want to build a db in live images, it's probably more work
+
+ 15:32 <bdmurray> juliank: the error message and dropping the c-n-f-data package
+
+ 15:32 <bdmurray> juliank: we suspect the live db is already built and I'll test that
+
+ 15:33 <juliank> Sounds good
+
+ 15:33 <bdmurray> I just want to clarify my understanding of bug 1841675
+
+ 15:33 <ubottu> bug 1841675 in ubuntu-release-upgrader (Ubuntu Eoan) "do-release-upgrade crashed with AttributeError in tryMarkObsoleteForRemoval(): 'Package' object has no attribute 'section'" [Medium,Confirmed] https://launchpad.net/bugs/1841675
+
+ 15:34 <juliank> Package.section is gone, because section is version specific
+
+ 15:35 <juliank> So likely you need .candidate.version, with the caveat that .candidate might not exist if all versions are pinned negatively
+
+ 15:35 <bdmurray> From what I've seen this only affects do-partial-upgrade
+
+ 15:35 <juliank> pkg.marked_delete and pkg.section == section
+
+ 15:36 <juliank> hmm might e useful to pkg.marked_delete and pkg.installed.section == section
+
+ 15:36 <juliank> but not 100% sure which section it's supposed to look at
+
+ 15:36 <bdmurray> So if it only affects do-partial-upgrade I think we can fix it as a zero day SRU
+
+ 15:36 <bdmurray> But it'd be good to have someone check and see if it will affect release upgrades to eoan
+
+ 15:37 <bdmurray> Actually it can't b/c we'll be using the previous release's apt right?
+
+ 15:37 <juliank> just add .candidate after the pkg and it'll be fine
+
+ 15:38 <bdmurray> there are two sections where it Tracebacks
+
+ 15:39 <juliank> yes, i see two pkg.section which both can be pkg.candidate.section
+
+ 15:39 <bdmurray> juliank: https://launchpadlibrarian.net/443001015/Traceback.txt
+
+ 15:39 <juliank> maybe instead of self[pkgname].section == section
+
+ 15:40 <juliank> do any(v.section == section for v in self[pkgname].version_list)
+
+ 15:40 <bdmurray> My real question here is do we need to fix it before 10/17
+
+ 15:40 <bdmurray> juliank: Do you have an opinion on that?
+
+ 15:40 <juliank> it seems to affect everything that has removals marked for packages that still exist in the archive
+
+ 15:41 <bdmurray> Well it seems rather easy to fix so maybe we should just JFDI
+
+ 15:41 <bdmurray> better safe than sorry
+
+ 15:41 <juliank> Well, you want to fix it before enabling upgrade prompts in any case
+
+ 15:41 <sil2100> +1
+
+ 15:42 <sil2100> I could take it
+
+ 15:42 <bdmurray> #topic Team proposed-migration report
+
+ 15:42 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:43 <bdmurray> Does somebody want to drive this part of the discussion?
+
+ 15:44 <sil2100> I could, but it's a quick thing
+
+ 15:44 <bdmurray> good because we still have xnox's AOB
+
+ 15:44 <rbalint> as i recall libapp-stacktrace-perl is waveform's
+
+ 15:44 <sil2100> So for gdb - I think this is something that waveform tries to reproduce on a raspi?
+
+ 15:45 <sil2100> waveform: ^ any luck?
+
+ 15:45 <sil2100> libapp-stacktrace-perl/0.09-3build1: armhf
+
+ 15:45 <waveform> correct - so far unsuccessfully
+
+ 15:45 <waveform> was going to retry with another image last night but got side-tracked by the CM3 failure
+
+ 15:45 <sil2100> waveform: would you want someone to help you out with this one?
+
+ 15:45 <sil2100> Ok
+
+ 15:45 <sil2100> Just advertise if you want more eyeballs looking at it
+
+ 15:46 <waveform> will do - especially if it builds entirely successfully again!
+
+ 15:46 <sil2100> libglib-perl - this is related to the MIRs we discussed on our standup yesterday
+
+ 15:46 <bdmurray> that's true
+
+ 15:46 <sil2100> bdmurray: do we know who's responsible for driving those?
+
+ 15:46 <sil2100> (I mean, did a discussion happen re: that with the desktop team?)
+
+ 15:46 <bdmurray> sil2100: I need to contact our colleagues
+
+ 15:47 <bdmurray> sil2100: We didn't sync up yesterday
+
+ 15:47 <sil2100> bdmurray: ok, moving on then o/ Just give us a poke if you know more
+
+ 15:47 <rbalint> libglib-perl and imagemagick are blocked on MIRs
+
+ 15:47 <rbalint> that's all
+
+ 15:47 <sil2100> imagemagick libheif1 also is an MIR, security review I guess?
+
+ 15:47 <rbalint> sil2100, yes
+
+ 15:48 <bdmurray> I'm under the impression the security review may not get done
+
+ 15:48 <rbalint> bdmurray, it is not expected to finish soon
+
+ 15:48 <sil2100> Should we drop the dependency then? Is that possible?
+
+ 15:48 <vorlon> why not just leave it as-is in -proposed?
+
+ 15:48 <vorlon> is it blocking a different update?
+
+ 15:49 <sil2100> Nothing that I know off at least
+
+ 15:49 <sil2100> *of
+
+ 15:49 <sil2100> Ok, let's leave it there for now then
+
+ 15:49 <sil2100> Guess that's it
+
+ 15:49 <sil2100> bdmurray: o/
+
+ 15:50 <bdmurray> #topic AOB
+
+ 15:50 <bdmurray> xnox: ?
+
+ 15:50 <xnox> so
+
+ 15:50 <xnox> techboard has not been replying to me about https://lists.ubuntu.com/archives/technical-board/2019-August/002456.html
+
+ 15:50 <xnox> what can i do?
+
+ 15:50 <xnox> cyphermox:  vorlon?
+
+ 15:50 <bdmurray> do we know anybody on the tech board?
+
+ 15:51 <vorlon> xnox: cyphermox is not on the techboard; send a follow-up email?
+
+ 15:51 <sil2100> Did you try to bring that up on the techboard meeting?
+
+ 15:52 <vorlon> https://wiki.ubuntu.com/TechnicalBoardAgenda
+
+ 15:53 <bdmurray> Any other AOB?
+
+ 15:54 <sil2100> None from me
+
+ 15:55 <bdmurray> Rather than handing off the chair, I think I will just continue chairing the meeting for a while.
+
+ 15:55 <bdmurray> So I think that's it.
+
+ 15:55 <bdmurray> Thanks everyone!
+
+ 15:55 <sil2100> Thanks bdmurray o/
+
+ 15:55 <rbalint> o/
+
+ 15:56 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,269 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jsalisbury at 17:00:06 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-03-27-17.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/Meeting   (jsalisbury, 17:00:06)
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise   (jsalisbury, 17:00:07)
+ *ARM Status (ppisati)
+
+ *Release Metrics and Incoming Bugs (jsalisbury)
+''LINK:'' http://people.canonical.com/~kernel/reports/kt-meeting.txt   (jsalisbury, 17:01:46)
+
+ *Milestone Targeted Work Items (ogasawara)
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/canonical-kernel-distro-team-ubuntu-12.04-beta-2.html   (ogasawara, 17:02:02)
+
+ *Blueprint: hardware-p-kernel-power-management (cking)
+
+ *Status: Precise Development Kernel (ogasawara)
+''LINK:'' https://wiki.ubuntu.com/Kernel/Dev/StablePatchFormat   (ogasawara, 17:03:45)
+
+ *Status: CVE's (apw)
+''LINK:'' http://people.canonical.com/~kernel/cve/pkg/ALL-linux.html   (apw, 17:04:26)
+''LINK:'' http://people.canonical.com/~kernel/status/cve-metrics.txt   (apw, 17:04:30)
+''LINK:'' http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt   (apw, 17:04:31)
+
+ *Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ *Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+
+
+Meeting ended at 17:06:09 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jsalisbury (24)
+ * ogasawara (19)
+ * bjf (18)
+ * apw (14)
+ * ppisati (7)
+ * cking (6)
+ * meetingology (3)
+ * tgardner (2)
+ * sforshee (1)
+ * ubottu (1)
+ * henrix (1)
+ * smb (1)
+
+
+
+== Full Log ==
+
+
+ 17:00:06 <jsalisbury> #startmeeting
+
+ 17:00:06 <meetingology> Meeting started Tue Mar 27 17:00:06 2012 UTC.  The chair is jsalisbury. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 17:00:06 <meetingology> 
+
+ 17:00:06 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 17:00:06 <jsalisbury> ##
+
+ 17:00:06 <jsalisbury> ## This is the Ubuntu Kernel Team weekly status meeting.
+
+ 17:00:06 <jsalisbury> ##
+
+ 17:00:06 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/Meeting
+
+ 17:00:07 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise
+
+ 17:00:09 <jsalisbury> # Meeting Etiquette
+
+ 17:00:11 <jsalisbury> #
+
+ 17:00:13 <jsalisbury> # NOTE: '..' indicates that you are finished with your input.
+
+ 17:00:15 <jsalisbury> #       'o/' indicates you have something to add (please wait until you are recognized)
+
+ 17:00:17 <jsalisbury> Roll Call for Ubuntu Kernel Weekly Status Meeting
+
+ 17:00:18 <bjf> o/
+
+ 17:00:19 <apw> o/
+
+ 17:00:20 <tgardner> o/
+
+ 17:00:21 <cking> o/
+
+ 17:00:21 <henrix> o/
+
+ 17:00:24 <smb> \o
+
+ 17:00:25 <sforshee> o/
+
+ 17:00:35 <ppisati> o/
+
+ 17:00:56 <jsalisbury> [TOPIC] ARM Status (ppisati)
+
+ 17:01:01 <ppisati> P/omap4: since a critical bug (lp963512 - "Latest kernel updates broke video on omap4") was affecting 3.2.0-1410.13, for beta2 the kernel was reverted to a previous working version (3.2.0-1409.12). AFAIK the regression came with latest rebase on master (3.2.1[0-2]) while the TI BSP was unchanged - so it's either a bad interaction between upstream/TI BSP or it's a brand new bug we got from upstream.
+
+ 17:01:07 <ppisati> lp956693 ("Broken perf with Ubuntu-3.2.0-1408.11 at Pandaboard"): one of the patch from Linaro tried to enable perf hw support but it wasn't ready for prime, reverting it gave us perf ba
+
+ 17:01:11 <ppisati> ck in a working shape.
+
+ 17:01:13 <ppisati> lp666267("Cross compiled headers package breaks DKMS compilation"): two patches that address this issue were resurrected from O and ported to P, scripts/* are correctly cross compiled no
+
+ 17:01:17 <ppisati> w.
+
+ 17:01:20 <ppisati> ..
+
+ 17:01:43 <jsalisbury> [TOPIC] Release Metrics and Incoming Bugs (jsalisbury)
+
+ 17:01:46 <jsalisbury> Release metrics and incoming bug data can be reviewed at the following link:
+
+ 17:01:46 <jsalisbury> [LINK] http://people.canonical.com/~kernel/reports/kt-meeting.txt
+
+ 17:01:49 <jsalisbury> ..
+
+ 17:02:00 <jsalisbury> [TOPIC] Milestone Targeted Work Items (ogasawara)
+
+ 17:02:02 <ogasawara> [LINK] http://status.ubuntu.com/ubuntu-precise/canonical-kernel-distro-team-ubuntu-12.04-beta-2.html
+
+ 17:02:02 <ogasawara> || apw        || hardware-p-kernel-boot                || 4 work items ||
+
+ 17:02:02 <ogasawara> ||            || hardware-p-kernel-config-review       || 1 work items ||
+
+ 17:02:02 <ogasawara> ||            || hardware-p-kernel-delta-review        || 3 work items ||
+
+ 17:02:02 <ogasawara> apw, I assume you'll get those cleaned up by Thurs.  If not, I'll do it.
+
+ 17:02:03 <ogasawara> ..
+
+ 17:02:30 <jsalisbury> [TOPIC] Blueprint: hardware-p-kernel-power-management (cking)
+
+ 17:02:34 <cking> Power management:
+
+ 17:02:34 <cking> * hdparm spin up/down measurements
+
+ 17:02:34 <cking> http://zinc.canonical.com/~cking/power-benchmarking/hdparm-spindown-settings
+
+ 17:02:34 <cking> * Going to re-measure unity 2d vs 3d fairly soon.
+
+ 17:02:34 <cking> ..
+
+ 17:02:37 <tgardner> ogasawara, maybe apw needs help
+
+ 17:03:04 <apw> tgardner, i don't think any of them will end the world either way
+
+ 17:03:14 <apw> will have a look and let you know ..
+
+ 17:03:34 <jsalisbury> [TOPIC] Status: Precise Development Kernel (ogasawara)
+
+ 17:03:38 <ogasawara> We are currently frozen for the upcoming Beta-2 release this Thurs, Mar
+
+ 17:03:38 <ogasawara> 29.  Only fixes critical for the release will warrent an upload at this
+
+ 17:03:38 <ogasawara> time.  We just uploaded 3.2.0-23.33 which contains a critical fix for
+
+ 17:03:38 <ogasawara> bug 960466.  We plan to upload all other queued patches immediately
+
+ 17:03:38 <ogasawara> following the release on Thurs.  Note that Kernel Freeze is next Thurs
+
+ 17:03:39 <ogasawara> Apr 5.  I intend to upload our final kernel no later than Tues Apr 3.
+
+ 17:03:40 <ubottu> Launchpad bug 960466 in linux (Ubuntu Precise) "Provide correct reporting of BMI1/AVX2/BMI2 support" [Medium,Fix committed] https://launchpad.net/bugs/960466
+
+ 17:03:41 <ogasawara> If there are any patches which need to land, submit them immediately.
+
+ 17:03:43 <ogasawara> After Kernel Freeze, all patches are subject to our SRU policy:
+
+ 17:03:45 <ogasawara> https://wiki.ubuntu.com/Kernel/Dev/StablePatchFormat
+
+ 17:03:56 <ogasawara> Important upcoming dates:
+
+ 17:03:56 <ogasawara> * Thurs Mar 29 - Beta-2 (~2 days)
+
+ 17:03:56 <ogasawara> * Thurs Apr 5 - Kernel Freeze (~1 week)
+
+ 17:03:56 <ogasawara> ..
+
+ 17:04:19 <jsalisbury> [TOPIC] Status: CVE's (apw)
+
+ 17:04:23 <apw> Currently we have 71 CVEs on our radar, with no new CVEs added this week.
+
+ 17:04:24 <apw> See the CVE matrix for the current list:
+
+ 17:04:25 <apw> 
+
+ 17:04:26 <apw> [LINK] http://people.canonical.com/~kernel/cve/pkg/ALL-linux.html
+
+ 17:04:27 <apw> 
+
+ 17:04:28 <apw> Broadly the backlog is unchanged this week:
+
+ 17:04:29 <apw> 
+
+ 17:04:30 <apw> [LINK] http://people.canonical.com/~kernel/status/cve-metrics.txt
+
+ 17:04:31 <apw> [LINK] http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt
+
+ 17:04:32 <apw> 
+
+ 17:04:33 <apw> ..
+
+ 17:04:48 <jsalisbury> [TOPIC] Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ 17:04:51 <bjf> Here is the status for the main kernels, until today (Mar. 27):
+
+ 17:04:52 <bjf> 
+
+ 17:04:53 <bjf> * Hardy    - 2.6.24-31.101 - Being prep'd; Fix for a single warning.
+
+ 17:04:54 <bjf> * Lucid    - 2.6.32-41.88  - Being prep'd; 52 commits in total.
+
+ 17:04:55 <bjf> * Maverick - 2.6.35-32.68  - Being prep'd; 9 commits in total. NOTE: THIS IS THE LAST MAVERICK KERNEL!
+
+ 17:04:56 <bjf> * Natty    - 2.6.38-14.58  - Being prep'd; 12 commits in total. Mostly eCryptfs and KVM.
+
+ 17:04:57 <bjf> * Oneiric  - 3.0.0-17.30   - Being prep'd; 4 stable upstream releases (194 commits).
+
+ 17:04:58 <bjf> 
+
+ 17:04:59 <bjf> Current opened tracking bugs details:
+
+ 17:05:01 <bjf> * http://people.canonical.com/~kernel/reports/kernel-sru-workflow.html
+
+ 17:05:01 <bjf> 
+
+ 17:05:02 <bjf> For SRUs, SRU report is a good source of information:
+
+ 17:05:03 <bjf> * http://people.canonical.com/~kernel/reports/sru-report.html
+
+ 17:05:04 <bjf> 
+
+ 17:05:05 <bjf> Future stable cadence cycles:
+
+ 17:05:06 <bjf> * https://wiki.ubuntu.com/PrecisePangolin/ReleaseInterlock
+
+ 17:05:07 <bjf> ..
+
+ 17:05:39 <jsalisbury> [TOPIC] Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+ 17:06:09 <jsalisbury> Thanks everyone
+
+ 17:06:09 <jsalisbury> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

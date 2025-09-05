@@ -1,0 +1,499 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:01:43 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-12-05-16.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:37:34 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (52)
+ * cjwatson (28)
+ * stgraber (26)
+ * jodh (22)
+ * stokachu (19)
+ * doko (16)
+ * ogra_ (15)
+ * ubottu (14)
+ * barry (12)
+ * xnox (10)
+ * infinity (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:01:43 <slangasek> #startmeeting
+
+ 16:01:43 <meetingology> Meeting started Wed Dec  5 16:01:43 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01:43 <meetingology> 
+
+ 16:01:43 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:02:00 <slangasek> yay, habemus botem
+
+ 16:03:07 <slangasek> [TOPIC] lightning round
+
+ 16:03:08 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 16:03:12 <slangasek> ogra stokachu jodh ev slangasek doko cjwatson xnox bdmurray stgraber barry
+
+ 16:03:54 <ogra_> done:
+
+ 16:03:54 <ogra_> * flash-kernel fixes and SRUs (pending an upload to quantal)
+
+ 16:03:54 <ogra_> * fix various image bits of nexus7
+
+ 16:03:55 <ogra_> * work out a "serial console by default" setup for nexus7 (just attach the USB cable and use screen/minicom from your desktop from tomorrow on, no more openssh server needed for debug shells)
+
+ 16:03:55 <ogra_> * finally got nux into the archive with all armhf fixes for nexus7, tomorrows image should be fully usable
+
+ 16:03:56 <ogra_> todo:
+
+ 16:03:59 <ogra_> * meeting for discussing the remaining WIs of https://blueprints.launchpad.net/ubuntu/+spec/desktop-r-reduced-power-ram (carried over again)
+
+ 16:04:02 <ogra_> * book vacation for the rest of december
+
+ 16:04:03 <ogra_> ..
+
+ 16:04:14 <cjwatson> (is the nominative bots, botis, or botes?)
+
+ 16:04:37 <stokachu> bug 1084863 - needs nomination approval
+
+ 16:04:38 <stokachu> bug 1012900, bug 1004775 - working with assigned engineers to get these uploaded for precise
+
+ 16:04:39 <ubottu> Launchpad bug 1084863 in parallel (Ubuntu) "Please upgrade to latest parallel-20121122" [Medium,New] https://launchpad.net/bugs/1084863
+
+ 16:04:41 <ubottu> Launchpad bug 1012900 in sssd (Ubuntu Precise) "Using SSSD, PAM error when exiting su session" [High,In progress] https://launchpad.net/bugs/1012900
+
+ 16:04:42 <ubottu> Launchpad bug 1004775 in network-manager (Ubuntu Precise) "NetworkManager restarts dnsmasq and adds host route on every IPv6 route lookup" [High,In progress] https://launchpad.net/bugs/1004775
+
+ 16:04:56 <stokachu> (done)
+
+ 16:05:08 <jodh> * bug 1083723: reworked and re-raised MP (awaiting feedback).
+
+ 16:05:08 <jodh> * bug 1079715: reworked and re-raised MP (awaiting feedback).
+
+ 16:05:09 <jodh> * bug 1086474: continued investigations.
+
+ 16:05:09 <jodh> * reviewed lp:~stgraber/upstart/upstart-dbus-events
+
+ 16:05:10 <ubottu> Launchpad bug 1083723 in upstart "'telinit u' has a cage fight with busybox init" [Medium,In progress] https://launchpad.net/bugs/1083723
+
+ 16:05:11 <jodh> * reviewed lp:~stgraber/upstart/upstart-initgroups and merged.
+
+ 16:05:12 <ubottu> Launchpad bug 1079715 in upstart "'telinit u' run from within a chroot causes a crash" [High,In progress] https://launchpad.net/bugs/1079715
+
+ 16:05:13 <ubottu> Launchpad bug 1086474 in upstart "test_job_process can fail in test 'with environment of unnamed instance'" [Undecided,In progress] https://launchpad.net/bugs/1086474
+
+ 16:05:15 <jodh> * reviewed lp:~xnox/upstart/fix-qemu-test and merged.
+
+ 16:05:18 <jodh> * reviewed lp:~stgraber/upstart/upstart-prctl.
+
+ 16:05:21 <jodh> * TODO:
+
+ 16:05:24 <jodh> - merge lp:~stgraber/upstart/upstart-prctl.
+
+ 16:05:28 <jodh> - https://wiki.ubuntu.com/FoundationsTeam/Specs/RaringUpstartUserSessions
+
+ 16:05:31 <jodh> - upates for PAM.
+
+ 16:05:31 <cjwatson> stokachu: if bug 1084863 is for -updates rather than -backports, shouldn't we be identifying the relevant patches rather than doing a wholesale backport?
+
+ 16:05:32 <jodh> - updates for confdir/override handling.
+
+ 16:05:35 <jodh> 𐒓
+
+ 16:06:00 * xnox ev promises a double long post next week.
+
+ 16:06:04 <stokachu> cjwatson: parallel would be a full  backporrt for precise
+
+ 16:06:25 <cjwatson> stokachu: that's contrary to the usual SRU practice, so it would need special justification
+
+ 16:06:31 <stokachu> cjwatson: but quantal we would need to specify the patches, so we can remove that nomination
+
+ 16:06:43 <stokachu> and raring is just a blanket upgrade
+
+ 16:07:02 <cjwatson> oh, parallel isn't in precise at all?  then we'd need to have a reason it's needed
+
+ 16:07:43 <cjwatson> wait.  is the intended state precise-backports + quantal-updates + raring?
+
+ 16:08:02 <stokachu> cjwatson: yea :D
+
+ 16:08:14 <cjwatson> in that case, we don't want the precise task - that'll be handled by the backport
+
+ 16:08:23 <stokachu> ah ok
+
+ 16:08:35 <cjwatson> we do want the quantal and raring tasks, but for quantal it will need to be a targeted patch exercise
+
+ 16:08:59 <stokachu> cjwatson: gotcha so we should remove nominations and I can create a separate bug for quantal?
+
+ 16:09:02 <stokachu> for specific fixes
+
+ 16:09:19 <cjwatson> No, leave it as it is now
+
+ 16:09:21 <xnox> stokachu: status fixed, refresh.
+
+ 16:09:43 <stokachu> cool thanks :D
+
+ 16:09:47 <slangasek> cjwatson: no reason a third-declension noun can't have "bot" as its nominative :)
+
+ 16:09:56 <xnox> stokachu: we can split later if we decide so, cause e.g. it will need backports & sru templates on it.
+
+ 16:09:57 <slangasek> no ev today due to crashdb sprinting
+
+ 16:10:05 <slangasek> mine is:
+
+ 16:10:07 <slangasek> * working with desktop team on X stack backports for 12.04.2
+
+ 16:10:07 <slangasek> * upstart branch reviews
+
+ 16:10:07 <slangasek> * further work to get upstart 1.6 ready to go into Debian testing
+
+ 16:10:07 <slangasek> * fixing a regression in mountall discovered in the cloud only after SRU (bug #1078926)
+
+ 16:10:08 <stokachu> xnox: sounds good thanks
+
+ 16:10:09 <ubottu> Launchpad bug 1078926 in mountall (Ubuntu Quantal) "raring instance failed to find EC2 datasource" [High,Fix committed] https://launchpad.net/bugs/1078926
+
+ 16:10:10 <slangasek> * looked at plymouth in lxc
+
+ 16:10:12 <slangasek> (done)
+
+ 16:10:24 <cjwatson> slangasek: touché
+
+ 16:10:39 <doko> * last week
+
+ 16:10:39 <doko> - more toolchain work, upstreaming 4.8 patches, fixing issues in the 4.8 packaging
+
+ 16:10:39 <doko> - gcc-4.7, binutils updates for raring.
+
+ 16:10:39 <doko> - review linaro arm-none-gnueabi packaging
+
+ 16:10:39 <doko> * this week
+
+ 16:10:40 <doko> - finish python3.3 multiarch packaging
+
+ 16:10:42 <doko> - move the python3.3 multiarch packaging to 2.7, and clean up things
+
+ 16:10:44 <doko> - prepare python-defaults and python3-defaults multiarch changes
+
+ 16:10:46 <doko> - start documenting python multiarch
+
+ 16:10:48 <doko> - look at the cross packaging, removing the ad-hoc solutions, and configure --with-sysroot=/
+
+ 16:10:50 <doko> - finally investigating how to build multilib'd cross toolchains
+
+ 16:10:52 <doko> - llvm-3.2 update, look at clang 3.2
+
+ 16:10:54 <doko> (done)
+
+ 16:11:30 <slangasek> --with-sysroot=/ \o/
+
+ 16:12:00 <slangasek> cjwatson: I guess you'll be exercising that toolchain soon, to confirm it really works without extra flags?
+
+ 16:12:19 <cjwatson> So that's what fixes the -rpath-link stuff?
+
+ 16:12:30 <slangasek> AIUI yes
+
+ 16:12:36 <slangasek> the binutils upload specifically
+
+ 16:12:37 <doko> it should, yes. binutils is already in the archive
+
+ 16:12:41 <cjwatson> I can clear out w-b and have it retry from scratch
+
+ 16:12:50 <doko> and the armhf cross binutils too
+
+ 16:13:28 <cjwatson> How about the "STRIP CFLAGS -fstack-protector" that we're still carrying?
+
+ 16:13:38 <cjwatson> Ah, that was just for arm64 because it didn't have a libssp
+
+ 16:13:40 <slangasek> that's aarch64-specific
+
+ 16:13:48 <doko> not yet ported to arm64
+
+ 16:14:23 <slangasek> cjwatson: your go, I think
+
+ 16:14:48 <cjwatson> OK, I'll go through my sbuild charm and conditionalise the bits that are quantal and/or arm64 only
+
+ 16:14:55 <cjwatson> Lots of merges.
+
+ 16:14:55 <cjwatson> Continuing to push SB up the hill in 12.04.  Now boots, according to stgraber, but fails to install correctly.
+
+ 16:14:58 <cjwatson> Many cross-build fixes, and adding M-A: foreign to things.  gettext unblocked.  Auto-cross-builder now publishing: http://people.canonical.com/~cjwatson/cross/armhf/raring/
+
+ 16:15:02 <cjwatson> Fixed arcane coreutils/powerpc build failure.
+
+ 16:15:04 <cjwatson> Fixed net-tools build failure.
+
+ 16:15:07 <cjwatson> Fixed ubiquity not to remove kernel headers just because it's removing a same-flavour signed kernel (bug 1070427).
+
+ 16:15:10 <ubottu> Launchpad bug 1070427 in ubiquity (Ubuntu Quantal) "Ubiquity removes kernel headers, fails to build nonfree drivers" [High,Triaged] https://launchpad.net/bugs/1070427
+
+ 16:15:10 <cjwatson> Multiarchified libplymouth{2,-dev}.
+
+ 16:15:12 <cjwatson> Fixed up build-essential to stop claiming that python-minimal is Essential.
+
+ 16:15:15 <cjwatson> Fixed ubiquity regression in question dialog handling that broke auto-resizing (bug 1085961).
+
+ 16:15:17 <ubottu> Launchpad bug 1085961 in ubiquity (Ubuntu) "Unable to install two raring desktops side-by-side" [High,Fix committed] https://launchpad.net/bugs/1085961
+
+ 16:15:18 <cjwatson> ..
+
+ 16:15:31 <cjwatson> There's a question in that last-but-one bug about publishing updated 12.10 images ...
+
+ 16:15:46 <xnox> * Fixed upstart race in the unit-test, now we pass adt tests in with
+
+ 16:15:46 <xnox> lp:upstart.
+
+ 16:15:46 <xnox> * Working on upstart user configuration directories.
+
+ 16:15:46 <xnox> * Joined co-working from the office with evan, brian and pitti.
+
+ 16:15:46 <xnox> * Guiding upgrade user experience work for raring.
+
+ 16:15:46 <cjwatson> Which, well.  It's possible but some work
+
+ 16:16:03 <xnox> ..
+
+ 16:16:23 <stgraber> - Upstart
+
+ 16:16:23 <stgraber> - Did a few more changes on the initgroups branch, was merged today.
+
+ 16:16:23 <stgraber> - Cleaned up and ported initctl2dot to python3
+
+ 16:16:23 <stgraber> - Some cleanup work on the upstart-dconf-bridge at: lp:~stgraber/upstart/upstart-dconf-bridge
+
+ 16:16:26 <stgraber> - Started poking at libnih to fix the 'as' type handling for the dbus-events branch
+
+ 16:16:29 <stgraber> - Cleaned up the prctl branch a little based on James' comment, now proposed for merging.
+
+ 16:16:32 <stgraber> - Container
+
+ 16:16:35 <stgraber> - Getting ready for 0.9~alpha1 release next week.
+
+ 16:16:37 <stgraber> - Quite a lot of code review for patches being sent upstream.
+
+ 16:16:40 <stgraber> - Extended lxc-device to support moving network devices to containers.
+
+ 16:16:42 <stgraber> - Made python optional upstream, falling back to "legacy" shell scripts when not available.
+
+ 16:16:45 <stgraber> - Improved some of the existing python scripts to better deal with a non-root user.
+
+ 16:16:48 <stgraber> - lxc-create now stores the name of the template, arguments and sha1sum in the container's configuration.
+
+ 16:16:51 <stgraber> - lxc-ubuntu now installs any needed language pack in the container based on the list of langpacks installed on the host.
+
+ 16:16:54 <stgraber> - Release
+
+ 16:16:57 <stgraber> - Taking care of the alpha-1 release for the few participating flavours.
+
+ 16:17:00 <stgraber> - Networking
+
+ 16:17:02 <stgraber> - Looking at reducing the delta between Debian and Ubuntu for bridge-utils. Will add some code to detect upstart-udev-bridge and change the codepath accordingly.
+
+ 16:17:05 <stgraber> - Other
+
+ 16:17:08 <stgraber> - Did some UEFI secureboot testing for Colin.
+
+ 16:17:10 <stgraber> - TODO
+
+ 16:17:13 <stgraber> - Release alpha-1.
+
+ 16:17:15 <stgraber> - Work on libnih and get the dbus-events upstart branch to work.
+
+ 16:17:18 <stgraber> - Prepare the pull request for the 0.9~alpha1 LXC release.
+
+ 16:17:20 <stgraber> - Prepare a patch for bridge-utils to detect upstart and send that to Debian.
+
+ 16:17:23 <stgraber> (DONE)
+
+ 16:17:33 <barry> last week: bug #1077076 (oneconf py3 & oauthlib). bug #1058029 (code review). bug #1061149 (probably not a kernel bug, maybe jodh can take a look?). pykde4 plugin port to py3. review apport-valgrind for kylen. tox 1.4.2-2. virtualenv 1.8.4. python-defaults 2.7.3-3ubuntu2. this week: finish up (i hope) oneconf; look at twisted py3 port and our dependencies; continue eradication of python-oauth on ubuntu-desktop.  𝄢
+
+ 16:17:36 <ubottu> Launchpad bug 1077076 in oneconf (Ubuntu) "Switch from python-oauth to python-oauthlib" [High,In progress] https://launchpad.net/bugs/1077076
+
+ 16:17:37 <ubottu> Launchpad bug 1058029 in upstart (Ubuntu) "Port initctl2dot to Python 3" [Undecided,New] https://launchpad.net/bugs/1058029
+
+ 16:17:39 <ubottu> Launchpad bug 1061149 in linux (Ubuntu) "boot occasionally hangs while "Checking battery state..."" [Medium,Incomplete] https://launchpad.net/bugs/1061149
+
+ 16:18:21 <slangasek> cjwatson: updated 12.10 images> right, it's possible but I don't think it's realistic that we'll have the cycles to spend on this
+
+ 16:18:34 <cjwatson> yeah :-/
+
+ 16:18:49 <cjwatson> I guess I could publish an SRU and switch on the offer-people-an-installer-upgrade bit
+
+ 16:20:13 <slangasek> cjwatson: that seems a reasonable middle ground
+
+ 16:20:25 <slangasek> any questions wrt statuses?
+
+ 16:20:38 <slangasek> (speaking of bad latin declinations)
+
+ 16:21:29 <slangasek> [TOPIC] Bugs
+
+ 16:21:44 <slangasek> bdmurray isn't here to drive this, so I suppose it'll be a quick topic
+
+ 16:21:57 <slangasek> anyone want to raise anything here?
+
+ 16:22:30 <barry> bug #1061149 is still confounding me
+
+ 16:22:31 <ubottu> Launchpad bug 1061149 in linux (Ubuntu) "boot occasionally hangs while "Checking battery state..."" [Medium,Incomplete] https://launchpad.net/bugs/1061149
+
+ 16:22:33 <stokachu> one sec
+
+ 16:23:12 <barry> we now think it is not a kernel problem.  perhaps upstart?  any suggestions for more things to test would be welcome
+
+ 16:24:19 <stokachu> can i bring up another backport bug thats been sitting around for several months?
+
+ 16:24:33 <jodh> barry: unlikely to be a bug in upstart itself. The acpi service is in the sysv side of the world, but it might be an odd interaction between sysv+upstart jobs possibly.
+
+ 16:24:54 <slangasek> I don't think it's likely to have anything to do with sysv+upstart
+
+ 16:24:55 <xnox> stokachu: go ahead.
+
+ 16:25:02 <stokachu> bug 943502
+
+ 16:25:04 <ubottu> Launchpad bug 943502 in whois (Ubuntu Oneiric) "whois doesn't properly query .hr/.sx/.pe TLDs and incorrect format for whois.arin.net" [Medium,In progress] https://launchpad.net/bugs/943502
+
+ 16:25:05 <jodh> barry: when you say the boot hangs - do you mean the machine is actually dead? magic sysrq any help?
+
+ 16:25:19 <slangasek> it's more likely that something has stalled and preventing the boot from getting any further due to a missing event of some kind
+
+ 16:25:30 <slangasek> barry: boot with --verbose and capture the last bits on the screen?
+
+ 16:25:39 <barry> jodh: ctrl-alt-del kills acpid and reboots it
+
+ 16:25:48 <jodh> barry: serial console output ideally.
+
+ 16:26:03 <infinity> stokachu: Why backport wholesale instead of SRUing the correct TLD info in?
+
+ 16:26:12 <stokachu> arges: ^
+
+ 16:26:32 <slangasek> barry: also, a listing of /etc/rc2.d/ on the affected machine
+
+ 16:26:40 <barry> the console output is somewhat unpredictable, but after the boot stalls, ctrl-alt-del *always* shows acpid getting killed
+
+ 16:26:55 <jodh> barry: what about http://en.wikipedia.org/wiki/Magic_SysRq_key ?
+
+ 16:27:13 <barry> i'd say the boot stalls roughly 50% of the time (but not exactly 50%)
+
+ 16:28:00 <slangasek> stokachu: no arges on this channel.  anyway, though infinity phrased it as a question, you will have better results by applying targeted fixes instead of doing a backport
+
+ 16:28:12 <slangasek> first, because the backport team is orthogonal to the normal sponsorship queue / SRU process
+
+ 16:28:15 <jodh> barry: but is the machine dead? does the caps lock light still respond? is the VM process maxed at 100% cpu?
+
+ 16:28:17 <barry> jodh: that might be tricky.  this is a vm ;)
+
+ 16:28:19 <slangasek> second, because backports aren't enabled for users by default
+
+ 16:28:36 <barry> slangasek: i'll past the ls into the issue
+
+ 16:28:42 <slangasek> barry: ta
+
+ 16:28:50 <stokachu> slangasek: ok let me talk to the OP and see wth is going on
+
+ 16:28:57 <slangasek> stokachu: ok, sounds good
+
+ 16:29:07 <barry> jodh: the machine isn't actually dead. iirc i can ssh into it
+
+ 16:29:29 <jodh> barry: it's possible to sysrq with kvm+virtualbox.
+
+ 16:29:31 <jodh> barry: ok.
+
+ 16:30:18 <slangasek> barry: chvt 2?  (this rules out a console hang, vs. things just not having been handed off to the 'tty1' service)
+
+ 16:30:20 <stokachu> slangasek, infinity: we are going to go over the bug again and see about taking a better approach
+
+ 16:30:27 <stokachu> bug is pretty old and the history is lost on it
+
+ 16:30:52 <slangasek> barry: also, if you can ssh in, you can get a process list and an upstart job list; we would want to see the state of the 'rc' and 'plymouth' jobs when the hang happens
+
+ 16:31:06 <slangasek> stokachu: ack
+
+ 16:31:21 <slangasek> any other bugs?
+
+ 16:31:23 <jodh> right. remove splash and quiet on kernel cmdline too.
+
+ 16:32:02 <slangasek> not at the same time as doing the other tests :)
+
+ 16:32:10 <barry> slangasek: yep.  jodh already splashless and chatty :)
+
+ 16:32:11 <slangasek> removing 'splash' is a big hammer
+
+ 16:32:16 <slangasek> ok
+
+ 16:32:31 <slangasek> so it's almost certainly not a plymouth console-related hang
+
+ 16:32:53 <barry> slangasek, jodh perhaps... let me get it into the stalled state and we can poke at it in real time?
+
+ 16:33:00 <barry> (after this meeting or later today?)
+
+ 16:33:05 <slangasek> barry: can do
+
+ 16:33:09 <slangasek> [TOPIC] AOB
+
+ 16:33:11 <jodh> barry: k
+
+ 16:33:35 <slangasek> anything else?
+
+ 16:34:15 <ogra_> infinity, do you plan to re-introduce weekly reports to ubuntu-release before end of the year ?
+
+ 16:34:34 <ogra_> (if so i need to find someone stepping in for me during vacation)
+
+ 16:34:41 <infinity> ogra_: Yes.  I was meta-nagged to nag people.
+
+ 16:34:48 <slangasek> :-)
+
+ 16:34:52 * ogra_ hasnt recieved a nag yet
+
+ 16:34:58 <infinity> ogra_: I'll be nagging today. :P
+
+ 16:35:04 <ogra_> i was actually expecting it :)
+
+ 16:35:12 <ogra_> (thats why i asked)
+
+ 16:35:32 <slangasek> infinity: is the nag covering all the changes to the requested report format?
+
+ 16:35:44 <slangasek> like, axing the "bugs currently worked on" thing
+
+ 16:35:53 <infinity> slangasek: I have to go back and poke the spec, but yes.
+
+ 16:35:57 <ogra_> ++
+
+ 16:36:02 <slangasek> infinity: great :)
+
+ 16:37:34 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,286 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 14 Jun at 16:01 &mdash; 16:21 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-06-14-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Review ACTION points from previous meeting ===
+The discussion about "Review ACTION points from previous meeting" started at 16:01.
+
+
+=== Development Release ===
+The discussion about "Development Release" started at 16:02.
+
+
+=== Server & Cloud Bugs (caribou) ===
+The discussion about "Server & Cloud Bugs (caribou)" started at 16:09.
+
+
+=== Weekly Updates & Questions for the QA Team (tbd) ===
+The discussion about "Weekly Updates & Questions for the QA Team (tbd)" started at 16:17.
+
+
+=== Weekly Updates & Questions for the Kernel Team (smb, sforshee, arges) ===
+The discussion about "Weekly Updates & Questions for the Kernel Team (smb, sforshee, arges)" started at 16:18.
+
+
+=== Upcoming Call For Papers ===
+The discussion about "Upcoming Call For Papers" started at 16:19.
+
+
+=== Ubuntu Server Team Events ===
+The discussion about "Ubuntu Server Team Events" started at 16:20.
+
+
+=== Open Discussion ===
+The discussion about "Open Discussion" started at 16:20.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * zul (26)
+ * nacc (22)
+ * rbasak (21)
+ * jgrimm (18)
+ * cpaelzer (8)
+ * powersj (3)
+ * jamespage (3)
+ * meetingology (3)
+ * smoser (1)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 16:01 <zul> #startmeeting
+
+ 16:01 <meetingology> Meeting started Tue Jun 14 16:01:13 2016 UTC.  The chair is zul. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:01 <zul> so lets get on with it
+
+ 16:01 <zul> #topic Review ACTION points from previous meeting
+
+ 16:01 <zul> any action points from the previous meeting?
+
+ 16:02 <rbasak> None were minuted.
+
+ 16:02 <zul> if not moving on
+
+ 16:02 <zul> #topic Development Release
+
+ 16:03 <zul> so yakkety is on going, does someone want to take this topic?
+
+ 16:03 <rbasak> Sync and merge time. I think that's all, unless anyone else has anything to discuss on this topic?
+
+ 16:03 <jgrimm> i'd like to get an update on the importer at some point in the meeting
+
+ 16:04 <zul> well now would be a good time then;)
+
+ 16:04 <rbasak> It probably fits this topic the best I think.
+
+ 16:04 <jgrimm> perfect. nacc, rbasak^^
+
+ 16:04 <nacc> sure
+
+ 16:04 * rbasak defers to nacc
+
+ 16:04 <nacc> not too many updates to the importer itself in the past week
+
+ 16:04 <nacc> I found one bug with the resuming of interrupted imports
+
+ 16:04 <smoser> o/
+
+ 16:05 <nacc> (which happens with launchpad timeouts periodically in my experience)
+
+ 16:05 <nacc> otherwise, it seems to be mostly working for the import case
+
+ 16:05 <nacc> rbasak and I have been discussing how best to get the tooling to do what we want for the git workflow at this point
+
+ 16:05 <nacc> barry from foundations did find one issue with gitpython that exists upstream due to a non-UTF8 in a historical changelog
+
+ 16:05 <rbasak> I think from an importer perspective we're doing very well.
+
+ 16:05 <nacc> he's planning on sending a patch to catch that and a few other things he's found
+
+ 16:06 <nacc> otherwise, the importer is stable as of right now
+
+ 16:06 <rbasak> A final piece is to make sure the importer works well against a branch an uploader pushes, to close the loop.
+
+ 16:06 <jgrimm> ok, its safe to use?
+
+ 16:06 <rbasak> LP MPs seem to work well too.
+
+ 16:06 <nacc> i'm still working on the wiki page (https://wiki.ubuntu.com/UbuntuDevelopment/Merging/GitWorkflow)
+
+ 16:06 <jgrimm> that is for real work, or still consider it testing phase?
+
+ 16:07 <rbasak> From what I've seen it's good for real work, though I have a pretty small sample size so far.
+
+ 16:07 <nacc> same here
+
+ 16:07 <rbasak> Closing the loop isn't necessary - if the importer doesn't pick up the tree from an upload, no big deal IMHO.
+
+ 16:07 <nacc> if we never push the upload/ tags to usdi for now, then the importer will just import the new publish later
+
+ 16:07 <rbasak> That shouldn't block progress.
+
+ 16:07 <nacc> right
+
+ 16:07 <jgrimm> ok, yes.. we know we'll still hit corner cases.
+
+ 16:07 <jgrimm> thanks!
+
+ 16:07 <zul> ok anything else?
+
+ 16:07 <rbasak> So, I guess that means that we'd like everyone to continue asking us for imports as needed.
+
+ 16:08 <jgrimm> cpaelzer, dpdk update?
+
+ 16:08 <jgrimm> rbasak, i'll send a few import requests later today
+
+ 16:08 <nacc> ask on the ubuntu-server list, please :)
+
+ 16:08 <jgrimm> nacc, ack
+
+ 16:09 <zul> ok moving on
+
+ 16:09 <jgrimm> k
+
+ 16:09 <zul> #topic  Server & Cloud Bugs (caribou)
+
+ 16:09 <rbasak> I would like to bring up bug 1560939.
+
+ 16:09 <ubottu> bug 1560939 in libvirt (Ubuntu) "libvirt-bin fails to install on a fresh xenial server" [Critical,Confirmed] https://launchpad.net/bugs/1560939
+
+ 16:09 <cpaelzer> sorry busy with rharper and smoser at the same time
+
+ 16:10 <jgrimm> cpaelzer, no worries.
+
+ 16:10 <cpaelzer> dpdk TL;DR update - we have sane libraries now
+
+ 16:10 <rbasak> I marked it Critical because if it is a regression as was suggested in the bug, then it's important.
+
+ 16:10 <cpaelzer> we have a dpdk 16.04 ppa at https://launchpad.net/~paelzer/+archive/ubuntu/dpdk-merge-16.04/+packages now
+
+ 16:10 * jgrimm looks at rbasak bug
+
+ 16:10 <rbasak> But it isn't clear to me if it is valid or not, especially given the most recent comments.
+
+ 16:10 <cpaelzer> next dpdk related steps are around getting OpenvSwitch work with it
+
+ 16:10 <rbasak> smb (not here) did ask me by email about the "-d" switch.
+
+ 16:11 <nacc> rbasak: seems like a nova-compute bug (implicitly)
+
+ 16:12 <rbasak> jamespage: any opinion please?
+
+ 16:12 <nacc> rbasak: in that nova-compute modified the libvirt-bin defaults, and then ... the user never noticed/knew to revert it, unsure
+
+ 16:12 <rbasak> I'd like to get this triaged at least, to eliminate it looking so dire if it isn't.
+
+ 16:12 <jamespage> that was related to an older charm version - that has been fixed
+
+ 16:13 <jamespage> the original bug was charm related - not sure about the most recent comments
+
+ 16:13 <zul> so anything ele?
+
+ 16:14 <rbasak> jamespage: so what should the status of the bug be?
+
+ 16:14 <nacc> rbasak: it feels like two independent bugs on my re-read; the first was the locales issue
+
+ 16:14 <jamespage> invalid imho
+
+ 16:14 <nacc> then other users got bit by this libvirt-bin default issue, that was unrelated to the locales one, but had the same effect
+
+ 16:15 <zul> ...
+
+ 16:15 <rbasak> nacc: are any of your two independent bugs valid, in your opinion? Or would they both be Invalid?
+
+ 16:15 <nacc> i think the first is fix-release (via locales update)
+
+ 16:16 <nacc> based also upon rharper's comments
+
+ 16:16 <nacc> the second is invalid based upon jamespage's comments (aiui)
+
+ 16:16 <rbasak> OK, thanks. If everyone's happy with that, I'll update the bug.
+
+ 16:17 <zul> #topic Weekly Updates & Questions for the QA Team (tbd)
+
+ 16:17 <zul> hi tbd
+
+ 16:17 <zul> oh wait..
+
+ 16:17 <powersj> o/
+
+ 16:17 <jgrimm> nice! hi powersj
+
+ 16:17 <powersj> howdy
+
+ 16:17 <cpaelzer> hi++ powersj
+
+ 16:18 <jgrimm> powersj, will be starting the first week of july.
+
+ 16:18 <jgrimm> zul, nothing else for now on QA
+
+ 16:18 <rbasak> powersj: welcome!
+
+ 16:18 <powersj> thx
+
+ 16:18 <zul> ok cool
+
+ 16:18 <zul> #topic Weekly Updates & Questions for the Kernel Team (smb, sforshee, arges)
+
+ 16:18 <jgrimm> sprinting i believe
+
+ 16:19 <cpaelzer> they should have entered social time already or soon
+
+ 16:19 <zul> bunch of drunks
+
+ 16:19 <zul> #topic Upcoming Call For Papers
+
+ 16:19 <nacc> heh
+
+ 16:20 <zul> #topic Ubuntu Server Team Events
+
+ 16:20 <jgrimm> not seeing anything interesting on lwn CFP page
+
+ 16:20 <jgrimm> ditto
+
+ 16:20 <zul> any upcoming events?
+
+ 16:20 <zul> #topic Open Discussion
+
+ 16:20 <zul> chat amongst yourselves
+
+ 16:20 <cpaelzer> CFP related - https://www.opnfv.org/news-faq/events/2016-06-20/2016-opnfv-summit anybody ?
+
+ 16:20 <cpaelzer> deadlines passed, but I'd be interested if anybody will be there
+
+ 16:21 <zul> i guess not
+
+ 16:21 <zul> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

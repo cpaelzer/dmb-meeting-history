@@ -1,0 +1,249 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 04 Nov at 19:10 &mdash; 19:51 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-11-04-19.10.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Per Package Uploader Applications ===
+The discussion about "Per Package Uploader Applications" started at 19:12.
+
+ * '''Ben Howard applying for PPU for walinuxagent  and hv-kvp-daemon-init''' (19:13)
+  * ''LINK:'' https://wiki.ubuntu.com/utlemming/PPUApplication 
+  * ''Vote:'' Should Ben Howard get upload rights for walinuxagent and hv-kvp-daemon-init and get Ubuntu membership? (Carried)
+
+=== Any other business ===
+The discussion about "Any other business" started at 19:50.
+
+
+
+
+== Vote results ==
+
+ * Should Ben Howard get upload rights for walinuxagent and hv-kvp-daemon-init and get Ubuntu membership?
+  * Motion carried (For/Against/Abstained 5/0/0)
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * utlemming (25)
+ * bdrung (21)
+ * stgraber (15)
+ * meetingology (13)
+ * tumbleweed (10)
+ * barry (6)
+ * infinity (6)
+ * ScottK (2)
+
+
+
+== Full Log ==
+
+
+ 19:10 <bdrung> #startmeeting
+
+ 19:10 <meetingology> Meeting started Mon Nov  4 19:10:55 2013 UTC.  The chair is bdrung. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 19:10 <meetingology> 
+
+ 19:10 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 19:12 <bdrung> no previous action items. let's begin with our applications.
+
+ 19:12 <bdrung> #topic Per Package Uploader Applications
+
+ 19:13 <bdrung> #subtopic Ben Howard applying for PPU for walinuxagent  and hv-kvp-daemon-init
+
+ 19:13 <bdrung> #link https://wiki.ubuntu.com/utlemming/PPUApplication
+
+ 19:13 <bdrung> utlemming: welcome. can you introduce yourself?
+
+ 19:14 <utlemming> hi, I'
+
+ 19:14 <utlemming> I'm Ben Howard and I spend my days in the cloud
+
+ 19:14 <utlemming> I rather enjoy working on Ubuntu and maintain those two packages, working with sponsors
+
+ 19:15 <utlemming> and I build the Cloud Images for Ubuntu
+
+ 19:16 <stgraber> so just a few random questions to get started ;)
+
+ 19:16 <stgraber> are you subscribed to ubuntu-devel-announce?
+
+ 19:16 <utlemming> er, I am not...but will be shortly :)
+
+ 19:16 <stgraber> good :)
+
+ 19:17 <utlemming> and done
+
+ 19:20 <stgraber> (sorry, trying to think about some clever questions, and failing at the moment ;))
+
+ 19:21 <stgraber> so those two packages are Azure specific, right? are there equivalents for other cloud platforms that you'll end up maintaining? or is Azure special in that regard?
+
+ 19:22 <utlemming> indeed, they are specific to Azure. The other package that I do a lot of work on is cloud-init. However, I lean on Scott Moser for that.
+
+ 19:23 <utlemming> there are no other packages at this time that I maintain as part of cloud work....and I would like to keep it that way. The goal is to put all that stuff into Cloud-init.
+
+ 19:25 <tumbleweed> utlemming: is walinuxagent something that we want to get into Debian too?
+
+ 19:25 <utlemming> tumbleweed: yes, and there is a version in Debian called waagent. However, I have been unssuccesful in working with the debian maintainer.
+
+ 19:26 <tumbleweed> oh, it's the same thing
+
+ 19:26 <utlemming> tumbleweed: our version, however, is much cleaner as we've made cloud-init to handle the majority of the work. So we do carry a delta.
+
+ 19:26 <tumbleweed> yeah, that's unfortunate
+
+ 19:28 <utlemming> tumbleweed: that said, I have worked with MS to get some our changes upstreamed, including carrying our init scripts and packaging to make maintance easier.
+
+ 19:29 <tumbleweed> does it make sense for ubuntu to have both walinuxagent and waagent? shouldn't we be dropping one or rebasing onto debian's package?
+
+ 19:29 <bdrung> at least the package name should be the same
+
+ 19:30 <utlemming> bdrung: if you look at the debian logs, they used our early version of the package to create waagent
+
+ 19:30 <barry> utlemming: can you go into any detail about the debian maintainer issues?
+
+ 19:32 <utlemming> barry: we introduced the intial version of the walinuxagent ~ 12.04 time frame, while walinuxagent was still having a lot of issues. I worked with MS to get those straigtened out. The Debian guys decided to package it, and introduced waagent based on our packaging. In the 12.10 and then 13.04 I reached out asking about merging the packages and removing the differences, which fell on deaf ears.
+
+ 19:33 <barry> utlemming: did they just not respond?  are the orig maintainers still interested in maintaining the package in debian?
+
+ 19:34 <tumbleweed> on a related topic, are you aware of the (fairly low traffic) debian-cloud list?
+
+ 19:34 <utlemming> barry: no response. I haven't followed up in while -- I intend on following up on that latter
+
+ 19:34 <utlemming> tumbleweed: yes, I am and I am on it
+
+ 19:34 <utlemming> tumbleweed: I even hang out on their IRC channel
+
+ 19:34 <barry> utlemming: cool
+
+ 19:34 <tumbleweed> ok. hopefully we can solve this some day
+
+ 19:35 <tumbleweed> but in the meantime, shouldn't we rename our walinuxagent source package? or remove waagent in Ubuntu?
+
+ 19:36 <utlemming> tumbleweed: that is a great question. waagent today exists as MS's originally saw it, while walinuxagent now requires cloud-init and uses cloud-init to behave like a cloud instance.
+
+ 19:36 <barry> tumbleweed: maybe schedule that for later in trusty if the issue can't be resolved in debian?
+
+ 19:37 <utlemming> tumbleweed: for cloud-images, we want them to behave like cloud-images and so we use walinuxagent + cloud-init.
+
+ 19:37 <stgraber> if our changes are a relatively clean set on top of upstream, then applying those on waagent instead (and killing walinuxagent) would make more sense
+
+ 19:38 <stgraber> if we've diverged to the point where we heavily change the upstream source tarball, then a separate source name isn't entirely unreasonable
+
+ 19:38 <utlemming> I can agree with that position. Mostly our changes are configuration changes.
+
+ 19:38 <stgraber> but we should then blacklist and remove waagent from the archive
+
+ 19:38 <bdrung> it depends what name is preferred. waagent or walinuxagent?
+
+ 19:38 <stgraber> well, whatever Debian uses is usually best, if only for dependencies
+
+ 19:38 <infinity> Am I fashionably late?
+
+ 19:39 <stgraber> infinity: no, just late ;)
+
+ 19:39 <utlemming> I would probably blacklist waagent, simply because it is a dangerous package. Part of packaging is to prevent it from hosing a system on installation.
+
+ 19:39 <infinity> ScottK asked me to pop in and repeat something I told him in private.
+
+ 19:39 <infinity> 12:19 <ScottK> Is utlemming ready for PPU rights for the Azure stuff?
+
+ 19:39 <infinity> 12:25 <infinity> I don't think I've had to fix any of his uploads for a while now, so probably.  As long as he's saying the right things about being sane and getting reviews.
+
+ 19:39 <infinity> So, there.   My work here is done. :)
+
+ 19:39 <ScottK> Thanks.
+
+ 19:39 <tumbleweed> thanks infinity
+
+ 19:39 <bdrung> maybe it would be good to file a bug against waagent in the BTS to ask for an opinion. either we should adopt the Debian name or Debian should adopt Ubuntu's name.
+
+ 19:40 <utlemming> I can take that as a work item for this cycle
+
+ 19:41 <bdrung> depending on the outcome, one of the two source package should be removed (and all needed changed applied to the remaining source package)
+
+ 19:41 <stgraber> oh, I guess I should also publicly state this since I've only done so in private to the board. I've been doing a fair amount of SRU review mostly of walinuxagent and haven't seen any problem with those so far. utlemming does a good job of getting all the right bits SRUed where it matters and keeping track of the state of Ubuntu Server on Azure.
+
+ 19:43 <bdrung> #vote Should Ben Howard get upload rights for walinuxagent and hv-kvp-daemon-init and get Ubuntu membership?
+
+ 19:43 <meetingology> Please vote on: Should Ben Howard get upload rights for walinuxagent and hv-kvp-daemon-init and get Ubuntu membership?
+
+ 19:43 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 19:44 <stgraber> +1
+
+ 19:44 <meetingology> +1 received from stgraber
+
+ 19:44 <tumbleweed> +1
+
+ 19:44 <meetingology> +1 received from tumbleweed
+
+ 19:44 <barry> +1
+
+ 19:44 <meetingology> +1 received from barry
+
+ 19:44 <bdrung> +1
+
+ 19:44 <meetingology> +1 received from bdrung
+
+ 19:44 <infinity> utlemming: Congrats.
+
+ 19:45 <utlemming> :)
+
+ 19:45 <ScottK> +1
+
+ 19:45 <meetingology> +1 received from ScottK
+
+ 19:45 <bdrung> #endvote
+
+ 19:45 <meetingology> Voting ended on: Should Ben Howard get upload rights for walinuxagent and hv-kvp-daemon-init and get Ubuntu membership?
+
+ 19:45 <meetingology> Votes for:5 Votes against:0 Abstentions:0
+
+ 19:45 <meetingology> Motion carried
+
+ 19:45 <bdrung> utlemming: congrats.
+
+ 19:45 <stgraber> utlemming: so normally I'd grant you those rights immediatel,y however since I've expired from the technical board and no new board has been elected since, it'll take a little while.
+
+ 19:46 <stgraber> utlemming: I'll have to poke the Launchpad folks to figure out whether someone can cowboy the ACL in there for me ;)
+
+ 19:46 <utlemming> ack, sounds good
+
+ 19:47 <bdrung> utlemming: I consider having PPU + Ubuntu Membership to be more than Ubuntu Contributing Developer (which just grants recognition and Ubuntu membership). do you still want to become Ubuntu Contributing Developer?
+
+ 19:48 <utlemming> er, I think that PPU + Ubuntu Membership is fine
+
+ 19:48 <utlemming> I'll work towards MOTU next
+
+ 19:50 <bdrung> #topic Any other business
+
+ 19:50 <bdrung> anything else to discuss?
+
+ 19:50 <stgraber> nothing here
+
+ 19:51 <tumbleweed> nor here
+
+ 19:51 <barry> same
+
+ 19:51 <bdrung> okay.
+
+ 19:51 <bdrung> micahg will be the next chair (following our list)
+
+ 19:51 <bdrung> thanks for coming.
+
+ 19:51 <bdrung> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

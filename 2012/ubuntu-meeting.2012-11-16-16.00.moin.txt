@@ -1,0 +1,993 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by dholbach at 16:00:10 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-11-16-16.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Introductions
+
+ *Questions and Answers
+
+ *Bug review: https://bugs.launchpad.net/ubuntu-nexus7
+''LINK:'' http://paste.ubuntu.com/1363002/ has a list of currently assigned bugs  (dholbach, 16:53:19)
+
+
+
+Meeting ended at 17:02:09 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * dholbach (70)
+ * mfisch (69)
+ * ogra-cb (62)
+ * achiang (58)
+ * victorp (34)
+ * janimo (23)
+ * cwayne (21)
+ * vanhoof (21)
+ * MagicFab (19)
+ * barry (18)
+ * cjwatson (18)
+ * kyleN_ (12)
+ * diwic (5)
+ * gema (5)
+ * ssweeny (4)
+ * jcastro_ (3)
+ * obounaim (3)
+ * meetingology (3)
+ * cking (2)
+ * ubottu (2)
+ * Riddell (2)
+ * jodh (1)
+ * feasty (1)
+ * yofel__ (1)
+ * sforshee (1)
+ * ijuz (1)
+ * bdmurray (1)
+
+
+
+== Full Log ==
+
+
+ 16:00:10 <dholbach> #startmeeting
+
+ 16:00:11 <meetingology> Meeting started Fri Nov 16 16:00:10 2012 UTC.  The chair is dholbach. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00:11 <meetingology> 
+
+ 16:00:11 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:00:21 <dholbach> Welcome everybody to the Ubuntu on Nexus7 meeting!
+
+ 16:00:26 <mfisch> hello
+
+ 16:00:28 <vanhoof> o/
+
+ 16:00:34 <dholbach> Quick show of hands - who do we all have here for the meeting? :)
+
+ 16:00:36 <ogra-cb> moo
+
+ 16:00:45 <MagicFab> it's been some time since I was here last! o/
+
+ 16:00:48 <mfisch> me
+
+ 16:00:48 * barry waves
+
+ 16:00:53 * sforshee waves
+
+ 16:00:55 <ogra-cb> MagicFab, !
+
+ 16:01:02 <ssweeny> o/
+
+ 16:01:03 <achiang> hi
+
+ 16:01:05 * jodh waves
+
+ 16:01:05 * barry might have to exit early though
+
+ 16:01:06 <feasty> o/
+
+ 16:01:07 <yofel__> o/
+
+ 16:01:12 <victorp> \o
+
+ 16:01:14 <victorp> o/
+
+ 16:01:14 <MagicFab> ogra-cb, :)
+
+ 16:01:15 <obounaim> Hello
+
+ 16:01:17 <Riddell> hi
+
+ 16:01:21 <victorp> \o/
+
+ 16:01:23 <vanhoof> victorp: dancing? :)
+
+ 16:01:34 <cwayne> o/
+
+ 16:01:35 <victorp> vanhoof, I am
+
+ 16:01:39 <victorp> nexus7-style!
+
+ 16:01:39 <vanhoof> /o/
+
+ 16:01:49 <dholbach> great to see so many people turned up here! :-)
+
+ 16:01:58 <dholbach> As this is the first meeting of the kind, I thought we'd start with a quick round of introductions of all the people who put some work into getting Ubuntu to work on the Nexus7
+
+ 16:02:03 <dholbach> #topic Introductions
+
+ 16:02:21 <dholbach> Can everyone who worked on this give a quick introduction of themselves? :)
+
+ 16:02:44 * ogra-cb is oliver grawert and works on image creation ...
+
+ 16:02:48 <achiang> ogra-cb: mfisch janimo cwayne ssweeny don't be shy
+
+ 16:03:06 <ogra-cb> if you have issues with the bootloader or the images, i'm the guy to nag
+
+ 16:03:21 * cwayne is chris wayne, initially worked on documenting installing and known issues, have since been working on answering questions and triaging bugs
+
+ 16:03:23 * ssweeny is Scott Sweeny, working on general bug fixes and a juju charm to help people get an arm development environment set up
+
+ 16:03:27 <ogra-cb> (and no, i dont plan to work on dual booting)
+
+ 16:03:38 * vanhoof is Chris Van Hoof, helped with the one-click installer, and massive amounts of flashing my devices ;)
+
+ 16:03:48 <janimo> I worked on packaging and maintaining the kernel tree before handing it over to the ubuntu kernel team very recently
+
+ 16:03:58 * achiang is alex chiang, i help clear obstacles for the team and generally sit back and watch in amazement at how good they are
+
+ 16:04:00 * mfisch is Matt Fischer worked on the initial image.  Currently doing bug fixes, bug triage, and investigating benchmarking tools
+
+ 16:04:05 * victorp victor palau - mainly looking at performance testing
+
+ 16:04:05 <janimo> also, misc bugfixes, will work on sensors most likely
+
+ 16:04:17 <kyleN_> kyleN is Kyle Nitzsche. flashed, installer, wiki, etc.
+
+ 16:05:02 <achiang> i think that's the core team. we of course have many other people both in canonical and the community who help as well
+
+ 16:05:03 <ogra-cb> and there is our sound magican diwic
+
+ 16:05:21 <diwic> hi
+
+ 16:05:44 <dholbach> awesome - I think it's important to put names to faces and everything - so thanks everyone :)
+
+ 16:06:00 <ogra-cb> do we have to bring a photo next week then ?
+
+ 16:06:10 <victorp> +1^
+
+ 16:06:10 <dholbach> that might work, yes :)
+
+ 16:06:22 <ogra-cb> :)
+
+ 16:06:26 <dholbach> we have many people who joined into the meeting and I thought it'd be good if we just open the floor for all questions you might have about Ubuntu on the Nexus7 - the experts are all here :)
+
+ 16:06:33 <dholbach> #topic Questions and Answers
+
+ 16:06:41 <dholbach> please don't be shy - just ask :)
+
+ 16:06:51 <gema> o/
+
+ 16:06:56 <barry> o/
+
+ 16:07:04 <MagicFab> Hi, Fabian Rodriguez here - http://ubuntu.magicfab.ca I have one
+
+ 16:07:07 <dholbach> gema, please :)
+
+ 16:07:22 <gema> we are looking into doing power consumption testing on the lab, I wonder if you guys have figured out how to go about that already
+
+ 16:07:41 <gema> fully automated, of course :)
+
+ 16:07:44 * MagicFab stands in line ;)
+
+ 16:07:45 <janimo> gema, smagoun hacked a device to some meters already I think
+
+ 16:07:58 <obounaim> Are there any plans to port Ubuntu to other devices?
+
+ 16:08:02 <achiang> that is on our plan but i think we are still trying to figure out a way to do so, and also engage the community
+
+ 16:08:05 <victorp> s/smagoun/sconklin
+
+ 16:08:12 <janimo> victorp, thanks
+
+ 16:08:13 <ogra-cb> cking might also have some insight from the kernel side about what you can do in software
+
+ 16:08:29 <achiang> for next week, we are going to focus on memory benchmarking, but power consumption is up quickly after that
+
+ 16:08:33 <gema> yep, I am in contact with them already, so no other insights? :D
+
+ 16:08:49 <achiang> one issue we will have is that we do not plan on recommending people rip apart their machines and hooking up probes
+
+ 16:08:57 <victorp> gema - I think the main concern is that measuring overall power usage is not as useful as knowing what the individual components consume
+
+ 16:08:58 <achiang> so we will focus on *relative* measurements
+
+ 16:09:11 <janimo> gema, apart from the fact that power savings in userland tested on x86 likely benefit the nexus too
+
+ 16:09:12 <achiang> hopefully the community can help us gather a lot of data
+
+ 16:09:26 <gema> victorp, janimo ack
+
+ 16:09:28 <dholbach> achiang, but that will be announced separately, right?
+
+ 16:09:32 <achiang> and my team is going to release a testing framework that enables the community to help us collect this data
+
+ 16:09:41 <victorp> gema, I would also suggest to challange conventional wisdom
+
+ 16:09:42 <dholbach> cool
+
+ 16:09:42 <achiang> dholbach: yes, announced separately
+
+ 16:09:50 <cking> unfortunately we  need some accurate measurements, so we need some H/W  probes do this
+
+ 16:10:05 <ogra-cb> cking, but only once as reference
+
+ 16:10:07 <victorp> I ran the same test twice, the second time I reduce the brightness of screen > 50% and it made little difference
+
+ 16:10:16 <victorp> I was expecting it to make bigger...
+
+ 16:10:17 <ijuz> does the Nexus7 has an internal way to measure the power usage?
+
+ 16:10:19 <MagicFab> I'd like to do some testing and invite other current Android users to do that. However they (and I) use the N7 as their primary device, testing other ROMs after backing up with ClockWork recovery, same to restore. How can we do that? Current instructions assume the device is dedicated to testing Ubuntu and recovery does a *factory* restore - not good to get more geeky testers, at least not the many already with CyanogenMod etc.
+
+ 16:10:28 <MagicFab> My question was posted on Ask Ubuntu: I posted this on Ask Ubuntu: http://askubuntu.com/questions/216977/how-can-i-install-ubuntu-on-my-nexus-7-while-being-able-to-recover-from-an-nandr
+
+ 16:10:35 * cking has calibrated the battery, it is effectively useless for accurate power benchmarking
+
+ 16:10:51 <mfisch> MagicFab: I answered you on AskUbuntu I think
+
+ 16:11:03 * barry has an offer and a question
+
+ 16:11:11 <cjwatson> I was talking with ogra_ earlier today about a mad idea I had of adapting Wubi to the Nexus 7
+
+ 16:11:12 <dholbach> Can folks with questions just message me their question?
+
+ 16:11:20 <MagicFab> mfisch, an official answer from Canonical, yes, I am expecting a bit different outcome here.
+
+ 16:11:22 <cjwatson> Though it depends on some other stuff in progress
+
+ 16:11:43 <dholbach> barry, obounaim: you had questions from what I could see.
+
+ 16:11:55 <ogra-cb> yeah, i'll keep an eye on it and it will also need some testing first
+
+ 16:12:22 <obounaim> yes
+
+ 16:12:26 <victorp> cjwatson,  That is a mad idea
+
+ 16:12:27 <cjwatson> (This would in theory avoid having to disturb Android at all in order to test Ubuntu - but I don't know, it's just a mad idea and it may be more trouble than it's worth)
+
+ 16:12:46 <cjwatson> (Well, not quite, you'd have to interpose a boot loader)
+
+ 16:13:05 <ogra-cb> if it would work it would be cool though
+
+ 16:13:08 <barry> dholbach: yes.  first my offer: i've heard that folks are having some problems w/ python applications on the nexus7.  onboard came up at uds-r, although it seems to be working fine for me.  please, if you're having problems with python on the nexus7, contact me and i will work with you.  or file bugs and assign me and i will take a look.  i can help!
+
+ 16:13:20 <ogra-cb> and avoid a lot of trouble we have with arm bootloaders post installation
+
+ 16:13:37 <achiang> \m/ thanks barry !
+
+ 16:13:38 <victorp> barry - what is your LP id?
+
+ 16:13:49 <barry> victorp: barry (so creative :)
+
+ 16:13:50 <dholbach> victorp, https://launchpad.net/~barry/
+
+ 16:13:55 <victorp> lol
+
+ 16:14:05 <achiang> everyone assign bugs to barry
+
+ 16:14:17 <barry> did i say 'barry'?  i mean jodh
+
+ 16:14:21 <dholbach> haha
+
+ 16:14:25 <cjwatson> barry: The comments I'd heard were generally that it was just sluggish
+
+ 16:14:26 <ogra-cb> barry, ddi zou trz it with the default ubuntu theme ?
+
+ 16:14:33 <ogra-cb> *try
+
+ 16:15:05 <barry> ogra-cb: try what?  i basically just installed the nexus7 image and began playing
+
+ 16:15:32 <ogra-cb> barry, play with the different onboard themes in its settings, we dont use the ubuntu default because it was unusable slow
+
+ 16:15:33 <victorp> barry,  on board
+
+ 16:15:40 <ssweeny> there is an onboard snapshot with some performance improvements which i will be uploading to the nexus 7 ppa today
+
+ 16:15:41 <janimo> any other questions? :) barry you had one
+
+ 16:15:44 <achiang> ogra-cb: the upstream onboard devs have a proposed fix for performance w/default theme, we are going to test it soon
+
+ 16:15:52 <dholbach> ok, have we talked about the power question sufficiently? I have 4 more questions lined up. (everyone else please message me their questions)
+
+ 16:15:52 <ogra-cb> cool !
+
+ 16:15:54 <achiang> let's get to barry's question
+
+ 16:16:02 <dholbach> <barry> my question is about progress on making the desktop drivable by touch.  maybe my fingers are too fat but i can't seem to operate the desktop at all
+
+ 16:16:11 <barry> awesome, i will be happy to test it
+
+ 16:16:15 <cjwatson> bug 1075470
+
+ 16:16:17 <ubottu> Launchpad bug 1075470 in ubuntu-nexus7 "Window titlebar buttons are unusably small for tablets/touchscreens and don't scale with the fonts/titlebar" [Medium,Confirmed] https://launchpad.net/bugs/1075470
+
+ 16:16:34 * barry subscribes
+
+ 16:16:40 <dholbach> barry, all set? :)
+
+ 16:16:42 <achiang> barry: specifically not part of our plan for this cycle
+
+ 16:16:55 <barry> achiang: nod
+
+ 16:16:58 <ogra-cb> but generally a bug that should be fixed (teh above one)
+
+ 16:17:12 <barry> it *is* nice to ssh into though :)
+
+ 16:17:15 <ogra-cb> it affects everything, not just tablets :)
+
+ 16:17:24 * cwayne has taken to vnc'ing into his tablet
+
+ 16:17:26 <achiang> barry: i would say that fixing touch in parts of the unity stack would be welcome, because it is still relevant on touch-screen laptops too
+
+ 16:17:32 <victorp> ogra-cb I think touch needs a holistic approach rather than fixing one bug at the time
+
+ 16:17:44 <victorp> much more that we can cover in the project
+
+ 16:18:00 <achiang> so that would be a great area for motivated community members to dive in
+
+ 16:18:04 <mfisch> there are dozens of unimplemented or non-functional gestures
+
+ 16:18:07 <achiang> learning about our opentouch framework
+
+ 16:18:09 <victorp> and the plan is for all of that to be done by 14.04
+
+ 16:18:14 <ogra-cb> victorp, that bug above breaks on x86 desktop machines as well (bottom of chars gets cut off if you pick the laargest fontsize)
+
+ 16:18:15 <barry> oh, if i might one other quick question: can the nexus7 be run in multi-user mode?
+
+ 16:18:24 <achiang> mfisch: ^^
+
+ 16:18:30 <ogra-cb> barry, sure
+
+ 16:18:34 <ogra-cb> just create users
+
+ 16:18:35 <victorp> ogra-cb, agreed , is not arch specific
+
+ 16:18:40 <barry> ogra-cb: beautiful
+
+ 16:18:45 * victorp not saying the bug is not valid
+
+ 16:18:45 <achiang> barry: you just have to turn off lightdm autologin
+
+ 16:18:50 <mfisch> barry: yes, you probably also need to disable autologin
+
+ 16:18:54 <barry> yep
+
+ 16:18:55 <ogra-cb> barry, and disable autologin
+
+ 16:18:58 <dholbach> perfect
+
+ 16:18:59 <diwic> I guess that would require a keyboard, or does the onboard show up in lightdm/unity-greeter?
+
+ 16:19:12 <ogra-cb> it is in the panel
+
+ 16:19:14 <diwic> an OTG keyboard
+
+ 16:19:14 <mfisch> diwic: I think it's loadable
+
+ 16:19:18 <diwic> excellent
+
+ 16:19:22 <dholbach> <MagicFab> Why is this project ignoring technical, advanced users that already use/test other ROMs? "Legal concerns" cited are a deal breaker. Ignoring as in CyanogenMod has a huge community and no mention on how to flash Ubuntu the usual, safe, roll-back available way.
+
+ 16:19:22 <barry> i have run it with the little usb hub and keyboard/mouse.  it works great
+
+ 16:19:23 <kyleN_> edit /etc/lightdm/lightdm.conf
+
+ 16:20:03 <victorp> MagicFab, we welcome people to contribute other boot scenarios to the project
+
+ 16:20:03 <dholbach> MagicFab adds: if at least there has been testing where recovery is kept and I can rollback to on of my backups, I'd feel safer doing it.
+
+ 16:20:21 <victorp> canonical staff has clear objectives to scratch :)
+
+ 16:20:49 <kyleN_> victorp has itchy objectives
+
+ 16:20:56 <victorp> I do I do
+
+ 16:21:08 <dholbach> MagicFab, does that answer your question? Do you have any follow-up about it?
+
+ 16:21:10 <MagicFab> victorp, no, Canonical is citing legal concerns not to tackle the huge CyanogenMod / others community of hackers.
+
+ 16:21:35 <mfisch> barry: in /etc/lightdm/lightdm.conf you need to comment out this line to disable autologin: autologin-user=ubuntu
+
+ 16:21:35 <dholbach> if it's generally possible, we could add it as a TODO item or a FAQ item to the wiki
+
+ 16:21:42 <janimo> MagicFab, that was so that our installer does not contain clockworkmod and similar but it can still be flashed to the recovery partition
+
+ 16:21:51 <MagicFab> Not really, it's worse. It means to me it's up to "someone" in the community to take some legal risk that is not clear (implied in the Ask Ubuntu reply).
+
+ 16:21:56 <barry> mfisch: thanks!
+
+ 16:21:57 <victorp> MagicFab, we focused on a path that will allow us to distribute roms and to focus on the objective to trim the ubuntu desktop to be efficient on an arm device
+
+ 16:22:18 <mfisch> MagicFab: personally I dont think there's a legal risk to someone in the community doing it
+
+ 16:22:21 <barry> mfisch: btw, this seems to me to be a huge benefit of ubuntu on tablets as opposed to certain other proprietary platforms
+
+ 16:22:26 <dholbach> MagicFab, can you provide a link to the askubuntu question - maybe somebody can look into clarifying the answer
+
+ 16:22:30 <victorp> MagicFab,  If other people want to set up alternative installs, we are hoping all the raring packages are available soon
+
+ 16:22:32 <mfisch> MagicFab: I think the issue was that canonical cannot ship or support tools like CWM
+
+ 16:22:32 <MagicFab> victorp, I understand that.
+
+ 16:22:39 <achiang> MagicFab: if you want to write instructions on how to use CWM, cyanogen, nandroid, etc. i am sure we can help you get publicity for it
+
+ 16:22:39 <vanhoof> MagicFab: if you are familiary with CWM and nandroid (which it appears you are), its certainly do-able, but not something we're pursuing/endorsing in our installation method
+
+ 16:23:04 <MagicFab> mfisch, then why would you answer that? http://askubuntu.com/a/217146/4601
+
+ 16:23:04 <mfisch> dholbach: here is the U-A question: http://askubuntu.com/questions/216977/how-can-i-install-ubuntu-on-my-nexus-7-while-being-able-to-recover-from-an-nandr/217146#217146
+
+ 16:23:07 * MagicFab confused
+
+ 16:23:15 <ogra-cb> note that currently the bootloader handling (and thus kernel updating etc) is not very flexible
+
+ 16:23:38 <mfisch> MagicFab: Canonical, as a company, is not going to ship or support CWM, if the community wants to write up directions, that's fine
+
+ 16:23:39 <ogra-cb> so the installation is required to be exactly the way the ubuntu image sets it up
+
+ 16:23:48 <ogra-cb> even if you use CWM
+
+ 16:23:51 <MagicFab> vanhoof, to the extent I risk bricking my only, personal device, no, I am not willing to spend time on that.
+
+ 16:23:54 <mfisch> MagicFab: I upvoted your comment even
+
+ 16:24:46 <MagicFab> ogra-cb, vanhoof, ok, those bits are useful.
+
+ 16:25:04 <achiang> MagicFab: for the people that are able and willing to help now, we welcome their support. if you are not willing/able, we understand
+
+ 16:25:20 <ogra-cb> i'm happy to answer any implementation details in #ubuntu-arm at any time
+
+ 16:25:21 <achiang> we don't expect everyone to take on the risk
+
+ 16:25:48 <victorp> another question?
+
+ 16:25:52 <dholbach> <obounaim> Are there any plans to bring Ubuntu on other devices?
+
+ 16:26:09 <MagicFab> achiang, I know - it was just a surprise being used to *any* other alternative ROM brought to the Android community using the standard "flash this zip, don'tlike it, reflash /recover". Guess I'll wait.
+
+ 16:26:34 <achiang> no plans to bring Ubuntu to other devices. we picked a good reference platform and now we want everyone to rally around it
+
+ 16:26:41 <ogra-cb> MagicFab, point is that we are not targeting the android community
+
+ 16:26:54 <achiang> MagicFab: this is *not* another alternative ROM and this is Ubuntu, not android.
+
+ 16:27:01 <ogra-cb> but the ubuntu one
+
+ 16:27:07 <mfisch> obounaim: if you'd like to work on a port we'd all be happy to help though in #ubuntu-arm
+
+ 16:27:30 <MagicFab> ogra-cb, ok, that's not the tone of the blog posts, etc. I get it now.
+
+ 16:27:43 <ogra-cb> obounaim, some community people seem to work on chromebook support
+
+ 16:28:27 <MagicFab> achiang, of course :) But you're asking Android users to test on their device. I expected being able to get back to its current state. NP, I see how I confused this.
+
+ 16:28:42 <achiang> MagicFab: happy to discuss in #ubuntu-arm after this meeting. :)
+
+ 16:28:43 <ogra-cb> MagicFab, well, most if not all blog posts say that we want to make the platform fit for small devices ... and platform here means mostly the plumbing layer
+
+ 16:28:52 <achiang> let's move on
+
+ 16:28:53 <dholbach> The next question seems to be a pressing one. cjwatson, Riddell and victorp asked the same question in different forms: <victorp> I would also like to ask about when raring images will be available and how are we doing with triaging/assigning bugs
+
+ 16:29:00 <diwic> obounaim, this is assuming you're talking about tablets. We have a lot of x86 desktops and laptops certified and pre-installed :-) ubuntu.com/certification, and ogra-cb can fill in on other ARM projects
+
+ 16:29:00 <dholbach> <cjwatson> question: How far are we from being able to run straight raring? I'm running mostly raring now, but still have some bits from the PPA
+
+ 16:29:02 <MagicFab> mfisch, I am not paid for this. I am willing to test for free but my current involvement is more as a power-user/tester.
+
+ 16:29:07 <dholbach> <Riddell> question: what's the state of daily image builds?
+
+ 16:29:08 <ogra-cb> no focus on any desktop funtionality, endusers or android hackers atm
+
+ 16:29:15 <MagicFab> dholbach, all, tx.
+
+ 16:29:19 <dholbach> thanks MagicFab
+
+ 16:29:27 <kyleN_> back up anroid > install U fro n7 > test > reset android > restore
+
+ 16:29:34 <mfisch> dholbach et al: Raring is coming soon
+
+ 16:29:41 <achiang> so, currently we have a few outstanding issues
+
+ 16:29:42 <mfisch> we're blocked on a Nux problem currently
+
+ 16:29:51 <cjwatson> FWIW I pinned the PPA and upgraded rather than worrying about daily builds
+
+ 16:29:53 <achiang> the nux fix should land today
+
+ 16:29:59 <cwayne> mfisch: the old drop shadow one?
+
+ 16:30:11 <achiang> once the nux fix lands, it will be safe for people to dist-upgrade to raring
+
+ 16:30:13 <mfisch> cwayne: no, thats not a blocker
+
+ 16:30:14 <ogra-cb> Riddell, nonexistent until IS has set up a new builder machine for arm images
+
+ 16:30:16 <achiang> that is different from daily images
+
+ 16:30:24 <achiang> daily images are blocked on new hardware
+
+ 16:30:31 <cwayne> oh right, the transparency one, duh
+
+ 16:30:39 <cjwatson> Yeah, I know about the daily builds issue, since it affects all ARM images
+
+ 16:30:40 <dholbach> achiang, so apart from nux, everything in https://launchpad.net/~ubuntu-nexus7/+archive/ppa is in raring? do we have a bug number for the nux problem?
+
+ 16:30:41 <ogra-cb> cjohnston, might probablz help to addd something abotu that to the wiki
+
+ 16:30:50 <ogra-cb> err cjwatson
+
+ 16:30:57 <ogra-cb> silly tab completion
+
+ 16:31:07 <cjwatson> dholbach: Right, that's what I was getting at
+
+ 16:31:09 <mfisch> I think this is the nux bug: #1065638 Unity panels don't display visuals
+
+ 16:31:11 <ubottu> Launchpad bug 1065638 in ubuntu-nexus7 "Unity panels don't display visuals" [Critical,Confirmed] https://launchpad.net/bugs/1065638
+
+ 16:31:41 <ogra-cb> not everything, the settings arent yet (but will come soon)
+
+ 16:31:43 <cjwatson> There are definitely still packages in the PPA that are not in raring
+
+ 16:32:07 <ogra-cb> and i'm not sure jabout the brcm-patchram stuff
+
+ 16:32:15 <achiang> dholbach: but we do not need to push the PPA packages into raring. the next interim phase will be: 1) install from existing installer 2) dist-upgrade to raring
+
+ 16:32:17 <ogra-cb> as it is clearly the wrong approach for the distro
+
+ 16:32:18 <kyleN_> action for someone to push ppa pkgs to R?
+
+ 16:32:22 <mfisch> victorp: regarding bug triage, we've done an excellent job, I think, of getting stuff upstreamed and then diving back into some bugs to gather more info.  Some of the upstream bugs unfortunately are not getting much attention
+
+ 16:32:39 <achiang> the final phase will be to push all the PPA bits into raring, and then we'll have daily images
+
+ 16:32:40 <mfisch> victorp: specifically I'd love to have some unity help
+
+ 16:32:57 <victorp> mfisch, I see lots of bugs that are unassigned can we fix that?
+
+ 16:33:05 <victorp> like Ubuntu bugs
+
+ 16:33:12 <mfisch> victorp: but also something interesting is that say, 80-90% of our bugs are not specific to the N7
+
+ 16:33:51 <mfisch> victorp: I'd love to get people assigned, but how would I do that?  I'm not sure who could help (for example) with Unity bugs
+
+ 16:33:52 <dholbach> (Everyone who's interested and has more questions, please message me and I'll queue them up. Please don't be shy. :-))
+
+ 16:33:57 <vanhoof> ogra-cb: I'll take the patchram action
+
+ 16:34:16 <ogra-cb> vanhoof, that will likely need patches to bluez to be done right
+
+ 16:34:18 <vanhoof> ogra-cb: its been something that needs to be sorted out across the board
+
+ 16:34:20 <ogra-cb> or even the kernel
+
+ 16:34:42 <ogra-cb> iirc there are some patches that add kernel support for patchram already but not finished
+
+ 16:35:03 <cjwatson> achiang: one certainly can already do that, just with apt pinning
+
+ 16:35:03 <vanhoof> ogra-cb: theres been some preliminary work already which hit the kernel-team lists for quantal and precise a few weeks back
+
+ 16:35:06 <achiang> dholbach: summary is, we hope people can be on raring as soon as the nux fix lands. we will send out an announcement when it is safe to do so, hopefully early next week, say tuesday
+
+ 16:35:07 <vanhoof> ogra-cb: yup
+
+ 16:35:12 <ogra-cb> the current package rather follows a broken approach
+
+ 16:35:21 <dholbach> achiang, perfect
+
+ 16:35:22 <achiang> cjwatson: yeah, but not everyone is good at/competent with apt-pinning
+
+ 16:35:26 <mfisch> achiang: is the raring plan just to ask people to change sources and upgrade?
+
+ 16:35:35 <cjwatson> Yeah, just saying, it's a kind of stage 0
+
+ 16:35:41 <achiang> mfisch: yes, until we can produce dailies
+
+ 16:35:49 <dholbach> In terms of getting bugs looked at - would it help to also send a quick summary of blocker bugs to one of the mailing lists?
+
+ 16:35:58 <ogra-cb> i would say latest mid next week we should have dailies
+
+ 16:36:00 <cjwatson> $ cat /etc/apt/preferences.d/ubuntu-nexus7-ppa
+
+ 16:36:01 <cjwatson> Package: *
+
+ 16:36:01 <cjwatson> Pin: release o=LP-PPA-ubuntu-nexus7
+
+ 16:36:01 <cjwatson> Pin-Priority: 600
+
+ 16:36:02 <cjwatson> FWIW
+
+ 16:36:02 <achiang> cjwatson: can you post your pinning snippet? we could put it in the FAQ
+
+ 16:36:09 <achiang> psychic! :)
+
+ 16:36:26 <victorp> mfisch lets talk about that we need to find someone in desktop that can drive it
+
+ 16:36:34 <mfisch> victorp: great
+
+ 16:36:48 <ogra-cb> can someone take an action to put the pinning stuff above on the wiki for the brave ones
+
+ 16:37:00 <dholbach> can do
+
+ 16:37:07 <achiang> dholbach: i think we truly only have 1 blocker. but i would be happy to send a weekly "top X bugs" to ubuntu-devel or wherever is appropriate
+
+ 16:37:09 <mfisch> dholbach: sure, we could do that, right now the only major blocker besides nux is that stuck button1 issue.
+
+ 16:37:26 <mfisch> I'd love to do that actually if we think it will generate interest
+
+ 16:37:29 <dholbach> achiang, that'd be awesome
+
+ 16:37:40 <vanhoof> achiang: I can drive a report like that
+
+ 16:37:58 <achiang> ok, consider us signed up for it
+
+ 16:38:03 <dholbach> vanhoof, mfisch: maybe you'll find https://code.launchpad.net/~dholbach/+junk/nexus7-report interesting - it's something I quickly put together
+
+ 16:38:07 <dholbach> fantastic
+
+ 16:38:10 <vanhoof> preferences on where to send, ubuntu-devel@ work for everyone?
+
+ 16:38:18 <dholbach> yes, that should be good
+
+ 16:38:20 <achiang> also, someone from my team will also take the action to post the apt-pinning recipe
+
+ 16:38:48 <dholbach> achiang, I was going to do it, but I won't object ;-)
+
+ 16:38:49 * mfisch branches dholbach's code
+
+ 16:39:12 * achiang adds dholbach to my team, and considers the action taken care of ;)
+
+ 16:39:15 <dholbach> haha
+
+ 16:39:17 <dholbach> :-)
+
+ 16:39:18 <mfisch> so I'd like the report to be more than a buglist, and I claim that cwayne and I have the most knowledge of bug status
+
+ 16:39:20 <vanhoof> dholbach: thanks for the pointer
+
+ 16:39:30 <mfisch> list + some info/status/progress
+
+ 16:39:30 <cwayne> mfisch: +1
+
+ 16:39:34 <achiang> vanhoof: please work w/mfisch and cwayne on the report
+
+ 16:39:48 <vanhoof> +1
+
+ 16:40:00 <vanhoof> mfisch: cwayne: ill show you what I had in mind and we can go from there
+
+ 16:40:11 <kyleN_> ./report (per dholbach branch)
+
+ 16:40:17 <cwayne> vanhoof: +1
+
+ 16:40:29 <dholbach> Riddell, victorp, cjwatson: did your questions get sufficiently answered?
+
+ 16:40:44 <cjwatson> Yes
+
+ 16:40:50 <Riddell> yes
+
+ 16:41:09 <dholbach> shall we do a quick bug review after the questions?
+
+ 16:41:16 <victorp> yes
+
+ 16:41:18 <dholbach> cool
+
+ 16:41:20 <dholbach> so I have one question from jcastro_ - he wanted to know if we're moving the FAQ to Ask Ubuntu
+
+ 16:41:20 <kyleN_> dholbach, report output: http://paste.ubuntu.com/1363002/
+
+ 16:41:37 <dholbach> (If any of you have more questions, please message me. The queue is empty right now.)
+
+ 16:41:55 <dholbach> cwayne, you might know about the AskUbuntu FAQ situation
+
+ 16:42:36 <cwayne> dholbach: jcastro_: I'd like to eventually move it over.  Some of the questions may need to be combined or added to..
+
+ 16:42:54 <cwayne> jcastro_: Can I ask a question and answer it myself?  How can I get it pinned to the FAQ tab?
+
+ 16:43:29 <kyleN_> cwayne, for now, maybe add intro to wiki FAQ saying from now on use ask ubuntu (and how)
+
+ 16:43:47 <cwayne> kyleN_: well theres nowehere else to ask questions anyway :P
+
+ 16:44:02 <cwayne> all of the ?'s in the FAQ were from that one session
+
+ 16:44:22 <achiang> dholbach: jcastro_: yes, as soon as we clean up the FAQ we will definitely move it to AskUbuntu. at the moment, we're just trying to unbury ourselves from incoming bugs
+
+ 16:44:29 <achiang> so that would be a good place for folks to help
+
+ 16:44:42 <dholbach> This seems to be all the questions we had - you can of course all ask more questions and get in touch with the team in #ubuntu-arm and get involved there. :-)
+
+ 16:44:59 <achiang> help us get the incoming bugs linked against the proper upstreams (as many of them are not specific to the nexus7 at all) would be a huge help
+
+ 16:45:08 <mfisch> One of the more time consuming parts of looking at our bugs is trying the issues on other devices and looking at upstream
+
+ 16:45:14 <mfisch> and then duping back
+
+ 16:45:22 <dholbach> This nicely leads us to our next topic... :)
+
+ 16:45:24 <dholbach> #topic Bug review: https://bugs.launchpad.net/ubuntu-nexus7
+
+ 16:45:37 <achiang> if you see an new bug, e.g., you could try to reproduce on your x86 laptop
+
+ 16:45:43 <jcastro_> cwayne: you can absolutely ask and answer your own, the FAQ part is autogenerated based on votes/traffic, and people linking to it
+
+ 16:45:52 <achiang> in many cases, you will see the same issue
+
+ 16:46:06 <cwayne> jcastro_: but I can't trick it to ensure it goes in FAQ?
+
+ 16:46:18 <cwayne> well i guess if it doesn't get traffic, it's not really frequently asked is it :P
+
+ 16:46:25 <jcastro_> right
+
+ 16:46:41 * cwayne takes an action to begin the transfer to AU today
+
+ 16:46:44 <jcastro_> cwayne: if everyone on the team votes on stuff accordingly it'll work itself out
+
+ 16:46:48 <mfisch> another triage note: If you find a N7 bug that has an older duplicate in another project, please dupe the new bug, then go to the older bug and mark as affecting N7.  Or just find me, achiang, and cwayne and we can help
+
+ 16:46:53 <dholbach> awesome
+
+ 16:46:54 <dholbach> victorp, you wanted to talk some more about bugs?
+
+ 16:47:10 <victorp> dholbach, nope I am fine
+
+ 16:47:29 <victorp> mfisch answered my question
+
+ 16:47:34 <cwayne> if anyone is planning on logging bugs, this may help explain what we're looking for: http://chrismwayne.com/?p=94
+
+ 16:47:41 <cwayne> </shamelessplug>
+
+ 16:47:53 <dholbach> oh, I thought somebody wanted to do a review of the open bugs, blockers, status of assigned bugs and so on?
+
+ 16:47:58 <mfisch> dholbach: I have a topic real quick
+
+ 16:48:03 <dholbach> sure
+
+ 16:48:06 <victorp> cwayne, that would be good to be *the wiki*
+
+ 16:48:10 <kyleN_> cwayne, put on wiki
+
+ 16:48:20 <mfisch> can achiang or janimo explain the plan for migrating to an official Ubuntu kernel config?
+
+ 16:48:31 <mfisch> figure some people would like to know
+
+ 16:48:37 <janimo> mfisch, kernel team will do it :)
+
+ 16:48:49 <cwayne> victorp: sure
+
+ 16:48:55 <janimo> the kernel is now maintained by the ubuntu kernel team
+
+ 16:48:56 <mfisch> janimo: just the config or will the Ubuntu specific patches also be merged?
+
+ 16:49:05 <janimo> mfisch, hopefully everything
+
+ 16:49:19 <janimo> as long as they can be applied to 3.1 I guess
+
+ 16:49:19 <mfisch> janimo: great, that should close out a bunch of bugs when it happens
+
+ 16:49:23 <ogra-cb> well, not everything :)
+
+ 16:49:38 <ogra-cb> we surely dont want all options an ubuntu kernel has by default
+
+ 16:49:47 <mfisch> janimo: any ideas when this will happen?
+
+ 16:49:55 * ogra-cb doesnt care much about hardware raid controllers on his nexus
+
+ 16:49:55 <mfisch> ogra-cb: but we do want more modules enabled
+
+ 16:50:04 <achiang> mfisch: can you take us through a list of the most pressing bugs this week?
+
+ 16:50:09 <ogra-cb> we want everything enabled you can attach
+
+ 16:50:14 <achiang> and we can see if we need help anywhere
+
+ 16:50:16 <janimo> mfisch, no, but it is on the kernel team's (which I am not part of) agenda
+
+ 16:50:22 <ogra-cb> whcih largely means USB and BT
+
+ 16:50:25 <mfisch> janimo: thanks
+
+ 16:50:26 <mfisch> achiang: sure
+
+ 16:50:29 <vanhoof> mfisch: that is being worked out atm as we prepare for R
+
+ 16:50:44 <mfisch> dholbach: I'll go over the top most pressing bugs
+
+ 16:50:50 <dholbach> thanks
+
+ 16:50:54 <vanhoof> mfisch: as things progress, we can report back status here or in the wiki
+
+ 16:51:06 <mfisch> vanhoof: great
+
+ 16:51:16 <mfisch> So the top bug is the Nux issue: #1065638 Unity panels don't display visuals
+
+ 16:51:28 <mfisch> we have a patch for Q in our PPA
+
+ 16:51:38 <mfisch> and apparently a fix in R is landing soon
+
+ 16:51:46 <achiang> i poked jay taoko today, and he says he's preparing a branch for landing "today"
+
+ 16:52:01 <mfisch> great
+
+ 16:52:16 <ogra-cb> what about the button 1 thing ?
+
+ 16:52:23 <mfisch> the next bug is the bug where the input gets stuck, as if the left button mouse is pressed: #1068994 button1 gets stuck after a while
+
+ 16:52:26 * ogra-cb would actually see that as more important
+
+ 16:52:35 <mfisch> we have no fix for this in Q or R currently
+
+ 16:52:49 <dholbach> 1068994	dandrader      	button1 gets stuck after a while
+
+ 16:52:58 <achiang> there is a developer working on it, but X is ... huge and hard to debug
+
+ 16:53:04 <mfisch> achiang: any updates on this?  I know it's being worked but that's all
+
+ 16:53:07 <mfisch> ok
+
+ 16:53:16 <achiang> i will poke dandrader on this one
+
+ 16:53:19 <dholbach> http://paste.ubuntu.com/1363002/ has a list of currently assigned bugs
+
+ 16:53:25 <dholbach> (in the ubuntu-nexus7 project)
+
+ 16:53:55 <mfisch> past those 2 bugs, we're in opinion territory for next most critical, but I'm going with this one: #1068804 sound only works after suspend/resume cycle
+
+ 16:54:13 <ogra-cb> rotation !
+
+ 16:54:21 * achiang owns an action to escalate to nvidia on the sound bug, will do today
+
+ 16:54:22 <mfisch> diwic did a lot of work on this, but at this point we're asking nVidia for help
+
+ 16:54:29 <janimo> ogra-cb, that's a missing feature not a bug :)
+
+ 16:54:36 <mfisch> ogra-cb: I'm smart enough to not rotate my device ;)
+
+ 16:54:44 <ogra-cb> JanC, the feature is there but its buggy :P
+
+ 16:54:49 <ogra-cb> bah
+
+ 16:54:57 <ogra-cb> janimo, ^^
+
+ 16:55:04 <mfisch> so as ogra-cb says we have several rotation bugs
+
+ 16:55:32 <mfisch> rotation causes screen corruption
+
+ 16:55:37 <mfisch> sometimes doesn't rotate input
+
+ 16:55:51 <cwayne> doesn't auto-rotate
+
+ 16:55:54 <kyleN_> (chrome doesn't rotate on Android JB)
+
+ 16:55:55 <mfisch> and the device doesn't autorotate when you physically move it
+
+ 16:56:30 <janimo> kyleN_, it does for me
+
+ 16:56:32 <mfisch> is bryceh working on those?
+
+ 16:56:52 <vanhoof> mfisch: do we have a plan on looking into the accelerometer that you know of?
+
+ 16:56:54 <achiang> i bet bryceh is playing video games 16 hours a day right now ;)
+
+ 16:56:56 <mfisch> I believe actually that none of them are being worked
+
+ 16:57:04 <janimo> vanhoof, yes it's on my plate
+
+ 16:57:07 <ogra-cb> achiang, hopefully
+
+ 16:57:08 <mfisch> vanhoof: I think janimo was going to
+
+ 16:57:28 <vanhoof> janimo: ah ok, please also give ming a ping, he has some background there
+
+ 16:57:36 <janimo> vanhoof, sure
+
+ 16:57:40 <mfisch> ogra-cb: has a good point, these bugs as a whole are likely in the top 5, so we need to get someone assigned
+
+ 16:57:44 <vanhoof> janimo: and a device :)
+
+ 16:57:54 <janimo> lol
+
+ 16:58:08 <mfisch> oh, and about kernel bugs
+
+ 16:58:25 <mfisch> we're not releasing any new Q kernels, so all the kernel fixes in progress will show up when we move to R
+
+ 16:58:33 <janimo> there is a package in raring now, we can just file bugs on it now
+
+ 16:58:44 <janimo> called linux-nexus7
+
+ 16:59:05 <mfisch> any other bugs that people would consider top bugs?
+
+ 16:59:13 <janimo> was the nautilus navigation is broken bug mentioned?
+
+ 16:59:21 <janimo> double tap not working in nautilus
+
+ 16:59:28 <mfisch> that's a good one
+
+ 16:59:34 <bdmurray> Is there an apport package hook for linux-nexus7?
+
+ 16:59:40 * ogra-cb thinks that falls under input bugs rather than nautilus
+
+ 16:59:48 <mfisch> nautilus double tap is broken, and single tap sometimes doesn't work either
+
+ 16:59:53 <dholbach> alright, we have only a bit of time left - anything else important we should be covering before we adjourn and move over to #ubuntu-arm?
+
+ 16:59:55 <janimo> ogra-cb, no, it works fine in thunar
+
+ 17:00:04 <mfisch> bdmurray: an apport hook is on our todo list
+
+ 17:00:04 <ogra-cb> bdmurray, kernel team maintains it, i woud expect so
+
+ 17:00:07 <janimo> and also in the mouse settings window
+
+ 17:00:11 <ogra-cb> janimo, oh
+
+ 17:00:42 <dholbach> Thanks a lot everyone for turning up. This was a great first meeting. If you have more questions, please head over to #ubuntu-arm - you've seen the team here, they're all nice chaps - they'll help you get started. :-)
+
+ 17:00:45 <kyleN_> ( janimo: you are correct. C rotation was locked in top panel for me )
+
+ 17:00:47 <cwayne> just a heads up -- to make debugging/benchmarking easier, i've created a couple metapackages that have been uploaded to universe for R
+
+ 17:00:48 <dholbach> And there's always https://wiki.ubuntu.com/Nexus7
+
+ 17:01:03 <mfisch> we can do follow-ups in #ubuntu-arm also
+
+ 17:01:12 <dholbach> cwayne, maybe we could include news like that in kind of a weekly report? I'd be happy to help getting it together and out there
+
+ 17:01:19 <cwayne> ubuntu-benchmarking-tools, and ubuntu-remote-debug-host-tools
+
+ 17:01:21 <cwayne> dholbach: sure
+
+ 17:01:32 <dholbach> Thanks a lot everyone. Great work! :)
+
+ 17:01:39 * vanhoof waves
+
+ 17:01:39 <achiang> cwayne: let's roll those up into our weekly status report which is due today. ;)
+
+ 17:01:53 <dholbach> sweet
+
+ 17:01:54 <ogra-cb> thanks dholbach !
+
+ 17:01:55 <kyleN_> aloha
+
+ 17:02:01 <ssweeny> thanks dholbach!
+
+ 17:02:01 <vanhoof> thanks dholbach
+
+ 17:02:05 <dholbach> thank you guys, you all did the hard work! :)
+
+ 17:02:09 <dholbach> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

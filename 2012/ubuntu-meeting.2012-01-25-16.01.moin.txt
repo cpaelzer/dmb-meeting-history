@@ -1,0 +1,523 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 16:01:38 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-01-25-16.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Alpha 2
+''LINK:'' https://bugs.launchpad.net/ubuntu/+bugs?field.milestone%3Alist=44326   (cjwatson, 16:11:09)
+
+ *Lightning round
+
+ *Alpha 2
+
+ *Patch pilot stints
+
+ *AOB
+
+
+
+Meeting ended at 16:36:17 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (76)
+ * ev (52)
+ * stgraber (35)
+ * ubottu (17)
+ * bdmurray (14)
+ * doko (13)
+ * jodh (8)
+ * mvo (8)
+ * meetingology (3)
+ * slangasek (2)
+ * barry (2)
+
+
+
+== Full Log ==
+
+
+ 16:01:38 <cjwatson> #startmeeting
+
+ 16:01:38 <meetingology> Meeting started Wed Jan 25 16:01:38 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:01:38 <meetingology> 
+
+ 16:01:38 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:48 <cjwatson> #topic Lightning round
+
+ 16:01:49 <cjwatson> $ echo $(shuf -e cjwatson barry doko stgraber jodh ev bdmurray slangasek)
+
+ 16:01:52 <cjwatson> stgraber slangasek barry bdmurray cjwatson doko ev jodh
+
+ 16:01:58 * stgraber waves
+
+ 16:02:08 <stgraber> - Testing tracker
+
+ 16:02:08 <stgraber> - Helped bdmurray put in production the updated lp-integration script for the ISO tracker
+
+ 16:02:11 <stgraber> - Networking
+
+ 16:02:14 <stgraber> - Uploaded the SRU for bug 876829
+
+ 16:02:16 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Fix committed] https://launchpad.net/bugs/876829
+
+ 16:02:16 <stgraber> - Uploaded new ifupdown with some more label fixes and NetworkManager integration fix to Precise
+
+ 16:02:20 <stgraber> - Updated vlan and bridge-utils to better deal with ifupdown checking their return code
+
+ 16:02:23 <stgraber> - Found and fixed another race condition in ifenslave-2.6 (/sys/class/net/bonding_masters only appear 0.5s after the kernel module is loaded)
+
+ 16:02:26 <stgraber> - Got to test some configs from comments on my blog that were even weirder than my weirdest one, so far everything works!
+
+ 16:02:29 <stgraber> - Uploaded SRU for vlan, bridge-utils and ifenslave-2.6 to Oneiric
+
+ 16:02:31 <stgraber> - Reviewed dhclient-script for resolvconf integration. Current resolvconf dhclient hook overrides the functions from dhclient-script, a bit ugly but it works.
+
+ 16:02:34 <stgraber> - Filed MIR for resolvconf and poked server team to run some tests before we turn it on for everyone. (bug 921135)
+
+ 16:02:36 <ubottu> Launchpad bug 921135 in resolvconf (Ubuntu) "[MIR] resolvconf" [Undecided,New] https://launchpad.net/bugs/921135
+
+ 16:02:37 <stgraber> - ARB
+
+ 16:02:40 <stgraber> - Finished packaging, reviewing and uploading unity-lens-sshsearch to extras.u.c
+
+ 16:02:43 <stgraber> - Some more discussion on what should be moved to the commercial process and how to deal with the backlog
+
+ 16:02:46 <stgraber> - Friendly Recovery
+
+ 16:02:48 <stgraber> - Started working on the upstart job, starting setvtrgb, mounting /run and starting udev
+
+ 16:02:52 <stgraber> - TPM
+
+ 16:02:54 <stgraber> - Tested the new opencryptoki, trousers and tpm-tools from my PPA, no luck so far, will need to test with Natty again.
+
+ 16:02:57 <stgraber> - Will do a TPM reset and some more tests next time I have to reboot my laptop (I used to say next time it crashes, but that didn't happen yet in Precise)
+
+ 16:03:01 <stgraber> - Other
+
+ 16:03:03 <stgraber> - Created rfkill-store/rfkill-restore jobs to save the RF kill switch soft state across reboots.
+
+ 16:03:06 <stgraber> - Rebased Edubuntu's LTSP ubiquity plugin on what we did last cycle with ltsp-live.
+
+ 16:03:10 <stgraber> - Tried to port edubuntu-artwork to gsettings only to notice Ubuntu still ships some default gconf settings, so ended up having edubuntu-artwork ship both gsettings and gconf...
+
+ 16:03:13 <stgraber> - Fixed handling of /etc/lightdm/unity-greeter.conf in edubuntu-artwork which is a conffile that was being altered by edubuntu-artwork (bad!), moved to using dpkg-divert + symlink to another conffile (ugly but works)
+
+ 16:03:18 <stgraber> - TODO
+
+ 16:03:20 <stgraber> - Some more bugfixes for the ISO tracker and trying to get the user subscription page back for alpha-2
+
+ 16:03:24 <stgraber> - Continue working on network SRUs, friendly-recovery and TPM
+
+ 16:04:12 <stgraber> (done)
+
+ 16:04:32 <slangasek> sorry, count me out - heading off to have a lie-down
+
+ 16:04:41 <barry> feedparser 5.1 for python 3 uploaded & submitted to debian; python-defer sync'd from debian for py 3 support; python-keyring for py3. wrote blog on debian packaging for py2/py3. some work on flufl.* package for DM application and learning more about dual py2/py3 support. helped ubuntuone folks with some weird dbus-python issues.  pyqt for python 3 reviewed and (almost) uploaded (a few linitian warnings need fixing).  reviewed packaging
+
+ 16:04:41 <barry> branch for multitouch team. did an interview and filled out travel expenses. dbus-python 1.0.0 released upstream and into debian - has py3 support!  will look at sync'ing to ubuntu.  done.
+
+ 16:04:45 <cjwatson> slangasek: GWS
+
+ 16:04:50 <slangasek> thx
+
+ 16:05:36 <bdmurray> bug triage of iso-testing bug reports
+
+ 16:05:36 <bdmurray> bug triage of ubuntu-installer bug reports
+
+ 16:05:38 <bdmurray> updated update-manager apport hook to not double gzip attachments
+
+ 16:05:47 <bdmurray> bug bot modification to deal with corrupted packages where dpkgterminallog is in the bug description
+
+ 16:05:50 <bdmurray> fixed bug gravity in python-launchpad-lib toolkit
+
+ 16:05:53 <bdmurray> added package bugs gravity code to ubuntu-reports
+
+ 16:05:55 <bdmurray> worked with jsalisbury regarding writing bug patterns
+
+ 16:06:01 <bdmurray> with stgraber improvements to ubuntu-qa-website's lp integration so that bugs are commented on
+
+ 16:06:04 <bdmurray> team-recent-bug-packages-json.py imporvements to collect apport- tagged bug counts
+
+ 16:06:07 <bdmurray> team-recent-bug-packages graphing work to display apport- counts of bugs
+
+ 16:06:08 <bdmurray> ⌁
+
+ 16:06:11 <bdmurray> investigation into initramfs-tools install script errors and persistent media
+
+ 16:06:14 <bdmurray> call with qa team regarding reports web page
+
+ 16:06:38 <cjwatson> Fixed gnome-games and libwmf upgrade bugs.
+
+ 16:06:39 <cjwatson> Tried to learn how to track down upgrade failures from Jenkins, not to very much avail so far.
+
+ 16:06:42 <cjwatson> Fixed ResourceWarning from lsb_release with Python 3.2.
+
+ 16:06:46 <cjwatson> grub2 SRU for lucid (bug 563895, bug 623609).
+
+ 16:06:47 <cjwatson> partman-iscsi/kickseed SRUs for lucid/maverick/natty (bug 810068).
+
+ 16:06:48 <ubottu> Launchpad bug 563895 in grub2 (Ubuntu Lucid) "grub2 fails to boot or install when an LVM snapshot exists" [High,Fix committed] https://launchpad.net/bugs/563895
+
+ 16:06:49 <cjwatson> Switched Ubuntu Studio to a live DVD.
+
+ 16:06:49 <ubottu> Launchpad bug 623609 in grub2 (Ubuntu Lucid) "grub-pc needs some help in uec instances" [Medium,Fix committed] https://launchpad.net/bugs/623609
+
+ 16:06:51 <ubottu> Launchpad bug 810068 in partman-iscsi (Ubuntu Natty) "kickstart iscsi option broken" [High,In progress] https://launchpad.net/bugs/810068
+
+ 16:06:52 <cjwatson> Finished python-debian port to Python 3.  Pending upstream review.
+
+ 16:06:54 <cjwatson> Removed lots of packages that had been removed from Debian.  A few uploads/syncs to get other packages in line with that.
+
+ 16:06:57 <cjwatson> Merged debhelper, to ensure that Build-Depends: debhelper (>= 9) will work in precise.
+
+ 16:07:00 <cjwatson> Fixed almost all of the ocamlopt stack on armhf.  Many fewer build failures now.  A few packages starting from coq are still broken.
+
+ 16:07:03 <cjwatson> Fixed xcp-storage-managers for Python 2.7.
+
+ 16:07:06 <cjwatson> Switched gnutls-bin and gnutls-doc back to being built from gnutls26 rather than gnutls28.
+
+ 16:07:09 <cjwatson> Fixed libgtkdatabox, kluppe, and vcdimager build failure.  Various syncs for other failures.
+
+ 16:07:12 <cjwatson> ..
+
+ 16:08:14 <cjwatson> doko:
+
+ 16:09:26 <cjwatson> ev: I guess doko isn't around?  go ahead
+
+ 16:09:35 <ev> - Prepared and uploaded Whoopsie 0.1.3 to precise. Followed up on the MIR bug,
+
+ 16:09:35 <ev> explaining that Whoopsie is now ready for the security review.
+
+ 16:09:35 <ev> - Setting up a Windows 7 VM with the Chromium Embedded Framework, so that we
+
+ 16:09:35 <ev> can build something for the agency to test the new slideshow work with.
+
+ 16:09:36 <ev> - Meeting with Christian to discuss the slideshow plans.
+
+ 16:09:36 <ev> - We'll instruct the agency to keep the slideshow under 1 MB.
+
+ 16:09:36 <ev> - Christian will look into seeing just how many of the Ubuntu fonts we need,
+
+ 16:09:37 <ev> and then we'll make a determination if we have room to embed them in Wubi.
+
+ 16:09:43 <ev> - I've provided Christian with a means to test the slideshow on Ubuntu
+
+ 16:09:44 <ev> (WebKitGtk sample browser), and Windows (Chromium Embedded Framework
+
+ 16:09:44 <ev> sample browser).
+
+ 16:09:45 <ev> - I will look at the WebKitGtk DOM API, to see what our best option is for
+
+ 16:09:45 <ev> bidirectional communication with the view.
+
+ 16:09:56 <ev> - Write the system UUID to the UserOOPS ColumnFamily.
+
+ 16:09:56 <ev> - Meeting with James to further discuss what hardware we need and its
+
+ 16:09:57 <ev> configuration. He's committed to a week for the initial deployment.
+
+ 16:09:57 <ev> - James pointed out that we don't need the CAP_FOWNER stuff (ignoring +t on
+
+ 16:09:57 <ev> just /var/crash), if we simply keep track of the crashes we've processed
+
+ 16:09:58 <ev> with a .uploaded file. Changed the code to do just this.
+
+ 16:10:08 <ev> - Get rid of the intermediary processing step to figure out which architecture
+
+ 16:10:09 <ev> queue to put a core dump on by having the client pass it as a parameter
+
+ 16:10:09 <ev> instead.
+
+ 16:10:09 <ev> - Investigation around wiring StacktraceAddressSignature into all of this.
+
+ 16:10:17 <ev> - Mail to Martin and Matthew about reviewing the proposed UI changes to
+
+ 16:10:18 <ev> apport, as well as an overview of the process around submitting a new crash
+
+ 16:10:18 <ev> and core dump.
+
+ 16:10:18 <ev> - Fighting apport-retrace, only to find out via pitti that I was working on a
+
+ 16:10:19 <ev> crash report without a Package field and out of date enough to fail
+
+ 16:10:19 <ev> retracing.
+
+ 16:10:25 <ev> - Work on tying together the remaining retracing pieces.
+
+ 16:10:25 <ev> - Started work on defining a schema for the relationship between
+
+ 16:10:25 <ev> StackAddressSignatures, stack traces and their hashes, and the bucketing
+
+ 16:10:26 <ev> system that will eventually come into play.
+
+ 16:10:30 <ev> - Research into bidirectional communication with a WebKit view, in support of
+
+ 16:10:31 <ev> the new installer slideshow.  Sending things through the title element is
+
+ 16:10:31 <ev> still sadly the only game in town, even in WebKit 1.7/1.8.
+
+ 16:10:32 <ev> - Created a small sample application demonstrating this to Christian.
+
+ 16:10:33 <ev> (done)
+
+ 16:10:45 <jodh> Finished fix for bug 912558, which required additional work to handle
+
+ 16:10:45 <jodh> respawn jobs. Extensively tested. Finished first part of script to
+
+ 16:10:45 <jodh> auto-gen test confs but this can't be run (yet) due to the sheer number
+
+ 16:10:45 <jodh> of jobs it's creating (~4,200). Lots of #upstart interaction this week.
+
+ 16:10:45 <jodh> Currently investigating an odd behavioural issue with
+
+ 16:10:46 <ubottu> Launchpad bug 912558 in upstart (Ubuntu Precise) "log.c Assert failed - err=>number == EIO" [High,Confirmed] https://launchpad.net/bugs/912558
+
+ 16:10:47 <jodh> getty/Upstart/cttys with cjwatson which we need to understand wrt
+
+ 16:10:50 <jodh> the Upstart logger semantics.
+
+ 16:10:52 <jodh> ♉
+
+ 16:11:02 <cjwatson> #topic Alpha 2
+
+ 16:11:09 <cjwatson> https://bugs.launchpad.net/ubuntu/+bugs?field.milestone%3Alist=44326
+
+ 16:11:12 <doko> sorry, was still installing G+
+
+ 16:11:15 <cjwatson> ah
+
+ 16:11:21 <cjwatson> #topic Lightning round
+
+ 16:11:22 <cjwatson> doko: go ahead
+
+ 16:11:27 <doko> - didn't do much which I wanted to do this week ...
+
+ 16:11:27 <doko> - gcc-4.7 packaging updates (libstdc++ split) in preparation for the 4.7 test rebuild
+
+ 16:11:27 <doko> - gdb-7.4 release
+
+ 16:11:27 <doko> - binutils upload, ARM backport from trunk
+
+ 16:11:27 <doko> - gcc-4.6 update and Linaro merge
+
+ 16:11:28 <doko> - openjdk-6 update in preparation of the icedtea-1.11 release, still some packaging things to do
+
+ 16:11:30 <doko> - push some gcc patches upstream
+
+ 16:11:32 <doko> - interviews
+
+ 16:11:34 <doko> - eglibc-2.15 updates, available in the ubuntu-toolchain-r/glibc ppa
+
+ 16:11:36 <doko> done
+
+ 16:11:38 <cjwatson> you and me both :-/
+
+ 16:11:44 <cjwatson> #topic Alpha 2
+
+ 16:12:10 <cjwatson> I'd like to quickly go over the milestoned bugs that are/should be assigned to us and make sure they're on track
+
+ 16:12:16 <cjwatson> or if they should be deferred
+
+ 16:12:37 <cjwatson> bug 850264 is now in Debian experimental and I'm told it's making progress
+
+ 16:12:39 <ubottu> Launchpad bug 850264 in apt (Ubuntu Precise) "given a foreign architecture of i386 on amd64 machine, and an outdated libc, apt tries to remove libc-bin" [High,Fix committed] https://launchpad.net/bugs/850264
+
+ 16:12:46 <cjwatson> bug 869239 - anyone?
+
+ 16:12:47 <ubottu> Launchpad bug 869239 in ubiquity (Ubuntu Precise) "webcam screen should be resized for netbooks (Eee PC, 10")" [High,Triaged] https://launchpad.net/bugs/869239
+
+ 16:12:57 <cjwatson> escalation from vmware
+
+ 16:13:45 <cjwatson> I can probably take it if nobody else does
+
+ 16:13:47 <stgraber> cjwatson: I can have a look, when do we want that one fixed? (unlikely to find the time before alpha-2)
+
+ 16:14:04 <ev> vmware? That's an odd request for them to make.
+
+ 16:14:07 <cjwatson> alpha-2, I think - I'll take care of it and swap you for something else :)
+
+ 16:14:16 <cjwatson> ev: so says the bug
+
+ 16:14:23 <stgraber> cjwatson: ok :)
+
+ 16:14:27 <cjwatson> ev: apparently the default vmware screen size is 800x600
+
+ 16:14:53 <cjwatson> bug 874727 - assigned to bdmurray?
+
+ 16:14:54 <ev> ah, interesting
+
+ 16:14:55 <ubottu> Launchpad bug 874727 in apport (Ubuntu Precise) "media error bug report blocking is incomplete" [High,Triaged] https://launchpad.net/bugs/874727
+
+ 16:15:00 <stgraber> do we support the 800 part of that resolution? I seem to remember the minimum for Ubuntu being 1024x600 (netbook resolution)
+
+ 16:15:21 <ev> yeah, fitting in 800x600 is going to be really trickty
+
+ 16:15:23 <cjwatson> apparently the webcam screen is the first bit that goes wrong so we'll see
+
+ 16:15:24 <ev> tricky even
+
+ 16:15:29 <cjwatson> (one moment, being called away)
+
+ 16:15:29 <bdmurray> cjwatson: I'll look at or update it appropriately
+
+ 16:16:38 <cjwatson> bug 879434 - does this mir need to be resolved for a2?
+
+ 16:16:40 <ubottu> Launchpad bug 879434 in liboggz (Ubuntu Precise) "[MIR] mutagen introduces b-d's on faad2 and liboggz" [High,Incomplete] https://launchpad.net/bugs/879434
+
+ 16:17:30 <cjwatson> bug 905754 - ev, have you had any chance to look at the mail I sent about this before Christmas?
+
+ 16:17:31 <ubottu> Launchpad bug 905754 in ubiquity (Ubuntu Precise) "Israel is not on the installer map" [High,Triaged] https://launchpad.net/bugs/905754
+
+ 16:17:39 <cjwatson> I'm stalled on it at this point
+
+ 16:18:01 <ev> ah, not in depth
+
+ 16:18:18 <ev> apols, I came back and panicked over getting caught up on the crash db work
+
+ 16:18:19 <ev> looking now
+
+ 16:18:27 <cjwatson> bug 907113 - doko, is it urgent to remove libjpeg8 source for a2 or is it just "let's not forget"?
+
+ 16:18:29 <ubottu> Launchpad bug 907113 in libjpeg8 (Ubuntu) "MIR for libjpeg-turbo" [High,Triaged] https://launchpad.net/bugs/907113
+
+ 16:18:39 <doko> the latter
+
+ 16:18:50 <doko> yeah, I'll take care of that
+
+ 16:18:53 <cjwatson> ok
+
+ 16:18:56 <cjwatson> bug 912558 I know is in progress
+
+ 16:18:58 <ubottu> Launchpad bug 912558 in upstart (Ubuntu Precise) "log.c Assert failed - err=>number == EIO" [High,Confirmed] https://launchpad.net/bugs/912558
+
+ 16:19:04 <ev> it's supposed to cycle through on multiple clicks
+
+ 16:19:18 <ev> but perhaps we should widen the area that's considered a second click
+
+ 16:19:28 <cjwatson> ev: I couldn't make it do that at all
+
+ 16:19:28 <ev> and provide some visual indication that this is possible
+
+ 16:19:45 <cjwatson> even holding the mouse absolutely stationary
+
+ 16:19:54 <cjwatson> (possible with a trackpad)
+
+ 16:20:32 <cjwatson> bug 912563 not really in progress but I have the baton on that for the moment
+
+ 16:20:33 <ubottu> Launchpad bug 912563 in ubiquity (Ubuntu Precise) "ubiquity crashed with TypeError in partman_column_format: argument of type 'NoneType' is not iterable" [High,Confirmed] https://launchpad.net/bugs/912563
+
+ 16:20:39 <ev> maybe that got dropped with the timezone code moving from python to C
+
+ 16:20:45 * ev digs
+
+ 16:20:55 <cjwatson> bug 813837 - stgraber, that's you with your community hat on, right?
+
+ 16:20:57 <ubottu> Launchpad bug 813837 in ltsp (Ubuntu Precise) "ltsp client not able to load boot file: ltsp/amd64.tmp/pxelinux.0" [Medium,Triaged] https://launchpad.net/bugs/813837
+
+ 16:21:34 <stgraber> cjwatson: that's me. Not sure with which hat on as that's only happening when installing from Ubuntu Alternate, we don't use the udeb for Edubuntu
+
+ 16:21:40 <cjwatson> oh
+
+ 16:21:58 <cjwatson> bug 861048 is mine, I think shouldn't be too hard at least as far as I've diagnosed so far
+
+ 16:22:00 <ubottu> Launchpad bug 861048 in grub2 (Ubuntu Precise) "have really quick '_' on boot before first purple screen" [Medium,Triaged] https://launchpad.net/bugs/861048
+
+ 16:22:30 <cjwatson> bug 871726 - stgraber, you reported this so can clearly reproduce it, I don't suppose you might be able to fix it too? :)
+
+ 16:22:32 <ubottu> Launchpad bug 871726 in ubiquity (Ubuntu Precise) "ibus doesn't work from ubiquity-dm" [Medium,Triaged] https://launchpad.net/bugs/871726
+
+ 16:23:35 <cjwatson> and I think that's mostly it for our team, although there are a couple of aptitude bugs in there that it'd be good if somebody could look over
+
+ 16:23:42 <stgraber> cjwatson: I can certainly find a fix for it, feel free to assign it to me
+
+ 16:24:09 <cjwatson> done, thanks
+
+ 16:24:41 <cjwatson> #topic Patch pilot stints
+
+ 16:24:57 <ev> cjwatson: theory confirmed; the multiple clicks stuff wasn't copied to C
+
+ 16:24:58 <cjwatson> dholbach asked that people be reminded about doing their patch pilot stints - if you don't know when yours is, ask m
+
+ 16:25:02 <ev> I'll follow up on the bug
+
+ 16:25:03 <cjwatson> me
+
+ 16:25:06 <cjwatson> ev: *nod*, thanks
+
+ 16:25:20 <cjwatson> #topic AOB
+
+ 16:28:23 <cjwatson> sorry, bounciness ...
+
+ 16:28:28 <cjwatson> 16:25 <cjwatson> ev: *nod*, thanks
+
+ 16:28:30 <cjwatson> 16:25 <cjwatson> #topic AOB
+
+ 16:28:33 <cjwatson> 16:26 <cjwatson> Rick has asked us to pay more attention to upgrade failures, now that that's one of the major things failing in Jenkins; I'm currently trying to get a reliable way to reproduce them locally, but
+
+ 16:28:37 <cjwatson> I may ask for people to help with this at some point as it's probably more than one person's worth of work
+
+ 16:29:10 <cjwatson> If you've worked on this in the past (specifically testing upgrades starting from apt-clone metadata), I wouldn't mind a leg-up
+
+ 16:29:40 <mvo> cjwatson: is the auto-upgrader-tester helping? I currently (in precise) get segfaults from kvm when I run it, but haven't traced it down yet
+
+ 16:30:12 <cjwatson> I'm trying it with the chroot backend
+
+ 16:30:15 <mvo> cjwatson: with the latest trunk of u-m it should be possilbe to run "./auto-upgrade-tester /tmp/apt-clone-file" - at least this is what jibel aded recently
+
+ 16:30:32 <cjwatson> How did you do it when you were investigating upgrade bugs in the past?
+
+ 16:30:34 <mvo> cjwatson: aha, ok. that did not get that much testing recently, let me have a look
+
+ 16:30:53 <mvo> cjwatson: I used the kvm backend, that is currently the most reliable (when its not segfaulting at least)
+
+ 16:31:16 <cjwatson> hm, ok
+
+ 16:31:26 <mvo> its relatively slow of course
+
+ 16:31:29 <stgraber> kvm backend works great here (my upgrade testing host is Oneiric though)
+
+ 16:31:34 <cjwatson> well, I'll see if I can get chroot working and if not fall back
+
+ 16:31:52 <mvo> stgraber: yeah, oneiric is fine for me too
+
+ 16:32:08 <mvo> cjwatson: I run a quick test with it now to see what is missing
+
+ 16:32:12 <mvo> (with chroot)
+
+ 16:32:27 <cjwatson> it falls over being unable to copy main.log to main_pre_reqs.log or some such - hacking around that
+
+ 16:34:46 <cjwatson> anyway, thanks, that's enough to be going on with
+
+ 16:34:52 <cjwatson> anything else?
+
+ 16:36:17 <cjwatson> ok
+
+ 16:36:17 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

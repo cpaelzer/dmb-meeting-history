@@ -1,0 +1,630 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 16 Jul at 15:01 &mdash; 15:58 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-07-16-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:02.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:10.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:37.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses.html#build-essential 
+
+=== AOB ===
+The discussion about "AOB" started at 15:54.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (56)
+ * bdmurray (48)
+ * juliank (29)
+ * slyon (28)
+ * xnox (27)
+ * sil2100 (23)
+ * doko (20)
+ * rbalint (16)
+ * waveform (11)
+ * ubottu (11)
+ * tdaitx (11)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started Thu Jul 16 15:01:55 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <bdmurray> #topic Lightning rounds
+
+ 15:02 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform slyon)
+
+ 15:02 <bdmurray> tdaitx bdmurray waveform doko mwhudson juliank vorlon slyon infinity xnox rbalint sil2100
+
+ 15:02 <sil2100> WON
+
+ 15:02 <bdmurray> tdaitx:
+
+ 15:02 <sil2100> \o/
+
+ 15:02 <tdaitx> uh oh, I don't have it ready T_T
+
+ 15:03 <tdaitx> sil2100: so I will go last instead =P
+
+ 15:03 <bdmurray> SRU verified LP: #1884148
+
+ 15:03 <bdmurray> investigation into update-motd autopkgtest failure on Focal (it strangely passed for Groovy)
+
+ 15:03 <ubottu> Launchpad bug 1884148 in ubuntu-release-upgrader (Ubuntu Focal) "dist upgrade process passes a number along with package to apport" [Critical,Fix released] https://launchpad.net/bugs/1884148
+
+ 15:03 <bdmurray> updated the fix for LP: #1873545 not to use $EUID as #! is /bin/sh
+
+ 15:03 <ubottu> Launchpad bug 1873545 in Ubuntu WSL "Permission denied error from show-motd when updates available" [High,Fix released] https://launchpad.net/bugs/1873545
+
+ 15:03 <bdmurray> review / testing of ~slyon/ubuntu-release-upgrader:slyon/focal-python2-fix
+
+ 15:03 <bdmurray> reported autopkgtest bug LP: #1887183
+
+ 15:03 <bdmurray> uploaded u-r-u for the 18.04.5 point release
+
+ 15:03 <bdmurray> +1 maintenance
+
+ 15:03 <ubottu> Launchpad bug 1887183 in autopkgtest (Ubuntu) "--associate-ip does not work" [Undecided,New] https://launchpad.net/bugs/1887183
+
+ 15:03 <bdmurray> short week with some holidays
+
+ 15:03 <bdmurray> waveform:
+
+ 15:03 <waveform> * Fixed issue in pending raspberrypi-userland (inclusion of EGL/GL headers clashing with libegl-dev) (LP: #1883111)
+
+ 15:03 <waveform> * Addressed review of rpi-eeprom (LP: #1884748)
+
+ 15:03 <waveform> * Prepared split linux-firmware-raspi2 using multi-upstream tarball style (LP: #1886581)
+
+ 15:03 <waveform> * Bumped wifi firmware in linux-firmware-raspi2 to latest version
+
+ 15:03 <waveform> * Worked on removal of u-boot from classic (postinst transition in flash-kernel and adjustment of custom "pi" method in flash-kernel to avoid u-boot tools)
+
+ 15:03 <waveform> (done)
+
+ 15:03 <ubottu> Launchpad bug 1883111 in Ubuntu "[needs-packaging] raspberrypi-userland" [Wishlist,New] https://launchpad.net/bugs/1883111
+
+ 15:03 <ubottu> Launchpad bug 1884748 in Ubuntu "[needs-packaging] rpi-eeprom" [Wishlist,New] https://launchpad.net/bugs/1884748
+
+ 15:03 <ubottu> Launchpad bug 1886581 in linux-firmware-raspi2 (Ubuntu) "Ubuntu 18.04 64-bit RasPi 3 and 4 image fails to boot on RasPi 4B" [Undecided,New] https://launchpad.net/bugs/1886581
+
+ 15:04 <bdmurray> doko:
+
+ 15:04 <bdmurray> how about juliank!
+
+ 15:05 <juliank> Not sure it's complete, but here we go:
+
+ 15:05 <juliank> jul 09:
+
+ 15:05 <juliank> * short week, off sick mon & tue
+
+ 15:05 <juliank> * apt 2.1.7
+
+ 15:05 <juliank> * fixed make-dfsg on s390x by disabling use of posix_spawn, still needs investigating whether posix_spawn is broken on s390x or the make code uses it in a way that only fails on s390x (and only in flatpak-builder tests)
+
+ 15:05 <juliank> * retry regressions
+
+ 15:05 <juliank> jul 16:
+
+ 15:05 <juliank> * initial work of freeing apt of masters, and slaves
+
+ 15:05 <juliank> * cleaned up apt-key net-update spec
+
+ 15:05 <juliank> * dug around in os-prober and snapshots
+
+ 15:05 <juliank> * private stuff fba872e3c2d435b7a69acbb618fb888d0437d7b471758b2bb9e74de341b070fe
+
+ 15:05 <juliank> * opened bugs for google chrome and keybase to stop using apt-key add, and use trusted.gpg.d
+
+ 15:05 <juliank> * reviewed rpi eeprom package thingy for waveform
+
+ 15:05 <juliank> (done)
+
+ 15:06 <bdmurray> vorlon:
+
+ 15:06 <vorlon> * haskell transition work (mostly deleting broken packages)
+
+ 15:06 <vorlon> * pandoc on riscv64 takes foreeeeever
+
+ 15:06 <vorlon> * reviewing current net-apt key-update spec
+
+ 15:06 <vorlon> * working with server team on some changes to the motd-news implementation
+
+ 15:06 <vorlon> * partner meetings
+
+ 15:06 <vorlon> * discussions around an embargoed issue
+
+ 15:06 <vorlon> (done)
+
+ 15:06 <bdmurray> slyon:
+
+ 15:06 <slyon> - Fixed python-mkdocs & streamlink for fonts-font-awesome migration
+
+ 15:06 <slyon> * sponsored by Dimiri & merged in Debian Salsa
+
+ 15:06 <slyon> - Fixed cider for fonts-font-awesome migration
+
+ 15:06 <slyon> * sponsoed via Debian NMU by Dimitri
+
+ 15:06 <slyon> - Discovered XSBC- field bug in dh-make-perl, fixed upstream
+
+ 15:06 <slyon> * Fix released, bug #1886461
+
+ 15:06 <slyon> - Debugged 20.04 upgrade, if legacy python[-minimal] installed
+
+ 15:06 <slyon> * Updated Focal release notes about 'python-is-python2'
+
+ 15:06 <slyon> * MP awaiting review, bug #1875523
+
+ 15:06 <slyon> - SRU verification for apport snap handling
+
+ 15:06 <slyon> * Fix released, bug #1861082
+
+ 15:06 <slyon> - Improved IWD vs WPA Supplicant evaluation document
+
+ 15:06 <slyon> - Collected netplan.io community engagement metrics
+
+ 15:06 <slyon> === Netplan ===
+
+ 15:07 <slyon> - Fixed non-OVS bonds in OVS netplan setup, with James & Lukasz
+
+ 15:07 <slyon> - Improve OVS integration tests
+
+ 15:07 <slyon> - Review Lukasz' implicit OVS fake VLAN bridges PR#151
+
+ 15:07 <slyon> - Checked upstream NM's refusal of our netplan plugin
+
+ 15:07 <slyon> * considering different solutions, like a netplan-nm-bridge daemon
+
+ 15:07 <slyon> * needs team discussion
+
+ 15:07 <slyon> - Reviewed Lukasz' SR-IOV first boot PR #141
+
+ 15:07 <slyon> - Prepared OVS interface cleanup PR #153
+
+ 15:07 <slyon> * In review
+
+ 15:07 <slyon> - Started working on Wireguard PR #113
+
+ 15:07 <slyon> (done)
+
+ 15:07 <bdmurray> xnox:
+
+ 15:08 <xnox> * mid-cycle product sprint + working on all the .1 release things & proposed-migration. Done.
+
+ 15:08 <bdmurray> rbalint:
+
+ 15:08 <rbalint> * +1 maintenance
+
+ 15:08 <rbalint> * uploads via Debian: wireshark 3.2.5-1, libevent 2.1.12-stable-1
+
+ 15:08 <rbalint> * merges: systemd as 245.6-2ubuntu1, then as 245.6-3ubuntu1 with additional fixes, mtd-utils
+
+ 15:08 <rbalint> * partner work
+
+ 15:08 <rbalint> * +1 maintenance (ongoing)
+
+ 15:08 <rbalint> (done)
+
+ 15:08 <bdmurray> sil2100:
+
+ 15:09 <sil2100> - Shorter week, had half-day on Friday, status only from this week
+
+ 15:09 <sil2100> - SRU reviews and releases
+
+ 15:09 <sil2100> - Kernel SRUs
+
+ 15:09 <sil2100> - +1 maintenance on Monday/Tuesday-ish
+
+ 15:09 <sil2100> * Got slightly side-tracked fixing britney in bileto
+
+ 15:09 <sil2100> - Phasing out new core18 into stable
+
+ 15:09 <sil2100> - 20.04.1 and 18.04.5 point-release preparation
+
+ 15:09 <sil2100> * Prepared base-files
+
+ 15:09 <sil2100> * Pushed updated language-packs (base for focal, updates for bionic)
+
+ 15:09 <sil2100> * Coordination with various teams
+
+ 15:09 <sil2100> * General preparation per the checklists
+
+ 15:09 <sil2100> - netplan:
+
+ 15:09 <sil2100> * Looking into the OVS config clean-up PR from Lukas
+
+ 15:09 <sil2100> * Started looking at SR-IOV improvement PR review comments
+
+ 15:09 <sil2100> * NM-plugin discussions
+
+ 15:09 <sil2100> - Pushed appliance-build livecd-rootfs changes to bionic Unapproved
+
+ 15:09 <sil2100> - Asked for upload of the new lxd appliance model assertion to the store
+
+ 15:09 <sil2100> - Various meetings
+
+ 15:09 <sil2100> (done)
+
+ 15:09 <tdaitx> * improved jck snap documentation
+
+ 15:09 <tdaitx> * working on regression detection for the jck testsuite in jenkins
+
+ 15:09 <tdaitx> - grabbing/copying artifacts in jenkins
+
+ 15:09 <tdaitx> * openjdk-11 and openjdk-8 security updates
+
+ 15:09 <tdaitx> - packaged openjdk-11, build failure on bionic, investigating
+
+ 15:09 <doko> - more CET investigations
+
+ 15:09 <doko> - GCC 10.2 release candidate
+
+ 15:09 <doko> - binutils 2.35 snapshots
+
+ 15:09 <doko> - Python 3.9 beta4
+
+ 15:09 <doko> - two MIRs, NEW processing
+
+ 15:09 <tdaitx> - packaging openjdk-8
+
+ 15:09 <doko> - get lintian again installable on i386
+
+ 15:09 <tdaitx> * fixed jtreg regression
+
+ 15:09 <doko> - started libgc and mpfr4 transitions
+
+ 15:09 <tdaitx> (done)
+
+ 15:09 <doko> - two +1 days
+
+ 15:09 <doko> (done)
+
+ 15:10 <bdmurray> any questions on status?
+
+ 15:10 <sil2100> None here!
+
+ 15:10 <bdmurray> #topic Release incoming bugs
+
+ 15:11 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs
+
+ 15:11 <bdmurray> bug 1886314 - is this for desktop or us?
+
+ 15:11 <ubottu> bug 1886314 in ubuntu-meta (Ubuntu) "preinstall `earlyoom` by default" [Wishlist,New] https://launchpad.net/bugs/1886314
+
+ 15:12 <bdmurray> vorlon: ?
+
+ 15:12 <vorlon> uh
+
+ 15:13 <vorlon> I would want the kernel team to weigh in on this
+
+ 15:13 <vorlon> before we install a package that changes the default oom handling
+
+ 15:13 <bdmurray> okay
+
+ 15:14 <juliank> huh, why does it need a userspace sercice?
+
+ 15:14 <vorlon> yeah exactly
+
+ 15:15 <bdmurray> So is anybody interested in this enough to drive it?
+
+ 15:15 <juliank> not really
+
+ 15:15 <xnox> nope
+
+ 15:15 <xnox> bdmurray:  not fixing, possibly punt to like cking maybe
+
+ 15:15 <xnox> it sounds interesting but also dubious
+
+ 15:15 <bdmurray> ack
+
+ 15:15 <bdmurray> bug 1887098
+
+ 15:15 <ubottu> bug 1887098 in what-is-python (Ubuntu) "Installing python-is-python3 should affect pip as well" [Undecided,Confirmed] https://launchpad.net/bugs/1887098
+
+ 15:17 <doko> is there a pip2?
+
+ 15:17 <bdmurray> this bug actually has a duplicate
+
+ 15:18 <xnox> doko:  we have python2 pip and python3 pip3, we don't have pip2
+
+ 15:18 <doko> hmm, is python2 based pip really available in focal?
+
+ 15:18 <xnox> let me check.
+
+ 15:18 <doko> afaicr, that was only re-added later in unstable after the focal release.
+
+ 15:18 <waveform> doesn't appear to be (at least there's no python-pip or python2-pip?)
+
+ 15:19 <juliank> $ dpkg -S bin/pip
+
+ 15:19 <juliank> python3-pip: /usr/bin/pip3
+
+ 15:19 <juliank> python3-pip: /usr/bin/pip
+
+ 15:19 <juliank> in groovy
+
+ 15:19 <doko> probably should be packported
+
+ 15:19 <doko> if we want to have a python2 based pip like debian will ship with bullseye
+
+ 15:20 <doko> but I'm -1 on pip-is-*
+
+ 15:21 <xnox> doko:  the request is for existing "python-is-python3" to ship pip -> pip3 symlink, like it does for `python` `python-config` etc.
+
+ 15:21 <juliank> python-is-python3 should add pip->pip3 symlink
+
+ 15:21 <xnox> not a new package
+
+ 15:21 <juliank> however
+
+ 15:21 <waveform> and presumably then python-is-python2 should do likewise for pip?
+
+ 15:21 <doko> juliank: no way, please don't fuck around with extra dependencies
+
+ 15:21 <xnox> doko:  no extra dependencies
+
+ 15:21 <xnox> dangling symlink
+
+ 15:21 <juliank> groovy ships it in python3-pip
+
+ 15:21 <doko> so dangling symlink?
+
+ 15:22 <xnox> note that in groovy /bin/pip is python3 shebang
+
+ 15:22 <juliank> if we add dangling symlink to python-is-python3, we also need replaces/breaks in python3-pip in groovy
+
+ 15:22 <slyon> but there is no python2 pip... so python-is-python2 -> pip does not work. Futhermore, there would be file conflicts if python2 pip is re-introduced
+
+ 15:23 <waveform> right
+
+ 15:27 <xnox> slyon:  we will not do that in the python-is-python2 package
+
+ 15:27 <xnox> so /bin/pip will be a dangling symlink in python-is-python3 package only
+
+ 15:28 <xnox> we can make it a file trigger
+
+ 15:28 <bdmurray> I think this warrants some further discussion via email with a clear design.
+
+ 15:28 <xnox> ok
+
+ 15:28 <xnox> to be continued
+
+ 15:29 <bdmurray> xnox: will you draft a plan?
+
+ 15:29 <xnox> ok
+
+ 15:29 <bdmurray> bug 1878225 already has a card so skipping
+
+ 15:29 <ubottu> bug 1878225 in autopkgtest (Ubuntu) "Please remove lxd.snap from lxd images, as it fails to seed thus failing the first boot - snapd.seeded.service waits forever (?) to have snaps seeded in LXD on s390x and arm64" [Undecided,Triaged] https://launchpad.net/bugs/1878225
+
+ 15:30 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:30 <bdmurray> bug 1871641 the desktop team is looking for help from "a systemd expert"
+
+ 15:30 <ubottu> bug 1871641 in plymouth (Ubuntu) "Ubuntu never finishes booting: A start job is running for Hold until boot process finishes up (3min 7s / no limit) -- removing 'splash' kernel parm fixes it" [High,Confirmed] https://launchpad.net/bugs/1871641
+
+ 15:31 <rbalint> i guess that's a +1 for me :-)
+
+ 15:31 <bdmurray> could you reach out to daniel and see what he needs?
+
+ 15:32 <rbalint> sure, will do so
+
+ 15:32 <vorlon> NB he's probably not very timezone-compatible
+
+ 15:33 <rbalint> bdmurray, should i card it for myself instead for the team?
+
+ 15:33 <bdmurray> rbalint: that sounds good to me
+
+ 15:34 <bdmurray> are we waiting for hardware for bug 1883229?
+
+ 15:34 <rbalint> done
+
+ 15:34 <ubottu> bug 1883229 in subiquity "Ubuntu server installation on S3260M4 server fails" [High,Confirmed] https://launchpad.net/bugs/1883229
+
+ 15:37 <bdmurray> alright, that's that for new bugs
+
+ 15:37 <bdmurray> #topic Team proposed-migration report
+
+ 15:37 <bdmurray> vorlon:
+
+ 15:38 <vorlon> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:38 <vorlon> 41 packages needing attention, that doesn't sound good
+
+ 15:38 <vorlon> vim is still mine
+
+ 15:38 <juliank> well, build-essential triggered quite a few I suppose
+
+ 15:38 <bdmurray> lintian is with me
+
+ 15:39 <vorlon> I don't see why it should be
+
+ 15:39 <vorlon> bdmurray: ok thanks
+
+ 15:39 <vorlon> python3.8 vs sqlite
+
+ 15:39 <waveform> libio-async-perl is still mine
+
+ 15:39 <rbalint> i'm fixing systemd
+
+ 15:40 <vorlon> sil2100: are you still on the python3.8 vs sqlite regression?
+
+ 15:40 <vorlon> (and sqlite3 generally)
+
+ 15:41 <sil2100> vorlon: yes, sorry, still on it...
+
+ 15:41 <vorlon> ok
+
+ 15:41 <vorlon> libio-async-perl is just waiting on its dep which is part of the linitan stuff
+
+ 15:41 <vorlon> rbalint mentioned being on systemd
+
+ 15:41 <vorlon> juliank: xz-utils?
+
+ 15:41 <juliank> yeah sounds fine
+
+ 15:42 <vorlon> juliank: I think I tried to assign this to you last time but I'm not sure you saw
+
+ 15:43 <vorlon> casper blocking qemu, what's that about
+
+ 15:43 <vorlon> looks like we should leave this with the server team
+
+ 15:44 <vorlon> curl is blocked on nettle, which is the ghc transition
+
+ 15:44 <vorlon> freetds, gnutls28, libarchive same
+
+ 15:44 <juliank> vorlon: I see my mention in the backlog, but I'm not sure I actively noticed
+
+ 15:45 <vorlon> open-iscsi also tied to qemu, so skipping
+
+ 15:45 <vorlon> rtmpdump, nettle again; then systemd and ubuntu-image for qemu again
+
+ 15:45 <vorlon> libzstd
+
+ 15:45 <slyon> I can look into libzstd vs badger, as I have been dealing with badger before
+
+ 15:45 <vorlon> slyon: thanks
+
+ 15:45 <slyon> (at least for the 64bit failure, 32bit problems need upstream fixing it)
+
+ 15:46 <vorlon> build-essential, I've actually been picking at these already this morning, strangely there are some i386 autopkgtest false-positives that were never seen before
+
+ 15:46 <vorlon> so I'll follow through on that one
+
+ 15:46 <xnox> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses.html#build-essential
+
+ 15:47 <vorlon> glib2.0, might just need some autopkgtest retriggers.  xnox can you take?
+
+ 15:48 <xnox> vorlon:  seb128 was doing some today, and some of them depend on the qemu fix previously mentioned.
+
+ 15:48 <xnox> vorlon:  but sure, can try to help poking it.
+
+ 15:48 <vorlon> well the qemu in release pocket should be ok surely
+
+ 15:48 <vorlon> python-tz needs oops to drop python2 support, should be easy
+
+ 15:49 <vorlon> waveform: ^^ can you take?
+
+ 15:49 <waveform> vorlon, will do
+
+ 15:49 <xnox> s390-tools waiting on AA new to accepted signing
+
+ 15:49 <vorlon> ok I'll look at that shortly
+
+ 15:49 <vorlon> dosfstools regressing livecd-rootfs, doesn't sound good
+
+ 15:50 <vorlon> tdaitx: ^^ can you look at this?
+
+ 15:50 <tdaitx> vorlon: ack
+
+ 15:50 <vorlon> rbalint: is systemd/amd64 regressing for kbd related to your ongoing work?
+
+ 15:50 <xnox> tdaitx:  maybe livecd-rootfs broken by itself? " python3-secretstorage : Depends: python3-jeepney but it is not installable"
+
+ 15:50 <xnox> could be just components missmatches
+
+ 15:50 <vorlon> that's a -proposed-only issue
+
+ 15:51 <vorlon> python3-jeepney is (was?) an MIR
+
+ 15:51 <rbalint> vorlon, i take kbd it then i'll see
+
+ 15:51 <vorlon> ok
+
+ 15:51 <vorlon> bdmurray: can you take dnspython vs python-idna?
+
+ 15:52 <vorlon> libsereal-decoder-perl, rather looks like a Debian issue, we might just ignore this for now and see if something better comes in via sync in the next week
+
+ 15:52 <vorlon> and libevent vs mysql-8.0
+
+ 15:52 <vorlon> who wants this last one
+
+ 15:52 <rbalint> vorlon, it is mysql
+
+ 15:53 <xnox> server team!
+
+ 15:53 <bdmurray> vorlon: okay
+
+ 15:53 <vorlon> rbalint: meaning?
+
+ 15:53 <rbalint> vorlon, i take it, it regressed in release
+
+ 15:53 <rbalint> (mysql regressed)
+
+ 15:54 <xnox> Failing test(s): main.ssl_crl main.ssl_crl_crlpath main.ssl_crl_clients_valid
+
+ 15:54 <vorlon> rbalint: ok, you'll follow through with hint mp?
+
+ 15:54 <xnox> sounds like dates / times / timing valid/from valid/until
+
+ 15:54 <rbalint> vorlon, yes
+
+ 15:54 <vorlon> thanks
+
+ 15:54 <vorlon> and that's done
+
+ 15:54 <vorlon> bdmurray:
+
+ 15:54 <bdmurray> #topic AOB
+
+ 15:55 <doko> just a heads up, GCC 10.2 will be released next, and once that's built the defaults change will happen
+
+ 15:55 <doko> next week even
+
+ 15:56 <juliank> nice
+
+ 15:56 <bdmurray> okay, thanks for the notification
+
+ 15:56 <xnox> doko:  horay!
+
+ 15:56 <vorlon> doko: can you communicate this to ubuntu-devel also?
+
+ 15:56 <doko> vorlon: no, it's in the release schedule ;o
+
+ 15:57 <juliank> more notifications don't hurt!
+
+ 15:58 <bdmurray> thanks everyone
+
+ 15:58 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

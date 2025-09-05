@@ -1,0 +1,630 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:03:49 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-10-26-15.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+''LINK:'' https://rt.admin.canonical.com/Ticket/Display.html?id=48569 for those with access  (cjwatson, 15:16:34)
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:10:53 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (121)
+ * cjwatson (47)
+ * stgraber (30)
+ * bdmurray (27)
+ * doko (21)
+ * ubottu (17)
+ * jhunt (11)
+ * barry (9)
+ * meetingology (3)
+ * jdstrand (1)
+
+
+
+== Full Log ==
+
+
+ 15:03:49 <slangasek> #startmeeting
+
+ 15:03:49 <meetingology> Meeting started Wed Oct 26 15:03:49 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:03:49 <meetingology> 
+
+ 15:03:49 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:04:01 <slangasek> [TOPIC] Lightning round
+
+ 15:04:16 <slangasek> we're down an mvo and an ev today; I'll fill in their reports
+
+ 15:04:21 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt mvo ev bdmurray slangasek)
+
+ 15:04:24 <slangasek> mvo stgraber doko ev cjwatson barry jhunt bdmurray slangasek
+
+ 15:05:03 <slangasek> [mvo]
+
+ 15:05:04 <slangasek> misc: sprint preparing software-center (pre-uds sprint)
+
+ 15:05:04 <slangasek> unattended-upgrades: fix hang in auto-reboot shutdown
+
+ 15:05:10 <slangasek> software-center: more i18n fixes, debug/fix #878707 (icon display problem),
+
+ 15:05:17 <slangasek> ubuntu-system-service: improve tests, improve code layout, SRU for branch from rodgrio
+
+ 15:05:24 <slangasek> work on some libsoup stuff
+
+ 15:05:28 <slangasek> python-apt: work on multiarch debfile support (lp:~mvo/python-apt/debfile-multiarch)
+
+ 15:05:31 <slangasek> software-properties: cherry pick fixes from lp:~evfool/software-properties/fixes
+
+ 15:05:35 <slangasek> patch pilot
+
+ 15:05:35 <slangasek> vmbuilder: add support to build precise
+
+ 15:05:35 <slangasek> python-apt: merge patches from the BTS, merge from debian
+
+ 15:05:35 <slangasek> cups: test/upload fix for the upgrade issue #874835
+
+ 15:05:37 <slangasek> ubuntu-system-service: improve tests, improve code layout, SRU for branch from rodgrio
+
+ 15:05:43 <slangasek> [/mvo]
+
+ 15:05:45 <slangasek> questions?
+
+ 15:06:13 <doko> mvo is gone from the team now?
+
+ 15:06:29 <slangasek> stgraber:
+
+ 15:06:36 <barry> :(
+
+ 15:06:48 <stgraber> - Did quite a bit of UDS preparation this week
+
+ 15:06:48 <stgraber> - Processed most of my merges, helped with the LXC merge, still have to look at the open-iscsi one (need to rebuild test environment)
+
+ 15:06:51 <stgraber> - Spent a bit of time with LXC upstream, going through the patches and bugs, updating the agenda for the UDS session
+
+ 15:06:54 <stgraber> - Patch pilot last Wednesday
+
+ 15:06:57 <stgraber> - Forwarded bug 876829 to Debian, seems to be a label issue, the IP is actually assigned to the interface, have to look at the proposed patches
+
+ 15:07:00 <stgraber> - Put a test instance of the new ISO tracker at http://91.189.93.73/
+
+ 15:07:02 <stgraber> - Package status module works fine now
+
+ 15:07:03 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Triaged] https://launchpad.net/bugs/876829
+
+ 15:07:05 <stgraber> - Admin UI for ISO testing is pretty much done
+
+ 15:07:07 <slangasek> doko: not officially moved over yet... and he continues to be involved in all aspects of the package manager
+
+ 15:07:07 <stgraber> - SSO/Launchpad integration works fine (~ubuntu-release and ~ubuntu-qa-website-devel are both admins)
+
+ 15:07:11 <stgraber> - TODO
+
+ 15:07:13 <stgraber> - LTSP hackfest tomorrow till Sunday, then UDS
+
+ 15:07:16 <stgraber> - Hoping to finish the ISO tracker admin UI, including xml-rpc interface and maybe a draft of the user interface by UDS
+
+ 15:07:19 <stgraber> - Prepare demo of IPv6 testing for Wednesday evening + container running non-native architecture as a lightning talk
+
+ 15:07:22 <stgraber> (done)
+
+ 15:07:32 <slangasek> but he is leaving foundations, so this UDS is the last chance to convince him to drink the beer you buy him :)
+
+ 15:07:44 <cjwatson> slangasek: (do we get a backfill?)
+
+ 15:07:48 <slangasek> cjwatson: yes
+
+ 15:08:16 <doko> - openjdk-6 and openjdk-7 security updates
+
+ 15:08:17 <doko> - openjdk-6 ARM assembler interpreter merge, testing
+
+ 15:08:17 <doko> - gcc-4.6.2 release
+
+ 15:08:17 <doko> - binutils updates from the branch
+
+ 15:08:17 <doko> - eglibc trunk updates, trying to figure out build fixes for ARM
+
+ 15:08:17 <doko> (need somebody to test powerpc packages when these are built)
+
+ 15:08:19 <doko> http://www.eglibc.org/archives/patches/msg01025.html
+
+ 15:08:21 <doko> - some merges
+
+ 15:08:49 <slangasek> stgraber: I see that open-iscsi is on the long-time-without-merge list; good to hear that you're working on it :)
+
+ 15:09:09 <slangasek> (that list is http://qa.ubuntuwire.org/oldmerges/, sorted by the 'superseded' column)
+
+ 15:09:44 <stgraber> slangasek: yeah, I'm the touched it last and I want to see if Debian's open-iscsi fixes our weird initramfs/init script problem that I worked around last cycle
+
+ 15:10:09 <stgraber> cjwatson: the interesting part is at http://91.189.93.73/admin/config/services/qatracker (assuming you told SSO to forward your membership in ~ubuntu-relesae to the tracker)
+
+ 15:10:24 <slangasek> stgraber: well, it's worth a try; keep in mind that Debian doesn't use udev-based initramfs at all, so there'll be some differences
+
+ 15:10:46 <cjwatson> oh, nice
+
+ 15:12:13 <slangasek> [ev]
+
+ 15:12:19 <slangasek> Investigation and prototyping around the crash database.
+
+ 15:12:24 <stgraber> cjwatson: I'm hoping to have the Builds page finished today and have that be the first xmlrpc exported function (so we can get builds posted automatically without having to parse the html ;))
+
+ 15:12:27 <slangasek> - I have a basic prototype running end to end in the Canonicloud after fighting a few OpenStack bugs and finding out that it really doesn't like you trying to provision a m1.large node.
+
+ 15:12:35 <slangasek> - I've been wrapping my head around how to do things the right way in Cassandra and have an increasingly solid plan for the database layer.
+
+ 15:12:53 <slangasek> - Had a meeting with James Troup on the IS requirements for the crash and metrics databases, and filed RT 48667 at his request.  I need to touch base with him again to come up with a plan for benchmarking that he wont stab me over.
+
+ 15:12:57 <slangasek> - Briefly tried to set up a meeting with Martin next week to discuss
+
+ 15:13:06 <slangasek> how we can best integrate with Apport.  I'd also like to chat with him about how we can expand the seemingly simple retracting daemon into a more complex bucketing system over time.
+
+ 15:13:06 <cjwatson> stgraber: cool, let me know when I can play with it from python :)
+
+ 15:13:20 <slangasek> - Need to find some of Robert Collins' time to knowledge share a bit around Cassandra.  I'm keen to understand what his plans were for progressive analytics in oopsrepository.  It looks like the Cassandra Hadoop bridge (with Hive or Pig) would be a good fit for generating the kind of data Kate and others want.  More importantly, I need a plan for how to asynchronously process the crashes into buckets.
+
+ 15:13:26 <slangasek> [/ev]
+
+ 15:13:28 <slangasek> questions?
+
+ 15:15:01 <slangasek> cjwatson:
+
+ 15:15:05 <cjwatson> Merges merges merges.  Also, merges merges merges.
+
+ 15:15:05 <cjwatson> Keeping up with adding missing dpkg pre-dependencies for data.tar.xz, and with Haskell and OCaml rebuilds.
+
+ 15:15:08 <cjwatson> Trying to keep up with libjpeg rebuilds.
+
+ 15:15:11 <cjwatson> Trying to keep up with -Werror=format-security failures.  I've now changed dpkg to avoid exporting the latter to the environment, although cdbs packages will still need to be fixed (in both Debian and Ubuntu).
+
+ 15:15:15 <cjwatson> Tracked down dh_make problem due to unset LOGNAME (bug 875705).
+
+ 15:15:16 <ubottu> Launchpad bug 875705 in dh-make (Debian) "dh_make in Oneiric outputs wrong content to changelog" [Unknown,New] https://launchpad.net/bugs/875705
+
+ 15:15:17 <cjwatson> Upgraded to precise.  Fixed libaio-dev/manpages-dev file conflict.  Otherwise things seem pretty smooth so far.
+
+ 15:15:20 <cjwatson> Fixed casper-md5check to ignore non-md5sum lines in md5sum.txt (bug 873401).
+
+ 15:15:21 <ubottu> Launchpad bug 873401 in casper (Ubuntu Oneiric) "Check disc for defects failed with a iso images built using ubuntu-defaults-image" [Low,Triaged] https://launchpad.net/bugs/873401
+
+ 15:15:23 <cjwatson> Working with kernel team to see if new kernel-wedge will fix bug 879340.
+
+ 15:15:24 <ubottu> Launchpad bug 879340 in linux (Ubuntu) "nic-shared-modules ballooned in size in precise" [High,In progress] https://launchpad.net/bugs/879340
+
+ 15:15:26 <cjwatson> Registered blueprints for UDS.
+
+ 15:15:28 <cjwatson> Working on refactoring germinate so that it can have a Python interface usable in Launchpad which does rather less duplicate work in every publisher run.
+
+ 15:15:31 <cjwatson> Reported Launchpad build farm breakage today and helped to investigate; turned out to be due to the staging build-manager trying to talk to production builders.  Everything is recovered now although powerpc is now
+
+ 15:15:35 <cjwatson> even further behind.
+
+ 15:15:38 <cjwatson> ..
+
+ 15:16:01 <doko> wasn't a third powerpc buildd promised?
+
+ 15:16:18 <cjwatson> yes, I have an RT ticket open for that
+
+ 15:16:34 <cjwatson> https://rt.admin.canonical.com/Ticket/Display.html?id=48569 for those with access
+
+ 15:17:00 <barry> syncs, merges, blueprints; python issue 13218 (test_ssl failures on Ubuntu); todo: more syncs and merges, uds prep.  also, my testing experiment will likely be merged with the pyti project and we'll also combine proposals for pycon 2012. done.
+
+ 15:17:44 <jhunt> Managed to recreate Plymouth bug 849414/553745 (yay!!), although I'm
+
+ 15:17:45 <jhunt> unable to see the failure on boot as observed by users. I think I now
+
+ 15:17:45 <jhunt> mostly understand the problem, but still need to fix it (and update the
+
+ 15:17:45 <jhunt> bug with the juicy details :) Registered a couple of blueprints for
+
+ 15:17:45 <jhunt> UDS. Reviewed patch from RedHat for new Upstart stanza ('usage').
+
+ 15:17:46 <ubottu> Launchpad bug 849414 in plymouth (Ubuntu Precise) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Incomplete] https://launchpad.net/bugs/849414
+
+ 15:17:47 <jhunt> Upstart job logging work still "real soon now": forced to curtail use of
+
+ 15:17:49 <jhunt> TEST_ALLOC_FAIL for log tests due to relative unpredictability of how
+
+ 15:17:52 <jhunt> many times NIH uses memory allocators with async io handlers. Currently
+
+ 15:17:54 <jhunt> finishing tidy-up and testing.
+
+ 15:17:57 <jhunt> ☔
+
+ 15:18:30 <barry> the test_ssl failures were a fun one.  when we switch openssl to disabling sslv2 via configure option it changed the semantics of sslv23 connecting to sslv3 and tlsv1 servers (this is obscurely documented in the openssl docs).  tests that expect those connections to fail are "suddenly" succeeding
+
+ 15:19:03 <slangasek> cjwatson: cdbs packages> and also anything that happens to be on debhelper compat 9 already? :)
+
+ 15:19:07 <bdmurray> reported apport bug 878335 re ubiquity source package hook
+
+ 15:19:07 <bdmurray> blueprint creation for UDS P
+
+ 15:19:07 <bdmurray> review of Launchpad bugs for ones I'd like to see fixed
+
+ 15:19:07 <bdmurray> reported launchpad bug 878532 regarding findSimilarBugs()
+
+ 15:19:08 <ubottu> Launchpad bug 878335 in apport (Ubuntu) "ubiquity source package hook should move more bugs to grub-installer" [Undecided,New] https://launchpad.net/bugs/878335
+
+ 15:19:10 <ubottu> Launchpad bug 878532 in Launchpad itself "findSimilarBugs() in the Launchpad API returns strange things" [Low,Triaged] https://launchpad.net/bugs/878532
+
+ 15:19:21 <bdmurray> reviewing bradf's bug report kit code and mako
+
+ 15:19:21 <bdmurray> testing protovis (javascript data visualization tool)
+
+ 15:19:21 <bdmurray> updated update-manager apport hook in natty (bug 878585)
+
+ 15:19:21 <bdmurray> casper bug triage (http://status.qa.ubuntu.com/qapkgstatus/casper)
+
+ 15:19:22 <ubottu> Launchpad bug 878585 in update-manager (Ubuntu Natty) "update apport package hook in natty" [High,Fix released] https://launchpad.net/bugs/878585
+
+ 15:19:32 <cjwatson> slangasek: Indeed, but those were mostly manually converted after dpkg started adding -Werror=format-security to dpkg-buildflags output in Debian, so aren't a problem
+
+ 15:19:34 <bdmurray> created udd search parameter to limit title matches (debian and ubuntu similar bugs) to recent ones
+
+ 15:19:37 <bdmurray> modified udd similar title search to have a switch not to show bugs from the same tracker
+
+ 15:19:40 <bdmurray> developer membership board meeting
+
+ 15:19:42 <cjwatson> (with some multiarch exceptions, I realise ... still a small number)
+
+ 15:19:59 <bdmurray> done
+
+ 15:21:25 <stgraber> oh, and bdmurray is now a core-dev!
+
+ 15:21:28 <cjwatson> ooh
+
+ 15:21:32 <barry> \o/
+
+ 15:25:56 <slangasek> jhunt: bug #849414> oh, sweet!  I look forward to your update on the bug :)
+
+ 15:25:57 <ubottu> Launchpad bug 849414 in plymouth (Ubuntu Precise) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Incomplete] https://launchpad.net/bugs/849414
+
+ 15:26:05 <slangasek> bdmurray: congrats on the coredevness :)
+
+ 15:26:16 <bdmurray> slangasek: thanks
+
+ 15:27:27 <slangasek> my go
+
+ 15:28:20 <slangasek> * finished all my merges except the problematic ones
+
+ 15:28:20 <slangasek> * took a merge from doko (libvisual-plugins), turned it into a Debian QA upload + sync, washed my hands of it
+
+ 15:28:23 <slangasek> * converted the package to dh(1) in the process, to further subvert http://people.debian.org/~cjwatson/dhstats.png
+
+ 15:28:26 <slangasek> * merged adduser and pinged Debian maintainers about maybe taking our patches, because this is a horrible merge that includes .po file changes that were done wrong last time
+
+ 15:28:30 <slangasek> * grumbled about the lack of useful tools for merging .po files; wrote a script to DTRT on a bzr conflict, need to think about it some more before proposing it anywhere
+
+ 15:28:33 <slangasek> * marked a bunch of packages Multi-Arch: foreign to solve ia32-libs installability; made a few more libraries M-A: same; sent out a call for volunteers to ubuntu-devel
+
+ 15:28:36 <slangasek> * xorg-server patch to fix graphics corruption with metacity+compositing, courtesy of a conversation over beer with keithp
+
+ 15:28:39 <slangasek> * attended the Oregon LoCo release party over the weekend, now scheming to have a multiarch Ubuntu LocalJam in December
+
+ 15:28:42 <slangasek> * blueprints, blueprints, blueprints - if yours aren't on the schedule yet, let me know please
+
+ 15:28:45 <slangasek> EOF
+
+ 15:28:48 <slangasek> questions?
+
+ 15:29:43 <slangasek> [TOPIC] Bugs
+
+ 15:29:54 <barry> slangasek: yeah.  have you extrapolated that graph out to the date when we can kill off cdbs? :)
+
+ 15:29:59 <slangasek> heh
+
+ 15:30:09 <slangasek> no, but I'm reminded that I need to redo the maven helper as a dh sequence :)
+
+ 15:30:12 <cjwatson> cdbs has been flat on that chart for a long time
+
+ 15:30:32 <slangasek> it's dipping slightly of late, but not enough to meaningfully extrapolate
+
+ 15:30:35 <barry> nice to see dh(1) gaining ground
+
+ 15:30:41 <slangasek> converting all the java packages in one go would help ;)
+
+ 15:30:42 <cjwatson> in fact that graph is a great illustration of psychohistory :)
+
+ 15:30:47 <slangasek> hah
+
+ 15:30:50 <barry> :-D
+
+ 15:31:36 <bdmurray> As I mentioned earlier I've been looking at casper bugs a fair bit
+
+ 15:31:48 <bdmurray> Trying to go through all of them actually and have some questions about some
+
+ 15:32:14 <stgraber> that reminds me I need to upload a new casper getting rid of the remaining gconf stuff that's in there, started working on that last time bdmurray poked me :)
+
+ 15:32:17 <slangasek> it's also an illustration of the inertia of a package that already works with one helper, even when the maintainer comes around to a different view... I updated mawk over the weekend to use dh(1) as well, and its packaging was pre-helper until now ;)
+
+ 15:32:17 <doko> do we have a goal to get rid of cdbs?
+
+ 15:32:29 <slangasek> I have a personal goal to get rid of cdbs
+
+ 15:32:36 <bdmurray> bug 539027 hasn't appeared recently and seems like it could be closed
+
+ 15:32:38 <slangasek> the cdbs maintainer has a personal goal to stab me in my sleep
+
+ 15:32:38 <ubottu> Launchpad bug 539027 in casper (Ubuntu) "end_request: I/O error rebooting at end of install" [Medium,Confirmed] https://launchpad.net/bugs/539027
+
+ 15:32:53 <slangasek> ANYWAY new topic
+
+ 15:33:14 <cjwatson> that was probably due to the binaries needed after CD eject not getting cached properly
+
+ 15:33:19 <cjwatson> if it's gone away, I think it's OK to close
+
+ 15:33:39 <slangasek> bdmurray, cjwatson: there was a lubuntu-specific report this cycle about not getting the "please eject" message on the shutdown screen
+
+ 15:33:47 <cjwatson> although I have no idea why it might have gone away
+
+ 15:34:05 <bdmurray> slangasek: right I saw that and think its different than I/O errors
+
+ 15:34:07 <slangasek> which seems that it could be explained by plymouth graphical splash correctly starting up, + /bin/plymouth not being available
+
+ 15:34:29 <slangasek> you should only ever see the I/O error messages when plymouth graphical splash is *not* running
+
+ 15:34:37 <cjwatson> /bin/plymouth is one of the cached paths though ...
+
+ 15:34:40 <slangasek> ok
+
+ 15:34:52 <slangasek> then I guess it makes sense to close it
+
+ 15:34:55 <cjwatson> perhaps it requires some files that cache_path doesn't pick up
+
+ 15:35:02 <cjwatson> well, it's been cached since lucid
+
+ 15:35:16 <slangasek> nah, /bin/plymouth is the client and pretty lightweight
+
+ 15:35:22 <cjwatson> if lubuntu is seeing something like that then the caching isn't covering it; but I do think it's distinct from the I/O error bugs
+
+ 15:35:27 <slangasek> doesn't use anything that isn't also used by the server
+
+ 15:35:32 <cjwatson> slangasek: right, but plymouthd might load something dynamically?
+
+ 15:35:41 <slangasek> hmm
+
+ 15:35:44 <cjwatson> does it dlopen pango when you display a message by any chance?
+
+ 15:36:03 <slangasek> not pango itself, but that's probably the first time it loads the font files and pango backends
+
+ 15:36:23 <cjwatson> anyway, the upshot is, lubuntu's problem is separate, but let's assume for now that the I/O errors have gone
+
+ 15:37:03 * slangasek nods
+
+ 15:37:21 <bdmurray> should there be a testcase for booting without splash to keep an eye out for issues like this?
+
+ 15:37:27 <cjwatson> maybe
+
+ 15:37:42 <cjwatson> I'm not very worried if it doesn't cause a visible problem with splash, though
+
+ 15:38:08 <bdmurray> okay
+
+ 15:38:11 <slangasek> right, seems that should be part of our troubleshooting toolkit rather than a test case
+
+ 15:38:53 <bdmurray> stgraber: so then you are working on bug 610345 correct?
+
+ 15:38:54 <ubottu> Launchpad bug 610345 in casper (Ubuntu) "scripts/casper-bottom/22gnome_panel_data sets /apps/panel/global/disable_lock_screen to true, but the key is deprecated." [High,Triaged] https://launchpad.net/bugs/610345
+
+ 15:39:03 <stgraber> bdmurray: yep
+
+ 15:39:32 <stgraber> bdmurray: just assigned it to myself so it's clear to everyone ;)
+
+ 15:39:52 <bdmurray> bug 747888 might have a fix in it
+
+ 15:39:53 <ubottu> Launchpad bug 747888 in casper (Ubuntu) "casper script 25configure_init clobbers 22serialtty, serial console nearly unusable" [Medium,Triaged] https://launchpad.net/bugs/747888
+
+ 15:41:40 <stgraber> I'm fine making a pass through casper's bug post-UDS and test+upload the bugs that have patches attached or are easy to fix, that's if nobody beats me to it :)
+
+ 15:42:46 <stgraber> we usually hear about these bugs quite late in the release cycle, would be nice to have as many as possible fixed early in the cycle this time
+
+ 15:43:02 <slangasek> bdmurray: any other bugs?  (I have a couple here when you're done)
+
+ 15:43:30 <bdmurray> I still regularly see duplicates of bug 220961
+
+ 15:43:32 <ubottu> Launchpad bug 220961 in ubiquity (Ubuntu) "[MASTER] ubiquity crashes instead of notifying the user of not enough disk space" [High,Triaged] https://launchpad.net/bugs/220961
+
+ 15:44:17 <slangasek> hmm
+
+ 15:44:33 <stgraber> quite a few of them seem to be because of btrfs where apparently a 15GB partition just gives you 2-3GB of usable space (even if df doesn't agree ;))
+
+ 15:44:48 <cjwatson> there is a specific bug about the btrfs case
+
+ 15:44:59 <slangasek> shouldn't it do something better than crashing, though?
+
+ 15:45:14 <slangasek> or is the bug title misleading/outdated?
+
+ 15:45:48 <stgraber> Daniel's bug seems to be on ext not on btrfs though, so that's probaby a case where we didn't check for the right amount of free space pre-install
+
+ 15:46:22 <stgraber> I guess we could check for free space on failure and give a more informative error message to the user, the real fix is to make sure we don't let them install though
+
+ 15:46:35 <cjwatson> the real problem here is that the crash can be just about anywhere, including shell fragments
+
+ 15:46:41 <slangasek> ah
+
+ 15:46:46 <cjwatson> so it's not easy to intercept in any remotely consistent way
+
+ 15:46:49 * slangasek nods
+
+ 15:46:59 <cjwatson> stgraber is probably on the money here
+
+ 15:47:50 <stgraber> we probably should have some more tests done, trying to install with the strict minimum amount of disk space with each of the supported file systems
+
+ 15:48:24 <slangasek> so the thought is that if we fix the btrfs behavior, we'll be getting fewer reports of this?
+
+ 15:48:25 <bdmurray> and with installing restricted packages too
+
+ 15:48:52 <stgraber> bdmurray: oh, indeed, good point
+
+ 15:49:10 <cjwatson> there are a bunch of fudge factors on autopartitioning; it's the sort of thing that gets out of date easily
+
+ 15:49:11 <stgraber> slangasek: yes, not sure how many of these bugs are related to btrfs though
+
+ 15:49:19 <cjwatson> note that partitioning-from-scratch and auto-resize are a bit different :-/
+
+ 15:49:59 <bdmurray> slangasek: at least duplicate bug 880263 isn't about btrfs
+
+ 15:50:00 <ubottu> Launchpad bug 220961 in ubiquity (Ubuntu) "duplicate for #880263 [MASTER] ubiquity crashes instead of notifying the user of not enough disk space" [High,Triaged] https://launchpad.net/bugs/220961
+
+ 15:50:40 <slangasek> ok
+
+ 15:51:00 <slangasek> so, will someone follow up on this?
+
+ 15:51:38 <slangasek> stgraber: shall I assign 220961 to you for precise?
+
+ 15:53:02 * slangasek takes that as a yes ;)
+
+ 15:53:03 <slangasek> moving on
+
+ 15:53:12 <slangasek> bdmurray: other bugs?
+
+ 15:53:25 <bdmurray> slangasek: They'll save for next meeting
+
+ 15:53:29 <slangasek> ok
+
+ 15:53:37 <slangasek> a couple I wanted to throw out quickly, then
+
+ 15:53:45 <slangasek> bug #381517
+
+ 15:53:46 <ubottu> Launchpad bug 381517 in kbd (Ubuntu) "Settings in /etc/kbd/config are not read" [Undecided,Confirmed] https://launchpad.net/bugs/381517
+
+ 15:53:55 <slangasek> this is linked from bug #881079
+
+ 15:53:55 <ubottu> Launchpad bug 881079 in upstart (Ubuntu) ""Waiting up to 60 more seconds for network configuration" at startup" [Undecided,Incomplete] https://launchpad.net/bugs/881079
+
+ 15:54:09 <slangasek> apparently some users are going out of their way to install obsolete packages, because the current ones aren't configurable...
+
+ 15:54:37 <slangasek> cjwatson: is it reasonable to have these dpms configuration options ported over to console-setup or kbd?
+
+ 15:54:49 <cjwatson> hm, not reading /etc/kbd/config is a bit crap - yes, we should port that stuff somehow
+
+ 15:55:11 <cjwatson> we should probably nuke the obsolete packages from precise too
+
+ 15:55:19 <slangasek> yes, definitely agreed
+
+ 15:55:33 <slangasek> anyone interested in working on porting those features?
+
+ 15:56:00 <stgraber> slangasek: sure (internet problem, sorry)
+
+ 15:56:19 <slangasek> great opportunity to learn about how the console is set up :)
+
+ 15:56:19 <cjwatson> I expect I can swear at it if nobody else wants to
+
+ 15:56:27 <cjwatson> although some knowledge transfer wouldn't hurt
+
+ 15:56:31 <slangasek> yes
+
+ 15:56:54 <slangasek> barry: you know you want to write some shell code
+
+ 15:57:13 <barry> slangasek: it's been a dream of mine since i was a child
+
+ 15:57:53 <barry> slangasek: but hey, i'll give it a go.  i love asking lots of dumb questions :)
+
+ 15:57:59 <slangasek> :)
+
+ 15:57:59 <slangasek> done
+
+ 15:58:19 <slangasek> the other one is a freaky cryptsetup problem
+
+ 15:58:35 <slangasek> bug #877403
+
+ 15:58:35 * bdmurray bets that one was on his list
+
+ 15:58:36 <ubottu> Launchpad bug 877403 in upstart (Ubuntu) "crypttab LUKS password shown in cleartext" [Medium,Triaged] https://launchpad.net/bugs/877403
+
+ 15:58:51 <slangasek> bdmurray: do you win the bet?
+
+ 15:58:58 <bdmurray> nope I lose
+
+ 15:59:22 <slangasek> so this is a weird bug - I can reproduce it but have no idea *why*
+
+ 16:00:57 <slangasek> it didn't happen like that in past releases... and the behavior seems to vary based on things like whether you start out in details mode (booting w/o splash) vs switching to it w/ Esc
+
+ 16:01:32 <slangasek> the bug is currently assigned to upstart... I don't know if something in upstart has changed that would account for this? jhunt?
+
+ 16:02:56 <slangasek> well, we're at time anyway, so let's take that up after the meeting
+
+ 16:03:00 <jhunt> Not that I'm aware of.
+
+ 16:03:06 <slangasek> anyway, it doesn't make sense and it's ugly, so if anyone has ideas...
+
+ 16:03:10 <slangasek> [TOPIC] AOB
+
+ 16:03:14 <cjwatson> sounds like creeping termios horrors
+
+ 16:03:29 <slangasek> now that I've eaten up all our meeting time, anyone else have something to say? :)
+
+ 16:03:38 <slangasek> cjwatson: that's what I was wondering, but I can't figure out where it'd be coming from
+
+ 16:04:05 <doko> promoted ruby1.9.1; now I have to find all packages, where we did disable building the ruby1.9 binary package ...
+
+ 16:04:25 <slangasek> does that mean we have two rubies in main now?
+
+ 16:04:45 <cjwatson> oh, security acked that in the end?
+
+ 16:05:18 <doko> jdstrand pointed out that ruby1.8 has not much time left for security updates
+
+ 16:05:44 <slangasek> does that mean the plan is to drop ruby1.8 from main by the end of the cycle?
+
+ 16:05:58 <doko> so trying to get everything built for 1.9 would be better, and yes, it probably will require some work to drop 1.8 from main
+
+ 16:06:24 * slangasek nods
+
+ 16:06:24 <doko> lucas only commits to do this for the wheezy timeframe, so it will require some work
+
+ 16:06:44 <slangasek> doko: can you reach out to the server team on this?  ruby is in main primarily to support their use
+
+ 16:06:44 <jdstrand> it would be ideal to get ruby1.8 demoted
+
+ 16:06:47 <slangasek> (puppet)
+
+ 16:06:55 <doko> otoh, we don't have the archs with build issues like sparc and ia64
+
+ 16:07:14 <doko> slangasek, ok, will do (pinging Daviey)
+
+ 16:07:35 <slangasek> the master list of package ownership (first draft) had foundations responsible for ruby1.8... I pushed back and said it was server's problem ;)
+
+ 16:08:09 <doko> but I assume we can't demote both ruby versions because we have it used for more b-d's ...
+
+ 16:08:26 <doko> and dropping tcl/tk 8.4 would maybe good ...
+
+ 16:08:55 <slangasek> is that happening in Debian?
+
+ 16:09:06 <doko> afaics, no
+
+ 16:09:51 <slangasek> :/
+
+ 16:10:23 <slangasek> doko: maybe we can look at that after UDS, then
+
+ 16:10:42 <doko> sure
+
+ 16:10:53 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

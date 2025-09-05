@@ -1,0 +1,449 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jsalisbury at 17:00:36 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-13-17.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/Meeting   (jsalisbury, 17:00:36)
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise   (jsalisbury, 17:00:37)
+ *ARM Status (ppisati)
+
+ *Release Metrics and Incoming Bugs (jsalisbury)
+''LINK:'' http://people.canonical.com/~kernel/reports/kt-meeting.txt   (jsalisbury, 17:01:20)
+
+ *Milestone Targeted Work Items (ogasawara)
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/canonical-kernel-team-precise-alpha-2.html   (ogasawara, 17:01:59)
+
+ *Blueprint: hardware-p-kernel-power-management (cking)
+
+ *Status: Precise Development Kernel (ogasawara)
+
+ *Status: CVE's (apw)
+''LINK:'' http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt   (apw, 17:04:29)
+
+ *Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ *Hardware Certification - Testing Pools (brendand)
+''LINK:'' https://docs.google.com/a/canonical.com/spreadsheet/ccc?key=0AphFraZYTghddElqTHl3NmZsWXVDYkMxcE5zX3EtR0E&hl=en_US#gid=0   (brendand, 17:08:41)
+
+ *Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+
+
+Meeting ended at 17:25:39 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * apw (39)
+ * bjf (32)
+ * jsalisbury (30)
+ * brendand (30)
+ * ogasawara (21)
+ * cking (16)
+ * ubottu (10)
+ * tgardner (4)
+ * ppisati (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 17:00:36 <jsalisbury> #startmeeting
+
+ 17:00:36 <meetingology> Meeting started Tue Dec 13 17:00:36 2011 UTC.  The chair is jsalisbury. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 17:00:36 <meetingology> 
+
+ 17:00:36 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 17:00:36 <jsalisbury> ##
+
+ 17:00:36 <jsalisbury> ## This is the Ubuntu Kernel Team weekly status meeting.
+
+ 17:00:36 <jsalisbury> ##
+
+ 17:00:36 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/Meeting
+
+ 17:00:37 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise
+
+ 17:00:39 <jsalisbury> # Meeting Etiquette
+
+ 17:00:41 <jsalisbury> #
+
+ 17:00:43 <jsalisbury> # NOTE: '..' indicates that you are finished with your input.
+
+ 17:00:45 <jsalisbury> #       'o/' indicates you have something to add (please wait until you are recognized)
+
+ 17:01:00 <jsalisbury> [TOPIC] ARM Status (ppisati)
+
+ 17:01:02 <ppisati> P/omap4: a new kernel (3.2.0-1402.2) based off 3.2 (Ubuntu-3.2.0-3.9) has been released, while a new TI BSP + 3.2-rc5 is in the pipe.
+
+ 17:01:05 <ppisati> SRU kernels: nothing to report.
+
+ 17:01:08 <ppisati> ..
+
+ 17:01:20 <jsalisbury> [TOPIC] Release Metrics and Incoming Bugs (jsalisbury)
+
+ 17:01:20 <jsalisbury> [LINK] http://people.canonical.com/~kernel/reports/kt-meeting.txt
+
+ 17:01:39 <jsalisbury> Just adding link this week, instead of posting all data.
+
+ 17:01:44 <jsalisbury> ..
+
+ 17:01:55 <jsalisbury> [TOPIC] Milestone Targeted Work Items (ogasawara)
+
+ 17:01:59 <ogasawara> [LINK] http://status.ubuntu.com/ubuntu-precise/canonical-kernel-team-precise-alpha-2.html
+
+ 17:02:00 <ogasawara> || apw        || hardware-p-kernel-boot                || 1 work item  ||
+
+ 17:02:00 <ogasawara> ||            || hardware-p-kernel-config-review       || 4 work items ||
+
+ 17:02:00 <ogasawara> ||            || hardware-p-kernel-delta-review        || 4 work items ||
+
+ 17:02:00 <ogasawara> ||            || foundations-p-ipv6                    || 1 work item  ||
+
+ 17:02:00 <ogasawara> || cking      || hardware-p-kernel-delta-review        || 1 work item  ||
+
+ 17:02:02 <ogasawara> || jsalisbury || other-p-bug-workflows                 || 1 work item  ||
+
+ 17:02:04 <ogasawara> || ogasawara  || hardware-p-kernel-version-and-flavors || 1 work item  ||
+
+ 17:02:06 <ogasawara> ||            || hardware-p-kernel-config-review       || 21 work items||
+
+ 17:02:08 <ogasawara> || tgardner   || hardware-p-kernel-version-and-flavors || 1 work item  ||
+
+ 17:02:10 <ogasawara> ||            || hardware-p-kernel-delta-review        || 1 work item  ||
+
+ 17:02:12 <ogasawara> If your name is in the above table, please review your Alpha-2 work items.  Note that Alpha-2 is Thurs Feb 2.
+
+ 17:02:15 <ogasawara> ..
+
+ 17:02:29 <jsalisbury> [TOPIC] Blueprint: hardware-p-kernel-power-management (cking)
+
+ 17:02:32 <cking> Power Management:
+
+ 17:02:32 <cking> * Re-run power.d readahead and journal-commit tests on non-idle
+
+ 17:02:33 <cking> user application scenerios.
+
+ 17:02:33 <cking> * Measure mouse power consumption, different rates + devices:
+
+ 17:02:33 <cking> http://zinc.canonical.com/~cking/power-benchmarking/mouse-movement
+
+ 17:02:33 <cking> * Complete PowerTop good/bad results:
+
+ 17:02:35 <cking> http://zinc.canonical.com/~cking/power-benchmarking/powertop-good-bad-recommendations
+
+ 17:02:37 <cking> * Measure backlight levels power traits:
+
+ 17:02:39 <cking> http://zinc.canonical.com/~cking/power-benchmarking/backlight-non-linearity
+
+ 17:02:41 <cking> * More extensive 32 vs 64 bit power comparisons (in progress)
+
+ 17:02:43 <cking> * Compare UEFI vs BIOS firmware (in progress)
+
+ 17:02:45 <cking> * Complete pm-utils measurements:
+
+ 17:02:49 <cking> http://zinc.canonical.com/~cking/power-benchmarking/pm-utils-results
+
+ 17:02:51 <cking> * Crowd-sourcing pm-utils extra tweaks, CALL FOR TESTING:
+
+ 17:02:53 <cking> https://wiki.ubuntu.com/Kernel/PowerManagementPMUtils
+
+ 17:02:55 <cking> ..
+
+ 17:03:21 <jsalisbury> [TOPIC] Status: Precise Development Kernel (ogasawara)
+
+ 17:03:24 <ogasawara> We have uploaded the 3.2.0-4.10 Ubuntu kernel which is based on latest upstream v3.2-rc5 kernel.  Additionally, after yesterday's Tech Board discussion around the i386 non-pae flavor, it was decided to continue carrying this flavor for 12.04 and then drop it in 12.10.  The installer will also be switched to default to the pae flavor for i386.
+
+ 17:03:37 <ogasawara> Important Upcoming Dates:
+
+ 17:03:37 <ogasawara> * Thurs Feb 2 - Alpha 2 (~7 weeks)
+
+ 17:03:38 <ogasawara> ..
+
+ 17:04:06 <jsalisbury> [TOPIC] Status: CVE's (apw)
+
+ 17:04:09 <apw> CVE-2010-4251 CVE-2010-4805 CVE-2011-1082 CVE-2011-1083: epoll DOS --  fix incomplete, referred back to Security for review
+
+ 17:04:11 <ubottu> The socket implementation in net/core/sock.c in the Linux kernel before 2.6.34 does not properly manage a backlog of received packets, which allows remote attackers to cause a denial of service (memory consumption) by sending a large amount of network traffic, as demonstrated by netperf UDP tests. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4251)
+
+ 17:04:11 <apw> CVE-2011-1747: agp ioctl memory DOS -- no upstream fix as yet
+
+ 17:04:12 <ubottu> The socket implementation in net/core/sock.c in the Linux kernel before 2.6.35 does not properly manage a backlog of received packets, which allows remote attackers to cause a denial of service by sending a large amount of network traffic, related to the sk_add_backlog function and the sk_rmem_alloc socket field.  NOTE: this vulnerability exists because of an incomplete fix for... (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4805)
+
+ 17:04:13 <ubottu> fs/eventpoll.c in the Linux kernel before 2.6.38 places epoll file descriptors within other epoll data structures without properly checking for (1) closed loops or (2) deep chains, which allows local users to cause a denial of service (deadlock or stack memory consumption) via a crafted application that makes epoll_create and epoll_ctl system calls. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1082)
+
+ 17:04:13 <apw> CVE-2011-3347: be2net non-member vlan DOS -- cannot identify upstream fix
+
+ 17:04:15 <ubottu> The epoll implementation in the Linux kernel 2.6.37.2 and earlier does not properly traverse a tree of epoll file descriptors, which allows local users to cause a denial of service (CPU consumption) via a crafted application that makes epoll_create and epoll_ctl system calls. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1083)
+
+ 17:04:15 <apw> CVE-2011-3638: ext4 extent split -- upstream fix identified, pending application
+
+ 17:04:16 <ubottu> The agp subsystem in the Linux kernel 2.6.38.5 and earlier does not properly restrict memory allocation by the (1) AGPIOC_RESERVE and (2) AGPIOC_ALLOCATE ioctls, which allows local users to cause a denial of service (memory consumption) by making many calls to these ioctls. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1747)
+
+ 17:04:17 <ubottu> ** RESERVED ** This candidate has been reserved by an organization or individual that will use it when announcing a new security problem.  When the candidate has been publicized, the details for this candidate will be provided. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3347)
+
+ 17:04:17 <apw> CVE-2011-4112: pktgen bridge panic -- redhat is withdrawing the CVE
+
+ 17:04:18 <ubottu> ** RESERVED ** This candidate has been reserved by an organization or individual that will use it when announcing a new security problem.  When the candidate has been publicized, the details for this candidate will be provided. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3638)
+
+ 17:04:19 <apw> CVE-2011-4131: nfs4 ACL oops -- fix is still iterating upstream, pending
+
+ 17:04:19 <ubottu> ** RESERVED ** This candidate has been reserved by an organization or individual that will use it when announcing a new security problem.  When the candidate has been publicized, the details for this candidate will be provided. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4112)
+
+ 17:04:21 <ubottu> ** RESERVED ** This candidate has been reserved by an organization or individual that will use it when announcing a new security problem.  When the candidate has been publicized, the details for this candidate will be provided. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4131)
+
+ 17:04:21 <apw> CVE-2011-4347: kvm kvm_vm_ioctl_assign_device crashes -- no upsteam fix as yet
+
+ 17:04:22 <ubottu> ** RESERVED ** This candidate has been reserved by an organization or individual that will use it when announcing a new security problem.  When the candidate has been publicized, the details for this candidate will be provided. (http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4347)
+
+ 17:04:23 <apw> 
+
+ 17:04:25 <apw> === CVE Metrics ===
+
+ 17:04:27 <apw> 
+
+ 17:04:29 <apw> [LINK] http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt
+
+ 17:04:31 <apw> 
+
+ 17:04:33 <apw> Currently open CVEs for each supported branch:
+
+ 17:04:35 <apw> 
+
+ 17:04:37 <apw> || Package                                  || Open      ||
+
+ 17:04:39 <apw> ||                                          ||           ||
+
+ 17:04:41 <apw> || linux Hardy                              ||   10 (-1) ||
+
+ 17:04:43 <apw> || linux Lucid                              ||    7 (-1) ||
+
+ 17:04:45 <apw> || linux Maverick                           ||    7 (-1) ||
+
+ 17:04:47 <apw> || linux Natty                              ||    7 (-1) ||
+
+ 17:04:49 <apw> || linux Oneiric                            ||    5      ||
+
+ 17:04:51 <apw> || linux Precise                            ||    5      ||
+
+ 17:04:53 <apw> || linux-ec2 Lucid                          ||    7 (-1) ||
+
+ 17:04:55 <apw> || linux-fsl-imx51 Lucid                    ||    7 (-1) ||
+
+ 17:04:57 <apw> || linux-mvl-dove Lucid                     ||    7 (-1) ||
+
+ 17:05:00 <apw> || linux-mvl-dove Maverick                  ||    7 (-1) ||
+
+ 17:05:01 <apw> || linux-ti-omap4 Maverick                  ||    7 (-1) ||
+
+ 17:05:03 <apw> || linux-ti-omap4 Natty                     ||    7 (-1) ||
+
+ 17:05:05 <apw> || linux-ti-omap4 Oneiric                   ||    5      ||
+
+ 17:05:08 <apw> || linux-ti-omap4 Precise                   ||    5      ||
+
+ 17:05:09 <apw> || linux-lts-backport-maverick Lucid        ||    7 (-1) ||
+
+ 17:05:12 <apw> || linux-lts-backport-natty Lucid           ||    7 (-1) ||
+
+ 17:05:13 <apw> || linux-lts-backport-oneiric Lucid         ||    5      ||
+
+ 17:05:16 <apw> 
+
+ 17:05:17 <apw> We only have one open CVE with an upstream fix currently.  The remainder await fixes from upstream.
+
+ 17:05:20 <apw> 
+
+ 17:05:21 <apw> ..
+
+ 17:05:23 <apw> (bah, will drop the CVE- prefix for future updates.) ..
+
+ 17:05:45 <jsalisbury> [TOPIC] Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ 17:05:52 <bjf> Many of the kernels in -proposed were quickly verified and went into
+
+ 17:05:54 <bjf> regression testing early. This week is mostly about finishing up the
+
+ 17:05:56 <bjf> stragglers. A new Oneiric has been prep'd and uploaded. We'll just have
+
+ 17:05:58 <bjf> to see if we can get it verified and regression tested before the
+
+ 17:06:00 <bjf> dead week of Christmas.
+
+ 17:06:02 <bjf> 
+
+ 17:06:04 <bjf> Here is the status for the main kernels, until today (13/12):
+
+ 17:06:06 <bjf> 
+
+ 17:06:08 <bjf> * Hardy - 2.6.24-30.97
+
+ 17:06:10 <bjf> * On holiday
+
+ 17:06:12 <bjf> 
+
+ 17:06:14 <bjf> * Lucid - 2.6.32-36.79
+
+ 17:06:16 <bjf> * Regression testing in progress.
+
+ 17:06:18 <bjf> 
+
+ 17:06:20 <bjf> * Maverick - 2.6.35-31.63
+
+ 17:06:22 <bjf> * On holiday
+
+ 17:06:24 <bjf> 
+
+ 17:06:26 <bjf> * Natty - 2.6.38-13.53
+
+ 17:06:28 <bjf> * Regression testing in progress.
+
+ 17:06:30 <bjf> 
+
+ 17:06:32 <bjf> * Oneiric - 3.0.0-14.23
+
+ 17:06:34 <bjf> * Prep'd and trying to reach -proposed
+
+ 17:06:36 <bjf> 
+
+ 17:06:38 <bjf> Current opened tracking bugs details:
+
+ 17:06:40 <bjf> * http://people.canonical.com/~kernel/reports/kernel-sru-workflow.html
+
+ 17:06:42 <bjf> 
+
+ 17:06:44 <bjf> For SRUs, SRU report is a good source of information:
+
+ 17:06:46 <bjf> * http://people.canonical.com/~kernel/reports/sru-report.html
+
+ 17:06:48 <bjf> 
+
+ 17:06:50 <bjf> Future stable cadence cycles:
+
+ 17:06:52 <bjf> * https://wiki.ubuntu.com/PrecisePangolin/ReleaseInterlock
+
+ 17:06:54 <bjf> ..
+
+ 17:07:13 <jsalisbury> [TOPIC] Hardware Certification - Testing Pools (brendand)
+
+ 17:07:18 <brendand> hi
+
+ 17:07:39 <brendand> let me do this gradually
+
+ 17:07:41 <brendand> As part of the SRU workflow the hardware certification team tests the -proposed kernel on as many certified systems as possible.
+
+ 17:07:41 <brendand> As the number of certified systems for each release has grown, getting full coverage has become more and more difficult.
+
+ 17:07:58 <brendand> To allow us to reduce the number of systems tested we have devised a system of 'testing pools'.
+
+ 17:07:58 <brendand> This takes advantage of a system which stores details of the certified hardware including it constituent components to provide as broad a component coverage as possible.
+
+ 17:08:14 <brendand> Initially the system ensured that at least one instance of each piece of hardware (as identified by PCI Id's) was present in the testing pool.
+
+ 17:08:14 <brendand> This turned out not to fulfill the goal of the system since we still ended up with needing almost all the systems we had to provide full coverage (e.g. 165 systems certified for Natty gave a testing pool of 158)
+
+ 17:08:41 <brendand> We made a first effort at reducing the size of the pools by considering only components of particular categories to be 'important'. A list of these was sent to the kernel-team mailing list.
+
+ 17:08:41 <brendand> https://docs.google.com/a/canonical.com/spreadsheet/ccc?key=0AphFraZYTghddElqTHl3NmZsWXVDYkMxcE5zX3EtR0E&hl=en_US#gid=0
+
+ 17:09:03 <brendand> These give us testing pools of ~50 systems. However we are not happy yet with the coverage. We need feedback on which components need to be added in.
+
+ 17:09:21 <brendand> The criteria used should be: how likely is it that a bug could occur in just a subset of the components of this category? A good example is the category 'Display Controller/VGA Compatible Controller' which we do cover already. We know for a fact that bugs will be specific to particular makes of graphics card. Same for CPUs ('Processor' category)
+
+ 17:10:01 <brendand> We really need feedback on this
+
+ 17:10:41 <brendand> ...
+
+ 17:11:20 <jsalisbury> brendand, This will all be documented in the meeting minutes.  It would be good if you could also follow up with an email to the kernel-team mailing list.
+
+ 17:12:01 <jsalisbury> [TOPIC] Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+ 17:12:09 <ogasawara> brendand: Do you have a revised list which has all the possible components you want us to review to consider adding back in?  Also, what # are you looking for to satify coverage?
+
+ 17:12:53 <brendand> ogasawara - if you can access that link then all the ones marked 'x' are not considered at the moment
+
+ 17:13:27 <brendand> we have no fixed number to reach
+
+ 17:13:41 <tgardner> brendand, what is the max number of machines that you can cover ?
+
+ 17:14:14 <brendand> tgardner - it seems to be about 90, realistically speaking. something like that.
+
+ 17:14:21 <tgardner> ack
+
+ 17:14:51 <brendand> i would prefer for now to take each component category on it's own merits'
+
+ 17:15:16 <brendand> rather than considering how many extra systems it adds. we (the hwcert team) can worry about managing that
+
+ 17:15:40 <brendand> i had a question to pose, as a bit of a thought experiment
+
+ 17:16:14 <brendand> Could a bug affect only a subset of device of the category 'Bridge/PCI bridge'?
+
+ 17:16:48 <tgardner> brendand, likely, but its more likely to be BIOS specific
+
+ 17:17:01 <apw> if there is more than one different piece of h/w in any category it is possible to get different results from each
+
+ 17:17:33 <tgardner> however, we have way fewer problems with PCI bridges.
+
+ 17:17:37 <brendand> apw - yes, definitely *possible*.
+
+ 17:18:25 <brendand> actually the point of that question was to illustrate the line of thinking that needs to be taken to evaluate this list of component categories
+
+ 17:18:59 <brendand> between tgardner and apw that's the kind of critique of the list i'm looking for
+
+ 17:19:25 <brendand> thanks
+
+ 17:19:54 <jsalisbury> Any Open Discussion comments?
+
+ 17:19:57 <brendand> one last thing. i'm not sure is that link public. anyone who can't get access please let me know and i'll sort something out
+
+ 17:20:49 <jsalisbury> If no other comments, then going once
+
+ 17:20:54 <ogasawara> brendand: how do you want feedback, maybe a "feedback" column, and we'll add X's to categories we think should be added back?
+
+ 17:21:25 <brendand> ogasawara - i'm arranging for everyone to have edit rights and i'll add a feedback column
+
+ 17:22:07 <ogasawara> brendand: let us know when it's ready for editing.  I'm sure a few of us can just a quick pass off and tick the ones we want.
+
+ 17:22:22 <ogasawara> ..
+
+ 17:22:46 <jsalisbury> brendand, any other comments?
+
+ 17:23:30 <brendand> yeah, if any of the categories don't make sense to you, contact me about it
+
+ 17:23:43 <brendand> i'll send the link to the kernel-team list
+
+ 17:24:25 <jsalisbury> brendand, dot dot then ?
+
+ 17:24:28 <brendand> ..
+
+ 17:24:48 <jsalisbury> Any other open discussions or questions?
+
+ 17:25:22 <jsalisbury> Last call
+
+ 17:25:39 <jsalisbury> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

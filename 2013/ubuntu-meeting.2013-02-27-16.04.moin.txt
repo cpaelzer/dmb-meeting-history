@@ -1,0 +1,822 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:04:01 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-02-27-16.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+''LINK:'' https://en.wiktionary.org/wiki/%F0%90%8E%98   (xnox, 16:16:54)
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:58:20 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (66)
+ * xnox (59)
+ * ev (51)
+ * ogra_ (48)
+ * cjwatson (34)
+ * bdmurray (27)
+ * stgraber (27)
+ * doko (22)
+ * jodh (17)
+ * ubottu (14)
+ * barry_ (8)
+ * Laney (4)
+ * meetingology (3)
+ * stokachu (1)
+
+
+
+== Full Log ==
+
+
+ 16:04:01 <slangasek> #startmeeting
+
+ 16:04:01 <meetingology> Meeting started Wed Feb 27 16:04:01 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:04:01 <meetingology> 
+
+ 16:04:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:06 <slangasek> [TOPIC] Lightning round
+
+ 16:04:26 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 16:04:29 <slangasek> stokachu cjwatson xnox ogra bdmurray barry jodh slangasek ev doko stgraber
+
+ 16:04:46 <stokachu> - No public fires this week :D (done)
+
+ 16:04:47 <ev> I love these dice
+
+ 16:05:02 <cjwatson> foundations-r-phased-updates: LP implementation landed and passed QA.  Next deployment will enable this facility, so errors.u.c glue will be able to use it.
+
+ 16:05:05 <cjwatson> foundations-r-future-release-infrastructure: Considerable progress on the Python rewrite.  Now over half-complete.  Had to spend some time fixing production regressions as a result, though.
+
+ 16:05:09 <cjwatson> Lots of maintenance work on update-manager's tests.
+
+ 16:05:12 <cjwatson> Allowed update-manager to remove packages under normal operation provided that Conflicts/Replaces/Provides are present (bug 1038113).
+
+ 16:05:14 <ubottu> bug 1038113 in update-manager (Ubuntu Raring) "support conflicts/provides/replaces and allow removal in this case" [High,Fix released] https://launchpad.net/bugs/1038113
+
+ 16:05:15 <cjwatson> Fixed implementation of biosdevname=0 installer boot parameter (bug 1134227).
+
+ 16:05:16 <ubottu> bug 1134227 in biosdevname (Ubuntu) "biosdevname always gets installed" [High,Fix released] https://launchpad.net/bugs/1134227
+
+ 16:05:18 <cjwatson> Started looking at bug 1097570; still trying to sort out some workable semantics which don't require re-signing GRUB.
+
+ 16:05:20 <ubottu> bug 1097570 in grub2 (Ubuntu Raring) "grub2-signed can not find the right device when there are two filesystems containing the file '.disk/info'." [High,Triaged] https://launchpad.net/bugs/1097570
+
+ 16:05:21 <cjwatson> SRU processing run last night.
+
+ 16:05:23 <cjwatson> Reflashed my Nexus 7 to the Touch Developer Preview.  This suffers fairly badly from wireless problems on my local network; I now have almost all the hardware needed to fix this (missing PATA/SATA converter, drat) so will be tearing down and rebuilding tomorrow.
+
+ 16:05:27 <cjwatson> ..
+
+ 16:06:06 <xnox> * Nexus7 preseeding including wifi settings and rebooting into
+
+ 16:06:06 <xnox> fastboot mode fully works and landed in raring daily images.
+
+ 16:06:06 <xnox> With added blog post to ubuntu planet.
+
+ 16:06:06 <xnox> Thus completing my workitems on foundations-r-android-image-builds.
+
+ 16:06:06 <xnox> Ogra do we still need oversize check and/or test-cases?
+
+ 16:06:06 <xnox> * Uploaded yet one more ntfs-3g fallout bug fix (LP: #1132392)
+
+ 16:06:08 <xnox> * Fixed cross-building nspr
+
+ 16:06:09 <ubottu> Launchpad bug 1132392 in ntfs-3g (Ubuntu) "Unable to mount NTFS partition during system boot while having a separate /usr partition" [High,Fix released] https://launchpad.net/bugs/1132392
+
+ 16:06:10 <xnox> * Visuals for ubiquity u1 refresh are finalised, working with u1 team
+
+ 16:06:12 <xnox> to deliver integrating that work into the installer.
+
+ 16:06:14 <xnox> * Started work to create the updated progress bar experience in ubiquity.
+
+ 16:06:16 <xnox> * Short week (had friday off).
+
+ 16:06:19 <xnox> ..
+
+ 16:06:20 <cjwatson> (If you're wondering why fixing a wireless network requires a PATA/SATA converter: the words "yak" and "shaving" come to mind)
+
+ 16:06:23 <slangasek> xnox: bug #1132392> great, thanks :)
+
+ 16:06:31 <ogra_> xnox, yes, but that kind of goes together with the switch to xz ...
+
+ 16:06:43 <xnox> ogra_: where is the code? Can I help?
+
+ 16:06:48 <ogra_> (which might not happen)
+
+ 16:06:54 <xnox> oh, ok.
+
+ 16:07:05 <ogra_> it needs pxz in main, adam had some concerns
+
+ 16:07:06 <slangasek> I recently watched Michael Palin's Himalaya, there's some great footage of yak shaving in there
+
+ 16:07:13 <ogra_> LOL
+
+ 16:07:43 <xnox> ogra_: why? can we not use the kernels embedded xz support. I know it's limited but it is supported in initramfs.
+
+ 16:08:03 <ogra_> xnox, its not the uncompressing :)
+
+ 16:08:15 <xnox> oh, yeah, build time.
+
+ 16:08:18 <ogra_> its adding an hour build time to the build
+
+ 16:08:32 <ogra_> pxz prevents us from that apparently
+
+ 16:08:41 <ogra_> but would need to become a dep of livecd-rootfs
+
+ 16:08:50 <ogra_> which would require it in main
+
+ 16:09:07 <ogra_> and infinity thinks its not ready yet
+
+ 16:09:07 <xnox> currently pxz in debian has some patches, where apperantly it doesn't handle streams correctly, but with tar.xz it's just one stream.
+
+ 16:09:21 <xnox> (patches in development that is)
+
+ 16:09:26 <ogra_> right
+
+ 16:09:32 <ogra_> thats what he referred to
+
+ 16:10:03 <ogra_> implementing xz itself is a matter of changing five lines in two places
+
+ 16:10:08 <xnox> i don't see how that blocks us on cd-image side of things, sure it's broken if you are compressing multiple files together into xz directly, instead of tarring them up first.....
+
+ 16:10:26 <ogra_> it needs to become a live-build/livecd-rootfs dep
+
+ 16:10:33 <xnox> i'll chat with infinity (which is _not_ idling here) about getting pxz into main.
+
+ 16:10:38 <ogra_> else we wont have it on the livefs builder
+
+ 16:10:55 * ogra_ didnt know infinity was an "it" :)
+
+ 16:11:11 * xnox ?????
+
+ 16:11:15 <ogra_> anyway, lets sort this out of meeting
+
+ 16:11:31 <cjwatson> xnox: you'd usually use "who" for a person, not "which" :)
+
+ 16:11:37 * xnox ponders (is it which vs who?! it's one word in russian.... sorry)
+
+ 16:11:46 <slangasek> ogra_: your turn?
+
+ 16:11:50 <ogra_> oh
+
+ 16:11:57 <ogra_> done:
+
+ 16:11:57 <ogra_> * stuck on implementing xz compression (would need pxz in main, not clear thats wanted yet)
+
+ 16:11:57 <ogra_> * started working on kubuntu-active nx7 images (Riddell is currently testing)
+
+ 16:11:57 <ogra_> * got sucked into Ubuntu Touch very deeply (i kind of turned into the go to guy for the community since i did the public release)
+
+ 16:11:57 <ogra_> * made ubuntu touch daily images available from jenkins to cdimage
+
+ 16:11:59 <ogra_> * lots of work and discussion with the phablet team
+
+ 16:12:01 <ogra_> todo:
+
+ 16:12:03 <ogra_> * go back to nexus7 work on ubuntu desktop :P
+
+ 16:12:05 <ogra_> * check with other flavours about nx7 images
+
+ 16:12:07 <ogra_> * invent some nice vUDS specs !
+
+ 16:12:09 <ogra_> * try to port Ubuntu Touch to my spare SGS II (GT-I9200) to get familiar with the android side of things
+
+ 16:12:12 <ogra_> * get proper live-build support for ubuntu-touch defined at vUDS and implement parts of it (seeds etc)
+
+ 16:12:15 <ogra_> ..
+
+ 16:12:19 <ogra_> sorry :) the discussion dragged me away
+
+ 16:12:34 <cjwatson> To what extent is the current set of nx7 images still something we intend to maintain in light of Ubuntu Touch?
+
+ 16:12:40 <xnox> cjwatson: my excuse, I didn't capitalise infinity to make that word a proper noun =)))))))
+
+ 16:12:48 <cjwatson> Or is that not something that can be answered in public / just plain not decided yet?
+
+ 16:13:13 <ogra_> well, we will have to run a full desktop in docked state at some point
+
+ 16:13:23 <ogra_> so we will still need a reference i guess
+
+ 16:13:28 <bdmurray> worked on an upstart job for update-notifier cd notifications
+
+ 16:13:28 <bdmurray> modified upstart job so it works with usb disks with ubuntu data too
+
+ 16:13:28 <bdmurray> tested update-notifier upstart job as a user session job
+
+ 16:13:28 <bdmurray> moved upstart user job for hplip firmware into update-notifier
+
+ 16:13:28 <bdmurray> modified update-notifier not to watch for CDs any more
+
+ 16:13:38 <cjwatson> Though not displaying on the nx7 screen, though we haven't been worrying too much about UI bugs there anyway - OK
+
+ 16:13:47 <bdmurray> modified update-notifier to build a new binary specifically for CDs
+
+ 16:13:47 <bdmurray> worked on, tested and pushed a branch for errors bug 1122511
+
+ 16:13:47 <bdmurray> restructured daisy branch to have a daisy directory
+
+ 16:13:47 <bdmurray> pushed new daisy and errors branches for userpackagecache and updated merge proposals
+
+ 16:13:50 <ubottu> bug 1122511 in Errors "expose user parameter on front page of errors.ubuntu.com" [Medium,In progress] https://launchpad.net/bugs/1122511
+
+ 16:13:50 <bdmurray> submitted rt regarding rolling out errors r274
+
+ 16:13:51 <ogra_> and pandas will likely die soon with the switch to new Xorg ABI and no new binary blobs from TI
+
+ 16:14:03 <bdmurray> reviewed a merge proposal from evan for daisy
+
+ 16:14:03 <bdmurray> merge proposal for canonical-memento adding a cronjob to import user packages
+
+ 16:14:06 <bdmurray> tested screen clearing with lightdm (bug 967229)
+
+ 16:14:08 <ubottu> bug 967229 in plymouth (Ubuntu) "Text mode shown briefly with various "cryptic" texts when logging out or shutting down" [High,Triaged] https://launchpad.net/bugs/967229
+
+ 16:14:12 <bdmurray> .. done
+
+ 16:14:29 <ev> yay
+
+ 16:14:55 <ogra_> (pandas for desktop images that is)
+
+ 16:15:15 <xnox> bdmurray: what is "adding a cronjob to import user packages" ?
+
+ 16:15:33 <xnox> or ev?!
+
+ 16:15:53 <jodh> * blueprints
+
+ 16:15:53 <jodh> - foundations-r-upstart-roadmap: no progress.
+
+ 16:15:53 <jodh> - foundations-r-upstart-user-session-enhancements
+
+ 16:15:53 <jodh> - Merged lp:~jamesodhunt/upstart/upstart-shutdown
+
+ 16:15:56 <jodh> - Merged lp:~jamesodhunt/upstart/set-env--global-apply-to-running-jobs
+
+ 16:15:59 <jodh> - Merged lp:~jamesodhunt/upstart/upstart-no-inherit-env
+
+ 16:16:02 <jodh> - Merged lp:~stgraber/upstart/upstart-fix-env-test
+
+ 16:16:06 <jodh> - upstart-file-bridge: good progress.
+
+ 16:16:09 <jodh> - Wrote a rudimentary Upstart event monitor app (gui+cmdline) to
+
+ 16:16:12 <jodh> make it easier for users to watch event flows to help write their own jobs
+
+ 16:16:15 <jodh> (http://people.canonical.com/~jhunt/upstart/gui/ for code+screenshots).
+
+ 16:16:18 <jodh> * misc
+
+ 16:16:22 <jodh> - not at work last week due to illness.
+
+ 16:16:25 <jodh> - bug 1123588: Fixed for Upstart (TODO for libnih).
+
+ 16:16:27 <ubottu> bug 1123588 in upstart (Ubuntu Raring) "wrong usage of the `malloc' function attribute" [High,Triaged] https://launchpad.net/bugs/1123588
+
+ 16:16:28 <jodh> 𐎘
+
+ 16:16:31 <jodh> 
+
+ 16:16:54 <xnox> https://en.wiktionary.org/wiki/%F0%90%8E%98
+
+ 16:17:52 <bdmurray> xnox: it takes a while to look up packages a launchpad user is subscribed to so we are cache'ing them in cassandra
+
+ 16:18:01 <slangasek> there's a food cart in downtown Portland called 'Ugarit'
+
+ 16:18:02 <bdmurray> xnox: for some specific teams like foundations-bugs
+
+ 16:18:06 <slangasek> they do not use Ugaritic writing
+
+ 16:19:20 <slangasek> * vUDS planning
+
+ 16:19:20 <slangasek> * working on getting apt to make multiarch-friendlier choices for library dependencies (bug #1130419)
+
+ 16:19:22 <ubottu> bug 1130419 in apt (Ubuntu Precise) "apt resolver doesn't do sensible things when satisfying a cross-dependency on a virtual package (steam, wine)" [Critical,Triaged] https://launchpad.net/bugs/1130419
+
+ 16:19:23 <slangasek> * worked with QA team on boot chart issues; current problems seem to have been caused by whoopsie (bug #1124330), now worked around
+
+ 16:19:25 <ubottu> bug 1124330 in The Ubuntu Boot Speed Project "[raring] Latest whoopsie 0.2.13 slows down boot process by 29 seconds!" [Undecided,New] https://launchpad.net/bugs/1124330
+
+ 16:19:26 <slangasek> * discussions with kernel team, phablet team about resource management on the phone
+
+ 16:19:29 <slangasek> * discussing with desktop team about next steps for systemd services, now that the basic package is in place
+
+ 16:19:32 <slangasek> (done)
+
+ 16:19:48 * ev grumbles that it's consolekit, not whoopsie, at fault here
+
+ 16:20:02 <ev> - Landed the prodstack-prep branch of daisy on trunk. \o/
+
+ 16:20:02 <ev> - In the process of landing all the other prodstack-prep branches as I want us
+
+ 16:20:02 <ev> dogfooding them more to encourage webops to finish the deployment to
+
+ 16:20:02 <ev> prodstack.
+
+ 16:20:02 <ev> - Massive (and long overdue) rearrangement of lp:daisy and lp:errors. Hand
+
+ 16:20:02 <ev> holded the deployment of this onto production. This will make running from a
+
+ 16:20:02 <ev> branch easier (they're proper modules now) and code sharing between lp:daisy
+
+ 16:20:03 <ev> and lp:errors possible.
+
+ 16:20:12 <ev> - Wrote a small script to run lp:errors from the branch under gunicorn.
+
+ 16:20:12 <ev> - Ressurected the test harness for daisy. Cleaned up and got working again.
+
+ 16:20:12 <ev> Expanded to include pyflakes tests. Made the harness safer (refuses to run
+
+ 16:20:12 <ev> against production) and easier to use.
+
+ 16:20:12 <ev> - Reverted back to using GDBus in whoopsie at the request of Seb. Fixed the
+
+ 16:20:19 <ev> GVariant memory leaks that prompted the move to libnm in the first place. I'm
+
+ 16:20:19 <ev> worried that we're kicking the can on this one, but I have no time to fix
+
+ 16:20:19 <ev> this myself so we'll just have to leave it for now.
+
+ 16:20:19 <ev> - Created a single point for nagios checks of the lp:errors service at
+
+ 16:20:19 <ev> http://errors.ubuntu.com/status/. This avoids having to deal with OpenID as
+
+ 16:20:25 <ev> part of the nagios curl and lets us expand the set of running system tests
+
+ 16:20:25 <ev> without needing to make changes to canonical-memento.
+
+ 16:20:25 <ev> - Researching the just released Cassandra 1.2.2 authentication. Works a treat.
+
+ 16:20:25 <ev> Started writing up an RT to move us to it as 1.2.2 is a dependency for our
+
+ 16:20:30 <ev> custom comparator and simplifies our Cassandra deployment in production and
+
+ 16:20:30 <ev> prodstack (we can rely on the Apache packaged deb rather than rolling our
+
+ 16:20:30 <ev> own).
+
+ 16:20:31 <ev> - Started planning the move from NFS for core file storage to Swift with jjo:
+
+ 16:20:35 <ev> https://docs.google.com/a/canonical.com/document/d/1m_UTdqepyCgLR68lRzccilasqhPR7Z8Z7K7DzXZGzWI/edit
+
+ 16:20:35 <ev> This will make the transition to prodstack easier. We can very easily deploy
+
+ 16:20:36 <ev> some retracers in prodstack once this is in place.
+
+ 16:20:36 <ev> - Discovered bugs in our custom dpkg version type comparator. Fixed.
+
+ 16:20:40 <ev> - Packaged our custom comparator. Java and Debian seem to have mututal disdain
+
+ 16:20:40 <ev> for each other, but at least the Debian Java tooling is getting better.
+
+ 16:20:40 <ev> - Code review for Brian.
+
+ 16:20:43 <ev> - Finished background investigation for the bucketversions repopulation. It was
+
+ 16:20:44 <ev> originally going to take 20 days to run - which I don't have - but I managed
+
+ 16:20:44 <ev> to knock it down to an estimated 9 hours by caching the entire mapping of
+
+ 16:20:49 <ev> stacktrace address signatures to crash signatures in memory (4-6GB). Public
+
+ 16:20:49 <ev> service announcement: nosql is not RDBMS, random lookups are *slow*. This is
+
+ 16:20:52 <ev> why they say denormalise and put data physically close. Being able to
+
+ 16:20:52 <ev> distribute to many workers (hi Hadoop) would have also made this easier.
+
+ 16:20:52 <ev> Waiting for Cassandra 1.2.2 and the new comparator to land before running
+
+ 16:20:56 <ev> this in write mode.
+
+ 16:20:56 <ev> BLOCKED:
+
+ 16:20:56 <ev> - RT 57881. Need an openstack user so tarmac can deploy the infrastructure as
+
+ 16:20:56 <ev> part of MP-landing tests.
+
+ 16:20:59 <ev> (done!)
+
+ 16:22:08 <doko> - update_excuses: got cmake and libarchive from proposed into raring, touched some cogle stuff, removed some php-horde packages
+
+ 16:22:09 <doko> - fixed all known GCC 4.8 build failures (~20) in main
+
+ 16:22:09 <doko> - filed GCC 4.8 and eglibc 2.17 ftbfs issues for Debian
+
+ 16:22:09 <doko> - updated GCC 4.8
+
+ 16:22:09 <doko> - fixed cross ld to lookup /usr/<triplet>/lib
+
+ 16:22:09 <doko> - new upstream versions for boehm-gc and guile-2.0, guile-2.0 now builds on armhf. i
+
+ 16:22:11 <doko> nvestigating demotion of guile-1.8 and promotion of guile-2.0 (aisleriot autogen graphviz swig2.0)
+
+ 16:22:13 <doko> - new libvigraimpex, fixing ftbfs
+
+ 16:22:15 <doko> - fixed qt4-x11 headers not to cause build failures with GCC 4.8
+
+ 16:22:17 <doko> - looked at boost, and what to do ... looks like 1.53 is the way to go ... pestered
+
+ 16:22:20 <slangasek> ev: consolekit?  How is consolekit even in the equation?
+
+ 16:22:21 <doko> xnox about it
+
+ 16:22:23 <doko> - looked at blhc intergration for lp builds
+
+ 16:22:25 <doko> done
+
+ 16:22:49 <ev> slangasek: I thought that's where things exploded when whoopsie did dbus service activation of network-manager?
+
+ 16:22:59 <stgraber> Feature work:
+
+ 16:22:59 <stgraber> - Upstart (BLUEPRINT: foundations-r-upstart-user-session-enhancements)
+
+ 16:22:59 <stgraber> - Fixed some upstream tests that caused the build to hang.
+
+ 16:22:59 <stgraber> - Updated the PPA with current upstream.
+
+ 16:23:01 <stgraber> - All branches have now been merged upstream, just waiting for more testing before pushing out 1.7.
+
+ 16:23:04 <slangasek> ev: whoopsie can't do dbus service activation of NM
+
+ 16:23:04 <stgraber> - Container (BLUEPRINT: servercloud-r-lxc)
+
+ 16:23:07 <stgraber> - Usual code review.
+
+ 16:23:09 <stgraber> - Started looking at/discussing replacing uchroot by lxc on the phablet.
+
+ 16:23:12 <stgraber> - Looked into a JuJu breakage caused by 0.9~alpha3. Turned out to be them setting PYTHONPATH which caused our python3 script to fail badly.
+
+ 16:23:15 <stgraber> - Looked into a container/kernel bug leading to inotify watches exhaustion.
+
+ 16:23:18 <slangasek> NM isn't configured to /allow/ dbus activation
+
+ 16:23:18 <stgraber> - Networking (BLUEPRINT: foundations-r-networking)
+
+ 16:23:21 <stgraber> - Merged isc-dhcp.
+
+ 16:23:24 <stgraber> - Tested and applied a bunch of infiniband patches to our isc-dhcp, now uploaded to raring.
+
+ 16:23:26 <stgraber> Other work:
+
+ 16:23:29 <stgraber> - Tested logind without user cgroups, worked fine.
+
+ 16:23:31 <stgraber> - Tested patched update-manager.
+
+ 16:23:34 <stgraber> - Long DMB meeting on Monday
+
+ 16:23:37 <stgraber> - Networking
+
+ 16:23:39 <stgraber> - Added a ton of debug statements to NetworkManager in the hope of tracking down that weird segfault, not much luck yet, planning on doing some more of that tomorrow.
+
+ 16:23:42 <stgraber> TODO:
+
+ 16:23:45 <stgraber> - Work some more on Xsession integration for upstart user sessions, coming up with something ready for archive upload.
+
+ 16:23:45 <xnox> slangasek: sure but the original bug report was that ubiquity tries to request a consolekit session which timed out and crashed lubuntu as you were investigating =)
+
+ 16:23:48 <stgraber> - Continue the ofono/NM work.
+
+ 16:23:50 <stgraber> - Try to finish any LXC feature work for this cycle (1 item left).
+
+ 16:23:53 <stgraber> (DONE)
+
+ 16:23:53 <slangasek> (there's no .service file for it)
+
+ 16:23:57 <ev> hm
+
+ 16:24:10 <xnox> yeah and no .service file for consolekit either.
+
+ 16:24:21 <xnox> (if i looked that up correctly)
+
+ 16:26:02 <slangasek> xnox: well, I don't know why consolekit is timing out, but that seems unrelated to the issue we were seeing with the whoopsie change slowing down boot
+
+ 16:26:29 <xnox> true the piled up issues can be co-incidental
+
+ 16:26:48 <slangasek> oh, they might have the same root cause
+
+ 16:26:55 <slangasek> I just don't think consolekit has anything to do with the root cause
+
+ 16:27:06 <xnox> ok.
+
+ 16:27:08 <slangasek> anyways
+
+ 16:27:16 <stgraber> isn't consolekit going away anyway? :)
+
+ 16:27:18 <slangasek> any questions on status?
+
+ 16:27:33 <slangasek> stgraber: hopefully... :)
+
+ 16:27:48 <slangasek> (does ubiquity need porting to logind, or does everything Just Work?)
+
+ 16:28:14 <ogra_> haha
+
+ 16:28:15 <cjwatson> It has some explicit consolekit code
+
+ 16:28:24 <xnox> slangasek: it will crash and load full user session, so it will all just work.
+
+ 16:28:32 <ogra_> yeah
+
+ 16:28:33 <ogra_> heh
+
+ 16:28:34 <cjwatson> Not lots
+
+ 16:28:36 <xnox> slangasek: integration will be needed to use ubiquity-only mode.
+
+ 16:28:43 <slangasek> ok
+
+ 16:28:50 <cjwatson> (About a dozen lines)
+
+ 16:29:06 <slangasek> so, we probably want to blueprint consolekit->logind
+
+ 16:29:16 <cjwatson> At vUDS, presumably
+
+ 16:29:20 * slangasek takes that action item
+
+ 16:29:30 <slangasek> cjwatson: yep, probably
+
+ 16:29:33 <xnox> slangasek: when logind lands for normal sessions we just copy/paste mimic what's there and if it's needed to start a user-session dbus and the like.
+
+ 16:30:02 <slangasek> xnox: logind is unrelated to the user session dbus?
+
+ 16:30:02 * xnox ponders what timezones vUDS will be in.
+
+ 16:30:15 <slangasek> xnox: 4pm-something pm UTC
+
+ 16:30:21 <barry_> 10pm
+
+ 16:30:25 <barry_> 4pm-10pm
+
+ 16:30:28 <slangasek> (was listed in the announcement)
+
+ 16:30:44 <ogra_> yeah, asia will love us
+
+ 16:30:46 <slangasek> so everyone get ready to shift your sleep schedules for next week
+
+ 16:31:03 <xnox> to be honest I'm not sure which piece of ubiquity-dm sessions needs console kit.
+
+ 16:31:05 <slangasek> ogra_: because they have to get up in the middle of the night instead of traveling 24h and suffering jet lag? ;P
+
+ 16:31:14 * barry_ gets to sleep in :)
+
+ 16:31:20 <ogra_> well, but they usually get free beer abnd food for that
+
+ 16:31:24 <slangasek> heh
+
+ 16:31:55 <slangasek> [TOPIC] Bugs
+
+ 16:32:08 <slangasek> bdmurray: anything of interest?
+
+ 16:32:39 <slangasek> the lsb_release crasher keeps cropping up... it definitely seems related to teamviewer, but I have no idea how
+
+ 16:32:52 <bdmurray> I found bug 1120322 rather high on errors
+
+ 16:32:54 <ubottu> bug 1120322 in aptdaemon (Ubuntu Precise) "update-manager crashed with UnboundLocalError in show_diff(): local variable 'line_number' referenced before assignment" [High,Triaged] https://launchpad.net/bugs/1120322
+
+ 16:33:45 <slangasek> hmm, how high?
+
+ 16:33:47 <bdmurray> affecting a fair number precise uers
+
+ 16:33:57 <slangasek> show_diff() sounds like it's related to conffiles?
+
+ 16:33:59 <bdmurray> 12k reports
+
+ 16:34:31 <cjwatson> conffiles> yes
+
+ 16:34:51 <barry_> probably a fairly simple programming bug
+
+ 16:34:58 <bdmurray> it looks reather easy see comment #4
+
+ 16:35:32 <slangasek> yeah... if it's easy to pick off then we might as well, but otherwise it doesn't seem like it should be a super-high priority
+
+ 16:35:45 <slangasek> as most users should never see conffile prompts in the first place
+
+ 16:35:54 <barry_> i could look at it tomorrow
+
+ 16:36:12 <slangasek> barry_: thanks
+
+ 16:36:13 <xnox> when looking at jenkins upgrade tests there is a fair amount of configuration files left after clean lucid -> precise and oneiric -> precise, after a quick check they do not seem to have been resolved for raring either. Do we just wait for them to time out, or shall we be fixing them in raring and SRU rm_conffile into precise as well?
+
+ 16:36:58 <xnox> (not directly related to above discussion, but ogra_ qa stopped filing individual bugs about those & only jenkins results are available)
+
+ 16:37:15 <bdmurray> all the crashes seem to be when dealing with steam
+
+ 16:37:15 <ogra_> hmm
+
+ 16:37:31 <slangasek> xnox: I don't think we'll manage to get those all fixed for upgrades to precise, this far after the fact; I would prefer to focus on just getting and keeping the jenkins report clean in raring
+
+ 16:37:33 <xnox> the desktop upgrades have the most.
+
+ 16:37:57 <slangasek> xnox: "most"> how many are we talking about?  I remember it being <5 when precise released
+
+ 16:38:31 <xnox> slangasek: precise->raring upgrade or lucid->precise->raring upgrade? Cause a clean install of e.g. quantal & upgrade to raring has indeed very little forgotten conffiles.
+
+ 16:38:39 <xnox> slangasek: let me look up how many.
+
+ 16:38:46 <slangasek> bdmurray: ah, is steam munging its own conffiles maybe?
+
+ 16:39:06 <ogra_> does it even have any system conffiles ?
+
+ 16:39:08 <bdmurray> slangasek: perhaps
+
+ 16:39:14 <bdmurray> it was a sources.list file
+
+ 16:39:19 * slangasek nods
+
+ 16:39:39 <slangasek> xnox: whichever upgrade paths ->raring we test in jenkins
+
+ 16:39:42 * ogra_ has nothing in /etc that looks steam related
+
+ 16:40:06 <stgraber> ogra_: even in /etc/apt/sources.list.d ?
+
+ 16:40:13 <slangasek> bdmurray: other bugs?
+
+ 16:40:29 <stgraber> ogra_: /etc/apt/sources.list.d/steam.list
+
+ 16:40:31 <xnox> oneiric -> precise has 15 packages: https://jenkins.qa.ubuntu.com/job/precise-upgrade-oneiric-main/392/ARCH=amd64,LTS=non-lts,PROFILE=main-all,label=upgrade-test/artifact/results/obsolete_conffiles.log
+
+ 16:40:51 <ogra_> stgraber, ah, yeah. i was looking for something like /etc/steam and /etc/default/steam
+
+ 16:40:52 <bdmurray> bug 1132918
+
+ 16:40:54 <ubottu> bug 1132918 in ubiquity (Ubuntu) "Ubiquity crashes after user creation" [High,New] https://launchpad.net/bugs/1132918
+
+ 16:41:15 <xnox> lucid-> precise a few more https://jenkins.qa.ubuntu.com/job/precise-upgrade-lucid-main/ARCH=amd64,LTS=lts,PROFILE=main-all,label=upgrade-test/394/artifact/results/obsolete_conffiles.log
+
+ 16:41:29 <bdmurray> a UnicodeDecode error with the progress
+
+ 16:41:38 <xnox> raring so far has in two packages: https://jenkins.qa.ubuntu.com/job/raring-upgrade-quantal-desktop/ARCH=amd64,LTS=non-lts,PROFILE=desktop,label=upgrade-test/lastSuccessfulBuild/artifact/results/obsolete_conffiles.log
+
+ 16:43:22 <slangasek> phooey, will we ever be done with unicode bugs?
+
+ 16:43:42 <barry_> is it py3? <wink>
+
+ 16:44:07 <slangasek> barry_: yes :/
+
+ 16:44:11 <cjwatson> barry_: aptdaemon> I suspect that it shouldn't enter those last two blocks unless line_number has been set properly yet, since diff hunks always start with @@?
+
+ 16:44:39 <barry_> cjwatson: net very limited, could you comment on the bug?
+
+ 16:45:03 <barry_> thanks!
+
+ 16:45:05 <xnox> the weird thing about bug 1132918 is that user is in Estonian locale and the upgrade status/progress doesn't make sence, cause it's prefixed with 0 everywhere.....
+
+ 16:45:07 <ubottu> bug 1132918 in ubiquity (Ubuntu) "Ubiquity crashes after user creation" [High,New] https://launchpad.net/bugs/1132918
+
+ 16:45:21 <cjwatson> k
+
+ 16:45:46 <cjwatson> Estonian locale is notable for weird collation IIRC
+
+ 16:46:08 <cjwatson> It's a particular one which tends to expose lack of LC_COLLATE=C
+
+ 16:46:22 <cjwatson> Though I guess maybe not in this cas
+
+ 16:46:22 <slangasek> xnox: looks to me like bugs should be filed on compiz-gnome and cups, then.  Though, the cups one is strange, I don't see why those conffiles should have gone away, I suspect they were dropped by a bug in the packaging
+
+ 16:46:22 <cjwatson> e
+
+ 16:46:42 <cjwatson> I could have sworn I got apt_pkg.size_to_str fixed ages ago though ...
+
+ 16:46:51 <xnox> slangasek: they moved to a different package name and dpkg doesn't have a sensible way of moving a conffile to a new package.
+
+ 16:47:09 <cjwatson> Ah, no, it needs to be fixed in callers
+
+ 16:47:10 <slangasek> xnox: those conffiles are shown on my system as still owned by cups, and obsolete
+
+ 16:47:13 <cjwatson> See bug 1031882
+
+ 16:47:15 <ubottu> bug 1031882 in ubuntu-release-upgrader (Ubuntu Quantal) "precise->quantal upgrade fails, with a UnicodeDecodeError" [High,Fix released] https://launchpad.net/bugs/1031882
+
+ 16:47:22 <slangasek> xnox: I think the packaging split screwed up and dropped the conffiles on the floor
+
+ 16:47:24 <xnox> slangasek: 0_0 ok.
+
+ 16:47:28 <cjwatson> So I'll take that bug since I know the drill from before
+
+ 16:47:45 <slangasek> cjwatson: thanks
+
+ 16:47:57 <cjwatson> (Time-honoured technique: when you vaguely remember something, google for the function name plus your own name ...)
+
+ 16:48:16 <xnox> =))))))))))))))))))))))) lol
+
+ 16:48:46 <xnox> it's like Dumbledore's bucket of memories.
+
+ 16:49:11 <bdmurray> then bug 1131761 which recently came in
+
+ 16:49:13 <ubottu> bug 1131761 in ubiquity (Ubuntu) "ubi-partman fails with exit code 141 when setting up crypted partitioned installation" [Undecided,New] https://launchpad.net/bugs/1131761
+
+ 16:49:32 <slangasek> I tried to do that for PHP's unixtojd function yesterday and it didn't work, I suspect PHP upstream has declared bug bankruptcy at some point :)
+
+ 16:49:38 <cjwatson> That one I'm *not* taking :)
+
+ 16:49:49 <slangasek> xnox: ^^ yours, then? :)
+
+ 16:49:52 <xnox> yeah.
+
+ 16:50:11 <bdmurray> that's all from me
+
+ 16:50:16 <slangasek> bdmurray: cool, thanks
+
+ 16:50:19 <slangasek> [TOPIC] AOB
+
+ 16:50:20 <slangasek> anything else?
+
+ 16:50:40 <ogra_> should we have beer hangouts at the vUDS ?
+
+ 16:51:15 <xnox> ogra_: i was pondering to show up in the office =)
+
+ 16:51:19 <slangasek> at home, or do we go to a pub with our webcams to do it?
+
+ 16:51:41 * jodh worries about virtual hot-tubs and the server team...
+
+ 16:51:43 <ogra_> xnox, so you would have to run the hangout with 9 others and get really drunk over there
+
+ 16:51:54 <ogra_> and the community can participate from home ;)
+
+ 16:51:55 * cjwatson wonders if the pub's wifi is faster than mine
+
+ 16:52:08 * slangasek grins
+
+ 16:52:31 <doko> I was looking at obsoleting old versions of stuff ...
+
+ 16:52:40 <xnox> doko: specifically?
+
+ 16:52:48 <doko> looks like nobody else is interested :-/
+
+ 16:52:54 <doko> xnox, boost ;-)
+
+ 16:52:55 <xnox> I'm sure Laney will join us in a beer hangout.
+
+ 16:52:59 <doko> guile, ruby, tcl
+
+ 16:53:17 <xnox> doko: ok. I know micahg wants to get rid of the acient sqlite as well.
+
+ 16:53:19 <doko> guile almost done,
+
+ 16:53:39 <doko> I would like to track these, or ask people to handle one of these ...
+
+ 16:53:48 * Laney eyes xnox
+
+ 16:53:50 <doko> ruby1.8 is a pita currently
+
+ 16:54:09 * doko doko eyes Laney/ghc
+
+ 16:54:16 <slangasek> isn't the transition tracker for this?
+
+ 16:54:28 <xnox> for some things yes, but not all.
+
+ 16:54:45 <slangasek> I thought it was for the things that developers said they would like to track
+
+ 16:54:56 <xnox> cjwatson: can please please move old trackers into a subfolder in http://people.canonical.com/~ubuntu-archive/transitions/ those that are not updated by cron any more?
+
+ 16:55:04 <xnox> or Laney if you have access.
+
+ 16:55:30 <Laney> xnox: care to update the script to do that?
+
+ 16:55:30 <cjwatson> I'm hoping that since I gave other people access they can maintain it
+
+ 16:55:36 <xnox> Laney: ok.
+
+ 16:55:42 <doko> slangasek, not sure how it can be used to drop an old (non-default) version
+
+ 16:55:50 <Laney> see /srv/lucid-somestuff on lillypilly to find it
+
+ 16:55:52 <cjwatson> Pretty sure Laney has direct access, but yeah, better to make the script do it
+
+ 16:56:00 <Laney> I'll blat it in when you give it to me
+
+ 16:56:14 <xnox> doko: with good enough gerexp we can track to drop anything, ben rocks.
+
+ 16:58:20 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

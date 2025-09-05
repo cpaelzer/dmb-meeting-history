@@ -1,0 +1,633 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by ajmitch at 18:00:36 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-11-25-18.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *UDS session
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/community-p-app-review-board has the work items there, most of them refer to getting access to myapps.developer.ubuntu.com & to the review shifts  (ajmitch, 18:07:16)
+''ACTION:'' wendar to check with doko on when python-support will be removed from the archive  (ajmitch, 18:24:45)
+''LINK:'' https://bugs.launchpad.net/python-distutils-extra/+bug/894582   (wendar, 18:36:05)
+''ACTION:'' lfaraone to look into fixing bug 894582  (lfaraone, 18:38:45)
+''LINK:'' https://myapps.developer.ubuntu.com/dev/apps/399/ is probably one that can be rejected if I can think of a polite way to say "Submission must be more than just boilerplate code"  (ajmitch, 18:43:49)
+''LINK:'' https://bugs.launchpad.net/ubuntudeveloperportal/+bug/873443   (ajmitch, 18:45:56)
+''LINK:'' http://pad.ubuntu.com/arb-guidelines   (lfaraone, 18:48:55)
+''LINK:'' https://myapps.developer.ubuntu.com/dev/apps/196/   (ajmitch, 18:50:10)
+''LINK:'' https://help.ubuntu.com/community/UbuntuBackports#How_to_request_new_packages has the rules for libraries  (ajmitch, 19:15:12)
+''ACTION:'' ajmitch to ask about ARB apps depending on backported packages  (ajmitch, 19:22:25)
+
+
+
+Meeting ended at 19:31:54 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * wendar to check with doko on when python-support will be removed from the archive
+ * lfaraone to look into fixing bug 894582
+ * ajmitch to ask about ARB apps depending on backported packages
+
+
+
+== Action items, by person ==
+
+ * ajmitch
+ ** ajmitch to ask about ARB apps depending on backported packages
+ * lfaraone
+ ** lfaraone to look into fixing bug 894582
+ * wendar
+ ** wendar to check with doko on when python-support will be removed from the archive
+
+
+
+== People present (lines said) ==
+
+ * ajmitch (107)
+ * wendar (105)
+ * lfaraone (30)
+ * highvoltage (12)
+ * coolbhavi (9)
+ * meetingology (6)
+ * stgraber (5)
+ * ubottu (4)
+ * micahg (2)
+
+
+
+== Full Log ==
+
+
+ 18:00:36 <ajmitch> #startmeeting
+
+ 18:00:36 <meetingology> Meeting started Fri Nov 25 18:00:36 2011 UTC.  The chair is ajmitch. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 18:00:36 <meetingology> 
+
+ 18:00:36 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:00:51 * stgraber waves
+
+ 18:01:02 * highvoltage waves
+
+ 18:02:39 <ajmitch> agenda is at https://wiki.ubuntu.com/AppReviewBoard/Agenda, we'll mostly just go over what's been going on these last few weeks
+
+ 18:03:32 <ajmitch> firstly action items from last meeting - there was one for stgraber to check on packages being copied to the new release
+
+ 18:04:09 * ajmitch had done a basic check that there were no packages copied to the precise dist on extras.ubuntu.com
+
+ 18:04:16 <stgraber> so I had to initialize Precise to get extras.u.c working, so apparently everything works as expected (nothing gets copied)
+
+ 18:04:28 <ajmitch> ok, great
+
+ 18:04:35 <ajmitch> glad to know it was simple :)
+
+ 18:05:44 <ajmitch> #topic UDS session
+
+ 18:06:06 <ajmitch> just pulling up the blueprint link now
+
+ 18:07:16 <ajmitch> https://blueprints.launchpad.net/ubuntu/+spec/community-p-app-review-board has the work items there, most of them refer to getting access to myapps.developer.ubuntu.com & to the review shifts
+
+ 18:08:04 <wendar> does everyone have access now?
+
+ 18:08:04 <ajmitch> stgraber: did jono hand over the list admin?
+
+ 18:08:08 <highvoltage> next week is my first shift, I hope some of you will be available if I have questions
+
+ 18:08:11 <highvoltage> (which I will)
+
+ 18:08:31 <stgraber> ajmitch: no, I poked him again two days ago, no news yet...
+
+ 18:08:36 <ajmitch> we have access but it's buggy & broken for accessing tarballs of apps copied from the non-ARB review parts
+
+ 18:08:49 <wendar> highvoltage: yeah, I'm taking the weekly shifts as a good time to do my own queue watching
+
+ 18:08:52 <stgraber> oh, and in person at UDS, though that didn't help apparently :)
+
+ 18:09:05 <ajmitch> there's a LP bug open about the problems
+
+ 18:09:18 <wendar> highvoltage: more fun to do together
+
+ 18:09:25 <highvoltage> wendar: great :)
+
+ 18:09:50 <ajmitch> bug 886366
+
+ 18:09:55 <ubottu> Launchpad bug 886366 in Developer registration portal "Cannot download some arb apps during review" [Medium,Confirmed] https://launchpad.net/bugs/886366
+
+ 18:10:32 <ajmitch> lfaraone: welcome, I just mentioned the bug you opened about not being able to access some arb apps
+
+ 18:11:33 <wendar> ah, that's an odd one
+
+ 18:11:45 <ajmitch> currently this bug is blocking reviewing of some apps, along with a few other problems which make the review page annoying
+
+ 18:12:28 <wendar> achuni has been on top of these things, so submit a bug (or bugs)
+
+ 18:12:40 <ajmitch> wendar: I'd like to hear from you how your shift went & then I'll get on to my issues with myapps :)
+
+ 18:12:59 <wendar> stgraber and I won't get all the same issues, since we have overall admin privs as well as ARB reviewer privs
+
+ 18:13:33 <wendar> first shift went well, it was nice to have some focused time
+
+ 18:13:53 <wendar> so, I packaged 'crabhack'
+
+ 18:14:16 <wendar> and was disappointed to discover at the end that there's a launcher bug in pyglet
+
+ 18:14:25 <wendar> (the toolkit it's written in)
+
+ 18:14:43 <wendar> otherwise, it's a nice little game
+
+ 18:15:05 <wendar> it also needed some fixes to the upstream tarball, so I sent those back to the developer
+
+ 18:15:46 <wendar> I have a couple of policy questions from other apps I reviewed
+
+ 18:16:06 <wendar> TagPlayer depends on a Last.fm account. The software itself is FLOSS, but the Last.fm terms are proprietary (http://www.last.fm/api/tos).
+
+ 18:16:22 <ajmitch> sure, I've got some as well
+
+ 18:16:53 <lfaraone> wendar: we have last.fm applications in the archive, including the official client.
+
+ 18:16:56 <ajmitch> afaik we have a few clients for proprietary services in main & universe
+
+ 18:17:10 <highvoltage> like ubuntu one.
+
+ 18:17:18 <lfaraone> See http://packages.debian.org/squeeze/last-exit and http://packages.debian.org/squeeze/lastfm
+
+ 18:18:12 <ajmitch> highvoltage: last.fm is a bit more proprietary than even that, it limits what you can do with the data you get
+
+ 18:19:08 <ajmitch> given the precedent of existing last.fm clients, I don't think it'll be a problem to include another app
+
+ 18:19:11 <highvoltage> ajmitch: ah, that doesn't seem much different than accessing a non-free web page from a free browser, does it?
+
+ 18:19:28 <lfaraone> ajmitch: right, but ftp-masters thinks the clients are DSFG-free.
+
+ 18:19:46 <ajmitch> highvoltage: though a browser isn't limited to just those pages :)
+
+ 18:20:15 <ajmitch> lfaraone: which is generally what counts - I think we follow the normal rules for what's allowed in extras
+
+ 18:21:51 <ajmitch> wendar: any other problems that came up?
+
+ 18:22:15 <wendar> ajmitch: that seems like a sensible ruling, we can put it in the notes for the meeting, and wider review
+
+ 18:22:33 <wendar> All the Quickly apps are coming in with python-support dependencies (because Quickly sets them up that way). Should we manually fix those up (it's an easy fix), or let them go for Oneiric, since python-support is still in the archive (though deprecated).
+
+ 18:23:13 * ajmitch would rather fix them & be rid of python-support, but it means a little bit of extra work
+
+ 18:23:38 <ajmitch> the quickly template should be fixed to use dh_python2 for precise
+
+ 18:23:48 <lfaraone> ajmitch: +1
+
+ 18:23:52 <wendar> I submitted a bug to Quickly yesterday
+
+ 18:23:58 <ajmitch> great
+
+ 18:24:00 <wendar> but, not a specific deadline
+
+ 18:24:23 <wendar> ajmitch: you can note an action item for me to check with doko on when python-support will be removed from the archive
+
+ 18:24:45 <ajmitch> #action wendar to check with doko on when python-support will be removed from the archive
+
+ 18:24:45 * meetingology wendar to check with doko on when python-support will be removed from the archive
+
+ 18:24:52 <wendar> (but, Quickly should migrate ASAP)
+
+ 18:24:54 <ajmitch> aha, that works :)
+
+ 18:25:10 <micahg> there are about 1k packages in oneiric using deprecated python-{support,central}
+
+ 18:25:32 <ajmitch> micahg: ok, we'd love to not add to that number :)
+
+ 18:25:55 <micahg> just saying, for oneiric, it probably doesn't matter, for precise, would be nice to drop entirely
+
+ 18:26:09 <ajmitch> but I don't think it should be a blocker for getting packages in - it should only take a few minutes to change for a package done with quickly
+
+ 18:27:24 <wendar> ajmitch: is it worth updating the packages before we put them in? It really is only a few minutes of work
+
+ 18:27:39 * ajmitch has his review session today & will try & mark a few apps for rejection, or at least asking for them to submit source :)
+
+ 18:27:53 <ajmitch> wendar: if possible, then yes, I think it should be done
+
+ 18:28:27 <wendar> ajmitch: will do that for the two I've encountered so far
+
+ 18:28:49 <wendar> and, add in the review notes
+
+ 18:28:53 <ajmitch> ok
+
+ 18:28:59 <lfaraone> wendar: if its programmatically generated code, it should be easy to script the modification.
+
+ 18:29:22 <ajmitch> do we have a place to leave notes about packages for other reviewers?
+
+ 18:29:26 <wendar> lfaraone: for that, I'd rather spend the time patching Quickly itself
+
+ 18:29:42 <wendar> lfaraone: rather than parsing and rewriting the output from Quickly
+
+ 18:29:53 <wendar> lfaraone: (though, certainly possible)
+
+ 18:30:08 <wendar> lfaraone: IIRC, Quickly has some features for "upgrade my project"
+
+ 18:30:31 <lfaraone> nifty. might be worth looking in to.
+
+ 18:31:11 <wendar> the other project I worked on is 4digits
+
+ 18:31:26 <wendar> I discovered that it used to be in Debian, but was orphaned
+
+ 18:31:49 <wendar> so, rather than repackaging for Extras, I revived the debian packaging, and submitted it to the DEbian Games Team
+
+ 18:32:13 <wendar> with the upstream developer as the primary Debian maintainer
+
+ 18:32:19 <wendar> that's been accepted now
+
+ 18:32:23 <lfaraone> wendar: do you have a link to the bug you filed against quickly?
+
+ 18:32:28 <ajmitch> great, that's probably a better option for a number of these packages
+
+ 18:32:44 <wendar> so, will be flowing into Universe for Precise
+
+ 18:33:02 <wendar> I'll followup with a Backport to Oneiric once it comes through the DEbian sync
+
+ 18:33:13 <wendar> ajmitch: yes, I'm thinking about just doing that for crabhack too
+
+ 18:33:39 <wendar> (the developer explicitly asked if we could help him get into debian)
+
+ 18:33:52 <wendar> lfaraone: just a sec, pulling the link...
+
+ 18:34:15 * ajmitch still has to finish sponsoring an upload to debian for a former arb submission as well, once I patch the build system a little
+
+ 18:36:05 <wendar> https://bugs.launchpad.net/python-distutils-extra/+bug/894582
+
+ 18:36:06 <ubottu> Launchpad bug 894582 in python-distutils-extra "Python templates should use dh_python2" [Undecided,New]
+
+ 18:37:15 <wendar> lfaraone: ah, didrocks reports the fix isn't in Quickly, but further upstream
+
+ 18:37:49 <wendar> lfaraone: could be a fun weekend project
+
+ 18:37:56 <lfaraone> hmmm.
+
+ 18:38:07 <ajmitch> might only take a few min to fix there as well
+
+ 18:38:25 <wendar> ajmitch: that's all from my review shift
+
+ 18:38:32 <ajmitch> wendar: thanks
+
+ 18:38:45 <lfaraone> #action lfaraone to look into fixing bug 894582
+
+ 18:38:45 * meetingology lfaraone to look into fixing bug 894582
+
+ 18:38:46 <ubottu> Launchpad bug 894582 in python-distutils-extra "Python templates should use dh_python2" [Undecided,New] https://launchpad.net/bugs/894582
+
+ 18:38:59 <ajmitch> just so everyone knows, we're not restricted to only reviewing in our shift :)
+
+ 18:39:26 <lfaraone> wendar: if by "weekend" you mean "next weekend", not "this weekend", then sure. :)
+
+ 18:39:31 <ajmitch> it'd be nice if people are looking at submissions as they come in
+
+ 18:39:54 <highvoltage> ajmitch: I just haven't had time since UDS, but I'm sure I'll get into the swing of things
+
+ 18:40:04 <ajmitch> this sort of relates to the 'health of the queue' item, which we can probably all agree is pretty poor still
+
+ 18:40:09 <wendar> lfaraone: I meant "generic weekend, as in sometime when you've got a bit of free time and interest"
+
+ 18:40:24 <lfaraone> wendar: works for me :)
+
+ 18:40:43 <ajmitch> I've looked at a few submissions in my spare time recently, and noticed that quite a few of them just don't have source
+
+ 18:41:05 <wendar> ajmitch: you can reply to those immediately, requesting the source
+
+ 18:41:21 <wendar> ajmitch: no need to wait for a longer review
+
+ 18:41:22 <ajmitch> Do we have published rules for rejection of packages, such as it needs to do something useful?
+
+ 18:41:50 <wendar> I even have a fixed blurb of text for "please submit source code"
+
+ 18:42:06 <ajmitch> wendar: right, I've been meaning to do that as I come across them, often I can't download the submission anyway due to the bug linked earlier
+
+ 18:42:38 <ajmitch> I usually do some hunting for the upstream project & look for a source download there if there is one
+
+ 18:42:49 <lfaraone> wendar: do we have things like https://wiki.ubuntu.com/Bugs/Responses ?
+
+ 18:43:14 <wendar> I'm collecting them here, but we could split out to a separate page: https://wiki.ubuntu.com/AppReviewBoard/Review
+
+ 18:43:49 <ajmitch> https://myapps.developer.ubuntu.com/dev/apps/399/ is probably one that can be rejected if I can think of a polite way to say "Submission must be more than just boilerplate code"
+
+ 18:44:10 <lfaraone> lolwut. I don't even.
+
+ 18:44:41 <wendar> ajmitch: Our guidelines are on that same page, but they don't say anything about "useful".
+
+ 18:45:00 <wendar> I wondered about Awesome Os too.
+
+ 18:45:05 <ajmitch> it looks like someone submitted the output of 'quickly create', I didn't spot anything original in it
+
+ 18:45:19 <lfaraone> I love the honest rationale.
+
+ 18:45:29 * ajmitch is just hunting for the bug now that mpt wrote
+
+ 18:45:38 <wendar> I'm torn between "it doesn't do anything", and "well, it's just a silly app, like you'd find on Android, maybe it doesn't need to do anything"
+
+ 18:45:56 <ajmitch> https://bugs.launchpad.net/ubuntudeveloperportal/+bug/873443
+
+ 18:45:57 <ubottu> Launchpad bug 873443 in Ubuntu App Developer site "No published rules for rejecting applications" [Undecided,New]
+
+ 18:46:01 <wendar> it certainly won't make its way into Debian or main/universe
+
+ 18:46:35 <lfaraone> wendar: Of course not. But we should have some sort of rule "somebody somewhere besides the author must find this useful"
+
+ 18:46:38 <wendar> probably won't even continue from Oneiric to Precise
+
+ 18:46:46 <ajmitch> wendar: silly app, but it really doesn't look like an original creation beyond running quickly
+
+ 18:46:55 <ajmitch> I don't think we should set the bar that low
+
+ 18:47:25 <lfaraone> ajmitch: see "long tail" in http://kitenet.net/~joey/blog/entry/the_popcon_problem/
+
+ 18:47:38 <wendar> so, proposed addition to our review guidelines
+
+ 18:47:47 <ajmitch> otherwise we may as well accept the hello world 'app' that was used for testing :)
+
+ 18:47:55 <wendar> under "Content"
+
+ 18:48:43 <wendar> "App should be useful or interesting to a general audience"
+
+ 18:48:47 <wendar> not quite right
+
+ 18:48:55 <lfaraone> http://pad.ubuntu.com/arb-guidelines
+
+ 18:49:00 <ajmitch> wendar: we also had mention somewhere of submissions needing to be applications instead of data or documentation
+
+ 18:49:21 <ajmitch> which is important because I saw a recent submission of fonts
+
+ 18:50:10 <ajmitch> https://myapps.developer.ubuntu.com/dev/apps/196/
+
+ 18:51:28 <ajmitch> right, I found the original reference to it: https://wiki.ubuntu.com/PostReleaseApps/Process
+
+ 18:52:27 <ajmitch> sorry to mess up the pad, I just pasted in the relevant section
+
+ 18:52:52 <lfaraone> no worries.
+
+ 18:53:09 <wendar> ajmitch: ah, I was just going to ask if you got that from https://wiki.ubuntu.com/ExtensionRepositoryPolicy
+
+ 18:53:12 <lfaraone> do we need content to be DFSG-free / under a free license?
+
+ 18:53:41 <wendar> ajmitch: but then, the second page started from the PostReleaseApps process
+
+ 18:53:52 <lfaraone> Like if I make a game with a non-free soundtrack, or propreitary maps. That's totally cool (explicitly allowed in the GPL FAQ!) but not suitable for main or universe, maybe.
+
+ 18:54:05 <ajmitch> wendar: there are a few too many wiki pages on this
+
+ 18:54:12 <wendar> lfaraone: yes, the ARB only reviews fully DFSG-free content
+
+ 18:54:23 <wendar> ajmitch: yes
+
+ 18:54:31 <lfaraone> ajmitch: we need to have a full-time wiki gardener.
+
+ 18:54:39 <wendar> ajmitch: the PostReleaseApps pages are deprecated, I should add a note
+
+ 18:54:47 * ajmitch isn't volunteering for that role, fwiw :)
+
+ 18:54:54 <coolbhavi> hello all! I'm sorry I came late to the meeting
+
+ 18:55:06 <ajmitch> coolbhavi: glad you could join us, we're still going :)
+
+ 18:55:10 <wendar> ajmitch: but, they also include content that isn't anywhere else yet (though, it's also partially out-of-date)
+
+ 18:55:11 <coolbhavi> :)
+
+ 18:56:11 <ajmitch> wendar: as long as it doesn't conflict with what we do now it should be ok to refer to
+
+ 18:56:25 <wendar> How about linking to the ExtensionRepositoryPolicy from ours, but giving easier short explanations?
+
+ 18:56:48 <wendar> I like "Apps should not be forks of existing applications in the archive."
+
+ 18:56:51 <ajmitch> sounds fair
+
+ 18:56:55 <wendar> it's quick and easy to understand
+
+ 18:57:35 <coolbhavi> wendar, sounds good +1 here :)
+
+ 18:57:45 <lfaraone> wendar: which also covers things which are obviously just GNU hello.
+
+ 18:58:09 <lfaraone> wendar: would it be sensible also to say "should not be a clone of something in the archive"?
+
+ 18:58:29 <lfaraone> wendar: like, if I pull a gnote and implement another application feature-for-feature, etc.
+
+ 18:58:34 <wendar> depends on what clone means
+
+ 18:58:53 <ajmitch> 'useful or interesting to a general audience' is suitably vague that it gives us some discretion as to what to let in
+
+ 18:58:53 <wendar> we'd certainly allow two independent implementations of, say a Last.fm client
+
+ 18:59:18 <wendar> but, a straight copy-and-resubmit we wouldn't
+
+ 19:00:25 <ajmitch> there are some specialised applications that most people wouldn't use but would still be useful to some, I think we would let those through
+
+ 19:00:26 <coolbhavi> lfaraone, fair enough like we give scope for a wider variety of apps by saying that it shouldnt be an exact clone but as wendar said clone should have an unambiguous meaning
+
+ 19:01:13 <lfaraone> hmmm.
+
+ 19:03:21 <lfaraone> Okay, scratch that. I was trying to come up with a case that would make this rule relevant and it ended up sounding much too contrived.
+
+ 19:03:45 <ajmitch> about that tools & libraries one I just added - we don't really want apps bundling libraries, how far should we go in disallowing it?
+
+ 19:03:51 * lfaraone will have to duck out.
+
+ 19:04:05 <ajmitch> lfaraone: thanks for being here
+
+ 19:04:06 <lfaraone> ajmitch: you should not bundle a library already packaged.
+
+ 19:04:06 * highvoltage too in a minute or so)
+
+ 19:04:35 <ajmitch> the problem is when a package needs a compiler which isn't in ubuntu :)
+
+ 19:04:59 <ajmitch> ok we should probably take this one to the list then
+
+ 19:05:12 <lfaraone> ajmitch: like, something for a language we don't support, or just a newer version of an exsiting lang?
+
+ 19:05:38 <ajmitch> lfaraone: new language, a couple are built with some obscure BASIC dialect
+
+ 19:05:55 <wendar> ajmitch: it's a good one to add to the list
+
+ 19:06:01 <ajmitch> they're submissions in the queue at the moment
+
+ 19:06:31 <lfaraone> wendar: "must use existing languages"?
+
+ 19:06:47 <ajmitch> wendar: I'm just not sure where to draw the line on libraries, since some can be large
+
+ 19:07:06 <ajmitch> a definite +1 on not bundling new versions of boost or Qt for example
+
+ 19:08:04 <coolbhavi> here too I ve seen some of them being sizeable
+
+ 19:09:16 <highvoltage> I can guess the answer to this, but I'd just like to be 100% sure, may an ARB app depend on something in the -backports repository?
+
+ 19:10:07 <ajmitch> highvoltage: we haven't discussed that afaik, I'd vote yes though
+
+ 19:10:42 <highvoltage> ajmitch: it sounds like it could potentially be a sane way to deal with things like new versions of qt
+
+ 19:11:00 <wendar> there's a technical problem at the moment, I don't think an Extras package has any way to automatically pull something from backports
+
+ 19:11:11 <coolbhavi> highvoltage, yes, but if thats optional, then a +1 here
+
+ 19:11:31 <ajmitch> right, though it's usually tricky to backport libraries because all reverse (build-)depends need to be tested with it
+
+ 19:11:45 <wendar> hmmm... even if it could, that's potentially dangerous, updating a system library to a backports version
+
+ 19:12:15 <ajmitch> wendar: afaik it should technically work if there's a versioned dependency satisfied only by backports, as long as both extras & backports are kept enabled
+
+ 19:12:18 <highvoltage> I lack a little history, has the topic of appimages ever come up before?
+
+ 19:12:28 <wendar> like, what if the app depends on a newer version of Qt, so pulls it in from backports, and the version of Unity the user is running breaks on the newer version of Qt?
+
+ 19:12:47 <ajmitch> wendar: then that version of Qt wouldn't be allowed into backports
+
+ 19:12:58 <wendar> backports tests "build, install, run", but doesn't test that it works with all dependencies
+
+ 19:13:26 <wendar> i.e. they don't test every package in the archive that uses the backported package
+
+ 19:13:42 <ajmitch> they should, people are asked to do that when submitting a backport request
+
+ 19:15:12 <ajmitch> https://help.ubuntu.com/community/UbuntuBackports#How_to_request_new_packages has the rules for libraries
+
+ 19:15:24 <wendar> "A backport should never cause any other package on the system to break"
+
+ 19:15:27 <wendar> that's good
+
+ 19:15:39 <wendar> but also "New versions of libraries are strongly discouraged"
+
+ 19:15:40 <ajmitch> it's not a complete cowboy operation ;)
+
+ 19:15:42 <wendar> which makes sense
+
+ 19:16:03 <wendar> but, also means it's not very useful for the scenario where an app needs a new version of a library
+
+ 19:16:29 <ajmitch> right, but there's no easy way to handle that without shipping a private copy of a system library
+
+ 19:16:31 <wendar> because, if the changes between versions are so minimal that they have no disruptions
+
+ 19:16:50 <wendar> then the ARB app will likely still support the old and new versions simultaneously
+
+ 19:17:36 <wendar> but, in general, it seems fine to allow backports, if we can solve the problem of pulling in backports as a dependency
+
+ 19:18:19 <ajmitch> I don't know of a good way to test it, but I think the biggest problem is in building the package rather than installing on a user's system
+
+ 19:18:21 <wendar> for example, a new library that isn't in Oneiric, but is in Precise and gets backported to Oneiric, should be no problem
+
+ 19:19:25 <wendar> ajmitch: As I understand it, you have to take a manual step to enable backports for a specific package
+
+ 19:19:33 <ajmitch> PPAs can depend on backports, I just checked on LP
+
+ 19:19:44 <wendar> ajmitch: so, how would the Extras package pull in the backports package?
+
+ 19:20:16 <wendar> I think this is a question for the backports team
+
+ 19:20:25 <ajmitch> wendar: afaik it's a PPA change rather than per-package - if apt can satisfy the dependency only by backports it will pull in the package
+
+ 19:20:34 <wendar> does anyone want to volunteer to chat with them before next meeting?
+
+ 19:20:40 <ajmitch> sure, I will
+
+ 19:20:58 <wendar> ajmitch: that part isn't a problem, backports is enabled by default in Oneiric
+
+ 19:21:14 <wendar> ajmitch: but, it's enabled by default with no packages turned on
+
+ 19:21:28 <wendar> ajmitch: cool, thanks!
+
+ 19:21:43 <ajmitch> wendar: yep, that's set in the Release file as NotAutomatic: Yes
+
+ 19:22:01 <ajmitch> I need to check on the other flag that I know of for that
+
+ 19:22:25 <ajmitch> #action ajmitch to ask about ARB apps depending on backported packages
+
+ 19:22:25 * meetingology ajmitch to ask about ARB apps depending on backported packages
+
+ 19:22:34 <wendar> yeah, specifically "is there a way to specify the backports version of X in the Depends line of a package"
+
+ 19:22:52 <wendar> or Build-Depends
+
+ 19:22:56 <ajmitch> we should probably wrap up this meeting soon
+
+ 19:23:07 <ajmitch> a simple versioned (Build-)Depends should cover it
+
+ 19:23:31 <ajmitch> it's the same situation in debian for experimental, I saw a discussion on it a couple of days ago
+
+ 19:23:32 <wendar> I'll copy our Content requirements from the etherpad into the wiki page
+
+ 19:23:38 <ajmitch> thanks
+
+ 19:23:53 <ajmitch> AOB?
+
+ 19:24:18 <ajmitch> oh I almost forgot
+
+ 19:24:25 <wendar> as an FYI, Anthony Lenton is working now on making our MyApps queue public
+
+ 19:24:41 <wendar> (public read-only)
+
+ 19:24:46 <ajmitch> is it worth having a meeting next month, since it falls between christmas & new year?
+
+ 19:25:08 <wendar> bad timing
+
+ 19:25:16 <wendar> but, I'd hate to go 2 months between
+
+ 19:25:30 <ajmitch> yeah, I may be around but I don't know who else may be
+
+ 19:25:38 <wendar> could we do say 2 weeks from now
+
+ 19:25:40 <highvoltage> I can be there.
+
+ 19:25:44 <wendar> and mid january?
+
+ 19:26:01 <coolbhavi> yes why not have it 2 weeks from now and mid jan? +1
+
+ 19:26:02 <ajmitch> wendar: when do you fly out for LCA?
+
+ 19:26:31 <wendar> ajmitch: probably saturday (so the day after that mid-jan meeting)
+
+ 19:26:45 <ajmitch> wendar: remember that it's saturday here for me now
+
+ 19:26:58 <coolbhavi> me too
+
+ 19:27:06 <wendar> aye, that's why I added the clarification
+
+ 19:27:16 <coolbhavi> early morning 1 am here
+
+ 19:27:17 <wendar> (my saturday, not your saturday)
+
+ 19:27:22 <ajmitch> wendar: ah right :)
+
+ 19:27:27 <wendar> I'll be around and free that Friday between Xmas and New Year too
+
+ 19:27:49 <ajmitch> ok, 2 weeks from now is 9th december, 18:00 UTC
+
+ 19:27:55 <ajmitch> who volunteers to be chair?
+
+ 19:28:41 <ajmitch> wendar: I'll miss the january meeting just because I get to leave ballarat at about 7AM to get to the airport
+
+ 19:29:03 <wendar> that's the middle of a Review shift, so should work out (the 9th, I mean)
+
+ 19:29:10 <ajmitch> ok
+
+ 19:29:24 <wendar> ajmitch: okay, we can decide at Dec 9th if it's worth a mid-Jan meeting
+
+ 19:29:27 <ajmitch> highvoltage: want to chair the next one? :)
+
+ 19:30:02 <stgraber> ajmitch: I guess I can chair. We may also want to switch to having the next chair be the next one in alphabetical order (that's how the DMB and TB do it now and saves quite a bit of time)
+
+ 19:30:26 <ajmitch> stgraber: ok, sounds good
+
+ 19:30:55 <ajmitch> with that, I guess we're done, unless anyone has something to add
+
+ 19:31:29 <wendar> thanks ajmitch!
+
+ 19:31:47 <ajmitch> thanks everyone, sorry it took so long :)
+
+ 19:31:54 <ajmitch> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

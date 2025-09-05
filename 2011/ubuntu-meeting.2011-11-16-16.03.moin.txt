@@ -1,0 +1,466 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:03:01 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-11-16-16.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+''LINK:'' http://upstart.ubuntu.com/cookbook/#how-to-establish-fork-count,   (jhunt_, 16:11:09)
+''LINK:'' http://upstart.ubuntu.com/cookbook/#implications-of-misspecifying-expect,   (jhunt_, 16:11:09)
+''LINK:'' http://upstart.ubuntu.com/cookbook/#recovery-on-misspecification-of-expect.   (jhunt_, 16:11:12)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-upstart-convert-main-initd-to-jobs).   (jhunt_, 16:11:30)
+
+ *Bugz
+
+ *Blueprints
+
+ *AOB
+
+
+
+Meeting ended at 16:53:05 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (59)
+ * slangasek (47)
+ * cjwatson (30)
+ * bdmurray (18)
+ * jhunt_ (17)
+ * stgraber (17)
+ * ubottu (8)
+ * barry (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:03:01 <slangasek> #startmeeting
+
+ 16:03:01 <meetingology> Meeting started Wed Nov 16 16:03:01 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:03:01 <meetingology> 
+
+ 16:03:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:03:34 <slangasek> [TOPIC] Lightning round
+
+ 16:03:36 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt ev bdmurray slangasek)
+
+ 16:03:39 <slangasek> ev cjwatson barry slangasek doko jhunt stgraber bdmurray
+
+ 16:03:48 <ev> eep
+
+ 16:03:51 <ev> can we circle back?
+
+ 16:03:54 <ev> still frantically typing
+
+ 16:03:57 <slangasek> k
+
+ 16:03:58 <slangasek> cjwatson:
+
+ 16:04:27 <cjwatson> Switched over to the new cdimage master machine.  The part of image builds that it does seems about two or three times as fast as before.
+
+ 16:04:29 <cjwatson> Drafted other-p-plusonemaint-priorities.
+
+ 16:04:32 <cjwatson> More poking at exposing a decent Germinate API for Launchpad to use.  I'm making progress but only slowly.
+
+ 16:04:35 <cjwatson> Finished OCaml transition.  Mostly finished Haskell transition.  Much of the way through http://people.canonical.com/~ubuntu-archive/transitions/perl5.14.html.  Other odds and ends of that kind.  700 uploads this week!
+
+ 16:04:39 <cjwatson> Caught up on some merges.
+
+ 16:04:42 <cjwatson> Nibbled around the edges of multiarch cross-building a bit more.  I've started trying to attack the odd cross-architecture gzip mismatch bug ...
+
+ 16:04:44 <cjwatson> ..
+
+ 16:05:23 <barry> python-dbus porting to python 3.  many interesting decisions along the way: <http://bazaar.launchpad.net/~barry/python-dbus/py3/view/head:/PY3PORT.rst>.  status: compiles, test suite runs without crashing (yay!), but does not fully pass.  todo: make the test suite pass <wink>.  once that's done, test with real-world application, upload to ppa, email to mlist, blog.  done.
+
+ 16:08:11 <slangasek> followed through on some multiarching of libraries that was uploaded to Debian
+
+ 16:08:14 <slangasek> reviewing blueprints
+
+ 16:08:16 <slangasek> reviewing resumes for open positions
+
+ 16:08:19 <slangasek> done
+
+ 16:09:05 <slangasek> doko_: you're up
+
+ 16:11:00 <slangasek> jhunt_: why don't you go ahead
+
+ 16:11:09 <jhunt_> Blueprint work. Some significant Upstart Cookbook updates:
+
+ 16:11:09 <jhunt_> http://upstart.ubuntu.com/cookbook/#how-to-establish-fork-count,
+
+ 16:11:09 <jhunt_> http://upstart.ubuntu.com/cookbook/#implications-of-misspecifying-expect,
+
+ 16:11:12 <jhunt_> http://upstart.ubuntu.com/cookbook/#recovery-on-misspecification-of-expect.
+
+ 16:11:15 <jhunt_> fix for bug 771372. Review of code for setuid/setgid stanzas in Upstart.
+
+ 16:11:17 <ubottu> Launchpad bug 771372 in procps (Ubuntu Precise) "procps runs too early in the boot process" [Medium,Triaged] https://launchpad.net/bugs/771372
+
+ 16:11:18 <jhunt_> Discussions with Patrick in QA re automated Upstart testing. Upstart job
+
+ 16:11:20 <jhunt_> logging rework still ongoing. Coding nominally complete - currently
+
+ 16:11:23 <jhunt_> debugging a failing test and working on documenting how to logically
+
+ 16:11:25 <jhunt_> establish the "optimal" start on condition for an Upstart job (to be
+
+ 16:11:28 <jhunt_> used for
+
+ 16:11:30 <jhunt_> https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-upstart-convert-main-initd-to-jobs).
+
+ 16:11:33 <jhunt_> Patch for bug 829980 seems to be working for users, so will upstream and
+
+ 16:11:35 <ubottu> Launchpad bug 829980 in upstart (Ubuntu) "upstart-udev-bridge eats 100% cpu calling dbus_message_iter_append_basic()" [Medium,In progress] https://launchpad.net/bugs/829980
+
+ 16:11:36 <jhunt_> re-merge into official package this week (oneiric and precise).
+
+ 16:11:38 <jhunt_> ∇
+
+ 16:12:21 <stgraber> - Testing tracker
+
+ 16:12:21 <stgraber> - http://91.189.93.73 is usually up to date with what's in the branch
+
+ 16:12:21 <stgraber> - Front page (list of builds) is done
+
+ 16:12:21 <stgraber> - Spent half a day working on SQL optimization, got the worst page load in less than a second now (instead of 5)
+
+ 16:12:24 <stgraber> - Initial work on the testcase view, should be done today
+
+ 16:12:26 <stgraber> - Some work on the user/admin ACLs
+
+ 16:12:29 <stgraber> - Finished drafting all my blueprints
+
+ 16:12:31 <stgraber> - Worked on bug 823366, got a test setup and have a patch to make ifenslave work with our event driven boot (tested on 802.3ad only)
+
+ 16:12:33 <ubottu> Launchpad bug 823366 in ifenslave-2.6 (Ubuntu) "bond_primary is ignored in /etc/network/interfaces" [Undecided,Incomplete] https://launchpad.net/bugs/823366
+
+ 16:12:34 <stgraber> - Some bugfixes in Arkose, still need to run the tests and then push the new version in Precise and SRU some of the fixes to Oneiric
+
+ 16:12:37 <stgraber> - Got upstart:i386 to install on an amd64 system with a patched apt (ppa:stgraber/experimental has the needed packages)
+
+ 16:12:41 <stgraber> - Some LXC upstream and packaging work with Serge, all of that should be uploaded to Precise soonish
+
+ 16:12:44 <stgraber> - TODO
+
+ 16:12:46 <stgraber> - Try to get the new ISO tracker feature-equivalent to the old one by the end of the week
+
+ 16:12:49 <stgraber> - Look at the new ifupdown in Debian (beta2), isolate the fix for bug 876829 and SRU to Oneiric
+
+ 16:12:51 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Triaged] https://launchpad.net/bugs/876829
+
+ 16:12:52 <stgraber> - Still need to get my iSCSI test setup online again and then look at the merge
+
+ 16:13:05 <stgraber> (done)
+
+ 16:13:27 <bdmurray> I was out on the 10th and 11th
+
+ 16:13:27 <bdmurray> tested and committed script to help manage rls-p-tracking bug tasks
+
+ 16:13:27 <bdmurray> setup up precise bug fixing report
+
+ 16:13:38 <bdmurray> wrote mailing list parser to determine where no package bug reports end up going and running a report for 2011
+
+ 16:13:41 <bdmurray> review of cproffit's bug workflow diagram for loco team members (bug reporters)
+
+ 16:13:44 <bdmurray> modification to bug bot commenting on no package bug reports routine
+
+ 16:13:47 <bdmurray> set up new canonistack image for the ultimate debian database
+
+ 16:13:49 <bdmurray> ubiquity bug triage (hardware errors and lack of free space)
+
+ 16:13:51 <bdmurray> .. done ..
+
+ 16:14:00 <slangasek> ev?
+
+ 16:14:33 <ev> - Got a local retracer set up after merging in pitti's fixes.
+
+ 16:14:33 <ev> - Researched RabbitMQ for coordinating retracing crash reports.
+
+ 16:14:34 <ev> - Long call with Robert Collins on the crash database work.
+
+ 16:14:34 <ev> - Robert is happy to help and provide guidance.
+
+ 16:14:34 <ev> - Plan is to use oops-repository (Cassandra) as the database layer and API
+
+ 16:14:35 <ev> for posting (with reply for more detail required), posting core dumps,
+
+ 16:14:35 <ev> getting the full data out (privileged), and update an existing crash
+
+ 16:14:35 <ev> (partially privileged).
+
+ 16:14:35 <ev> - Also agreed to use the oops-repository dictionary format for crashes.
+
+ 16:14:48 <ev> - This will make integrating with Launchpad's longer term plans of this as
+
+ 16:14:48 <ev> a service for all projects an easier challenge. This may be implemented
+
+ 16:14:48 <ev> as one big Cassandra cluster in a multi-tenant fashion, or on a
+
+ 16:14:49 <ev> per-project basis, feeding to an API.
+
+ 16:14:49 <ev> - Need to get something just sending crash signatures (or a likeness)
+
+ 16:14:49 <ev> sharpish to test the scalability.
+
+ 16:14:49 <ev> - Will use RabbitMQ for work queues, while still posting to a Cassandra
+
+ 16:14:50 <ev> ColumnFamily to have a back up queue in case Rabbit falls over.
+
+ 16:14:50 <ev> - Agreed to look at the existing long list of hardware databases created by
+
+ 16:14:51 <ev> Canonical rather than creating yet another one.
+
+ 16:15:03 <ev> - Came up with some plans for fractional deployment for the client.
+
+ 16:15:03 <ev> - And lots, lots more :)
+
+ 16:15:04 <ev> - Started looking into txstatsd and Graphite, per Robert's advice to measure
+
+ 16:15:04 <ev> everything :)
+
+ 16:15:04 <ev> - Proposed a branch to disable removing core files in the Launchpad retracer,
+
+ 16:15:04 <ev> so that we have some profiling data to work with.  Need to follow up to
+
+ 16:15:05 <ev> Martin's comments.
+
+ 16:15:06 <ev> - Ported the crash reporter to C. \o/ Still need to wire up to
+
+ 16:15:06 <ev> NetworkManager.
+
+ 16:15:21 <ev> - Wrote a C parser for the Apport (/RFC822) report format.
+
+ 16:15:21 <ev> - Call with David Pitkin about his plans for improving the 3rd party
+
+ 16:15:22 <ev> application development platform.
+
+ 16:15:22 <ev> - Helped Matthew understand what packages are responsible for writing to the
+
+ 16:15:22 <ev> screen during the boot and shutdown process in support of his work item for
+
+ 16:15:23 <ev> session consistency (bug 882296).
+
+ 16:15:23 <ev> - Background research into moving from JSON to BSON. Some serious wins to be
+
+ 16:15:23 <ev> had.
+
+ 16:15:24 <ev> - Moved from JSON to BSON using MongoDB's C BSON library for transmitting
+
+ 16:15:24 <ev> crash data to the server.
+
+ 16:15:24 <ubottu> Launchpad bug 882296 in gnome-session (Ubuntu) "No complete specification for how Ubuntu sessions are supposed to work" [High,In progress] https://launchpad.net/bugs/882296
+
+ 16:15:24 <ev> - Chat with Rick about helping the DX team get over the testing hump.
+
+ 16:15:26 <ev> (done, I think)
+
+ 16:16:19 <slangasek> BSON, eh?
+
+ 16:16:29 <slangasek> how is that different from JSON?
+
+ 16:16:46 <ev> it's binary
+
+ 16:16:48 <ev> therefore it's better
+
+ 16:16:51 <slangasek> ah
+
+ 16:17:15 * slangasek grins
+
+ 16:17:18 <slangasek> doko_: around at all?
+
+ 16:17:32 <ev> (http://www.mongodb.org/display/DOCS/BSON)
+
+ 16:17:40 <barry> ev: did you see jam's performance analysis on canonical-tech?
+
+ 16:18:02 <ev> of BSON? I believe that's the thread I read on there about it
+
+ 16:18:19 <ev> the one where Robert unpacked the worked involved to send JSON vs BSON over the wire
+
+ 16:19:48 <barry> ev: i really only skimmed the message ;)
+
+ 16:21:33 <ev> barry: :) I was thinking of a different thread, but I've seen this one too :)
+
+ 16:22:26 <ev> I don't think it's possible to do anything but skim that thread. It put me in a coma at UDS.
+
+ 16:23:07 <barry> :-D
+
+ 16:23:27 <slangasek> [TOPIC] Bugz
+
+ 16:23:27 <slangasek> bdmurray: what's new and buggy?
+
+ 16:23:27 * slangasek hmms and prods the bot (or his connection)
+
+ 16:24:17 <bdmurray> mterry brought up bug 459730 this week which cjwatson commented on at one point in time
+
+ 16:24:19 <ubottu> Launchpad bug 459730 in rsyslog (Ubuntu) "rsyslog doesn't create /dev/xconsole " [Undecided,Confirmed] https://launchpad.net/bugs/459730
+
+ 16:24:21 * slangasek tentatively taps his connection
+
+ 16:25:39 <cjwatson> If mterry brought it up, he can reply to my review comment :-)
+
+ 16:26:59 <slangasek> technically it's not a device at all but a pipe... does it belong somewhere other than /dev?
+
+ 16:27:14 <slangasek> I don't think this is a high priority bug though
+
+ 16:27:36 <cjwatson> quite possibly; if it were somewhere other than /dev then we wouldn't have to have the debate about whether it belonged in udev.  /run would work now, perhaps
+
+ 16:28:08 <cjwatson> (noted that in the bug)
+
+ 16:29:38 <slangasek> not sure how many other packages regard xconsole as a "standard" interface, is the only thing that gives me pause
+
+ 16:30:12 <jhunt_> slangasek: one day, when we have opengrok... :)
+
+ 16:30:19 <slangasek> bdmurray: what else you got in the bug jar? :)
+
+ 16:30:21 <bdmurray> okay then, cjwatson do you have a thought on where the _ in bug 861048 is coming from?
+
+ 16:30:23 <ubottu> Launchpad bug 861048 in grub2 (Ubuntu) "have really quick '_' on boot before first purple screen" [Medium,Triaged] https://launchpad.net/bugs/861048
+
+ 16:30:32 <ev> jhunt_: what the RT for the opengrok stuff?
+
+ 16:31:40 <jhunt_> ev: jamespage has done some packaging work. We need to assess infrastructure requirements. I'm currently working on some changes to the OpenGrok core to improve indexing.
+
+ 16:31:55 <cjwatson> bdmurray: I haven't had a chance to see if I can reproduce that; grub2 is supposed to turn off the cursor and then IIRC it sets a magic bit in the boot protocol to tell the kernel not to turn it on
+
+ 16:32:07 <ev> jhunt_: don't forget about the Canonicloud
+
+ 16:32:20 <ev> you can always prototype there
+
+ 16:32:22 <jhunt_> ev: we're using it :)
+
+ 16:32:26 <ev> brilliant
+
+ 16:32:26 <cjwatson> so by design it works; it's possible that grub isn't actually setting that magic bit or that the kernel isn't honouring it, and those are the two likely points of failure
+
+ 16:32:48 <ev> let me know if you get something I can set up an ssh tunnel to
+
+ 16:32:49 <cjwatson> I know Matthew Garrett wrote a kernel patch to do that but right now I don't recall whether it landed
+
+ 16:32:53 <slangasek> cjwatson: 861048 is before the first purple screen though, so before grub has rendered
+
+ 16:33:02 <cjwatson> oh, *before* grub?
+
+ 16:33:05 <slangasek> cjwatson: does that mean it's BIOS output that we can't control?
+
+ 16:33:12 <cjwatson> in that case the BIOS sets it and we can't do anything about it
+
+ 16:33:24 <cjwatson> grub turns it off as pretty much the very first thing it does
+
+ 16:33:30 <slangasek> ok - thought so, but wanted your professional opinion
+
+ 16:33:42 <cjwatson> sorry, hadn't read the up-to-date comments
+
+ 16:33:53 <cjwatson> I'll double-check in the code
+
+ 16:34:36 <bdmurray> I may have also seen an _ when resuming from hibernate - that would be a bug though correct?
+
+ 16:34:53 <cjwatson> (because I might be misremembering)
+
+ 16:35:02 <cjwatson> resuming from hibernate starts out from the BIOS too
+
+ 16:35:21 <cjwatson> however it's possible that we aren't turning it off as quickly there; if so that would be a bug
+
+ 16:35:32 <cjwatson> we may not be able to fix it completely but should do what we can
+
+ 16:35:46 <bdmurray> A video would help I'd imagine?
+
+ 16:36:43 <cjwatson> Hmm.  I may be misremembering about grub.  It does turn off the cursor, but not desperately early
+
+ 16:37:01 <cjwatson> It's possible we can improve things there
+
+ 16:37:58 <cjwatson> I've updated the bug
+
+ 16:39:02 <bdmurray> Additionally there was a session where we discussed text free boot and I'd tested switching to a tty1 and suspending and resuming.  Should I report a bug about that?
+
+ 16:39:27 <cjwatson> yes, I don't remember the exact behaviour but the behaviour we discovered in that session was a bug :;-)
+
+ 16:39:30 <cjwatson> :-)
+
+ 16:40:14 <bdmurray> okay, that answers that then
+
+ 16:41:01 <bdmurray> stgraber you'd talked about taking a pass through casper bugs before we went to UDS.  Do you still plan on doing that? there are a few with patches etc...
+
+ 16:41:30 <stgraber> bdmurray: yes, I actually have some local changes on casper (getting rid of gconf and converting to gsettings)
+
+ 16:42:57 <bdmurray> that's all I've got then
+
+ 16:44:03 <slangasek> cjwatson: related, you have a workitem on https://blueprints.launchpad.net/ubuntu/+spec/desktop-p-text-free-boot to "hunt down" a bug about grub not honouring EDID properly... bug 877278 is the right bugnum, I'm not sure if that means that workitem is done or if it just metamorphoses :)
+
+ 16:44:04 <ubottu> Launchpad bug 877278 in grub2 (Ubuntu) "Boot fails on T61, screen stays blank" [Undecided,New] https://launchpad.net/bugs/877278
+
+ 16:44:37 <slangasek> bdmurray: thanks
+
+ 16:44:45 <cjwatson> let's metamorphose it into that bug then
+
+ 16:44:55 <slangasek> cjwatson: and assign to you?
+
+ 16:44:57 <cjwatson> yep
+
+ 16:45:30 <slangasek> done
+
+ 16:45:33 <slangasek> [TOPIC] Blueprints
+
+ 16:45:43 <slangasek> Blueprints!  Drafting due Friday
+
+ 16:46:01 <slangasek> from what I see we seem to be on track... just be sure to get them wrapped up by then
+
+ 16:46:27 <slangasek> and when you're done drafting and ready for review, please be sure to mark as either 'pending approval' or 'review' so we know
+
+ 16:46:33 <slangasek> any questions?
+
+ 16:46:56 <ev> what time on friday? :)
+
+ 16:47:26 <slangasek> heh
+
+ 16:47:30 <slangasek> before you leave the office is fine
+
+ 16:47:33 <ev> cool
+
+ 16:47:45 <slangasek> but I don't want everyone dumping them on me at 5pm pacific :)
+
+ 16:47:46 <bdmurray> before ev leaves or I leave?
+
+ 16:47:52 <slangasek> bdmurray: yes
+
+ 16:48:41 <slangasek> [TOPIC] AOB
+
+ 16:48:47 <slangasek> anything else?
+
+ 16:49:55 <slangasek> oh, should've said during the lightning round, but just to remind you that I'm out all next week and half of the week after... hence the deadline
+
+ 16:50:30 <cjwatson> oh, I should book holiday before that then
+
+ 16:51:00 <ev> attending a big data event at Millbank tonight - some Cassandra people there, probably MongoDB folks as well. Let me know if you have questions you want passed along.
+
+ 16:51:35 <ev> oh and Hadoop
+
+ 16:52:58 <slangasek> cool
+
+ 16:53:05 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

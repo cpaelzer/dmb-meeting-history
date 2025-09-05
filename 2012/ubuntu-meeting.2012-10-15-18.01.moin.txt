@@ -1,0 +1,209 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:01:53 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-10-15-18.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:01:56)
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/tcptrack.html   (jdstrand, 18:21:38)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pan.html   (jdstrand, 18:21:41)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/boost1.42.html   (jdstrand, 18:21:45)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/php-openid.html   (jdstrand, 18:21:50)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/tryton-server.html   (jdstrand, 18:21:53)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:24:34 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (32)
+ * mdeslaur (15)
+ * sbeattie (7)
+ * sarnold (6)
+ * jjohansen (5)
+ * tyhicks (5)
+ * meetingology (3)
+ * smileE17 (2)
+
+
+
+== Full Log ==
+
+
+ 18:01:53 <jdstrand> #startmeeting
+
+ 18:01:53 <meetingology> Meeting started Mon Oct 15 18:01:53 2012 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:01:53 <meetingology> 
+
+ 18:01:53 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:01:56 <jdstrand> The meeting agenda can be found at:
+
+ 18:01:56 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:02:01 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:02:05 <jdstrand> I'll go first
+
+ 18:02:16 <jdstrand> I'm on community this week
+
+ 18:02:41 <jdstrand> I'll be doing some packaging work for dbx updates
+
+ 18:02:52 <jdstrand> I've got some more python updates coming
+
+ 18:03:10 <jdstrand> I've also got patch piloting to finish today
+
+ 18:03:16 <jdstrand> and finally install audits
+
+ 18:03:23 <jdstrand> mdeslaur: you're up
+
+ 18:03:28 <mdeslaur> I'm in the happy place this week
+
+ 18:03:55 <mdeslaur> I'm working on backporting the munin fixes, and learning how it works to write a test script
+
+ 18:04:07 <mdeslaur> the munin fixes seem to break a few things, so I'm fixing the regressions too
+
+ 18:04:16 <sbeattie> mdeslaur: I use munin locally so I can help test.
+
+ 18:04:18 * jdstrand hugs mdeslaur
+
+ 18:04:19 <mdeslaur> after that, I'll pick something from the list
+
+ 18:04:25 <mdeslaur> sbeattie: cool
+
+ 18:04:34 <mdeslaur> that's pretty much it from me
+
+ 18:04:38 <mdeslaur> sbeattie: you're up
+
+ 18:04:52 <sbeattie> I'm focusing again on apparmor this week
+
+ 18:05:19 <sbeattie> I need to finish up reviewing a couple of things on the mail list and bug reports
+
+ 18:05:58 <sbeattie> I'm planning on starting to look at xace and other display manager issues
+
+ 18:06:27 <sbeattie> I'll probably pick up a couple of other misc apparmor things this week as well
+
+ 18:06:28 <jjohansen> sbeattie: kick /me for xace stuff when you get their
+
+ 18:06:33 <sbeattie> jjohansen: okay, thanks
+
+ 18:06:34 <jjohansen> s/their/there
+
+ 18:07:20 <sbeattie> that's pretty much it for me; micahg, you're up
+
+ 18:07:39 <jdstrand> micah had a last minute errand, so he isn't here
+
+ 18:07:43 <jdstrand> I'll report for him
+
+ 18:08:43 <jdstrand> the webkit backport for 11.10 had some technical hurdles that pushed it back and we need to do an archive grep to make sure the update doesn't break things
+
+ 18:09:14 <jdstrand> micahg will be working on how to tell me how to get him the info he needs for the ABI change
+
+ 18:09:56 <jdstrand> then based on the grep, get the final oneiric packaging uploaded along with any rdeps that need patching/rebuilds
+
+ 18:10:41 <jdstrand> this work will make it so the packaging will be the same on 12.04 and earlier aiui, so that will greatly speed-up updates in the future
+
+ 18:11:02 <jdstrand> 12.04 webkit testing will be performed and it copied to precise-proposed
+
+ 18:11:23 <jdstrand> and then iterating on 10.04 to get a preliminary build going
+
+ 18:11:32 <jdstrand> tyhicks: you're up
+
+ 18:12:13 <tyhicks> As of today, my focus shifts to the apparmor dbus work
+
+ 18:12:37 <tyhicks> I've started reviewing the notes provided by jj and will sync up with him as I have questions
+
+ 18:13:02 <tyhicks> Any spare cycles that I have will be spent on a couple eCryptfs bugs but nothing too urgent
+
+ 18:13:11 <tyhicks> That's it for me
+
+ 18:13:13 <tyhicks> jjohansen: You're up
+
+ 18:14:04 <jjohansen> I need to fix a new locking issue I introduced when doing the proper fix for bug#1056078. I need to kick some display manager confinement stuff over to sbeattie, some more dbus stuff over to tyhicks and then I am going to get the env filtering beta up for people to experiement with
+
+ 18:14:25 <smileE17> Maaz I am Geoffrey De Belie
+
+ 18:14:44 <jjohansen> jdstrand: on the env side their won't be any setting/pinning any time soon
+
+ 18:14:45 <smileE17> Maaz: I hate you
+
+ 18:16:19 <mdeslaur> party crasher
+
+ 18:17:00 <mdeslaur> jjohansen: back to you
+
+ 18:17:22 <jjohansen> heh I think I am done, sarnold over to you
+
+ 18:18:13 <sarnold> I'm on triage this week; I replaced my suspect ssd with one that I hope will provide me with reliable builds. we'll see. I've got qt4-x11 and perl to do this week, and if the builds are repeatable, qt4-x11 at least looks doable. :)
+
+ 18:18:34 <sarnold> jdstrand: back to you
+
+ 18:18:58 <mdeslaur> sarnold: what do you mean by "looks doable"?
+
+ 18:19:34 <sarnold> mdeslaur: the fix is incredibly simple, shouldn't have much impact on anything else. if I can get repeatable builds, it's unlikely to cause regressions for anything, and I'll probably be able to get an update out.
+
+ 18:19:50 <mdeslaur> ok, I see. good.
+
+ 18:20:06 <sarnold> mdeslaur: there's multiple perl problems, and I've not yet investigated them; I feel that it is unlikely I'll get that out this week. we'll see.
+
+ 18:20:37 <mdeslaur> sarnold: yeah, some of those a "low" and don't necessarily have obvious upstream fixes...let me know if you can find some of them
+
+ 18:20:46 <sarnold> mdeslaur: thanks
+
+ 18:20:47 <mdeslaur> s/a/are/
+
+ 18:20:51 <mdeslaur> s/can/can't/
+
+ 18:20:58 <mdeslaur> me write cannot monday do
+
+ 18:21:03 <sarnold> hehee
+
+ 18:21:26 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:21:29 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:21:33 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:21:38 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/tcptrack.html
+
+ 18:21:41 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/pan.html
+
+ 18:21:45 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/boost1.42.html
+
+ 18:21:50 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/php-openid.html
+
+ 18:21:53 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/tryton-server.html
+
+ 18:22:04 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:22:09 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:24:34 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

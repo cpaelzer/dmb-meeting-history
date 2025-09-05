@@ -1,0 +1,574 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 29 May at 15:01 &mdash; 15:44 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-05-29-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 15:29.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:38.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (66)
+ * ev (51)
+ * stgraber (44)
+ * bdmurray (25)
+ * xnox (21)
+ * jodh (15)
+ * barry (14)
+ * doko (11)
+ * ubottu (10)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Wed May 29 15:01:56 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02 <slangasek> [TOPIC] Lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:02 <slangasek> jodh barry slangasek ev stgraber stokachu cjwatson bdmurray doko xnox
+
+ 15:02 * slangasek starts the stopwatch
+
+ 15:03 <jodh> * misc:
+
+ 15:03 <jodh> - Bank Holiday Monday and half day Tuesday.
+
+ 15:03 <jodh> - Fix for Upstart logger bug reported by stgraber now committed.
+
+ 15:03 <jodh> - Registered for DebConf13 and arranged travel.
+
+ 15:03 <jodh> - Reworked
+
+ 15:03 <jodh> lp:~jamesodhunt/ubuntu/saucy/sysvinit/log-processes-and-open-files-on-shutdown.
+
+ 15:03 <jodh> - Reworked lp:~jamesodhunt/upstart/serialise-remaining-objects.
+
+ 15:03 <jodh> - Reworking lp:~jamesodhunt/upstart/allow-multiple-cmdline-confdirs
+
+ 15:03 <jodh> based on feedback from stgraber to allow some actual init
+
+ 15:03 <jodh> command-line tests to be written.
+
+ 15:03 <jodh> * foundations-1305-upstart-app-launching
+
+ 15:03 <jodh> - Raised MP for lp:~jamesodhunt/upstart/libupstart
+
+ 15:03 <jodh> - Merged lp:~mdeslaur/upstart/apparmor-support.
+
+ 15:03 <jodh> ⫸
+
+ 15:03 <jodh> 
+
+ 15:03 <barry> short week due to usa holiday monday
+
+ 15:03 <barry> merges, updates, patch piloting: codespeak-lib, pytest, pyflakes3, zope.interfaces, natilus-python
+
+ 15:03 <barry> bugs: lp: #1173704, lp: #1069019 (reviewed), lp: #1170017 (continuing)
+
+ 15:03 <ubottu> Launchpad bug 1173704 in python-imaging (Ubuntu Raring) "PILcompat needs to add PngImagePlugin" [High,Fix committed] https://launchpad.net/bugs/1173704
+
+ 15:04 <ubottu> Launchpad bug 1069019 in python-apt (Ubuntu Saucy) "[software-properties-gtk] can not delete, enable or modify any software source with non-ASCII characters in the comment" [Medium,Triaged] https://launchpad.net/bugs/1069019
+
+ 15:04 <barry> image based upgrades: catchup w/lifeless & stgraber.  gpg regime discussion
+
+ 15:04 <ubottu> Launchpad bug 1170017 in nautilus-python "nautilus-python fails to load on 64-bit systems: g_module_open libpython failed: No such file or directory" [Medium,New] https://launchpad.net/bugs/1170017
+
+ 15:04 <barry> todo: continue implementation of new gpg regime
+
+ 15:04 <barry> done
+
+ 15:04 <slangasek> * short week due to Memorial Day in the US
+
+ 15:04 <slangasek> * slow week, still recovering from plane plague
+
+ 15:04 <slangasek> * reviews finished
+
+ 15:04 <slangasek> * new skype uploaded to partner
+
+ 15:04 <slangasek> * DebConf travel plans all sorted out
+
+ 15:04 <slangasek> * LPC travel plans to be finalized this week
+
+ 15:04 <slangasek> * fixed sysvinit regression (invoke-rc.d) cascading from a fix to debhelper to make sure we actually call invoke-rc.d for packages that ship an upstart job but not an initscript; this unfortunately broke builds for a day
+
+ 15:05 <slangasek> (done)
+
+ 15:05 <ev> - Worked with Katherine and Neil to get the NDA for https://errors.ubuntu.com
+
+ 15:05 <ev> written and published:
+
+ 15:05 <ev> https://forms.canonical.com/reports/
+
+ 15:05 <ev> - Drafted an announcement of the NDA to ubuntu-devel@.u.c. Waiting on some peer
+
+ 15:05 <ev> review from Matthew.
+
+ 15:05 <ev> - Created a package that purposefully fails in its postinst, creating an apport
+
+ 15:05 <ev> package installation failure report. Modified apport-test-crashes to install
+
+ 15:05 <ev> this in a fakechroot and include the apport report in its output. I just need
+
+ 15:05 <ev> to add this to the integration test now.
+
+ 15:05 <ev> - Simplified the design of our Tarmac machinery. It was taking too long to
+
+ 15:05 <ev> cover all the corner cases in tearing down the world with each deployment
+
+ 15:05 <ev> attempt. Instead, we start with a deployed set of charms and the Tarmac
+
+ 15:05 <ev> instance uses the upgrade-charm functionality (that we created for use in
+
+ 15:05 <ev> stagingstack) to deploy the code from the MP.
+
+ 15:05 <ev> - Finished the above and deployed it. It works \o/:
+
+ 15:05 <ev> http://bazaar.launchpad.net/~daisy-pluckers/daisy/trunk/revision/349
+
+ 15:06 <ev> - Investigating the creation of a "What's unusual about this error?" section to
+
+ 15:06 <ev> the problem page:
+
+ 15:06 <ev> https://wiki.ubuntu.com/ErrorTracker#A.2BIBw-What.2BIBk-s_unusual_about_this_error.2BIB0-
+
+ 15:06 <ev> Started work on surfacing common dependencies between the instances as a
+
+ 15:06 <ev> first pass. This will help us identify cases where the bug exists in the
+
+ 15:06 <ev> library, not the binary its surfacing in. Discussions with Matthew on what
+
+ 15:06 <ev> defines the "rate for matching machines" and whether this is better than a
+
+ 15:06 <ev> simple percentage of the total instances.
+
+ 15:06 <ev> Blocked:
+
+ 15:06 <ev> - The webops team has been sprinting in the weeks since UDS as training for the
+
+ 15:06 <ev> move to squads. This has meant that all non-critical tickets are on hold.
+
+ 15:06 <ev> - We're also stuck by the Cassandra cluster not having enough free disk space
+
+ 15:06 <ev> for compaction. Tickets that create new data, such as back-population jobs,
+
+ 15:06 <ev> are on hold until this is resolved:
+
+ 15:06 <ev> https://rt.admin.canonical.com/Ticket/Display.html?id=61432
+
+ 15:06 <ev> - Due to the way I constructed our oops.canonical.com support, we're blocked on
+
+ 15:06 <ev> further deployments of lp:errors until the RT lands:
+
+ 15:06 <ev> https://rt.admin.canonical.com/Ticket/Display.html?id=61393
+
+ 15:06 <ev> Misc:
+
+ 15:06 <ev> - I attended a talk last night by Russel Winder on how Go and D stack up
+
+ 15:06 <ev> against Python:
+
+ 15:06 <ev> http://skillsmatter.com/podcast/nosql/are-go-and-d-threats-to-python/mh-7418
+
+ 15:06 <ev> I don't think it's worth the language wars that would follow a trip report,
+
+ 15:06 <ev> nor was there a lot of meat in there for the canonical-tech crowd, but I was
+
+ 15:06 <ev> surprised to see that Go's error handling is enforced by policy, not code.
+
+ 15:06 <ev> Unlike exception-based languages, you end up with the whole thing blowing up
+
+ 15:06 <ev> some distance from where the error actually occurred. Julian does a better
+
+ 15:06 <ev> job of explaining it:
+
+ 15:06 <ev> http://bigjools.wordpress.com/2013/04/24/error-handling-in-go/
+
+ 15:06 <ev> That said, it seems like an interesting enough language for server workloads,
+
+ 15:06 <ev> assuming it gets a some mature batteries.
+
+ 15:06 <ev> - I'm 6 today:
+
+ 15:06 <ev> https://pastebin.canonical.com/91771/
+
+ 15:06 <ev> (done)
+
+ 15:07 <stgraber> Blueprint-related work:
+
+ 15:07 <stgraber> - Image based updates (BLUEPRINT: foundations-1305-image-based-updates)
+
+ 15:07 <stgraber> - Waiting on review of the GPG implementation plan, need to get the keys generated and signed after that.
+
+ 15:07 <stgraber> - Waiting for IS to setup the image based update server.
+
+ 15:07 <stgraber> - Fixed a couple of bugs in the image diffing tool, adding a proper test suite now.
+
+ 15:07 <stgraber> - Discussion with lifeless and barry.
+
+ 15:07 <stgraber> Other work:
+
+ 15:07 <stgraber> - release/cdimage
+
+ 15:07 <stgraber> - Wrote a new rebuild-requests tool to query any pending rebuild from the ISO tracker.
+
+ 15:07 <stgraber> - Started integrating this with the actual build process so we can cron that thing.
+
+ 15:08 <stgraber> - Smaller code change to the tracker to automatically mark a rebuild request as done when a new version is pushed (manually or through the API).
+
+ 15:08 <stgraber> - LXC
+
+ 15:08 <stgraber> - Pushed C implementation of get_ips in LXC API, dropped the python implementation and update the bindings
+
+ 15:08 <stgraber> - Fixed LXC in saucy to install properly on a device with network bridges available in the kernel (touch devices).
+
+ 15:08 <stgraber> - Answered some #ubuntu-phone question for the container flip, things appear to be going well
+
+ 15:08 <stgraber> - Answered some questions from the QA/desktop team on using LXC for their desktop tests
+
+ 15:08 <stgraber> - Drafted the implementation of container autostart upstream (to replace the Ubuntu-specific implementation)
+
+ 15:08 <stgraber> - Updated the build/testing server to build on saucy and add armhf builds to the mix
+
+ 15:08 <stgraber> - Various discussions and code reviews for major upstream changes needed for LXC 1.0
+
+ 15:08 <stgraber> - Merged gnupg2, installation-report, openvpn, ifenslave-2.6 and nfs-utils (waiting on testing from slangasek for that last one)
+
+ 15:08 <stgraber> - SRUed isc-dhcp to precise and lucid to allow both to be used as containers on saucy (required backporting the UDP checksum offloading patch)
+
+ 15:08 <stgraber> 
+
+ 15:08 <stgraber> TODO:
+
+ 15:08 <stgraber> - Finish self-rebuilds feature implementation on nusakan
+
+ 15:08 <stgraber> - Implement some of the remaining bits for the image based update server tools
+
+ 15:08 <slangasek> stgraber: ack, will test nfs-utils today
+
+ 15:08 <stgraber> - Process some pending merges (ifupdown and resolvconf)
+
+ 15:08 <stgraber> (DONE)
+
+ 15:08 <stgraber> slangasek: thanks
+
+ 15:09 <slangasek> testing these things would be easier if someone could explain to me why my kernel is holding 1.5GB of memory for disk caches that it will never free
+
+ 15:09 <slangasek> well.  a *lot* of things would be easier if that were the case
+
+ 15:10 <slangasek> ev: "tickets that create new data" - does that block anything for phased updates? bdmurray?
+
+ 15:10 <bdmurray> slangasek: yes
+
+ 15:10 <slangasek> blast - ok.
+
+ 15:10 <bdmurray> although it may not be critical as it is the count of systems that have experienced a crash
+
+ 15:11 <slangasek> well, ticket #61432 already has "priority 20000", that's probably good enough :P
+
+ 15:11 <bdmurray> and actually its backfilling data so not important for packages entering -updates
+
+ 15:11 <ev> bdmurray: you might have some luck if you raise your ticket with the vanguard, as he was correcting my statement that we're blocked by the sprint :)
+
+ 15:12 <slangasek> oh, and stokachu is out this morning, and cjwatson is off today
+
+ 15:12 <slangasek> so, bdmurray:
+
+ 15:12 <bdmurray> submitted RT regarding backfill of bucketsystems
+
+ 15:12 <bdmurray> further work on phased-updater code
+
+ 15:12 <bdmurray> submitted merge proposal regarding sru-review
+
+ 15:12 <bdmurray> review of slangasek's change to sru-review
+
+ 15:12 <bdmurray> review of pending SRUs for errors bucket information
+
+ 15:12 <bdmurray> wrote blog post regarding SRU verification
+
+ 15:12 <bdmurray> release of recently verified SRUs (possibly due to blog posting)
+
+ 15:12 <bdmurray> fixed apport-symptoms bug regarding ubuntu-release-upgrader (LP: #1173913)
+
+ 15:12 <ubottu> Launchpad bug 1173913 in apport-symptoms (Ubuntu Raring) "bugreporting for ubuntu-release-upgrader is struggling on naming issue" [Undecided,Fix committed] https://launchpad.net/bugs/1173913
+
+ 15:12 <bdmurray> investigation into bug 1180034
+
+ 15:12 <ubottu> bug 1180034 in update-notifier (Ubuntu) "backend_helper.py wants update-manager" [Low,Triaged] https://launchpad.net/bugs/1180034
+
+ 15:12 <bdmurray> trying to fix / test bug 1069019
+
+ 15:12 <ubottu> bug 1069019 in python-apt (Ubuntu Saucy) "[software-properties-gtk] can not delete, enable or modify any software source with non-ASCII characters in the comment" [Medium,Triaged] https://launchpad.net/bugs/1069019
+
+ 15:12 <bdmurray> review of DuplicateSignatures for saucy apport-package bug reports
+
+ 15:12 <bdmurray> merged apport bug fix for bug 1184121 regarding duplicate signature for package install failures
+
+ 15:12 <ubottu> bug 1184121 in apport (Ubuntu) "package kio-audiocd (not installed) failed to install/upgrade: trying to overwrite '/usr/share/kde4/services/audiocd.desktop', which is also in package audiocd-kio 4:4.10.2-0ubuntu1" [High,Triaged] https://launchpad.net/bugs/1184121
+
+ 15:12 <bdmurray> modified bugbot to deal with corrupt pyc files
+
+ 15:13 <bdmurray> fixed bugbot issue with apport crashdb on cranberry
+
+ 15:13 <bdmurray> ␗ done
+
+ 15:14 <slangasek> stgraber: image-based update server> I did update the ticket with deadline+priority, but based on what ev's said I guess this ticket is not going to move for a few weeks.  Is that holding anything up for you?
+
+ 15:14 <slangasek> stgraber: and thanks for getting the ifupdown merge; I meant to ask you if that was safe for me to do or if you wanted it held off
+
+ 15:14 <barry> bdmurray, doko think it's time to sru lp: #1058884 ?
+
+ 15:14 <ubottu> Launchpad bug 1058884 in python3.3 (Ubuntu Raring) "Race condition in py_compile corrupts pyc files" [Undecided,Confirmed] https://launchpad.net/bugs/1058884
+
+ 15:15 <doko> barry, I think it doesn't do any harm
+
+ 15:15 <doko> another question if it will help ...
+
+ 15:15 <slangasek> from the profile of that bug report, I suspect it will
+
+ 15:16 <slangasek> so, +1 from me for SRUing
+
+ 15:16 <bdmurray> barry: sounds good to me
+
+ 15:16 <slangasek> are there any python SRUs currently stuck in the queue?  Hmm, I would check this but pending-sru report is broken at the moment - doh
+
+ 15:16 <barry> yep, good, i'll get that started.  doko did i see that you got the same patch into debian?
+
+ 15:16 <bdmurray> I believe there are / were
+
+ 15:16 <doko> yes, there are still some 2.7 ones
+
+ 15:16 <doko> or 3.2?
+
+ 15:17 <stgraber> slangasek: ifupdown is always a pain to merge but I know where the problems tend to be so figure it'd be a lot faster for me to do it
+
+ 15:17 <stgraber> slangasek: so we need the server and the GPG keys online and ready by end of June if we want to respect our deadlines
+
+ 15:17 <stgraber> slangasek: it's not preventing developement of the other bits as we're using phablet.stgraber.org currently which has a valid SSL certificate and can be used with barry's code
+
+ 15:17 <slangasek> stgraber: ok.  I'll make sure to revisit this with IS in the sync call next week, then.
+
+ 15:18 <slangasek> doko: your turn
+
+ 15:18 <barry> stgraber: did you fill out the /gpg tree?
+
+ 15:18 <doko> - android cross toolchain (wanted to upload today, let's see if this works out)
+
+ 15:18 <doko> - preparing and testing gcc 4.8.1 release, looking at http://bugs.debian.org/710220, starte
+
+ 15:18 <doko> d an archive search for saucy
+
+ 15:18 <doko> - binutils trunk update in the ubuntu-toolchain-r/test ppa, waiting on feedback from the ke
+
+ 15:18 <doko> rnel team
+
+ 15:18 <doko> - python3.3 update, consolidating maintainer scripts
+
+ 15:18 <ubottu> Debian bug 710220 in libstdc++6 "libstdc++6: 4.8.0-8 upgrade breaks system_clock" [Important,Open]
+
+ 15:18 <doko> (done)
+
+ 15:19 <stgraber> barry: was actually hoping to hear back from you on the changes I did on the wiki. If everything looks good to you, I'll go ahead and do the changes to phablet.stgraber.org
+
+ 15:19 <xnox> * boost1.53 is finished (less than 17 ftbfs packages left to be
+
+ 15:19 <xnox> resolved in Debian, libreoffice update is being prepared by bjorn)
+
+ 15:19 <xnox> * merged updated fuse, fuse-utils package renamed to fuse (and
+
+ 15:19 <xnox> transition reverse-deps to the new name)
+
+ 15:19 <xnox> * pushed some of ubuntu's d-i delta back to debian, and merged back to
+
+ 15:19 <xnox> ubuntu.
+
+ 15:19 <xnox> * merged and uploaded ubuntu1 plugin for ubiquity, but disabled by
+
+ 15:19 <xnox> default. Can be activated with --sso flag. Prepared instructions for
+
+ 15:19 <xnox> design team review of the changes.
+
+ 15:19 <xnox> * Reviewed changes to ubuntu-geonames service from Liam Young, he is
+
+ 15:19 <xnox> working on charming geonames to work on prod-stack (from IS sprint)
+
+ 15:19 <xnox> * Still have ~40 TIL merges left as per MoM, which I hope to resolve
+
+ 15:19 <xnox> (ideally by syncing ;-))
+
+ 15:19 <xnox> * In-progress adding logind support to ubiquity, I correctly receive
+
+ 15:19 <xnox> seat&session, yet ubiquity doesn't start-up under logind yet.
+
+ 15:19 <barry> stgraber: ack.  i'll get back to you on that later today
+
+ 15:19 <xnox> * Booked travel for DebConf13
+
+ 15:19 <xnox> done.
+
+ 15:19 <stgraber> barry: IIRc changes are mostly format of the keyrings, blacklist keyring, format change of channels.json and some changes on what's using detached signatures vs in-line signatures
+
+ 15:21 <slangasek> xnox: "doesn't start up under logind" - hmm, what does that mean?
+
+ 15:23 <xnox> slangasek: still investigating, ubiquity-dm terminates and doesn't give much useful output. will crank up dbus logging to see what is preventing ubiquity from opening a logind session.
+
+ 15:24 <slangasek> xnox: ok
+
+ 15:24 <slangasek> any other questions over the above?
+
+ 15:24 <xnox> slangasek: now that we have upstart-usersessions, I wonder if ubiquity should simply be a user-job which simply starts up before unity & blocks it.
+
+ 15:25 <slangasek> xnox: mmm, no idea - maybe stgraber has some thoughts on that
+
+ 15:25 <stgraber> xnox: we don't have upstart usersesssion for !ubuntu
+
+ 15:26 <xnox> (if that is possible, it's more of a wondering). Also since there is no pam session initiated, there is also no XDG_RUNTIME and etc. variables.
+
+ 15:26 <xnox> (XDG_RUNTIME_DIR that is)
+
+ 15:26 <stgraber> if we had, we indeed could ship a "start on starting xsession-init and dbus" job which would start ubiquity
+
+ 15:27 <slangasek> you could theoretically split the binary package for user-session activation vs. system activation
+
+ 15:27 <slangasek> though that could make for some unpleasant bit rot on the system activation case
+
+ 15:28 <stgraber> indeed. I'm not sure what's the benefit though if we end up having to maintain the two (sure, the flavours would be responsible for ubiquity-dm, but in the end we'll still be the ones reviewing those and fixing quite a few of the bugs I expect)
+
+ 15:29 <slangasek> right, except perhaps in encouraging the flavors to move to upstart user sessions sooner?
+
+ 15:29 <slangasek> but anyway - probably a conversation for another time and place
+
+ 15:29 <slangasek> [TOPIC] Bugs
+
+ 15:29 <slangasek> bdmurray: any bugs you've not gotten answers on already?
+
+ 15:30 <bdmurray> oh, bug 1094218 received an interesting comment
+
+ 15:30 <stgraber> I can probably quickly look into what would be needed to get kde, lxde and xfce to use user sessions. I don't think it's much more than a single upstart job that starts the right *-session binary
+
+ 15:30 <ubottu> bug 1094218 in lsb (Ubuntu) "lsb_release crashed with IOError in getstatusoutput(): [Errno 10] No child processes (called by teamviewerd)" [Medium,Confirmed] https://launchpad.net/bugs/1094218
+
+ 15:31 <barry> bdmurray: i still have a browser tab open on that one.  i haven't looked closely, but a cursory look was a bit mysterious
+
+ 15:32 <bdmurray> barry: a look at the last comment?
+
+ 15:32 <slangasek> it's a bit speculative
+
+ 15:32 <slangasek> "there may be a SIGCHLD handling bug in python" - sure, there may
+
+ 15:33 <slangasek> but the pipe code has been there a while, how has nobody hit this before?
+
+ 15:33 <slangasek> barry, doko: anyway, it might be worth one of you having a look at os.popen() vs. http://bugs.python.org/issue9127
+
+ 15:33 <barry> yeah, if sys.stderr is closed or otherwise unavailable, that would probably cause the crash.
+
+ 15:33 <slangasek> ah
+
+ 15:34 <slangasek> sys.stderr being closed seems quite plausible here
+
+ 15:35 <slangasek> and I guess reproducing that requires actually closing stderr, not just redirecting to /dev/null :)
+
+ 15:35 <slangasek> (not sure of a good way to test that from shell)
+
+ 15:35 <slangasek> anyway
+
+ 15:35 <slangasek> barry: will you follow up?
+
+ 15:37 <barry> slangasek: yeppers
+
+ 15:37 <slangasek> great, thanks
+
+ 15:37 <slangasek> bdmurray: anything else?
+
+ 15:38 <slangasek> ... assuming not :)
+
+ 15:38 <bdmurray> slangasek: nope
+
+ 15:38 <slangasek> [TOPIC] AOB
+
+ 15:39 <slangasek> bdmurray: ok, thanks :)
+
+ 15:39 <slangasek> anything else new and exciting?
+
+ 15:40 <stgraber> did I ever mention how much I hate ubuntu-release-upgrader? It's now my 5th try at building a source package. I "think" I've got all the needed packages installed on my system now...
+
+ 15:40 <slangasek> stgraber: are you using bzr bd?
+
+ 15:40 <stgraber> yep
+
+ 15:40 <barry> stgraber: i feel your pain
+
+ 15:40 <slangasek> hmm, this package is missing the bzr-builddeb integration hook!
+
+ 15:41 <slangasek> did someone forget to add that when splitting from update-manager?
+
+ 15:41 <stgraber> it just annoys me that this package has more dependencies to build a source package than it has to actually build the binaries :)
+
+ 15:41 <slangasek> yeah
+
+ 15:41 <stgraber> slangasek: it has the hook, pre-build.sh is being called by bzr bd
+
+ 15:41 <slangasek> stgraber: the pre-build.sh should prompt you for all the build-deps in one go, AFAICS
+
+ 15:41 <slangasek> and if it's not doing that, update the dpkg-checkbuilddeps line :)
+
+ 15:41 <bdmurray> I think infinity had mentioned one was missing at the sprint
+
+ 15:42 <stgraber> slangasek: it does for what's needed by the testsuite, then the source package fails to build 5min later because you also need all the build-deps apparently
+
+ 15:42 <bdmurray> or he fixed one
+
+ 15:42 <slangasek> looks like he did, yes
+
+ 15:43 <slangasek> stgraber: oh; I was assuming you'd done 'sudo mk-build-deps -i -r' or equivalent before calling bzr bd, too :)
+
+ 15:43 <slangasek> anywayz
+
+ 15:43 <slangasek> stgraber: thanks for fixing invoke-rc.d :)
+
+ 15:43 <stgraber> slangasek: most if not all packages I maintain don't depend on half the world just to build a source package ;)
+
+ 15:44 <stgraber> anyway, I apparently just got a source package, let's see if I can build that thing and test it somehow
+
+ 15:44 <slangasek> heh
+
+ 15:44 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

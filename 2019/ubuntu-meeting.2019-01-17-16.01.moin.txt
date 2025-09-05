@@ -1,0 +1,357 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 17 Jan at 16:01 &mdash; 16:25 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-01-17-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 16:02.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 16:10.
+
+  * ''LINK:'' https://launchpad.net/ubuntu/+milestone/ubuntu-18.04.2 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-tracking-bug-tasks.html 
+  * ''LINK:'' http://launchpad.net/bugs/1670291 
+
+=== AOB ===
+The discussion about "AOB" started at 16:23.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cyphermox (26)
+ * juliank (24)
+ * sil2100 (21)
+ * bdmurray (18)
+ * xnox (15)
+ * ubottu (14)
+ * rbalint (10)
+ * waveform (10)
+ * tdaitx (9)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:01 <cyphermox> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started Thu Jan 17 16:01:46 2019 UTC.  The chair is cyphermox. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:02 <cyphermox> #topic Lightning rounds
+
+ 16:02 <cyphermox> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson juliank waveform)
+
+ 16:02 <cyphermox> mwhudson cyphermox juliank bdmurray vorlon infinity xnox rbalint doko waveform sil2100 tdaitx
+
+ 16:02 <cyphermox> that means I start.
+
+ 16:02 <cyphermox> - out tomorrow (Friday)
+
+ 16:02 <cyphermox> - debugging arm64 SB crash on some firmwares with dannf
+
+ 16:02 <cyphermox> - investigated systemd-networkd behavior with ip rules (netplan issue with DHCP vs. static with rules)
+
+ 16:02 <cyphermox> - grub2 SRU to trusty for Secure Boot patches
+
+ 16:02 <cyphermox> - dkms + shim-signed update+testing on xenial/trusty
+
+ 16:02 <cyphermox> (done)
+
+ 16:02 <cyphermox> juliank:
+
+ 16:02 <juliank> * wrote a bunch of text
+
+ 16:02 <juliank> * merges / syncs:
+
+ 16:02 <juliank> - merged gpgme1.0 (LP: #1808109)
+
+ 16:02 <juliank> - synced rails as remaining change was upstream, and existing version in proposed was broken anyway
+
+ 16:02 <juliank> * forwarded to Debian
+
+ 16:02 <ubottu> Launchpad bug 1808109 in gpgme1.0 (Ubuntu) "Upgrade to 1.12" [Wishlist,Fix committed] https://launchpad.net/bugs/1808109
+
+ 16:02 <juliank> - gpgme1.0 FTBFS due to expired tests (debian bug 919293)
+
+ 16:03 <ubottu> Debian bug 919293 in src:gpgme1.0 "FTBFS: Test keys expired 2019-01-06" [Serious,Open] http://bugs.debian.org/919293
+
+ 16:03 <juliank> - rails: Tests failing, but package still builds (debian bug 919478)
+
+ 16:03 <ubottu> Debian bug 919478 in src:rails "rails: Tests failing, but package still builds" [Normal,Open] http://bugs.debian.org/919478
+
+ 16:03 <juliank> * apt
+
+ 16:03 <juliank> - SRUed apt 1.7.1 and 1.6.1 to cosmic/bionic (LP: #1787460) (LP: #1811120)
+
+ 16:03 <juliank> - TIL that dpkg maintainer scripts can have "in-favor" removals on conflicts/breaks, and explained that apt does not really support that (debian bug 919543)
+
+ 16:03 <juliank> * autopkgtest:
+
+ 16:03 <juliank> - added mercurial to long test list in autopkgtes
+
+ 16:03 <juliank> - merged and later synced autopkgtest 5.8 from Debian
+
+ 16:03 <ubottu> Launchpad bug 1787460 in linux-meta-hwe (Ubuntu Disco) "Unattended upgrades removed linux-image-generic" [Critical,Triaged] https://launchpad.net/bugs/1787460
+
+ 16:03 <juliank> - fixed duplicity tests to work on usrmerged systems we have on autopkgtest now :)
+
+ 16:03 <ubottu> Launchpad bug 1811120 in apt (Ubuntu Xenial) "Backport auth.conf.d" [Low,Triaged] https://launchpad.net/bugs/1811120
+
+ 16:03 <juliank> - performed early analysis on what's needed for having two cloud workers for autopkgtest
+
+ 16:03 <ubottu> Debian bug 919543 in apt "apt: when installing with deb file, prerm maintainer script doesn't pass new-package-name before it's replaced due to conflict" [Normal,Open] http://bugs.debian.org/919543
+
+ 16:03 <juliank> (done)
+
+ 16:03 <juliank> bdmurray:
+
+ 16:03 <bdmurray> worked with webops to resolve downed retracers
+
+ 16:03 <bdmurray> submitted RT re oops-repository not being up to date on all retracers
+
+ 16:03 <bdmurray> discovered another retrace was down, oops-repository was updated but not
+
+ 16:03 <bdmurray> error-tracker-dependencies so python-cassandra was not installed
+
+ 16:03 <bdmurray> submitted RT re cassandra WriteTimeout traceback on daisy app servers
+
+ 16:03 <bdmurray> SRU test / verification of u-r-u bug LP: #1786484
+
+ 16:03 <bdmurray> investigation into, testing of apport autoreport issue LP: #1787729
+
+ 16:03 <bdmurray> uploaded disco fix for the apport-autoreport.service LP: #1787729
+
+ 16:03 <bdmurray> uploaded update-manager SRUs for B/C for LP: #1798618, #1795024
+
+ 16:03 <bdmurray> special SRU reviews for raspi3 and 18.04
+
+ 16:03 <ubottu> Launchpad bug 1786484 in ubuntu-release-upgrader (Ubuntu) "free space need for /usr could be negative which is wrong" [High,Fix released] https://launchpad.net/bugs/1786484
+
+ 16:04 <bdmurray> ✔ done
+
+ 16:04 <xnox> * first week back from holidays
+
+ 16:04 <xnox> * going through mail/bugmail/etc
+
+ 16:04 <xnox> * Uploaded updates to:
+
+ 16:04 <xnox> - zhmcclient, btrfs-progs, valgrind, mdadm, s390-tools
+
+ 16:04 <xnox> * Bug fixes:
+
+ 16:04 <xnox> - meson, dash, ubiquity (sru)
+
+ 16:04 <xnox> * Working on v240 systemd merge & srus (got trumped by security over
+
+ 16:04 <xnox> christmas)
+
+ 16:04 <ubottu> Launchpad bug 1787729 in apport (Ubuntu Cosmic) "apport-autoreport.service fails if whoopsie isn't running" [High,In progress] https://launchpad.net/bugs/1787729
+
+ 16:04 <ubottu> Launchpad bug 1795024 in update-manager (Ubuntu Cosmic) "setting release-upgrades Prompt to never can cause confusing behavior" [Medium,In progress] https://launchpad.net/bugs/1795024
+
+ 16:04 <ubottu> Launchpad bug 1798618 in update-manager (Ubuntu Cosmic) "confusing error message with 'do-release-upgrade -d' and Prompt=lts" [Medium,In progress] https://launchpad.net/bugs/1798618
+
+ 16:04 <xnox> (done)
+
+ 16:04 <rbalint> (short week due to being on sick leave)
+
+ 16:04 <rbalint> * uploaded meld 3.20.0-1
+
+ 16:04 <rbalint> * set --jobs 4 in mercurial autopkgtest to not time out (waiting for tests)
+
+ 16:04 <rbalint> * partner work
+
+ 16:04 <rbalint> * wrote MIR for uchardet
+
+ 16:04 <rbalint> * discussed adding /var/run/reboot-required(.pkgs) usage to Debian Policy BTS #919507
+
+ 16:04 <rbalint> (done)
+
+ 16:04 <xnox> rbalint, debian policy - nice!
+
+ 16:05 <juliank> rbalint: so we both fixed mercurial, you in the package, me by increasing the timeout? that's... special
+
+ 16:05 <xnox> next time it regresses, you shall pair programme!
+
+ 16:05 <juliank> lol
+
+ 16:06 <xnox> waveform, ?
+
+ 16:07 <waveform> - u-boot and irqbalance packages done
+
+ 16:07 <waveform> - mucking in on the backlog
+
+ 16:07 <waveform> * json-schema-validator 2.3.1-3ubuntu2 updated (and sponsored)
+
+ 16:07 <waveform> * ruby-albino prepared; need to check about upstreaming
+
+ 16:07 <waveform> * xonsh: not figured out what the issue is yet
+
+ 16:07 <waveform> - learning image building (pi3 classic done, pi2 classic not quite)
+
+ 16:07 <waveform> - CM3 acquired, because MOAR PI! Will begin testing images on it
+
+ 16:07 <waveform> (done)
+
+ 16:08 <sil2100> Oh, me?
+
+ 16:08 <sil2100> Already?
+
+ 16:08 <juliank> yes, sil2100, you, already
+
+ 16:08 <juliank> :)
+
+ 16:08 <xnox> sil2100, also can join the call?
+
+ 16:08 <sil2100> - Many kernel SRU reviews (new cycle)
+
+ 16:08 <sil2100> - SRU reviews and releases
+
+ 16:08 <sil2100> - DMB meeting
+
+ 16:08 <sil2100> - Fixing core18 snap builds caused by a locale-dependent test failing on builders
+
+ 16:08 <sil2100> - raspi3 'upstreaming':
+
+ 16:08 <sil2100> * Pushing flash-kernel, raspi3-firmware and Dave's u-boot + irqbalancer to bionic
+
+ 16:08 <sil2100> * Finished work-around hack for enabling multiverse in gadget tree builds on builders
+
+ 16:08 <sil2100> * Got working cdimage raspi3 builds for disco
+
+ 16:08 <sil2100> * Did a manual cpc livefs -proposed enabled raspi3 build - success!
+
+ 16:08 <sil2100> * Confirmed reported possible issues with using raspi3-firmware on pi3
+
+ 16:08 <sil2100> * Prepared an updated linux-firmware-raspi2 + livecd-rootfs in PPA for testing
+
+ 16:08 <sil2100> * Changed classic pi3-gadget to use different config.txt for armhf and arm64
+
+ 16:08 <sil2100> - Sent credentials for core-snap rebuilds to CPC
+
+ 16:08 <sil2100> - Fixed a typo in core-snap rebuilder jenkins script
+
+ 16:08 <sil2100> - Started looking into trello API and the available Python bindings
+
+ 16:08 <sil2100> - Sponsored irqbalancer and json-schema-validator for Dave
+
+ 16:09 <sil2100> - Performed NEW reviews of ec2-hibinit-agent and zhmcclient
+
+ 16:09 <sil2100> - Performed a few package removals
+
+ 16:09 <sil2100> (done)
+
+ 16:09 * juliank read Pushing flash-kernel as Punishing flash-kernel
+
+ 16:09 <tdaitx> * openjdk security update
+
+ 16:09 <tdaitx> - provided packages for openjdk 8 (cosmic, bionic, xenial) and 11 (cosmic) to the security team; also uploaded both to disco
+
+ 16:09 <tdaitx> - openjdk 7 updated to icedtea 2.6.16 7u201
+
+ 16:09 <tdaitx> - openjdk 7 security backport of 8u201 is ongoing, adapting hotspot code from S8210094
+
+ 16:09 <tdaitx> * openjdk-lts autopkgtest disk space issues
+
+ 16:09 <tdaitx> - fixed and included on the latest security updates
+
+ 16:09 <tdaitx> Other:
+
+ 16:09 <tdaitx> - travelling to EU next Saturday (26 Jan)
+
+ 16:09 <tdaitx> (done)
+
+ 16:10 <cyphermox> #topic Release incoming bugs
+
+ 16:10 <rbalint> waveform, do you have the ruby-albino patch somewhere?
+
+ 16:11 <cyphermox> anything about the point-release bugs or dd bugs?
+
+ 16:11 <waveform> rbalint, I've got an updated package in my PPA: https://launchpad.net/~waveform/+archive/ubuntu/pkg
+
+ 16:11 <bdmurray> bug 1804673 - will there be a cosmic SRU for that?
+
+ 16:11 <ubottu> bug 1804673 in gnutls28 (Ubuntu Cosmic) "gnutls causes gnome-music segmentation fault" [Undecided,New] https://launchpad.net/bugs/1804673
+
+ 16:12 <juliank> yes
+
+ 16:12 <xnox> https://launchpad.net/ubuntu/+milestone/ubuntu-18.04.2
+
+ 16:12 <waveform> rbalint, however the relevant upstream bug (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=919564) seems ... well, I'm not sure what they're going to do
+
+ 16:12 <ubottu> Debian bug 919564 in src:ruby-albino "ruby-albino: must alter (build) dependency on python-pygments" [Normal,Open]
+
+ 16:12 <juliank> bdmurray: I gotta write up a test case for the SRU, but I was busy with the other stuff :)
+
+ 16:12 <bdmurray> Maybe we should look at the rls-bb-tracking list?
+
+ 16:12 <bdmurray> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-tracking-bug-tasks.html
+
+ 16:13 <xnox> http://launchpad.net/bugs/1670291
+
+ 16:13 <ubottu> Launchpad bug 1670291 in systemd (Ubuntu Trusty) "Landscape: Upgrade 14.04.5 to 16.04.2 fails unable to reboot" [Undecided,New]
+
+ 16:14 <rbalint> waveform, tried updating ruby-albino deps and did fix the test but maybe i missed something
+
+ 16:15 <rbalint> waveform, thanks, i'll follow up later
+
+ 16:16 <bdmurray> cyphermox: is bug 1401532 in progress?
+
+ 16:16 <ubottu> bug 1401532 in grub2-signed (Ubuntu Bionic) "GRUB's Secure Boot implementation loads unsigned kernel without warning" [High,In progress] https://launchpad.net/bugs/1401532
+
+ 16:20 <cyphermox> yes still in progress, I got the underlying work done in disco late last week
+
+ 16:20 <cyphermox> now to do the SRUs
+
+ 16:20 <cyphermox> vorlon: should this be targetted for 18.04.2?
+
+ 16:20 <cyphermox> (we might not get an answer now)
+
+ 16:20 <cyphermox> ok; anything else for point release?
+
+ 16:20 <bdmurray> There sure are a lot of bugs with bionic tasks. Maybe I should cull the list and look for important ones.
+
+ 16:20 <cyphermox> heh
+
+ 16:23 <cyphermox> #topic AOB
+
+ 16:23 <bdmurray> Next Monday is a US Holiday but I'll be working.
+
+ 16:23 <cyphermox> any AOB?
+
+ 16:23 <cyphermox> oh, ack
+
+ 16:24 <bdmurray> Oh, I guess the other US employees aren't here
+
+ 16:24 <cyphermox> but they also said they will likely not be available
+
+ 16:25 <cyphermox> alright, that's it then
+
+ 16:25 <cyphermox> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,427 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Developer Membership Board meeting, started by rbasak, 05 Sep at 19:09 &mdash; 19:59 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-09-05-19.09.log.html
+
+
+
+== Meeting summary ==
+
+===  ===
+
+Discussion started by rbasak at 19:09.
+
+
+=== Ubuntu MOTU Developer Applications ===
+
+Discussion started by rbasak at 19:09.
+
+ * '''Frank Heimes'''  (rbasak, 19:10)
+  * ''LINK:'' https://irclogs.ubuntu.com/2022/07/25/%23ubuntu-meeting.html#t16:42   (rbasak, 19:10)
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/   (fheimes, 19:36)
+  * ''VOTE:'' Grant Frank Heimes MOTU (Carried)  (rbasak, 19:45)
+
+=== Package Set/Per Package Uploader Applications ===
+
+Discussion started by rbasak at 19:48.
+
+ * '''Joshua Peisach (for 2022-09-05)'''  (rbasak, 19:48)
+
+
+
+== Vote results ==
+
+ * [[https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-09-05-19.09.log.html#95|Grant Frank Heimes MOTU]]
+  * Motion carried (For: 2, Against: 0, Abstained: 2)
+   * Voters: rbasak, kanashiro[m], sil2100, utkarsh2102
+
+
+
+== People present (lines said) ==
+
+ * rbasak (53)
+ * fheimes (44)
+ * utkarsh2102 (30)
+ * sil2100 (15)
+ * ItzSwirlz (13)
+ * meetingology (11)
+ * kanashiro[m] (9)
+ * rs2009 (7)
+ * teward[m] (2)
+
+
+
+== Full log ==
+
+
+ 19:09 <rbasak> #startmeeting Developer Membership Board
+
+ 19:09 <meetingology> Meeting started at 19:09:23 UTC.  The chair is rbasak.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 19:09 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 19:09 <rbasak> I'm just going to jump straight in then
+
+ 19:09 <rbasak> #topic
+
+ 19:09 <rbasak> #topic Ubuntu MOTU Developer Applications
+
+ 19:10 <rbasak> #subtopic Frank Heimes
+
+ 19:10 <rbasak> Previous adjourned meeting:
+
+ 19:10 <rbasak> #link https://irclogs.ubuntu.com/2022/07/25/%23ubuntu-meeting.html#t16:42
+
+ 19:10 <rbasak> I'd like to maybe continue asking fheimes about both transitions and proposed migration
+
+ 19:11 <fheimes> sure
+
+ 19:11 <rbasak> Does anyone else have any questions for fheimes?
+
+ 19:11 <sil2100> I'm still reading through the previous logs and the application, as I was not present on the previous meeting
+
+ 19:12 <utkarsh2102> I have, but I'll ask after rbasak or jump in if I have anything in b/w
+
+ 19:12 <rbasak> fheimes: OK, so on transitions, I'm just looking to get some confidence that you won't accidentally trigger one when you upload.
+
+ 19:13 <rbasak> Did you consider anything further since we discussed this last time?
+
+ 19:14 <fheimes> I had a look at some transition, the pcre2 transition
+
+ 19:14 <fheimes> and I also proceeded with some work on proposed-migration
+
+ 19:14 <fheimes> so you may ask in both directions if you want
+
+ 19:15 <rbasak> Can you suggest a simple check that you can do before you upload that would catch if a regular transition would be triggered by your upload?
+
+ 19:15 <fheimes> a transition that I once faced was a more trivial one: libica
+
+ 19:16 <fheimes> a change in the name of the binary package for example: like an SONAME bump (libfoo[n] changes to libfoo[n+1])
+
+ 19:16 <rbasak> Great, thanks :)
+
+ 19:16 <rbasak> OK, and for proposed migration I'm just looking to ensure that you know how to look after a package after you've upload to make sure it lands.
+
+ 19:17 <rbasak> How would you check to see if it's landed, and where would you look to find the reason if it hasn't?
+
+ 19:18 <fheimes> several ways to check IF it landed: LP, rmadison, enable proposed and have a look etc.
+
+ 19:18 <utkarsh2102> "enable proposed and have a look"?
+
+ 19:18 <fheimes> if it didn't landed, there must be a reason for it, and the update_excuse page(s) will help
+
+ 19:18 <rbasak> Where is the update_excuse page please/
+
+ 19:18 <rbasak> ?
+
+ 19:19 <fheimes> "apt-cache policy" -- but tbh I wouldn't really do that
+
+ 19:19 <fheimes> this one points to the current devel release: https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses.html
+
+ 19:19 <rbasak> OK thanks!
+
+ 19:19 <rbasak> utkarsh2102: over to you?
+
+ 19:19 <fheimes> but there are others for the stble releases as well
+
+ 19:19 <fheimes> s/stble/stable
+
+ 19:20 <sil2100> I also have a question o/
+
+ 19:20 <utkarsh2102> fheimes: what if there's nothing worthwhile on the update_excuses page and for some reason, the package has still not migrated?
+
+ 19:20 <fheimes> (I helped on getting zlib through for K and J - now with F ...)
+
+ 19:20 <utkarsh2102> what would you do then?
+
+ 19:22 <fheimes> well, there are more things to check (lik block-proposed tag, in case of an SRU missing verification)
+
+ 19:22 <fheimes> but if there is nothing I can find I would of course ask - e.g. AA
+
+ 19:23 <utkarsh2102> block-proposed is clearly show in the update_excuses page
+
+ 19:23 <fheimes> (I would consider failed tests and  broken dependencies as worthwhile ...)
+
+ 19:23 <utkarsh2102> my question was what if you don't find anything worthwhile there. No obvious blockers or block-proposed or anything.
+
+ 19:24 <utkarsh2102> what would you do? Where would you look?
+
+ 19:24 <utkarsh2102> fheimes: but those reasons are shown in the update_excuses page, isn't it?
+
+ 19:24 <fheimes> yes, hence I would consider them also as worthwhile ...
+
+ 19:25 <utkarsh2102> uh, let me rephrase my question
+
+ 19:26 <utkarsh2102> what all steps are checked/performed in proposed-migration
+
+ 19:27 <utkarsh2102> let's say you uploaded src:foo to the devel release
+
+ 19:27 <fheimes> so it's checked if it's a "valid caniidate"
+
+ 19:27 <utkarsh2102> where does it go first?
+
+ 19:27 <fheimes> means it must build on all archs
+
+ 19:27 <utkarsh2102> yes, what checks are done for that?
+
+ 19:28 <fheimes> all deps must be satisfyiable (either with release of other packages that are migrated at the same time)
+
+ 19:28 <fheimes> and all tests must not be regress
+
+ 19:28 <fheimes> tests of the package, it's binaries or of it's reverse deps
+
+ 19:29 <utkarsh2102> of the package itself? Or?
+
+ 19:29 <utkarsh2102> ok, then?
+
+ 19:30 <fheimes> the and it must not break anything when it's get moved to release  (packages that are already in release)
+
+ 19:31 <fheimes> there are a lot of reasons that  may prevent a package from being migrated, listed in the ubuntu-server handbook
+
+ 19:31 <utkarsh2102> alright, since we have another candidate, i don't want to drag this. What I want to hear is "in case everything's passing and the package still doesn't migrate, there might be uninstallabilty issues". D'you know about them? And where would you look?
+
+ 19:31 <fheimes> but these largely cause an indication on update_excuses, too
+
+ 19:32 <fheimes> that is one of them, more are:
+
+ 19:32 <fheimes> main/universe binary mismatch
+
+ 19:32 <fheimes> has no binaries on arch
+
+ 19:32 <sil2100> Yeah, update_excuses nowadays seems to have most of the info
+
+ 19:32 <fheimes> different kinds of dependency issues
+
+ 19:32 <rbasak> Does anyone else have questions for fheimes?
+
+ 19:33 <kanashiro[m]> fheimes: do you know the recommended way to trigger tests nowadays?
+
+ 19:33 <sil2100> fheimes: as this is something utkarsh2102 might have wanted to hear: do you know about update_output.txt?
+
+ 19:34 <fheimes> install issues: e.g. in case the dependent and depending packages are in different areas of the archive (one in main and the other in universe)
+
+ 19:34 <fheimes> install issues: e.g. in case the dependent and depending packages are in different areas of the archive (one in main and the other in universe)
+
+ 19:34 <fheimes> or: a source package may have some binaries in main and others in universe, but this can get mixed up for various reasons
+
+ 19:35 <fheimes> for retriggering test you need to have permissions
+
+ 19:35 <fheimes> but it is generally done based on a autopkgtest URL
+
+ 19:35 <fheimes> I modified several URLs for tests and asked core-devs to re-trigger them for me
+
+ 19:36 <fheimes> sil2100: I see
+
+ 19:36 <fheimes> so yes, update_excuses is only one of the interesting files here:
+
+ 19:36 <kanashiro[m]> fheimes: how would you generate those URLs?
+
+ 19:36 <fheimes> https://people.canonical.com/~ubuntu-archive/proposed-migration/
+
+ 19:37 <fheimes> I think there is a generator, but tbh. so far I modified them by hand (I think it's not to difficult)
+
+ 19:37 <utkarsh2102> fheimes: I think you're confusing with different things here. I have a feeling that you're talking about component-mismatches(?)
+
+ 19:37 <utkarsh2102> anyway, skip that for now
+
+ 19:37 <utkarsh2102> we have less time
+
+ 19:37 <utkarsh2102> over to kanashiro
+
+ 19:38 <fheimes> at the update_excuses page there is the re-trigger link (that I cannot use myself)
+
+ 19:38 <kanashiro[m]> fheimes: to avoid re-triggering tests already in the queue you can use retry-autopkgtest-regressions
+
+ 19:39 <fheimes> I thought that is s/t only core-devs can do (but I might be wrong)
+
+ 19:39 <kanashiro[m]> I am done, sil2100 ?
+
+ 19:40 <sil2100> fheimes: so yeah, nowadays most info is in update_excuses, but there is also the update_output.txt file for proposed migration that includes some additional britney info, helpful when trying to determine installability issues of packages in -proposed
+
+ 19:40 <kanashiro[m]> fheimes: if you become a MOTU dev you can trigger tests for packages in universe as well
+
+ 19:40 <sil2100> I'm good if anything
+
+ 19:41 <rbasak> #vote Grant Frank Heimes MOTU
+
+ 19:41 <meetingology> Please vote on: Grant Frank Heimes MOTU
+
+ 19:41 <fheimes> (that would be a relief to be able to retrigger at least the universe ones - for digging deeper into autopkgtest issues I usually have to run them locally ...)
+
+ 19:41 <meetingology> Public votes can be registered by saying +1, -1 or +0 in channel (for private voting, private message me with 'vote +1|-1|+0 #channelname')
+
+ 19:41 <rbasak> +1
+
+ 19:41 <meetingology> +1 received from rbasak
+
+ 19:42 <kanashiro[m]> +0
+
+ 19:42 <meetingology> +0 received from kanashiro[m]
+
+ 19:42 <rbasak> I was hoping you'd point to the proposed migration documentation page, but you did say that you'd ask for help, and you do know how to identify when you need it. Note that asking for help generally (eg. in #ubuntu-devel) will probably be the most effective - other people will be able to see what's going on. You probably won't need an AA, but if you do, then someone will be able to determine that
+
+ 19:42 <rbasak> for certain. And there are more non-AAs :)
+
+ 19:43 <fheimes> well, I really thought tha knowing this page is trivial
+
+ 19:43 <rbasak> ItzSwirlz: I'm sorry, it looks like we're not going to have enough time today :-(
+
+ 19:43 <ItzSwirlz> rbasak: in that case, and i hate to say this but you guys are going to have to vote in my absence
+
+ 19:43 <sil2100> +1
+
+ 19:43 <meetingology> +1 received from sil2100
+
+ 19:44 <utkarsh2102> +0 with reasons to follow
+
+ 19:44 <meetingology> +0 with reasons to follow received from utkarsh2102
+
+ 19:44 <ItzSwirlz> unless you want to move the meeting to another time past 4:10 -0400
+
+ 19:44 <kanashiro[m]> I feel fheimes needs some more work on the development release to assimilate all the concepts better, some +1 maint work would be welcome
+
+ 19:44 <rbasak> ItzSwirlz: we can try to find a time that works for you
+
+ 19:45 <utkarsh2102> yes, that^
+
+ 19:45 <rbasak> #endvote
+
+ 19:45 <meetingology> Voting ended on: Grant Frank Heimes MOTU
+
+ 19:45 <meetingology> Votes for: 2, Votes against: 0, Abstentions: 2
+
+ 19:45 <meetingology> Motion carried
+
+ 19:46 <rbasak> Correction - not carried. We have +2, with 3 DMB members absent. We need at least two other votes to reach a conclusion I think.
+
+ 19:46 <rbasak> Sorry we didn't manage to reach a conclusion fheimes. I'll follow up on the list.
+
+ 19:46 <utkarsh2102> whilst knowing those things aren't _absolutely_ necessary, it's always good to know. If you don't know or are confused about something, ask on #ubuntu-devel. You're gonna wanna be a core-dev at one point, I think knowing those would be really helpful and needed then.
+
+ 19:46 <sil2100> rbasak: one vote seem enough
+
+ 19:47 <rbasak> sil2100: if it's a +1.
+
+ 19:47 <rbasak> If it's a -1 then we'd need more.
+
+ 19:47 <rbasak> This is the problem with +0 votes :-(
+
+ 19:47 <sil2100> rbasak: ah, yes, indeed, I guess I misunderstood!
+
+ 19:47 <sil2100> I meant one more +1 for this to be carried
+
+ 19:48 <rbasak> #topic Package Set/Per Package Uploader Applications
+
+ 19:48 <rbasak> #subtopic     Joshua Peisach (for 2022-09-05)
+
+ 19:49 <rbasak> I suggest there's not enough time now to handle this application.
+
+ 19:49 <rbasak> Maybe we should reduce to max 1 application per meeting?
+
+ 19:49 <utkarsh2102> ItzSwirlz: you'll not be able to make it at any of the 2 slots we have?
+
+ 19:49 <rbasak> Anyway, let's use the remaining time to find a solution.
+
+ 19:49 <sil2100> rbasak: should we start it now and then maybe continue via e-mail?
+
+ 19:49 <sil2100> Or should we just move it to the a meeting at a time that's more convenient for ItzSwirlz ?
+
+ 19:49 <ItzSwirlz> utkarsh2102: school starts up tomorrow for me and my day runs from 8 am to 4:10 pm -0400, not the most fun situation
+
+ 19:50 <ItzSwirlz> sil2100: I'd rather move to another time so there won't be time wasted on waiting for responses from me
+
+ 19:50 <rbasak> I have no objection to starting now, but I'm quite reluctant to fall back to e-mail unless there's really no other option. I'd prefer to find a time that we can mutually make, even if we have to arrange a meeting at a special time for that.
+
+ 19:50 <sil2100> ACK
+
+ 19:51 <rbasak> How about we move the next meeting which would be at 1600 UTC to 2100 UTC instead?
+
+ 19:52 <rbasak> Or, how about before 8am for ItzSwirlz? Would that work?
+
+ 19:52 <ItzSwirlz> rbasak: lol i have to get on the bus at 7:15, but if it wasnt for that i'd say yes (oof)
+
+ 19:52 <ItzSwirlz> 2100 UTC would be good, let me check my calendar
+
+ 19:52 <rs2009> I'll probably be applying for PPU status in the next DMB meeting (for the Ubuntu Unity packages)
+
+ 19:52 <rbasak> 19 Sept 2100 UTC
+
+ 19:53 <utkarsh2102> 21 UTC means 0230 for me.
+
+ 19:53 <rbasak> rs2009: sorry if this one happens I don't think we'd be availabl then. You'd have to wait for the next one.
+
+ 19:53 <utkarsh2102> I'll not be able to make it
+
+ 19:53 <rbasak> We don't usually have the meetings so full.
+
+ 19:53 <ItzSwirlz> That would be good-ohhh utkarsh2102 ._.
+
+ 19:53 <rs2009> rbasak: sure :)
+
+ 19:53 <kanashiro[m]> 2100 UTC works for me
+
+ 19:54 <rs2009> utkarsh2102: it's actually 1:23 am here in India
+
+ 19:54 <sil2100> I could do 2100 UTC if needed
+
+ 19:54 <rbasak> sil2100, bdmurray, teward[m], kanashiro[m]: ^ how does 19 Sept 2100 UTC work for you?
+
+ 19:54 <rbasak> Thanks!
+
+ 19:54 <rbasak> That's three. Let's see if we can get a fourth on the ML.
+
+ 19:55 <ItzSwirlz> Cool
+
+ 19:55 <utkarsh2102> rs2009: the proposal is for 2100 UTC, which is 0230 IST
+
+ 19:55 <utkarsh2102> let me know if have my math wrong? 😢
+
+ 19:55 <ItzSwirlz> Quick Q - can I still endorse rs2009 pre-approval
+
+ 19:55 <rbasak> utkarsh2102: it's OK, you can be helpful when there's someone further east of you needing a special meeting time :-P
+
+ 19:55 <rs2009> utkarsh2102: actually have my exams from Wednesday, so prob won't be able to attend :(
+
+ 19:56 <rbasak> ItzSwirlz: please do comment, but make it clear you're not an uploader (yet).
+
+ 19:56 <rbasak> And you can change that if your status changes before rs2009's meeting!
+
+ 19:56 <utkarsh2102> rbasak: yeah, kinda waiting for that day
+
+ 19:56 <teward[m]> rbasak thats ok for me
+
+ 19:56 <ItzSwirlz> will do
+
+ 19:56 <rs2009> ItzSwirlz: thanks! :)
+
+ 19:56 <rbasak> Great we have four. So we'll be quorate. Thanks all!
+
+ 19:56 <ItzSwirlz> thanks everyone
+
+ 19:56 <rbasak> We're basically out of time, so let's finish for now, and defer the rest of the agenda for next time.
+
+ 19:57 <rbasak> The next meeting will be at a special time, so I'll amend the agenda accordingly.
+
+ 19:57 <teward[m]> *goes back to the family cookout gettogether*
+
+ 19:57 <fheimes> thx (good luck ItzSwirlz)
+
+ 19:58 <ItzSwirlz> fheimes: ty, you too
+
+ 19:58 <sil2100> o/
+
+ 19:58 * rs2009 puts down phone and tries to go to sleep at 1:30 am
+
+ 19:58 <utkarsh2102> o/
+
+ 19:58 <kanashiro[m]> o/
+
+ 19:59 <ItzSwirlz> o/
+
+ 19:59 <rs2009> o/
+
+ 19:59 <rbasak> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

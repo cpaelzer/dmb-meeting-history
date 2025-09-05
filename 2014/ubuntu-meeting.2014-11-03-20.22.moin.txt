@@ -1,0 +1,230 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 03 Nov at 20:22 &mdash; 20:53 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-11-03-20.22.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 20:23.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 20:23.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 20:49.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/sup-mail.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/openvswitch.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/isync.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pdns.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ganeti.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 20:49.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (39)
+ * sarnold (10)
+ * jjohansen (10)
+ * tyhicks (8)
+ * mdeslaur (6)
+ * sbeattie (6)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 20:22 <jdstrand> #startmeeting
+
+ 20:22 <meetingology> Meeting started Mon Nov  3 20:22:53 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:22 <meetingology> 
+
+ 20:22 <meetingology> Available commands: action commands idea info link nick
+
+ 20:23 <jdstrand> first off, sorry the meeting is a bit late today
+
+ 20:23 <jdstrand> The meeting agenda can be found at:
+
+ 20:23 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 20:23 <jdstrand> [TOPIC] Announcements
+
+ 20:23 <jdstrand> Thanks Gianfranco Costamagna (LocutusOfBorg) for providing debdiffs for precise and trusty for drupal7 (LP: #1381969). Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)
+
+ 20:23 <ubottu> Launchpad bug 1381969 in drupal7 (Ubuntu) "CVE-2014-3704" [Undecided,Fix released] https://launchpad.net/bugs/1381969
+
+ 20:23 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 20:24 <jdstrand> I'll go first
+
+ 20:24 <jdstrand> I'm on community this week
+
+ 20:24 <jdstrand> I've got some updates I need to get to
+
+ 20:24 <jdstrand> I'm hoping this is the week that I adjust UCT for derivative branches
+
+ 20:25 <jdstrand> I have a small update to click-reviewers-tools
+
+ 20:25 <jdstrand> and then finish up some apparmor work
+
+ 20:25 <jdstrand> specifically, finish up some apparmor-easyprof-ubuntu updates for vivid and finish up click-apparmor 0.3 upload for vivid
+
+ 20:25 <jdstrand> mdeslaur: you're up
+
+ 20:25 <mdeslaur> I'm in the happy place this week
+
+ 20:25 <mdeslaur> I've been busy backporting the ruby security fixes to the zillion versions we support
+
+ 20:26 <mdeslaur> they should be going out this week
+
+ 20:26 <mdeslaur> after that, there's a bunch of new CVEs I have to look at
+
+ 20:26 <mdeslaur> and that's a bout it
+
+ 20:26 <mdeslaur> sbeattie: you're up
+
+ 20:27 <sbeattie> I am resurrecting my pie-by-default-on-amd64 compiler patch (it doesn't apply to the current gcc-4.9 in utopic/vivid)
+
+ 20:28 <sbeattie> I need to review the apparmor utils open bugs and commit to hand off to mdeslaur for a trusty apparmor SRU.
+
+ 20:28 <sbeattie> I have some other apparmor tasks on my plate, and I need to sync up with jjohansen and tyhicks for any priority work they have for me.
+
+ 20:29 <sbeattie> that's pretty much it for me.
+
+ 20:29 <sbeattie> tyhicks: tag.
+
+ 20:30 <tyhicks> I'm working on making the apparmor policy cache setup code and the binary policy loading code into a standalone form that can be moved into libapparmor
+
+ 20:30 <tyhicks> I'm building on top of some patches that jj gave to me a while back
+
+ 20:30 <tyhicks> I'm done with the binary policy loading code
+
+ 20:30 <tyhicks> working on the cache setup code now
+
+ 20:30 <tyhicks> I also want to review the proposed kdbus lsm hooks
+
+ 20:31 <tyhicks> and I need to prepare and send a pull request for a couple ecryptfs kernel fixes
+
+ 20:31 <tyhicks> that's it for me
+
+ 20:31 <tyhicks> jjohansen: you're up
+
+ 20:32 <jjohansen> I have a little more to do with the recent kvm CVEs
+
+ 20:33 <jjohansen> I have some patches for apparmor I need to push to the kt, and another set to go upstream
+
+ 20:33 <jjohansen> I need to get back to working on the stacking patches, and cleanup the whole dev mess so it can get pushed upstream
+
+ 20:34 <jjohansen> and I need to look at the LSM stacking patches wrt apparmor
+
+ 20:35 <jdstrand> dev mess?
+
+ 20:35 <jjohansen> after that next year I'll start ^W^W^W^W^W sarnold your up
+
+ 20:35 <sarnold> hehe
+
+ 20:35 <jjohansen> jdstrand: collapse the dev tree patch on top of patch into a reasonable set that can be reviewed and pushed up stream
+
+ 20:36 <jdstrand> ok. I'll call that 'patch cleanup in preparation for review' :)
+
+ 20:36 <jjohansen> as it stands now, you have a patch with bugs, and then those bugs get addressed by patches later in the series etc, very hard to review something like that
+
+ 20:36 <jjohansen> yep
+
+ 20:37 * jdstrand nods
+
+ 20:37 <sarnold> it does somewhat deflate the victory of finding a bug, "AHA! I've found a mistake!" ... "oh. john already fixed it."
+
+ 20:40 <jdstrand> sarnold: I think you're up
+
+ 20:40 <sarnold> I'm on triage this week; I still have to polish and post my notes from linux plumbers conference; I'd really like to get a modern phone image installed and start writing applications for it -- I'm starting to feel a bit left behind there, and want to make sure I don't miss it entirely
+
+ 20:41 <sarnold> but my week is relatively unscheduled, so I can do apparmor patch reviews or cve fixes if needed
+
+ 20:41 <sarnold> oh to be near the start of a cycle and not knee-deep in over-late MIRs :)
+
+ 20:41 <jdstrand> seriously
+
+ 20:41 <jdstrand> :)
+
+ 20:41 <jjohansen> sarnold: we can fix that
+
+ 20:42 <jjohansen> :)
+
+ 20:42 * sbeattie gleefully awaits sarnold's cve-triage phone app.
+
+ 20:42 <sarnold> jjohansen: haha
+
+ 20:42 <sarnold> sbeattie: oh my
+
+ 20:42 <sarnold> (actually, a cve scope seems like a useful starting point..)
+
+ 20:42 * jdstrand was thinking about a USN scope
+
+ 20:42 <jdstrand> a cve scope would be cool too
+
+ 20:43 <sarnold> .. something to search our uct, usn, debian's database, etc... maybe little scopes for each and then an aggregation scope for all of it? dunno...)
+
+ 20:43 * jdstrand notes chris is eod and will report for him
+
+ 20:45 <jdstrand> sarnold: did you have more to report?
+
+ 20:47 <sarnold> jdstrand: no
+
+ 20:48 <jdstrand> ok, chris is working on bug #1370366 primarily
+
+ 20:48 <ubottu> bug 1370366 in Oxide "Add an API to better manage the top-header" [Medium,Triaged] https://launchpad.net/bugs/1370366
+
+ 20:48 <jdstrand> and a bunch of reviews. there might be some 1.3 backporting to 1.2 to do for rtm, but this discussion is ongoing
+
+ 20:49 <jdstrand> [TOPIC] Highlighted packages
+
+ 20:49 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 20:49 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 20:49 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/sup-mail.html
+
+ 20:49 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/openvswitch.html
+
+ 20:49 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/isync.html
+
+ 20:49 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/pdns.html
+
+ 20:49 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ganeti.html
+
+ 20:49 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 20:49 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 20:53 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold: thanks!
+
+ 20:53 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,787 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:00:14 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-10-05-15.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' https://wiki.ubuntu.com/BootGraphicsArchitecture   (slangasek, 15:17:34)
+''LINK:'' https://wiki.ubuntu.com/ReleaseProcess   (skaet, 15:33:45)
+''ACTION:'' ev to talk to james about getting wubi builds signed as we go so we don't hold up CD candidates  (slangasek, 15:35:50)
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:02:30 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * ev to talk to james about getting wubi builds signed as we go so we don't hold up CD candidates
+
+
+
+== Action items, by person ==
+
+ * ev
+ ** ev to talk to james about getting wubi builds signed as we go so we don't hold up CD candidates
+
+
+
+== People present (lines said) ==
+
+ * ev (99)
+ * slangasek (64)
+ * cjwatson (54)
+ * ubottu (31)
+ * mvo (31)
+ * bdmurray (22)
+ * stgraber (14)
+ * doko (13)
+ * jhunt (13)
+ * barry (8)
+ * skaet (7)
+ * meetingology` (4)
+
+
+
+== Full Log ==
+
+
+ 15:00:14 <slangasek> #startmeeting
+
+ 15:00:14 <meetingology`> Meeting started Wed Oct  5 15:00:14 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:00:14 <meetingology`> 
+
+ 15:00:14 <meetingology`> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:00:53 <slangasek> [TOPIC] lightning round
+
+ 15:00:58 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt mvo ev bdmurray slangasek)
+
+ 15:01:01 <slangasek> doko jhunt cjwatson slangasek mvo bdmurray stgraber barry ev
+
+ 15:01:07 <ev> woohoo! I win
+
+ 15:01:11 <slangasek> :-)
+
+ 15:01:13 <stgraber> ;)
+
+ 15:01:17 <slangasek> doko: care to start us off? :)
+
+ 15:01:17 * ev frantically types
+
+ 15:01:30 <doko> oops, jhunt, please go ahead ...
+
+ 15:01:41 <jhunt> Lots of work on bug 829980, bug 849414 and bug 818177.
+
+ 15:01:42 <jhunt> ♫
+
+ 15:01:44 <ubottu> Launchpad bug 829980 in upstart (Ubuntu) "upstart-udev-bridge eats 100% cpu calling dbus_message_iter_append_basic()" [Medium,Triaged] https://launchpad.net/bugs/829980
+
+ 15:01:45 <ubottu> Launchpad bug 849414 in plymouth (Ubuntu P-series) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Incomplete] https://launchpad.net/bugs/849414
+
+ 15:01:46 <ubottu> Launchpad bug 818177 in udev (Ubuntu Oneiric) "boot failures caused by udev race" [High,Confirmed] https://launchpad.net/bugs/818177
+
+ 15:02:17 <cjwatson> d-i: avoid grub-installer crash with legacy non-os-prober menu generation (#851704)
+
+ 15:02:21 <cjwatson> xdeb: upload 0.6.5, sync to oneiric
+
+ 15:02:24 <cjwatson> grub2: recovery mode gfxpayload tweak (#854967)
+
+ 15:02:29 <cjwatson> ubiquity: SSID Unicode fix (#839143), async geoname fetching (#837217), oem-config Qt encoding fix (#837042), reliable disk ordering (#770711), fix oem-config-prepare KDE logout inhibition (#856418), kill update-apt-cache reliably (#743359), working on Chinese language handling (#590108)
+
+ 15:02:34 <cjwatson> --
+
+ 15:02:37 <cjwatson> patch pilot on Tuesday morning
+
+ 15:04:49 <slangasek> jhunt: any closer to the bottom on bug #818177? :)
+
+ 15:04:52 <ubottu> Launchpad bug 818177 in udev (Ubuntu Oneiric) "boot failures caused by udev race" [High,Confirmed] https://launchpad.net/bugs/818177
+
+ 15:05:02 <jhunt> jhunt: no :(
+
+ 15:05:12 <slangasek> :(
+
+ 15:05:37 <jhunt> problem is partly being able to reproduce the issue.
+
+ 15:06:08 <jhunt> adam has a high hit rate, but I set up a system to reboot constantly and didn't get a hit in 25 reboots.
+
+ 15:06:20 <slangasek> right
+
+ 15:06:29 <doko> ok, ready
+
+ 15:06:32 <slangasek> can he give you console access to his system?
+
+ 15:06:37 <jhunt> I've tried lots of lvms, lots of plain disks.
+
+ 15:06:56 <cjwatson> might help to widen the race by deliberately slowing down some relevant udev rules?
+
+ 15:07:22 <cjwatson> usually a helpful tactic with race conditions
+
+ 15:07:37 <jhunt> I'll try that. I've tried slowing down some *disks* but that didn't help :)
+
+ 15:08:37 <cjwatson> incidentally somebody posted to ubuntu-users with a problem opening /root/dev/console; they say that they fixed it by fscking
+
+ 15:08:46 <cjwatson> dunno if that's relevant ...
+
+ 15:09:21 <jhunt> hmmm
+
+ 15:09:39 <cjwatson> admittedly that was with 10.04, and it's not quite your same bug
+
+ 15:09:50 <cjwatson> so ignore if it's a distraction :)
+
+ 15:10:03 <slangasek> fscking!
+
+ 15:10:06 <jhunt> I'll keep it in mind.
+
+ 15:10:09 <jhunt> :)
+
+ 15:10:32 <slangasek> doko: go ahead
+
+ 15:10:51 <doko> - some last ftbfs fixes (xdotool, ruby-rails, ghdl, mmpong, xzgv, qcontrol)
+
+ 15:10:51 <doko> - OpenJDK6 fixes for armel, IcedTea-Web update
+
+ 15:10:51 <doko> - start working on toolchain updates for the p-series
+
+ 15:10:51 <doko> - propose to better handle library syncs from experimental (ubuntu-devel)
+
+ 15:10:51 <doko> - document new compiler flags: https://wiki.ubuntu.com/CompilerFlags
+
+ 15:10:52 <doko> - write up https://wiki.ubuntu.com/P-SeriesOpening
+
+ 15:10:54 <doko> done
+
+ 15:11:47 <cjwatson> heh, I'd actually like perl 5.14 but only if Debian does it first ...
+
+ 15:12:32 <cjwatson> (Debian #637809)
+
+ 15:12:33 <doko> right, was just looking for an example for each section ;)
+
+ 15:12:33 <ubottu> Debian bug 637809 in release.debian.org "transition: perl 5.14" [Normal,Open] http://bugs.debian.org/637809
+
+ 15:13:09 <doko> would like to get some feedback on this list, but maybe after the lightning round
+
+ 15:13:56 <cjwatson> the list looked OK although we should do debhelper early as well
+
+ 15:14:31 <doko> right, my intention is to write to u-d, to have people add things
+
+ 15:15:06 <cjwatson> should probably only list things that block general opening though
+
+ 15:15:46 <slangasek> thanks for the mail about experimental libraries too, I hope we'll see some improvement in how those are handled this cycle
+
+ 15:16:33 <slangasek> me next:
+
+ 15:16:35 <slangasek> - lots of flicker-free boot testing over the weekend
+
+ 15:16:36 <slangasek> - fixed initramfs to include vesafb fallback on FRAMEBUFFER=y, fixing bug 864149, bug 563878, bug 771905
+
+ 15:16:38 <slangasek> - revert various nvidia blacklists that are counterproductive needed (bug #854967, bug #864149)
+
+ 15:16:40 <ubottu> Launchpad bug 864149 in nvidia-graphics-drivers-updates (Ubuntu Oneiric) "initrd doesn't set keyboard layout when nvidia drivers are installed (FRAMEBUFFER=n override)" [High,Triaged] https://launchpad.net/bugs/864149
+
+ 15:16:42 <slangasek> - write up some documentation of how the boot-time graphics fit together
+
+ 15:16:44 <slangasek> - teased the intel guys about nvidia working better
+
+ 15:16:46 <slangasek> - work with Clint to pin an issue with failsafe network handling (bug #863864)
+
+ 15:16:49 <ubottu> Launchpad bug 563878 in initramfs-tools (Ubuntu) "Ubuntu splashscreen big and ugly after installing ATI/nVidia proprietary graphics driver" [Low,Fix released] https://launchpad.net/bugs/563878
+
+ 15:16:50 <slangasek> - work with stgraber to fix text messages showing on the console in ubiquity (bug #813065)
+
+ 15:16:53 <slangasek> - taught debhelper to always pass dpkg-buildflags to perl MakeMaker build system.  Harden the world!
+
+ 15:16:56 <slangasek> ..
+
+ 15:16:56 <ubottu> Launchpad bug 771905 in initramfs-tools (Ubuntu) "(natty/nvidia) No logo at boot on nvidia card" [Medium,Fix released] https://launchpad.net/bugs/771905
+
+ 15:16:57 <ubottu> Launchpad bug 854967 in nvidia-graphics-drivers-updates (Ubuntu) "boot to rescue mode in Oneiric" [High,Triaged] https://launchpad.net/bugs/854967
+
+ 15:16:58 <ubottu> Launchpad bug 863864 in upstart (Ubuntu) "/etc/init/failsafe.conf doesn't actually stop on runlevel" [High,Fix released] https://launchpad.net/bugs/863864
+
+ 15:16:59 <slangasek> questions?
+
+ 15:17:00 <ubottu> Launchpad bug 813065 in ubiquity (Ubuntu Oneiric) "Live session switches to VT console briefly" [High,Fix released] https://launchpad.net/bugs/813065
+
+ 15:17:21 <bdmurray> slangasek: where is the boot time graphics documentation?
+
+ 15:17:34 <slangasek> [LINK] https://wiki.ubuntu.com/BootGraphicsArchitecture
+
+ 15:17:37 <slangasek> bdmurray: good point :)
+
+ 15:18:34 <mvo> my turn?
+
+ 15:18:39 <slangasek> mvo: yep!
+
+ 15:18:57 <mvo> software-center: fix HOME base license keys debug/fix xapian DocumentNotFound hang, fix crash in software-center a-x-i plugin (#819907), code review/branch merges, merge lp:~gary-lasker/software-center/license-fix-lp864706 and add test, debug/fix #865985 and add test-case, update html/qml versions to trunk
+
+ 15:18:57 <mvo> update-manager: fix leaking auth info into upgrade log (#839094), test/upload u-m crashfix on amd64/multiarch, reproduce/fix gcc-4.4 upgrade issue (#853688)
+
+ 15:18:57 <mvo> update-notifier: finish appindicator port, test, upload to oneiric (in the queue)
+
+ 15:18:57 <mvo> python-apt: fix crash with latest vte (#865388), add __cmp__ for apt.Package to make sorting by name the default on apt.Package sorts
+
+ 15:18:59 <mvo> unattended-upgrades: merge fix from Iain Nicol
+
+ 15:19:01 <mvo> apt: work on lp:~mvo/apt/apt-key-net-update-master-fix2
+
+ 15:19:03 <mvo> misc: bug triage, send initial patch and test libgnome-desktop3/gnome-settings-daemon dpms fix (#862139), test/upload libglib2.0-data fix for bug #854622, ran into libappindicator bug #833945 and propose fix,  libcanberra: create fix for crash in gtk-module #834403 that affects s-c
+
+ 15:19:05 <ubottu> Launchpad bug 854622 in glib2.0 (Ubuntu Oneiric) "Could not install libglib2.0" [High,Fix released] https://launchpad.net/bugs/854622
+
+ 15:19:06 <ubottu> Launchpad bug 833945 in aptdaemon (Ubuntu) "Allow to install system wide license keys" [High,In progress] https://launchpad.net/bugs/833945
+
+ 15:19:09 <mvo> piston-mini-client: work on better proxy support (LP: #863717)
+
+ 15:19:11 <mvo> aptdaemon: fix crash in progress #858684
+
+ 15:19:52 <mvo> EOF
+
+ 15:20:01 <bdmurray> bug triage and testing of iso-testing bug reports
+
+ 15:20:01 <bdmurray> ubuntu bug control application review for Fathi, Ahmed Shams
+
+ 15:20:09 <bdmurray> adding in date generated information to ubuntu-reports reports
+
+ 15:20:09 <bdmurray> team recent package bugs improvements (display median numbers and not just top 5 packages)
+
+ 15:20:12 <bdmurray> changing colors of fixing and triaging graphs to match colors Launchpad uses for bug statuses (LP: #855517)
+
+ 15:20:20 <bdmurray> set up apport on cranberry and implemented a consolidate-bugs bugpatterns script there
+
+ 15:20:23 <bdmurray> fixed lp_buttontags to reload the web page with the tag consistently
+
+ 15:20:25 <bdmurray> writing an lpltk script to open series tasks and copy status / importance
+
+ 15:20:33 <bdmurray> set up postgres and udd on the canonistack server
+
+ 15:20:33 <bdmurray> review bugs found with similar titles using udd
+
+ 15:20:33 <bdmurray> emailed debian title matches to Ursula for server team packages
+
+ 15:20:33 <bdmurray> patch piloting
+
+ 15:20:44 <bdmurray> \ done /
+
+ 15:21:13 <stgraber> - Did a few last minute uploads for Edubuntu (translation update and bugfix)
+
+ 15:21:16 <stgraber> - Mostly poked at Ubiquity this bug, trying to fix as many bugs as possible, will continue for the rest of the week
+
+ 15:21:19 <stgraber> - Support gsettings (bug 800760), copy Network Manager networks to the target, hopefully fix bug 657086 for good, http proxy support, ...
+
+ 15:21:22 <ubottu> Launchpad bug 800760 in user-setup (Ubuntu Oneiric) "Needs gconf to gsettings updates" [Undecided,New] https://launchpad.net/bugs/800760
+
+ 15:21:22 <stgraber> - Trying to get WebLive to work on Oneiric, an appserv is online since yesterday but I now have to port some of the arkose hacks and freenx/x2go to work on Oneiric
+
+ 15:21:25 <stgraber> - Played a bit more with Drupal over the weekend, should have all the QA modules EXCEPT the ISO tracker ported to Drupal 7 quite soon. Then to start poking at the ISO tracker :)
+
+ 15:21:29 <stgraber> - TODO
+
+ 15:21:31 <stgraber> - Edubuntu smoke testing (images currently building) and upgrade testing
+
+ 15:21:32 <ubottu> Launchpad bug 657086 in ubiquity (Ubuntu) "No restart option after choosing to "Continue Testing"" [High,Fix released] https://launchpad.net/bugs/657086
+
+ 15:21:35 <stgraber> - Booked some time with highvoltage and mgariepy to go talk about Edubuntu and go through the final checklist on Friday
+
+ 15:21:38 <stgraber> - Next week I'll be in London for the release sprint
+
+ 15:21:39 <stgraber> (done)
+
+ 15:22:01 <barry> short week due to holiday; bug 795096 (turbojson ftbfs, python-peak.util); bug 850744 (quickly crash after upgrade); storm 0.19 release work, built out (natty for now) arm server & buildbot.  todo: merge python3-defaults from sid; update storm, gtimelog, flufl.* in debian; more ftbfs; investigate python test_socket failures on arm; done.
+
+ 15:22:04 <ubottu> Launchpad bug 795096 in turbojson (Ubuntu Oneiric) "FTBFS with Python 2.7 as default" [High,Fix released] https://launchpad.net/bugs/795096
+
+ 15:22:05 <ubottu> Launchpad bug 850744 in quickly (Ubuntu) "quickly crashed with ImportError in __main__: No module named quickly" [High,Fix released] https://launchpad.net/bugs/850744
+
+ 15:25:03 <ev> - Helped John update the screenshots for the 11.10 download tour and showed
+
+ 15:25:04 <ev> him how the release announcement is done in update-manager.
+
+ 15:25:04 <ev> - Released a new slideshow with updated translations at the request of the
+
+ 15:25:04 <ev> Lithuanian team.
+
+ 15:25:05 <ev> - Created a patch to ubiquity and partman-auto to account for swap size and
+
+ 15:25:05 <ev> the installation size when calculating the bounds of the partition resizing.
+
+ 15:25:05 <ev> Previously we were going with whatever partman-auto threw at us, which was
+
+ 15:25:06 <ev> often too small to hold Ubuntu (bug 769350).  Merges awaiting review.
+
+ 15:25:06 <ev> - Call with mvo and Rick on improving the development cycle. Lots of really
+
+ 15:25:06 <ev> good plans from Rick and Jason on this front. I'm quite excited to see the
+
+ 15:25:07 <ev> final work discussed at UDS. I've signed myself up to help cheer and
+
+ 15:25:07 <ubottu> Launchpad bug 769350 in partman-auto (Ubuntu Oneiric) "resized partition size doesn't count swap space size." [High,Triaged] https://launchpad.net/bugs/769350
+
+ 15:25:08 <ev> develop.
+
+ 15:25:17 <ev> - Follow up chat with John Lea about how this could apply to the approval
+
+ 15:25:17 <ev> process for Unity design and engineering.
+
+ 15:25:18 <ev> - Reviewed the download page design with John Oxton.
+
+ 15:25:18 <ev> - Set up a netbook with a mocked up Windows for John to do further screenshots
+
+ 15:25:18 <ev> of the 11.10 installer.
+
+ 15:25:19 <ev> - Created a Testing in Ubuntu event for the Wednesday night at UDS with the
+
+ 15:25:19 <slangasek> barry: that quickly issue was an interesting one... glad to see it was package-specific :)
+
+ 15:25:19 <ev> assistance of Marianna and Jorge, following the call with Rick and mvo.  You
+
+ 15:25:19 <ev> should all come and give five minute talks:
+
+ 15:25:19 <ev> https://wiki.ubuntu.com/UDS-P/TestingInUbuntu
+
+ 15:25:20 <ev> There will be free beer and pizza.  What more could you want?
+
+ 15:25:31 <ev> - After helping Sian direct our PR agency on how to get the 11.10 Beta when
+
+ 15:25:31 <ev> they were woefully lost in the depths of the Ubuntu Forums, I had a
+
+ 15:25:32 <barry> slangasek: me too! :)
+
+ 15:25:32 <ev> discussion with John about getting the milestones displayed in the same
+
+ 15:25:32 <ev> download page structure as the regular releases, for 12.04.  With a big
+
+ 15:25:32 <ev> warning that this is a pre-release and the final version will come in April,
+
+ 15:25:33 <ev> of course. We can do better than a link that's buried in the Google results
+
+ 15:25:33 <ev> that points to a complex wiki page that in turn points to a complex cdimage
+
+ 15:25:33 <ev> page with no instruction on burning a CD or USB disk until you're deep in
+
+ 15:25:33 <ev> paragraphs and paragraphs of text.  This should be a job for the web team,
+
+ 15:25:34 <ev> anyway.
+
+ 15:25:36 <mvo> meh, I forgot to add this call to my report, thanks ev for mentioning it!
+
+ 15:25:43 <ev> - In VirtualBox and Windows 7 hell.  The former lost sight of the Windows 7
+
+ 15:25:43 <ev> disk, despite it being just fine, and the latter refused to boot when I
+
+ 15:25:43 <ev> tried any of the snapshots I've made over the past few months.  The Windows
+
+ 15:25:44 <ev> install CD is crashing at boot.  Will hopefully have something sorted
+
+ 15:25:44 <ev> sharpish so I can fix Wubi bugs.
+
+ 15:25:44 <ev> - Fixed the focusing of labels when we're in a screen reader profile (bug
+
+ 15:25:45 <ev> 856782, bug 856773).
+
+ 15:25:45 <ev> - Fixed a crasher around the ubiquity keyboard query (bug 865493) and a UI
+
+ 15:25:46 <ev> issue with the keyboard test entry (bug 862309).
+
+ 15:25:46 <ev> - Tried time and time again to fix the killing of update-apt-cache (bug
+
+ 15:25:46 <ev> 743359). Colin got it in the end - thanks!
+
+ 15:25:47 <ev> (done)
+
+ 15:25:47 <ev> apols for the ranting :)
+
+ 15:25:48 <ubottu> Launchpad bug 856773 in ubiquity (Ubuntu) "Welcome Screen: Cannot reach 'release notes' link with keyboard only." [Medium,Confirmed] https://launchpad.net/bugs/856773
+
+ 15:25:49 <ubottu> Launchpad bug 865493 in ubiquity (Ubuntu) "Hitting print screen or possibly closing the keyboard guessing window crashes ubiquity" [Undecided,Fix committed] https://launchpad.net/bugs/865493
+
+ 15:25:50 <ubottu> Launchpad bug 862309 in ubiquity (Ubuntu) "In "test your keyboard", Enter doesn't trigger highlighted "Continue" button" [Medium,Fix released] https://launchpad.net/bugs/862309
+
+ 15:26:13 <mvo> ev: is john interessted in better release announcements for u-m ?
+
+ 15:26:21 <slangasek> ev: did the Lithuanian team miss the translation deadline?
+
+ 15:26:27 <cjwatson> should be a job for the web team> er, only if they're prepared to be involved in cdimage maintenance :)
+
+ 15:26:41 <slangasek> if so... that's not the first time
+
+ 15:26:46 <ev> mvo: very much so
+
+ 15:26:48 <cjwatson> it is indeed not
+
+ 15:26:54 <mvo> ev: cooool!
+
+ 15:27:03 <ev> he has a task for improving the download experience
+
+ 15:27:04 <cjwatson> oh, wait, download page != releases.ubuntu.com index
+
+ 15:27:07 <ev> which includes upgrades
+
+ 15:27:10 <ev> you should get in touch :)
+
+ 15:27:27 <cjwatson> yeah, download page => web team, sorry for my confusion
+
+ 15:27:29 <ev> cjwatson: we should leave releases.ubuntu.com alone
+
+ 15:27:32 <ev> indeed
+
+ 15:27:40 <ev> and just have the ubuntu website point at the right ISO
+
+ 15:27:42 <mvo> ev: absolutely, thanks for this! code-wise, it should be all ready I think, good content is missing
+
+ 15:27:59 <ev> slangasek: they did not
+
+ 15:28:06 <ev> I failed to do an 11th hour upload
+
+ 15:28:19 <ev> I had done one the day before the deadline
+
+ 15:28:36 <cjwatson> speaking of 11th hour translation uploads, I need to do gfxboot-theme-ubuntu nowish because there was a late string change from server ...
+
+ 15:28:46 <slangasek> ev: ah, ok then :)
+
+ 15:28:49 <cjwatson> (I did the string change last week or so, but would like to catch up on translations now)
+
+ 15:28:59 <slangasek> Windows install CD is crashing at boot - haha
+
+ 15:29:31 <ev> I love that step 1 of the "to fix the problem" steps is "insert your windows installation disc and restart your computer"
+
+ 15:29:38 <slangasek> for all the bugs we've ever seen, I don't think we've ever had *that* problem ;)
+
+ 15:29:44 <cjwatson> ev: what's the brief state of the wubi at the moment?  it's the only thing where I'm not entirely sure whether we're showstopper-free at the moment
+
+ 15:29:58 <ev> cjwatson: I *think* we're largely okay
+
+ 15:30:04 <ev> jibel has been testing it a bit
+
+ 15:30:10 <ev> and I've been running through it as often as possible
+
+ 15:30:13 <cjwatson> I noticed a few bugs recently, but they didn't seem horribly serious
+
+ 15:30:17 <ev> pretty quiet on the bugs front
+
+ 15:30:17 <ev> i
+
+ 15:30:18 <ev> ndeed
+
+ 15:30:23 <skaet> ev, does it make sense to get a signed copy ready now then?
+
+ 15:30:28 <ev> I'm trying to get a quick fix in for the plymouth splash one
+
+ 15:30:52 <ev> skaet: that's an excellent idea - but I'm going to wait until early next week
+
+ 15:31:05 <ev> just so I can get these sorts of tiny fixes in
+
+ 15:31:10 <ev> and then I'll ask James to take care of that
+
+ 15:31:12 <skaet> ev, ok. thanks.
+
+ 15:31:19 <ev> so we have it ready way ahead of release
+
+ 15:31:44 <slangasek> ev: what's the plymouth splash issue, OOI?
+
+ 15:31:46 <cjwatson> early next week> when are we planning to build candidate images though?
+
+ 15:31:56 <slangasek> is that 862007?
+
+ 15:32:14 <ev> incidentally, fairly quiet on the wubi bugs front.  Once we have the metrics server running early doors in 12.04, I think that will dramatically change our confidence in it
+
+ 15:32:18 <ev> and the crash server, obviously
+
+ 15:32:31 <ev> yes, bug 862007
+
+ 15:32:32 <ubottu> Launchpad bug 862007 in Wubi "Wubi preinstalled image first boot should use 'quiet splash'" [Undecided,New] https://launchpad.net/bugs/862007
+
+ 15:32:33 <ev> tiny
+
+ 15:32:40 <ev> and could probably do it in trunk and just build
+
+ 15:32:48 <ev> but it's always good to test these things :)
+
+ 15:32:54 <slangasek> dramatically change our confidence> I hope you mean "For the better" :)
+
+ 15:32:59 <ev> yes
+
+ 15:33:03 <mvo> *xough*
+
+ 15:33:06 <mvo> cough even
+
+ 15:33:19 <ev> even in the absence of bug reports, we'll know how many wubi installs are succeeding or failing
+
+ 15:33:25 <ev> and where
+
+ 15:33:30 <slangasek> skaet: when are you planning to start build candidate images?
+
+ 15:33:32 <skaet> cjwatson, first set of candidate issues on thursday/friday after langpacks land,  then turn on official, on next monday and rebuild full set.
+
+ 15:33:34 <ev> it will be a brave new world
+
+ 15:33:40 <slangasek> ok
+
+ 15:33:45 <skaet> https://wiki.ubuntu.com/ReleaseProcess
+
+ 15:33:55 <slangasek> skaet: since wubi goes on the CDs, that means we need a signed copy by then...
+
+ 15:34:46 <ev> ah okay
+
+ 15:34:47 <skaet> slangasek,  so it seems.   Right now calling for rleease minus 3 days,  but better if earlier.
+
+ 15:34:51 <cjwatson> so how about we just sign as we go along
+
+ 15:34:59 <ev> yes, I'll talk to james
+
+ 15:34:59 <cjwatson> I think the process is faster now
+
+ 15:35:05 <skaet> thanks.
+
+ 15:35:12 <slangasek> ev: great, thanks :)
+
+ 15:35:15 <ev> err, IS seems to have fled
+
+ 15:35:30 <ev> must have realized we have a release coming up and all decided to take holiday
+
+ 15:35:35 <cjwatson> wise decision
+
+ 15:35:39 <ev> lol
+
+ 15:35:50 <slangasek> [ACTION] ev to talk to james about getting wubi builds signed as we go so we don't hold up CD candidates
+
+ 15:35:50 * meetingology` ev to talk to james about getting wubi builds signed as we go so we don't hold up CD candidates
+
+ 15:36:46 <slangasek> btw, speaking of holidays and releases, next Monday is a bank holiday here in the US
+
+ 15:37:08 <barry> slangasek: yep.  i swapped the day, so i will be working
+
+ 15:37:11 <ev> Arbor Day?
+
+ 15:37:19 <barry> columbus day
+
+ 15:37:25 <ev> oh, that dude
+
+ 15:37:35 <barry> yeah, go figure :)
+
+ 15:37:40 <ev> :)
+
+ 15:37:41 <slangasek> I'm off... which I guess means I'll only be working on the release in my free time? :)
+
+ 15:38:00 <slangasek> [TOPIC] Bugs
+
+ 15:38:27 <slangasek> bdmurray: find any interesting specimens for us this week?
+
+ 15:38:32 <bdmurray> So I had a few in mind but it seems we move too fast and they are already be looked at
+
+ 15:38:53 <bdmurray> Luckily there are still a couple
+
+ 15:39:26 <bdmurray> bug 856055 - which I'm not quite certain that should be High
+
+ 15:39:28 <ubottu> Launchpad bug 856055 in memtest86+ (Ubuntu) "Memtest run from DI installer menu never finishes" [High,Confirmed] https://launchpad.net/bugs/856055
+
+ 15:39:36 <ev> ...it never did?
+
+ 15:39:48 <cjwatson> mm, I think that should probably be downgraded, it's hardware-specific
+
+ 15:39:49 <doko> strange definition of luck ...
+
+ 15:40:06 <cjwatson> no obvious fix upstream and I don't think any of us have a clue how to fix it ::)
+
+ 15:40:09 <cjwatson> :)
+
+ 15:40:15 <cjwatson> I'll downgrade it
+
+ 15:40:28 <bdmurray> okay sounds good
+
+ 15:40:57 <bdmurray> slangasek: we'd talked about bug 859188 once before but I don't think I commented on it well enough
+
+ 15:40:58 <ubottu> Launchpad bug 859188 in apt (Ubuntu) "E: Internal Error, No file name for libgl1-mesa-glx" [Low,Confirmed] https://launchpad.net/bugs/859188
+
+ 15:41:30 <bdmurray> so if you could have at it that'd be great
+
+ 15:42:12 <slangasek> mvo: shall I add this to your pile? :)  apt-get install --reinstall doesn't work in the obvious manner when there's more than one arch for the lib
+
+ 15:43:15 <slangasek> commented
+
+ 15:43:22 <mvo> slangasek: thanks, I can have a look
+
+ 15:43:41 <bdmurray> that's all then
+
+ 15:44:07 <slangasek> mvo: "low" is the right priority though IMHO, it's a seldom-used option and there's a workaround
+
+ 15:44:19 <mvo> ok
+
+ 15:44:49 <cjwatson> does anyone have any absolute showstoppers they want to mention?
+
+ 15:45:13 <cjwatson> right now I think bug 857472 is the only one I think qualifies
+
+ 15:45:15 <ubottu> Launchpad bug 857472 in apt (Ubuntu Oneiric) "net-update verifcation checking insecure" [Critical,In progress] https://launchpad.net/bugs/857472
+
+ 15:45:15 <mvo> I would appreciate some review of #857472
+
+ 15:45:22 <mvo> heh :)
+
+ 15:45:37 <slangasek> or anyone still working on *non* showstoppers that they're anxious to get in?
+
+ 15:45:42 <cjwatson> but I'd like to be able to stand up in the release meeting on Friday and be confident of that
+
+ 15:45:48 <mvo> I implemented the approach that slangasek suggested now but given the nature of this I would appreciate critical review
+
+ 15:45:58 <cjwatson> I'm still working on bug 590108 as I mentioned
+
+ 15:46:01 <ubottu> Launchpad bug 590108 in ubiquity (Ubuntu) "User get wrong system language after executing oem-config, if he is a foreigner in the country he selected in timezone select stage" [Medium,In progress] https://launchpad.net/bugs/590108
+
+ 15:46:21 <cjwatson> but I'm restricting the scope of that to Portuguese and Chinese (i.e. the usual special-case languages)
+
+ 15:46:32 <cjwatson> which I think is all the reporters care about)
+
+ 15:46:37 <barry> slangasek: scottk requested a merge of debian's python3-defaults which is blocking a pyqt fix.  i'm going to get that in after lunch
+
+ 15:46:46 <stgraber> I'm looking at a few ubiquity bugs but nothing that we absolutely need for release
+
+ 15:47:14 <cjwatson> I also want to land the fix for the libdevel-bt-perl build failure that kees and I put together to complete the perl 5.12 transition, but that's universe and non-urgent
+
+ 15:47:17 <ev> I'm going to land the resize fix now and do a new ubiquity upload
+
+ 15:47:47 <stgraber> ev: I may have one more gsettings fix I'd like to have in that ubiquity upload, what's your ETA?
+
+ 15:48:10 <ev> stgraber: planning to leave at 6pm local (just over an hour)
+
+ 15:48:24 <cjwatson> bug 745960 and bug 854837 are my other nice-to-have fixes, but if I run out of time, they aren't showstoppers
+
+ 15:48:27 <ubottu> Launchpad bug 745960 in grub2 (Ubuntu Oneiric) "Cannot boot grub after installing to LVM" [High,Incomplete] https://launchpad.net/bugs/745960
+
+ 15:48:27 <ubottu> Launchpad bug 854837 in casper (Ubuntu Oneiric) "Lubuntu live image boots to TTY" [High,Confirmed] https://launchpad.net/bugs/854837
+
+ 15:48:29 <jhunt> bug 818177 is pretty nasty as we don't really know what's triggering the problem and it does cause boot failures.
+
+ 15:48:31 <ubottu> Launchpad bug 818177 in udev (Ubuntu Oneiric) "boot failures caused by udev race" [High,Confirmed] https://launchpad.net/bugs/818177
+
+ 15:48:46 <stgraber> ev: ok, I'll see if I can get it fixed by then, otherwise it'll have to be in the next ubiquity upload (assuming we'll have one more ;))
+
+ 15:48:54 <slangasek> mvo: has anyone from the security team reviewed for 857472?  I'd be more confident in their review than my own
+
+ 15:48:55 <cjwatson> jhunt: I agree it's nasty, it's on the edge of my mental showstopper criteria
+
+ 15:49:04 <ev> stgraber: sure - do feel free to upload another one after me
+
+ 15:49:13 <mvo> slangasek: I will ask them
+
+ 15:49:31 <cjwatson> the thing that puts it on the non-showstopper side for me right now is lack of developer ability to reproduce; if you can get a reliable reproduction case I'd be more comfortable calling it a showstopper
+
+ 15:49:44 <skaet> am a little worried about 848915,  since from duplicate patterns it was happening as recently as yesterday.
+
+ 15:49:53 <slangasek> mvo: ok.  If they aren't going to get to it, come back to me and I'll have another look so we at least have some eyeballs on it
+
+ 15:49:57 <cjwatson> bug 848915
+
+ 15:49:59 <ubottu> Launchpad bug 848915 in update-manager (Ubuntu Oneiric) "update-manager crashed with RuntimeError in /usr/lib/python2.7/dist-packages/gi/overrides/Gtk.py: Gtk couldn't be initialized" [High,Incomplete] https://launchpad.net/bugs/848915
+
+ 15:50:04 <cjwatson> mvo: ^?
+
+ 15:50:19 <mvo> cjwatson: this sounds like DISPLAY is not set
+
+ 15:50:33 <cjwatson> hm, you've commented I see
+
+ 15:51:24 <mvo> cjwatson: this was the only way I managed to reproduce
+
+ 15:51:25 <cjwatson> distinctly odd since the reporters seem to be using the GTK frontend though
+
+ 15:51:28 <bdmurray> duplicate bug 867629 has a test case
+
+ 15:51:30 <ubottu> Launchpad bug 848915 in update-manager (Ubuntu Oneiric) "duplicate for #867629 update-manager crashed with RuntimeError in /usr/lib/python2.7/dist-packages/gi/overrides/Gtk.py: Gtk couldn't be initialized" [High,Incomplete] https://launchpad.net/bugs/848915
+
+ 15:51:39 <cjwatson> surely they couldn't have got that far ...
+
+ 15:51:42 <mvo> bdmurray: oh, nice!
+
+ 15:52:17 <mvo> bdmurray: gksu then most likely
+
+ 15:53:07 <cjwatson> yeah, gksu will be sanitising the environment
+
+ 15:53:27 <slangasek> yeah, why would gksu need DISPLAY...
+
+ 15:53:32 <slangasek> :)
+
+ 15:55:34 <slangasek> someone's triaging that one to gksu then?  someone want to work on it?
+
+ 15:55:44 <jhunt> bdmurray, cjwatson, mvo: maybe apport could be changed to include DISPLAY in 'ProcEnviron'?
+
+ 15:55:47 <mvo> I can have a look in a little bit
+
+ 15:56:15 <slangasek> mvo: thanks
+
+ 15:56:40 <slangasek> jhunt++
+
+ 15:56:56 <jhunt> in fact, can't we just include all envar *names*?
+
+ 15:57:41 <slangasek> bdmurray, jhunt: can you follow up on that question on #ubuntu-devel?
+
+ 15:57:45 <cjwatson> slangasek: at this point I'd be more comfortable with a workaround than with changing gksu
+
+ 15:57:54 <slangasek> cjwatson: ok
+
+ 15:57:56 <slangasek> mvo: ^^
+
+ 15:58:11 <mvo> ok
+
+ 15:58:36 <slangasek> [TOPIC] AOB
+
+ 15:58:42 <slangasek> anything else?  You have 1 minute :)
+
+ 15:58:44 <cjwatson> (e.g. env DISPLAY="$DISPLAY" or whatever's appropriate)
+
+ 15:58:53 <ev> I can't believe I have to repeat the words "free beer and pizza", but free beer and pizza: https://wiki.ubuntu.com/UDS-P/TestingInUbuntu
+
+ 15:58:53 <ev> In all seriousness, I'm trying to build off the excitement and planning around refining our development process, as we centre it around test systems.  We'll need plenty of knowledge sharing to do this right.
+
+ 15:59:39 <mvo> ev++
+
+ 15:59:59 <cjwatson> I'll see what my energy levels are like by Wednesday ...
+
+ 16:00:02 * cjwatson <- old man
+
+ 16:00:05 <ev> I joined a few folks in Millbank representing Ubuntu at the PC World Awards.  We didn't win, but rest assured we made more noise at the mispronunciation of our name than any other table.
+
+ 16:00:25 <cjwatson> haha
+
+ 16:00:27 <slangasek> so go sign up to exchange pizza for the contents of your brains at UDS :)
+
+ 16:00:31 <cjwatson> fun black tie dinner?
+
+ 16:00:32 <ev> basically, yes
+
+ 16:00:33 <slangasek> ev: heh :)
+
+ 16:00:37 <ev> it was!
+
+ 16:00:40 <barry> ev: gluten free soy cheese pizza? :)
+
+ 16:01:08 <ev> barry: ask Marianna :)
+
+ 16:01:19 <ev> I'm sure we can find something for you to eat
+
+ 16:01:38 <barry> ev: well, it's orlando, i'm not so sure :)
+
+ 16:01:40 <mvo> remember the veggies
+
+ 16:02:12 <ev> mmm vegetarians
+
+ 16:02:30 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

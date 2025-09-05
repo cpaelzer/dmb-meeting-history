@@ -1,0 +1,203 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by waveform, 18 May at 15:02 &mdash; 15:34 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-05-18-15.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by waveform at 15:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-18-may-2023/35817   (waveform, 15:03)
+
+=== Release incoming bugs ===
+
+Discussion started by waveform at 15:07.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (waveform, 15:07)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (waveform, 15:11)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (waveform, 15:12)
+
+=== Team proposed-migration report ===
+
+Discussion started by waveform at 15:13.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (waveform, 15:13)
+
+=== AOB ===
+
+Discussion started by waveform at 15:16.
+
+ * ''LINK:'' https://merges.ubuntu.com/main.html?query=foundations-bugs&showProposed=true&showMergeNeeded=true   (ginggs, 15:17)
+ * ''LINK:'' https://merges.ubuntu.com/main.html?query=foundations-bugs&showProposed=true&showMergeNeeded=true   (waveform, 15:17)
+
+
+
+== People present (lines said) ==
+
+ * waveform (35)
+ * vorlon (21)
+ * ginggs (7)
+ * bdmurray (4)
+ * meetingology (2)
+ * enr0n (2)
+ * dbungert (1)
+ * liushuyu (1)
+
+
+
+== Full log ==
+
+
+ 15:02 <waveform> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:02 <meetingology> Meeting started at 15:02:43 UTC.  The chair is waveform.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:02 <waveform> #topic Lightning rounds
+
+ 15:03 <waveform> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-18-may-2023/35817
+
+ 15:03 <waveform> Let's take some time to read the status as usual
+
+ 15:03 <vorlon> netplan everywhere landed in mantic-proposed \o/
+
+ 15:04 <vorlon> so when network-manager migrates, mantic users will have netplan yaml as the authoritative backend for their network config on desktop :)
+
+ 15:07 <waveform> okay, let's look at the incoming stuff
+
+ 15:07 <waveform> #topic Release incoming bugs
+
+ 15:07 <waveform> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:08 <waveform> bug 2016471
+
+ 15:08 <bdmurray> vorlon: How dd you specifically reduce the libreoffice tests?
+
+ 15:09 <vorlon> bdmurray: finding any tests still in the queues for lunar and mantic, and re-queuing a replacement --all-proposed test to consolidate the requests (though, I did this for mantic but not yet for lunar)
+
+ 15:10 <bdmurray> The bug is already tagged foundations-todo and has a card
+
+ 15:10 <waveform> okay, moving on
+
+ 15:10 <waveform> bug 2018721
+
+ 15:10 <bdmurray> The report is 8 days old
+
+ 15:10 <dbungert> If the report is that old should we just move on?
+
+ 15:10 <vorlon> enr0n: fwiw linux-lowlatency passed its autopkgtest on a rerun with just fakeroot as the trigger so didn't need hinted. I did hint past sbuild/amd64 which is the postfix craziness
+
+ 15:11 <waveform> doh
+
+ 15:11 <waveform> okay, moving on to ll
+
+ 15:11 <enr0n> vorlon: ah okay thanks. I thought I saw a PR for hinting linux-lowlatency somehwere and assumed that did it
+
+ 15:11 <waveform> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:12 <vorlon> enr0n: there was a PR but I nacked it :)
+
+ 15:12 <waveform> bug 2012698
+
+ 15:12 <enr0n> vorlon: ah ok
+
+ 15:12 <vorlon> did we discuss this one last week?
+
+ 15:12 <waveform> looks like desktop are still investigating that one, and that's it for ll
+
+ 15:12 <waveform> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:13 <waveform> nothing for foundations this week
+
+ 15:13 <waveform> and nothing for foundations in ff either
+
+ 15:13 <waveform> #topic Team proposed-migration report
+
+ 15:13 <vorlon> bdmurray: libreoffice/i386/mantic is in big_packages instead of never_run?  It's a useless test, there are no i386 libreoffice binaries
+
+ 15:13 <waveform> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:13 <waveform> over to vorlon?
+
+ 15:14 <vorlon> down to 5 this week
+
+ 15:14 <vorlon> openssh vs sbuild: that's the known postfix issue and I'll handle hinting that
+
+ 15:14 <vorlon> glib2.0 vs libreoffice, I would ask that people NOT work on this since when I looked last night there were still 90 libreoffice tests running in parallel
+
+ 15:14 <vorlon> cmake vs boost - any volunteers?
+
+ 15:15 <ginggs> i'll take it
+
+ 15:15 <bdmurray> vorlon: My status report was incorrect its in never_run
+
+ 15:15 <vorlon> cmake vs boost: ginggs
+
+ 15:15 <vorlon> ginggs: thanks
+
+ 15:15 <ginggs> i've already retried the test, it *should* padd this time
+
+ 15:15 <ginggs> s/padd/pass/
+
+ 15:15 <vorlon> and fwupd needs its autopkgtests sorted. volunteer?
+
+ 15:15 <liushuyu> I can take one
+
+ 15:16 <vorlon> fwupd: liushuyu
+
+ 15:16 <vorlon> thanks
+
+ 15:16 <vorlon> that's all for today
+
+ 15:16 <vorlon> waveform:
+
+ 15:16 <waveform> thanks!
+
+ 15:16 <waveform> #topic AOB
+
+ 15:16 <ginggs> merge party?
+
+ 15:16 <ginggs> a small party, since most of europe is out
+
+ 15:17 <waveform> sounds good -- there's certainly some I want to take a look at
+
+ 15:17 <ginggs> here's the filtered list of outstanding merges
+
+ 15:17 <ginggs> https://merges.ubuntu.com/main.html?query=foundations-bugs&showProposed=true&showMergeNeeded=true
+
+ 15:17 <waveform> #link https://merges.ubuntu.com/main.html?query=foundations-bugs&showProposed=true&showMergeNeeded=true
+
+ 15:18 <vorlon> (also available from the commandline as grep-merges foundations-bugs)
+
+ 15:19 <waveform> very nice!
+
+ 15:30 <waveform> right, so we've got: enr0n on openssh (and git later); grub2 is being kept for julian_k; I'll take lvm2 (and sbuild, flash-kernel later); vorlon for brltty
+
+ 15:31 <waveform> mateus-morais for adduser; dbungert for util-linux; ginggs for base-files; danilogondolfo for sudo (and libpcap2)
+
+ 15:32 <vorlon> fwiw I don't suggest taking user-setup
+
+ 15:32 <vorlon> I've pinged seb128 about it internally as TIL - the thing is user-setup is primarily consumed by ubiquity, which bundles the source BUT NOT THE VERSION FROM THE ARCHIVE so I'm asking him if he wants to take a look at reconciling this
+
+ 15:33 <waveform> good point, I still have some ticket to look at regarding that ...
+
+ 15:33 <waveform> okay, have I missed anyone?
+
+ 15:33 <waveform> or any other business?
+
+ 15:34 <waveform> going once
+
+ 15:34 <waveform> going twice
+
+ 15:34 <waveform> sold!
+
+ 15:34 <waveform> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

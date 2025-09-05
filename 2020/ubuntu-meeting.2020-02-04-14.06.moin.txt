@@ -1,0 +1,295 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status, 04 Feb at 14:06 &mdash; 14:27 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-02-04-14.06.log.html]]
+
+
+
+== Meeting summary ==
+
+=== New MIRs ===
+The discussion about "New MIRs" started at 14:07.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/jeepney/+bug/1861268 
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.html 
+
+=== Incomplete bugs / questions ===
+The discussion about "Incomplete bugs / questions" started at 14:19.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir 
+
+=== Any other business? ===
+The discussion about "Any other business?" started at 14:21.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/masakari/+bug/1815991 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (73)
+ * jamespage (15)
+ * didrocks (12)
+ * doko (6)
+ * ubottu (5)
+ * joeubuntu (4)
+ * meetingology (3)
+ * marcustomlinson (1)
+
+
+
+== Full Log ==
+
+
+ 14:06 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:06 <meetingology> Meeting started Tue Feb  4 14:06:35 2020 UTC.  The chair is cpaelzer. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:06 <meetingology> 
+
+ 14:06 <meetingology> Available commands: action commands idea info link nick
+
+ 14:06 <cpaelzer> skipping previous-action items as we had no explicit ones
+
+ 14:07 <cpaelzer> let me know if I have just missed them :-)
+
+ 14:07 <cpaelzer> #topic New MIRs
+
+ 14:07 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:07 <cpaelzer> has two entries
+
+ 14:07 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/jeepney/+bug/1861268
+
+ 14:07 <ubottu> Launchpad bug 1861268 in jeepney (Ubuntu) "[MIR] jeepney" [Undecided,New]
+
+ 14:08 <cpaelzer> has anyone history/experience with that to be a fast review?
+
+ 14:08 <cpaelzer> a.k.a call for volunteers
+
+ 14:08 <cpaelzer> python-dbus interface smells like a case for pythonic people - doko/jamespage maybe?
+
+ 14:09 <didrocks> doesn’t sound straightforward either and security sensitive no?
+
+ 14:10 <cpaelzer> I'd expect anything *dbus* to be security sensitive
+
+ 14:10 <jamespage> agreed
+
+ 14:11 <doko> ok
+
+ 14:11 <cpaelzer> and who wants to do the packaging check to then pass it on to security?
+
+ 14:12 <cpaelzer> It seems we fast-path agreed on the result, but somone has to do the formal check (maybe there is more that needs to be fixed)
+
+ 14:12 <joeubuntu> will jeepney be required for Focal?
+
+ 14:13 <joeubuntu> really just anything we talk about today , if we need it for 20.04 just let me know.
+
+ 14:14 <cpaelzer> it is in component-mismatches already
+
+ 14:14 <cpaelzer> https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.html
+
+ 14:14 <cpaelzer> depended on by python3-secretstorage
+
+ 14:15 <cpaelzer> does any of the following rev-deps ring a bell why this is in main
+
+ 14:15 <cpaelzer> $ reverse-depends -r focal python3-secretstorage
+
+ 14:15 <cpaelzer> Reverse-Recommends
+
+ 14:15 <cpaelzer> ==================
+
+ 14:15 <cpaelzer> * backintime-qt
+
+ 14:15 <cpaelzer> * nagstamon
+
+ 14:15 <cpaelzer> Reverse-Depends
+
+ 14:15 <cpaelzer> ===============
+
+ 14:15 <cpaelzer> * python3-datalad
+
+ 14:15 <cpaelzer> * python3-keyring
+
+ 14:15 <cpaelzer> * unity-mail
+
+ 14:16 <didrocks> (sorry, I meant seems security sensitive or not straightforward, but double negative :p)
+
+ 14:16 <cpaelzer> ok it comes from python3-keyring
+
+ 14:17 <cpaelzer> which then on revdeps hits openstack with python3-keystoneclient python3-novaclient and others
+
+ 14:17 <cpaelzer> jamespage: would you mind doing the https://bugs.launchpad.net/ubuntu/+source/jeepney/+bug/1861268 review
+
+ 14:17 <ubottu> Launchpad bug 1861268 in jeepney (Ubuntu) "[MIR] jeepney" [Undecided,New]
+
+ 14:17 <cpaelzer> it seems eventually it is you needing it anyway ?
+
+ 14:18 <cpaelzer> and once you have assessed the case you could let joeubuntu know if this is urgent-20.04 material
+
+ 14:18 <jamespage> cpaelzer: yeah I can do that
+
+ 14:18 <joeubuntu> 👍
+
+ 14:18 <cpaelzer> great
+
+ 14:18 <cpaelzer> the next in the list was ec2-instance connetc
+
+ 14:18 <cpaelzer> I have reviewed that in the past
+
+ 14:18 <cpaelzer> and denied
+
+ 14:19 <cpaelzer> the old missing bits are not provided, it was expired and accidentially set back to new
+
+ 14:19 <cpaelzer> I clarified on the bug and set it back to incomplete
+
+ 14:19 <cpaelzer> done with new MIR bugs
+
+ 14:19 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:19 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:20 <cpaelzer> of these I just mentioned ec2-instance-connect
+
+ 14:20 <cpaelzer> that is ok
+
+ 14:20 <cpaelzer> further we have https://bugs.launchpad.net/ubuntu/+source/pyrsistent/+bug/1860422
+
+ 14:20 <ubottu> Launchpad bug 1860422 in pyrsistent (Ubuntu) "[MIR] pyrsistent, required by python-jsconschema" [High,Incomplete]
+
+ 14:20 <cpaelzer> have you talked about this last week?
+
+ 14:20 <cpaelzer> doko: jamespage: this one seems between you two
+
+ 14:21 <doko> yep, I filed the incomplete one
+
+ 14:21 <jamespage> needs someone in u-openstack to fill in the details - I'll poke sahid and coreycb
+
+ 14:21 <cpaelzer> ok, so this one will make progress as well then
+
+ 14:21 <cpaelzer> all others are old and were handled int he past
+
+ 14:21 <cpaelzer> #topic Any other business?
+
+ 14:21 <cpaelzer> anything else by any of you?
+
+ 14:21 <cpaelzer> didrocks: jamespage: joeubuntu: doko ?
+
+ 14:21 <jamespage> o/
+
+ 14:21 <jamespage> yes
+
+ 14:21 <jamespage> one sec
+
+ 14:22 <joeubuntu> nothing for me
+
+ 14:22 <didrocks> (nothing particular for me)
+
+ 14:22 <doko> not from my side
+
+ 14:22 <cpaelzer> nothing (new) for server-team
+
+ 14:22 <jamespage> had I not had a launchpad timeout this AM
+
+ 14:22 <jamespage> https://bugs.launchpad.net/ubuntu/+source/masakari/+bug/1815991
+
+ 14:22 <ubottu> Launchpad bug 1815991 in masakari-monitors (Ubuntu) "[MIR] masakari and masakari-monitors" [Undecided,New]
+
+ 14:22 <jamespage> would have been marked back as New rather than Incomplete
+
+ 14:23 <jamespage> I was reviewing MIR work for 20.04 deliverables and realised we had put that one on hold but now needs revisiting
+
+ 14:23 <doko> didrocks: https://launchpad.net/ubuntu/+source/libreoffice/1:6.4.0-0ubuntu2  this is an ugly thing, using the interncal copy ...
+
+ 14:23 <cpaelzer> jamespage: so you are looking for a reviewer on 1815991 now is that correct?
+
+ 14:24 <jamespage> yes please
+
+ 14:24 <cpaelzer> I can take a look tomorrow
+
+ 14:24 <didrocks> doko: can you mention it to marcustomlinson on #u-desktop or should I?
+
+ 14:24 <cpaelzer> jamespage: is this 20.04 material
+
+ 14:24 <didrocks> or even here, he’s around, do done :)
+
+ 14:24 <didrocks> so*
+
+ 14:24 <jamespage> yep
+
+ 14:24 <doko> didrocks: please do
+
+ 14:24 <cpaelzer> jamespage: joeubuntu left already, you might want to let him know per email then?
+
+ 14:25 <marcustomlinson> doko: no, I simply removed the dep, no internal copy used
+
+ 14:25 <jamespage> yep will raise it although I would think it won't require security review
+
+ 14:25 <doko> ahh, ok
+
+ 14:25 <didrocks> +# SYSTEM_STUFF += qrcodegen
+
+ 14:25 <jamespage> being yet-another openstack python daemon thingmy
+
+ 14:25 <didrocks> yeah :)
+
+ 14:25 <cpaelzer> jamespage: I'll need soem time to look at it and agree that no security is needed
+
+ 14:25 <cpaelzer> but I'm glad to know your expectation ...
+
+ 14:25 <cpaelzer> I have one more for desktop didrocks
+
+ 14:25 <cpaelzer> in the incomplete MIRs we have https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061
+
+ 14:25 <ubottu> Launchpad bug 711061 in openjpeg2 (Ubuntu) "[MIR] openjpeg2" [High,Incomplete]
+
+ 14:26 <cpaelzer> didrocks: this still needs a team subscriber
+
+ 14:26 <cpaelzer> and a security review
+
+ 14:26 <didrocks> cpaelzer: handling it
+
+ 14:26 <cpaelzer> didrocks: you might want to fixup both so it can go forward
+
+ 14:26 <didrocks> well, not the security part :p
+
+ 14:26 <didrocks> yep
+
+ 14:26 <cpaelzer> didrocks: but you can set the assigned team to ubuntu-security
+
+ 14:26 <cpaelzer> ok, it seems we are good for now
+
+ 14:26 <didrocks> doing
+
+ 14:26 <cpaelzer> jamespage: I'll let you know if I find anything discussion worthy
+
+ 14:27 <cpaelzer> in masakari
+
+ 14:27 <jamespage> thankyee
+
+ 14:27 <cpaelzer> I'll close the meeting if nothing else comes up in
+
+ 14:27 <cpaelzer> 10
+
+ 14:27 <cpaelzer> 5
+
+ 14:27 <cpaelzer> 2
+
+ 14:27 <cpaelzer> 1
+
+ 14:27 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,621 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 31 Jul at 15:00 &mdash; 15:37 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-07-31-15.00.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:00.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 15:10.
+
+
+=== arm64 bootstrap ===
+The discussion about "arm64 bootstrap" started at 15:12.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:28.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * doko (85)
+ * ev (52)
+ * cjwatson (37)
+ * jodh (23)
+ * xnox (23)
+ * slangasek (21)
+ * barry (18)
+ * ubottu (16)
+ * meetingology (3)
+ * ogra_ (2)
+ * stgraber (1)
+
+
+
+== Full Log ==
+
+
+ 15:00 <ev> #startmeeting
+
+ 15:00 <meetingology> Meeting started Wed Jul 31 15:00:37 2013 UTC.  The chair is ev. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:00 <meetingology> 
+
+ 15:00 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:00 <ev> [TOPIC] Lightning round
+
+ 15:00 <ev> $ echo $(shuf -e barry doko stgraber jodh ev cjwatson xnox)
+
+ 15:01 <ev> stgraber xnox cjwatson doko ev barry jodh
+
+ 15:01 <doko> slangasek not here?
+
+ 15:01 <cjwatson> He's at the Isle of Man client sprint and unavailable
+
+ 15:02 <stgraber> xnox: I'm on vacation, so it's your turn
+
+ 15:02 <ev> oh right, apols :)
+
+ 15:02 <xnox> * Last week wed-sun was on holiday
+
+ 15:02 <xnox> * From the week before, android and blobs are packaged and uploaded
+
+ 15:02 <xnox> into ubuntu universe.
+
+ 15:02 <xnox> * M.I.R. for above is filed, and in-progress (need to answer security
+
+ 15:02 <xnox> enquiries).
+
+ 15:02 <xnox> * TODO: automate "binNMU"/daily building of android package (such that
+
+ 15:02 <xnox> I'm not the only one who can/knows how to upload it)
+
+ 15:02 <xnox> * Working on sorting out btrfs mounting/fsck once and for all & get
+
+ 15:02 <xnox> btrfs in sync between Debian & Ubuntu. Should be fine with -5
+
+ 15:02 <xnox> update.
+
+ 15:02 <xnox> * Working on sorting out ubiquity: outstanding merge proposals & U1
+
+ 15:02 <cjwatson> xnox: Ah, you sorted out your internet troubles then
+
+ 15:03 <xnox> login page.
+
+ 15:03 <xnox> * Verified pending-removal SRU bugs for mdadm & partman-lvm
+
+ 15:03 <xnox> * Trying to help resolve bug 1197766, initially provided workaround
+
+ 15:03 <xnox> was not sufficient
+
+ 15:03 <ubottu> bug 1197766 in OEM Priority Project "Different partition layout after recovery with keep home partition" [Critical,Confirmed] https://launchpad.net/bugs/1197766
+
+ 15:03 <xnox> ..
+
+ 15:03 <xnox> stgraber: touche =) i was out last week ;-)
+
+ 15:03 <xnox> cjwatson: yes. they trigger full line resynchronisation via automated telephone option selection. Which got my line back up.
+
+ 15:04 <xnox> so was only a short down-time <<30minuts.
+
+ 15:04 <cjwatson> Release engineering sprint.  Spent most of the second half of the week implementing build cancellation:
+
+ 15:04 <cjwatson> - https://code.launchpad.net/~cjwatson/launchpad/buildstatus-aborted/+merge/176990
+
+ 15:04 <cjwatson> - https://code.launchpad.net/~cjwatson/launchpad-buildd/fix-abort/+merge/177003
+
+ 15:04 <cjwatson> - https://code.launchpad.net/~cjwatson/launchpad/buildmaster-cancel-properly/+merge/177580
+
+ 15:05 <cjwatson> I'm still awaiting some reviews and will probably need to make some changes, but the bulk of it is done.
+
+ 15:05 <cjwatson> foundations-1305-click-package:
+
+ 15:05 <cjwatson> - Various minor tweaks to prepare for the IoM demo.  Bug 1204523 was especially entertaining to fix.
+
+ 15:05 <ubottu> bug 1204523 in click (Ubuntu) "Click packages can't be installed from directories not viewable by the clickpkg user" [High,Fix released] https://launchpad.net/bugs/1204523
+
+ 15:05 <cjwatson> - Fixed rather embarrassing Unicode support failures.
+
+ 15:05 <cjwatson> foundations-1305-arm64-bringup:
+
+ 15:05 <cjwatson> - Bent juju-core to my will to bootstrap a new build farm, after the Canonistack LCY02 instance-deletion instance.
+
+ 15:05 <cjwatson> - Tried to get some saucy builds working.  Currently blocked on some tail-ends of toolchain rebootstrapping, but should be able to start helping out again soon.
+
+ 15:05 <cjwatson> ..
+
+ 15:05 <doko> - arm64 bootstrap (later more)
+
+ 15:05 <doko> - MIR's
+
+ 15:05 <doko> - binutils update
+
+ 15:05 <doko> (done)
+
+ 15:06 <ev> - I've spent much of the week continuing to get mobile error reporting up and
+
+ 15:06 <ev> running. We now have whoopsie and apport on the Touch images as well as a
+
+ 15:06 <ev> settings page for controlling reporting. I have a meeting later this week
+
+ 15:06 <ev> with Katherine to discuss enabling reporting by default.
+
+ 15:06 <ev> - I've run into what looks like a race condition on whoopsie startup on the
+
+ 15:06 <ev> Touch images, which prevent it from uploading reports. I'm taking the
+
+ 15:06 <ev> opportunity to build some more tests into things like whoopsie-preferences
+
+ 15:06 <ev> (hooray for dbus-test-runner, by the way) as I get to the bottom of this.
+
+ 15:06 <ev> - Work continues on the Cassandra crisis. You may have noticed that
+
+ 15:06 <ev> https://errors.ubuntu.com is only showing data from the past week or so. We
+
+ 15:06 <ev> had to cut over to a new database. Nothing is lost. We're backing up the old
+
+ 15:06 <ev> database and will merge in the data when that is complete. If you don't
+
+ 15:06 <ev> UGH. Die pidgin.
+
+ 15:06 <ev> right, https://pastebin.canonical.com/95283/
+
+ 15:06 <ev> done!
+
+ 15:07 <barry> ev: i don't use dbus-test-runner, but i managed to finally track down a very interesting (and annoying) behavior in the underlying dbus libraries ;)
+
+ 15:07 <ev> errr http://paste.ubuntu.com/5933046/ :)
+
+ 15:07 <barry> image based updates: LP: #1206515; LP: #1206558; LP: #1206523; LP: #1204528; LP: #1204976; various dbus api changes for better u/i integration; upload 0.9, 0.9.1, 0.9.2
+
+ 15:07 <ev> barry: oh?
+
+ 15:07 <ubottu> Launchpad bug 1206515 in Ubuntu system image "dbus service requires /tmp/system-image directory" [High,Fix committed] https://launchpad.net/bugs/1206515
+
+ 15:07 <ubottu> Launchpad bug 1206558 in Ubuntu system image "system-image-dbus should run on system bus" [Critical,Fix released] https://launchpad.net/bugs/1206558
+
+ 15:07 <ubottu> Launchpad bug 1206523 in Ubuntu system image "Need a system dbus policy for the system dbus service" [High,Fix released] https://launchpad.net/bugs/1206523
+
+ 15:07 <ubottu> Launchpad bug 1204528 in Ubuntu system image "Add DBus mocks for u/i testing" [High,Fix released] https://launchpad.net/bugs/1204528
+
+ 15:07 <barry> other: LP: #1073919; LP: #1205505; LP: #1181814; python-webob 1.2.3-3 (py3 support) and 1.2.3-4, debian bug 717655; PEP 394 (shebang lines); emacs 24.3 bug fix and upload; python-coverage review
+
+ 15:07 <ubottu> Launchpad bug 1204976 in Ubuntu system image "Rename IsUpdateAvailable() and make it non-blocking" [High,Fix released] https://launchpad.net/bugs/1204976
+
+ 15:07 <ev> ah nice
+
+ 15:07 <barry> in progress: LP: #1206866, system-image 0.9.3
+
+ 15:07 <ubottu> Launchpad bug 1073919 in command-not-found (Ubuntu Raring) "Crash with Python 3" [High,In progress] https://launchpad.net/bugs/1073919
+
+ 15:07 <ubottu> Launchpad bug 1205505 in python-gnupg (Ubuntu) "Sync python-gnupg 0.3.4-1 (universe) from Debian unstable (main)" [Undecided,Fix released] https://launchpad.net/bugs/1205505
+
+ 15:07 <ubottu> Launchpad bug 1181814 in wsjt (Ubuntu) "Crash: AttributeError: 'module' object has no attribute 'isNumberType'" [High,Confirmed] https://launchpad.net/bugs/1181814
+
+ 15:07 <ubottu> Debian bug 717655 in python-webob "python-webob: Add python 3 support" [Wishlist,Fixed] http://bugs.debian.org/717655
+
+ 15:07 <ubottu> Launchpad bug 1206866 in Ubuntu system image "Dies with dotted version numbers? - TypeError: unorderable types: Image() < Image()" [High,In progress] https://launchpad.net/bugs/1206866
+
+ 15:08 <barry> ev: yeah, so i use $DBUS_SYSTEM_BUS_ADDRESS envar to rendezvous on a private bus...
+
+ 15:08 <barry> turns out that once libdbus is intiialized, it never consults that envar again
+
+ 15:08 <cjwatson> How did the image-based-updates demo go?
+
+ 15:08 <ev> ha!
+
+ 15:09 <barry> so you can't change it and expect the same process to rendezvous on a different bus address
+
+ 15:09 <barry> cjwatson: mixed i think.  they got some weird bug that i don't understand at all but eventually got it to update and reboot
+
+ 15:09 <barry> cjwatson: and of course it wfm here locally :/
+
+ 15:09 <cjwatson> All the best bugs are like that
+
+ 15:10 <barry> cjwatson: anyway, that's LP: #1206866, ongoing
+
+ 15:10 <ubottu> Launchpad bug 1206866 in Ubuntu system image "Dies with dotted version numbers? - TypeError: unorderable types: Image() < Image()" [High,In progress] https://launchpad.net/bugs/1206866
+
+ 15:10 * barry is very happy that phablet-flash now allows --ubuntu-bootstrap and -r -2
+
+ 15:10 <cjwatson> (Oh, I forgot to mention, I'm also working on implementing the "devel" series alias for saucy)
+
+ 15:10 <barry> (allows you to flash to an older image)
+
+ 15:10 <barry> cjwatson: nice
+
+ 15:10 <barry> anyway...
+
+ 15:10 <barry> done
+
+ 15:10 <ev> :)
+
+ 15:10 <ev> [TOPIC] Bugs
+
+ 15:10 <ev> No Brian.
+
+ 15:10 <xnox> ev: paste.canonical.com instead of paste.ubuntu.com ? not using pastebinit? =)
+
+ 15:11 <ev> Does anyone have bugs worth a mention?
+
+ 15:11 <ev> xnox: that would've been the smart thing to do
+
+ 15:11 <jodh> erm, shall I go at the end? :)
+
+ 15:11 <ev> OH HAI
+
+ 15:11 <ev> jodh: you're up
+
+ 15:11 <cjwatson> Steve asked me to get back to bug 1065281, so I'm going to have to roll up my sleeves again on that :-/
+
+ 15:11 <ubottu> bug 1065281 in OEM Priority Project quantal "Installer crashed when trying to partition 4k/4k sector hard disks" [High,In progress] https://launchpad.net/bugs/1065281
+
+ 15:11 <ev> soz. I copy and pasted from when you weren't here :)
+
+ 15:11 <cjwatson> But nothing interesting to talk about as yet
+
+ 15:11 <jodh> * foundations-1305-upstart-work-items:
+
+ 15:11 <jodh> - Finished the upstart-dconf-bridge and raised MP:
+
+ 15:11 <jodh> https://code.launchpad.net/~jamesodhunt/upstart/upstart-dconf-bridge/+merge/177650
+
+ 15:11 <jodh> - Upstart integration tests (DEP-8):
+
+ 15:11 * ev nods
+
+ 15:11 <jodh> - Updated python Upstart test module and resubmitted MP:
+
+ 15:11 <jodh> https://code.launchpad.net/~jamesodhunt/upstart/python-upstart-module/+merge/157549
+
+ 15:11 <jodh> - Spent remainder of time working on DEP-8 scripts to make use of
+
+ 15:11 <jodh> nested pristine VM which will be provided by autopkgtest
+
+ 15:11 <jodh> environment. Attempted to use NBD to mount VM disk and configure
+
+ 15:11 <jodh> in chroot but requires too many hacks. Plan is now to boot VM, ssh
+
+ 15:11 <jodh> in to configure it, reboot, then run tests, but use NBD to collect
+
+ 15:12 <jodh> results data (ongoing).
+
+ 15:12 <jodh> * upstart:
+
+ 15:12 <jodh> - upstart-text-bridge simplified (local sockets only), renamed to
+
+ 15:12 <jodh> upstart-local-bridge and MP raised:
+
+ 15:12 <jodh> https://code.launchpad.net/~jamesodhunt/upstart/upstart-local-bridge/+merge/177027
+
+ 15:12 <jodh> - Investigated bugs 1205443 and 1202287 and merged the branch below that
+
+ 15:12 <ubottu> Error: Launchpad bug 1205443 could not be found
+
+ 15:12 <ubottu> Error: Launchpad bug 1202287 could not be found
+
+ 15:12 <slangasek> doko: mostly not here, no
+
+ 15:12 <jodh> will hopefully resolve the issue:
+
+ 15:12 <jodh> lp:~jamesodhunt/upstart/quiesce-cleanup-fix
+
+ 15:12 <jodh> * misc
+
+ 15:12 <jodh> - debconf/LPC presentation: ongoing updates.
+
+ 15:12 <jodh> Ử
+
+ 15:12 <ev> [TOPIC] arm64 bootstrap
+
+ 15:12 <barry> ev: i finally got fixed a looooongggg standing emacs bug that was annoying the crap out of me for years :)
+
+ 15:12 <ev> Steve asked doko to bring us up to speed on the arm64 bootstrap
+
+ 15:12 <ev> With that, I yield to doko :)
+
+ 15:13 <ev> barry: :D
+
+ 15:13 <doko> Aarch64 bootstrap - how we did start ...
+
+ 15:13 <ev> was the fix to use Vim instead?
+
+ 15:13 * barry is not amused
+
+ 15:13 <ogra_> instead ??
+
+ 15:13 <doko> (just waiting between my pastes ...)
+
+ 15:13 <doko> - Start with armhf. It's in the archive, we know that it does build (or not).
+
+ 15:13 <doko> - Build an armhf buildd chroot entirely with cross-built packages
+
+ 15:13 <doko> - Use staged builds (DEB_STAGE=stage1) to break cyclic dependencies, or not to build unnecessary/unbuildable binary packages.
+
+ 15:13 <doko> - Make sure that the cross-built chroot is usable.
+
+ 15:13 <ogra_> the fix always involves vim ... no matter what fix :P
+
+ 15:14 <doko> - Build and package the Aarch64 cross toolchain
+
+ 15:14 <doko> - Start the cross build again, targeting Aarch64
+
+ 15:14 <doko> - Fix Aarch64 specific bugs during that cross-build
+
+ 15:14 <doko> - Finally had a build chroot + debhelper available (April)
+
+ 15:14 <doko> - Make sure that it works using the foundations model (simulator).
+
+ 15:14 <doko> - Building gnu-hello takes over an hour.
+
+ 15:14 <doko> we got to this state in April
+
+ 15:15 <doko> - During saucy ... start building native packages (with nocheck enabled).
+
+ 15:15 <doko> - Build with nocheck. Good enogh if the package builds and can be used as a b-d
+
+ 15:15 <doko> - We don't have any sbuild or dep-wait information, so set a goal to build a package. Starting with ... you guess it ... the toolchain.
+
+ 15:15 <doko> - For warming up, binutils
+
+ 15:15 <cjwatson> Turns out we've built the toolchain several times ;-)
+
+ 15:15 <cjwatson> I think of it as a stress-test of "Reflections on Trusting Trust"
+
+ 15:15 <doko> - Build-depends: bison, flex, gettext, texinfo, dejagnu,  quilt, file, xz-utils, lsb-release, zlib1g-dev
+
+ 15:15 <doko> - Identify the b-d's which are only needed for running the tests. Here: dejagnu
+
+ 15:15 <doko> cjwatson, not just the toolchain =)
+
+ 15:16 <xnox> if gnu-hello takes over an hour, gcc 3 stage bootstrap took... weeks?!
+
+ 15:16 <doko> - Next eglibc .. b-d: libaudit-dev
+
+ 15:16 <cjwatson> (http://cm.bell-labs.com/who/ken/trust.html in the unlikely event anyone hasn't encountered it)
+
+ 15:16 <doko> ... audit: b-d: libkrb5-dev, libldap2-dev, libprelude-dev, and finally systemd
+
+ 15:16 <doko> crap, maybe we come back later ...
+
+ 15:16 <doko> - Next gcc ... easy as binutils
+
+ 15:16 <doko> ... wait, except for gcj and needing gtk+2.0 ...
+
+ 15:17 <doko> - There are a lot of cyclic dependencies in the gtk stack.
+
+ 15:17 <doko> - Often not clear which ones are only used for testing.
+
+ 15:17 <doko> - gtk b-d's on cups, so disable
+
+ 15:17 <doko> - disable udeb builds, halfs the build time
+
+ 15:17 <doko> - Ok, now gcc did build
+
+ 15:17 <doko> - Next target: build LAMP ...
+
+ 15:18 <doko> Break it down:
+
+ 15:18 <doko> - build reduced build tools (cmake, doxygen without Qt)
+
+ 15:18 <doko> - build reduced openldap, krb5, heimdal
+
+ 15:18 <doko> - build reduced avahi
+
+ 15:18 <doko> - build databases postgres and mysql (without krb, heimdal)
+
+ 15:18 <doko> - build krb5, heimdal
+
+ 15:18 <doko> - build cyrus-sasl2
+
+ 15:18 <doko> - build apache
+
+ 15:18 <cjwatson> The object of the exercise of course is to get to the point where we can start normal-ish autobuilds as quickly as possible.  Did I hear correctly that we are at the point of being able to self-host sbuild soon?
+
+ 15:18 <doko> - build php5
+
+ 15:18 <doko> - Any volunteers to test if that actually works?
+
+ 15:19 <cjwatson> Hm.  I'm slightly surprised we're doing LAMP in stage1.  I thought that was a stage2 target, or even something we'd want to push for early once we have builds in Launchpad
+
+ 15:19 <doko> well, busted1.53 did fail to build twice, and took the simulator down
+
+ 15:19 <cjwatson> Of course the bits that involve circular build-deps are worth doing in stage1
+
+ 15:19 * xnox giggles at busted1.53
+
+ 15:20 <doko> it's systemd, audit and things like that needing the crypto stuff, and the crypto stuff the database stuff
+
+ 15:20 <doko> so if sbuild can use dchroot, fine, else we need schroot first
+
+ 15:20 <doko> - A lot of packages have b-d's for documentation builds not in build-indep ... these should be fixed.
+
+ 15:20 <doko> - Finally I had to build texlive-bin. Running dh_autoreconf on 60+ configuries takes more than three days ... I start hating it.
+
+ 15:20 <cjwatson> I don't believe it can
+
+ 15:21 <cjwatson> dchroot is fairly dead except for the version built out of schroot
+
+ 15:21 <doko> have to finish my other builds before I give it a try. but it's the last package
+
+ 15:21 <doko> - And now we can build eglibc ...
+
+ 15:21 <doko> - Not the only cycles. In a lot of cases you have to see where it is the easiest way to break a cycle. Don't touch "uncommon" build systems.
+
+ 15:21 <doko> - Next steps: Get build-deps for qt4-x11 ready (almost done)
+
+ 15:21 <doko> - gstreamer (avoid gsl), gst-plugins (avoid external plugins)
+
+ 15:22 <doko> - Have a look at gtk+3.0 (install failure, don't understand it)
+
+ 15:22 <doko> - Have a look at the sound stack (pulseaudio, alsa, bluez)
+
+ 15:22 <doko> - Have a look at the video stack
+
+ 15:22 <doko> - Have a look at guile. The built interpreter doesn't terminate
+
+ 15:22 <doko> - Ocaml not yet ported, looks like other distros are working on that
+
+ 15:22 <doko> - How to build initramfs (klibc isn't yet ported, only used by Debian/Ubuntu)
+
+ 15:22 <doko> - Have a look at https://bugs.launchpad.net/linaro-aarch64
+
+ 15:22 <doko> Help: How do identify both open and closed bugs, which either
+
+ 15:22 <doko> don't have a distro task, or have an open distro task?
+
+ 15:22 <doko> - Get dep-wait information for packages without trying to build them
+
+ 15:22 <doko> Just takes too long ...
+
+ 15:22 <doko> - Setup a sbuild which rebuilds already built but out-of-date packages
+
+ 15:22 <cjwatson> doko: Looked at edos-distcheck?
+
+ 15:22 <slangasek> doko: gtk+3.0> what fails to install?
+
+ 15:22 <cjwatson> That's what Debian's wanna-build uses
+
+ 15:22 <doko> not yet, chdist didn't work
+
+ 15:23 <cjwatson> chdist should work given that all sbuild is doing is an apt-get invocation
+
+ 15:23 <doko> slangasek, this is strange, I'll post the build log once it finishes again
+
+ 15:23 <cjwatson> And all chdist does is set up apt to look at different sources
+
+ 15:24 <xnox> doko: i'd also like to see gtk+3.0 fail to install errors / log.
+
+ 15:24 <doko> right, but it couldn't handle the saucy archive with the [armhf] identifier
+
+ 15:24 <doko> so the other blocker is guile (and we need it for autogen)
+
+ 15:24 <doko> - About packaging ...
+
+ 15:24 <doko> - Unneeded build-deps, or ones which should be in build-indep
+
+ 15:24 <doko> - shell script like makefiles (configure & build in one target)
+
+ 15:24 <doko> - no support for parallel builds
+
+ 15:24 <doko> - no support for staged builds
+
+ 15:24 <cjwatson> Still odd, since it doesn't parse sources.list itself :)
+
+ 15:25 <cjwatson> You might need to set APT::Architecture and/or APT::Architectures in the chdist environment's apt.conf
+
+ 15:25 <doko> I can give it a try later, I didn't care that much at the moment
+
+ 15:25 <doko> - About using the simulator:
+
+ 15:25 <doko> - Crashes sometimes, having to restart builds
+
+ 15:25 <doko> - The time is slower in the simulator. Uploading a package to saucy, then trying to build it has interesting effects (generated files are older than the one in the package).
+
+ 15:26 <doko> would love to install ntp, but that b-d's on autogen ...
+
+ 15:26 <cjwatson> I was about to say :)
+
+ 15:27 <doko> so, that's it what I did prepare ...
+
+ 15:27 <ev> thanks doko
+
+ 15:27 <slangasek> doko: how much is still being cross-built right now, vs. built under emulation?
+
+ 15:28 <doko> slangasek, for stage1 now nothing. but we didn't re-build cross-built packages from stage0 yet
+
+ 15:28 <doko> just when I noted issues, like the cross-built bash missing job control
+
+ 15:28 * slangasek nods
+
+ 15:28 <ev> [TOPIC] AOB
+
+ 15:28 <ev> anything else?
+
+ 15:29 <cjwatson> We're keeping things reasonably separate between stage0 and stage1, but I'm working on a saucy-stage0 at the moment to see if I can make some cycles a bit easier to break
+
+ 15:29 <slangasek> brief update from the sprint? :)
+
+ 15:29 <cjwatson> (Since the raring-stage0 generally didn't use its own output to build, so it's only the first layer in a lot of cases)
+
+ 15:29 <ev> go for it :)
+
+ 15:29 <barry> slangasek: please!
+
+ 15:29 <slangasek> so click packages and system updates were both demoed this week
+
+ 15:30 <slangasek> the click package demo went off without a hitch (beuno clearly spent more time rehearsing than I did)
+
+ 15:30 <slangasek> very well-received
+
+ 15:30 <slangasek> and very close to being ready to go live, which is exciting
+
+ 15:31 <slangasek> the system updates demo had a few problems, but everything did come together well all things considered
+
+ 15:31 <cjwatson> beuno was doing little else but rehearsing from about last Wednesday :)
+
+ 15:31 <slangasek> and I've done several real upgrades through the UI, the code really does work :)
+
+ 15:31 <slangasek> so kudos to everyone who was involved in those two big pieces of work
+
+ 15:32 <ev> well done, guys
+
+ 15:32 <slangasek> everyone here is also happy to have whoopsie landed on the images
+
+ 15:32 <slangasek> though I've just noticed that with the system images, /var/crash is read-only, so we have some more fixing to do there ;)
+
+ 15:32 <ev> ha!
+
+ 15:32 <ev> Zarro boogs found.
+
+ 15:32 <slangasek> but the unity team are eagerly awaiting having their crashes recorded
+
+ 15:33 <ev> That's good to know.
+
+ 15:33 <slangasek> and there's pent-up demand for both the upstart android bridge and package cross-build support (a few more packages needed to support before it meets the team's needs)
+
+ 15:33 <slangasek> so they're chomping at the bit
+
+ 15:34 <slangasek> in short: you guys are all doing great work, which is greatly appreciated by the rest of the team
+
+ 15:34 <slangasek> so keep it up :)
+
+ 15:34 <slangasek> </cheerleading>
+
+ 15:35 <ev> slangasek: if you see someone responsible for the current touch experience, spawn an app and then SIGSTOP it for me
+
+ 15:35 <ev> then tell them to use the launcher
+
+ 15:35 <ev> I've sent a mail to phablet about it
+
+ 15:37 <slangasek> ev: this demos a bug I suppose, with the launcher locking up?
+
+ 15:37 <ev> slangasek: if an application hangs, there is no way out
+
+ 15:37 <ev> all input seems to be channelled through the foreground application
+
+ 15:37 <ev> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

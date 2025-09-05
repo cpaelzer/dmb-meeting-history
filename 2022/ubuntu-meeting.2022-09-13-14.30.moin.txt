@@ -1,0 +1,368 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 13 Sep at 14:30 &mdash; 14:57 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-09-13-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:32)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/iwd/1.29-1ubuntu1 for lto  (didrocks, 14:35)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/python-redis/+publishinghistory   (didrocks, 14:45)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:49.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:50)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:50.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:50)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:52.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:52)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:52.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:52)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:52)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:53.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (99)
+ * didrocks (26)
+ * sarnold (17)
+ * jamespage (3)
+ * meetingology (2)
+ * joalif (2)
+ * ubottu (1)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:35 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:30 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 14:31 <cpaelzer> still all on PTO except didrocks and me?
+
+ 14:31 <cpaelzer> joalif slyon sarnold jamespage ?
+
+ 14:31 <didrocks> could be, long holidays after FF? :p
+
+ 14:32 <cpaelzer> yep
+
+ 14:32 <cpaelzer> well let us get going, they might show up later
+
+ 14:32 <didrocks> right
+
+ 14:32 <joalif> o/
+
+ 14:32 <cpaelzer> and for steps we can get through alone we can do that already
+
+ 14:32 <cpaelzer> hi joalif
+
+ 14:32 <cpaelzer> #topic current component mismatches
+
+ 14:32 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <sarnold> good morning
+
+ 14:33 <cpaelzer> hi sarnold
+
+ 14:33 <cpaelzer> #1 is IWD
+
+ 14:33 <cpaelzer> I think this is an approved MIR, still checking details ...
+
+ 14:34 <cpaelzer> needed https://bugs.launchpad.net/ubuntu/+source/ell/+bug/1971738 which seems ready as well
+
+ 14:34 <ubottu> Launchpad bug 1971738 in ell (Ubuntu) "[MIR] ell" [High, Fix Committed]
+
+ 14:35 <cpaelzer> demoting wpa was needed, clarified as well
+
+ 14:35 <sarnold> perhaps the build with lto requirement?
+
+ 14:35 <didrocks> https://launchpad.net/ubuntu/+source/iwd/1.29-1ubuntu1 for lto
+
+ 14:35 <didrocks> so it’s still disabled (but in the package this time, not in the global list)
+
+ 14:35 <cpaelzer> which is fine
+
+ 14:35 <sarnold> oh nice, that got the --enable-wired, too
+
+ 14:35 <cpaelzer> so to me that seems ready
+
+ 14:36 <cpaelzer> didrocks: do you want to work with seb128 to get with (depend iwd, promoted that, demote wpa)?
+
+ 14:36 <didrocks> cpaelzer: yes, will do, nw!
+
+ 14:36 <cpaelzer> grea
+
+ 14:36 <cpaelzer> t
+
+ 14:36 <cpaelzer> next is ...
+
+ 14:37 <cpaelzer> well, in proposed there are plenty of pytohn-redis things and lintian again
+
+ 14:37 <cpaelzer> and python-os-ken
+
+ 14:37 <cpaelzer> let us sort them into actions one by one
+
+ 14:37 <cpaelzer> lintian is the easiest
+
+ 14:37 <cpaelzer> two known cases, no action for now
+
+ 14:37 <cpaelzer> and two false positives
+
+ 14:37 <didrocks> yes
+
+ 14:38 <cpaelzer> next python-redis
+
+ 14:38 <cpaelzer> new version https://launchpad.net/ubuntu/+source/python-redis/4.3.4-3
+
+ 14:38 <cpaelzer> part of the openstack tasks
+
+ 14:38 <cpaelzer> pytohn-os-ken as well
+
+ 14:38 <didrocks> this was a manual sync from debian? We did unplug automated sync, correct?
+
+ 14:38 <cpaelzer> jamespage: coreycb: hey - those seem to be all yours
+
+ 14:39 <sarnold> mark reviewed libwww-mechanize-perl and libmldbm-perl -- they're probably both good for promotion, no?
+
+ 14:39 <cpaelzer> and as didrocks suggests, all seem manual syncs
+
+ 14:39 <cpaelzer> oh are they sarnold, we will check that again after sorting these python things - thanks
+
+ 14:39 <cpaelzer> coreycb: jamespage: that would be 4 more very last minute MIRs to get those new versions
+
+ 14:40 <cpaelzer> I'll drop a msg in their channel internally to make them aware
+
+ 14:40 <jamespage> ack
+
+ 14:40 <cpaelzer> oh here you are
+
+ 14:40 <cpaelzer> will you drive those jamespage?
+
+ 14:40 <jamespage> I am - multi-meeting tasking
+
+ 14:40 <cpaelzer> sorry for that
+
+ 14:40 <jamespage> looking now
+
+ 14:41 <cpaelzer> python-deprecated does not sound very promising :-), the others are python-async-timeout + python-typing-extensions + python-ncclient
+
+ 14:41 <didrocks> I don’t see why you have any issues with the name :p
+
+ 14:41 <sarnold> hmm, why is python-redis really only showing up on our radar today, if it was published in proposed on 2022-07-07 ?
+
+ 14:42 <didrocks> yeah, I was about to ask that…
+
+ 14:43 <sarnold> (I started writing the old feature-freeze warning speech but the date sure felt funny..)
+
+ 14:43 <didrocks> Steve move 3.5.3-2 from main to universe on 2022-08-25
+
+ 14:43 <didrocks> moved*
+
+ 14:43 <cpaelzer> maybe he moved too much
+
+ 14:43 <cpaelzer> this is a pkg which is partially in main and some binaries in universe
+
+ 14:43 <cpaelzer> is it shown in auto-demotions ...
+
+ 14:43 <didrocks> which makes 4.3.4-3 still in main in proposed
+
+ 14:44 <didrocks> so anyway, there is a mismatch (but you would expect the other way around between universe and main)
+
+ 14:44 <didrocks> so maybe that’s the contrary, not enough demotion (not considered proposed)
+
+ 14:44 <didrocks> I guess we need people with the knowledge of this stack
+
+ 14:44 <cpaelzer> python3-redis | 3.5.3-2         | kinetic/universe | all
+
+ 14:44 <cpaelzer> python3-redis | 4.3.4-3         | kinetic-proposed | all
+
+ 14:45 <cpaelzer> so 3.5.3-2 was in universe, but before it was not
+
+ 14:45 <didrocks> no, it was in main
+
+ 14:45 <didrocks> https://launchpad.net/ubuntu/+source/python-redis/+publishinghistory
+
+ 14:45 <cpaelzer> I guess jamespage / openstack as the responsible one should sort it out - probably just a mismatch before
+
+ 14:46 <didrocks> 2021-10-15 13:50:32 CEST Published Jammy release main python 3.5.3-2
+
+ 14:46 <cpaelzer> so it was in main and got to universe due to 4.3 showing up?
+
+ 14:46 <didrocks> Steve seems to have manually demoted it in the release pocket by the end of August
+
+ 14:46 <didrocks> (while the new version, in main, is stuck in proposed)
+
+ 14:47 <cpaelzer> the new version really depends on many more things
+
+ 14:47 <cpaelzer> Depends: python3-async-timeout, python3-deprecated, python3-importlib-metadata | python3 (>> 3.8), python3-packaging, python3-typing-extensions | python3 (>> 3.8), python3:any
+
+ 14:47 <cpaelzer> Depends: python3:any
+
+ 14:47 <cpaelzer> so it is a real issue to get 4.3 migrating to sort these out
+
+ 14:47 <cpaelzer> jamespage: coreycb: can we consider you to have a look then?
+
+ 14:47 <didrocks> yeah, I wonder if he tried to make it move for any reasons, or if this is just a wrong correlation
+
+ 14:48 <didrocks> but I don’t understand why we didn’t have it on our radar before (at least, before the 25th of August)
+
+ 14:48 <cpaelzer> I'd also have expected to see it, at least from the day this got to main in kinetic-proposed
+
+ 14:48 <cpaelzer> but not sure how much effort we should spend on analyzing this now
+
+ 14:49 <cpaelzer> let me go back to libwww-mechanize-perl and libmldbm-perl instead
+
+ 14:49 <cpaelzer> sarnold: that indeed LGTM now
+
+ 14:49 <cpaelzer> I can move these tomorrow
+
+ 14:49 <sarnold> \o/
+
+ 14:49 <didrocks> yeah, -perl are acked :)
+
+ 14:49 <cpaelzer> #topic New MIRs
+
+ 14:49 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:50 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:50 <cpaelzer> none
+
+ 14:50 <sarnold> woo :)
+
+ 14:50 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:50 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:50 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:50 <cpaelzer> smartcards got re-assigned
+
+ 14:50 <cpaelzer> not happening right now
+
+ 14:50 <cpaelzer> tuna/tuned have discussions asking for more details on the report
+
+ 14:50 <cpaelzer> all fine, no action for us right now
+
+ 14:51 <cpaelzer> thanks didrocks and joalif for handling these
+
+ 14:52 <cpaelzer> qtr was last time, as I mentioned I told seb that we can make a one-off decision if the right aruments are provided - but so far no answer to that AFAICS
+
+ 14:52 <didrocks> let’s see when we get some feedbacks…
+
+ 14:52 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:52 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:52 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:52 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:52 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:52 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:52 <cpaelzer> Internal link
+
+ 14:52 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:52 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:52 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:52 <cpaelzer> mdevctl clearly is still missing, the rest is sort of ok to be later
+
+ 14:52 <cpaelzer> sarnold: status on that?
+
+ 14:53 <sarnold> mark has done good work getting the perl packages handled :D thanks to him; I haven't made progress on the mdevctl lately, I'm currently focused on 360s
+
+ 14:53 <cpaelzer> ok, but between now and let me say next week we'd need to get mdevctl in to not mess up late Kinetic too mcuh - any chance for that?
+
+ 14:53 <sarnold> yes
+
+ 14:53 <cpaelzer> ok, looking forward to it then
+
+ 14:53 <cpaelzer> thanks
+
+ 14:53 <cpaelzer> #topic Any other business?
+
+ 14:53 <sarnold> it'd take a pretty big surprise at this point :) hehe
+
+ 14:53 <cpaelzer> hehe
+
+ 14:53 <cpaelzer> no further topics by me today
+
+ 14:54 <joalif> nothing for me
+
+ 14:54 <didrocks> nothing either
+
+ 14:54 <sarnold> I'd really like a better idea of how the python-redis took us by surprise
+
+ 14:54 <cpaelzer> we can spend the remaining 6 min on it and then close
+
+ 14:54 <sarnold> should we poke archive admin types to get new perspectives?
+
+ 14:55 <cpaelzer> like didrocks and me :-)
+
+ 14:55 <sarnold> or is it enough to say that we'll probably learn more when jamespage
+
+ 14:55 <sarnold> .. does the investigation?
+
+ 14:56 <didrocks> yeah, I would wait for james first, but at first sight, I don’t see anthing happening in the archive between last week and this one
+
+ 14:56 <cpaelzer> I think it isn't a lot that was missed, just afte rthe 25th of Aug it would have showed up
+
+ 14:56 <cpaelzer> so why not last week
+
+ 14:56 <cpaelzer> and yes, having the owning team investigate (which needs to happen anyway) seems to be the right start.
+
+ 14:56 <sarnold> okay, cool
+
+ 14:57 <cpaelzer> ok, closing for today then
+
+ 14:57 <cpaelzer> thank you all
+
+ 14:57 <sarnold> thanks cpaelzer, all :)
+
+ 14:57 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

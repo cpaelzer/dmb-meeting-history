@@ -1,0 +1,906 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:02:55 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-02-20-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Bugs
+''LINK:'' http://bazaar.launchpad.net/~daisy-pluckers/whoopsie/trunk/view/head:/src/connectivity.c is pretty simple  (ev, 16:43:00)
+
+ *AOB
+
+
+
+Meeting ended at 17:07:01 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * xnox (89)
+ * slangasek (77)
+ * ev (64)
+ * cjwatson (46)
+ * bdmurray (34)
+ * stgraber (25)
+ * ubottu (21)
+ * ogra_ (19)
+ * doko (17)
+ * stokachu (13)
+ * barry (10)
+ * mdeslaur (3)
+ * meetingology (3)
+ * Laney (2)
+
+
+
+== Full Log ==
+
+
+ 16:02:55 <slangasek> #startmeeting
+
+ 16:02:55 * slangasek nudges the bot with his toe
+
+ 16:02:55 <meetingology> Meeting started Wed Feb 20 16:02:55 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02:55 <meetingology> 
+
+ 16:02:55 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:17 <slangasek> there we go
+
+ 16:04:23 <slangasek> [TOPIC] Lightning round
+
+ 16:04:39 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 16:04:42 <slangasek> slangasek stgraber jodh ogra cjwatson xnox doko barry bdmurray ev stokachu
+
+ 16:04:45 <slangasek> hmm, I don't like these dice
+
+ 16:04:50 <ev> I love these dice
+
+ 16:04:52 * xnox *giggles*
+
+ 16:06:15 <slangasek> - uploaded initial packaging of systemd services to raring last week, in preparation for the desktop team's sprint this week
+
+ 16:06:46 <slangasek> - discussions around the UbuntuKylin flavor application at the TB
+
+ 16:06:54 <ogra_> oops
+
+ 16:07:02 <stokachu> gnome relying on systemd makes me soooo happy
+
+ 16:07:10 <ogra_> everyone
+
+ 16:07:12 <ogra_> ...
+
+ 16:07:16 <ogra_> lets switch to KDE
+
+ 16:07:29 * barry dusts off fvwm
+
+ 16:07:33 <xnox> rumour has it, it will all be rewritten in QML soon =)
+
+ 16:07:35 <stokachu> haha
+
+ 16:07:36 <slangasek> - trying to figure out how to make ovmf use persistent storage for nvram variables
+
+ 16:07:53 <xnox> that would be so awesome to have persistent nvram =)
+
+ 16:08:23 <ev> GNOME? That thing still exists?
+
+ 16:08:34 * xnox ponders if one would be able to test mac os x weird efi using a modified ovmf.
+
+ 16:08:50 <slangasek> - working on bug #1130419, since bad timing of the steam client release and Ubuntu 12.04.2 makes a mess on 64-bit systems
+
+ 16:08:53 <slangasek> (done)
+
+ 16:08:54 <ubottu> bug 1130419 in apt (Ubuntu Precise) "apt resolver doesn't do sensible things when satisfying a cross-dependency on a virtual package (steam, wine)" [Critical,Triaged] https://launchpad.net/bugs/1130419
+
+ 16:09:01 <stgraber> Feature work:
+
+ 16:09:01 <stgraber> - Upstart (BLUEPRINT: foundations-r-upstart-user-session-enhancements)
+
+ 16:09:01 <stgraber> - Helped fix and prepare the upstart-shutdown branch.
+
+ 16:09:01 <stgraber> - Tested some chanegs to the way we deal with the environment.
+
+ 16:09:01 <stgraber> - Published updated test packages and sent call for testing yesterday.
+
+ 16:09:04 <stgraber> - Discussed event prefixing, decided not to actually change anything.
+
+ 16:09:06 <stgraber> - Container (BLUEPRINT: servercloud-r-lxc)
+
+ 16:09:09 <stgraber> - Release 0.9~alpha3.
+
+ 16:09:11 <stgraber> - Updated the package in Ubuntu which brings us really close to upstream, dropping over 100 patches.
+
+ 16:09:14 <stgraber> - Some more code reviews and forwarded most of our remaining delta upstream.
+
+ 16:09:16 <cjwatson> slangasek: steam> oh, yes, sorry, way too many interrupts today and haven't got to that yet ...
+
+ 16:09:17 <stgraber> - Networking (BLUEPRINT: foundations-r-networking)
+
+ 16:09:20 <stgraber> - Still waiting on test results for the infiniband support, no other progress there.
+
+ 16:09:23 <stgraber> Other work:
+
+ 16:09:25 <stgraber> - Networking
+
+ 16:09:28 <stgraber> - Didn't spend as much time as I'd have wanted on ofono support in NM but made all the property querying work. Now I need to figure out some random segfaults.
+
+ 16:09:29 <slangasek> xnox: well, the darn thing is, ovmf has code already to read/write nvram state to disk... it's just not working, so I'm fighting with the thing to figure out where it's sending its debug output
+
+ 16:09:31 <stgraber> - Release
+
+ 16:09:33 <stgraber> - Edubuntu 12.04.2 LTS
+
+ 16:09:36 <stgraber> - Discussed plans for Ubuntu Kylin
+
+ 16:09:38 <stgraber> TODO:
+
+ 16:09:41 <stgraber> - Continue the ofono/NM work.
+
+ 16:09:43 <stgraber> - Try to finish any LXC feature work for this cycle (1 item left).
+
+ 16:09:46 <stgraber> (DONE)
+
+ 16:10:08 <slangasek> ogra_, stokachu: bah, don't worry, it's just a set of dbus interfaces for systemd :)
+
+ 16:10:13 <cjwatson> slangasek: but I see David is way ahead of me anyway
+
+ 16:10:40 <slangasek> cjwatson: right :-)  Can you follow up on his patch today, see if it works as advertised?
+
+ 16:10:40 * ogra_ notes down GNOME -> set of dbus interfaces for systemd
+
+ 16:10:59 <cjwatson> slangasek: ok
+
+ 16:11:09 <stokachu> i heard gnome is being included in the systemd package
+
+ 16:12:04 <cjwatson> jodh is off, IIRC
+
+ 16:12:06 <ogra_> i heard it becomes a kernel module
+
+ 16:12:07 <doko> well, they wouldn't have any issue anymore with build deps
+
+ 16:12:11 <stokachu> lol
+
+ 16:12:26 <slangasek> jodh> correct
+
+ 16:12:28 <ogra_> right after dbus moved into the kernel
+
+ 16:12:29 <cjwatson> So ogra's turn
+
+ 16:12:30 <slangasek> ogra_:
+
+ 16:12:35 <ogra_> done:
+
+ 16:12:48 <ogra_> * hunting installer breakage ...
+
+ 16:13:06 <ogra_> (thanks xnox, cjwatson and seb for helping)
+
+ 16:13:11 <ogra_> todo:
+
+ 16:13:14 <xnox> doko: yeah it's very hard to do the whole Gnome module inclusion thing, so they decided that systemd is the last module they will include. If anything else is added, it must be in the systemd module.
+
+ 16:13:20 <ogra_> * switch images to xz compression
+
+ 16:13:27 <doko> that wsa short ;p
+
+ 16:13:29 <ogra_> * make flavour images for nx7 work
+
+ 16:13:33 <doko> that wsa short ;p
+
+ 16:13:47 <xnox> doko: wait for my update.
+
+ 16:13:49 <ogra_> * implement publisher code for tablet and phone dailies
+
+ 16:13:52 <ogra_> ..
+
+ 16:14:08 <cjwatson> ogra_: let me know if you need help with that last, since I gather it's urgent
+
+ 16:14:20 <cjwatson> Finished and released 12.04.2.  (Was very little use to anyone on Friday.)
+
+ 16:14:24 <cjwatson> foundations-r-phased-updates: Solicited and responded to another round of review.
+
+ 16:14:27 <cjwatson> foundations-r-future-release-infrastructure: Made a bit more progress on rewriting cdimage in Python.  Not quite worked up the fortitude to tackle publish-release yet.
+
+ 16:14:30 <cjwatson> Spent most of the rest of the week trying to make progress on rls-r-tracking-bug-tasks:
+
+ 16:14:33 <cjwatson> * Fixed apt-clone autopkgtest failures (bug 1112472).  Did some general maintenance on apt-clone while I was at it.
+
+ 16:14:35 <ubottu> bug 1112472 in apt-clone (Ubuntu Raring) "dep8 test failed because test data is too old" [High,Fix released] https://launchpad.net/bugs/1112472
+
+ 16:14:36 <cjwatson> * Tweaked shim-signed to recommend secureboot-db (bug 1087843).
+
+ 16:14:37 <ubottu> bug 1087843 in shim-signed (Ubuntu Quantal) "[MIR] secureboot-db" [Undecided,New] https://launchpad.net/bugs/1087843
+
+ 16:14:38 <cjwatson> * Fixed syslinux to build with GCC 4.7 (bug 1127462).
+
+ 16:14:39 <ubottu> bug 1127462 in syslinux (Ubuntu) "syslinux should be built using gcc-4.7 again" [High,Fix released] https://launchpad.net/bugs/1127462
+
+ 16:14:41 <cjwatson> * Fixed grub-installer's transfer of user boot parameters to target system to work even with live filesystems (bug 664526).
+
+ 16:14:42 <ubottu> bug 664526 in grub-installer (Ubuntu Precise) "setting nomodeset in grub, if live session was started with nomodeset" [High,Triaged] https://launchpad.net/bugs/664526
+
+ 16:14:44 <cjwatson> * Fixed crash when double-clicking on partitioner controls (bug 1095684).
+
+ 16:14:45 <ubottu> bug 1095684 in ubiquity (Ubuntu Raring) "Ubiquity crashes upon clicking 'New partition table' twice in the manual partitioning step during raring installation" [High,Fix committed] https://launchpad.net/bugs/1095684
+
+ 16:14:46 <ogra_> cjwatson, not that urgent as i understood (for dailies that is) ... the demo image will be a simple cp on my side
+
+ 16:14:47 <cjwatson> * Fixed ordering of encryption password strength indications (bug 1068391).
+
+ 16:14:49 <ubottu> bug 1068391 in ubiquity (Ubuntu Raring) "Password strength bug" [High,Fix committed] https://launchpad.net/bugs/1068391
+
+ 16:14:50 <cjwatson> * Made installer locale handling smarter to be able to cope with many mismatched language/location pairs (bug 1094872).
+
+ 16:14:51 <ubottu> bug 1094872 in ubiquity (Ubuntu Raring) "Installation information cause letter format instead of DIN A4" [High,Fix committed] https://launchpad.net/bugs/1094872
+
+ 16:14:53 <cjwatson> Cleared up image build failure due to libreoffice 4.0.0 packaging changes.
+
+ 16:14:57 <cjwatson> ..
+
+ 16:14:59 <cjwatson> ogra_: OK
+
+ 16:15:02 <cjwatson> handy :)
+
+ 16:15:16 <ogra_> as i understood dailies early next week should be fine
+
+ 16:16:11 <xnox> * uploaded plymouth with support to ask questions (bug #509384 )
+
+ 16:16:11 <xnox> .
+
+ 16:16:11 <xnox> * uploaded mdadm merge with many changes, most importantly plymouth
+
+ 16:16:11 <xnox> integration and initramfs support to assemble Intel Matrix Raid
+
+ 16:16:11 <xnox> arrays (sometimes aka Intel Rapid Storage). (bug #1102499 )
+
+ 16:16:11 <xnox> .
+
+ 16:16:12 <ubottu> bug 509384 in plymouth (Ubuntu) "ubuntu-logo does not implement display_question callback" [High,Fix released] https://launchpad.net/bugs/509384
+
+ 16:16:13 <xnox> * uploaded ntfs-3g package update (caused ABI break of testdisk, which
+
+ 16:16:14 <ubottu> bug 1102499 in mdadm (Ubuntu) "Cannot see 'bootdegraded' question" [High,Fix released] https://launchpad.net/bugs/1102499
+
+ 16:16:15 <xnox> got spotted and escalated all the way to debian ctte, now fixed in
+
+ 16:16:17 <xnox> ubuntu and patch forwarded to debian). It solve a few compatibality
+
+ 16:16:19 <xnox> issues with Windows8 ntfs updates.
+
+ 16:16:21 <xnox> .
+
+ 16:16:23 <xnox> * helped ogra to debug ubiquity nexus7 image (and as it turns out
+
+ 16:16:27 <xnox> desktop images as well). In the end uploaded a workaround to not
+
+ 16:16:29 <xnox> start whoopsie together with ubiquity-dm. The actual cause of the
+
+ 16:16:31 <xnox> bug is believed to be deep in the network-manager generated bindings
+
+ 16:16:33 <xnox> which Laney was diving into to fix. (Not sure what the update there
+
+ 16:16:35 <xnox> is).
+
+ 16:16:37 <xnox> .
+
+ 16:16:39 <xnox> * tested unattended preseeding oem-config on the nexus7. It works \o/
+
+ 16:16:41 <xnox> email send to utha-devel & ubuntu-installer. The wifi preseeding
+
+ 16:16:43 <xnox> didn't work (by simply dropping network-manager config). I will try
+
+ 16:16:45 <xnox> calling nmcli tool directly, and if that fails will pass this over
+
+ 16:16:47 <xnox> to desktop/qa teams. Documented automatic-oem-config boot option on
+
+ 16:16:49 <xnox> the https://wiki.ubuntu.com/DesktopCDOptions
+
+ 16:16:51 <xnox> .
+
+ 16:16:53 <xnox> * Implemented support to pass rebootcommand argument to the reboot
+
+ 16:16:55 <xnox> syscall in the upstart's reboot utility. This allows to reboot into,
+
+ 16:16:59 <xnox> e.g. fastboot mode on the nexus7. (Thus completing the unattended
+
+ 16:17:01 <xnox> redeploy cycle for Nexus 7). Merge proposal on the way. I wonder if
+
+ 16:17:03 <xnox> UEFI fastpath "reboot into firmware" is implemented the same
+
+ 16:17:05 <xnox> way. Also interesting to know how one can query which rebootcommands
+
+ 16:17:07 <xnox> are supported.
+
+ 16:17:09 <xnox> .
+
+ 16:17:11 <xnox> * bug #1080437 is essentially fixed, by using g-s-d on the images that
+
+ 16:17:13 <ubottu> bug 1080437 in ubiquity (Ubuntu Raring) "no background during the 13.04 daily install" [High,In progress] https://launchpad.net/bugs/1080437
+
+ 16:17:13 <xnox> are available. There is merge proposal to use some lxde tool for
+
+ 16:17:15 <xnox> Lubuntu flavour and Xubuntu flavour is still needs to be
+
+ 16:17:17 <xnox> fixed. Painting background with g-s-d is nice, since it support
+
+ 16:17:19 <xnox> rotation & screen size changes out of the box (e.g. for nexus 7). At
+
+ 16:17:21 <xnox> the same time noticed t
+
+ 16:17:23 <xnox> At
+
+ 16:17:25 <xnox> the same time noticed that bug #594233 has regressed as the
+
+ 16:17:26 <ubottu> bug 594233 in ubiquity (Ubuntu) "Pressing ctrl-alt-T gets you a root terminal in oem-config" [Undecided,Fix released] https://launchpad.net/bugs/594233
+
+ 16:17:29 <xnox> configuration option moved from gconf/metacity to
+
+ 16:17:31 <xnox> gsettings/g-s-d. This is now fixed. At the same time cleaned up
+
+ 16:17:33 <xnox> remaining usage of gconf in ubiquity, as actually all of those keys
+
+ 16:17:35 <xnox> have migrated to gsettings now.
+
+ 16:17:37 <xnox> .
+
+ 16:17:39 <xnox> * Tested the upstart session login, fixed a race with g-s-d being
+
+ 16:17:41 <xnox> spawned too many times. Still other fixes to do. Chatted with laney
+
+ 16:17:43 <xnox> and forwarded instructions to him, he will be looking into / helping
+
+ 16:17:45 <xnox> with upstart based sessions on desktop side. And since he uses
+
+ 16:17:47 <xnox> xmonad session he wants a generic way to run existing xsessions.
+
+ 16:17:49 <xnox> .
+
+ 16:17:51 <xnox> * Working from the office this week, due to ongoing desktop
+
+ 16:17:53 <xnox> sprint. You can tell I'm catching on evan's verbose changelog mode.
+
+ 16:17:55 <xnox> .
+
+ 16:17:59 <xnox> * Also uploaded adb from 4.2.2 android sdk into the nexus7 installer ppa.
+
+ 16:18:01 <xnox> + blog. (for those not on raring).
+
+ 16:18:03 <xnox> ..
+
+ 16:18:05 <stgraber> xnox: you've been spending way too much time with ev ;)
+
+ 16:18:06 <ogra_> you definitely work to close to ev now !
+
+ 16:18:12 <ev> bwahahaha
+
+ 16:18:14 <ogra_> *snap*
+
+ 16:18:25 <doko> ev's company does do you any good
+
+ 16:18:26 <stokachu> lp:1090512 - Need help in determing what rdepends I need to be concerned with and other pitfalls that may arise
+
+ 16:18:27 <stokachu> lp:1068399 - Needs a ack/nack on getting this into precise
+
+ 16:18:28 <stokachu> Most of my time has been utilized packaging Firefox and now Thunderbird ESR
+
+ 16:18:30 <stokachu> (done)
+
+ 16:18:38 <Laney> (I'm going to abuse cyphermox to help me on that)
+
+ 16:18:43 <xnox> bug 1090512 bug 1068399
+
+ 16:18:45 <ubottu> bug 1090512 in Quantal Backports "Please backport sudo 1.8.6p3-0ubuntu2 (main) from raring" [Undecided,New] https://launchpad.net/bugs/1090512
+
+ 16:18:46 <ubottu> bug 1068399 in Precise Backports "Please backport parallel 20120422-1 (universe) from raring" [Undecided,New] https://launchpad.net/bugs/1068399
+
+ 16:18:55 <stokachu> doh sorry i thought i had it switched to the bug
+
+ 16:19:27 <xnox> np.
+
+ 16:19:40 <Laney> ping micahg about parallel
+
+ 16:19:42 <doko> - another GCC-4.8 test rebuild (Debian testing, done by lucas), submitted four GCC issues for ICEs
+
+ 16:19:42 <doko> - oops, they did it again ... OpenJDK-6 security builds
+
+ 16:19:42 <doko> - +1 maintenance work (ftbfs, -proposed migration, component mismatches, package removals). looks like I could do this for another few weeks full time
+
+ 16:19:42 <doko> - tracked down upstart coding issue, develper trying to outsmart the compiler
+
+ 16:19:42 <doko> - got rid of gcc-4.6 in main
+
+ 16:19:43 <doko> - chase downs submitters of incomplete MIRs
+
+ 16:19:45 <doko> - Linaro GCC 4.7-2013.02 release, including all cross builds
+
+ 16:19:48 <doko> - Linaro GCC 4.6-2013.02 release
+
+ 16:19:49 <doko> - binutils updates from the branch, including all cross builds
+
+ 16:19:51 <stokachu> Laney: ok will do
+
+ 16:19:51 <doko> - helped with the Canonical statement about the Python trademark issue
+
+ 16:19:53 <doko> done
+
+ 16:20:06 <cjwatson> ooh, is that statement published?
+
+ 16:20:23 <doko> I don't know
+
+ 16:20:23 <barry> cjwatson: it is
+
+ 16:20:32 <stokachu> i think chinchilla would be an awesome replacement name
+
+ 16:20:36 <barry> cjwatson: well, um, it was sent to the psf anyway
+
+ 16:20:38 <barry> short week due to usa holiday.  bug 1097922.  friends package debugging.  u1 client oauth debugging (upstream issue 120)y.  click packages.  tablet py3 work.
+
+ 16:20:40 <ubottu> bug 1097922 in newt (Ubuntu Raring) "byobu-config crashed with ImportError in /usr/lib/python2.7/dist-packages/snack.py: /usr/lib/python2.7/dist-packages/_snack.so: undefined symbol: _Py_RefTotal" [High,Fix released] https://launchpad.net/bugs/1097922
+
+ 16:20:43 <barry> foundations-r-python3-oauth: done
+
+ 16:20:44 <xnox> barry: public URL or it didn't happen =)
+
+ 16:20:44 <cjwatson> gotcha, thanks, just noosey
+
+ 16:20:46 <cjwatson> *nosey
+
+ 16:20:48 <barry> foundations-r-python-versions: done (though porting work may be ongoing)
+
+ 16:20:52 <barry> foundations-r-python33: done
+
+ 16:20:56 <barry> ..
+
+ 16:21:06 <barry> (good question as to whether the psf will publish them)
+
+ 16:21:08 <stokachu> ah i went out of turn, sorry everyone
+
+ 16:21:30 <xnox> stokachu: chin3 and chin2.7 don't sound like awesome shebang lines.
+
+ 16:21:35 <bdmurray> irc discussion with evan regarding the custom comparator for package versions and rolling it out
+
+ 16:21:37 <bdmurray> worked on migration of bucketversion column family to one that uses the custom comparator
+
+ 16:21:40 <bdmurray> pushed errors branch allowing one to use a first_appearence url parameter to the API
+
+ 16:21:43 <bdmurray> submitted rt regarding updating errors to r270
+
+ 16:21:47 <bdmurray> built and tested dpkgversiontype comparator on canonistack
+
+ 16:21:47 <bdmurray> reviewed and tested evan's bucket page reworking
+
+ 16:21:47 <bdmurray> modified bug bot to comment on sru bugs still needing verification
+
+ 16:21:47 <bdmurray> wrote a tool to query the errors api regarding versions of packages from -proposed for errors
+
+ 16:21:50 <bdmurray> modified errors regression checker to use date published and today as from and to dates
+
+ 16:21:59 <bdmurray> subscribed desktop-packages and dx-packages to packages which they should be subscribed to
+
+ 16:22:02 <bdmurray> reassignment of linaro packages in package to team mapping
+
+ 16:22:05 <bdmurray> review of server team package to team mapping discrepancies
+
+ 16:22:07 <bdmurray> updated meta release files for the 12.04.2 point release
+
+ 16:22:10 <bdmurray> resolved an issue with cd_error being unset in the ubiquity source package hook
+
+ 16:22:13 <bdmurray> worked on an upstart job to replace CD with packages functionality from update-notifier
+
+ 16:22:16 <bdmurray> research into bug 1124330
+
+ 16:22:17 <ubottu> bug 1124330 in whoopsie (Ubuntu) "[raring] Latest whoopsie 0.2.13 slows down boot process by 29 seconds!" [Undecided,Confirmed] https://launchpad.net/bugs/1124330
+
+ 16:22:33 <bdmurray> regarding work items I'm working on the following:
+
+ 16:22:39 * xnox ponders if it's the same network-manager bug....
+
+ 16:22:43 <bdmurray> create and update a BucketSystems column family to keep track of unique systems in a bucket: INPROGRESS
+
+ 16:22:55 <bdmurray> Import developer to package and developer to team mappings and filter the default view on errors.ubuntu.com to problems the developer and their team are responsible for: INPROGRESS
+
+ 16:23:09 <bdmurray> and finished
+
+ 16:23:19 <bdmurray> auto comment on bugs needing verification (indicate that it needs to happen in the next 15 days) at some interval (3 months)
+
+ 16:23:36 <bdmurray> ⌁ done
+
+ 16:23:38 <ev> - Slower week. Sick for much of it, but feeling infinitely better now.
+
+ 16:23:38 <ev> - Rebuilt the errors.ubuntu.com bucket page to match the design:
+
+ 16:23:39 <ev> https://errors.ubuntu.com/bucket/?id=%2Fusr%2Fbin%2Flsb_release%3AIOError%3A%3Cmodule%3E%3Amain%3Acheck_modules_installed%3Agetoutput%3Agetstatusoutput
+
+ 16:23:39 <ev> https://wiki.ubuntu.com/ErrorTracker#Bucket_page
+
+ 16:23:39 <ev> - The instances are now presented in an infinitely-scrolling table (sorting
+
+ 16:23:39 <ev> by time coming soon). This was made possible by a rebuild of the Buckets CF
+
+ 16:23:49 <ev> using a TimeUUID comparator. I have a ticket in process to drop the old CF.
+
+ 16:23:49 <ev> - The graph is now based on average instances per calendar day (weighted
+
+ 16:23:50 <ev> against the systems) rather than a raw instance count, and provides
+
+ 16:23:50 <ev> individual lines for each release (the key is coming back soon).
+
+ 16:23:50 <ev> - The package versions with this problem table will provide a
+
+ 16:23:56 <ev> version-by-version breakdown of the problem in each Ubuntu version, but
+
+ 16:23:56 <ev> right now it just displays the total count. This is waiting for the new
+
+ 16:23:56 <ev> BucketVersions CF that uses a composite of my DpkgVersionType comparator
+
+ 16:23:56 <ev> and a UTF8 string for the Ubuntu release.
+
+ 16:23:56 <ev> - Wrote a script to rebuild the BucketVersions CF using different comparators
+
+ 16:24:01 <ev> and used it to find out that there are a lot of binary crashes that we're not
+
+ 16:24:01 <ev> retracing. This is because while we clear the Rabbit queues when they get too
+
+ 16:24:01 <ev> big, we don't also clear the index in Cassandra for this. So while we remove
+
+ 16:24:01 <ev> the core files we have to hand, we never ask users for a replacement. I'm
+
+ 16:24:07 <ev> going to work with IS to get the process changed to account for this.
+
+ 16:24:07 <ev> The rebuild script is running in a debugging mode on one of the retracer
+
+ 16:24:08 <ev> machines for now, collecting some more background information. As soon as I
+
+ 16:24:08 <ev> finish getting the new Cassandra version (1.2.1) ready for production, the
+
+ 16:24:08 <ev> new column family set up in oops-repository, and everything deployed, I'll
+
+ 16:24:15 <ev> ask webops to switch it over to write mode.
+
+ 16:24:15 <ev> - Investigation work around Cassandra 1.2.1. They've finally built an ACL in
+
+ 16:24:15 <ev> the core distribution again, but it's not complete in the released version.
+
+ 16:24:15 <ev> We can continue using SimpleAuthenticator (text files) for now and switch
+
+ 16:24:21 <slangasek> stokachu: sudo reverse-depends> I'm not all that familiar with the backports process, but it seems to me like the point is there to test *all* of them to spot any issues?  If the question is which revdeps are likely to break, I think the answer is "none"
+
+ 16:24:21 <ev> over to the Cassandra keyspace backed authentication backend when 1.2.2/3 is
+
+ 16:24:22 <ev> out.
+
+ 16:24:22 <ev> - Bundling Cassandra 1.2.1 with simple authentication and my DpkgVersionType
+
+ 16:24:22 <ev> comparator. Testing on Canonistack.
+
+ 16:24:27 <ev> - Code review for Brian.
+
+ 16:24:27 <ev> - Discussion with Bryce about Xorg needs around the error tracker. They'd like
+
+ 16:24:27 <ev> to retain some core files as they need to see locals in the backtrace output.
+
+ 16:24:27 <ev> We agreed to build a small fixed size queue of Xorg core dumps.
+
+ 16:24:30 <ev> They also want to be able to sort by the Last seen field in the most common
+
+ 16:24:30 <ev> problems table, ellipsize on the First/Last seen fields instead of the
+
+ 16:24:30 <ev> signature column, and search by packageset.
+
+ 16:24:31 <ev> (done)
+
+ 16:24:47 <doko> that was short
+
+ 16:24:52 <stgraber> ev: you loose, xnox's was longer ;)
+
+ 16:25:08 <stgraber> ev: but you were sick, I guess that's a valid excuse
+
+ 16:25:12 <slangasek> bdmurray, ev: is that custom comparator going to be released, btw?  Seems like the sort of thing that would find occasional reuse elsewhere
+
+ 16:25:25 <stokachu> slangasek: yea i was afraid i'd have to test them all
+
+ 16:25:31 <ev> slangasek: https://github.com/evandandrea/cassandra-dpkgversiontype
+
+ 16:25:47 <slangasek> stokachu: or alternately, none ;)  But that's a question of the backports process
+
+ 16:27:59 <slangasek> ev: yay - you should send an RFP to Debian, see if someone on the java team wants to maintain a package for it
+
+ 16:28:19 <slangasek> any other questions re: statuses?
+
+ 16:29:09 <ev> slangasek: tricky - cassandra moves quicker than Debian's glacial pace and thus the packages live in the Apache debian repository
+
+ 16:29:24 <ev> so if it were packaged, the dependencies wouldn't be solvable in Debian
+
+ 16:29:37 <slangasek> ah, it has cassandra-specific deps?
+
+ 16:29:44 <slangasek> maybe less interesting then, indeed
+
+ 16:29:50 <ev> it's built against the Cassandra API, yeah
+
+ 16:30:07 <slangasek> right, I assumed it was something generalizable that cassandra would call out to
+
+ 16:30:13 <slangasek> [TOPIC] Bugs
+
+ 16:30:26 <slangasek> bdmurray: what's new with six legs and wings?
+
+ 16:30:41 <bdmurray> well there is the previously mentioned bug 1124330
+
+ 16:30:42 <ubottu> bug 1124330 in whoopsie (Ubuntu) "[raring] Latest whoopsie 0.2.13 slows down boot process by 29 seconds!" [Undecided,Confirmed] https://launchpad.net/bugs/1124330
+
+ 16:31:20 <slangasek> has anyone else seen that bug?
+
+ 16:31:25 <slangasek> I rebooted yesterday, saw nothing of the sort
+
+ 16:31:37 <ev> given that it's installed on everyone's system and the delta from 0.2.9 to 0.2.13 didn't touch anything upstart related, I call shenanigans
+
+ 16:31:49 * barry neither
+
+ 16:31:58 <bdmurray> I've not seen it
+
+ 16:32:04 <ev> installed on everyone's system> I'd have quite a few people beating down my door
+
+ 16:32:32 <slangasek> so probably unrelated to the whoopsie update
+
+ 16:32:57 <slangasek> though it may still be triggered by whoopsie in some fashion
+
+ 16:33:36 <ev> nothing depends on it
+
+ 16:34:14 <xnox> well from 0.2.9 -> 0.2.13 we have a switch from direct dbus to nm-bindings-to-dbus and that broke nexus7 and desktop images when no desktop-session is running.
+
+ 16:34:38 <xnox> so if someone happens to boot into something like ubiquity-dm.....
+
+ 16:34:38 <ev> yeah, that was strange
+
+ 16:36:45 <slangasek> so, on the boot charts it looks like things go to sleep exactly at the point of NM activity
+
+ 16:37:43 <xnox> and whoopsie can start before network-manager (as there is no start on as far as I can see)
+
+ 16:37:56 <xnox> thus doing dbus activation of network-manager?!
+
+ 16:38:40 <ev> hm, I would say it should start on network-manager, but it doesn't explicitly need it
+
+ 16:38:41 <slangasek> I don't see ubiquity in the chart, fwiw; though there is 'preload', which points to this user tinkering to try to speed up their system
+
+ 16:38:53 <ev> if it cannot talk to NM, it's supposed to carry on like it has an active internet connection
+
+ 16:39:21 <xnox> and you are using async NM calls? cause otherwise it will block on getting the dbus proxy for NM objects.
+
+ 16:39:26 <ev> I guess there's no way to express, "ideally wait for network-manager, but if it doesn't show up, still start whoopsie"
+
+ 16:39:29 * xnox should poke that code.
+
+ 16:39:35 <slangasek> ev: but if the way it checks for NM is over dbus, and this auto-launches NM, that could be a problem
+
+ 16:39:39 <ev> or is that effectively dbus service activation
+
+ 16:39:40 <slangasek> (maybe)
+
+ 16:40:11 <xnox> ev: well we can start on started network-manager or (something that is much later but present on all systems)
+
+ 16:40:18 <slangasek> the only dbus-activated service I see in NM is /usr/share/dbus-1/system-services/org.freedesktop.nm_dispatcher.service
+
+ 16:40:42 <ev> xnox: is it safe to assume everyone has NM?
+
+ 16:40:46 <slangasek> no
+
+ 16:40:48 <xnox> no.
+
+ 16:40:56 <ev> xnox: there are no async libnm calls
+
+ 16:41:05 <ev> at least not for what we need: http://projects.gnome.org/NetworkManager/developers/libnm-glib/09/NMClient.html
+
+ 16:41:18 <slangasek> (not if you want whoopsie to work on servers in any capacity)
+
+ 16:41:28 <ev> yeah, and I do
+
+ 16:41:33 <slangasek> delayed whoopsie startup can be done as 'start on stopped rc RUNLEVEL=[2345]'
+
+ 16:41:55 <slangasek> though that's not /guaranteed/ to take longer than starting up NM itself
+
+ 16:41:58 <xnox> ev: that is no much different from the udisks2 bindings.
+
+ 16:42:03 <xnox> s/no/so/
+
+ 16:42:06 <slangasek> however, as mentioned the only dbus-activated NM serice is the dispatcher
+
+ 16:42:11 <slangasek> which I don't think whoopsie would be using?
+
+ 16:42:18 <ev> nope
+
+ 16:42:34 <slangasek> ok
+
+ 16:42:41 <slangasek> who can follow up on this bug?  xnox?
+
+ 16:43:00 <ev> http://bazaar.launchpad.net/~daisy-pluckers/whoopsie/trunk/view/head:/src/connectivity.c is pretty simple
+
+ 16:43:04 <xnox> slangasek: ok. i'll poke it a bit more.
+
+ 16:43:19 <xnox> unless ev is in love with network-manager? =)
+
+ 16:43:20 <slangasek> xnox: thanks
+
+ 16:43:26 <slangasek> bdmurray: other bugs?
+
+ 16:43:31 <ev> xnox: stab stab
+
+ 16:43:34 <ev> thanks :)
+
+ 16:43:38 <bdmurray> the oem team pinged me about bug 1097570
+
+ 16:43:41 <ubottu> bug 1097570 in grub2 (Ubuntu) "grub2-signed can not find the right device when there are two filesystems containing the file '.disk/info'." [High,Triaged] https://launchpad.net/bugs/1097570
+
+ 16:44:12 * xnox .o0( How to tell apart identical twins?! )
+
+ 16:44:25 <bdmurray> cjwatson: you'd said at one point in time that wouldn't make 12.04.2 because it was rather hard
+
+ 16:44:31 <cjwatson> Indeed
+
+ 16:44:51 <cjwatson> My best idea is to put a UUID in that file and match on that instead
+
+ 16:44:54 <cjwatson> Or something similar
+
+ 16:44:59 <cjwatson> But I haven't yet checked whether that's feasible
+
+ 16:45:08 <cjwatson> (Probably a different file, actually)
+
+ 16:45:38 <cjwatson> bdmurray: I can take assignee on that - probably more sensible since I wrote the code
+
+ 16:45:45 <cjwatson> And I'll put it on rls-r-tracking so I remember
+
+ 16:46:10 <bdmurray> cjwatson: okay, sounds good
+
+ 16:46:25 <bdmurray> and they also mentioned bug 967229
+
+ 16:46:28 <ubottu> bug 967229 in plymouth (Ubuntu) "Text mode shown briefly with various "cryptic" texts when logging out or shutting down" [High,Triaged] https://launchpad.net/bugs/967229
+
+ 16:46:39 <cjwatson> Heh, now *that's* a long-running problem
+
+ 16:46:51 <cjwatson> (Sorry, that's my only useful input)
+
+ 16:47:25 <slangasek> I saw an update on that one from jmleddy yesterday
+
+ 16:47:43 <bdmurray> right
+
+ 16:48:03 <slangasek> the printf/clear seems to be what we discussed with apw several udses ago but never implemented
+
+ 16:48:51 <slangasek> for the record, there's no way to prevent this from going into text mode briefly on shutdown - it's not an upstart ordering bug
+
+ 16:49:29 <slangasek> the architecture just doesn't allow for it to be done sanely - the X server won't leave the VT in graphics mode
+
+ 16:49:44 <slangasek> (and probably shouldn't, for purposes of maintainability/debuggability)
+
+ 16:49:50 <slangasek> so we do need to clear the text
+
+ 16:50:49 <slangasek> bdmurray: IIRC we said we wanted to clear the text there on VT7 after starting lightdm?
+
+ 16:51:13 <slangasek> in which case putting this in the lightdm job might be most sensible
+
+ 16:51:19 <mdeslaur> that doesn't work
+
+ 16:51:24 <cjwatson> mm, I would recommend clearing it just before exiting X as well - it's not uncommon for stuff to be left on vt7 later on
+
+ 16:51:24 <bdmurray> slangasek: yes, that sounds right
+
+ 16:51:31 <slangasek> mdeslaur: why not?
+
+ 16:51:32 <cjwatson> shouldn't hurt to do both
+
+ 16:51:54 <slangasek> cjwatson: I think at the time, we argued that anything writing to VT7 *while* lightdm is running is itself buggy and we should know about it and fix it at the source
+
+ 16:51:59 <mdeslaur> you can clear the screen when you shutdown lightdm, but the processes that get shutdown in parallel by upstart still print junk before plymouth comes up
+
+ 16:52:35 <cjwatson> I'm not sure I buy that argument - writing to the console under X isn't intrinsically buggy
+
+ 16:52:49 <slangasek> cjwatson: the argument is that they shouldn't be outputting to the console
+
+ 16:52:55 <slangasek> they should be outputting somewhere more useful
+
+ 16:53:00 <cjwatson> Maybe
+
+ 16:53:38 <slangasek> mdeslaur: likewise, jobs shutting down in parallel to lightdm shouldn't be writing anything here; the output should be sent somewhere more appropriate (possibly plymouth, possibly upstart log)
+
+ 16:53:39 <cjwatson> However, if I boot without quiet (or even without splash), I still don't want startup junk on my screen when I shut down
+
+ 16:54:10 <cjwatson> sending to plymouth is hard when plymouthd hasn't restarted yet :)
+
+ 16:54:21 <slangasek> yeah
+
+ 16:54:26 <mdeslaur> slangasek: yes, that makes sense
+
+ 16:54:34 <cjwatson> and sending to the upstart log requires knowing what you're doing in advance
+
+ 16:54:38 <slangasek> but we could make sure plymouthd starts sooner on shutdown, while leaving the splash deferred until lightdm shuts down
+
+ 16:54:50 <cjwatson> I think we have to do that, yes
+
+ 16:55:00 <slangasek> anyway, I think having the lightdm job clear the VT on startup is per-se correct
+
+ 16:55:02 <cjwatson> similar to the startup architecture
+
+ 16:55:21 <slangasek> so we should probably do that as a first step that covers the 90% case, I think?
+
+ 16:57:21 <slangasek> bdmurray: are you happy moving ahead with that part of it?
+
+ 16:58:43 <bdmurray> slangasek: sure
+
+ 16:58:49 <slangasek> ok, thanks
+
+ 16:58:50 <slangasek> any other bugs?
+
+ 16:59:11 <bdmurray> bug 1126107 - I haven't had a chance to test it yet though
+
+ 16:59:12 <ubottu> bug 1126107 in ubiquity (Ubuntu) "Ubiquity does not start during raring desktop installations using libvirt and KVM " [High,Confirmed] https://launchpad.net/bugs/1126107
+
+ 17:00:04 <xnox> it should work now that whoopsie got a work around.
+
+ 17:00:17 <slangasek> -> fix released then?
+
+ 17:00:22 <xnox> wait, this is different.
+
+ 17:00:54 <xnox> but needs a retest before proceeding with images from 18th or better.
+
+ 17:01:18 <cjwatson> we didn't get a daily build this morning due to libreoffice-related breakage, but I'm respinning for that at the moment
+
+ 17:01:31 <cjwatson> however the last daily build booted fine
+
+ 17:01:36 <cjwatson> (just tested)
+
+ 17:02:02 <xnox> I'll test more, for my current merge-proposal in a moment. And I'll mark it incomplete if I cannot reproduce this any more.
+
+ 17:02:30 <cjwatson> I'm just leaving a comment too
+
+ 17:02:40 <slangasek> ok, seems like that bug's in hand then
+
+ 17:02:45 <slangasek> bdmurray: next? :)
+
+ 17:02:54 <bdmurray> bug 1127867 regarding precise
+
+ 17:02:57 <ubottu> bug 1127867 in mdadm (Ubuntu Precise) "/etc/udev/rules.d/65-mdadm.vol_id.rules uses non-existent 'vol_id'" [High,New] https://launchpad.net/bugs/1127867
+
+ 17:03:25 <xnox> mine. Thanks for pointing out, didn't see it.
+
+ 17:04:07 <slangasek> is that a file generated in the current (precise) package, or an upgrade leftover?
+
+ 17:04:44 <slangasek> anyway, left to xnox (who is very popular today with the bugs)
+
+ 17:04:45 <xnox> it's a regression between -release & -updates (where we switched to upstream udev rules)
+
+ 17:04:51 <slangasek> ok
+
+ 17:04:54 <xnox> as far as I can tell by quickly scanning.
+
+ 17:05:40 <slangasek> bdmurray: any more?
+
+ 17:05:48 <bdmurray> slangasek: nope, that's it!
+
+ 17:05:51 <slangasek> great
+
+ 17:05:53 <slangasek> [TOPIC] AOB
+
+ 17:05:55 <slangasek> anything else?
+
+ 17:07:01 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

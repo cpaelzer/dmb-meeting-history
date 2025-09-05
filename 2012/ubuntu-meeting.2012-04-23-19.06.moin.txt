@@ -1,0 +1,545 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cody-somerville at 19:06:17 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-04-23-19.06.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *PerPackageUploader Application: David Henningsson
+''LINK:'' https://wiki.ubuntu.com/Diwic/PulseAudioUploaderApplication   (cody-somerville, 19:07:14)
+
+ *PerPackageUploader Application: Cesare Falco
+''LINK:'' https://wiki.ubuntu.com/c.falco/DeveloperApplication   (cody-somerville, 19:35:06)
+
+ *AOB
+''ACTION:'' tumbleweed to ensure micahg gets things sorted for UDS meeting  (cody-somerville, 20:21:54)
+
+
+
+Meeting ended at 20:26:33 UTC.
+
+
+
+== Votes ==
+
+
+ * PerPackageUploader Application: David Henningsson - PulseAudio
+   For: 6 Against: 0 Abstained: 0
+
+
+
+== Action items ==
+
+ * tumbleweed to ensure micahg gets things sorted for UDS meeting
+
+
+
+== Action items, by person ==
+
+ * micahg
+ ** tumbleweed to ensure micahg gets things sorted for UDS meeting
+ * tumbleweed
+ ** tumbleweed to ensure micahg gets things sorted for UDS meeting
+
+
+
+== People present (lines said) ==
+
+ * cfalco (48)
+ * diwic (38)
+ * cody-somerville (33)
+ * Laney (30)
+ * micahg (22)
+ * tumbleweed (17)
+ * meetingology (15)
+ * bdrung (13)
+ * barry (12)
+ * ogra_ (8)
+ * vanhoof (1)
+
+
+
+== Full Log ==
+
+
+ 19:06:17 <cody-somerville> #startmeeting
+
+ 19:06:17 <meetingology> Meeting started Mon Apr 23 19:06:17 2012 UTC.  The chair is cody-somerville. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 19:06:17 <meetingology> 
+
+ 19:06:17 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 19:06:21 <Laney> hah, sucker :P
+
+ 19:06:25 <tumbleweed> :)
+
+ 19:07:07 <cody-somerville> #topic PerPackageUploader Application: David Henningsson
+
+ 19:07:14 <cody-somerville> #link https://wiki.ubuntu.com/Diwic/PulseAudioUploaderApplication
+
+ 19:07:31 <cody-somerville> diwic, Hello. Could you please introduce yourself and your application?
+
+ 19:07:36 <diwic> hi!
+
+ 19:08:05 <diwic> Well, I've been co-maintaining PulseAudio for a while now. I work with PulseAudio and ALSA daily at my job at Canonical.
+
+ 19:08:27 <diwic> I should maybe point out that my main interest is really in the debian/patches directoro
+
+ 19:08:31 <diwic> directory
+
+ 19:08:42 <diwic> which does not mean the other stuff is uninteresting
+
+ 19:09:03 <diwic> but a lot of what I do is to try to actually fix bugs and then get them into Ubuntu
+
+ 19:09:06 <diwic> and into upstream
+
+ 19:09:22 <diwic> also keeping track of bugfixes that come in upstream and apply them to Ubuntu as well.
+
+ 19:09:48 <diwic> As for the packaging itself, I had a meeting at last desktop summit with the debian maintainer
+
+ 19:10:20 <diwic> bringing PulseAudio closer to Debian would be a long term goal for me
+
+ 19:10:32 <diwic> perhaps even being able to merge/sync it one day.
+
+ 19:11:02 <diwic> I guess that suits as an introduction :-) Any questions, feel free to ask
+
+ 19:11:24 <cody-somerville> diwic, How familiar do you feel you are with debian packaging in general and again how familiar do you feel you are with the packaging of pulseaudio, alsa, etc? Do you ever find gaps in your skill set when working on audio related packages? If so, how do you go about working around that?
+
+ 19:12:05 <bdrung> diwic: an epoch bump in ubuntu does not help to get to a syncable version
+
+ 19:12:19 <Laney> ah, the package is in Git. Perhaps you could talk to Sweetshark about his experience with co-maintaining Libreoffice :-).
+
+ 19:13:00 <diwic> cody-somerville, well, I guess the reason why I'm not applying for motu or core-dev right away is that I'm not totally familiar with *everything* but rather the PulseAudio package
+
+ 19:13:02 <barry> diwic: do you have a plan for getting debian and ubuntu versions back in sync?
+
+ 19:13:32 <diwic> cody-somerville, and to some degree the alsa packages as well perhaps.
+
+ 19:14:01 <diwic> bdrung, not exactly :-) but perhaps one could be creative in finding ways to collaborate.
+
+ 19:15:28 <Laney> diwic: why just PA and not the alsa stack too?
+
+ 19:15:49 <Laney> oh, perhaps you just answered that
+
+ 19:15:53 <Laney> are they more complicated packages?
+
+ 19:16:26 <diwic> barry, at this point? Well, sjoerd who maintains it in Debian would like us to sync it some day. In any way we can collaborate about issues and packaging, we can spread knowledge across and reduce workload, leading to more efficient package and better quality essentially. But I haven't looked in detail to it, yet
+
+ 19:16:58 <barry> diwic: do you have any sense for the major bottlenecks for a sync?
+
+ 19:17:02 <Laney> also, are you the only person concentrating on the audio stack currently? I understand crimsun has reduced his involvement.
+
+ 19:17:04 <diwic> barry, and I can't give you a definite promise that it will happen any time soon. But the upstream relations are good.
+
+ 19:17:30 <barry> diwic: great!
+
+ 19:17:56 <diwic> Laney, I was actually considering alsa-* as well, as you see Daniel's endorsement, he seems to trust me with that as well. It's mostly a matter of experience. I've been more into the PulseAudio package.
+
+ 19:18:26 <diwic> Laney, TheMuso does a lot of the packaging for the ALSA and PulseAudio packages also.
+
+ 19:18:40 <cody-somerville> diwic, What would you consider more important: breadth of support for devices and features + or adverseness to risk? How do the weights of these two concerns change over the course of a Ubuntu release cycle for you?
+
+ 19:18:40 <diwic> Laney, he's the one who has sponsored most of my work lately.
+
+ 19:18:47 <Laney> ah.
+
+ 19:21:16 <diwic> cody-somerville, that's always a balance, of course. And it's spread over the cycle so bigger features goes in early. One can say that maybe things go in different categories here:
+
+ 19:22:09 <cfalco> hello everyone!
+
+ 19:22:22 <diwic> cody-somerville, if it's something that I'm drop dead sure that it won't affect anything else - or at least almost anything else - e g we can match something against a specific device ID (or subsystem ID), it can even go in as an SRU.
+
+ 19:22:30 * ogra_ cheers for diwic
+
+ 19:22:47 <diwic> cody-somerville, that's consistent with what the kernel people do.
+
+ 19:22:59 * tumbleweed has just been reading some bugs, and everything seems to have been sponsored without any back-and-forth. Nice.
+
+ 19:23:05 <diwic> cody-somerville, but if it touches generic code, it's another matter. No features after Feature Freeze :-)
+
+ 19:23:53 <diwic> cody-somerville, and no uploads in Alpha/Beta/Final Freeze, unless its terribly important (and double-checked with relevant people, such as the release team)
+
+ 19:24:17 <diwic> cody-somerville, does that answer your question?
+
+ 19:24:26 <cody-somerville> Aye.
+
+ 19:24:28 <cody-somerville> diwic, Are you familiar with the SRU and freeze exception processes? Have you ever driven a request through them before?
+
+ 19:24:52 * ogra_ remembers multiple SRUs i worked on with diwic
+
+ 19:25:03 * tumbleweed sees a few: http://ubuntu-dev.alioth.debian.org/cgi-bin/ubuntu-sponsorships.cgi?render=html&sponsor=&sponsor_search=name&sponsoree=David+Henningsson&sponsoree_search=name
+
+ 19:25:35 <diwic> cody-somerville, I've been writing SRUs. Freeze exceptions, not so much. I think TheMuso's been sorting out the paperwork there
+
+ 19:26:01 <diwic> cody-somerville, but the best is of course if you've fixed enough bugs so you don't have to make either of them :-)
+
+ 19:26:53 <tumbleweed> diwic: are you subscribed to ubuntu-devel-announce?
+
+ 19:26:56 <bdrung> as i said: ubuntu is bug free. ;)
+
+ 19:27:03 <diwic> tumbleweed, yes.
+
+ 19:27:13 <ogra_> bdrung, shhh
+
+ 19:27:16 <tumbleweed> out of interest, why did you wait a year to apply?
+
+ 19:27:19 <cody-somerville> diwic, Do you feel integrated in the Ubuntu development community? Do you participate on MLs, devel channels on IRC, etc?
+
+ 19:27:20 <ogra_> (dont tell anyone)
+
+ 19:28:46 <diwic> tumbleweed, to gain sufficient experience.
+
+ 19:29:15 * tumbleweed appreciates that
+
+ 19:29:55 <diwic> cody-somerville, yes. I'm on #ubuntu-devel and #ubuntu-kernel daily.
+
+ 19:30:38 <Laney> +1 on crossing the chasm ;-)
+
+ 19:30:40 <micahg> diwic: do you feel your sponsors gave you sufficient feedback to improve your skills
+
+ 19:30:41 <diwic> cody-somerville, and I find all these kinds of things interesting, how we drive things forward, and it's also a constant learning experience
+
+ 19:32:18 <cody-somerville> #vote PerPackageUploader Application: David Henningsson - PulseAudio
+
+ 19:32:18 <meetingology> Please vote on: PerPackageUploader Application: David Henningsson - PulseAudio
+
+ 19:32:18 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 19:32:36 <diwic> micahg, hmm, it was a while since that was necessary, but in general yes. I remember bdrung helping me out with audacity when I was starting out here. crimsun has also been very helpful.
+
+ 19:32:58 <tumbleweed> +1 [ keep up the good work ]
+
+ 19:32:58 <meetingology> +1 [ keep up the good work ] received from tumbleweed
+
+ 19:32:59 <cody-somerville> +1 - Strong plus one based on interview here today, endorsements on application, and evidence of great work.
+
+ 19:32:59 <meetingology> +1 - Strong plus one based on interview here today, endorsements on application, and evidence of great work. received from cody-somerville
+
+ 19:33:03 <bdrung> +1
+
+ 19:33:03 <meetingology> +1 received from bdrung
+
+ 19:33:04 <Laney> +1
+
+ 19:33:04 <meetingology> +1 received from Laney
+
+ 19:33:06 <barry> +1
+
+ 19:33:06 <meetingology> +1 received from barry
+
+ 19:33:17 <Laney> please come back and apply for alsa :-)
+
+ 19:33:20 * ogra_ would plus 1 if i could :)
+
+ 19:33:43 <diwic> Laney, noted :-)
+
+ 19:33:43 * bdrung remembers the collaboration on audacity.
+
+ 19:33:44 <micahg> +1 - good endorsements, good packaging work, would have liked more feedback in bugs, but I guessas diwic said it's been a while since his uploads have required it
+
+ 19:33:44 <meetingology> +1 - good endorsements, good packaging work, would have liked more feedback in bugs, but I guessas diwic said it's been a while since his uploads have required it received from micahg
+
+ 19:33:53 <cody-somerville> is that all of us?
+
+ 19:34:09 <Laney> i believe so
+
+ 19:34:11 <micahg> yes
+
+ 19:34:15 <cody-somerville> #endvote
+
+ 19:34:15 <meetingology> Voting ended on: PerPackageUploader Application: David Henningsson - PulseAudio
+
+ 19:34:15 <meetingology> Votes for:6 Votes against:0 Abstentions:0
+
+ 19:34:15 <meetingology> Motion carried
+
+ 19:34:24 <cody-somerville> diwic, Congratulations. Your application has been approved.
+
+ 19:34:36 * ogra_ hugs diwic
+
+ 19:34:38 <diwic> thanks everyone for your work as well!
+
+ 19:34:40 <vanhoof> diwic: congrats!
+
+ 19:34:45 <ogra_> well deserved
+
+ 19:34:50 <diwic> ogra_, vanhoof thanks for the moral support :-)
+
+ 19:34:59 <ogra_> :)
+
+ 19:35:00 <cody-somerville> #topic PerPackageUploader Application: Cesare Falco
+
+ 19:35:06 <cody-somerville> #link https://wiki.ubuntu.com/c.falco/DeveloperApplication
+
+ 19:35:11 <bdrung> diwic: i recommend to get commit right to the debian repositories to get started with collaboration with debian.
+
+ 19:35:15 <cfalco> here I am! Hello everyone!
+
+ 19:35:22 <diwic> bdrung, noted, thanks
+
+ 19:35:33 <cody-somerville> cfalco, Hello Cesare Falco. Please introduce yourself and your application.
+
+ 19:36:12 <cfalco> I've been the official maintainer for a couple of package for many years
+
+ 19:36:18 <cfalco> mame and btpd
+
+ 19:37:03 <cfalco> I'll be honest and I'll say I can't be on IRC so much  and I prefer the lists
+
+ 19:37:38 <cfalco> that's because I my free time is unfortunately not much
+
+ 19:38:03 <cfalco> I'm applying for upload rights for my packages only for that reason
+
+ 19:38:31 <cfalco> I'd like to help others, but _at present_ I can't do more
+
+ 19:38:42 <cfalco> and I feel I need some more experience too ;)
+
+ 19:38:47 <tumbleweed> cfalco: are you involved with the Debian side of these packages at all?
+
+ 19:39:02 <cfalco> yes, for mame only
+
+ 19:39:06 * micahg notices btpd isn't in Debian
+
+ 19:39:10 <cfalco> btpd is not in debian AFAIK
+
+ 19:39:15 <Laney> did you know that Vcs-* for mess points to mame?
+
+ 19:39:39 <cfalco> no...
+
+ 19:39:49 <cfalco> I know the debian games team has packaged mess too
+
+ 19:40:02 <micahg> cfalco: I've noticed that btpd hasn't seen an update since maverick, is the package still useful?
+
+ 19:40:03 <cfalco> which I'll help to bring into ubuntu too
+
+ 19:40:45 <cfalco> micahg, hard to say... it didn't get updates for a long time now
+
+ 19:40:53 <cfalco> still I use it and it works good for me
+
+ 19:41:16 <cfalco> I see that recently a bug has been opened against 11.10
+
+ 19:41:34 <cfalco> but I'm not  been able to reproduce it by far
+
+ 19:41:43 <cody-somerville> cfalco, Have you been able to sync mame from Debian into Ubuntu yet?
+
+ 19:42:07 <cfalco> plan is to sync it for 12.10
+
+ 19:42:22 <cfalco> package is now fully merged and working in ubuntu (on my box)
+
+ 19:42:27 <Laney> So you are now working with the games team?
+
+ 19:42:31 <cfalco> yes
+
+ 19:42:44 <micahg> cfalco: have you considered adding btpd to Debian?
+
+ 19:42:47 <cfalco> _Debian_ games team
+
+ 19:42:59 <Laney> What did you mean by "I know the debian games team has packages mess too" then?
+
+ 19:42:59 <cfalco> micahg, yes I did
+
+ 19:43:08 <Laney> That made it sound to me like your package is something else.
+
+ 19:43:15 <cody-somerville> cfalco, I also note that it looks like you're an uploader for the package in Debian but you uploaded 0.144-0ubuntu1 to Ubuntu and then Debian did their own packaging of the new upstream a few months later. Whats the reason for that?
+
+ 19:44:15 <cfalco> Laney, mame and mess are different packages; I had never the chance to package it for ubuntu, the debian team arrived first ;)
+
+ 19:45:00 <cfalco> codi-somerville, we've been working on different ways until 0.144, we've joined forces starting with 0.145
+
+ 19:45:24 <cfalco> 0.145 is still different because we had to take some time to merge our debian/ tree
+
+ 19:46:39 <cody-somerville> mame and mess both show you merging Ubuntu packaging into the Debian packaging in version 0.142-2 which was uploaded 12 May 2011. What sort of collaboration have you had with them since then?
+
+ 19:47:01 <cfalco> Laney, mess is a derivative from  mame, for a long time it has been distributed in an incremental form to be applied to the mame source tree, which puzzled me a lot
+
+ 19:47:12 <micahg> cfalco: if one moves files between packages, what are the required changes for debian/control?
+
+ 19:47:20 <Laney> It was the /too/ that confused me
+
+ 19:47:37 <Laney> but I get it now.
+
+ 19:48:04 <Laney> after answering micahg, can you quickly outline our major freezes and how they affect the uploads you'll make?
+
+ 19:50:10 <cfalco> cody-somerville, I know they started their package from an old version of mine, then they got in touch and we started to work together to make things good both for debian and ubuntu
+
+ 19:50:59 <cfalco> micahg, sorry I didn't get it... what are you referring to please?
+
+ 19:51:19 <micahg> cfalco: if files move from mame-common to mame, what changes do you need to make in debian/control
+
+ 19:52:27 <cfalco> micahg, just change the dependencies I guess? :blush:
+
+ 19:53:36 <bdrung> that's not enough
+
+ 19:53:39 <micahg> cfalco: dpkg will warn if you're trying to overwrite files in another package unless you tell it something about the package relationship
+
+ 19:54:06 <micahg> s/warn/error out/
+
+ 19:54:15 <cfalco> Laney, freezes come when a new "stable" mame release occur; you can note on mame site that several "u"(nstable) releases are issued between them; these are not suitable for inclusion in the repos because they are often alpha and seldom break something
+
+ 19:55:00 <Laney> I was referring to Ubuntu freezes
+
+ 19:55:31 <Laney> i.e. can you just upload a new mame release whenever it happens to come or do you need to take something else into consideration?
+
+ 19:56:18 <cfalco> Laney, do you mean if I'm aware of the release cycle?
+
+ 19:56:48 <tumbleweed> yes, he does :)
+
+ 19:56:54 <Laney> pretty much
+
+ 19:58:19 <micahg> cfalco: any further thoughts on my question after the comment I made?
+
+ 19:58:28 <cfalco> Laney, yes I do, I also had to ask for an exception for btpd to fix a bug if I recall correctly
+
+ 19:58:51 <micahg> cfalco: go ahead and answer Laney first
+
+ 19:59:38 <cfalco> micahg, well on debian/control I can't think on anything more at present, I surely had to change other files in debian/ to allow the files to reach the correct packages
+
+ 20:00:19 <micahg> cfalco: right, but there's something about the package relationships that are defined in debian/control that you'd have to add or modify
+
+ 20:00:21 <cfalco> Laney, I'll have to read some more about the debian import process
+
+ 20:01:09 <Laney> well, why did you have to ask for an exception for btpd?
+
+ 20:02:02 <cfalco> Laney, I added the logrotate file if I can recall correctly
+
+ 20:03:17 <cfalco> micahg, do you mean that I have to manage the package renaming (conflicts/replaces/provides)?
+
+ 20:04:13 <cfalco> (apologies for mistakes, you may have guessed english is not my mother tongue)
+
+ 20:04:42 <micahg> cfalco: yes, can you elaborate
+
+ 20:04:58 <Laney> I'll put it more directly: do you know what Feature Freeze is?
+
+ 20:08:03 <cfalco> micahg, I had to rename former sdlmame to mame when they merged sources upstream, so I know how to do this... but to be honest, I can't state this by heart, sorry :(
+
+ 20:08:55 <cfalco> Laney, FF is the day by wich you have to upload the upgraded/new packages. After FF you can't but for very important reason
+
+ 20:09:59 <cfalco> I'm also aware that a similar deadline exists named Debian Import Freeze or something similar, which I'll have to  consider from now on
+
+ 20:10:42 <tumbleweed> DIF shouldn't get in the way of any work. It's just the point where autosyncs stop
+
+ 20:10:47 <bdrung> cfalco: what changes with the debian import freeze?
+
+ 20:10:49 <Laney> correct, although "very important" is a bit strong - any upload which only fixes bugs is acceptable
+
+ 20:11:10 <tumbleweed> and other things are acceptable too, with justification
+
+ 20:11:41 <barry> cfalco: are you aware of anybody else in ubuntu who is helping to maintain mame?  if so, how have you worked with them?
+
+ 20:11:44 <cody-somerville> cfalco, If you're uncertain about something, how would you go about finding out the answer / getting help?
+
+ 20:13:24 <cfalco> micahg, I'll try saying that if I move files from mame-common to mame -> mame will have to provide mame-common and to conflict with it to force removal of the deprecated package, and also provide it to allow smooth transition to the new package
+
+ 20:13:52 <micahg> cfalco: ok, what if only some files move
+
+ 20:14:32 <cfalco> bdrung, I'll have to match DIF starting with 12.10, I still haven't synced it at present
+
+ 20:14:48 <cody-somerville> We're now running out of time. Does the board wish to vote now or ask cfalco to return to continue interview at later meeting?
+
+ 20:14:56 <cfalco> Laney, aknowledged :)
+
+ 20:16:15 <bdrung> cfalco: what needs to be done to get a package synced after DIF, but before the feature freeze?
+
+ 20:16:44 <micahg> +1 on continue later
+
+ 20:16:58 <Laney> yes please let's defer
+
+ 20:17:04 * bdrung agrees.
+
+ 20:17:05 <barry> +1 for deferring
+
+ 20:17:15 <tumbleweed> yeah, I'm with that
+
+ 20:17:19 <Laney> I feel like this is harder due to you not being a native speaker of English
+
+ 20:17:47 <micahg> next time, we should try to limit it to one active question at a time to ease this I think
+
+ 20:17:48 <cfalco> Laney, yes I agree... it's difficult for me :(
+
+ 20:18:01 <Laney> yeah
+
+ 20:18:07 <cody-somerville> cfalco, Are you open to coming to the next (or later) DMB meeting to continue interview?
+
+ 20:18:27 <cfalco> cody-somerville, of course :)
+
+ 20:18:39 <barry> cfalco: thanks for sticking with it!
+
+ 20:18:54 <cody-somerville> cfalco, Great. Please update the date next to your entry in the agenda with the date of the next meeting you'll be able to attend.
+
+ 20:18:55 <cfalco> thanks to all for you patience and your work! :)
+
+ 20:19:00 <cody-somerville> cfalco, Thank you!
+
+ 20:19:16 <micahg> cfalco: thank you for your patience and work as well
+
+ 20:19:17 <cody-somerville> #topic AOB
+
+ 20:19:38 <cfalco> cody-somerville, ok
+
+ 20:20:11 <tumbleweed> UDS
+
+ 20:20:28 <cody-somerville> Quick Note. The next DMB meeting will take place during UDS.
+
+ 20:20:29 <tumbleweed> we're going to schedule a meeting. Any prefences on day/time?
+
+ 20:20:33 <bdrung> which time slot and which timezone?
+
+ 20:20:52 <cody-somerville> tumbleweed, any time during Eastern work day works for me.
+
+ 20:21:00 <bdrung> tumbleweed: which time zone?
+
+ 20:21:28 <barry> timezone will be utc-7
+
+ 20:21:35 * tumbleweed doesn't know the process for scheduling meetings, I tried to get micahg to do the paperwork :)
+
+ 20:21:44 <cody-somerville> :)
+
+ 20:21:49 <micahg> yeah, I can do that
+
+ 20:21:54 <cody-somerville> #action tumbleweed to ensure micahg gets things sorted for UDS meeting
+
+ 20:21:54 * meetingology tumbleweed to ensure micahg gets things sorted for UDS meeting
+
+ 20:21:57 <barry> i think we just need to file a blueprint and make all of us essential participants
+
+ 20:21:58 <tumbleweed> heh
+
+ 20:22:00 <cody-somerville> anything else?
+
+ 20:22:03 <tumbleweed> do we also want a UDS session?
+
+ 20:22:06 <Laney> well
+
+ 20:22:14 <Laney> for those you might not get conf call equipment in the room AFAIK
+
+ 20:22:25 <diwic> maybe you can schedule it as a "private meeting"
+
+ 20:22:26 <Laney> I believe we can ask Marianna to sort that out
+
+ 20:22:46 <barry> tumbleweed: i think we should take the opportunity to discuss things we might be able to do to make the process better for ourselves and applications
+
+ 20:22:49 <micahg> once I know who will be there, I can arrange it
+
+ 20:23:08 <cody-somerville> barry, tumbleweed: I'm open to that provided we have something prepared and ready to discuss
+
+ 20:24:15 <bdrung> due to the timezone, i would prefer a meeting before 14 o'clock local time
+
+ 20:25:09 <barry> bdrung: i believe that works out to 9am us/pacific time
+
+ 20:25:19 <micahg> well, the earliest meeting used to be ~12:00 UTC, you're suggesting 11:00 UTC
+
+ 20:25:55 <micahg> barry: no, 14:00 local for him is 05:00 US/Pacific
+
+ 20:26:14 <bdrung> 14:00 local for uds (-> 23:00 local for me)
+
+ 20:26:22 <barry> ah
+
+ 20:26:33 <cody-somerville> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

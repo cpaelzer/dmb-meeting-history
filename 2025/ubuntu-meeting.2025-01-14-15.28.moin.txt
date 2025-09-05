@@ -1,0 +1,378 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 14 Jan at 15:28 &mdash; 15:55 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-01-14-15.28.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:40)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/glycin/+bug/2093182 was alow prio filing it early (thanks) not going for that first  (cpaelzer, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libpisp/+bug/2093321   (cpaelzer, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868   (cpaelzer, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/azure-vm-utils/+bug/2093322   (cpaelzer, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/raspi-utils/+bug/2094805   (cpaelzer, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868 seems to be easier than azure and nlohmann is related to pisp which I've taken  (cpaelzer, 15:43)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:44.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:44)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 15:45.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 15:45)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 15:45)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:45.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:45)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:45)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:45)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:53.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (114)
+ * sarnold (12)
+ * slyon (7)
+ * dviererbe (6)
+ * joalif (5)
+ * meetingology (2)
+ * seb128 (2)
+ * r41k0u (2)
+ * waveform (1)
+
+
+
+== Full log ==
+
+
+ 15:28 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:28 <meetingology> Meeting started at 15:28:27 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:28 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:28 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( dviererbe )
+
+ 15:28 <joalif> o/
+
+ 15:28 <slyon> o/
+
+ 15:28 <dviererbe> o/
+
+ 15:28 <cpaelzer> hiho
+
+ 15:29 <cpaelzer> I'll wait with actually starting for fairness on everyone's time schedule
+
+ 15:30 <cpaelzer> in this minute I might ask joalif about https://bugs.launchpad.net/ubuntu/+source/jemalloc/+bug/2088056
+
+ 15:30 <cpaelzer> seeing you back do you think you'll get to that soon'ish?
+
+ 15:30 <cpaelzer> it is one of those things gating other things gating other things ... :-)
+
+ 15:30 <joalif> i'll get this done before asap
+
+ 15:30 <cpaelzer> security already added it to their queue as part of last weeks meeting
+
+ 15:30 <joalif> meaning today/tomorrow
+
+ 15:30 <cpaelzer> thank you
+
+ 15:30 <cpaelzer> and now it is time to start
+
+ 15:30 <sarnold> good morning
+
+ 15:31 <cpaelzer> one thing solved before starting \o/
+
+ 15:31 <joalif> sorry for the delay
+
+ 15:31 <cpaelzer> np, I had to ask but no need to excuse :-)
+
+ 15:31 <slyon> FTR: haproxy could also make good use of jemalloc
+
+ 15:31 <cpaelzer> slyon: there are even more IIRC
+
+ 15:31 <cpaelzer> ok, copy & paste time it is ...
+
+ 15:31 <cpaelzer> #topic current component mismatches
+
+ 15:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:32 <cpaelzer> duplicity
+
+ 15:32 <cpaelzer> interesting
+
+ 15:32 <seb128> we will handle
+
+ 15:32 <cpaelzer> thank you
+
+ 15:32 <cpaelzer> for that and for watching!
+
+ 15:32 <seb128> np! :)
+
+ 15:32 <cpaelzer> next is jemalloc which we already talked
+
+ 15:32 <cpaelzer> to the right is pytohn-pint which needs not action
+
+ 15:33 <cpaelzer> two new cases in the middle of the graph
+
+ 15:33 <sarnold> kernel thing that almost never requires work on our part, jqueryui that I hope is just some documentation thing that we can skip..
+
+ 15:33 <cpaelzer> almost certainly
+
+ 15:33 <cpaelzer> now to the two real things there
+
+ 15:33 <sarnold> hmm, another oddball burst of messages
+
+ 15:33 <cpaelzer> freeradius -> wtmpdb
+
+ 15:33 <slyon> erlang probably needs an erlang-doc extra-exclude
+
+ 15:33 <cpaelzer> I feel we've taken that last week
+
+ 15:33 <cpaelzer> ack slyon
+
+ 15:34 <slyon> I can handle erlang-doc
+
+ 15:34 <cpaelzer> can you still carry that to foundations or maybe dviererbe could?
+
+ 15:34 <dviererbe> I can mention it in the weekly foundations meeting
+
+ 15:36 <cpaelzer> indeed freeradius is ours, let me enqueue this better
+
+ 15:36 <cpaelzer> what is the wrid raspi-utils self depends?
+
+ 15:36 <r41k0u> o/
+
+ 15:37 <dviererbe> So what should I carry to foundations if slyon takes care of erlang-doc and you of `freeradius -> wtmpdb`?
+
+ 15:37 <r41k0u> there is a transitional package in there
+
+ 15:37 <slyon> dviererbe: https://bugs.launchpad.net/ubuntu/+source/erlang/+bug/2094814
+
+ 15:37 <dviererbe> thanks
+
+ 15:38 <cpaelzer> done with the ping
+
+ 15:38 <cpaelzer> back here
+
+ 15:38 <cpaelzer> waveform: is raspi-utils yours?
+
+ 15:38 <cpaelzer> and if so which way around should that be?
+
+ 15:39 <cpaelzer> the html version https://ubuntu-archive-team.ubuntu.com/component-mismatches-proposed.html
+
+ 15:39 <cpaelzer> is a bit more insightful
+
+ 15:39 <cpaelzer> raspi-utils: raspi-utils raspi-utils-core raspi-utils-dt raspi-utils-eeprom raspi-utils-otp
+
+ 15:39 <cpaelzer> [Reverse-Depends: libraspberrypi-bin (MAIN), raspi-utils (Uploader: waveform)]
+
+ 15:39 <waveform> raspi-utils is mine and r41k0u's
+
+ 15:39 <cpaelzer> ok, we'll consider it getting resolved then
+
+ 15:39 <cpaelzer> thanks
+
+ 15:40 <cpaelzer> #topic New MIRs
+
+ 15:40 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:40 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:40 <cpaelzer> ah, and there we see
+
+ 15:40 <cpaelzer> tpday has something for all of us
+
+ 15:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/glycin/+bug/2093182 was alow prio filing it early (thanks) not going for that first
+
+ 15:41 <cpaelzer> 4 left to assign
+
+ 15:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libpisp/+bug/2093321
+
+ 15:41 <cpaelzer> let me take that one because why not
+
+ 15:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868
+
+ 15:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/azure-vm-utils/+bug/2093322
+
+ 15:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/raspi-utils/+bug/2094805
+
+ 15:41 <cpaelzer> those three look for a reviewer
+
+ 15:41 <slyon> raspi-utils for me
+
+ 15:42 <cpaelzer> ok
+
+ 15:42 <cpaelzer> this is complex but I can see how you can use your old connections to resolve
+
+ 15:43 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868 seems to be easier than azure and nlohmann is related to pisp which I've taken
+
+ 15:43 <cpaelzer> how about me also taking https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868
+
+ 15:43 <cpaelzer> and joalif https://bugs.launchpad.net/ubuntu/+source/azure-vm-utils/+bug/2093322 for next week after this weeks jemalloc?
+
+ 15:43 <joalif> yes
+
+ 15:44 <cpaelzer> didrocks: if you read the log - I would not mind if you would grab https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868 for fully fair distribution
+
+ 15:44 <cpaelzer> if so just assign it to yourself before tomorrow
+
+ 15:44 <cpaelzer> thanks joalif
+
+ 15:44 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:44 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:44 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:45 <cpaelzer> nothing since last week
+
+ 15:45 <cpaelzer> #topic Process/Documentation improvements
+
+ 15:45 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 15:45 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 15:45 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 15:45 <cpaelzer> all draft/old
+
+ 15:45 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:45 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:45 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 15:45 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:45 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:45 <cpaelzer> Internal link
+
+ 15:45 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:45 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:45 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:45 <cpaelzer> sarnold: your time to shine
+
+ 15:45 <sarnold> hmm I thought I saw conversation about someone wanting to open an issue for an idea..
+
+ 15:45 <cpaelzer> please tell us things go forward
+
+ 15:46 <cpaelzer> did I not see it, the link only had old issues
+
+ 15:46 <sarnold> oh, that might have been amurray suggesting we try to use some of the tiobhe things? he's on pto at the moment..
+
+ 15:46 <cpaelzer> that explains
+
+ 15:47 <sarnold> alas not much movement on security's end of MIRs, it's been a turbulent time and nothing has ben picked up :(
+
+ 15:47 <cpaelzer> yes, once we have a referrable path for those we discussed in the past that looking at it could be just as much quality indicator as many other checks we do
+
+ 15:47 <cpaelzer> :-/ @sarnold
+
+ 15:48 <cpaelzer> due to the follow up of a follow up ... mentioned above, do you think you could ensure jemalloc is not waiting for the day before feature freeze?
+
+ 15:48 <cpaelzer> and for the fairness of waiting for ages already - maybe jpeg-xl
+
+ 15:48 <sarnold> yeah, jemalloc at least can unlock quite a lot
+
+ 15:48 <cpaelzer> indeed
+
+ 15:48 <sarnold> I'll try to get some time, but .. sigh.
+
+ 15:48 <cpaelzer> If those two would get to in-progress with a person actually looking at it I'd feel much better
+
+ 15:48 <cpaelzer> otherwise the backlog will only grow
+
+ 15:49 <cpaelzer> until the pain is even higher :-/
+
+ 15:49 <cpaelzer> sorry for that sarnold
+
+ 15:49 <cpaelzer> but we need to apply the pressure now or the release will be even more ... complex .. interesting... ? :-)
+
+ 15:50 <sarnold> isn't that how the old saying goes? "may you live in complex and interesting times"? :)
+
+ 15:51 <sarnold> things are definitely complex and interesting with the folks we've lost over the last six weeks or so
+
+ 15:52 <cpaelzer> I thought that was a curse
+
+ 15:52 <sarnold> we have new joiners too, it's not all doom and gloom, but new hires aren't immediately useful
+
+ 15:52 <cpaelzer> I'm with you in that struggle sarnold, same here
+
+ 15:53 <cpaelzer> and as we all know, enabling them to become more useful is hard while doom and gloom is waiting around the corner
+
+ 15:53 <cpaelzer> I hope that is not all on you
+
+ 15:53 <cpaelzer> and with that discussion we can go to ...
+
+ 15:53 <cpaelzer> #topic Any other business?
+
+ 15:53 <sarnold> none
+
+ 15:53 <slyon> nothing from my end
+
+ 15:53 <cpaelzer> nothing else here, jemalloc prio was sorted at the beginning - thanks again joalif
+
+ 15:54 <cpaelzer> dviererbe: or seb128: anything else from foundations/desktop?
+
+ 15:54 <dviererbe> no
+
+ 15:54 <cpaelzer> I'll look for a great sequence while waiting for more answers and then count out
+
+ 15:54 <cpaelzer> thank you all already
+
+ 15:55 <dviererbe> Thanks everyone! o/
+
+ 15:55 <cpaelzer> 11
+
+ 15:55 <cpaelzer> 8
+
+ 15:55 <cpaelzer> 6
+
+ 15:55 <cpaelzer> 4
+
+ 15:55 <cpaelzer> 3
+
+ 15:55 <cpaelzer> 2
+
+ 15:55 <cpaelzer> 1
+
+ 15:55 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

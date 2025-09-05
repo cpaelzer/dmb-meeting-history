@@ -1,0 +1,716 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 10 Jul at 15:06 &mdash; 16:05 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-07-10-15.06.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:06.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:33.
+
+
+=== Touch container architecture ===
+The discussion about "Touch container architecture" started at 15:37.
+
+  * ''LINK:'' http://paste.ubuntu.com/5775132/ 
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (74)
+ * stgraber (44)
+ * cjwatson (37)
+ * ogra_ (30)
+ * ev (28)
+ * xnox (26)
+ * ubottu (20)
+ * jodh` (19)
+ * stokachu (17)
+ * barry (9)
+ * bdmurray (9)
+ * rsalveti (8)
+ * doko (3)
+ * meetingology (3)
+ * mdeslaur (1)
+
+
+
+== Full Log ==
+
+
+ 15:06 <slangasek> #startmeeting
+
+ 15:06 <meetingology> Meeting started Wed Jul 10 15:06:18 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:06 <meetingology> 
+
+ 15:06 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:06 <slangasek> [TOPIC] Lightning round
+
+ 15:06 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:06 <slangasek> xnox barry stgraber ev slangasek cjwatson jodh stokachu bdmurray doko
+
+ 15:07 <xnox> =)
+
+ 15:07 <xnox> * android crosstoolchain uploaded into the archive
+
+ 15:07 <xnox> * (and subsequently fixed up)
+
+ 15:07 <xnox> * upstart merge reviews
+
+ 15:07 <xnox> * patch pilot tuesday
+
+ 15:07 <xnox> * in progress making "android" package that will do everything
+
+ 15:07 <xnox> - build system/recovery/boot images for 4 nexus devices
+
+ 15:07 <xnox> - build android-src package for cross-toolchain
+
+ 15:07 <xnox> - build host tools
+
+ 15:09 <slangasek> xnox: done?
+
+ 15:09 * barry wonders if xnox is done
+
+ 15:09 <xnox> yes.
+
+ 15:10 <barry> short week due to usa holiday.
+
+ 15:10 <barry> image based updates: weekly meeting.  LP: #1199177.  LP: #1192585.  LP: #1199361.  LP: #1199498.  Today: finish up LP: #1199498, LP: #1199488, and upload new version of system-image package.
+
+ 15:10 <ubottu> Launchpad bug 1199177 in Ubuntu system image "installed version must look for /etc/system-image/client.ini" [High,Fix committed] https://launchpad.net/bugs/1199177
+
+ 15:10 <ubottu> Launchpad bug 1192585 in Ubuntu system image "Add a dbus API" [High,In progress] https://launchpad.net/bugs/1192585
+
+ 15:10 <ubottu> Launchpad bug 1199361 in Ubuntu system image "Built-in downloads time out" [High,Fix committed] https://launchpad.net/bugs/1199361
+
+ 15:10 <ubottu> Launchpad bug 1199498 in Ubuntu system image "Update client for updated ubuntu_command format" [High,In progress] https://launchpad.net/bugs/1199498
+
+ 15:10 <barry> (the next upload won't include the dbus api)
+
+ 15:10 <barry> other: LP: #1198439 (investigated).  LP: #1038429, LP: #1196754, configglue 1.1.1 and other horrors related to python-configparser.  I'll be dealing with this more after the next system-image package upload.  Tracked down and worked around long nagging emacs bug.  LP: #1199403 and LP: #1199439 and other horrors related to X crashing after latest saucy updates.
+
+ 15:10 <ubottu> Launchpad bug 1198439 in python2.7 (Ubuntu) "package python2.7-minimal 2.7.4-2ubuntu3.1 failed to install/upgrade: subprocess installed post-installation script returned error exit status 1" [Undecided,Incomplete] https://launchpad.net/bugs/1198439
+
+ 15:10 <ubottu> Launchpad bug 1038429 in Ubuntu Software Center stable-13-10 "update-software-center crashed with order (MRO) for bases SafeConfigParser, object in __new__()" [High,Triaged] https://launchpad.net/bugs/1038429
+
+ 15:10 <ubottu> Launchpad bug 1196754 in configglue "Tests fail in Python 3 with non UTF-8 locale" [Low,Fix released] https://launchpad.net/bugs/1196754
+
+ 15:10 <ubottu> Launchpad bug 1199403 in xorg (Ubuntu) "Xorg crash" [Critical,New] https://launchpad.net/bugs/1199403
+
+ 15:10 <ubottu> Launchpad bug 1199439 in xorg-server (Ubuntu) "segfault in xorg-server during install of saucy 32bits under vmware" [Undecided,Confirmed] https://launchpad.net/bugs/1199439
+
+ 15:10 <barry> ∅
+
+ 15:11 <stgraber> Blueprint-related work:
+
+ 15:11 <stgraber> - Image based updates (BLUEPRINT: foundations-1305-image-based-updates)
+
+ 15:11 <stgraber> - system-image-cli is now part of the daily images
+
+ 15:11 <stgraber> - a basic upgrader tool is now part of the recovery images
+
+ 15:11 <stgraber> - wrote an import-cdimage tool, that converts our current images to system-image. Currently running manually, will be croned once reliable.
+
+ 15:11 <stgraber> - added pxz support to the python module
+
+ 15:11 <stgraber> - updated initrd+fstab to make /var/lib/system-image writable on the touch devices
+
+ 15:11 <stgraber> - ran a bunch of tests with the client, leading to a bunch of bug reports, hopefully the next release will actually let us run an end to end upgrade using the production infrastructure
+
+ 15:11 <stgraber> - got in touch with design wrt the UI (on hold waiting for next PRD review meeting)
+
+ 15:11 <stgraber> Other work:
+
+ 15:11 <stgraber> - Ubuntu touch
+
+ 15:11 <stgraber> - Cherry-picked pidns+mntns support to mako and manta, available at github.com/stgraber/linux (maguro and grouper will be much harder as they're on an older kernel)
+
+ 15:11 <stgraber> - Merged a bunch of changes to lxc-android-config and the initrd to support loop-mounted flipped images
+
+ 15:11 <stgraber> - Cleaned up a bunch of scripts to stop using /proc/<pid>/root as a way to access the container, instead doing clean bind-mounts from the host to the container
+
+ 15:11 <stgraber> - LXC
+
+ 15:11 <stgraber> - Fix openssh key generation in the Ubuntu template (broken after changes to the openssh postinst)
+
+ 15:11 <stgraber> - Re-added timeout option to get_ips API and fixed a bunch of PEP-8 warnings
+
+ 15:11 <stgraber> - Added support for non-tmpfs backend to lxc-start-ephemeral
+
+ 15:11 <stgraber> - Usual code reviews
+
+ 15:11 <stgraber> - Network
+
+ 15:11 <stgraber> - Prepared the openvpn merge, blocked on iproute2
+
+ 15:11 <stgraber> - Made iproute2 build
+
+ 15:11 <stgraber> - Other
+
+ 15:11 <stgraber> - Merged bcfg2
+
+ 15:11 <stgraber> - Tested a new shim for slangasek
+
+ 15:12 <stgraber> 
+
+ 15:12 <stgraber> TODO:
+
+ 15:12 <stgraber> - THIS WEEK: Look into what else is blocked on the new iproute2 and get that sorted
+
+ 15:12 <stgraber> - THIS WEEK: Add gpg support to the upgrader script
+
+ 15:12 <stgraber> - Write some tools for manual actions on system-image (manage channels, manage keyrings, manually publish updates, ...)
+
+ 15:12 <stgraber> - Process some pending merges (ifupdown and resolvconf)
+
+ 15:12 <stgraber> 
+
+ 15:12 <stgraber> (DONE)
+
+ 15:12 <slangasek> stgraber: PRD review meeting> does that mean Design is waiting to be told by pmcgowan that this is a priority?  Do I need to make sure this is escalated with him?
+
+ 15:13 <ev> - Most of my time this week has been spent on getting Cassandra deployed into
+
+ 15:13 <ev> Prodstack with the webops team:
+
+ 15:13 <ev> https://rt.admin.canonical.com/Ticket/Display.html?id=60652
+
+ 15:13 <ev> https://wiki.canonical.com/InformationInfrastructure/OSA/Projects/InProgress/UE/CassandraSpace/BringingUpProdstack
+
+ 15:13 <ev> - We've run into some headaches along the way, but we have the nodes in place
+
+ 15:13 <ev> and streaming a repair from the DC. We'll see how this goes. Juju lost its
+
+ 15:13 <ev> brain last night and decided to restart all the Cassandra nodes while they
+
+ 15:13 <ev> were doing the repair (bad):
+
+ 15:13 <ev> https://code.launchpad.net/~ev/canonical-marshal/cassandra.restart-when-required
+
+ 15:13 <ev> - Current estimates put the seed node repair at just over a day and the rest
+
+ 15:13 <ev> of the nodes done by early next week.
+
+ 15:13 <ev> - Fixed the error tracker charms to handle all the weird corner cases around
+
+ 15:13 <ev> Cassandra juju nodes coming and going by greatly simplifying the relation
+
+ 15:13 <ev> code.
+
+ 15:13 <ev> - Finally got the mobile images creating core dumps with the help of Oli and
+
+ 15:13 <ev> apw. \o/
+
+ 15:13 <ev> - Added support for automatic error reporting to apport, in support of crash
+
+ 15:13 <ev> reporting on the server and mobile images:
+
+ 15:13 <ev> https://code.launchpad.net/~ev/apport/automatic-reporting/+merge/173553
+
+ 15:13 <ev> - Adding a diagnostics page to system-settings to control whoopsie reporting, per:
+
+ 15:13 <ev> https://wiki.ubuntu.com/ErrorTracker#Privacy_settings
+
+ 15:13 <ev> https://code.launchpad.net/~ev/ubuntu-system-settings/diagnostics
+
+ 15:13 <ev> - Code review for Brian.
+
+ 15:13 <ev> TODO:
+
+ 15:13 <ev> - Split the WhoopsiePreferences DBus daemon out of activity-log-manager so it
+
+ 15:13 <ev> can be used by ubuntu-system-settings.
+
+ 15:13 <ev> - Modify the WhoopsiePreferences policykit policy to allow admin without password.
+
+ 15:13 <ev> (done)
+
+ 15:14 <slangasek> * short week, public holiday+vac
+
+ 15:14 <slangasek> * packaging parted for cross-building now that the android cross-compiler is in the archive
+
+ 15:14 <slangasek> * working on tracking down remaining shim bugs - seems the new version is even worse on stgraber's ThinkPad, we need to get to the bottom of this (bug #1087501)
+
+ 15:14 <ubottu> bug 1087501 in shim (Ubuntu) "Unable to boot unsigned kernel, boot freezes in shim call" [High,Incomplete] https://launchpad.net/bugs/1087501
+
+ 15:14 <slangasek> * some installer path seems to leave systems without shim-signed installed on the target system (bug #1184297), needs further investigation
+
+ 15:14 <ubottu> bug 1184297 in grub-installer (Ubuntu Precise) "Secure boot failed, claiming boot is against security policy" [High,Triaged] https://launchpad.net/bugs/1184297
+
+ 15:15 <slangasek> * partner package updates for centrifydc
+
+ 15:15 <slangasek> * discussions around bug management for the Touch images
+
+ 15:15 <slangasek> * looking into unity library handling, which consistently breaks update-manager on soname changes (bug #1193120)
+
+ 15:15 <ubottu> bug 1193120 in unity (Ubuntu) "unity-common is not common" [Undecided,New] https://launchpad.net/bugs/1193120
+
+ 15:15 <slangasek> (done)
+
+ 15:16 <cjwatson> foundations-1305-click-package:
+
+ 15:16 <cjwatson> - Implemented per-user package installs; still working on removal/unregistration and associated garbage-collection.
+
+ 15:16 <cjwatson> - In tandem with this, experimenting with a PackageKit backend based on Sebastian's work.  The approach of a PK plugin (as implemented in Listaller) is looking promising for this.
+
+ 15:16 <cjwatson> - Various discussions about things like desktop file handling.
+
+ 15:16 <cjwatson> Working on Apache 2.4 transition to try to save everyone else's sanity trying to get packages migrated to saucy.  (In particular, apparmor is kind of wedged on it and the security team need to work on it for click; the workaround of copying from a devirt PPA is possible but tedious and error-prone.)  Much swearing at a variety of entertainingly broken packages.
+
+ 15:16 <cjwatson> Discussions of build pipeline problems, and trying to apply tactical Vaseline to things.
+
+ 15:16 <cjwatson> Shifted the "current" symlink for ubuntu-touch images over to trigger-controlled mode so that it can be tested first.
+
+ 15:16 <cjwatson> ..
+
+ 15:16 <jodh`> * foundations-1305-upstart-app-launching
+
+ 15:16 <jodh`> - upstart 1.9.1 release preparation
+
+ 15:16 <jodh`> - libupstart packaging with xnox.
+
+ 15:16 <jodh`> - Discovered bug 1199778 in final testing.
+
+ 15:16 <ubottu> bug 1199778 in upstart (Ubuntu) "upstart crashes if re-exec'ed with active chroot sessions" [High,New] https://launchpad.net/bugs/1199778
+
+ 15:17 <jodh`> * foundations-1305-upstart-work-items
+
+ 15:17 <jodh`> - dconf/gsettings bridge
+
+ 15:17 <jodh`> - Created lp:~jamesodhunt/upstart/upstart-dconf-bridge.
+
+ 15:17 <jodh`> - Few tweaks. Currently working on handling jobs being added/removed.
+
+ 15:17 <jodh`> * upstart
+
+ 15:17 <jodh`> - Discussions with Phonedations team about injecting Android service
+
+ 15:17 <jodh`> states into Upstart.
+
+ 15:17 <jodh`> - Started working on a new bridge to handle this communication.
+
+ 15:17 <jodh`> - Reviewed lp:~ricmm/session-manager-touch/migrate-to-upstart-session
+
+ 15:17 <jodh`> * misc
+
+ 15:17 <jodh`> - short week (will be out on Friday)
+
+ 15:17 <jodh`> ๛
+
+ 15:18 <stokachu> currently working on bug 833994 seems wget is returning different outputs between busybox and standard wget, working on getting rdeps built for bug 1194901
+
+ 15:18 * barry thinks Tactical Vaseline would make an excellent band name
+
+ 15:18 <ubottu> bug 833994 in debian-installer-utils (Ubuntu) "debian-installer does not support https when using with preseed files" [Medium,Triaged] https://launchpad.net/bugs/833994
+
+ 15:18 <ubottu> bug 1194901 in raring-backports "Please backport puppet 3.2.2-1 (main) from saucy" [Undecided,New] https://launchpad.net/bugs/1194901
+
+ 15:18 <stokachu> (done)
+
+ 15:18 <stokachu> xnox: i did see your comment referenced in another similar bug, was going to look into that
+
+ 15:18 <bdmurray> short week due to holidays
+
+ 15:18 <bdmurray> bug triage of some initramfs-tools duplicate bugs
+
+ 15:18 <bdmurray> investigation into regression detection of bug 1195007 (would the phased updater have found it: no)
+
+ 15:18 <ubottu> bug 1195007 in qt4-x11 (Ubuntu Saucy) "qt patch introduces fatal gdk_x_error handler" [High,Confirmed] https://launchpad.net/bugs/1195007
+
+ 15:18 <bdmurray> modified errors bug submitter to create more detailed bug reports (example at http://qastaging.launchpad.net/bugs/1105405)
+
+ 15:18 <ubottu> Launchpad bug 1105405 in db (Ubuntu) "D2013" [Undecided,Invalid]
+
+ 15:19 <bdmurray> merged / uploaded ubuntu-release-upgrader branch for disabling proposed when upgrading to the development release
+
+ 15:19 <bdmurray> modified and tested update-notifier notification of .crash files
+
+ 15:19 <bdmurray> tested and reported upstart bug 1199499
+
+ 15:19 <ubottu> bug 1199499 in upstart (Ubuntu) "upstart file bridge sets FILE to glob pattern instead of specific file" [Undecided,Invalid] https://launchpad.net/bugs/1199499
+
+ 15:19 <bdmurray> irc discussion with slangasek regarding pkg team mapping and working on it
+
+ 15:19 <bdmurray> ✔ done
+
+ 15:20 <xnox> stokachu: yeah, the other bug was against wget package "wget-udeb should ship wget instead of wget.gnu"
+
+ 15:20 <stokachu> xnox: yea and this one needs ssl support
+
+ 15:20 <stgraber> slangasek: mpt said he has interest in that part of the design but that there's nobody clearly assigned to this at this point, he raised it with Nick Tait who told him he'd raise this issue at the next PRD review meeting (next week apparently)
+
+ 15:20 <stokachu> so once i fix that other one this one will be good to go
+
+ 15:20 <slangasek> jodh`: android service states into upstart> could we have a public discussion about this on an appropriate mailing list?  I'm not thrilled with the architecture being proposed and think it should be subjected to some more eyeballs
+
+ 15:20 <xnox> stgraber: which the other one was suggested as the "solution" to ssl support =))))
+
+ 15:21 <cjwatson> I continue to have fundamental design scepticism about the whole https thing in the installer, but appear to be being railroaded
+
+ 15:21 <jodh`> slangasek: sure. We are feeling our way a little on this I think so the more input the better :)
+
+ 15:21 <stgraber> slangasek: so I haven't heard anything to make me think we've got a priority issue there but we clearly need someone assigned to it and I suspect the design may end up missing the end of July deadline (if we have to wait an extra week just to have someone be put on it)
+
+ 15:21 <stokachu> cjwatson: ssl is the new thing! :D
+
+ 15:22 <stokachu> they even have a firefox addon to force https
+
+ 15:22 <stokachu> :P
+
+ 15:22 <cjwatson> stokachu: SSL is snake-oil if proper certificates aren't present
+
+ 15:22 <cjwatson> And I disapprove of peddling snake-oil
+
+ 15:23 <cjwatson> So any solution to this needs to think about that and at least document how to get useful certificates in (I suggested one mechanism in a comment)
+
+ 15:23 <slangasek> stgraber: ok, then I /will/ escalate it with pmcgowan, thanks :)
+
+ 15:23 <stokachu> cjwatson: what about signed urls?
+
+ 15:24 * stokachu was just thinking of alternatives
+
+ 15:24 <slangasek> doko: hi - your turn :)
+
+ 15:24 <cjwatson> Er, no such thing as a signed URL
+
+ 15:24 <stgraber> hmm, wait, are we talking about doing https downloads but without doing the certificate validation? that sounds like a waste of CPU
+
+ 15:24 <cjwatson> stgraber: That is exactly what https://bugs.launchpad.net/ubuntu/+source/debian-installer/+bug/833994/comments/10 suggests
+
+ 15:24 <ubottu> Launchpad bug 833994 in debian-installer-utils (Ubuntu) "debian-installer does not support https when using with preseed files" [Medium,Triaged]
+
+ 15:25 * xnox thought that booting with md5sum of the pressed file is enough.
+
+ 15:25 <cjwatson> xnox: Some people appear to want on-the-wire confidentiality too
+
+ 15:25 <stokachu> you could build your urls based ona key
+
+ 15:26 <cjwatson> stokachu: doesn't solve the customer requirement at all
+
+ 15:26 <cjwatson> I understand the customer requirement, and we probably eventually have to do HTTPS; I just want people to actually listen when I say that it needs a bit more care than shoving in an HTTPS-capable wget
+
+ 15:27 <stgraber> hmm, well, it's right that it'd be vaguely safer (protect against sniffing) but won't prevent MITM, at the minimum we should require the certificate fingerprint to be passed to d-i (assuming wget let's you check that)
+
+ 15:27 <cjwatson> I'm not saying "we should make up some crypto protocol of our own rather than doing HTTPS"
+
+ 15:27 <cjwatson> (making up our own crypto protocol is roughly never the right answer.  don't do it)
+
+ 15:27 <xnox> .... it needs to at least manage to finish the installs ;-)
+
+ 15:27 * mdeslaur prepares stick to beat amateur cryptologist
+
+ 15:28 <stokachu> if they are that concerned about https shouldnt they be running landscape internally to manage their repos
+
+ 15:28 <cjwatson> err
+
+ 15:28 <stokachu> or a private repo
+
+ 15:28 <cjwatson> I think you have drunk our own kool-aid
+
+ 15:28 <cjwatson> landscape does not magically encrypt communication with d-i when d-i has no crypto capabilities built in ...
+
+ 15:29 <xnox> stokachu: i do over the network preseed install and I don't want other users on the network find out i ever did, and what packages i have installed. it should all just look like https traffic.
+
+ 15:29 <stokachu> hmm ok, i was more thinking of locally managed packages not in the archive
+
+ 15:29 <cjwatson> this really isn't the point
+
+ 15:29 <xnox> stokachu: that is independant of the landscape / repos used, oh.... yeah what cjwatson says.
+
+ 15:30 <doko> slangasek, sorry, not prepared ... at connect, updated GCC, merged the new Linaro release, some merges & syncs
+
+ 15:30 <slangasek> doko: good enough :-)
+
+ 15:30 <cjwatson> like I say, I'm not saying "don't do https", I'm saying "do https properly"
+
+ 15:30 <cjwatson> https, done properly, is the right answer to the customer req
+
+ 15:30 <xnox> doko: is bero around? with whatever ping was about?
+
+ 15:31 <doko> xnox, yes, I'll follow-up
+
+ 15:31 <xnox> ack.
+
+ 15:32 <cjwatson> regarding repo management, I suspect that they also want the preseed file contents not to be sniffable, and that doesn't live in a repo anyway
+
+ 15:32 <stokachu> ok
+
+ 15:32 <slangasek> stokachu, cjwatson: "do https properly" - seems like a concise summary of the problem. :-)
+
+ 15:33 <slangasek> [TOPIC] AOB
+
+ 15:33 <xnox> cjwatson: where would you ship certificates ca-certs-udeb?
+
+ 15:33 <slangasek> anything else?
+
+ 15:33 <stokachu> RIP Seth Vidal
+
+ 15:34 <cjwatson> xnox: https://bugs.launchpad.net/ubuntu/+source/debian-installer/+bug/833994/comments/8
+
+ 15:34 <ubottu> Launchpad bug 833994 in debian-installer-utils (Ubuntu) "debian-installer does not support https when using with preseed files" [Medium,Triaged]
+
+ 15:35 <cjwatson> xnox: Bearing in mind the nature of the sites that want this kind of thing, I think they'll be more interested in saying "this is our certificate" vs. "this is everything in ca-certificates"
+
+ 15:36 <cjwatson> stokachu: yes, another car-on-cyclist case I hear :-(
+
+ 15:36 * slangasek nods :/
+
+ 15:36 <ogra_> :/
+
+ 15:36 <stokachu> cjwatson: yea he lived in the next town over, sad to hear
+
+ 15:37 <barry> sad :(
+
+ 15:37 <slangasek> [TOPIC] Touch container architecture
+
+ 15:38 <doko> xnox, did you see my message
+
+ 15:38 <slangasek> so today I thought I'd take the hot seat myself and talk a bit about the layout of the touch images
+
+ 15:38 <slangasek> especially now that the container flip is done, it's probably good for people to understand exactly what we've got going here and be on the same page
+
+ 15:39 <slangasek> so before the container flip, the way the touch preview images worked was to boot a more-or-less standard android environment, and then run Ubuntu in a chroot
+
+ 15:39 <slangasek> this is less than optimal from our perspective, for a number of reasons :)
+
+ 15:40 <slangasek> with the container flip, we are now booting an *Ubuntu* environment, then running android in an lxc-managed container
+
+ 15:41 <slangasek> the container is run from an upstart job, /etc/init/lxc-android-config.conf
+
+ 15:41 <slangasek> there are a couple key reasons for having this as a container when done this way around, rather than just a chroot
+
+ 15:42 <slangasek> first, because we need to run android's own init still, and it cares about being pid 1 - so we need a pid namespace for it
+
+ 15:42 <slangasek> second, because it cares about doing its own thing with mounts
+
+ 15:43 <slangasek> (actually, the latter might be surmountable with just a chroot, but point 1 stands anyway)
+
+ 15:43 <slangasek> the reasons we need to run android's init are that it runs ueventd, which is android's udev equivalent and needs to do various bits of device management for us... including some firmware loading that we don't have working quite right under udev
+
+ 15:44 <slangasek> and because it runs a 'prop' service on a socket that other android services care about
+
+ 15:44 <barry> slangasek: will it ever be possible to get rid of android altogether?
+
+ 15:44 <slangasek> so much as we might like to, we can't (currently) drop the android environment and run all the services as upstart jobs
+
+ 15:45 <cjwatson> I'm curious if there's much more stuff left in the android env that we expect to move to Ubuntu for 13.10
+
+ 15:45 <ogra_> barry, well, our whole infrastyructure is knitted around android atm
+
+ 15:45 <slangasek> barry: it may be possible to get rid of the container, but the roadmap has us continuing to leverage android technologies in the future for certain parts of the middleware
+
+ 15:45 <slangasek> the one thing left that we're expecting to move to Ubuntu is surfaceflinger->Mir :)
+
+ 15:45 <slangasek> (AFAIK that's the only one)
+
+ 15:45 <cjwatson> ok, thanks
+
+ 15:46 <ogra_> if we ever get a dricet contract with a vendor that would give us access to everything, first of all the platform-api would have to learn to cope with that
+
+ 15:46 <slangasek> and fwiw, if you think running a udev equivalent in a container is ugly... you're right :)
+
+ 15:46 <ogra_> since it currently hooks into android for many things (snesores etc(
+
+ 15:46 <ogra_> *sensors
+
+ 15:46 <ogra_> haha
+
+ 15:46 <slangasek> but I've looked at this problem from every angle together with the Phonedations team, and we just don't see any way to get rid of it right now without investing a lot of effort
+
+ 15:46 <ogra_> slangasek, jodh` will save us all :)
+
+ 15:47 <ogra_> (with the upstart android bridge)
+
+ 15:47 <slangasek> ogra_: the proposal there is only to expose android status to upstart... running ueventd is still fugly
+
+ 15:47 * jodh` whistles...
+
+ 15:47 <slangasek> but it's what we have to do for now
+
+ 15:47 <ogra_> slangasek, we have full access to androids properties system
+
+ 15:47 <ogra_> thanks to rsajdok_
+
+ 15:48 <ogra_> err
+
+ 15:48 <ogra_> rsalveti,
+
+ 15:48 <slangasek> right
+
+ 15:48 <ogra_> so start/stop android services you just od a setprop ...
+
+ 15:48 <ogra_> *do
+
+ 15:48 <ogra_> thats where the bridge will hook into
+
+ 15:48 <ogra_> it will give us far more thaan status
+
+ 15:48 <slangasek> speaking of the properties system, if you're not familiar with it, it's effectively a central keystore for information about the overall state of the system... it also exposes things like your system type
+
+ 15:49 <jodh`> ogra_: my understanding is that the properties socket is for writing which is accessible from the host side, but we cannot monitor changes to properties from the host right?
+
+ 15:49 <slangasek> which is why if you were running a container-flipped image earlier, and adbd was running from Ubuntu instead of from Android, you might have noticed that phablet-flash wouldn't autodetect your device type
+
+ 15:49 <ogra_> jodh`, via the socket we should be able to trigger it from the android side
+
+ 15:49 <slangasek> this is fixed now, by having the 'prop' interface made available in the Ubuntu environment as standard commands
+
+ 15:50 <slangasek> (from android-tools-such-n-such)
+
+ 15:50 <slangasek> http://paste.ubuntu.com/5775132/
+
+ 15:50 <slangasek> so one thing that's given us a lot of grief has been the partition layout
+
+ 15:50 <ogra_> ++
+
+ 15:50 <slangasek> that pastebin is a "typical" partition table on an android device
+
+ 15:51 <cjwatson> oh my, I hadn't actually looked at it before
+
+ 15:51 <slangasek> lots of partitions, fairly well-architected wrt Android's requiremenst
+
+ 15:51 <slangasek> and Ubuntu can use most of those partitions without modification
+
+ 15:51 <cjwatson> it's like the worst excesses of somebody turning up on usenet with seven different Linux distros multi-booting
+
+ 15:51 <slangasek> except... the system partition, which by all rights is where the OS should be, tends to be a little small. :P
+
+ 15:51 <slangasek> (here, 686MB)
+
+ 15:52 <slangasek> conveniently, on all our reference devices at least, the system, cache, and userdata partitions are all right next to each other
+
+ 15:53 <slangasek> which means that in theory we should be able to steal some space back from the read-write userdata partition to give to the system partition, without breaking things at a low level
+
+ 15:53 <slangasek> I've been working on this... it's why we want parted in the recovery partition, which means cross-building parted for android
+
+ 15:53 <rsalveti> jodh`: right, we cannot monitor the current socket for properties, we'd need a different approach, kind as we discussed by email
+
+ 15:53 <slangasek> so the phablet-flash bootstrap option will not just install an enhanced recovery partition for you, it will also re-partition the system/cache/userdata partitions
+
+ 15:54 <rsalveti> slangasek: and yes, we'll run ueventd fully at least once, and stop the service, which will trigger a ueventd.stopped, that will be hooked to upstart by jodh`
+
+ 15:54 <slangasek> the goal is to have a 2GB system partition standard, so that we can put the full Ubuntu rootfs on there (including the android bits)
+
+ 15:54 <slangasek> rsalveti: ok
+
+ 15:55 <slangasek> now, on our ref devices, we can repartition, but we can't necessarily do that on all the community ports that folks have spun up - and basically aren't even going to try, lest we brick someone's device by mistake
+
+ 15:55 <xnox> slangasek: "cross-building parted for android" -> since there is no dynamic linker in the recovery partition, this reduces to "statically link an armhf binary" (similar to e.g. busybox-static)
+
+ 15:56 <slangasek> so on systems that don't have a big enough system partition, the plan is to have the Ubuntu rootfs as a loop-mount off of the userdata partition, after all
+
+ 15:56 <xnox> slangasek: one could build it & statically link against bionic, but that requires porting to incomplete libc/pthreads.
+
+ 15:56 <slangasek> so the root will still be mounted ro, though it won't quite give us the same degree of safety since the underlying fs is still rw
+
+ 15:57 <ogra_> nexus7 will be our loop mount reference device :)
+
+ 15:57 <slangasek> xnox: oh, I hadn't noticed there was no dynamic linker; I wonder if that's a design choice we should revisit
+
+ 15:57 <slangasek> right - we can't repartition the nexus7 (grouper)
+
+ 15:57 <slangasek> because its partition table is INSANELY NON STANDARD
+
+ 15:57 <slangasek> it relies on a kernel patch to even *find* the partition table on disk
+
+ 15:57 <xnox> slangasek: the question is size =) how big is recovery & how much can one have for parted?
+
+ 15:57 <ogra_> tegra .... :)
+
+ 15:58 <slangasek> but that's another story
+
+ 15:58 <slangasek> xnox: well, I wouldn't assume that statically linking everything is going to make the overall image smaller
+
+ 15:59 <xnox> slangasek: no, bigger due to copies. If size is an issue, we should investigate dynamic linking. If it's not and 3MB for gpg and probably similar for parted is ok, we should just use those.
+
+ 15:59 <slangasek> anyway, that's pretty much the overview with where things stand on the architecture for the filesystem on Touch :)
+
+ 15:59 <stgraber> xnox: we have a total of 12.5MB on the N4, IIRC Android requires 10MB minimum so it's quite small
+
+ 15:59 <slangasek> any questions?
+
+ 16:00 <xnox> stgraber: and gpg got in already =) i'll statically compile parted and will check how big/small it is.
+
+ 16:00 <stgraber> yesterday I had abootimg fail on me because I was adding 6kB to our standard image ;) I think it was wrong (image was around 8MB) but still, not much room in there
+
+ 16:00 <xnox> ouch.
+
+ 16:00 <rsalveti> stgraber: that's probably because the config had top 8mb for you
+
+ 16:00 <stgraber> in the end I kicked out tune2fs from my initrd which saved around 200kB
+
+ 16:01 <ogra_> stgraber, the 8M are picked by me ... thats the allowed minimal for android
+
+ 16:01 <ogra_> if you know the partition is actually bigger, feel free to bump it in the bootimg.cfg file
+
+ 16:01 <ogra_> i did that for manta already
+
+ 16:01 <rsalveti> ogra_: seems the android build system is a bit smarter on that, it calculates the size dynamically during build time
+
+ 16:02 <stgraber> xnox: we already have parted in our images (338.6K) so it shouldn't be a problem so long as it's not much bigger than that
+
+ 16:02 <ogra_> rsalveti, well, it looks at how big kernel and initrd togetther are and sets that as fixed size
+
+ 16:02 <rsalveti> but we still need to know how to dynamically create the initrd when updating the kernel (not via image updates)
+
+ 16:02 <xnox> stgraber: oh, ok. didn't notice =)
+
+ 16:02 <ogra_> rsalveti, which means adding 1byte already fails :)
+
+ 16:02 <rsalveti> indeed
+
+ 16:02 <cjwatson> if that parted is linked dynamically then it's probably linked against libparted
+
+ 16:02 <cjwatson> which has the bulk of the intelligence in it
+
+ 16:02 <ogra_> rsalveti, and we dont really want to do any dynamic stuff with the initrd
+
+ 16:03 <slangasek> apparently the current one wouldn't be dynamic because there's no dynamic linker in the recovery partition?
+
+ 16:03 <rsalveti> ogra_: right, indeed, we just need to change the bootimg, in case we update the kernel
+
+ 16:03 <ogra_> yeah
+
+ 16:03 <cjwatson> ok.  I suspect that's stripped-down (libparted.a is about a megabyte here), but we'll see
+
+ 16:03 <stgraber> ~ # find / | grep lib | grep -v system | grep -v proc
+
+ 16:03 <stgraber> ~ #
+
+ 16:03 <stgraber> no such thing as libs in recovery :)
+
+ 16:03 <ogra_> rsalveti, well, bootimg,cfg defines 8M for all devices but manta atm
+
+ 16:03 <rsalveti> ogra_: right
+
+ 16:04 <ogra_> if there is space on disk i'm happy to bump the default
+
+ 16:04 <cjwatson> stgraber: party like it's 1969
+
+ 16:04 <ogra_> (manta already has 22M)
+
+ 16:05 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

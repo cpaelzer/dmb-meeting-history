@@ -1,0 +1,351 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by bdmurray at 18:02:52 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-01-25-18.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Previous Actions
+
+ *Previous Actions
+
+ *Engineering Team Bug Status
+''ACTION:'' create a list of apport-crash bugs with "DBus.Error.NoReply" in the title with bug information regarding status, importance, number of dupes and users affected  (bdmurray, 18:20:40)
+
+ *Bug Escalations (any High or Critical bugs that community members have seen that need attention)
+
+ *Other Topics
+''LINK:'' http://harvest.ubuntu.com/   (hggdh, 18:39:42)
+
+
+
+Meeting ended at 18:49:50 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * create a list of apport-crash bugs with "DBus.Error.NoReply" in the title with bug information regarding status, importance, number of dupes and users affected
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (64)
+ * Ursinha (26)
+ * dlentz (15)
+ * hggdh (14)
+ * phil-wong (7)
+ * bil21al (6)
+ * ubottu (5)
+ * meetingology (4)
+ * Riddell (3)
+ * bil21al_ (1)
+
+
+
+== Full Log ==
+
+
+ 18:02:52 <bdmurray> #startmeeting
+
+ 18:02:52 <meetingology> Meeting started Wed Jan 25 18:02:52 2012 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 18:02:52 <meetingology> 
+
+ 18:02:52 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:03:23 <bdmurray> [TOPIC] Previous Actions
+
+ 18:03:39 <bdmurray> #topic Previous Actions
+
+ 18:04:02 * bdmurray Ursinha to perform SRU verification of bug 904527
+
+ 18:04:04 <ubottu> Launchpad bug 904527 in rhythmbox (Ubuntu Oneiric) "apport package hook no longer installed" [Medium,Fix released] https://launchpad.net/bugs/904527
+
+ 18:04:14 <bdmurray> This was done and the package is now in -updates
+
+ 18:04:19 <bdmurray> Thanks Ursinha
+
+ 18:04:30 <Ursinha> np :)
+
+ 18:04:46 <bdmurray> That was the only action from last week's meeting
+
+ 18:04:57 <bdmurray> #topic Engineering Team Bug Status
+
+ 18:05:10 <bil21al> hello
+
+ 18:05:18 <bdmurray> bil21al: hi
+
+ 18:05:26 <bdmurray> Ursinha: do you have anything today?
+
+ 18:05:39 <Ursinha> bdmurray, no sir... I promise to have something next week
+
+ 18:05:58 <bdmurray> Ursinha: no problem
+
+ 18:06:17 <bdmurray> jsalisbury couldn't make it today and said he didn't have much news either
+
+ 18:06:19 <phil-wong> hi
+
+ 18:06:37 <bdmurray> I wanted to bring up one "bug" that was fixed in Precise
+
+ 18:07:03 <bdmurray> bug 914220
+
+ 18:07:05 <ubottu> Launchpad bug 914220 in apport (Ubuntu) "crash reports with DBus.Error.NoReply should be blacklisted" [Medium,Fix released] https://launchpad.net/bugs/914220
+
+ 18:07:26 <bdmurray> This is about prevent apport from reporting a certain classification of bugs
+
+ 18:08:06 <bdmurray> Some examples of the bugs that have been reported are found in the apport bug description
+
+ 18:08:33 <bdmurray> The error message looks like this
+
+ 18:08:50 <bdmurray> "DBusException: org.freedesktop.DBus.Error.NoReply: Did not receive a reply. Possible causes include: the remote application did not send a reply …"
+
+ 18:09:19 <bdmurray> So this error indicates that a failure to communicate happened between the client and the server
+
+ 18:09:42 <bdmurray> And we are getting the error from the client which isn't very informative
+
+ 18:10:08 <bdmurray> What we really want is the error from the server - for example in bug 715523 - what happened to aptdaemon?
+
+ 18:10:09 <ubottu> Launchpad bug 715523 in gnome-codec-install (Ubuntu) "gnome-codec-install crashed with DBusException in _run(): org.freedesktop.DBus.Error.NoReply: Did not receive a reply. Possible causes include: the remote application did not send a reply, the message bus security policy blocked the reply, the reply timeout expired, or the network connection was broken." [Undecided,Confirmed] https://launchpad.net/bugs/715523
+
+ 18:11:06 <bdmurray> The point being there are certainly lots of bug reports with this DBus error message in Launchpad that are likely not useful in their current state.
+
+ 18:12:06 <Ursinha> interesting
+
+ 18:13:04 <bdmurray> So I think there is some opportunity for cleanup / investigation into a lot of bug reports there.
+
+ 18:13:45 <Ursinha> something to do this week: check similar bugs and do a cleanup
+
+ 18:14:19 <bdmurray> Ursinha: I suspect there are hundreds of these...
+
+ 18:14:41 <phil-wong> nice to meet you guys, I'm new to the bug squad. I'm sorry if I can't be much help to the meeting right now.
+
+ 18:14:42 <Ursinha> bdmurray, do you think we could blindly do something about those as they're not useful, as you said?
+
+ 18:15:16 <bdmurray> phil-wong: welcome, thanks for coming.
+
+ 18:15:34 <dlentz> Ursinha, i did that with fglrx not too long ago, it was productive
+
+ 18:15:35 <bdmurray> Ursinha: well we could invalidate them all but that seems unfair to me
+
+ 18:15:46 <Ursinha> dlentz, cool
+
+ 18:15:59 <Ursinha> bdmurray, thing is they won't be used by anyone
+
+ 18:15:59 <dlentz> so bdmurray, an example maybe, what would you do with
+
+ 18:16:06 <bdmurray> I'd rather make a list of them and treat the ones that have an importance and tons of duplicates differently
+
+ 18:16:10 <dlentz> bug 657821
+
+ 18:16:12 <ubottu> Launchpad bug 657821 in nautilus (Ubuntu) "Dbus NoReply when mounting a davs webfolder with authentification" [Low,Confirmed] https://launchpad.net/bugs/657821
+
+ 18:16:12 <Ursinha> even if valid bugs, what one could do with that incomplete information?
+
+ 18:16:45 <bdmurray> Well its possible somebody investigated the server failure and added details to the bug
+
+ 18:16:51 <Ursinha> bdmurray, but they might be marked as dupes but actually not be dupes because the message is the same vague and generic one... am I talking nonsense?
+
+ 18:17:13 <dlentz> Ursinha, i get it
+
+ 18:17:19 <bdmurray> Ursinha: no they maybe be marked incorrectly as dupes
+
+ 18:17:23 * Ursinha recalls tons of oopses with similar messages and totally unrelated problems..
+
+ 18:17:31 <Ursinha> launchpad oopses, that is
+
+ 18:17:52 <Ursinha> okay, so it should be a case by case thing
+
+ 18:17:52 <bdmurray> but I think we should build a list of these bugs and handle ones with a higher "gravity" manually
+
+ 18:17:59 <Ursinha> great, agreed
+
+ 18:18:13 <bdmurray> and those with a low gravity progrmatically
+
+ 18:18:40 <bdmurray> my keyboard is really messed up today ;-)
+
+ 18:18:40 <Ursinha> could we add an action on that? maybe we could do this and check the progress weekly.. is that too much?
+
+ 18:18:44 <Ursinha> lol
+
+ 18:18:48 <Ursinha> blame the tool
+
+ 18:20:40 <bdmurray> #action create a list of apport-crash bugs with "DBus.Error.NoReply" in the title with bug information regarding status, importance, number of dupes and users affected
+
+ 18:20:40 * meetingology create a list of apport-crash bugs with "DBus.Error.NoReply" in the title with bug information regarding status, importance, number of dupes and users affected
+
+ 18:20:47 <bdmurray> sound good?
+
+ 18:20:54 <Ursinha> great!
+
+ 18:20:56 <Ursinha> :)
+
+ 18:20:58 <Ursinha> thanks bdmurray
+
+ 18:21:35 <bdmurray> One other thing from me
+
+ 18:21:59 <bdmurray> I've an upload for update-manager that'll fix an issue with a bug attachment being double gzipped
+
+ 18:22:14 <bdmurray> That should happen soon
+
+ 18:22:20 <phil-wong> is there a way I can help with this? I only just started yesterday examining and changing new bug statuses to incomplete
+
+ 18:23:14 <bdmurray> phil-wong: I think creating the list is best done using the launchpad api so probably not yet
+
+ 18:23:49 <phil-wong> ok
+
+ 18:23:55 <bdmurray> phil-wong: however, when we have that list and need to do manual investigation we could surely use your help
+
+ 18:24:03 <bdmurray> #topic Bug Escalations (any High or Critical bugs that community members have seen that need attention)
+
+ 18:24:12 <phil-wong> great :)
+
+ 18:24:43 <Ursinha> phil-wong, thanks :))
+
+ 18:24:59 <bdmurray> so phil-wong (or anybody else) are there any important bugs that you have seen that we should be aware of?
+
+ 18:25:33 <Ursinha> important being..
+
+ 18:25:35 <Ursinha> ?
+
+ 18:25:52 <bdmurray> Ursinha: bugs that should be, or are, High or Critical
+
+ 18:26:00 <bdmurray> Ursinha: or a regression
+
+ 18:26:13 <bil21al_> bdmurray: not in empathy just one which is under the developer eye.
+
+ 18:26:19 <Ursinha> bdmurray, thanks :) in this case, no
+
+ 18:26:32 <phil-wong> well, I am a real newbie. I literally don't know much about linux, I'm just looking to see if bugs are detailed enough at the moment.
+
+ 18:26:53 <phil-wong> So, I am not aware of important bugs yet.
+
+ 18:27:53 <bdmurray> My thought was this is a good opportunity / time for bug squad members to escalate bugs to the defect analysts on the engineering teams
+
+ 18:28:17 <dlentz> i keep seeing complaints in ubuntuforums (and there apre probably even more in kubuntuforums) of muon and kpackagekit crashing after a fresh 11.10 install, which has to be very frustrating
+
+ 18:28:26 <dlentz> bug 915235
+
+ 18:28:27 <ubottu> Launchpad bug 915235 in muon (Ubuntu) "muon-installer crash" [High,Confirmed] https://launchpad.net/bugs/915235
+
+ 18:28:50 <bdmurray> dlentz: looking
+
+ 18:30:01 <Riddell> dlentz: JontheEnchidna is often on IRC if you feel it needs a ping
+
+ 18:30:21 <dlentz> is software-center used as default in kubuntu?
+
+ 18:30:37 <Riddell> dlentz: no, Muon is
+
+ 18:30:55 <Riddell> and formerly kpackagekit
+
+ 18:32:26 <dlentz> thanks, at least there's a workaround
+
+ 18:33:03 <bdmurray> dlentz: to be clear JontheEnchidna is Jonathan Thomas and he works on muon
+
+ 18:33:39 <dlentz> ack'd
+
+ 18:33:53 <bdmurray> dlentz: thanks for bringing this up - I'll take a look at it a bit more after the meeting
+
+ 18:33:56 <Ursinha> is this the case of adding the workaround to the bug and mark it as such?
+
+ 18:34:19 <bdmurray> I think the workaround could use some additional verification
+
+ 18:36:28 <bdmurray> #topic Other Topics
+
+ 18:36:46 <bdmurray> Anything else? Questions what have you
+
+ 18:38:51 <hggdh> o/
+
+ 18:38:58 <bdmurray> hggdh: hi there
+
+ 18:39:04 <bdmurray> hggdh: go ahead
+
+ 18:39:34 <dlentz> i'm relatively new (at doing this officially), and still a bit unclear on the difference between wishlist and something that sould go to ubuntubrainstorm
+
+ 18:39:40 <hggdh> I would like to remember all that Harvest is available to simplify searching for bugs one may be interested in
+
+ 18:39:42 <hggdh> http://harvest.ubuntu.com/
+
+ 18:39:45 <hggdh> ..
+
+ 18:39:53 <hggdh> and hi bdmurray ;-)
+
+ 18:40:01 * hggdh goes back to lurking
+
+ 18:40:05 <bdmurray> dlentz: it depends on the scope of the feature
+
+ 18:40:22 <Ursinha> hggdh, harvest is only for bitesize bugs or any bugs?
+
+ 18:41:00 <hggdh> Ursinha: there are many different categories of bugs you can search for; it happens one of them is bitesize bugs
+
+ 18:41:12 <bdmurray> dlentz: a brainstorm idea would be like ubuntu should have a global proxy configuration system
+
+ 18:41:44 <bdmurray> dlentz: while a wishlist bug might be it should be possible to sort by song title in easytag
+
+ 18:41:49 <Ursinha> thanks hggdh
+
+ 18:41:55 <bdmurray> dlentz: does that help at all?
+
+ 18:42:03 <dlentz> i see now that i re-read the wiki, ubuntubrainstorm is not for upstream stuff
+
+ 18:42:13 <dlentz> yes, the "scope" thing helps
+
+ 18:42:16 <dlentz> thanks
+
+ 18:42:32 <bdmurray> dlentz: if you feel the wiki page could be improved please make the change
+
+ 18:44:02 <dlentz> next time, i'll ask for clarification in this channel if i see one of these, thanks
+
+ 18:44:45 <bdmurray> Ursinha: in harvest you can find fixable bugs about a package and some triaging opportunities
+
+ 18:45:00 <bil21al> bdmurray:empathy is finalized is there any other package  that needs the attention. and have a lot of bugs  do u know about that?
+
+ 18:45:08 <bdmurray> for triaging we have bugpattern-needed and sru verification needed tagged bugs
+
+ 18:45:58 <bdmurray> bil21al: perhaps rhythmbox?
+
+ 18:46:18 <hggdh> \o
+
+ 18:46:46 <bdmurray> hggdh: hmm?
+
+ 18:46:50 <bil21al> hmm so i keep eye on empathy and rhythmbox both. thanks cheer:)
+
+ 18:46:53 <hggdh> heh
+
+ 18:47:19 <hggdh> I would also like to announce the soon-to-be Bug Controller... bil21al!
+
+ 18:47:56 <dlentz> i try to attend to rhythmbox bugs, since i like audio stuff; i did the massive dupe check a month or so ago
+
+ 18:47:56 <bil21al> hggdh:thank u so much
+
+ 18:48:00 <hggdh> bil21al has been very active on Empathy triaging, and has finally acquired enough knowledge of Ubuntu triaging to be accepted
+
+ 18:48:23 <hggdh> I will add him in as a member in a few
+
+ 18:48:32 <hggdh> thank you, bil21al, for all your help
+
+ 18:48:33 <hggdh> ..
+
+ 18:48:54 <bdmurray> That's great.  Congratulations bil21al
+
+ 18:49:07 <bil21al> hggdh:my pleasure
+
+ 18:49:19 <bil21al> bdmurray:yw
+
+ 18:49:36 <bdmurray> I think thats a wrap then
+
+ 18:49:50 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

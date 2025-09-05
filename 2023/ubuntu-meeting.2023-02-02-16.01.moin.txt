@@ -1,0 +1,274 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 02 Feb at 16:01 &mdash; 16:42 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-02-02-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 16:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:09)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:17)
+
+=== proposed-migration ===
+
+Discussion started by jawn-smith at 16:18.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 16:18)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 16:31.
+
+ * ''LINK:'' https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20221215-lunar-normal-lunar.html#foundations-bugs-team   (ginggs, 16:33)
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (57)
+ * ginggs (13)
+ * slyon (6)
+ * dbungert (5)
+ * cpaelzer (5)
+ * bdmurray (4)
+ * schopin (3)
+ * meetingology (2)
+ * juliank (2)
+ * danilogondolfo (2)
+ * waveform (2)
+ * adrien (2)
+ * cpaelzer_ (1)
+ * bdrung (1)
+ * jbicha (1)
+ * zhsj (1)
+ * ogayot (1)
+
+
+
+== Full log ==
+
+
+ 16:01 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:37 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:02 <juliank> /o/
+
+ 16:02 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-02-february-2023/33657
+
+ 16:02 <jawn-smith> Let's all read and ask questions
+
+ 16:02 <bdmurray> dbungert: so mini-iso-tools is the ?
+
+ 16:03 <dbungert> it's a package with a similar use story to casper, to build stuff into an initrd
+
+ 16:03 <dbungert> this is what's driving the boot-chooser feature on the new mini.iso work
+
+ 16:04 <slyon> danilogondolfo: did you already push those final fixes for the vxlan PR (after my review)?
+
+ 16:05 <danilogondolfo> slyon: not yet, finishing that right now
+
+ 16:05 <slyon> excelent, thanks!
+
+ 16:09 <jawn-smith> #topic Release incoming bugs
+
+ 16:09 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 16:09 <jawn-smith> bug 2003331
+
+ 16:09 <jawn-smith> Looks like we discussed this last week
+
+ 16:10 <jawn-smith> And it looks like a desktop team issue
+
+ 16:10 <jawn-smith> Nothing for us to do, so moving on
+
+ 16:10 <jawn-smith> bug 2002871
+
+ 16:11 <jawn-smith> waveform: you had mentioned looking into this, have you checked up on this at all?
+
+ 16:11 <waveform> haven't had time this week unfortunately
+
+ 16:11 <jawn-smith> Think you'll have time next week?
+
+ 16:11 <waveform> yes, should do
+
+ 16:11 <jawn-smith> Excellent, I'll leave that with you then
+
+ 16:11 <jawn-smith> thanks
+
+ 16:12 <jawn-smith> bug 2004272
+
+ 16:13 <slyon> Debian enabled DNS over Https (DOH) which requires lots of new dependencies (MIRs)
+
+ 16:14 <jawn-smith> Some discussion of whether this should be handled this cycle or next
+
+ 16:14 <slyon> Foundations needs to consider if we want to take responsibility for all those new dependency and do the MIRs (I disabled DOH for now to mitigate the MIRs)
+
+ 16:15 <schopin> IMHO we should keep DOH disabled until someone asks us for the support.
+
+ 16:15 <jawn-smith> Changing the tag to rls-mm-incoming so we remember to look into this next cycle
+
+ 16:16 <jawn-smith> That's it for ll
+
+ 16:16 <jawn-smith> Oh neat kk is empty
+
+ 16:17 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:17 <jawn-smith> bug 1999345
+
+ 16:17 <jawn-smith> juliank: still with security team?
+
+ 16:17 <juliank> yeah
+
+ 16:17 <jawn-smith> Okay then, it's been an easy day of bug discussions
+
+ 16:18 <jawn-smith> #topic proposed-migration
+
+ 16:18 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:19 <jawn-smith> reprepo vs libarchive is with me
+
+ 16:19 <jawn-smith> It's a tricky one
+
+ 16:19 <jawn-smith> llvm-toolchain was with doko
+
+ 16:19 <jawn-smith> datefudge vs coreutils, has anyone been looking into that?
+
+ 16:20 * jawn-smith reads logs
+
+ 16:20 <adrien> it's still the same status
+
+ 16:20 <jawn-smith> Doesn't look like that was assigned to anyone last week
+
+ 16:20 <jawn-smith> Oh is this the time64 thing?
+
+ 16:20 <schopin> it is.
+
+ 16:20 <jawn-smith> fun
+
+ 16:22 <jawn-smith> Sounds like we're going to hint that one
+
+ 16:22 <jawn-smith> There's a licensecheck related MIR, is someone working that?
+
+ 16:23 <jawn-smith> Sounds like adrien is working on that
+
+ 16:23 <jawn-smith> fuse3 vs ostree
+
+ 16:23 <jawn-smith> Anyone interested in that?
+
+ 16:23 <slyon> o/
+
+ 16:24 <jawn-smith> Thanks!
+
+ 16:24 <jawn-smith> sbuild
+
+ 16:24 <jawn-smith> sounds like a waveform thing
+
+ 16:25 <jawn-smith> libcap2 seems to have an armhf regression
+
+ 16:25 <jawn-smith> Is this also a time64 thing?
+
+ 16:25 <slyon> danilogondolfo: ^
+
+ 16:26 <danilogondolfo> libcap2 is failing a test probably due to the test environment
+
+ 16:26 <adrien> I hope it isn't!
+
+ 16:28 <jawn-smith> Sounds like we're going to patch out the test that's failing on armhf
+
+ 16:28 <jawn-smith> And danilogondolfo is working on that
+
+ 16:28 <jawn-smith> grep vs dpdk: any volunteers?
+
+ 16:28 <dbungert> I can take a look
+
+ 16:28 <jawn-smith> Thanks!
+
+ 16:29 <jawn-smith> setuptools has a few issues
+
+ 16:29 <ginggs> i'l take them
+
+ 16:29 <jawn-smith> All of them?
+
+ 16:29 <ginggs> sure
+
+ 16:29 <jawn-smith> Thanks!
+
+ 16:29 <cpaelzer_> what is wrong with "grep vs dpdk" ?
+
+ 16:29 <bdmurray> I'm retrying ros-bloom and setup tools aon arm64
+
+ 16:30 <jawn-smith> cpaelzer: there is a failing dpdk autopkgtest triggered by the new grep
+
+ 16:30 <schopin> cpaelzer: dpdk tests failed when triggered by grep
+
+ 16:30 <ginggs> cpaelzer: https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses.html#grep
+
+ 16:30 <cpaelzer> schopin: I think I just fixed this in Debian, but we didn't upload/sync it yet
+
+ 16:30 <jawn-smith> Then let's assign fontconfig vs openjdk-8 to vpa1977
+
+ 16:30 <jawn-smith> And that's it for proposed migration
+
+ 16:30 <cpaelzer> checking, thanks for the link ginggs
+
+ 16:31 <jawn-smith> #topic AOB
+
+ 16:32 <bdrung> distro-info 1.4 fails to build on i386. How do I get mypy built on i386?
+
+ 16:33 <ginggs> let's have a FTBFS party
+
+ 16:33 <ginggs> https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20221215-lunar-normal-lunar.html#foundations-bugs-team
+
+ 16:34 <cpaelzer> schopin: ginggs: dbungert: the dpdk fail you see is not what I fixed (that was on armhf depending on which chip it ran on in test infra).
+
+ 16:34 <cpaelzer> schopin: ginggs: dbungert: The one you have here is due to overload of the test environment - I've seen it and it happens rarely, but usually when the system hosting the test VM is quite loaded.
+
+ 16:35 <dbungert> cpaelzer: ok, sounds like we should do a retry
+
+ 16:35 <cpaelzer> schopin: ginggs: dbungert: maybe we should flag it as large/long test if not already done (haven't checked)
+
+ 16:35 <jawn-smith> I can take icu
+
+ 16:35 <dbungert> and that
+
+ 16:36 <ginggs> it seems the announce did make it to the list https://lists.ubuntu.com/archives/ubuntu-devel/2023-January/042404.html
+
+ 16:37 <bdmurray> bdrung will take cracklib
+
+ 16:37 <bdmurray> 2
+
+ 16:37 <ginggs> cross-toolchain-base sounds like one for doko
+
+ 16:38 <ginggs> schopin will look at ec2-hibinit-agent and hibagent
+
+ 16:39 <jbicha> hi, for AOB, will y'all be syncing ICU from Debian for 23.04?
+
+ 16:39 <ginggs> vpa1977 is already assigned fontconfig for proposed migration
+
+ 16:40 <jawn-smith> jbicha: I'll look into that sync as part of my work investigating the FTBFS
+
+ 16:40 <ginggs> slyon is already got fuse3 for proposed migration
+
+ 16:41 <ginggs> jawn-smith has got icu
+
+ 16:41 <ginggs> anyone for mpdecimal?
+
+ 16:41 <zhsj> i'll be back next week, so i can take something
+
+ 16:41 <ogayot> I can take mpdecimal
+
+ 16:41 <ginggs> ok, that's all of the, thanks everyone
+
+ 16:42 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

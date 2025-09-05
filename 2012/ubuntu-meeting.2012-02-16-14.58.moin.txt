@@ -1,0 +1,475 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by NCommander at 14:58:35 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-16-14.58.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/ARM/Meeting/2012/20120216   (NCommander, 14:59:41)
+ *ActionItem Review
+
+ *rsalveti to follow with riku to see if chromium will get fixed
+
+ *Standing Items
+
+ *http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html
+
+ *ARM Server Status (NCommander)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *[ ARM Porting/FTBFS status (NCommander, janimo)
+''ACTION:'' janimo` to get Lennart to maintain upstart  (NCommander, 15:18:19)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *QA Status (GrueMaster, mahmoh)
+
+ *Linaro Updates (rsalveti)
+
+ *AOB
+
+
+
+Meeting ended at 15:33:03 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * janimo` to get Lennart to maintain upstart
+
+
+
+== Action items, by person ==
+
+ * janimo`
+ ** janimo` to get Lennart to maintain upstart
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (60)
+ * NCommander (44)
+ * janimo` (30)
+ * infinity (24)
+ * GrueMaster (22)
+ * Riddell (8)
+ * ppisati (4)
+ * meetingology (4)
+ * mahmoh (2)
+
+
+
+== Full Log ==
+
+
+ 14:58:35 <NCommander> #startmeeting
+
+ 14:58:35 <meetingology> Meeting started Thu Feb 16 14:58:35 2012 UTC.  The chair is NCommander. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:58:35 <meetingology> 
+
+ 14:58:35 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 14:58:41 <ogra_> you are early today
+
+ 14:58:55 <janimo`> hi
+
+ 14:59:09 <infinity> o/
+
+ 14:59:41 <NCommander> [link] https://wiki.ubuntu.com/ARM/Meeting/2012/20120216
+
+ 15:00:05 <NCommander> #topic ActionItem Review
+
+ 15:00:10 <NCommander> #topic rsalveti to follow with riku to see if chromium will get fixed
+
+ 15:00:42 <ogra_> looks like that was done
+
+ 15:00:47 <infinity> Riku and micahg were discussing chromium earlier.
+
+ 15:00:52 <infinity> Seems like it's nearly there.
+
+ 15:00:52 <ogra_> we had an extensive discussion this morning
+
+ 15:01:13 <mahmoh> o/
+
+ 15:01:29 <ogra_> and while we are at fixing, 1000 hugs to janimo` for fixing libO in just a few days of work :)
+
+ 15:01:59 <janimo`> ogasawara, well it was a few days work preceded by a few days of staring at the code dumbfounded
+
+ 15:02:11 <ogra_> heh
+
+ 15:02:17 <NCommander> yay janimo`
+
+ 15:02:19 * ogra_ hugs ogasawara ...
+
+ 15:02:26 <infinity> ogra_: You've been upgraded to ogasawara!
+
+ 15:02:32 <ogra_> she always steals my pings !
+
+ 15:02:34 <janimo`> awesome!
+
+ 15:02:51 <janimo`> ogra_, start lurking the kernel channel and steal some back
+
+ 15:02:53 <NCommander> anyway, no rsajdok so moving on
+
+ 15:03:07 <ogra_> janimo`, i'm resident there, she steals them there too
+
+ 15:03:12 <NCommander> #topic Standing Items
+
+ 15:03:14 <NCommander> #topic http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html
+
+ 15:03:45 * ogra_ guesses we need to postpone everything thats FF cfritical today
+
+ 15:03:51 <ogra_> *critical
+
+ 15:03:58 <GrueMaster> Looks like the TODO items have taken a dip.
+
+ 15:04:21 <infinity> I don't think any of my items will be blocked by FF.  Sadly.
+
+ 15:04:44 * ogra_ is still planning to fix the ubuntu-core DL page if i ever find out how the heck infinity manages to make make-web-indiciec being ignored
+
+ 15:04:57 <NCommander> ogra_: deep voodoo
+
+ 15:05:03 <ogra_> yeah
+
+ 15:05:08 <ogra_> maple voodo :)
+
+ 15:05:13 <infinity> :P
+
+ 15:05:30 <infinity> We can talk later.
+
+ 15:05:35 <infinity> I didn't realise you were having issues.
+
+ 15:05:39 <NCommander> [topic] ARM Server Status (NCommander)
+
+ 15:05:49 <NCommander> linux-armadaxp exists
+
+ 15:05:51 <ogra_> yeah, not today though
+
+ 15:06:00 <infinity> It even installs.
+
+ 15:06:06 <ogra_> .... i didnt shout yet since i want to find out myself first :)
+
+ 15:06:30 <NCommander> working on the d-i portion, and working with cooloney to merge in the lastest bits from Marvell
+
+ 15:06:40 <ogra_> ready today ?
+
+ 15:07:13 <NCommander> We didn't quite make feature freeze withthe actual d-i bit but the rest should be there
+
+ 15:08:03 <NCommander> except images tonight/tomrrow
+
+ 15:08:08 <ogra_> ready tomorrow ? (else i need to notify about the FF exception in tomorrows release meeting)
+
+ 15:08:18 <ogra_> ok
+
+ 15:08:40 <NCommander> ogra_: probably tonight if everything goes as planned.If not,tomorrow
+
+ 15:08:56 <NCommander> disclaimer
+
+ 15:09:23 <ogra_> ok
+
+ 15:09:25 <NCommander> this is for netboot. I do plan to try to build alternates but I don't know ifthey'll work right offthebat
+
+ 15:09:31 <ogra_> if not tomorrow, please let me know
+
+ 15:09:40 <NCommander> will do
+
+ 15:09:42 <NCommander> [topic] Kernel Status (cooloney, ppisati)
+
+ 15:09:55 <ppisati> new kernel release yesterday (1406.8)
+
+ 15:10:02 <ppisati> with audio fixes
+
+ 15:10:10 <GrueMaster> yea!
+
+ 15:10:16 <ppisati> now i'm working on the "set mac address" from the cmdline
+
+ 15:10:27 <ppisati> it's broken since natty
+
+ 15:10:35 * janimo` is currently building a new ac100 3.0.19 kernel and if all's well it is going to be uploaded soon.
+
+ 15:10:45 <ogra_> \o/
+
+ 15:10:58 <ogra_> janimo`, i think -exp was merged yesterday into the stable branch btw
+
+ 15:11:12 <GrueMaster> janimo`: Let me know when it gets in.
+
+ 15:11:13 <janimo`> ogra_, yes, and two more sound related commits since yesterday
+
+ 15:11:17 <janimo`> GrueMaster, sure
+
+ 15:11:23 <ogra_> yup
+
+ 15:11:25 <GrueMaster> I want to see if it fixes the start-r board.
+
+ 15:11:39 <janimo`> GrueMaster, start-r ?
+
+ 15:11:50 <infinity> Wrong kernel..
+
+ 15:11:53 <janimo`> I may need extra config options if that is some USB dongle
+
+ 15:11:55 <GrueMaster> New rev.
+
+ 15:12:01 <janimo`> GrueMaster, ac100
+
+ 15:12:11 <GrueMaster> Oh.
+
+ 15:12:19 * GrueMaster sips more coffee.
+
+ 15:13:28 <ogra_> NCommander, move ?
+
+ 15:13:30 <NCommander> [topic[ ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:13:40 <NCommander> bah ninjaed
+
+ 15:13:50 * NCommander hugs janimo` for libo
+
+ 15:14:01 * janimo` hugs NCommander
+
+ 15:14:04 <janimo`> for libo
+
+ 15:14:16 <ogra_> humm ... upstart
+
+ 15:14:19 <NCommander> and funeral services will be held for his sanity next thursday at 15:00 UTC.
+
+ 15:14:25 <janimo`> I am debugging upstart now
+
+ 15:14:29 <ogra_> ah, cool
+
+ 15:14:35 <infinity> The upstart failure isn't arm-specific.
+
+ 15:14:44 <janimo`> as in just fired up gdb. Not sure why it built on armel
+
+ 15:14:45 <infinity> It takes several builds to beat the race on x86 buildds.
+
+ 15:14:57 <NCommander> infinity: thatbug is STILL around?
+
+ 15:15:01 <infinity> We've just been throwing it back until it sticks. :/
+
+ 15:15:13 <NCommander> I remember keybuk working on that race when he was still here
+
+ 15:15:17 <janimo`> infinity, so it is a bug but very subtle. throw it back I guess then :)
+
+ 15:15:22 <infinity> janimo`: That said, arm-specific or not, the upstart devs might appreciate someone finding the problem.
+
+ 15:15:25 <ogra_> infinity, well, let the awesome janimo` look at it :)
+
+ 15:15:40 <infinity> janimo`: We can't get it to stick reliably on arm, that's the problem. :P
+
+ 15:15:54 <janimo`> if we used systemd we could just blame Lennart. Now we have to do actual debugging, grumble
+
+ 15:16:10 <ogra_> lol
+
+ 15:16:16 <ogra_> now thats a reason for switching
+
+ 15:16:19 <GrueMaster> heh
+
+ 15:16:26 <ogra_> "because we can whine about lennart"
+
+ 15:16:46 <NCommander> somehow, I don't think it would make ARM bugs vanish
+
+ 15:16:54 <GrueMaster> I think slangasek was looking at this yesterday as well.  Saw a post of him mucking with cross-compiling in qemu.
+
+ 15:17:15 <ogra_> NCommander, no, but we could just just blame him for them ;)
+
+ 15:17:39 <janimo`> we should persuade Lennart to take over upstream upstart maintainership, then we can blame him without switching
+
+ 15:17:41 <NCommander> ogra_: but we can blame Scott for upstart so whats the difference :-P
+
+ 15:18:00 <ogra_> janimo`, awesome idea !
+
+ 15:18:07 <infinity> vorlon's upload was meant to fix the test that still fails so, yeah, catching up with him might be good.
+
+ 15:18:09 <ogra_> NCommander, we like scott
+
+ 15:18:19 <NCommander> [action] janimo` to get Lennart to maintain upstart
+
+ 15:18:19 * meetingology janimo` to get Lennart to maintain upstart
+
+ 15:18:28 <NCommander> I figured you got libo fixed, that shouldn't be hard
+
+ 15:18:40 <janimo`> hmm, you have apoint
+
+ 15:19:01 <NCommander> anyway
+
+ 15:19:05 <NCommander> [topic] ARM Image Status (ogra, NCommander)
+
+ 15:19:13 <ogra_> broken today
+
+ 15:19:13 <NCommander> To soon be existing for arm server
+
+ 15:19:17 <ogra_> thanks to compiz ftbfs
+
+ 15:19:27 <ogra_> (across the board)
+
+ 15:19:44 <ogra_> oh, and an announcement (seems to fit here)
+
+ 15:19:44 <janimo`> that compiz ftbfs seems like a QT issue
+
+ 15:19:48 <janimo`> the kde backend is the one failing
+
+ 15:19:49 <ogra_> canonical will from today on support armhf
+
+ 15:19:55 <ogra_> '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+ 15:19:56 <janimo`> \o/
+
+ 15:20:05 <GrueMaster> WOOT!
+
+ 15:20:05 <ogra_> and turn armel into community supported
+
+ 15:20:19 <NCommander> so GrueMaster will still test it!
+
+ 15:20:20 <infinity> I'm dropping armel+mx5 and armel+omap4 images today.
+
+ 15:20:21 <ogra_> i guess infinity can tell us which images we still build for armel
+
+ 15:20:30 <GrueMaster> Are we dropping image builds for armel?
+
+ 15:20:34 <GrueMaster> YEA!
+
+ 15:20:36 <ogra_> GrueMaster, not all
+
+ 15:20:40 <infinity> We'll still build armel+omap and armel+ac100, and drop ac100 when nvidia gives us armhf drivers.
+
+ 15:20:54 <janimo`> that means there are slots freed for live image testbuilds sometime soonish ?
+
+ 15:20:56 <infinity> Ultimately, we should just be building armel+omap for smoketesting.
+
+ 15:21:09 <infinity> janimo`: Not really.
+
+ 15:21:17 <infinity> janimo`: It means we don't have to wait 16 hours for all the images to build.
+
+ 15:21:21 <ogra_> janimo`, there are tons of slots once infinity is done with the move to LP buildds for image builds
+
+ 15:21:21 <janimo`> infinity, you keep shattering my dreams
+
+ 15:21:31 <NCommander> janimo`: he's good at that
+
+ 15:21:37 <ogra_> but that will still take a bit
+
+ 15:21:47 <janimo`> he has no sleep and dreams, so messes with others'
+
+ 15:22:00 <infinity> Yes, yes, I'm a bad man.
+
+ 15:22:02 <infinity> Moving on.
+
+ 15:22:06 <ogra_> ++
+
+ 15:22:14 <NCommander> [topic] QA Status (GrueMaster, mahmoh)
+
+ 15:22:51 <GrueMaster> I wrote a few scripts to do server load testing.  One for the lamp stack, one for rabbitmq.
+
+ 15:23:28 <GrueMaster> Also working on getting power meter data acquisition going.  Works on a panda so far.
+
+ 15:23:44 <ogra_> nice
+
+ 15:24:00 <ogra_> do you have any intel based comparison data ?
+
+ 15:24:02 <GrueMaster> Tested daily images earlier this week, no sudden deaths.  Looking solid.
+
+ 15:24:25 <ogra_> (i.e. from cking)
+
+ 15:24:35 <GrueMaster> Unfortunately, it is just a digital amp meter.  Very hard to get power loads across multiple voltages.
+
+ 15:24:43 <ogra_> ah, k
+
+ 15:24:56 <GrueMaster> he is testing with a laptop.
+
+ 15:25:04 <ogra_> right
+
+ 15:25:11 <GrueMaster> And completely different loads.
+
+ 15:25:18 <ogra_> k
+
+ 15:25:57 <NCommander> anything else?
+
+ 15:26:03 <NCommander> [topic] Linaro Updates (rsalveti)
+
+ 15:26:03 <ogra_> move
+
+ 15:26:05 <NCommander> er
+
+ 15:26:07 <GrueMaster> I put my arm server test system on a kill-a-watt device, but it barely registers.
+
+ 15:26:12 <mahmoh> I ran some kernel burn in yesterday and pushed a PTS script to the workload branch - getting to WI today
+
+ 15:26:24 <ogra_> oh. lots else :)
+
+ 15:26:55 <NCommander> still no rsajdok
+
+ 15:26:56 <NCommander> er
+
+ 15:27:01 <NCommander> still no rsalveti
+
+ 15:27:04 <NCommander> [topic] AOB
+
+ 15:27:07 <ogra_> well, lets skip this then
+
+ 15:27:15 <Riddell> janimo`: it seems gcc has got stricter again and some new errors are turning up, that compiz issue is one
+
+ 15:27:19 <ogra_> though i would have loved to hear where compiz stands :(
+
+ 15:27:22 <GrueMaster> janimo`: I'd like to get info on how you tested erlang & rabbitmq last cycle. after the meeting
+
+ 15:27:27 <Riddell> janimo`: and so is digikam and something else
+
+ 15:27:30 <janimo`> GrueMaster, ok
+
+ 15:27:44 <janimo`> Riddell, ah, so a bug for Linaro gcc folks I guess?
+
+ 15:27:53 <ogra_> or for doko .)
+
+ 15:27:56 <Riddell> janimo`: it's probably not hard to work out the way to keep the compiler happy but it's hard for me with no arm hardware
+
+ 15:28:06 <Riddell> janimo`: or just drop the kde compiz bits as a workaround
+
+ 15:28:30 <Riddell> janimo`: only if they enjoy fixing c++ cast problems :)
+
+ 15:28:32 <janimo`> Riddell, ok, we'll probably do that as a workaround since the alternative is fixing and uploading Qt
+
+ 15:28:33 <GrueMaster> Riddell: I thought you had a panda?
+
+ 15:28:35 <janimo`> which takes longer
+
+ 15:28:47 <Riddell> janimo`: compiz is a "bug" in kdelibs not qt
+
+ 15:28:58 <janimo`> Riddell, it's part of their job to fix C++ cast problems :)
+
+ 15:29:00 <Riddell> GrueMaster: I do, yet to find time/knowledge to set it up
+
+ 15:29:02 <infinity> janimo`: Fixing the errors seems saner than disabling features.
+
+ 15:29:13 * ogra_ agrees that compiz is a bug .... not only in kdelibs
+
+ 15:29:26 <janimo`> infinity, sure unless fixing it means no images for weeks?
+
+ 15:29:29 <GrueMaster> Riddell: Get with me offline, I can get you up and running in minutes.
+
+ 15:29:53 <ogra_> yes, getting a panda up is a matter of a few minutes nowadays
+
+ 15:29:58 <Riddell> GrueMaster: I will do next time I find some minutes
+
+ 15:30:03 <ogra_> (plus download time)
+
+ 15:32:40 <NCommander> anything else or can I close?
+
+ 15:32:46 <ogra_> close
+
+ 15:33:03 <NCommander> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,339 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 27 Jul at 15:04 &mdash; 16:01 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-07-27-15.04.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:04.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-27-jul-2023   (juliank, 15:04)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:17.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:17)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:30.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:31)
+
+=== aob ===
+
+Discussion started by juliank at 15:57.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (88)
+ * dbungert (8)
+ * bdmurray (7)
+ * schopin (5)
+ * ginggs (5)
+ * adrien (4)
+ * bdrung (3)
+ * ogayot (3)
+ * mateus-morais (3)
+ * pushkarnk (3)
+ * meetingology (2)
+ * dviererbe (2)
+ * danilogondolfo (2)
+ * waveform (2)
+ * zhsj (1)
+ * enr0n (1)
+
+
+
+== Full log ==
+
+
+ 15:04 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:04 <meetingology> Meeting started at 15:04:10 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:04 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:04 <juliank> #topic Lightning rounds
+
+ 15:04 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-27-jul-2023
+
+ 15:09 <bdrung> dviererbe, redarding the dash merge: I would prefer to see the mmdebstrap autopkgtest made working on Ubuntu
+
+ 15:10 <schopin> bdmurray: do Tim's changes to autopkgtest mean that we won't need to use retry-autopkgtest-regressions as much?
+
+ 15:10 <schopin> I mean the tool is still useful, but now I'll be able to just click the link rather than fire up a terminal :)
+
+ 15:11 <bdmurray> schopin: I still think its useful for queueing things en masse but for one off tests you won't need to use it.
+
+ 15:11 <dbungert> the retry tool can help group triggered tests together that the web UI won't necessarily offer
+
+ 15:13 <juliank> Which is problematic in itself
+
+ 15:13 <juliank> Because it might produce false positives
+
+ 15:13 <juliank> Or false negatives, imagine one trigger works and the other breaks it, you want to run them separately
+
+ 15:13 <ogayot> sometimes, retry-autopkgtest-regressions lists URLs for tests that are in progress. Does the fix for bug 2028801 address that as well?
+
+ 15:14 <mateus-morais> dviererbe: I'll need to bring your dotnet6,7 changes to dotnet8 sometime soon, to avoid bringing back the DOTNET_ROOT bug and to perpetuate the other changes themselves
+
+ 15:14 <bdmurray> ogayot: no, that's independent but I'd be interested to hear more about the issue with r-a-r that you saw.
+
+ 15:15 <ogayot> bdmurray: sure, when I hit it, I'll let you know then
+
+ 15:15 <juliank> it's a bit peculiar because if you iterate over the queue you might not see all items
+
+ 15:15 <dviererbe> bdrung: LP: 2028868
+
+ 15:15 <juliank> and there's a race condition where the worker takes it off the queue and and then notifies the frontend it's running it, I think
+
+ 15:16 <dviererbe> mateus-morais: +1 definetly
+
+ 15:16 <juliank> Like we had failing tests that looped endlessly, and weren't able to remove them because the worker was always picking them directly, lol
+
+ 15:16 <juliank> Anyhow, continue?
+
+ 15:17 <juliank> #topic Release incoming bugs
+
+ 15:17 <juliank> We have two releases with bugs today
+
+ 15:17 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:17 <juliank> bug 2027826
+
+ 15:17 <juliank> vorlon tagged this but is not here
+
+ 15:17 <dbungert> so steve landed changes for this, outside of livecd-rootfs
+
+ 15:18 <dbungert> It however hasn't migrated in a while, so I think we should figure out why.
+
+ 15:18 <dbungert> I know x_nox tagged this block-proposed but there are also failing tests
+
+ 15:19 <juliank> but that's a different topic than the bug, it not migrating
+
+ 15:19 <dbungert> Steve's change is intended to address the bug
+
+ 15:19 <juliank> I understand that
+
+ 15:21 <juliank> But the bug is not about livecd-rootfs not migrating
+
+ 15:21 <dbungert> ok
+
+ 15:22 <dbungert> I think there are no actions to take for this bug, in livecd-rootfs.
+
+ 15:22 <juliank> I think let's leave it as is, I don't see why it's in the state it is, we can revisit it when we have vorlon if it still is an sisue
+
+ 15:22 <juliank> bug 2026826
+
+ 15:23 <juliank> seems fixed
+
+ 15:23 <danilogondolfo> hm netplan is not affected by it anymore, I wonder if we should remove the tag
+
+ 15:24 <juliank> sldone
+
+ 15:24 <juliank> bug 2017401
+
+ 15:25 <juliank> Ugh this is a complex topic that I don't think this is the right venue to address this in
+
+ 15:26 <juliank> That's a wider discussion around Pro and update surfacing
+
+ 15:27 <bdmurray> How can we track if not here?
+
+ 15:27 <juliank> I do not know
+
+ 15:28 <juliank> I think this is working as intended for now
+
+ 15:28 <juliank> And there's a roadmap with improvements scheduled
+
+ 15:28 <juliank> I think I'll go assign it to server to have a look and comment
+
+ 15:30 <juliank> this is a bit hacky
+
+ 15:30 <juliank> but we can get back to it next week if needed
+
+ 15:30 <juliank> Ah and ff has the same bug only, so we're done with bugs
+
+ 15:30 <juliank> #topic Team proposed-migration report
+
+ 15:31 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:31 <juliank> too many items, aargh
+
+ 15:32 <juliank> fwupd
+
+ 15:32 <juliank> bug 2021908
+
+ 15:32 <bdmurray> Oh, that should be untagged update-excuse
+
+ 15:33 <juliank> ah it only depends on Depends on glib2.0
+
+ 15:33 <juliank> pcre2 vs suricata
+
+ 15:33 <schopin> I'll take that one.
+
+ 15:34 <mateus-morais> I have pcre2 assigned from last week
+
+ 15:34 <juliank> ah I missed that
+
+ 15:34 <schopin> oh well, nevermind then :)
+
+ 15:34 <mateus-morais> schopin you can take it if you want, haven't been able to find the time :)
+
+ 15:34 <schopin> Alright, I'll take it.
+
+ 15:34 <juliank> cdebconf
+
+ 15:35 <juliank> (2 regressions, seemingly unrelated)
+
+ 15:35 <adrien> I recently made a merge for cdebconf but I'm not able to follow through due to being on vacation very soon
+
+ 15:35 <juliank> I see
+
+ 15:36 <juliank> I'm hacking grub together, I expect to be busy with grub stuff
+
+ 15:36 <adrien> (I hadn't checked cdebconf migrating)
+
+ 15:36 <adrien> but at least one issue seems unrelated to my merge and the other I don't know, I haven't found the error yet
+
+ 15:37 <juliank> cdebconf: juliank
+
+ 15:37 <juliank> let me be first then
+
+ 15:38 <juliank> python-reportlab we skip
+
+ 15:38 <bdrung> groff vs dgit looks like a flaky dgit test case
+
+ 15:38 <juliank> I see bdrung volunteers to investigate that
+
+ 15:38 <juliank> :D
+
+ 15:38 <juliank> groff: bdrung
+
+ 15:39 <juliank> lots of regressions for init-system-helpersy
+
+ 15:39 <bdrung> Then someone else has to pick up the initramfs-tools and apport fun
+
+ 15:39 <ginggs> i'll take groff then
+
+ 15:40 <juliank> I think it's a retry basically, armhf remote died in middle of test
+
+ 15:40 <juliank> init-system-helpers vs davmail
+
+ 15:41 * juliank can roll a dice but it's hard
+
+ 15:41 <zhsj> juliank: i will take
+
+ 15:41 <juliank> init-system-helpers vs davmail: zhsj
+
+ 15:41 <juliank> init-system-helpers vs dbus?
+
+ 15:42 <pushkarnk> juliank: I'll give it a shot
+
+ 15:42 <juliank> pushkarnk: I was about to say this looks like an infrastructure issue for QA to deal with
+
+ 15:42 <pushkarnk> alright :)
+
+ 15:43 <juliank> bdmurray: can you guys check that?
+
+ 15:43 <juliank> udev hangs, and then kernel crashes and hence boot doesn't finish
+
+ 15:44 <juliank> init-system-helpers vs ganglia?
+
+ 15:44 <bdmurray> juliank: which one?
+
+ 15:44 <waveform> I can take ganglia
+
+ 15:44 <juliank> bdmurray: init-system-helpers vs dbus
+
+ 15:45 <juliank> init-system-helpers vs ganglia: waveform
+
+ 15:45 <juliank> init-system-helpers vs openafs
+
+ 15:47 <pushkarnk> I'll take it
+
+ 15:47 <juliank> init-system-helpers vs openafs: pushkarnk
+
+ 15:47 <juliank> init-system-helpers vs openvswitch?
+
+ 15:48 <danilogondolfo> I can take a look
+
+ 15:48 <juliank> init-system-helpers vs openvswitch: danilogondolfo
+
+ 15:49 <juliank> init-system-helpers vs prometheus: dbungert
+
+ 15:50 <juliank> init-system-helpers vs slurm-wlm: ogayot
+
+ 15:51 <ogayot> juliank: ack
+
+ 15:51 <juliank> init-system-helpers vs systemd: vpa1977
+
+ 15:52 <juliank> livecd-rootfs: sil2100
+
+ 15:52 <juliank> openjdk-17  vs davmail: liushuyu
+
+ 15:52 <dbungert> juliank: ack
+
+ 15:53 <juliank> openjdk-17 vs libreoffice needs QA work: bdmurray
+
+ 15:53 <juliank> libreoffice is blacklisted
+
+ 15:53 <ginggs> juliank: i retried that one already
+
+ 15:53 <ginggs> still running, i think
+
+ 15:53 <juliank> ginggs: it#s blacklisted it shouldn't run?
+
+ 15:54 <ginggs> i removed it from the list
+
+ 15:54 <ginggs> since s390x is happy again
+
+ 15:54 <juliank> curl vs cmake dviererbe
+
+ 15:54 <bdmurray> for now
+
+ 15:54 <juliank> curl vs falcosecurity-libs: xypron
+
+ 15:55 <juliank> curl vs systemd: enr0n
+
+ 15:55 <enr0n> juliank: ack
+
+ 15:55 <juliank> curl vs virtualbox: doko
+
+ 15:56 <juliank> boost1.74 vs bagel: slyon
+
+ 15:56 <juliank> boost1.74 vs dolfin: mateus-morais
+
+ 15:57 <juliank> I think everyone has one so let's wrap it up
+
+ 15:57 <juliank> #topic aob
+
+ 15:57 <waveform> I'll be out Wed-Fri next week covering school hols
+
+ 15:58 <bdmurray> I'll be out all of next week
+
+ 15:59 <juliank> vorlon: I did not give you any proposed-migration, but it would be nice to restructure this into a script that feeds an epic and then people go pick items from that rather than do it in the meeting, as linear nature just wastes time vs free for all
+
+ 15:59 <juliank> I'll be out the week after next week
+
+ 15:59 <adrien> I'll be out all of august basically
+
+ 16:00 <juliank> crypto-configuration sadness
+
+ 16:00 <juliank> :)
+
+ 16:01 <juliank> We're out of time!
+
+ 16:01 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

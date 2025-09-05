@@ -1,0 +1,476 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 02 Oct at 15:03 &mdash; 15:37 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-10-02-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:19.
+
+
+=== kernel crash dumps ===
+The discussion about "kernel crash dumps" started at 15:21.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * mvo (64)
+ * caribou (29)
+ * barry (17)
+ * slangasek (16)
+ * sil2100 (16)
+ * bdmurray (16)
+ * robru (11)
+ * ubottu (11)
+ * jodh (10)
+ * stgraber (8)
+ * doko (8)
+ * meetingology (4)
+
+
+
+== Full Log ==
+
+
+ 15:03 <slangasek> #startmeeting
+
+ 15:03 <meetingology> Meeting started Thu Oct  2 15:03:25 2014 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <mvo> hi
+
+ 15:03 <sil2100> o/
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson caribou infinity mvo bhuey sil2100 robru)
+
+ 15:03 <slangasek> mvo infinity sil2100 slangasek robru stgraber jodh caribou bdmurray barry doko bhuey cjwatson
+
+ 15:03 <mvo> first!
+
+ 15:04 <mvo> apt:
+
+ 15:04 <mvo> - Diagose failure that Daniel Westervelt had with armhf/maas
+
+ 15:04 <mvo> (bug in Acquire::GzipIndexes code but already fixe)
+
+ 15:04 <mvo> - Enable all hardening options (including PIE)
+
+ 15:04 <mvo> - Smoe more work on acq-trans branch
+
+ 15:04 <mvo> click:
+
+ 15:04 <mvo> - Deal with libqt5gui5 -> -gles fallout (emulator releated)
+
+ 15:04 <mvo> - Fix gnutls error for public.apps.u.c in their deploy charm
+
+ 15:04 <mvo> (lp:~mvo/canonical-is-charms/ubuntuone-servers-deploy-public.apps.u.c)
+
+ 15:04 <mvo> - Address review comments for lp:~mvo/click/acquire
+
+ 15:04 <mvo> - Port acquire to use pythons new asyncio (lp:~mvo/click/acquire-asyncio)
+
+ 15:04 <mvo> - Port lp:~mvo/click/sso to pycurl and resolve gnutls issues (missing
+
+ 15:04 <mvo> ServerName in server config for TLS)
+
+ 15:04 <mvo> - Start discussion with SDK team about lp:~mvo/click/click-check-libs
+
+ 15:04 <mvo> - Work on fixing lp:~mvo/click/lp1232130-kill-on-remove-2
+
+ 15:04 <mvo> (tricky because ubuntu-app-launch is on the session bus but click is root)
+
+ 15:04 <mvo> - Port lp:~mvo/click/repository to use pycurl and provide httplib2 like
+
+ 15:04 <mvo> http_request() function to make porting simpler
+
+ 15:04 <mvo> - Review lp:~cjwatson/click/chroot-name
+
+ 15:04 <mvo> - Update lp:~mvo/click/lp1319790-chroot-fstab
+
+ 15:04 <mvo> lp:~mvo/click/dont-crash-for-empty-db,
+
+ 15:04 <mvo> lp:~mvo/click/lp1232130-kill-on-remove,
+
+ 15:04 <mvo> lp:~mvo/click/lp1219912-build-exclude,
+
+ 15:04 <mvo> lp:~mvo/click/framework-info to current click
+
+ 15:04 <mvo> click-bin-path:
+
+ 15:04 <mvo> - Debug/fix crash when nothing has a bin-path
+
+ 15:04 <mvo> sponsoring:
+
+ 15:05 <mvo> - Review/upload ubuntu-core-config/initramfs-tools-ubuntu-core
+
+ 15:05 <mvo> system-image:
+
+ 15:05 <mvo> - Upload pycurl based image downloader to the foundations PPA
+
+ 15:05 <mvo> - Debug build failure with pycurl in system-image ppa build
+
+ 15:05 <mvo> - Debug/fix incorrect writes with lambda and write custom writer
+
+ 15:05 <mvo> - Look into unneeded core image dependencies
+
+ 15:05 <mvo> - Port pycurl branch to CurlMulti
+
+ 15:05 <mvo> - make total progress totally reliable
+
+ 15:05 <mvo> - add get_download_manager() factory
+
+ 15:05 <mvo> - update default config for ppa system-image-cli
+
+ 15:05 <mvo> - tweak seeds, do not include recommends in system-image seed
+
+ 15:05 <mvo> (done)
+
+ 15:05 <barry> mvo: \o/
+
+ 15:06 <slangasek> no infinity at the moment
+
+ 15:06 <sil2100> Ah, ok
+
+ 15:06 <slangasek> sil2100:
+
+ 15:06 <sil2100> - Landing team work, preparing landing e-mails
+
+ 15:06 <sil2100> - CI Train maintenance and feature:
+
+ 15:06 <sil2100> * Deployment of the build job refactoring
+
+ 15:06 <sil2100> * Refactoring of the publish job
+
+ 15:06 <sil2100> * Adding unit tests to the few newly ripped out publish job chunks
+
+ 15:06 <sil2100> * Work on the dual landing scheme for ubuntu-rtm
+
+ 15:06 <sil2100> * Start looking into the issue of not all bug numbers landing in debian/changelog
+
+ 15:06 <sil2100> - Debugging and fixing problems in commitlog generation (google API problems)
+
+ 15:06 <sil2100> - Sending out announcements about changes in some of our processes
+
+ 15:06 <sil2100> - Packaging and quilt advice for some upstream projects
+
+ 15:06 <sil2100> - Preparing script for ubuntu-rtm backlog generation
+
+ 15:06 <sil2100> - Health problems, one day of sickness, slow recovery - less work done...
+
+ 15:06 <mvo> barry: get_download_manager() should actually be good now, it will check the bus for udm and use that if its available and otherwise try to fallback to pycurl
+
+ 15:06 <sil2100> (done)
+
+ 15:07 <barry> mvo: that's really great
+
+ 15:07 <barry> mvo: i might still want the setting to override autodetection, but we'll see
+
+ 15:07 <mvo> barry: thats added as well :P
+
+ 15:08 <mvo> barry: via the environment right now though for easy testing
+
+ 15:08 <barry> mvo: yep, makes sense
+
+ 15:09 <slangasek> * feeling ill this morning, so not a very comprehensive report
+
+ 15:09 <slangasek> * partner package reviews
+
+ 15:09 <slangasek> * working on various branch reviews (upstart, apport)
+
+ 15:09 <slangasek> (done)
+
+ 15:09 <slangasek> robru:
+
+ 15:09 <mvo> barry: whats the best irc channel to ask about asyncio for "normal" files? and if its worthwhile to work on a patch?
+
+ 15:10 <slangasek> #chair mvo
+
+ 15:10 <meetingology> Current chairs: mvo slangasek
+
+ 15:10 <barry> mvo: good question.  *maybe* #python-dev?  i have to see if there's a specific asyncio channel
+
+ 15:10 <slangasek> (as I may not make it to the end of the meeting today)
+
+ 15:10 <slangasek> looks like no robru
+
+ 15:10 <slangasek> stgraber:
+
+ 15:10 <robru> ah sorry, need a minute
+
+ 15:10 <sil2100> robru looked alive ;)
+
+ 15:11 <stgraber> oops, sorry
+
+ 15:11 <stgraber> been preparing for LinuxCon and Plumbers, did the LXC 1.0.6 release, did the LXC 1.1~alpha2 release, got a FFe for that latter and uploaded to utopic
+
+ 15:11 <slangasek> ok, robru after stgraber then
+
+ 15:11 <stgraber> now trying to track down a very annoying kernel bug that's affecting my server
+
+ 15:12 <barry> mvo: https://code.google.com/p/tulip/  (tulip being the code name for the standalone version)
+
+ 15:12 <stgraber> I'll be gone next week except for Friday, then I'll be gone the week after at LinuxCon/Plumbers and the week after that for the device sprint.
+
+ 15:12 <stgraber> fully back on the 27th
+
+ 15:12 <stgraber> (DONE)
+
+ 15:12 <robru> - ripped all knowledge of spreadsheets out of the CI Train jenkins backend. It is now 100% ready to have something else replace the spreadsheet (just waiting for the spreadsheet replacement itself to be ready).
+
+ 15:12 <robru> - work continues on encapsulating the various bits of spaghetti that exist in the ci train code. eliminated knowledge of the json configuration format from the prepare job, check-publication-migration job, and the build job.
+
+ 15:12 <robru> - made it easier to rollback production deployments in case I land something broken
+
+ 15:12 <robru> - resurrect accidentally deleted copy2distro script and brought it up to current coding standards (pep8, pyflakes, etc)
+
+ 15:12 <robru> - fixed all kinds of little bugs and typos and stuff
+
+ 15:12 <robru> - ported most of the bash scripts to sh, except for one in which sh breaks pbuilder for some unknown reason.
+
+ 15:12 <robru> - eliminated an entire class of ridiculous path-traversing code which was hunting for silos... which exist only in a single well-defined location.
+
+ 15:12 <robru> - various and sundry landings.
+
+ 15:12 <robru> - vacation next week!
+
+ 15:12 <robru> (done)
+
+ 15:12 <jodh> * upstart
+
+ 15:12 <jodh> - bug 1198180 investigations with apw.
+
+ 15:12 <ubottu> bug 1198180 in upstart (Ubuntu) "possible leak in upstart 1.5" [Medium,Confirmed] https://launchpad.net/bugs/1198180
+
+ 15:12 <jodh> * goget-ubuntu-touch:
+
+ 15:12 <jodh> - Raised MP to add '--list-images' option:
+
+ 15:12 <jodh> https://code.launchpad.net/~jamesodhunt/goget-ubuntu-touch/add-list-images-option/+merge/236510
+
+ 15:13 <jodh> * system-image
+
+ 15:13 <jodh> - Lots of activity. Currently investigating improvements to upgrade
+
+ 15:13 <jodh> logic and will then start serious package whittling.
+
+ 15:13 <doko> lxc autopkg tests fail
+
+ 15:13 <jodh> 🀫
+
+ 15:13 <stgraber> doko: that's normal
+
+ 15:13 <mvo> jodh: nice work on the goget branch
+
+ 15:13 <doko> ahh
+
+ 15:14 <jodh> mvo: w/e hack :)
+
+ 15:14 <stgraber> doko: see part about the kernel panic on my server :) adt will pass again once the public images server works again
+
+ 15:14 <caribou> * sosreport 3.2 released
+
+ 15:14 <caribou> - Started to work on Debian/Ubuntu packaging
+
+ 15:14 <caribou> - Continue implementation of git-dpm
+
+ 15:14 <caribou> - Found zero-day bug  in apt plugin
+
+ 15:14 <caribou> * Investigation on a iSCSI/LVM/DM-MPIO mount issue at boot
+
+ 15:14 <caribou> * Preliminary work on running kdump-tools at RunLevel S
+
+ 15:14 <caribou> (done)
+
+ 15:15 <barry> caribou: git-dpm ftw!
+
+ 15:15 <caribou> barry: looking forward to your talk !=
+
+ 15:15 <caribou> :)
+
+ 15:15 <bdmurray> modified errors charm and code to create version_info
+
+ 15:15 <bdmurray> research into volume of CORE files being reported to the Error Tracker
+
+ 15:15 <bdmurray> searched for CORE files to be removed from swift
+
+ 15:15 <bdmurray> r537: daisy/submit.py: do not ask for a CORE for packages without Ubuntu or Ubuntu RTM as we will not be able to retrace them
+
+ 15:15 <bdmurray> r538 "daisy/submit.py: add in a metric for retraced crashes missing a stacktrace"
+
+ 15:15 <bdmurray> r540: daisy/submit.py: do not ask for CORE files if the report is missing information required for retracing the crash"
+
+ 15:15 <bdmurray> reworked steve's apport changes for whoopsie-upload-all
+
+ 15:15 <bdmurray> investigation into ubuntu-touch default test whoopsie failure and discussion with plars about it
+
+ 15:15 <bdmurray> reviewed paul larson's change to whoopsie default ubuntu-touch test (approve)
+
+ 15:15 <bdmurray> submitted apport bug LP: #1374544 regarding SegvAnalysis field weirdness
+
+ 15:15 <bdmurray> reported apport bug LP: #1376374 regarding repeat processing of crash files
+
+ 15:15 <ubottu> Launchpad bug 1374544 in apport (Ubuntu) "crash file indicates Disassembly is missing when it isn't" [Undecided,New] https://launchpad.net/bugs/1374544
+
+ 15:15 <ubottu> Launchpad bug 1376374 in apport (Ubuntu) "whoopsie-upload-all will run hooks on a corrupt crash file multiple times" [Undecided,New] https://launchpad.net/bugs/1376374
+
+ 15:15 <bdmurray> SRU verification of bug LP: #1324833
+
+ 15:15 <ubottu> Launchpad bug 1324833 in aptdaemon (Ubuntu Trusty) "crash handler does not include package version" [High,Fix released] https://launchpad.net/bugs/1324833
+
+ 15:15 <bdmurray> uploaded fix for update-manager LP: #1374715 regarding CVE urls
+
+ 15:15 <ubottu> Launchpad bug 1374715 in update-manager (Ubuntu) "CVE links in the updater are invalid" [Medium,Fix released] https://launchpad.net/bugs/1374715
+
+ 15:16 <bdmurray> uploaded trusty SRU for LP: #1354571 so we'll stop uploading crashes with bad core dumps to the error tracker
+
+ 15:16 <ubottu> Launchpad bug 1354571 in apport (Ubuntu Trusty) "apport-retrace ignores warnings from gdb" [Medium,Fix committed] https://launchpad.net/bugs/1354571
+
+ 15:16 <bdmurray> submitted merge proposal fixing sru-report traceback
+
+ 15:16 <bdmurray> ✔ done
+
+ 15:16 <barry> system-image: LP: #1370586; LP: #1376758 (triaged); system-image 2.5-0ubuntu1 (monkeypushing rebuilds, citrain, rtm, testing).  reviewed mvo branch.
+
+ 15:16 <ubottu> Launchpad bug 1370586 in Ubuntu system image "Add synchronous method to determine if there are known updates" [High,Fix released] https://launchpad.net/bugs/1370586
+
+ 15:16 <ubottu> Launchpad bug 1376758 in Ubuntu system image "Ability to specify script to call at end of download rather than rebooting" [High,Triaged] https://launchpad.net/bugs/1376758
+
+ 15:16 <barry> debuntu: tox 1.8.0-1. python-concurrent.futures 2.2.0-1.  tons of pycurl bug triaging, conversion to git (for better debian/ubuntu package management), 7.19.3-1-2, 7.19.5-1, 7.19.5-2, and LP: #1376736 (FFE) with 7.19.5-2ubuntu1 ready to go.  debian bug #763770.  debian sbuild creation (fails due to debian bug #607228)
+
+ 15:16 <ubottu> Launchpad bug 1376736 in pycurl (Ubuntu) "[FFe] update to pycurl 7.19.5" [Undecided,New] https://launchpad.net/bugs/1376736
+
+ 15:16 <ubottu> Debian bug 763770 in src:pycurl "pycurl: Add DEP-8 tests" [Normal,Open] http://bugs.debian.org/763770
+
+ 15:16 <ubottu> Debian bug 607228 in sbuild "no way to run setup command inside a chroot" [Normal,Fixed] http://bugs.debian.org/607228
+
+ 15:16 <barry> other: reviewed branches for cgoldberg and robru.  falcon upstream branch rebase and back/forth to get landed.
+
+ 15:16 <barry> more git-dpm hacking
+
+ 15:16 <barry> -- done --
+
+ 15:17 <mvo> doko is next
+
+ 15:17 <doko> - vacation last week
+
+ 15:17 <doko> - catching up with email
+
+ 15:17 <doko> - toolchain updates
+
+ 15:17 <doko> - python update
+
+ 15:17 <doko> - a bit of MIR processing
+
+ 15:17 <doko> (done)
+
+ 15:17 <mvo> and now bhuey
+
+ 15:18 <mvo> and cjwatson is not here today
+
+ 15:19 <mvo> no bhuey?
+
+ 15:19 <mvo> [TOPIC] AOB
+
+ 15:19 <mvo> anything else? anything interessting happening last week thats worth sharing?
+
+ 15:19 <mvo> I have: asyncio is cool
+
+ 15:21 <mvo> nothing…?
+
+ 15:21 <barry> mvo: continue! :)
+
+ 15:21 <mvo> [TOPIC] kernel crash dumps
+
+ 15:21 <mvo> caribou: do you want to talk a little bit about this?
+
+ 15:22 <barry> mvo: yes, it's *super* cool
+
+ 15:22 <mvo> barry: heh :) everybody want to get back to real work eh ?
+
+ 15:22 <caribou> mvo: maybe a brief update if someone is interested
+
+ 15:22 <barry> caribou: yes!
+
+ 15:23 <caribou> the Debian/Ubuntu way of capturing a kernel crash dump is, once kexec triggers a reboot following a kernel panic
+
+ 15:24 <caribou> to run a SysV initscript called kdump-tools that will do the necessary steps to read from /proc/vmcore
+
+ 15:24 <caribou> use makedumpfile to process the /proc/vmcore output and to some filtering and compression and to produce a file
+
+ 15:25 <caribou> in /var/crash/{timestamp dir} directory. the content of the dmesg output is also captured in that directory
+
+ 15:26 <caribou> the system is then rebooted. On startup Apport will produce a Report file in /var/crash that contains the output of the dmesg file
+
+ 15:26 <caribou> that Apport report used to contain the full kernel crash dump but given the size of those files, it is now left in the timestamped directory
+
+ 15:27 <caribou> the kernel crash file can be later analyzed in conjunction with a kernel namelist which includes the debug symbols
+
+ 15:28 <caribou> I recently introduced in the latest version available in Debian (1.5.7) a functionality to allow the crashdump file to be sent to a remote server via SSH or NFS
+
+ 15:29 <caribou> There is also some preliminary work being done to have the kernel dump capture to be executed at run level S
+
+ 15:29 <barry> caribou: is there sensitive information in the crash dump, and if so, does it get trimmed out before it leaves the local machine?
+
+ 15:30 <caribou> there can be, especially if all userspace memory is capture (the default is not to capture them)
+
+ 15:30 <caribou> but network information, in-transit data & such is bound to be present in the crash dump file
+
+ 15:31 <caribou> which is why many user are very cautious of what is being done with those files. Some even refuse to make them
+
+ 15:31 <caribou> available, so sometime the analysis has to be done remotely on their servers
+
+ 15:32 <caribou> For instance, the file system structure, file names, TCP/IP information & adresses, process list with arguments, all of those are easily available with the default setup
+
+ 15:33 <caribou> It is makedumpfile responsability to filter out unneeded/unwanted memory pages
+
+ 15:34 <caribou> that's about all I have if I want to remain brief
+
+ 15:34 <mvo> cool, interessting stuff, thanks for this!
+
+ 15:34 <caribou> oh, for some reason it seems much more difficult to get a crash dump on a laptop/desktop
+
+ 15:34 <mvo> and next week we will have cjwatson talking about (one of the things) he is working on
+
+ 15:34 <caribou> I have an outstanding bug on that
+
+ 15:35 <mvo> oh, what the issue here?
+
+ 15:35 <barry> caribou: thanks!
+
+ 15:35 <caribou> yw
+
+ 15:36 <mvo> more comments/questions? if not it seems we are close to EOM :)
+
+ 15:37 <mvo> #endmeething
+
+ 15:37 <mvo> thanks everyone!
+
+ 15:37 <mvo> #endmeeting even
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

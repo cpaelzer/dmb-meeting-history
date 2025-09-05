@@ -1,0 +1,292 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand_ at 16:31:52 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-05-13-16.31.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 16:32:25)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/appdev-s-appisolation-signals-ipc-ptrace   (jjohansen, 16:49:47)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/tomboy.html   (jdstrand, 16:52:59)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/xmp.html   (jdstrand, 16:53:03)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pwlib.html   (jdstrand, 16:53:05)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gnome-shell.html   (jdstrand, 16:53:08)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/inetutils.html   (jdstrand, 16:53:11)
+
+
+
+Meeting ended at 20:07:45 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (42)
+ * sarnold (12)
+ * mdeslaur (10)
+ * chrisccoulson (9)
+ * tyhicks (9)
+ * pitti (8)
+ * jjohansen (8)
+ * sbeattie (7)
+ * meetingology (5)
+ * stgraber (2)
+ * ubottu (2)
+ * jdstrand_ (1)
+ * soren (1)
+
+
+
+== Full Log ==
+
+
+ 16:31:52 <jdstrand_> #startmeeting
+
+ 16:31:52 <meetingology> Meeting started Mon May 13 16:31:52 2013 UTC.  The chair is jdstrand_. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:31:52 <meetingology> 
+
+ 16:31:52 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:32:24 <jdstrand> The meeting agenda can be found at:
+
+ 16:32:25 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:32:29 <jdstrand> [TOPIC] Announcements
+
+ 16:32:37 <jdstrand> Francois Trahan (francois-trahan) provided diffs for precise-raring for fwlogwatch (LP: #1178281)
+
+ 16:32:39 <ubottu> Launchpad bug 1178281 in fwlogwatch (Ubuntu) "bad timestamp parsing" [Undecided,Fix released] https://launchpad.net/bugs/1178281
+
+ 16:32:43 <jdstrand> Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)
+
+ 16:32:59 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:33:02 <jdstrand> I'll go first
+
+ 16:33:44 <jdstrand> I'm on triage this week
+
+ 16:33:53 <jdstrand> I'll be participating in vUDS
+
+ 16:34:08 <jdstrand> I've still got some sprint followups to do
+
+ 16:34:24 <jdstrand> I've got a keystone update I'm going to try to push out
+
+ 16:34:41 <jdstrand> and I need to patch pilot (deferred from last week)
+
+ 16:35:01 <jdstrand> beyond that, I've got a short week this week (off friday)
+
+ 16:35:18 <jdstrand> I'm also off next monday, so if womeone could lead the meeting, that would be great :)
+
+ 16:35:26 <jdstrand> mdeslaur: you're up
+
+ 16:35:35 <mdeslaur> jdstrand: I'll lead the meeting next week
+
+ 16:35:39 <jdstrand> mdeslaur: thanks
+
+ 16:35:42 <mdeslaur> jdstrand: I'm on community this week
+
+ 16:35:48 <mdeslaur> whoops :)
+
+ 16:35:54 <mdeslaur> I'm on community this week
+
+ 16:36:03 <mdeslaur> I'm currently working on tiff updates
+
+ 16:36:43 <mdeslaur> and I have some code to get native apparmor and MAC support into upstart that I want to submit upstream
+
+ 16:36:51 <jdstrand> \o/
+
+ 16:36:54 <jdstrand> nice :)
+
+ 16:37:12 <mdeslaur> yes, it'll be awesome for confining apps in user mode
+
+ 16:37:30 <mdeslaur> and after that, I'll continue going down the CVE list
+
+ 16:37:44 <mdeslaur> and, of course, I will be attending uds
+
+ 16:37:52 <mdeslaur> that's it from me, sbeattie, you're up
+
+ 16:38:30 <sbeattie> I'm again focused on apparmor related items this week, specifically focused on the security-s-appisolation-sdk blueprint
+
+ 16:38:50 <sbeattie> I'm currently working on getting easyprof to support json input
+
+ 16:39:04 <sbeattie> I'll also be attending uds this week
+
+ 16:39:14 <sbeattie> that's pretty much it for me... tyhicks?
+
+ 16:39:38 <tyhicks> I'm working on https://blueprints.launchpad.net/ubuntu/+spec/security-s-appisolation-dbus-performance
+
+ 16:39:55 <tyhicks> I gathered performance numbers late friday and over the weekend and I'm analyzing them now
+
+ 16:40:33 <tyhicks> I need to circle back around to the dbus policy language thread on the apparmor list and see if we can get a consensus on how the dbus rules should be structured and then make those changes
+
+ 16:41:22 <sbeattie> ah yeah, I need to focus some more time there as well.
+
+ 16:41:23 <tyhicks> also, I'd like to start fixing one of the known performance problems in how we're doing the AA access checks in dbus
+
+ 16:41:35 <tyhicks> (and then rerun the tests)
+
+ 16:41:50 <tyhicks> I'll be attending UDS as well
+
+ 16:41:51 <tyhicks> that's it for me
+
+ 16:42:28 <tyhicks> sarnold: I think you're up and then we can come back to jj
+
+ 16:43:31 <sarnold> I'm in the happy place this week; I'll be spenidng most of my time reviewing jj's patches, but I'll probably dust off my auto* and m4 knowledge and fake python 3 porting knowledge and review someof the patches sent last week .. or two weeks back ..
+
+ 16:44:04 * tyhicks still needs to send a few prereq patches for dbus support in apparmor
+
+ 16:44:05 <sarnold> I'm also going to look at mdeslaur's upstart patches, though earlier versions looked pretty well baked, it feels like that ought to go quickly
+
+ 16:44:12 <jdstrand> actually, we missed chrisccoulson
+
+ 16:44:23 <sarnold> and I'll be doing UDS :)
+
+ 16:44:27 <jdstrand> ah, sorry, sarnold is still going (sorry)
+
+ 16:44:34 <sarnold> chrisccoulson: you're up, hand the baton to jj when he shows up :)
+
+ 16:45:30 <chrisccoulson> hi :)
+
+ 16:46:04 <chrisccoulson> so, i spent some time last week getting more familiar with chrome, following the discussions from the sprint
+
+ 16:46:24 <chrisccoulson> i've put that to one side now to handle the regular firefox  and thunderbird updates
+
+ 16:46:29 <chrisccoulson> which are nearly done
+
+ 16:46:36 <sarnold> (woot)
+
+ 16:47:10 <chrisccoulson> although, been hitting a hang frequently in raring. it turns out this is a glib bug, and i think explains some of the recent bug reports i've been getting (bug 1179554)
+
+ 16:47:11 <ubottu> bug 1179554 in glib2.0 (Ubuntu) "Firefox hang on start because ibus calls g_object_new inside a class_init function" [High,Triaged] https://launchpad.net/bugs/1179554
+
+ 16:48:01 <chrisccoulson> also, the arm builds failed because some jit tests timed out. i reproduced the same failures on my pandaboard at the weekend, and verified that lengthening the timeout fixes it
+
+ 16:48:16 <chrisccoulson> also working on an embargoed update
+
+ 16:48:31 <chrisccoulson> i think that's me done
+
+ 16:48:44 <chrisccoulson> jjohansen, i think it's your turn now :)
+
+ 16:48:52 <jjohansen> hey
+
+ 16:49:18 <jjohansen> so I will be working on my apparmor bp work items
+
+ 16:49:47 <jjohansen> https://blueprints.launchpad.net/ubuntu/+spec/appdev-s-appisolation-signals-ipc-ptrace
+
+ 16:50:22 <jjohansen> I have some prep to do for tomorrows apparmor IRC meeting
+
+ 16:51:25 <jjohansen> and I need to finish finding/fixing a bug with the default profile, that made its way into the most recent devel kernels
+
+ 16:52:11 <jjohansen> I think that is it for /me
+
+ 16:52:27 <jjohansen> jdstrand: back to you
+
+ 16:52:47 <jdstrand> [TOPIC] Highlighted packages
+
+ 16:52:50 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:52:54 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:52:59 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/tomboy.html
+
+ 16:53:03 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/xmp.html
+
+ 16:53:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/pwlib.html
+
+ 16:53:08 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/gnome-shell.html
+
+ 16:53:11 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/inetutils.html
+
+ 16:53:20 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 16:53:58 <jdstrand> I had one for sbeattie: were you able to finish your easyprof templates?
+
+ 16:54:19 <sbeattie> jdstrand: not quite, still finishing those up as well
+
+ 16:54:41 <jdstrand> ok
+
+ 16:54:49 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 16:55:45 <sarnold> I'm curious about our proposed favored ssl/tls bindings in our SDK.. do we have an API there that's better than OpenSSL's for application authors to use?
+
+ 16:56:19 <sarnold> do we get some nice ones for free with Qt/QML? or are they just thin wrappers around the painful API? :)
+
+ 16:56:33 <jdstrand> sarnold: Qt has some, yes
+
+ 16:56:54 <jdstrand> QML is just presentation, so it doesn't have anything
+
+ 16:57:23 <jdstrand> well, it is more than just presentation
+
+ 16:58:32 <jdstrand> but what I meant is that to get to the Qt SSL bits you need to write C++, but we don't expect many apps to be written in that (but it is there if they need it)
+
+ 16:58:53 <sarnold> hrm.
+
+ 16:59:08 <jdstrand> the webkit view should just handle that all transparently
+
+ 16:59:36 <jdstrand> sarnold: it might be worth asking the sdk team about. they are quite responsive
+
+ 16:59:49 <sarnold> for webby things, perhaps, but apps will likely have structured data that they want private and authenticated...
+
+ 16:59:58 <sarnold> jdstrand: aha, got a favored contact?
+
+ 17:00:17 <jdstrand> sarnold: I'd go to bzoltan
+
+ 17:00:21 <sarnold> jdstrand: thanks :)
+
+ 17:00:24 <jdstrand> np
+
+ 17:01:04 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold, ChrisCoulson: thanks!
+
+ 17:01:06 <jdstrand> #endmeeting
+
+ 17:01:10 <sarnold> thanks jdstrand :)
+
+ 17:01:11 <jjohansen> thanks jdstrand
+
+ 17:01:12 <sbeattie> jdstrand: thanks!
+
+ 19:56:55 <pitti> hello
+
+ 20:01:01 <pitti> oh, so mdz and cjwatson are out
+
+ 20:01:19 <soren> o/
+
+ 20:01:58 <pitti> kees, stgraber: ?
+
+ 20:04:00 * stgraber waves
+
+ 20:06:52 <pitti> hm, so cjwatson was chair originally, and seems kees is out, too
+
+ 20:06:59 <pitti> so I guess I'm next in line
+
+ 20:07:02 <meetingology> pitti: Error: Can't start another meeting, one is in progress.
+
+ 20:07:07 <pitti> oh
+
+ 20:07:24 <pitti> hm, who started this?
+
+ 20:07:35 <pitti> meetingology: help
+
+ 20:07:35 <meetingology> pitti: (help [<plugin>] [<command>]) -- This command gives a useful description of what <command> does. <plugin> is only necessary if the command is in more than one plugin.
+
+ 20:07:45 <stgraber> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

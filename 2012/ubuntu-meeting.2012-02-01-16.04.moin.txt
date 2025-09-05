@@ -1,0 +1,560 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:04:20 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-01-16.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' http://bazaar.launchpad.net/~ubuntu-installer/wubi/trunk/view/245/data/isolist.ini   (bdmurray, 16:25:29)
+
+ *Alpha-2
+''ACTION:'' cjwatson to release-note the ia32-libs o->p upgrade issue  (slangasek, 16:42:31)
+
+ *Bugs
+
+ *AOB
+''LINK:'' http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20120201-precise.html   (doko_, 16:54:27)
+
+
+
+Meeting ended at 16:54:28 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * cjwatson to release-note the ia32-libs o->p upgrade issue
+
+
+
+== Action items, by person ==
+
+ * cjwatson
+ ** cjwatson to release-note the ia32-libs o->p upgrade issue
+
+
+
+== People present (lines said) ==
+
+ * slangasek (57)
+ * cjwatson (52)
+ * ev (34)
+ * stgraber (26)
+ * bdmurray (26)
+ * ubottu (22)
+ * doko_ (9)
+ * jodh (8)
+ * barry (7)
+ * meetingology (4)
+ * jdstrand (1)
+
+
+
+== Full Log ==
+
+
+ 16:04:20 <slangasek> #startmeeting
+
+ 16:04:20 <meetingology> Meeting started Wed Feb  1 16:04:20 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:04:20 <meetingology> 
+
+ 16:04:20 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:43 <slangasek> [TOPIC] lightning round
+
+ 16:04:49 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jodh ev bdmurray slangasek)
+
+ 16:04:52 <slangasek> cjwatson ev doko jodh slangasek stgraber barry bdmurray
+
+ 16:05:17 <cjwatson> Mostly this week I have been working on upgrade bugs of one kind or another (bug 917173 and bug 922485 in the apt resolver, which I blogged about; bug 924079, which I posted to ubuntu-devel about today).  More of this probably to come; we are not short of upgrade bugs.
+
+ 16:05:22 <cjwatson> Fixed mirror handling for ports installs (bug 919356).
+
+ 16:05:22 <ubottu> Launchpad bug 917173 in apt (Ubuntu Oneiric) "lucid -> precise upgrade failed: Resolver failed to calculate the upgrade - dpkg-dev held back" [Medium,Triaged] https://launchpad.net/bugs/917173
+
+ 16:05:23 <ubottu> Launchpad bug 922485 in apt (Ubuntu Oneiric) "Lucid Desktop i386 failed to calculate the upgrade to Precise" [Medium,Triaged] https://launchpad.net/bugs/922485
+
+ 16:05:24 <cjwatson> Patch piloting on Friday morning.  Dealt with parted/dmraid/multipath-tools fallout from some of the branches I landed (bug 922646).
+
+ 16:05:24 <ubottu> Launchpad bug 924079 in apt (Ubuntu) "do-release-upgrade fails to upgrade from Oneiric to Precise" [High,Triaged] https://launchpad.net/bugs/924079
+
+ 16:05:26 <ubottu> Launchpad bug 919356 in choose-mirror (Ubuntu) "Default hostname needed for PowerPC" [Medium,Fix released] https://launchpad.net/bugs/919356
+
+ 16:05:27 <ubottu> Launchpad bug 922646 in parted (Ubuntu Precise) "precise alternate LVM failed to install: no root file system" [High,Fix released] https://launchpad.net/bugs/922646
+
+ 16:05:28 <cjwatson> Fixed netcfg and ubiquity fallout from resolvconf.
+
+ 16:05:30 <cjwatson> Scaled down the ubiquity webcam page (bug 869239); took some fiddling to make the test suite handle this properly.
+
+ 16:05:31 <ubottu> Launchpad bug 869239 in ubiquity (Ubuntu Precise) "webcam screen should be resized for netbooks (Eee PC, 10")" [High,Fix released] https://launchpad.net/bugs/869239
+
+ 16:05:34 <cjwatson> Fixed ubiquity fallout from dbus-python 1.0.0 (bug 922988).
+
+ 16:05:35 <ubottu> Launchpad bug 922988 in ubiquity (Ubuntu Precise) "ubiquity crashed with UnicodeDecodeError in decode_ssid(): 'utf8' codec can't decode byte 0xe2 in position 0: unexpected end of data" [Medium,Fix released] https://launchpad.net/bugs/922988
+
+ 16:05:36 <cjwatson> Fixed casper to set up ubuntustudio groups properly, then fixed fallout from that for everything else when preseeded (oops).
+
+ 16:05:39 <cjwatson> Fixed germinate Provides mishandling that broke lucid point release candidate DVDs.  Some other point release preparation.
+
+ 16:05:43 <cjwatson> Preliminary patch for bug 861048 in grub2, but having some build problems.  Shelved until after Alpha 2.
+
+ 16:05:44 <ubottu> Launchpad bug 861048 in grub2 (Ubuntu Precise) "have really quick '_' on boot before first purple screen" [Medium,In progress] https://launchpad.net/bugs/861048
+
+ 16:05:46 <cjwatson> ..
+
+ 16:06:04 <ev> - Released a new version of whoopsie-daisy (the crash reporting daemon) into
+
+ 16:06:04 <ev> the archive. Still waiting on approval for MIR bug 913694.
+
+ 16:06:05 <ev> - Added retracing support to whoopsie-dasiy. It's currently partially broken
+
+ 16:06:05 <ev> as the stack traces change slightly with each new retrace, so a new
+
+ 16:06:05 <ev> stacktrace and stacktrace hash gets written to the columnfamily every time.
+
+ 16:06:07 <ubottu> Launchpad bug 913694 in whoopsie-daisy (Ubuntu) "[MIR] whoopsie-daisy" [Undecided,New] https://launchpad.net/bugs/913694
+
+ 16:06:08 <barry> ouch, sorry about 922988
+
+ 16:06:12 <ev> - Added a small purge tool for flushing the message queue.
+
+ 16:06:12 <ev> - Created the control center preferences page after spending an indordinate
+
+ 16:06:12 <ev> amount of time digesting the gnome-control-center API that they helpfully
+
+ 16:06:13 <ev> made private, forcing us to patch it back in (without documentation).
+
+ 16:06:13 <ev> - Short week; vacation on Monday.
+
+ 16:06:22 <ev> - Added initial policy kit permission support in the preferences dialog.
+
+ 16:06:22 <ev> - Work on the DBus daemon (using GDBus' code generation) for the preferences
+
+ 16:06:22 <ev> dialog backend.
+
+ 16:06:23 <ev> - More work on the DBus daemon. Investigating how to best enable/disable the
+
+ 16:06:23 <ev> upstart job.
+
+ 16:06:26 <ev> (done)
+
+ 16:06:27 <cjwatson> barry: couldn't quite decide if that was a dbus-python bug or not ... feel free to think about it :)
+
+ 16:06:34 <barry> will do!
+
+ 16:06:48 <cjwatson> the fix was str() -> chr(int())
+
+ 16:07:04 * doko_ moves to the end of the list
+
+ 16:07:12 <doko_> stgraber, please go on
+
+ 16:07:34 <jodh> ?
+
+ 16:07:48 <jodh> Working on bug 922754. I've identified the cause and currently busy
+
+ 16:07:49 <jodh> beating the tests with a flaming mallet.
+
+ 16:07:50 <ubottu> Launchpad bug 922754 in upstart (Ubuntu) "booting without --no-log causes init and plymouth-upstart-bridge to spin at 100%" [High,Triaged] https://launchpad.net/bugs/922754
+
+ 16:09:44 <jodh> ♮
+
+ 16:09:44 <jodh> :)
+
+ 16:09:49 <stgraber> :)
+
+ 16:10:02 <stgraber> - Testing tracker
+
+ 16:10:02 <stgraber> - Updated some scripts in ubuntu-archive-tools
+
+ 16:10:02 <stgraber> - Help with Alpha 2 preparation
+
+ 16:10:02 <stgraber> - Networking
+
+ 16:10:02 <stgraber> - Got resolvconf installed by default (ubuntu-minimal)
+
+ 16:10:04 <stgraber> - Fixed issues found after switching to resolvconf (LTSP, LXC, live-build, arkose ...)
+
+ 16:10:07 <stgraber> - Most of the SRUs are now in -proposed or -updates (ifupdown, ifenslave-2.6, vlan, bridge-utils)
+
+ 16:10:10 <stgraber> - LTSP
+
+ 16:10:13 <stgraber> - Merged ldm for the first time in a long long time, expecting to do a complete sync from Debian next week
+
+ 16:10:16 <stgraber> - Fixed installability from alternate i386 media (where linux-image-generic doesn't exist)
+
+ 16:10:19 <stgraber> - Pushed set of fixes to current LTSP trunk in the hope of making it work properly and be able to upload it this week
+
+ 16:10:22 <stgraber> - ARB
+
+ 16:10:24 <stgraber> - Spent some time monitoring the queue and nagging the MyApps developers about bugs
+
+ 16:10:27 <stgraber> - Friendly Recovery
+
+ 16:10:30 <stgraber> - Uploaded new upstart job starting udev, setvtrgb, dealing better with missing jobs, ...
+
+ 16:10:33 <stgraber> - Started working on some rework of the menu
+
+ 16:10:34 <barry> jodh: emacs irc ftw
+
+ 16:10:35 <stgraber> - Containers
+
+ 16:10:38 <stgraber> - Submitted merge proposal for container detection and support in our upstrart jobs
+
+ 16:10:41 <stgraber> - Did some more test to have an armhf container running on x86. Just two uploads (sysvinit, mountall) away to having it work (post-alpha2)
+
+ 16:10:45 <stgraber> - Other
+
+ 16:10:47 <stgraber> - Merged bcfg2 (spare time) and started fighting with gamin failing in interesting ways on Precise (because of new glib)
+
+ 16:10:50 <stgraber> - Did some cleanup of duplicate upload ACLs and trying to make ~ubuntu-dev consistent (having people with PPU be direct members and everyone else indirect members)
+
+ 16:10:53 <stgraber> - TODO
+
+ 16:10:56 <stgraber> - Feature Freeze is pretty close, so try to push most of the new stuff before it :)
+
+ 16:10:59 <stgraber> (done)
+
+ 16:11:11 <barry> interviews. pyqt4-dbus review and upload.  dbus-python 1.0.0 sync.  looked at bug 922721 (not an outcome of the python 3 work).  looked at aptdaemon for py3.  wadllib for python 3.  testing storm package for oneiric.  django/oops consulting.  DM application work.  updated udd docs in the upg.  giving a class on udd later today.  done.
+
+ 16:11:12 <ubottu> Launchpad bug 922721 in pykde4 (Ubuntu) "python-qt4 applications crash since 4.9-2ubuntu2" [Critical,Fix released] https://launchpad.net/bugs/922721
+
+ 16:11:35 <cjwatson> oh, sorry, I haven't progressed on oauth for py3 :(
+
+ 16:11:48 <barry> cjwatson: me neither :(
+
+ 16:11:56 <bdmurray> oliday
+
+ 16:11:56 <bdmurray> triage of http://launchpad.net/bugs/922884 - not bugpatternable
+
+ 16:11:56 <bdmurray> triage of http://launchpad.net/bugs/922042 - wrote a bug pattern
+
+ 16:11:56 <bdmurray> triage of iso-testing bug reports
+
+ 16:11:58 <ubottu> Ubuntu bug 922640 in ubiquity (Ubuntu) "duplicate for #922884 Precise Pangolin Installer crashed with: Error: `/etc/resolv.conf` and `/target/etc/resolv.conf` are the same file" [High,Fix released]
+
+ 16:12:00 <ubottu> Ubuntu bug 922042 in DOLFIN "matrix-free PETScKrylovMatrix works in 1.0, but is broken in fenics-dev" [Undecided,Confirmed]
+
+ 16:12:07 <bdmurray> merge bug patterns from Vadim Rutkovsky
+
+ 16:12:07 <bdmurray> modifications to prebuild.sh for update-manager
+
+ 16:12:07 <bdmurray> upload of update-manager with new apport hook
+
+ 16:12:20 <bdmurray> investigation into wubi bug 922330 (wubi from 11.10 installing 12.04)
+
+ 16:12:20 <bdmurray> push of recent package bug tasks to qa.ubuntu.com (http://bit.ly/wC8FJI)
+
+ 16:12:20 <bdmurray> patch pilot
+
+ 16:12:21 <ubottu> Launchpad bug 922330 in Wubi "Wubi.exe from 11.10 disc installs 12.04 snapshot." [High,Triaged] https://launchpad.net/bugs/922330
+
+ 16:12:27 <bdmurray> ␗
+
+ 16:13:04 <jodh> barry: erc?
+
+ 16:13:14 <barry> jodh: yep
+
+ 16:13:42 <bdmurray> end of transmission block - I think
+
+ 16:13:49 <jodh> barry: thanks. I'll give it a try.
+
+ 16:14:23 <slangasek> jodh: so... what *is* the cause for bug #922754? :)
+
+ 16:14:24 <ubottu> Launchpad bug 922754 in upstart (Ubuntu) "booting without --no-log causes init and plymouth-upstart-bridge to spin at 100%" [High,Triaged] https://launchpad.net/bugs/922754
+
+ 16:14:25 <barry> jodh: try it with bip.  ping me if you want some config stuff
+
+ 16:14:27 <slangasek> hmph, I got skipped
+
+ 16:14:45 <slangasek> * isolated a reproducer for upstart bug #922754
+
+ 16:14:45 <slangasek> * uploaded mvo's apt merge from experimental, fixing various upgrade+multiarch bugs
+
+ 16:14:48 <slangasek> * worked on getting resolvconf into shape (bug #922491)
+
+ 16:14:49 <ubottu> Launchpad bug 922491 in resolvconf (Ubuntu Precise) "lucid to precise server upgrade: resolvconf failed to upgrade: cp cannot create regular file `/run/resolvconf/resolv.conf': No such file or directory" [High,Fix released] https://launchpad.net/bugs/922491
+
+ 16:14:50 <slangasek> * looking into whether we can support cross-grades from i386 to amd64 for 12.04
+
+ 16:14:53 <slangasek> * in charge of crank-turning for alpha-2 this week
+
+ 16:14:56 <slangasek> * interviews
+
+ 16:14:58 <slangasek> ..
+
+ 16:15:10 <cjwatson> re bug 922330, it's time-machine territory now, but I wonder if we should make wubi put its version in HTTP headers so that we at least theoretically might have some way to fix this kind of thing in future ...
+
+ 16:15:11 <ubottu> Launchpad bug 922330 in Wubi "Wubi.exe from 11.10 disc installs 12.04 snapshot." [High,Triaged] https://launchpad.net/bugs/922330
+
+ 16:15:13 <doko_> - more gcc-4.7 fixes and packaging updates
+
+ 16:15:13 <doko_> - eglibc updates, the dlopen crash in gdk-pixbug-loaders on amd64 is fixed
+
+ 16:15:13 <doko_> - really export the sunrpc symbols in libc6
+
+ 16:15:13 <doko_> - prepared and started the test precise test rebuild
+
+ 16:15:13 <doko_> - catch up on MIR's
+
+ 16:16:26 <jodh> slangasek: weeeeell. took a lot of work to find it. we were closing the fds correctly, *but* the fd number persisted in an nih watch such that when nih looked for fd activity, it saw the (now invalid) fd and returned EBADF. repeatedly :)
+
+ 16:16:41 <bdmurray> cjwatson: I dont' know how people find wubi but putting a new wubi.exe at http://people.canonical.com/~evand/wubi/oneiric/ might help
+
+ 16:16:53 <cjwatson> bdmurray: the bug reports that it came off the CD image
+
+ 16:17:13 <slangasek> jodh: doh... :)
+
+ 16:17:26 <bdmurray> cjwatson: okay, yes but I tested it by just downloading 245.exe
+
+ 16:17:29 <cjwatson> although I agree that a build of r247 there wouldn't go amiss - ev?  I'm surprised we didn't have one there actually
+
+ 16:18:16 <ev> I think we didn't put a newer build on the CD because it was determined that they wouldn't be using the download a compressed disk image path when running off the CD
+
+ 16:18:22 <ev> as this was an 11th hour release thing
+
+ 16:18:24 <ev> if memory serves
+
+ 16:18:42 <ev> so the bug, as I've just commented in the report, is that it's going down the download path at all
+
+ 16:18:47 <cjwatson> ev: ok, but I wonder how we were expecting them to get it off the website if you didn't publish a build
+
+ 16:19:17 <cjwatson> it was all a rush that morning
+
+ 16:20:06 <ev> I'm confused. Why would we be expecting them to get it off the website?
+
+ 16:21:22 <bdmurray> Isn't that where http://www.ubuntu.com/download/ubuntu/windows-installer takes you?
+
+ 16:21:59 <cjwatson> well, it sends you to a wubi.exe from a mirror of releases.ubuntu.com I think, but the executable does need to come from somewhere
+
+ 16:22:21 <cjwatson> and the source for that is ev's people.c.c directory
+
+ 16:23:51 <cjwatson> so, yes, I think anyone going through the website path is broken right now
+
+ 16:24:14 <ev> for 12.04
+
+ 16:24:23 <ev> not for 11.10, unless I'm missing some part of this conversation
+
+ 16:24:26 <bdmurray> no, for 11.10
+
+ 16:24:30 <cjwatson> what he said
+
+ 16:24:43 <slangasek> I've lost the thread here; that bug is about a wubi copied off of a CD, I thought?
+
+ 16:25:15 <cjwatson> the problem is that 11.10's wubi.exe uses a URL for the disk image which now refers to a daily build of precise
+
+ 16:25:29 <bdmurray> http://bazaar.launchpad.net/~ubuntu-installer/wubi/trunk/view/245/data/isolist.ini
+
+ 16:25:52 <cjwatson> we cannot fix this for wubi copied off CDs, but the same problem currently goes for people downloading it from the redirect on www.ubuntu.com (which I think is for 11.10)
+
+ 16:25:53 <ev> in that version
+
+ 16:25:54 <bdmurray> and the wubi.exe on the cd is the same as the one you download at ubuntu.com...windows-installer
+
+ 16:26:03 <ev> but I could've sworn that we published a later version on the website...
+
+ 16:26:25 <cjwatson> ev: so could I, but I can't see how we would have done without there being a build in your people.c.c directory
+
+ 16:26:42 <bdmurray> I checked the md5sum of wubi.exe at http://releases.ubuntu.com/oneiric/ and it was rev 245
+
+ 16:27:08 <cjwatson> yes, I just did as well
+
+ 16:27:14 <cjwatson> matches wubi-r245-signed.exe
+
+ 16:27:35 <cjwatson> so I think we need a new build, get it signed, get it tested, push to releases.u.c/oneiric/
+
+ 16:27:41 <ev> yeah
+
+ 16:28:42 <slangasek> ev: can you take care of that?
+
+ 16:28:49 <ev> yup, on it
+
+ 16:28:51 <slangasek> thanks
+
+ 16:29:05 <slangasek> there's another wubi bug that turned up in milestone testing which I suspect comes down to the same thing
+
+ 16:29:22 <slangasek> bug #924752
+
+ 16:29:23 <ubottu> Launchpad bug 924752 in Wubi "wubi r255 - Ubuntu Desktop failed to install from disk image - wrong download url" [Critical,New] https://launchpad.net/bugs/924752
+
+ 16:29:43 <cjwatson> no, not quite, I asked ev about that
+
+ 16:29:44 <ev> yup, I'm committing a fix for that in about 25 seconds
+
+ 16:29:47 <cjwatson> heh
+
+ 16:29:50 <slangasek> ah, ok :)
+
+ 16:30:07 <cjwatson> actually does that mean r247 wouldn't work for oneiric either?
+
+ 16:30:07 <slangasek> segging into the next topic...
+
+ 16:30:19 <cjwatson> maybe we do need the same fix there, since it was a failure to fall back to diskimage2
+
+ 16:31:54 <slangasek> [TOPIC] Alpha-2
+
+ 16:32:32 <slangasek> since I'm minding the crank for this one, if you have any bugs that you think are milestone critical, please let me know :)
+
+ 16:32:56 <slangasek> there was a casper upload for a preseed issue (thanks, cjwatson)
+
+ 16:33:08 <slangasek> and it would be good to have a fixed wubi in - sounds like that's on track
+
+ 16:33:33 <slangasek> any other landmines in the alpha prep?
+
+ 16:33:59 <ev> new wubi is up
+
+ 16:34:23 <slangasek> yay
+
+ 16:34:43 <cjwatson> slangasek: wonder if we should release-note something about amd64 upgrades (cf. -devel)
+
+ 16:34:48 <slangasek> cjwatson, ev: did Israel get sorted?
+
+ 16:34:51 <cjwatson> no
+
+ 16:34:59 <cjwatson> I -> beta-1'ed that
+
+ 16:35:01 <slangasek> ok
+
+ 16:35:10 <slangasek> do you think that warrants a release note too?
+
+ 16:35:21 <cjwatson> probably, to stave off pitchforkage
+
+ 16:35:46 <cjwatson> ev: (wubi branch doesn't seem up to date though)
+
+ 16:36:18 <ev> fixed
+
+ 16:36:20 <ev> apols
+
+ 16:36:49 <slangasek> cjwatson: sorry, was that -devel or #-devel for the context?
+
+ 16:36:56 <slangasek> on amd64 upgrades
+
+ 16:37:32 <cjwatson> ev: aha, yes
+
+ 16:37:40 <cjwatson> slangasek: both :-)  the list has more exposition though
+
+ 16:38:01 <cjwatson> but briefly any oneiric amd64 system with ia32-libs needs some work to be upgradeable cleanly to precise
+
+ 16:38:09 <cjwatson> at least afaics
+
+ 16:38:13 <slangasek> cjwatson: oh right, the date changed so I'm looking in the wrong archive yay
+
+ 16:38:54 <cjwatson> I think it is fixable but not before tomorrow
+
+ 16:38:55 <slangasek> yes, I agree that sounds like it should be release noted
+
+ 16:39:05 <slangasek> what's our recommendation there?
+
+ 16:39:35 <slangasek> for users trying to upgrade, I mean
+
+ 16:39:57 <cjwatson> install apt first, if possible
+
+ 16:40:26 <cjwatson> (from precise)
+
+ 16:40:32 <cjwatson> that strategy worked for RAOF's system
+
+ 16:40:33 <slangasek> which is stepping pretty far outside of the update-manager workflow.  Do we want to give them a pointer in the release notes to the launchpad page for a direct download from the librarian?
+
+ 16:40:52 <slangasek> or do we assume "if you're running 64-bit and upgrading to an alpha, you can figure it out" :)
+
+ 16:41:02 <cjwatson> well, the list thread was about fixing the update-manager workflow :)  I don't know that it has to be polished for a milestone
+
+ 16:41:21 <cjwatson> it wouldn't just be a single download since you need new libapt-pkg as well
+
+ 16:41:35 <slangasek> yep
+
+ 16:41:54 <cjwatson> we could publish a python-apt program that did it ... but well, not sure it's worth it
+
+ 16:41:58 <slangasek> cjwatson: can you take the action to get this release-noted in some fashion?
+
+ 16:42:05 <cjwatson> yes
+
+ 16:42:11 <slangasek> thanks
+
+ 16:42:31 <slangasek> [ACTION] cjwatson to release-note the ia32-libs o->p upgrade issue
+
+ 16:42:31 * meetingology cjwatson to release-note the ia32-libs o->p upgrade issue
+
+ 16:42:40 <slangasek> anything else we're worried about for a2?
+
+ 16:42:52 <slangasek> if not, we can look a little farther ahead...
+
+ 16:43:01 <slangasek> [TOPIC] Bugs
+
+ 16:43:40 <bdmurray> well we talked about bug 922330 already
+
+ 16:43:42 <ubottu> Launchpad bug 922330 in Wubi "Wubi.exe from 11.10 disc installs 12.04 snapshot." [High,Triaged] https://launchpad.net/bugs/922330
+
+ 16:43:45 * slangasek nods
+
+ 16:43:48 <ev> could someone lean on the security team to look at bug 913694 for me?
+
+ 16:43:49 <ubottu> Launchpad bug 913694 in whoopsie-daisy (Ubuntu) "[MIR] whoopsie-daisy" [Undecided,New] https://launchpad.net/bugs/913694
+
+ 16:44:02 <jdstrand> ev: it is on my list for this week
+
+ 16:44:06 <ev> jdstrand: yay!
+
+ 16:44:10 <ev> cheers
+
+ 16:44:55 <bdmurray> I ran acrss bug 550717 recently
+
+ 16:44:56 <ubottu> Launchpad bug 550717 in ubiquity (Ubuntu) "[Lucid] two accessiblity related bug with Ubiquity, with easy to fix" [High,Triaged] https://launchpad.net/bugs/550717
+
+ 16:45:50 <slangasek> doko_: btw, where are we with java-access-bridge switching off of at-spi?  the task is assigned to TheMuso and targeted to a2, but it looks like desktop team thinks the remaining changes needed are in openjdk-6?
+
+ 16:45:55 * cjwatson giggles manically at "accessibility" and "easy" in the same sentence
+
+ 16:46:24 <slangasek> as easy as 1, 2, shift+ctrl+meta+backtick
+
+ 16:46:38 <doko_> slangasek, not yet there, have committed it, but it crashes, need to look at it
+
+ 16:46:45 <slangasek> doko_: alrighty
+
+ 16:47:16 <cjwatson> I think half of that bug is probably fixed and the other half of the suggested change isn't something we'd be prepared to do
+
+ 16:47:21 <cjwatson> I'll look into it and leave a comment
+
+ 16:47:49 <bdmurray> okay thanks
+
+ 16:48:29 <bdmurray> Then bug 852181 isn't about one of our packages, I think, but is easily confused for one
+
+ 16:48:30 <ubottu> Launchpad bug 852181 in indicator-session (Ubuntu Oneiric) "Wrong indication again about updates" [High,Confirmed] https://launchpad.net/bugs/852181
+
+ 16:48:51 <bdmurray> Its about apt watcher in indicator session
+
+ 16:50:38 <slangasek> somewhere between update-notifier and indicator-session, I guess
+
+ 16:52:43 <slangasek> bdmurray: given that I don't think any of us have the spare bandwidth to dive into indicator-session to fix it, not sure what else we can do there?
+
+ 16:53:03 <bdmurray> I'll see if there are more duplicates about that bug hiding in update-notifier or update-manager to see if there are lots
+
+ 16:53:17 <slangasek> makes sense
+
+ 16:53:38 <bdmurray> Okay, that's that then
+
+ 16:53:39 * slangasek adds a tag to the bug too ;)
+
+ 16:53:45 <slangasek> bdmurray: ok, thanks!
+
+ 16:53:47 <slangasek> [TOPIC] AOB
+
+ 16:53:54 <slangasek> anything else?
+
+ 16:54:27 <doko_> http://people.ubuntuwire.org/~wgrant/rebuild-ftbfs-test/test-rebuild-20120201-precise.html
+
+ 16:54:28 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

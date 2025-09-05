@@ -1,0 +1,465 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 02 Jun at 15:03 &mdash; 15:27 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-06-02-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+
+=== Sprint prep ===
+The discussion about "Sprint prep" started at 15:17.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:19.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (45)
+ * slangasek (31)
+ * sil2100 (23)
+ * caribou (20)
+ * cyphermox (18)
+ * tdaitx (18)
+ * bdmurray (17)
+ * chiluk (12)
+ * robru (10)
+ * ubottu (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:03 <slangasek> #startmeeting
+
+ 15:03 <meetingology> Meeting started Thu Jun  2 15:03:03 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk)
+
+ 15:03 <slangasek> pitti robru cyphermox tdaitx doko sil2100 xnox slangasek barry infinity caribou bdmurray chiluk
+
+ 15:03 * chiluk = winning.
+
+ 15:03 <pitti> slangasek: FYI, caribou will be a bit late, but he's close to the end so that's fine
+
+ 15:03 <pitti> win!
+
+ 15:03 <pitti> convergence-y-replace-upstart: settled down the architecture and converted about a third of our session upstart jobs to systemd, the two live happily side by side, all in a PPA now as a PoC; this is now ready for a little sprint with the desktop team to complete this, proposed for end July (TBD)
+
+ 15:03 <pitti> foundations-y-local-resolver: landed and announced the changes; this caused some fallout about DNS caching and domain specific DNS servers, resulting in two more WIs
+
+ 15:03 <pitti> Ubuntu network YAML config: pinned down design with the server team enough to be able to start working on a prototype; but snappy team has different use cases and a parallel spec which looks rather different; scheduled meeting with lool tomorrow to unify those. This is becoming homungus, it will take quite some more time to pin down the design for this, so /!\ this might land late
+
+ 15:03 <pitti> autopkgtest:
+
+ 15:04 <pitti> - Add self-autopkgtest for building and using an LXD container
+
+ 15:04 <pitti> - Refine apt pinning → source version mapping heuristics (didn't work for ktnef and linux-raspi2)
+
+ 15:04 <pitti> - Support packages for sources which haven't been rebuilt since precise (#1588199)
+
+ 15:04 <pitti> - lots of manual maintenance and cleanup after several infra troubles
+
+ 15:04 <pitti> systemd:
+
+ 15:04 <pitti> - debug resolved crashes
+
+ 15:04 <pitti> - Fix comments in resolve.conf for search domain overflows (#1588229)
+
+ 15:04 <pitti> - Fix networkd integration with resolvconf for domain-limited DNS servers (#1587762)
+
+ 15:04 <pitti> - Fix LSB init-functions integration with upstream master
+
+ 15:04 <pitti> distro changes/fixes:
+
+ 15:04 <pitti> - dropped init/systemd from essential, thus buildd chroots now don't have it any more (hello infinity)
+
+ 15:04 <pitti> - dropped initscripts from default install, a big step towards dropping sysvinit
+
+ 15:04 <pitti> - apport: Fix retracing of arm64/ppc64el reports (#1585702)
+
+ 15:04 <pitti> - at-spi2-atk: Fix to work with dbus-user-session
+
+ 15:04 <pitti> - init-system-helpers: Fix deb-systemd-invoke interpretation of policy-rc.d (Debian #825075)
+
+ 15:04 <ubottu> Debian bug 825075 in init-system-helpers "deb-systemd-invoke: incomplete handling of policy-rc.d status codes" [Normal,Fixed] http://bugs.debian.org/825075
+
+ 15:04 <pitti> - debug/fix invoke-rc.d failure in containers (#1587903)
+
+ 15:04 <pitti> - Some ubuntu-minimal/standard seed cleanup
+
+ 15:04 <pitti> (end)
+
+ 15:04 <robru> lp:bileto
+
+ 15:04 <robru> * successful rollout of build parallelization branch
+
+ 15:04 <robru> - fixed a few regressions identified by users
+
+ 15:04 <robru> - reviewed running jobs to ensure things were working for everybody
+
+ 15:04 <robru> - answered a lot of user questions
+
+ 15:04 <robru> lp:cupstream2distro
+
+ 15:04 <robru> * a few minor fixes to sync with lp:bileto
+
+ 15:04 <robru> - support for comments in MP lists
+
+ 15:04 <robru> - new filename format for diffs
+
+ 15:04 <robru> (done)
+
+ 15:04 <cyphermox> MIR:
+
+ 15:04 <cyphermox> - python-yaql
+
+ 15:04 <cyphermox> SRU:
+
+ 15:04 <cyphermox> - ipmitool sel time set TZ parsing (bug LP: #1586048)
+
+ 15:04 <cyphermox> - secureboot efivar/efibootmgr/mokutil to P&T
+
+ 15:04 <ubottu> Launchpad bug 1586048 in ipmitool (Ubuntu Xenial) "ipmi sel time set is setting 30 mins less than given time in OOB, and 30 mins more than given time in in-band method (ipmitool)" [Undecided,Fix committed] https://launchpad.net/bugs/1586048
+
+ 15:04 <cyphermox> precise:
+
+ 15:04 <cyphermox> - debugging binutils segfault on i386
+
+ 15:04 <cyphermox> - this is required for the sbsigntool backport for Secure Boot support
+
+ 15:05 <cyphermox> xenial:
+
+ 15:05 <cyphermox> - console-setup SRU (bug LP: #1572697, bug LP: #1576893, bug LP: #1579267)
+
+ 15:05 <cyphermox> yakkety:
+
+ 15:05 <ubottu> Launchpad bug 1572697 in console-setup (Ubuntu Xenial) "broken symlink console-setup.service [systemd]" [High,In progress] https://launchpad.net/bugs/1572697
+
+ 15:05 <ubottu> Launchpad bug 1576893 in console-setup (Ubuntu Xenial) "console colors are not correctly applied" [Medium,In progress] https://launchpad.net/bugs/1576893
+
+ 15:05 <cyphermox> - NM wwan icon fixes (bug LP: #1571574)
+
+ 15:05 <cyphermox> - investigate mdadm install/upgrade issues
+
+ 15:05 <ubottu> Launchpad bug 1579267 in console-setup (Ubuntu Xenial) "plymouth-start.service: After: reference to non-existent keyboard-setup.service" [Medium,In progress] https://launchpad.net/bugs/1579267
+
+ 15:05 <cyphermox> ±other stuff:
+
+ 15:05 <ubottu> Launchpad bug 1571574 in OEM Priority Project "[SRU] 3G (WWAN) icon missing" [Critical,Confirmed] https://launchpad.net/bugs/1571574
+
+ 15:05 <cyphermox> - DNS resolver discussion w/ pitti and awe
+
+ 15:05 <cyphermox> - various meetings about networking
+
+ 15:05 <cyphermox> - Lenovo tech here in 20 minutes to fix my X230
+
+ 15:05 <cyphermox> (done)
+
+ 15:05 <tdaitx> Note: short week, away on Friday
+
+ 15:05 <tdaitx> = JCK
+
+ 15:05 <tdaitx> - done an initial setup of autopkgtest infra locally with canonistack swift, stopped midway as this is not the best way to get JCK to run
+
+ 15:05 <tdaitx> - Got Jenkins installed locally and started setting it up to run together with a slave
+
+ 15:05 <tdaitx> - Requested a Jenkins instance with a pair of slaves for amd64, arm64, and ppc64el, requested for Xenial slaves; ongoing
+
+ 15:05 <tdaitx> = Other
+
+ 15:05 <tdaitx> - On vacation next week, will see you all on the sprint ;-)
+
+ 15:05 <tdaitx> - After the sprint I will be working half a day for 2 weeks
+
+ 15:05 <tdaitx> (done)
+
+ 15:06 <pitti> tdaitx: JCK> what was the blocker, something missing in autopkgtest, or canonistack not being up to the task?
+
+ 15:06 <sil2100> doko: ?
+
+ 15:06 <tdaitx> btw, thanks pitti for the help with autopkgtest =)
+
+ 15:06 <bdmurray> doko is at pycon
+
+ 15:07 <sil2100> Ok
+
+ 15:07 <sil2100> - Shorter week, Friday off
+
+ 15:07 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:07 <sil2100> - RTM status meetings
+
+ 15:07 <sil2100> - Xenial touch transition:
+
+ 15:07 <sil2100> * Adding pocket-desktop packages to the list of unbuildable package checks
+
+ 15:07 <pitti> tdaitx: I guess we shoudl talk about that; you setting up an entierly parallel infra doesn't sound very efficient
+
+ 15:07 <sil2100> * Looking into why unity-scope-click is FTBFS on arm64 (oxide build-dep chain)
+
+ 15:07 <sil2100> * Poking and coordinating various arm64 related tasks
+
+ 15:07 <sil2100> * Reverting the lxc revert for yakkety-overlay and xenial-overlay
+
+ 15:07 <sil2100> - OTA-11:
+
+ 15:07 <sil2100> * Preparing release notes, sending release e-mails
+
+ 15:07 <sil2100> * Copying images to stable and starting phasing
+
+ 15:07 <sil2100> * Various actions on additional testing - emulator not publishable again
+
+ 15:07 <sil2100> - Helping out in investigating the issue with OTAs not downloading (LP: #1588370)
+
+ 15:07 <pitti> tdaitx: excellent sprint matter for Greece :)
+
+ 15:07 <sil2100> - Removing deprecated ubuntu-touch frameworks
+
+ 15:07 <tdaitx> pitti: even the logs have to private... I believe jenkaas can provide what I actually need
+
+ 15:07 <sil2100> - Preparing silo with upstream crasher fix cherrypick for lxc
+
+ 15:07 <sil2100> - Preparing silo for vivid-overlay ltt-controls follow up on the ust backport
+
+ 15:07 <ubottu> Launchpad bug 1588370 in Ubuntu system image "Unable to download update from OTA-9 to OTA-11 on turbo" [Undecided,New] https://launchpad.net/bugs/1588370
+
+ 15:07 <sil2100> - Start documenting the current manual image re-spin process
+
+ 15:07 <sil2100> - Some work on the re-sign-indexes script after key rotation in system-image (merged)
+
+ 15:07 <sil2100> (done)
+
+ 15:08 <tdaitx> pitti: but I will be using autopkgtest for the jtreg build that is run on openjdk builds ;-
+
+ 15:08 <tdaitx> ;-)
+
+ 15:08 <pitti> sil2100: \o/
+
+ 15:08 <pitti> sil2100: to be clear, that's both migrating to xenial and to arm64?
+
+ 15:09 <sil2100> pitti: yeah, we're doing both at once basically
+
+ 15:09 <slangasek> skipping xnox for now, he said he would be here toward the end of the meeting due to conflict
+
+ 15:09 <pitti> sil2100: die, vivid, die! :-)
+
+ 15:09 <slangasek> * short week, Memorial Day
+
+ 15:09 <slangasek> * SRU processing, including some work for the SecureBoot policy update
+
+ 15:09 <slangasek> * pushing the libpoppler library transition along through p-m
+
+ 15:09 <slangasek> * discussions around network-config yaml interface for 16.10
+
+ 15:09 <slangasek> * discussions around snappy first-boot experience
+
+ 15:09 <slangasek> * tweaks to packaging of snappy components
+
+ 15:09 <slangasek> (done)
+
+ 15:10 <slangasek> barry also at pycon
+
+ 15:10 <slangasek> infinity not here
+
+ 15:10 <slangasek> is caribou here now?
+
+ 15:11 <slangasek> bdmurray:
+
+ 15:11 <bdmurray> short week w/ Monday holiday
+
+ 15:11 <bdmurray> further tests of retracing arm64 and ppc64el crashes
+
+ 15:11 <bdmurray> modifications to the retracer charm to retrace arm64 crashes
+
+ 15:11 <bdmurray> tested retracing arm64 crashes in staging ET
+
+ 15:11 <bdmurray> added retracer configuations for arm64 and ppc64el to daisy code
+
+ 15:11 <bdmurray> modifications to daisy to keep track of retrace attempts and only try 3 times
+
+ 15:11 <bdmurray> worked with webops to resolve an errors frontend failure
+
+ 15:11 <bdmurray> irc discussion regarding SRU bugs not being commented on and how LP works
+
+ 15:11 <bdmurray> modifications to SRU tools to add release tasks
+
+ 15:11 <bdmurray> added a hint for xenial for fpc
+
+ 15:11 <bdmurray> discussed fpc autopkgtest "regression" with pitti
+
+ 15:11 <bdmurray> ✔ done
+
+ 15:12 <caribou> slangasek: o/
+
+ 15:12 <pitti> bdmurray: thanks for setting up overrides for stables, much appreicated
+
+ 15:12 <pitti> and tpying is hrad
+
+ 15:12 <slangasek> caribou: hi! you're up :)
+
+ 15:12 <chiluk> you mean me..
+
+ 15:12 <caribou> Bugfix :
+
+ 15:12 <caribou> - Quassel does not play sound (LP: #1506550)
+
+ 15:12 <caribou> Investigating FTBS on X & Y
+
+ 15:12 <ubottu> Launchpad bug 1506550 in quassel (Ubuntu Xenial) "quassel can't play audio notifications in wily" [Low,In progress] https://launchpad.net/bugs/1506550
+
+ 15:12 <caribou> Development work:
+
+ 15:12 <caribou> - makedumpfile development
+
+ 15:12 <caribou> Uploaded to Debian. Will sync
+
+ 15:12 <caribou> when kexec-tools merge is completed
+
+ 15:12 <caribou> - Various merges :*
+
+ 15:12 <caribou> corosync
+
+ 15:12 <caribou> kexec-tools
+
+ 15:12 <caribou> - sosreport development
+
+ 15:12 <caribou> Rearrange debian git repo
+
+ 15:12 <caribou> Prepare new version
+
+ 15:12 <caribou> - Interviews
+
+ 15:12 <caribou> ☑ Done
+
+ 15:13 <sil2100> pitti: hah, will be a while since it's completely dead tho ;)
+
+ 15:13 <pitti> sil2100: only three out of nine lives gone?
+
+ 15:13 <tdaitx> bdmurray: what irc channel did the "sru comments/lp works" discussion take place at?
+
+ 15:13 <chiluk> * Short Week - memorial day
+
+ 15:13 <chiluk> * Mostly non-public work
+
+ 15:13 <chiluk> * LP#1581236 - Tested upstream kernel + patches on my haswell box with no benefits.  Need to verify if my nvidia card in my test rig is the issue.
+
+ 15:13 <chiluk> * LP#1579917 - Tested upstream kernel + patches, but saw no benefit.  Need
+
+ 15:13 <chiluk> * Looked at merging partman-auto, quassel, and mdadm some more.  cyphermox told me to stop with the d-i components due to the rewrite.  I need some guidance for quassel and mdadm, as they both look like they have some broken ancenstry.  Basically quassel requires merging each upstream change when using grab-merge (I'd expect non-conflicting changes to just be applied). That doesn't seem right.
+
+ 15:13 <caribou> chiluk: sorry for jumping the gun on oy
+
+ 15:13 <chiluk> -done-
+
+ 15:13 <chiluk> no worries caribou.
+
+ 15:14 <slangasek> any questions?
+
+ 15:14 <caribou> chiluk: if you look at quassel, it has ftbs since xenial
+
+ 15:15 <chiluk> slangasek I'll direct my merge questions to ubuntu+1-maint channel.
+
+ 15:15 <chiluk> later.. I usually look at merges for the last hour of my day or so.. which is probably not optimal.
+
+ 15:16 <slangasek> heh, k
+
+ 15:16 <caribou> I've been using the server team's git workflow; wfm
+
+ 15:16 <caribou> to merge I mean
+
+ 15:17 <chiluk> yeah.. I haven't looked too much at that yet..
+
+ 15:17 <slangasek> [TOPIC] Sprint prep
+
+ 15:17 <bdmurray> tdaitx: ubuntu-release
+
+ 15:17 <tdaitx> bdmurray: thanks!
+
+ 15:18 <slangasek> sprint is coming up on us fast; since no one volunteered last week ;), I've set up a doc for our agenda: https://docs.google.com/document/d/1rdiLICseBxX6Gml586DR1YDaFmbYuGEUcayFKdYAWRY/edit
+
+ 15:18 <slangasek> please add to it
+
+ 15:18 <slangasek> and if you have doubts about what you should be working on at the sprint, come talk to me :)
+
+ 15:19 <slangasek> [TOPIC] AOB
+
+ 15:19 <slangasek> anything else for today?
+
+ 15:20 <bdmurray> I'm planning on setting up retracers for arm64 and while we could for ppc64el, is there much need?
+
+ 15:21 <slangasek> it's not a burning priority
+
+ 15:21 <slangasek> but is it easier to just set it up at the same time?
+
+ 15:22 <bdmurray> Yes it would be the same amount of work.
+
+ 15:22 <pitti> tdaitx: want to talk about autopkgtest-ifying the JCK?
+
+ 15:22 <pitti> tdaitx: (the test format, not necessarily the infra0
+
+ 15:22 <tdaitx> pitti: not for JCK, possibily for OpenJDK packaging tests that are run during the build now
+
+ 15:22 <bdmurray> pitti: Do you have arm64 retracers for LP?
+
+ 15:22 <pitti> bdmurray: not ATM
+
+ 15:22 <pitti> only x86, powerpc, and armhf
+
+ 15:23 <pitti> no arm64, no ppc64el
+
+ 15:23 <pitti> and no s390x either
+
+ 15:23 <tdaitx> pitti: but I need to sit down and try my hand at them before I have an actual valid question =)
+
+ 15:23 <pitti> tdaitx: ok; I think providing them in our standard format is still valuable for running locally, even if you might end up running them on a separate infar
+
+ 15:24 <pitti> infra
+
+ 15:25 <tdaitx> pitti: alright, then lets put that on the agenda
+
+ 15:25 <pitti> gosh, this gdoc thing is impossible
+
+ 15:26 <pitti> slangasek: thanks for trying to unindent that; the unindent button doesn't work, and it seems I'm too dense to drive that
+
+ 15:26 * pitti is too used to Markdown and wiki :/
+
+ 15:26 <slangasek> pitti: yes, I had noticed the same problem, I don't know what I did wrong with that doc to break unindent
+
+ 15:26 <slangasek> anyway, seems like we can end the meeting and go fight with collaborative doc editing now
+
+ 15:26 <pitti> slangasek: normally that shoudl be the third-most button from the right, no?
+
+ 15:27 <slangasek> there, figured it out ;)
+
+ 15:27 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

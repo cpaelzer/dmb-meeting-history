@@ -1,0 +1,452 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Developer Membership Board meeting, started by rbasak, 12 Jun at 19:04 &mdash; 20:09 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-06-12-19.04.log.html
+
+
+
+== Meeting summary ==
+
+=== Package Set/Per Package Uploader Applications ===
+
+Discussion started by rbasak at 19:04.
+
+ * '''You-Sheng Yang (2023-06-12)'''  (rbasak, 19:05)
+  * ''LINK:'' https://wiki.ubuntu.com/Vicamo/UbuntuPerPackageUploaderApplication   (rbasak, 19:06)
+  * ''LINK:'' https://udd.debian.org/cgi-bin/ubuntu-sponsorships.cgi?render=html&sponsor=&sponsor_search=name&sponsoree=*vicamo*&sponsoree_search=email   (rbasak, 19:08)
+  * ''VOTE:'' Grant PPU to vicamo for backport-iwlwifi-dkms, ipu6-drivers, ivsc-driver, rtl8821ce (Denied)  (rbasak, 19:55)
+  * ''ACTION:'' utkarsh2102 to close vicamo's application  (rbasak, 20:08)
+
+=== AOB ===
+
+Discussion started by rbasak at 20:08.
+
+
+
+
+== Vote results ==
+
+ * [[https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-06-12-19.04.log.html#104|Grant PPU to vicamo for backport-iwlwifi-dkms, ipu6-drivers, ivsc-driver, rtl8821ce]]
+  * Motion denied (For: 0, Against: 6, Abstained: 0)
+   * Voters: rbasak, seb128, kanashiro[m], bdmurray, sil2100, utkarsh2102
+
+
+
+== Action items, by person ==
+
+ * utkarsh2102
+  * utkarsh2102 to close vicamo's application
+ * vicamo
+  * utkarsh2102 to close vicamo's application
+
+
+
+== People present (lines said) ==
+
+ * rbasak (61)
+ * utkarsh2102 (46)
+ * vicamo (43)
+ * meetingology (14)
+ * sil2100 (11)
+ * seb128 (9)
+ * bdmurray (7)
+ * kanashiro[m] (4)
+
+
+
+== Full log ==
+
+
+ 19:04 <rbasak> #startmeeting Developer Membership Board
+
+ 19:04 <meetingology> Meeting started at 19:04:28 UTC.  The chair is rbasak.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 19:04 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 19:04 <seb128> I think I did chair the previous one, if someone else want to do it that would be welcome
+
+ 19:04 <seb128> rbasak, thanks!
+
+ 19:04 <utkarsh2102> I can chair if you want
+
+ 19:04 <rbasak> #topic Package Set/Per Package Uploader Applications
+
+ 19:05 <rbasak> #subtopic You-Sheng Yang (2023-06-12)
+
+ 19:05 <utkarsh2102> can you see my messages, rbasak?
+
+ 19:05 <rbasak> utkarsh2102: o/ yes, but I'd already started
+
+ 19:05 <rbasak> Thank you for checking :)
+
+ 19:05 <utkarsh2102> yep, no problem
+
+ 19:05 <rbasak> vicamo: welcome!
+
+ 19:05 <vicamo> rbasak: hi
+
+ 19:05 <sil2100> o/
+
+ 19:05 <rbasak> Would you like to introduce yourself?
+
+ 19:06 <rbasak> #link https://wiki.ubuntu.com/Vicamo/UbuntuPerPackageUploaderApplication
+
+ 19:06 <sil2100> (sorry for being late)
+
+ 19:06 <vicamo> sure. This is You-Sheng from Taiwan, 3AM in the morning. Been running Ubuntu since 2006.
+
+ 19:07 <vicamo> I'm currently in kernel/hardware enablement team, and is working on some dkms packages
+
+ 19:07 <utkarsh2102> nice!
+
+ 19:07 <vicamo> that's why I'll need the upload priviledges for them.
+
+ 19:07 <sil2100> Does anyone have a sponsorship miner link handy? I didn't see it on the application per-se, but maybe I'm blind
+
+ 19:08 <rbasak> #link https://udd.debian.org/cgi-bin/ubuntu-sponsorships.cgi?render=html&sponsor=&sponsor_search=name&sponsoree=*vicamo*&sponsoree_search=email
+
+ 19:08 <rbasak> OK, let's start with questions for vicamo
+
+ 19:08 <vicamo> rbasak: yes, please go ahead
+
+ 19:08 <rbasak> I can start: can you tell me what freeze applies in the development cycle when it might become inappropriate to upload, please, and where I can find the relevant date?
+
+ 19:10 <vicamo> rbasak: I goes to https://launchpad.net/ubuntu/mantic for milestone lists, and you'll find feature freeze dates there
+
+ 19:11 <vicamo> there are also a few freeze dates in https://wiki.ubuntu.com/UbuntuDevelopment/ReleaseProcess
+
+ 19:11 <vicamo> feature freeze, ui freeze, beta freeze, etc.
+
+ 19:12 <rbasak> OK, and let's say that rtl8821ce is on 5.5.2.1, and you're considering uploading 5.5.2.2. Would that be permitted during feature freeze? How would you check?
+
+ 19:13 <vicamo> rbasak: for dkms packages, we'd like to enforce no new hardware models being added, or new hardware released features being introduced as possible
+
+ 19:13 <vicamo> but while these packages are always linked to a specific vendor, the releases of its source versions might not fall into our own control
+
+ 19:14 <sil2100> I'll have a question afterwards
+
+ 19:14 <vicamo> we may need to submit 5.5.2.1-0ubuntu1, or something like that after a freeze
+
+ 19:14 <bdmurray> vicamo: Just for your reference there is also https://discourse.ubuntu.com/t/mantic-minotaur-release-schedule/34989 which might be easier to read
+
+ 19:15 <vicamo> bdmurray: thank you
+
+ 19:15 <rbasak> vicamo: OK, and how would you determine if you need 5.5.2.1-0ubuntu1 or if it's OK to upload 5.5.2.2?
+
+ 19:17 <vicamo> rbasak: I'll make sure it matches upstream source version. After inspecting into the changes of a new upstream release, we may either decide to backport a certain amount of changes or simply package the new 5.5.2.2
+
+ 19:17 <vicamo> if the freeze status fits, of course
+
+ 19:17 <rbasak> How would you determine if the freeze status fits?
+
+ 19:19 <vicamo> like I said, it depends on the change of the new release. Like backport-iwlwifi-dkms, its revision goes up for each new commit being added to the git history,
+
+ 19:19 <vicamo> and under currenct practise, we'd like to keep 9856 for some series and pull only small commits when necessary
+
+ 19:20 <rbasak> OK. And if it's unclear, who would make the decision as to whether it would be acceptable to upload or not?
+
+ 19:20 <vicamo> but for devel series, it should be fine to pull the latest HEAD
+
+ 19:20 <vicamo> there will be another upload reviewer
+
+ 19:20 <rbasak> Who would that be?
+
+ 19:21 <vicamo> Well, I don't remember their teams at this moment
+
+ 19:22 <rbasak> How would you find out?
+
+ 19:23 <vicamo> I used to ask help from two colleagues in kernel team
+
+ 19:23 <vicamo> one of them has the review privileges
+
+ 19:24 <rbasak> If the upload isn't acceptable to upload due to the freeze, but you think an exception is needed, then what's the process for that?
+
+ 19:26 <vicamo> rbasak: so far we don't have such thing that requires an exception
+
+ 19:27 <rbasak> OK, but if you did need an exception, then what's the process that you need to follow?
+
+ 19:28 <vicamo> I did not aware that's possible
+
+ 19:28 <rbasak> OK, let's move on.
+
+ 19:28 <rbasak> Are you familiar with proposed migration?
+
+ 19:30 <vicamo> As far as I can reach, there will be a verification period and when it's failed, you'd either fix that again or it will be bailed out
+
+ 19:31 <vicamo> the details are documented in https://wiki.ubuntu.com/ProposedMigration
+
+ 19:31 <rbasak> But are you familiar with it?
+
+ 19:32 <rbasak> Please answer my questions directly!
+
+ 19:32 <vicamo> I has built some testing pipeline to simulate the tests like piparts, autopkgtests on Gitlab
+
+ 19:33 <rbasak> If your upload to the development release is stuck in proposed migration, do you know what to do?
+
+ 19:34 <vicamo> rbasak: there will be a email notification indicating what's wrong, and I follow that to find the problem
+
+ 19:34 <rbasak> OK, sorry, I think I need to stop asking questions.
+
+ 19:34 <vicamo> something like what's happening in backport-iwlwifi-dkms/mantic
+
+ 19:35 <rbasak> I think it's clear that you don't know the details to the standard I expect. Does anyone else have any questions? How should I proceed?
+
+ 19:36 <sil2100> vicamo: one question from me, regarding some recen thing that happened during an SRU from someone unrelated:
+
+ 19:36 <vicamo> ????
+
+ 19:36 <sil2100> vicamo: is it acceptable to SRU new upstream versions of packages to stable series?
+
+ 19:37 <vicamo> sil2100: we don't do that
+
+ 19:39 <vicamo> we only do bug fixes for packages in stable series
+
+ 19:39 <sil2100> Well, we generally disencourage, but there are certain exceptions that we can make to that. There are rather strict rules for that, but it's possible!
+
+ 19:40 <sil2100> Anyway, that's it for my question
+
+ 19:40 <rbasak> Any other questions from other DMB members?
+
+ 19:41 <utkarsh2102> vicamo: I've got an easy one -
+
+ 19:42 <vicamo> and it would be?
+
+ 19:42 <utkarsh2102> what if the version of a package you'd like to upload is 1.2.3-0ubuntu3 in Focal, Jammy, Kinetic, Lunar, and Mantic. What will the versions be like for each upload?
+
+ 19:42 <utkarsh2102> note: 1.2.3-0ubuntu3 is in all the releases.
+
+ 19:44 <vicamo> utkarsh2102: we would like to make sure each of them may upgrade to the next release. If it's currently same 1.2.3-0ubuntu3 at this moment, a 1.2.3-0ubuntu4 for them sounds reasonable to me
+
+ 19:44 <vicamo> it's also possible we may have to pick 1.2.3-0ubuntu3~22.04.1, 1.2.3-0ubuntu3~22.10.1, etc.
+
+ 19:44 <utkarsh2102> vicamo: 1.2.3-0ubuntu4 for all the releases?
+
+ 19:46 <vicamo> but because you may not have the same debian/changelog, you'll have to use 1.2.3-0ubuntu3~22.04.1 as always
+
+ 19:46 <vicamo> 1.2.3-0ubuntu4~22.04.1
+
+ 19:47 <vicamo> 1.2.3-0ubuntu4~22.10.1, etc.
+
+ 19:48 <utkarsh2102> OK, but you've got the reasoning a bit wrong there.
+
+ 19:48 <rbasak> We don't have long left.
+
+ 19:48 <vicamo> utkarsh2102: like?
+
+ 19:48 <rbasak> Another two minutes for questions please, and then we'll vote?
+
+ 19:49 <bdmurray> +1 to voting
+
+ 19:49 <utkarsh2102> to ensure a smooth upgrade, the version in the newer release should be greater than the older one. That's why it should be 1.2.3-0ubuntu3~20.04.x and so on
+
+ 19:50 <utkarsh2102> and btw, it's not ubuntu4~, it would be ubuntu3~
+
+ 19:50 <vicamo> utkarsh2102: 1.2.3-0ubuntu3~20.04.x is smaller than 1.2.3-0ubuntu3
+
+ 19:50 <utkarsh2102> I hope you get what I mean by the above^?
+
+ 19:50 <utkarsh2102> uh, sorry, my bad.
+
+ 19:51 <utkarsh2102> I meant, if it's 0ubuntu4 in devel, then it's ubuntu4~, right
+
+ 19:51 <utkarsh2102> it shouldn't be 1.2.3-0ubuntu3~22.04.1 like you suggested earlier.
+
+ 19:51 <rbasak> OK, we need to move to voting now.
+
+ 19:51 <vicamo> so which bit I was wrong?
+
+ 19:52 <utkarsh2102> I said the opposite thing, apologies. :)
+
+ 19:52 <utkarsh2102> it's 1:22 here and I should sleep, hah
+
+ 19:52 <vicamo> utkarsh2102: that's being corrected as 1.2.3-0ubuntu4~22.04.1. Typo.
+
+ 19:52 <utkarsh2102> vicamo: let's talk about that after the meeting
+
+ 19:52 <rbasak> #vote Grant PPU to vicamo for backport-iwlwifi-dkms, ipu6-drivers, ivsc-driver, rtl8821ce
+
+ 19:52 <meetingology> Please vote on: Grant PPU to vicamo for backport-iwlwifi-dkms, ipu6-drivers, ivsc-driver, rtl8821ce
+
+ 19:52 <meetingology> Public votes can be registered by saying +1, -1 or +0 in channel (for private voting, private message me with 'vote +1|-1|+0 #channelname')
+
+ 19:52 <rbasak> -1
+
+ 19:52 <meetingology> -1 received from rbasak
+
+ 19:53 <seb128> -1
+
+ 19:53 <meetingology> -1 received from seb128
+
+ 19:53 <kanashiro[m]> -1, I see the good endorsements vicamo has in his application page, but their answers here during the meeting do not make me confident that they know the processes used by the community. I'd recommend to take a look at them and understand why they are designed that way.
+
+ 19:53 <meetingology> -1, I see the good endorsements vicamo has in his application page, but their answers here during the meeting do not make me confident that they know the processes used by the community. I'd recommend to take a look at them and understand why they are designed that way. received from kanashiro[m]
+
+ 19:53 <rbasak> Sorry, I think you need to spend some time understanding Ubuntu's development process better, such as the rules that apply at various times in our development cycle, who has the authority to grant exceptions, and the processes to request those.
+
+ 19:53 <bdmurray> -1 I'd like to see vicamo participate in some +1 maintenance so that they get a better understanding of -proposed migration and Ubuntu development.
+
+ 19:53 <meetingology> -1 I'd like to see vicamo participate in some +1 maintenance so that they get a better understanding of -proposed migration and Ubuntu development. received from bdmurray
+
+ 19:54 <rbasak> Yes - and same for proposed migration.
+
+ 19:54 <sil2100> -1 I think there's still a bit that vicamo needs to learn, or refine, to be granted PPU rights. I would recommend finding an uploader as a 'mentor' and go through with him regarding all the bits we talked about today and re-try again!
+
+ 19:54 <meetingology> -1 I think there's still a bit that vicamo needs to learn, or refine, to be granted PPU rights. I would recommend finding an uploader as a 'mentor' and go through with him regarding all the bits we talked about today and re-try again! received from sil2100
+
+ 19:54 <seb128> sorry but similarly to kanashiro[m], I think the technical endorsement are solid but the replies in the meeting were not really precise
+
+ 19:54 <rbasak> Within Canonical I've been working on a process to assign mentors to help with this kind of thing. Are you aware of this?
+
+ 19:54 <utkarsh2102> -1; I do appreciate the great work you've done and the endorsements are good, too, but unfortunately, I see that there are some gaps in understanding the basic things. I didn't see a straight, direct, correct answer to any of the questions asked. I feel that you should work on these and come back when you're familiar and confident with these. I'm happy to help if you'd like some guidance.
+
+ 19:54 <meetingology> -1; I do appreciate the great work you've done and the endorsements are good, too, but unfortunately, I see that there are some gaps in understanding the basic things. I didn't see a straight, direct, correct answer to any of the questions asked. I feel that you should work on these and come back when you're familiar and confident with these. I'm happy to help if you'd like some guidance. received from utkarsh2102
+
+ 19:55 <seb128> like for the freeze question I would have liked an explanation of what consider a feature change vs a change which is ok under the freeze rules
+
+ 19:55 <bdmurray> I undertand its quite early where you are and want to thank you for joining the meeting!
+
+ 19:55 <rbasak> #endvote
+
+ 19:55 <meetingology> Voting ended on: Grant PPU to vicamo for backport-iwlwifi-dkms, ipu6-drivers, ivsc-driver, rtl8821ce
+
+ 19:55 <meetingology> Votes for: 0, Votes against: 6, Abstentions: 0
+
+ 19:55 <meetingology> Motion denied
+
+ 19:57 <utkarsh2102> I am sorry but I have something really important.
+
+ 19:57 <vicamo> alas
+
+ 19:57 <utkarsh2102> We still have 3 minutes and I'd like to use them.
+
+ 19:57 <rbasak> vicamo: not sure if it got lost in the flood: Within Canonical I've been working on a process to assign mentors to help with this kind of thing. Are you aware of this?
+
+ 19:57 <sil2100> I will have to do a hard stop in 3 minutes, but I have a quick question to the DMB: what are we doing with Nikhil's application?
+
+ 19:57 <vicamo> rbasak: nope
+
+ 19:57 <utkarsh2102> rbasak: for Nikhil's application, I'd like to propose a special meeting.
+
+ 19:57 <rbasak> vicamo: please arrange a meeting with me and your manager. 30 minutes. I'll try to help.
+
+ 19:58 <utkarsh2102> hopefully this week or at least next Monday.
+
+ 19:58 <sil2100> utkarsh2102: ok, I'm fine with that. I'd also be fine continuuing via e-mail. Can you share the details with me once they're known?
+
+ 19:58 <utkarsh2102> bdmurray, seb128, sil2100, kanashiro: do you have a problem with that?
+
+ 19:58 <seb128> I will try to join if there is a meeting but not garante I will be able to make it on short notice, depends of the day/time
+
+ 19:59 <seb128> I'm happy to follow up/vote via email if I can't join though
+
+ 19:59 <utkarsh2102> sil2100: precisely. I am also fine in continuing but rbasak preferred a real time thing. So I'd rather have us a special meeting to make up for the lost slot.
+
+ 19:59 <rbasak> I'm sorry, I've got too much on my plate at the moment.
+
+ 19:59 <utkarsh2102> seb128: lovely, thank you!
+
+ 19:59 <utkarsh2102> rbasak: I am afraid then you can't have it both ways :)
+
+ 19:59 <rbasak> I'm already committing just over an hour every two weeks to the DMB.
+
+ 20:00 <seb128> if everyone but rbasak is fine with email and rbasak can't make it to a meeting maybe we just go ahead via email without Robie?
+
+ 20:00 <kanashiro[m]> both ways work for me (extra meeting or email)
+
+ 20:00 <utkarsh2102> rbasak: would you be OK with that^?
+
+ 20:00 <bdmurray> I'm fine with email
+
+ 20:00 <rbasak> I don't see why this is a problem. Nikhil only joined the queue when they first sent the email to devel-permissions@.
+
+ 20:01 <utkarsh2102> rbasak: no, they joined way before.
+
+ 20:01 <utkarsh2102> just forgot to email us.
+
+ 20:01 <rbasak> OK, so bump someone else out of the queue then.
+
+ 20:01 <utkarsh2102> and that's what they mentioned, too
+
+ 20:01 <rbasak> I mean obviously don't, but that's the hard choice to make.
+
+ 20:01 <rbasak> I'm sorry it's inconvenient, but we should also be mindful of DMB time.
+
+ 20:01 <utkarsh2102> rbasak: precisely why I propose a special meeting.
+
+ 20:02 <utkarsh2102> so that we don't bump someone else out
+
+ 20:02 <utkarsh2102> but also make up for the lost slot
+
+ 20:02 <utkarsh2102> if people were out, we should've canceled the meeting, removed that from the agenda, et al
+
+ 20:02 <utkarsh2102> rbasak: at this point, everyone is OK with mail except you. :)
+
+ 20:03 <kanashiro[m]> I think in this case we should keep the discussion/voting via email
+
+ 20:03 <utkarsh2102> please note that I do understand what you're saying and I'd want to make that happen (so everyone's happy) but I can't find that common ground.
+
+ 20:03 <rbasak> I disapprove of email because it means that applicants research their answers.
+
+ 20:03 <rbasak> But we only have the opportunity to spot check their knowledge.
+
+ 20:04 <rbasak> If they research just what they're asked, then they'll provide good answers, but will have huge gaps in their knowledge.
+
+ 20:04 <rbasak> s/will/may/
+
+ 20:04 <seb128> alternative is to try to squeeze more than 1 application in one of the next meeting
+
+ 20:04 <utkarsh2102> right, exactly why I am OK in doing a special meeting. But I do also acknowledge ENOTIME for other members.
+
+ 20:05 <utkarsh2102> seb128: I'd really like that
+
+ 20:05 <bdmurray> I believe an upcoming candidate is an ubuntu contributing developer so that should go quick.
+
+ 20:05 <rbasak> I have no objection to trying to squeeze in to an existing meeting, providing it doesn't go over too much. We tried that in the past. IIRC it didn't work once. But I'm happy to try again.
+
+ 20:05 <rbasak> This PPU application today for example did take the full hour.
+
+ 20:05 <rbasak> But we can try.
+
+ 20:06 <utkarsh2102> OK, let's do that then!
+
+ 20:06 <bdmurray> I wouldn't have any questions for a UCD application.
+
+ 20:06 <kanashiro[m]> if the person spent time researching to prepare a good answer I think they at least learned something during this process :)
+
+ 20:06 <utkarsh2102> me neither, really
+
+ 20:06 <rbasak> Yeah that seems like a good candidate for a meeting to try and squeeze two in :)
+
+ 20:06 <utkarsh2102> should I propose that then?
+
+ 20:06 <rbasak> If this would work for Nikhil?
+
+ 20:06 <rbasak> +1
+
+ 20:07 <utkarsh2102> right
+
+ 20:07 <utkarsh2102> lovely, will do, thanks, everyone! :D
+
+ 20:07 <rbasak> We need actions to close out vicamo's application. Any volunteers?
+
+ 20:07 <utkarsh2102> I'll take that
+
+ 20:07 <rbasak> Thanks!
+
+ 20:08 <rbasak> #action utkarsh2102 to close vicamo's application
+
+ 20:08 * meetingology utkarsh2102 to close vicamo's application
+
+ 20:08 <rbasak> We're out of time for any more of our agenda unfortunately
+
+ 20:08 <rbasak> #topic AOB
+
+ 20:08 <rbasak> AOB that needs urgent attention that we cannot defer?
+
+ 20:09 <utkarsh2102> none from me
+
+ 20:09 <rbasak> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

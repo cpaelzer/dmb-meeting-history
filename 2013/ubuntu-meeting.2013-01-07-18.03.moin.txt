@@ -1,0 +1,208 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:03:31 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-01-07-18.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:03:35)
+ *Announcements
+
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/exif.html   (jdstrand, 18:22:47)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-rails-3.2.html   (jdstrand, 18:22:51)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libguac.html   (jdstrand, 18:22:54)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/activemq.html   (jdstrand, 18:22:57)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-activerecord-2.3.html   (jdstrand, 18:23:00)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:31:58 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (46)
+ * sarnold (7)
+ * sbeattie (6)
+ * jjohansen (5)
+ * tyhicks (5)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 18:03:31 <jdstrand> #startmeeting
+
+ 18:03:31 <meetingology> Meeting started Mon Jan  7 18:03:31 2013 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:03:31 <meetingology> 
+
+ 18:03:31 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:03:35 <jdstrand> The meeting agenda can be found at:
+
+ 18:03:35 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:03:38 <jdstrand> [TOPIC] Announcements
+
+ 18:03:52 <jdstrand> Happy New Year and welcome back :)
+
+ 18:04:00 <jdstrand> Thanks to Thomas Ward (TheLordOfTime) provided a debdiff for lucid for znc (LP: #1090195)
+
+ 18:04:01 <ubottu> Launchpad bug 1090195 in znc (Ubuntu Hardy) "ZNC security report: CVEs for Lucid, Hardy" [Undecided,Incomplete] https://launchpad.net/bugs/1090195
+
+ 18:04:03 <jdstrand> Thanks to Christian Kuersteiner (ckuerste) provided a debdiff for lucid-precise for dtach (LP: #1088355)
+
+ 18:04:04 <ubottu> Launchpad bug 1088355 in dtach (Ubuntu Raring) "Information disclosure Vulnerability" [Undecided,Fix released] https://launchpad.net/bugs/1088355
+
+ 18:04:12 <jdstrand> Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)
+
+ 18:04:47 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:04:51 <jdstrand> I'll go first
+
+ 18:05:14 <jdstrand> I'm in the happy place this week
+
+ 18:05:42 <jdstrand> before (and during) the break I took some time to play with the dbus apparmor patches
+
+ 18:06:00 <jdstrand> it's working really well for me and I am starting to see patterns for abstractions
+
+ 18:06:11 <sbeattie> nice!
+
+ 18:06:26 <jdstrand> it is inconvenient that aa-notify can only read one logfile at a time though
+
+ 18:06:32 <tyhicks> \o/
+
+ 18:06:47 <jdstrand> so I started poking at a python rewrite that would allow reading multiple logfiles
+
+ 18:07:00 <sbeattie> woo
+
+ 18:07:25 <tyhicks> jdstrand: I can flip the switch on enabling auditd support in the dbus-dev ppa's dbus package
+
+ 18:07:50 <tyhicks> we can talk about it offline
+
+ 18:07:53 <jdstrand> all this got me rather excited about the work the security team has been doing, so I started to write up a multipart blog series for apparmor
+
+ 18:08:05 <jdstrand> tyhicks: yeah, I thought about that too-- yes let's talk later
+
+ 18:09:01 <jdstrand> the idea behind the blogging is to basically say what we have done, how we use it in Ubuntu, what we are currently working on, then talk about my experiences with dbus specifically
+
+ 18:09:19 <jdstrand> that should set it up such that any of us (or me) could blog about the other bits
+
+ 18:09:31 <jdstrand> that the team is working on
+
+ 18:09:59 <jdstrand> thanks to sarnold and jjohansen for reviewing my 1st draft
+
+ 18:10:21 <jdstrand> jjohansen: btw, let's talk about your comments offline since the upstream wiki also needs to be updated
+
+ 18:10:34 <jdstrand> beyond that
+
+ 18:10:37 <jjohansen> jdstrand: sure
+
+ 18:11:04 <jdstrand> I am patch piloting this week (supposed to be today, but I need to push that to later in the week because... )
+
+ 18:11:28 <jdstrand> I'm also working on an nss update, testing/sponsoring firefox and thunderbird, and hopefully chromium-browser
+
+ 18:11:57 <jdstrand> I need to follow-up with chad on chromium-browser, since I think all that is left is lucid
+
+ 18:12:42 <jdstrand> mdes laur returns tomorrow. he will be on triage
+
+ 18:12:49 <jdstrand> sbeattie: you're up
+
+ 18:13:04 <sbeattie> I'm still an apparmor monkey this week
+
+ 18:13:46 <sbeattie> I'm still working on the display manager prototype as well as doing prep work for the 2.8.1 release, the upcoming alpha, and for the apparmor meeting tomorrow.
+
+ 18:13:58 <sbeattie> that's pretty much it for me.
+
+ 18:14:03 <sbeattie> tyhicks: you're up
+
+ 18:14:22 <tyhicks> I'm working on an embargoed item, the AppArmor kernel policy interface, and I need to review my objectives
+
+ 18:14:30 <tyhicks> jjohansen: you're up
+
+ 18:15:06 <jjohansen> I am getting back into apparmor this week as well
+
+ 18:16:17 <jjohansen> there are a couple bugs that where reported over the holidays that need some more looking into, I need to get some stuff together for the meeting tomorrow, and I need to get the labeling/alpha1 stuff out this week
+
+ 18:16:51 <jjohansen> I suppose I need to review objectives too
+
+ 18:16:57 <jjohansen> sarnold: your up
+
+ 18:17:56 <sarnold> I'm still working on the libvirt/dnsmasq update; I didn't make much progress on it last week, and I'm starting to lean towards not having a reproducer for the specific bugfix that we're looking at integrating.
+
+ 18:18:13 <sarnold> I'd very much like be unstuck on this :)
+
+ 18:18:58 <sarnold> I'm going to repoke the axis2/c upstream bugreport I filed before the holidays before refiling my CVE request for not-checking-hostnames
+
+ 18:19:06 <jdstrand> sarnold: well, automating dhcp reproducers is always tricky. it's ok to fallback to testing that you didn't regress (even if some of that is manual)
+
+ 18:19:08 <sarnold> but I feel like that should be finished this week
+
+ 18:19:12 <jdstrand> it's just like that sometimes
+
+ 18:19:58 <sarnold> I've also got objectives to do, presumably this week, I assumed jdstrand and I would discuss them elsewhere
+
+ 18:20:20 <jdstrand> sarnold: indeed :)
+
+ 18:21:29 <sarnold> and in good news, I think I may have finallylicked the last of my "where does my email go?" quandry -- I've switched to using dovecot/delivre to deliver my inbox mail instead of allowing it to fall off the end of procmail into a file
+
+ 18:21:39 <sarnold> jdstrand: back to you :)
+
+ 18:22:07 <jdstrand> nice :)
+
+ 18:22:22 <jdstrand> it is certainly distressing when you aren't sure you are getting your mail
+
+ 18:22:32 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:22:35 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:22:39 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:22:47 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/exif.html
+
+ 18:22:51 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-rails-3.2.html
+
+ 18:22:54 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libguac.html
+
+ 18:22:57 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/activemq.html
+
+ 18:23:00 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-activerecord-2.3.html
+
+ 18:23:22 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:23:32 <jdstrand> There are a lot of merge opportunities for packages listed in http://people.canonical.com/~ubuntu-security/d2u/. Performing these updates is a great way to help Ubuntu and bolster your developer application.
+
+ 18:23:51 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:31:56 <jdstrand> sbeattie, tyhicks, jjohansen, sarnold: thanks!
+
+ 18:31:58 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

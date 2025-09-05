@@ -1,0 +1,370 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 24 Aug at 15:01 &mdash; 15:49 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-08-24-15.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:01.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-24-aug-2023/   (juliank, 15:01)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:10.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:10)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:27)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:27)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:33.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:33)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/s390-tools/+bug/2030482   (slyon, 15:43)
+
+=== AOB ===
+
+Discussion started by juliank at 15:45.
+
+ * ''LINK:'' https://autopkgtest.ubuntu.com/request.cgi?release=mantic&arch=amd64&package=casper&trigger=initramfs-tools/0.142ubuntu12 gave me a "A server error occurred.  Please contact the administrator."  (bdrung, 15:45)
+
+
+
+== People present (lines said) ==
+
+ * juliank (54)
+ * vorlon (39)
+ * slyon (14)
+ * schopin (11)
+ * bdrung (7)
+ * ginggs (6)
+ * bdmurray (5)
+ * danilogondolfo (3)
+ * meetingology (2)
+ * zhsj (2)
+ * waveform (2)
+ * mclemenceau (2)
+ * dviererbe (1)
+ * xypron (1)
+ * mateus-morais (1)
+ * liushuyu (1)
+ * enr0n (1)
+
+
+
+== Full log ==
+
+
+ 15:01 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started at 15:01:30 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <dviererbe> o/
+
+ 15:01 <ginggs> o/
+
+ 15:01 <juliank> #topic Lightning rounds
+
+ 15:01 * vorlon waves
+
+ 15:01 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-24-aug-2023/
+
+ 15:01 <zhsj> o/
+
+ 15:02 <xypron> \o
+
+ 15:02 <mateus-morais> o/
+
+ 15:02 <bdrung> \o
+
+ 15:03 <bdmurray> cantankerous
+
+ 15:03 <waveform> occasionally :)
+
+ 15:03 <juliank> moo?
+
+ 15:03 <bdmurray> DPaaS
+
+ 15:03 <liushuyu> o/
+
+ 15:03 <waveform> I just couldn't come up with a good acronym...
+
+ 15:04 <slyon> o/
+
+ 15:09 <mclemenceau> o/
+
+ 15:10 <juliank> #topic Release incoming bugs
+
+ 15:10 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <juliank> bug 2031909
+
+ 15:11 <juliank> schopin: ^
+
+ 15:12 <schopin> Oh right. danilogondolfo fixed the symptoms, but I'm a bit worried about it still since the fix is to double the applied limit, which seems excessive.
+
+ 15:13 <vorlon> juliank: I didn't notice if you replied to my last ping; are all the grub zfs regressions sorted now in mantic(-proposed)?
+
+ 15:13 <schopin> So I think we need to take the time to investigate it some more to see if that's not an actual bug in glibc that causes excess memory usage.
+
+ 15:13 <danilogondolfo> well, to be fair, the was a patch already increasing that limit, I just increased it a bit more :)
+
+ 15:13 <schopin> The patch was going from 3 to 4, you went straight to 8 :D
+
+ 15:14 <bdmurray> why not 11?
+
+ 15:14 <juliank> vorlon: to the best of my knowledge they should be, yes, I don't remember seing a ping
+
+ 15:14 <vorlon> juliank: ack thanks
+
+ 15:15 <danilogondolfo> bdmurray, next glibc will require 11 I'm pretty sure
+
+ 15:15 <juliank> should we tag this todo?
+
+ 15:15 <juliank> someone will complain about this later likely :D
+
+ 15:15 <schopin> I say yes (obviously)
+
+ 15:16 <juliank> counting down from 3
+
+ 15:16 <juliank> 0
+
+ 15:16 <juliank> Added the tag
+
+ 15:16 <juliank> bug 2031685
+
+ 15:16 <juliank> some vorlon font stuff
+
+ 15:17 <vorlon> if we wind up excluding rust-doc from main, then this doesn't need to be foundations-todo
+
+ 15:17 <vorlon> but it's still a bug :)
+
+ 15:17 <juliank> We already matain a delta/are ahead so it wouldn't be a hard hit to do that
+
+ 15:18 <vorlon> the dependency on fonts-nanum is itself a delta
+
+ 15:18 <juliank> vorlon: is rust-doc demotion in progress? should we revisit this next week then?
+
+ 15:18 <slyon> all of rust is currently in universe (still)
+
+ 15:18 <vorlon> I wouldn't say it's in progress; it was a suggestion from (I think) slyon in response to this
+
+ 15:18 <slyon> pending security review of cargo
+
+ 15:19 <slyon> vorlon: I think excluding rust-doc was suggested as part of the initial MIR
+
+ 15:19 <vorlon> slyon: can you point me to the bug? we could add it to Extra-Excludes: now and drop this off the list
+
+ 15:19 <schopin> definitely was.
+
+ 15:20 <slyon> vorlon: https://bugs.launchpad.net/ubuntu/+source/rustc/+bug/1957932/comments/3
+
+ 15:20 <slyon> "Specific binary packages built, but NOT to be promoted to main: rust-doc, rust-src, rust-all"
+
+ 15:21 <juliank> +1
+
+ 15:21 <vorlon> thanks, let's lose the tag then
+
+ 15:22 <juliank> ack
+
+ 15:22 <juliank> bug 2017401
+
+ 15:22 <juliank> I think next step is meeting and discussing
+
+ 15:22 <juliank> but also server is doing stuff
+
+ 15:23 <juliank> and bug 2029148 is a desktop issue
+
+ 15:23 <vorlon> this bug report is simply about the regression in support for the Unattended-Upgrade::Automatic-Reboot option
+
+ 15:24 <bdmurray> probably should be retagged rls-nn-incoming given the recent email to ubuntu-devel
+
+ 15:24 <vorlon> I thought it was agreed we should JFDI
+
+ 15:24 <vorlon> bdmurray: sorry, which email?
+
+ 15:24 <slyon> bdmurray: is talking about the cups snap thing..
+
+ 15:24 <juliank> right
+
+ 15:24 <vorlon> ah right
+
+ 15:25 <vorlon> 2017401 - it's a functional regression. JFDI!
+
+ 15:25 <juliank> I don't think we had a conclusion for the u-u bug last week and wanted to discuss further outside the meeting but didn't
+
+ 15:25 <mclemenceau> I'll setup the meeting
+
+ 15:26 <juliank> we're not livepatch PM
+
+ 15:27 <juliank> let's go to the next list
+
+ 15:27 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:27 <juliank> that one is empty, sorry
+
+ 15:27 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:27 <juliank> bug 1990798
+
+ 15:28 <juliank> seems wrong to me, why would it fail?
+
+ 15:29 <juliank> we don't add the repository if it's not enabled...
+
+ 15:30 <juliank> I mean there must be a bug in the pro client there
+
+ 15:30 <juliank> also that pro client seemingly doesn't know about esm-apps, only infra, hmm
+
+ 15:31 <juliank> let me add an ubuntu-advantage-tools entry and set the one u-r-u one to Incomplete, because we need more info from the pro people what's going on
+
+ 15:33 <juliank> very weird
+
+ 15:33 <juliank> that wraps up the incoming bugs
+
+ 15:33 <juliank> (ff is empty)
+
+ 15:33 <juliank> #topic Team proposed-migration report
+
+ 15:33 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:33 <juliank> I see ginggs created https://warthogs.atlassian.net/browse/FR-5187
+
+ 15:33 <juliank> and the report is out of date apparently, not sure what we can do?
+
+ 15:34 <juliank> 2023.08.24 05:52:36 UTC
+
+ 15:34 <vorlon> we can assign from what's there and if that means people get a free pass, so be it
+
+ 15:34 <juliank> ack
+
+ 15:34 <vorlon> danilogondolfo: any progress on vim?
+
+ 15:34 <vorlon> danilogondolfo: fwiw ppc64el is known to have less locked memory available than other archs
+
+ 15:35 <danilogondolfo> vorlon, yes, I got it building on ppc64el. I'm still testing it
+
+ 15:35 <vorlon> ok cool
+
+ 15:35 <vorlon> lots of "depends on glibc" - schopin what's the prognosis here? is more help still needed?
+
+ 15:35 <vorlon> bdrung: libregexp-pattern-license-perl, carry-over for you?
+
+ 15:35 <slyon> I can take libstring-license-perl, it probably needs a rebase of my previous component-mismatch handling. (cc bdrung)
+
+ 15:36 <vorlon> ack, libregexp-pattern-license-perl vs libstring-license-perl moved to slyon
+
+ 15:36 <schopin> vorlon: The MPI thing is sorted but the glibc/armhf one is still a mystery. ginggs suggests we hint it anyway since it's actively being worked on
+
+ 15:36 <bdrung> vorlon, i only looked quickly into libregexp-pattern-license-perl. I spend more time on ubiquity.
+
+ 15:36 <bdrung> slyon, do you want to take it over?
+
+ 15:36 <slyon> yes
+
+ 15:36 <vorlon> glibc * requires glibc to migrate ya think
+
+ 15:37 * juliank hates glibc
+
+ 15:37 <vorlon> ginggs: are you following up on glibc then?
+
+ 15:37 <schopin> juliank: me too, this week.
+
+ 15:37 <ginggs> yes, i'll follow up
+
+ 15:37 <vorlon> juliank: are you still working on tzdata?
+
+ 15:37 <bdrung> btw, the casper autopkgtest seems to be flaky
+
+ 15:38 <juliank> vorlon: I don't think I ever started, I forgot to put it into the pulse or something
+
+ 15:38 <juliank> so I will start working on it :D
+
+ 15:38 <vorlon> juliank: ok
+
+ 15:39 <vorlon> schopin, ginggs: I also still see combblas/armhf, h5py/armhf and mumax3/arm64 autopkgtest regressions outstanding on this report, are those being worked on?
+
+ 15:40 <ginggs> combblas, h5py are all MPI related
+
+ 15:40 <schopin> first two are MPI-related
+
+ 15:40 <vorlon> ubiquity I'm giving back to mwhudson, I think we triaged this to needing another git dance with tzsetup from Debian; if he's not going to work on it he can pass it on to someone else
+
+ 15:40 <schopin> mumax is being worked on by mitchdz right now, it's presumably nvcc weirdness.
+
+ 15:41 <vorlon> ginggs, schopin: ack.  Are we going to hold up for a resolution on mumax3 before migrating?
+
+ 15:41 <bdrung> vorlon, https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/2031838 the ticket for ubiquity
+
+ 15:41 <vorlon> systemd: enr0n are you folliwng through on this?
+
+ 15:41 <enr0n> vorlon: yes
+
+ 15:42 <vorlon> krb5, I'll take
+
+ 15:42 <vorlon> s390-tools needs unapproved processing by an AA, I'll sort it
+
+ 15:42 <ginggs> i don't think we need to wait for a fix for mumax3, but if we want, a quick fix would be to make it amd64 only, it is not built on arm64 in debian, and did not build in jammy
+
+ 15:42 <slyon> vorlon: it also needs MIR
+
+ 15:43 <vorlon> slyon: which, s390-tools?
+
+ 15:43 <slyon> yes
+
+ 15:43 <vorlon> new dep?
+
+ 15:43 <slyon> pulling in some of the rust ecosystem
+
+ 15:43 <slyon> https://bugs.launchpad.net/ubuntu/+source/s390-tools/+bug/2030482
+
+ 15:43 <vorlon> well I'll let the MIR be Frank's problem
+
+ 15:43 <schopin> ACtually it's mine, but sure :)
+
+ 15:43 <vorlon> anyway, that's everything - long list of packages on here but mostly just waiting for glibc
+
+ 15:44 <vorlon> juliank:
+
+ 15:45 <juliank> #topic AOB
+
+ 15:45 <juliank> any other business?
+
+ 15:45 <vorlon> ginggs: I agree with ignoring mumax3 autopkgtest regression and if it ftbfs we can just remove the arm64 binaries in parallel
+
+ 15:45 <bdrung> https://autopkgtest.ubuntu.com/request.cgi?release=mantic&arch=amd64&package=casper&trigger=initramfs-tools/0.142ubuntu12 gave me a "A server error occurred.  Please contact the administrator."
+
+ 15:45 <juliank> oh apparently I might have to take Monday half? off, seems a friend is going to be here
+
+ 15:46 <ginggs> vorlon: i've confirmed mumax3 does already FTBFS on arm64
+
+ 15:46 <ginggs> do we need to make it Architecture: amd64 ?
+
+ 15:46 <bdmurray> the administrators are looking at it
+
+ 15:46 <slyon> bdrung: see QA channel in MM
+
+ 15:46 <vorlon> schopin: oh krb5 is missing strlcat/strlcpy symbols, can I sync with you quickly afterwards about this?
+
+ 15:46 <bdrung> i might do the same as juliank on monday (family visit)
+
+ 15:47 <schopin> vorlon: sure.
+
+ 15:47 <zhsj> vorlon: this is already be discussed on Debian bug #1043184
+
+ 15:47 <vorlon> zhsj: thanks for the pointer
+
+ 15:49 <juliank> I think that wraps it up here
+
+ 15:49 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

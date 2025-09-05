@@ -1,0 +1,498 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 04 Aug at 15:02 &mdash; 15:34 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-08-04-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:32.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (63)
+ * sil2100 (42)
+ * cyphermox (32)
+ * robru (18)
+ * ubottu (13)
+ * tdaitx (12)
+ * xnox (11)
+ * doko (11)
+ * bdmurray (10)
+ * chiluk (5)
+ * barry (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Thu Aug  4 15:02:34 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk mwhudson)
+
+ 15:03 <slangasek> bdmurray pitti mwhudson robru chiluk barry cyphermox infinity xnox slangasek doko caribou tdaitx sil2100
+
+ 15:03 <slangasek> and... go
+
+ 15:03 <sil2100> Phew, will have time to prep my notes at least
+
+ 15:03 <bdmurray> irc discussion regarding the haproxy charm, switched one being used
+
+ 15:03 <bdmurray> worked on utilizing swift for ET code storage in mojo spec
+
+ 15:03 <bdmurray> worked on RT re Lift and shift error-tracker staging environment
+
+ 15:03 <bdmurray> updated meta-release files for X point release and W EOL
+
+ 15:04 <bdmurray> ubuntu-release-upgrader bug triage
+
+ 15:04 <bdmurray> reported, fixed update-manager bug regarding hwe-support-status (LP: #1607983)
+
+ 15:04 <ubottu> Launchpad bug 1607983 in update-manager (Ubuntu Precise) "hwe-support-status --show-replacements shows replacements that are installed" [Low,Triaged] https://launchpad.net/bugs/1607983
+
+ 15:04 <bdmurray> built, tested, uploaded update-manager w/ HWE support for Trusty
+
+ 15:04 <bdmurray> ✔ done
+
+ 15:04 <bdmurray> research into adding update-notifier hwe support for Trusty
+
+ 15:05 <slangasek> pitti is off
+
+ 15:05 <slangasek> mwhudson is in the shadow of the sun
+
+ 15:05 <slangasek> robru:
+
+ 15:05 <robru> ah
+
+ 15:05 <robru> lp:bileto
+
+ 15:05 <robru> * big cache expiry cleanup. better logging, more aggressive purging, purging some caches that were previously overlooked and growing without bound
+
+ 15:05 <robru> * pretty display for merge targets when there are too many
+
+ 15:05 <robru> * fix race condition when deciding when to branch and when to pull local bzr caches
+
+ 15:05 <robru> * fix discovery of arches to consider for regressions when overlay PPA supports fewer arches than distro
+
+ 15:05 <robru> * serialize some overly-parallelized 'bzr missing' invocations that were hammering LP too hard
+
+ 15:05 <robru> * decrease status updater from 15 minutes to 20 minutes also due to too-high load
+
+ 15:05 <robru> * new page that only shows failure logs now that status job is spamming the "all logs" page
+
+ 15:05 <robru> * make britney skip QA-approved tickets in addition to the already skipped britney-approved tickets, halving britney run time from 1hr to 30 minutes.
+
+ 15:05 <robru> * fix race condition where status job reports stale status too soon after build job triggered, so people stop getting confused and building twice in a row for no reason
+
+ 15:05 <robru> * change instance_id from uuid to md5sum of html/js/css assets so forced page reloads stop happening when assets haven't changed
+
+ 15:05 <robru> * several iterations on CSS based on user feedback; now status/signoffs have independant coloring, and icons, rather than trying to choose one color based on the whole ticket status
+
+ 15:06 * xnox shakes fist at the sun shadow
+
+ 15:07 <slangasek> robru: cache expiry cleanup> so things that were being cached that should have been cleaned up when a ticket was closed out (landed/dropped) but weren't?
+
+ 15:07 <chiluk> lp 1607920 : zfs failure on first boot due to missing /etc/mtab.  Will be fixing upstream to use /proc/self/mounts, and then SRU back into Ubuntu.
+
+ 15:07 <chiluk> Vacation Monday, Tuesday, off again Friday (lasik)
+
+ 15:07 <chiluk> -done-
+
+ 15:07 <ubottu> Launchpad bug 1607920 in zfs-linux (Ubuntu) "zfs services fail on firstboot if zfs-utils is integrated into the deployment image" [Undecided,New] https://launchpad.net/bugs/1607920
+
+ 15:07 <barry> ubuntu-image: gadget.yaml branch; snap weld branch; test fixing branches; more-parsing branch; LP: #1605434
+
+ 15:07 <ubottu> Launchpad bug 1605434 in Ubuntu Image "testsuite calls 'snap weld' multiple times" [High,In progress] https://launchpad.net/bugs/1605434
+
+ 15:07 <slangasek> "missing /etc/mtab" pff ancient software
+
+ 15:07 <barry> debuntu: voluptuous 0.9.2-1, 9.3-1, syncpackage; xonsh 0.4.4+dfsg-1 sponsorship; zope.interface 4.2.0-2
+
+ 15:07 <barry> --done--
+
+ 15:08 <chiluk> yeah.. it should've been fixed long ago.
+
+ 15:08 <robru> slangasek: yeah some lplib cache files were being kept forever, that got up to 200MBs until I started pruning it, also it was keeping britney indexes forever eg so we had trusty index files despite the fact that no trusty tickets were using britney for a while, so I started cleaning those up
+
+ 15:08 <chiluk> but there's a lot of logic around it and processing it.
+
+ 15:08 <slangasek> robru: oh interesting, I thought lplib did its own cache management properly
+
+ 15:08 <slangasek> well, I mean, I wouldn't be surprised if I have a 200MB cache here :)
+
+ 15:09 <robru> slangasek: yeah that was my assumption too but I've been watching the lplib cache expand for a long time, it started at 2MBs and just got bigger and bigger
+
+ 15:09 <robru> slangasek: it was growing by about 2MBs/day, now I delete all files older than 24 hours and the size hovers at 120MB
+
+ 15:10 <slangasek> cyphermox:
+
+ 15:10 <cyphermox> yup
+
+ 15:10 <cyphermox> MIR:
+
+ 15:10 <cyphermox> - review barbican (bug LP: #1543754)
+
+ 15:10 <cyphermox> - review content-hub (bug LP: #1597453)
+
+ 15:10 <sil2100> Didn't know lplib was such a beast
+
+ 15:10 <ubottu> Launchpad bug 1543754 in barbican (Ubuntu) "[MIR] barbican, python-pykmip" [High,In progress] https://launchpad.net/bugs/1543754
+
+ 15:10 <cyphermox> - review libpod-constants-perl
+
+ 15:10 <ubottu> Launchpad bug 1597453 in content-hub (Ubuntu) "[MIR] content-hub" [Undecided,Incomplete] https://launchpad.net/bugs/1597453
+
+ 15:10 <cyphermox> - review network-manager-openvpn (bug LP: #1574576)
+
+ 15:10 <ubottu> Launchpad bug 1574576 in network-manager-openvpn (Ubuntu) "[MIR] network-manager-openvpn" [High,Fix committed] https://launchpad.net/bugs/1574576
+
+ 15:10 <cyphermox> trusty:
+
+ 15:10 <cyphermox> - NVMe SRU for ubiquity installer (bug LP: #1600308)
+
+ 15:10 <ubottu> Launchpad bug 1600308 in ubiquity (Ubuntu Xenial) "ubiquity targets invalid device name with nvme disks, fails to install grub" [Medium,In progress] https://launchpad.net/bugs/1600308
+
+ 15:10 <cyphermox> xenial:
+
+ 15:10 * bdmurray thought everybody knew
+
+ 15:10 <robru> sil2100: bileto uses it rather aggressively
+
+ 15:10 <cyphermox> - grub2 efi ipv6 patch backports (bug LP: #1229458)
+
+ 15:10 <ubottu> Launchpad bug 1229458 in grub2-signed (Ubuntu Xenial) "grubnetx64.efi tftp client does not work over ipv6" [High,In progress] https://launchpad.net/bugs/1229458
+
+ 15:10 <cyphermox> yakkety:
+
+ 15:10 <cyphermox> - merge / review choose-mirror
+
+ 15:10 <slangasek> yay phone MIRs \o/
+
+ 15:10 <cyphermox> - packagekit 1.1.1 no-change rebuilds
+
+ 15:10 <cyphermox> - discussion/planning shim work with pjones
+
+ 15:10 <cyphermox> - review ubiquity gtk3.20 changes from Laney
+
+ 15:10 <cyphermox> - fixup ubiquity ftbfs and error in nvme regex
+
+ 15:11 <cyphermox> - investigated porting click to packagekit 1.1.1
+
+ 15:11 <cyphermox> - looks like maybe just a no-change rebuild will do, have yet to test from a PPA package
+
+ 15:11 <robru> my local lplib cache is only 18MBs, heh
+
+ 15:11 <cyphermox> other stuff:
+
+ 15:11 <cyphermox> - setting up snap build for canonical-foundations
+
+ 15:11 <cyphermox> - shim Secure Boot prompting improvements (bug LP: #1595611, bug LP: #1604936)
+
+ 15:11 <ubottu> Launchpad bug 1595611 in shim-signed (Ubuntu Xenial) "Improve prompting for Secure Boot password" [Critical,In progress] https://launchpad.net/bugs/1595611
+
+ 15:11 <cyphermox> - some NetworkManager DNS issue with VPNs not in split-tunnelling.
+
+ 15:11 <ubottu> Launchpad bug 1604936 in shim-signed (Ubuntu Xenial) "Please document command-line options with --help and when called incorrectly" [Medium,In progress] https://launchpad.net/bugs/1604936
+
+ 15:11 <cyphermox> - helped out slashd with packaging issues (mostly answering questions)
+
+ 15:11 <cyphermox> - waiting for a shim signature
+
+ 15:11 <cyphermox> yeah, phone MIRs, I'm a bit behind in reviewing MIRs so I took a bite from my list :)
+
+ 15:11 <cyphermox> (done)
+
+ 15:12 * sil2100 gently pokes infinity
+
+ 15:12 <slangasek> cyphermox: don't know if it's been mentioned anywhere to you, but the goal from the client side is to have the unity8 stack on the desktop image as a non-default session by 16.10, so there'll be a few more MIRs coming :)
+
+ 15:13 <cyphermox> slangasek: I know! no problem, I don't mind reviewing them
+
+ 15:13 <slangasek> right :)
+
+ 15:13 <sil2100> We moving unity8 stuff to main now?
+
+ 15:13 <slangasek> sil2100: yes
+
+ 15:13 <cyphermox> it takes a bit of time, maybe I'm a little more thorough than I should by doing some code review, but hey
+
+ 15:13 <sil2100> Wow, didn't hear there was a final decision to do that now finally
+
+ 15:13 <sil2100> I might want to help with that
+
+ 15:13 <slangasek> long overdue, and the security team has been looped in to triage things globally wrt what is going to need deep security review and when
+
+ 15:14 * slangasek pokes infinity less gently than sil2100
+
+ 15:14 <cyphermox> he wasn't responding earlier, but he pinged me at some insane hour
+
+ 15:14 <xnox> ..
+
+ 15:14 <xnox> boost1.61 update prepared for gcc+icu transition
+
+ 15:14 <xnox> openssl enable asm and apply fixes lp #1601836 also requested the same to be done in debian (maintainers are agreeable to the idea)
+
+ 15:14 <xnox> generate cloud images appx for Ubuntu on Windows
+
+ 15:14 <xnox> 14.04 point release testing (nvme)
+
+ 15:14 <ubottu> Launchpad bug 1601836 in Ubuntu on IBM z Systems "Openssl libcrypto performance issue" [High,Triaged] https://launchpad.net/bugs/1601836
+
+ 15:14 <xnox> sru validation
+
+ 15:14 <xnox> upcoming helping with boost/gcc/icu transition
+
+ 15:14 <xnox> ..
+
+ 15:15 <xnox> .... clearly enabling asm optimisations never causes regressions =) *caugh* but testing so far is solid and everyone else has it enabled
+
+ 15:16 <slangasek> xnox: was the '..' a 'done'?
+
+ 15:16 <cyphermox> isn't it an escape in some weird terminal thing?
+
+ 15:16 <slangasek> xnox, doko: I noticed the thread discussing ABI incompatibilities between gcc5 and gcc6... I think we're going to need to dig into this wrt phone stack ABIs
+
+ 15:17 <slangasek> (not here and now, but imminently)
+
+ 15:17 <slangasek> cyphermox: 8270?
+
+ 15:17 <slangasek> * last week: CDO midcycle sprint
+
+ 15:17 <slangasek> * lightning talk demo of snappy first boot experience, it was pretty snappy!
+
+ 15:17 <slangasek> * discussions around snappy support on 14.04
+
+ 15:17 <slangasek> * Monday: travel swap
+
+ 15:17 <slangasek> * Tuesday: email catch-up
+
+ 15:17 <slangasek> * Wednesday: sick day
+
+ 15:17 <slangasek> * next:
+
+ 15:17 <slangasek> * continued mid-cycle braindump
+
+ 15:17 <cyphermox> slangasek: sorry, I 404.
+
+ 15:17 <slangasek> * continued email catch-up
+
+ 15:17 <slangasek> * ubuntu-image
+
+ 15:17 <slangasek> (done)
+
+ 15:17 <xnox> slangasek, we know boost-regexp is bust, and autopkgtest shows that possibly some kdelibs are bust too. Apperantly they have fixed the bugs in abi-tagging in nested templates or something.
+
+ 15:18 <doko> - GCC 6 now the default
+
+ 15:18 <doko> - gcc 4.9.4 release, package update, gcc 5.4.1 package update
+
+ 15:18 <doko> - boost 1.61 transition
+
+ 15:18 <doko> - fixing build failures related to GCC 6 and boost 1.61
+
+ 15:18 <doko> - pinging people about fixing build failures ...
+
+ 15:18 <doko> - openjdk-8 update
+
+ 15:18 <doko> (done)
+
+ 15:18 <slangasek> xnox: sure; but where "fixed bug" == "break compatibility", we need to have a plan :)
+
+ 15:18 <doko> slangasek, but it will be ugly in any case
+
+ 15:18 <slangasek> it sounds like the gcc6 + boost 1.61 build failures should now be fixed en masse? yes?
+
+ 15:19 <doko> yes, there are "some".
+
+ 15:19 <doko> but let's first finish the transition rebuilds, see http://people.canonical.com/~ubuntu-archive/transitions/html/boost1.61.html
+
+ 15:19 * slangasek nods
+
+ 15:20 <slangasek> doko: so I suppose once boost has cleared we want to revisit what's still broken that the phone team needs to look at?
+
+ 15:20 <slangasek> meanwhile
+
+ 15:20 <slangasek> no caribou
+
+ 15:20 <slangasek> tdaitx:
+
+ 15:20 <tdaitx> = OpenJDK security update
+
+ 15:20 <tdaitx> - Packaged IcedTea 2.6.7 into openjdk-7-7u111-2.6.7 for Trusty and Precise; tested and provided packages to the security team
+
+ 15:20 <tdaitx> * Had to retry ARM64 build on Trusty 6 times until gcc/g++ didn't segfault (happens on every update as the PPA must use only the -security pocket, version on -updates works fine); tips on how to fix that?
+
+ 15:20 <tdaitx> - Working on 2 regressions from the security updates:
+
+ 15:20 <tdaitx> * JAMVM regression on OpenJDK 7u111
+
+ 15:20 <tdaitx> * OpenJDK 8u101 Zero VM on armhf (LP: #1609190)
+
+ 15:20 <ubottu> Launchpad bug 1609190 in openjdk-8 (Ubuntu) "/usr/lib/jvm/java-8-openjdk-armhf/jre/bin/java:6:BytecodeInterpreter::run:CppInterpreter::main_loop:CppInterpreter::normal_entry:ZeroEntry::invoke:Interpreter::invoke_method" [Undecided,New] https://launchpad.net/bugs/1609190
+
+ 15:20 <tdaitx> = AOB
+
+ 15:20 <tdaitx> - Trying to figure out why Network Manager can't restart openvpn when ping-restart is set (seems to be missing the up script or dependencies in the chroot, still debugging that, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=667611#20); cyphermox, help? =)
+
+ 15:20 <ubottu> Debian bug 667611 in network-manager-openvpn "n-m-openvpn shuts down VPN when openvpn soft-restarts" [Normal,Open]
+
+ 15:20 <doko> slangasek, yes, they have a list, and are apparently starting to fix things
+
+ 15:20 <tdaitx> - Provider will install landline/adsl tomorrow morning (Friday)
+
+ 15:20 <tdaitx> (done)
+
+ 15:21 <slangasek> doko: ok good :)
+
+ 15:21 <cyphermox> oh, hai
+
+ 15:22 <sil2100> oh
+
+ 15:22 <sil2100> Me
+
+ 15:22 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:22 <sil2100> - RTM status meetings
+
+ 15:22 <sil2100> - Touch xenial:
+
+ 15:22 <sil2100> * Coordinating rebuilds of all core clicks for arm64
+
+ 15:22 <sil2100> * Modifying the livecd-rootfs build hooks to fetch arm64 from a different location
+
+ 15:22 <slangasek> tdaitx: tips on how to fix the -security gcc being broken> get the security team to pull that gcc into the security pocket for you? :)
+
+ 15:22 <sil2100> * Switching system-image to import the new arm64 rootfs - first frieza arm64 image!
+
+ 15:22 <sil2100> * Discussing fat-click-package future (consensus: wait for snaps?)
+
+ 15:22 <sil2100> - DMB meeting
+
+ 15:22 <sil2100> - Trying to refresh packagesets with the packageset script, output strange
+
+ 15:22 <sil2100> - Added mate-hub to the ubuntu-mate packageset
+
+ 15:22 <sil2100> - Releasing the modified goget-ubuntu-touch for new device support
+
+ 15:22 <sil2100> - Looking into backporting libboost1.58 to the overlay as per phone needs
+
+ 15:22 <sil2100> - Staging updated touch seeds to include new packages (indicator-keyboard, account-plugin-owncloud)
+
+ 15:22 <sil2100> - Started backporting golang-1.6 to the overlay as it seems to fix various issues
+
+ 15:22 <sil2100> - Finished work on switching generate-commitlog to the new bileto published_versions
+
+ 15:22 <sil2100> - Validating SRUs for xorg-server and mesa
+
+ 15:22 <sil2100> (got distracted, done)
+
+ 15:22 <tdaitx> slangasek, heh, I will poke them then
+
+ 15:22 <tdaitx> thanks
+
+ 15:23 <slangasek> tdaitx: they may say 'no', of course, but it's the right conversation to have :)
+
+ 15:23 <slangasek> sil2100: an arm64 image? woot!
+
+ 15:24 <sil2100> \o/
+
+ 15:24 <slangasek> sounds like you all had a very productive week without me
+
+ 15:24 <sil2100> Yeah, it doesn't boot quite yet, but it's because we didn't have a working device tarball
+
+ 15:24 <slangasek> should I go away more often? ;)
+
+ 15:24 <slangasek> any questions re: status?
+
+ 15:24 <sil2100> ondra assumed the armhf one should work ;p
+
+ 15:24 <sil2100> Not from me
+
+ 15:25 <slangasek> sil2100: backporting golang-1.6 to the overlay> that seems like it shouldn't be necessary to "backport" given that we have golang-1.6 as an SRU all the way back to trusty.  Do we just need to forward-copy to vivid/wily?
+
+ 15:26 <sil2100> Oh, might be a good idea then, yeah
+
+ 15:26 <sil2100> Didn't know we had that in trusty
+
+ 15:26 * sil2100 could have checked
+
+ 15:26 <sil2100> I mean, I rarely look 'backwards' for stuff ;)
+
+ 15:26 <sil2100> That would make things rather easy
+
+ 15:27 <slangasek> if we want to do it "properly" then we may have to re-bootstrap in each release; mwhudson would be the one to talk to about that
+
+ 15:28 <slangasek> otherwise, I would be ok in this case with just binary-copying forward from trusty to vivid+wily, provided that infinity won't stab me for this
+
+ 15:28 <sil2100> He's not here so I guess we can just do it, he won't notice ;p
+
+ 15:29 <slangasek> heh
+
+ 15:29 <slangasek> sil2100: anyway, fast path to avoid blocking on SRU process would be for you to just do binary copy from trusty to the overlay ppa; it's a completely new package so I *think* it should be safe to copy in without going through a silo
+
+ 15:30 <slangasek> but, of course, you should double-check that it's not going to clobber any other binary packages
+
+ 15:30 <sil2100> I wanted to do that through a silo so that I can do rebuilds of all the packages we need and see if those work ok on vivid
+
+ 15:30 <slangasek> ok
+
+ 15:30 <slangasek> then you can binary-copy to a silo instead of to the overlay :-)
+
+ 15:30 <sil2100> SInce we know that golang-1.6 fixed some issues for xenial, and possibly it will fix those on vivid too
+
+ 15:30 <sil2100> Will do, thanks :)
+
+ 15:31 <slangasek> are you intending to change the golang defaults, or just provide golang-1.6 as an alternative?
+
+ 15:31 <slangasek> the latter matches what's been done in trusty, and is probably easier to QA in pieces because only things you know are broken and need rebuilt have to opt-in
+
+ 15:31 <sil2100> Not sure yet, both ways would work fine as we want to use the new golang for all our touch go packages anyway
+
+ 15:32 <sil2100> But yeah, maybe it would be less troublesome to not do a change of defaults
+
+ 15:32 * slangasek nods
+
+ 15:32 <sil2100> THen we can have more control if anything is broken
+
+ 15:32 <sil2100> +1 on that idea then ;)
+
+ 15:32 <slangasek> cool
+
+ 15:32 <slangasek> [TOPIC] AOB
+
+ 15:33 <slangasek> anything else?
+
+ 15:34 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

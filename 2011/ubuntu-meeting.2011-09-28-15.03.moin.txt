@@ -1,0 +1,670 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:03:05 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-09-28-15.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-next-milestone-important-bug-tasks.html - important milestoned bug tasks  (slangasek, 15:07:42)
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:02:49 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (70)
+ * ev (59)
+ * cjwatson (50)
+ * ubottu (38)
+ * bdmurray (34)
+ * mvo_ (16)
+ * stgraber (16)
+ * jhunt (9)
+ * barry (6)
+ * mvo (4)
+ * meetingology (3)
+ * doko (1)
+
+
+
+== Full Log ==
+
+
+ 15:03:05 <slangasek> #startmeeting
+
+ 15:03:05 <meetingology> Meeting started Wed Sep 28 15:03:05 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:03:05 <meetingology> 
+
+ 15:03:05 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:03:14 <slangasek> [TOPIC] lightning round
+
+ 15:03:19 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt mvo ev bdmurray slangasek)
+
+ 15:03:22 <slangasek> stgraber mvo bdmurray jhunt ev doko slangasek barry cjwatson
+
+ 15:03:22 <slangasek> boom
+
+ 15:03:41 <stgraber> - Got rid of most of friendly-recovery's bugs, the rest will have to wait for P. (bug 524605, bug 782872, bug 852266, bug 777524)
+
+ 15:03:44 <stgraber> - Tracked bug 854967 down to a binary driver problem, hopefully gfxpayload blacklist will be updated to fix it
+
+ 15:03:45 <ubottu> Launchpad bug 524605 in friendly-recovery (Ubuntu) "Keyboard layout isn't configured by the time friendly-recovery starts" [Medium,Fix released] https://launchpad.net/bugs/524605
+
+ 15:03:47 <stgraber> - Starting poking at bug 745960 though couldn't reproduce it yet
+
+ 15:03:50 <stgraber> - Still trying to reproduce our "last" Edubuntu bug: bug 856460 but no luck so far
+
+ 15:03:52 <ubottu> Launchpad bug 782872 in friendly-recovery (Ubuntu) "Recovery mode is displayed in unreadable font" [Undecided,Fix released] https://launchpad.net/bugs/782872
+
+ 15:03:53 <ubottu> Launchpad bug 852266 in friendly-recovery (Ubuntu) "friendly-recovery spews noise about missing commands when /usr is a separate partition" [Low,Fix released] https://launchpad.net/bugs/852266
+
+ 15:03:53 <stgraber> - Worked on a fix for bug 848072
+
+ 15:03:55 <stgraber> - Did some upgrade testing for Edubuntu as we didn't have time to do it for beta2, didn't find any bug there
+
+ 15:03:57 <ubottu> Launchpad bug 777524 in friendly-recovery (Ubuntu Oneiric) "“Repair broken packages” option breaks with Python ≥ 2.6" [Medium,Fix released] https://launchpad.net/bugs/777524
+
+ 15:03:58 <stgraber> - On the side, did some work on porting the ISO tracker to Drupal 7. Will need some more work but at least for Launchpad integration working and am now a lot more familiar with Drupal 7 API.
+
+ 15:04:01 <ubottu> Launchpad bug 854967 in nvidia-graphics-drivers-updates (Ubuntu) "boot to rescue mode in Oneiric" [Undecided,Triaged] https://launchpad.net/bugs/854967
+
+ 15:04:02 <stgraber> - TODO
+
+ 15:04:05 <ubottu> Launchpad bug 745960 in grub2 (Ubuntu Oneiric) "Cannot boot grub after installing to LVM" [High,Confirmed] https://launchpad.net/bugs/745960
+
+ 15:04:05 <stgraber> - Will do a bunch of uploads for translations update before final freeze
+
+ 15:04:06 <ubottu> Launchpad bug 856460 in ltsp (Ubuntu) "ltsp-live fails to configure internal NIC" [High,New] https://launchpad.net/bugs/856460
+
+ 15:04:07 <ubottu> Launchpad bug 848072 in netcfg (Ubuntu) "[oneiric] net-installer dhcp client fails with a DHCPDECLINE" [Medium,Confirmed] https://launchpad.net/bugs/848072
+
+ 15:04:08 <stgraber> - Will then continue going through milestoned ubiquity bugs and fix as many of them
+
+ 15:04:27 <stgraber> oh, and did some patch piloting last Thursday
+
+ 15:04:28 <stgraber> (done)
+
+ 15:05:18 <mvo_> did:
+
+ 15:05:18 <mvo_> summary: lots and lots of debugging/fixing
+
+ 15:05:18 <mvo_> python-apt: fix bug #829284 once and for all via new ParentComponent concept in python-apt
+
+ 15:05:18 <mvo_> aptdaemon: debug/fix/upload new version with fix for bug #659111
+
+ 15:05:18 <mvo_> software-center: trying to verify remaining proxy issue, can't reproduce (#545134), port to the new UbuntuSSOClient API, tentative fix for  #857931, integrate lp:~mvo/software-center/review-stats-as-dbm for unity, debug/fix #651568 (turns out to be a bug in sun-java6), prepare debdiff, get in touch with brian
+
+ 15:05:20 <ubottu> Launchpad bug 829284 in python-apt (Ubuntu) "Software Center does not enable "universe" when it enables "multiverse" software sources of dependencies" [High,Fix released] https://launchpad.net/bugs/829284
+
+ 15:05:21 <mvo_> piston-mini-client: add proxy support, review branch from achuni, merge, upload new piston-mini-client to oneiric,
+
+ 15:05:22 <ubottu> Launchpad bug 659111 in aptdaemon (Ubuntu) "Installing then removing Monodevelop reports "the package system is broken"" [High,Fix released] https://launchpad.net/bugs/659111
+
+ 15:05:24 <mvo_> update-notifier: look at app indicator port for update-notifier (lp:~mvo/update-notifier/app-indicator-port
+
+ 15:05:27 <mvo_> update-manager: look at #854622 again (changelog.Debian.gz no-duplicaton)
+
+ 15:05:29 <mvo_> apt: work on regression test for apt-key net-update, net-update security issue, debug/diagnose/upload fix for #854090
+
+ 15:05:32 <mvo_> misc: patch piloting
+
+ 15:05:34 <mvo_> EOF
+
+ 15:05:57 <mvo_> stgraber: thanks for the friendly-recovery fixes!!!
+
+ 15:06:07 <bdmurray> since I missed last weeks meeting this covers some of that period
+
+ 15:06:12 * slangasek drowns in stgraber's list of bugs
+
+ 15:06:21 <bdmurray> bug triage of foundations team iso-testing bugs
+
+ 15:06:22 <bdmurray> bug pattern writing for bug 854090 and investigation into it and bug 859976
+
+ 15:06:24 <ubottu> Launchpad bug 854090 in update-manager (Ubuntu Oneiric) "aptd crashed with SIGSEGV in debListParser::LoadReleaseInfo()" [Medium,In progress] https://launchpad.net/bugs/854090
+
+ 15:06:24 <bdmurray> discovered an issue with bugpatterns not working because OriginalTitle is not known when an apport bug is being reported - it is only defined when downloading  a bug title
+
+ 15:06:26 <ubottu> Launchpad bug 854090 in update-manager (Ubuntu Oneiric) "duplicate for #859976 aptd crashed with SIGSEGV in debListParser::LoadReleaseInfo()" [Medium,In progress] https://launchpad.net/bugs/854090
+
+ 15:06:27 <bdmurray> fixed all existing patterns and emailed bug control
+
+ 15:06:38 <bdmurray> investigation into ntfs resize errors and ntfs-3g bug reports
+
+ 15:06:38 <bdmurray> plymouth apport package hook modification fixing bug 860371 (gather more log files)
+
+ 15:06:39 <ubottu> Launchpad bug 860371 in apport (Ubuntu) "apport should save boot.log for plymouth crashes" [Medium,Fix committed] https://launchpad.net/bugs/860371
+
+ 15:06:41 <bdmurray> modification of apport package hook for debian-installer to properly collect dm information (LP: #856826)
+
+ 15:06:44 <bdmurray> added active_milestones to distro_series in lpltk
+
+ 15:06:47 <bdmurray> wrote an important milestoned bug tasks report for slangasek and other engineering teams
+
+ 15:06:50 <bdmurray> html report of recently important bug tasks
+
+ 15:06:54 <bdmurray> created an html version of the assigned old in progress bug tasks report                                                                                        created html version of report of team-left-closed bug tasks report
+
+ 15:06:58 <bdmurray> you can find links to all reports at http://reports.qa.ubuntu.com/reports/
+
+ 15:07:01 <bdmurray> irc discussion regarding crichton and patch subscription
+
+ 15:07:04 <bdmurray> wrote and sent trip report from OReilly Strata Conference
+
+ 15:07:06 <bdmurray> work on role and responsibilities of the defect analysts
+
+ 15:07:09 <bdmurray> done
+
+ 15:07:17 <jhunt> On holiday last week. Fixed a trying bug in the upstart job logging code
+
+ 15:07:17 <jhunt> which will allow an updated ppa build this week (although still need to
+
+ 15:07:17 <jhunt> finish some tests). Currently working on bugs 849414, 829980 and 849414.
+
+ 15:07:18 <jhunt> ⏎
+
+ 15:07:19 <ubottu> Launchpad bug 849414 in plymouth (Ubuntu) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Incomplete] https://launchpad.net/bugs/849414
+
+ 15:07:20 <stgraber> mvo_: no prob, hopefully I can spend some more time on it for 12.04 so we can get a rocking recovery mode for the LTS
+
+ 15:07:21 <ubottu> Launchpad bug 829980 in upstart (Ubuntu) "upstart-udev-bridge eats 100% cpu calling dbus_message_iter_append_basic()" [Medium,Confirmed] https://launchpad.net/bugs/829980
+
+ 15:07:42 <slangasek> [LINK] reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-next-milestone-important-bug-tasks.html - important milestoned bug tasks
+
+ 15:08:01 <jhunt> stgraber: I'm keen to help out with that too.
+
+ 15:08:03 <slangasek> bdmurray: it occurs to me that it would be nice to show the assignee on there too, btw
+
+ 15:08:31 <stgraber> jhunt: cool, definitely worth a session in Orlando then
+
+ 15:08:42 <jhunt> stgraber: agreed!
+
+ 15:08:43 <bdmurray> slangasek: got it
+
+ 15:08:44 <cjwatson> it'd be lovely for all reports.qa pages to show a timestamp of when the report was generated
+
+ 15:09:40 <stgraber> oh, speaking of reports, I now have: http://people.canonical.com/~stgraber/package_sets/ if someone's wondering what's in our package sets (and doesn't want to play with edit_acl.py)
+
+ 15:11:24 <slangasek> bdmurray: ^^ agree with cjwatson; for that matter, embedding a link to the source would be nice
+
+ 15:11:45 <bdmurray> I've todo'ed the timestamp
+
+ 15:11:55 <slangasek> ev:
+
+ 15:12:01 <ev> - Fixed live-build to include universe and friends on Wubi disk images
+
+ 15:12:01 <ev> (855301).
+
+ 15:12:02 <ev> - Call with Hugh and others on the employee survey.
+
+ 15:12:02 <ev> - Fixed locale issues with Wubi disk images (855295).
+
+ 15:12:02 <ev> - Fixed timezone issues with Wubi disk images (855287).
+
+ 15:12:02 <ev> - Fixed release notes update installer links being displayed when there isn't
+
+ 15:12:03 <ev> a network connection (856213).
+
+ 15:12:09 <ev> - Fighting Wubi test harness and fixing bug (856340).
+
+ 15:12:09 <ev> - Repaint the wallpaper in ubiquity by entering the GTK main loop (854179).
+
+ 15:12:09 <ev> - Fought ubiquity tests build failures, pygobject 3 to blame (854179).
+
+ 15:12:10 <ev> - Replied to HP regarding customizing the installer.
+
+ 15:12:10 <ev> - Reviewing developer.ubuntu.com at the request of the web team before it went
+
+ 15:12:10 <ev> live.
+
+ 15:12:18 <ev> - Set ATK names only when using --ldtp in ubiquity (781385).
+
+ 15:12:18 <ev> - UBUNTU IS PEOPLE! (855685).
+
+ 15:12:18 <ev> - Fixed Wubi not using a local ISO (bad refactoring, yay) (842397).
+
+ 15:12:19 <ev> - Fighting with canonical-arm on oem-config-gtk (820514).
+
+ 15:12:19 <ev> - Trying to get to the bottom of the apt lock bug (743395). A few attempts at
+
+ 15:12:19 <ev> fixing it made.
+
+ 15:12:24 <ev> - Meeting with Iain, Matthew, and John on changes to the downloads page 11.10.
+
+ 15:12:25 <ev> - Evening fun hacking on the metrics collection backend and Wubi frontend
+
+ 15:12:25 <ev> using nodejs and MongoDB.  Working prototype \o/ and I'll have a Vagrant
+
+ 15:12:25 <ev> configuration (VirtualBox + puppet/chef: http://vagrantup.com/) in a public
+
+ 15:12:25 <ev> branch soon, if you want to get your own projects hooked into it.
+
+ 15:12:26 <ev> - Fixed some bugs caught by unit tests.
+
+ 15:12:29 <ev> - Merged and pushed out a new slideshow with updated screenshots for the
+
+ 15:12:29 <ev> latest desktop changes.
+
+ 15:12:29 <ev> - Reviewing Colin's async geonames branch
+
+ 15:12:29 <ev> (https://code.launchpad.net/~cjwatson/ubiquity/libsoup-timezone/+merge/77324).
+
+ 15:12:31 <ev> done!
+
+ 15:13:41 <jhunt> that's a lot of fightin' :)
+
+ 15:13:57 <ev> :)
+
+ 15:14:06 <mvo_> yeah, really impressive list!
+
+ 15:14:31 <ev> thanks!
+
+ 15:15:24 <slangasek> ah, soylent ubuntu
+
+ 15:15:48 <slangasek> doko: did you make it back in time?
+
+ 15:15:49 <ev> I'm working on reanimating Heston
+
+ 15:16:27 <slangasek> guess not, so I'll dump doko's status here for him
+
+ 15:16:34 <slangasek> - more ftbfs fixes, although the pace slows down (~30).
+
+ 15:16:34 <slangasek> - sponsoring ftbfs fixes, ftbfs related archive removals
+
+ 15:16:34 <slangasek> - fixed some armel ftbfs (linker related and fpc related)
+
+ 15:16:38 <slangasek> - openjdk-6 JamVM update (please expect an openjdk-7 update still this week)
+
+ 15:16:41 <slangasek> - 853688, no real solution yet. proposed to fix the
+
+ 15:16:45 <slangasek> original issue in command-not-found
+
+ 15:16:45 <slangasek> - bug triage on some issues
+
+ 15:16:51 <slangasek> - scanned the armel ftbfs, no new binutils/gcc related issues found
+
+ 15:16:51 <slangasek> - eglibc update (maybe one more needed: 861132)
+
+ 15:16:54 <slangasek> - addressed (too) late linking changes in the gtk/gnome uploads on #debian-release.
+
+ 15:17:13 <slangasek> bug #853688
+
+ 15:17:15 <ubottu> Launchpad bug 853688 in gcj-4.4 (Ubuntu Oneiric) "Natty to Oneiric - failed to calculate the upgrade with gcj-4.4-jre installed" [High,Triaged] https://launchpad.net/bugs/853688
+
+ 15:17:21 <slangasek> bug #861132
+
+ 15:17:22 <ubottu> Launchpad bug 861132 in eglibc "setenv ("NAME", NULL) corrupts environment" [Medium,Confirmed] https://launchpad.net/bugs/861132
+
+ 15:20:04 <slangasek> and then me
+
+ 15:20:14 <slangasek> pushed changes to gdm,lightdm,plymouth to give us text-free shutdown again (bug #854329).  If you still see dots over text, report bugs!
+
+ 15:20:15 <ubottu> Launchpad bug 854329 in xdm (Ubuntu Oneiric) "race condition on shutdown with more than one DM installed" [Low,Triaged] https://launchpad.net/bugs/854329
+
+ 15:20:17 <slangasek> fixed up i18n for console-setup (bug #838669)
+
+ 15:20:18 <ubottu> Launchpad bug 838669 in ubiquity (Ubuntu) "Keep default layout dialog is not localized in Finnish" [Undecided,Confirmed] https://launchpad.net/bugs/838669
+
+ 15:20:22 <slangasek> did some thinking about apt-key over the weekend, helping to come up with a plan
+
+ 15:20:25 <slangasek> qemu-linaro FFe, fixing FTBFS
+
+ 15:20:30 <slangasek> fixing up flashplugin-nonfree maintainer scripts
+
+ 15:20:33 <slangasek> upload dpkg to catch all the stragglers still missing multiarch on their systems (bug #846451)
+
+ 15:20:34 <ubottu> Launchpad bug 846451 in dpkg (Ubuntu) "upgrades from oneiric beta-1 installs missing multiarch support" [High,Fix released] https://launchpad.net/bugs/846451
+
+ 15:21:04 <slangasek> convert jackd2 to multiarch at the eleventh hour because I converted the wrong libjack before (bug #861025); still regression-testing the archive for buildability
+
+ 15:21:05 <ubottu> Launchpad bug 861025 in jackd2 (Ubuntu) "FFe: I don't know jack, need to multiarch jackd2" [High,Fix released] https://launchpad.net/bugs/861025
+
+ 15:21:12 <slangasek> spent some time helping with FFe reviews
+
+ 15:21:14 <slangasek> (done)
+
+ 15:21:20 <ev> slangasek: will ubiquity-dm need anything for that text-free shutdown?
+
+ 15:22:12 <barry> bug 795096 (turbojson ftbfs - python-peak.util update); bug 850744 (quickly crash after upgrade); bug 832782 (python-omniorb ftbfs); bug 835008 (nipype ftbfs); gtimelog 0.7 release (upstream and ubuntu); bug 831344 (cardstories ftbfs); merge python-defaults from debian; python security issue 7732 (imp.find_module crasher); todo: continue on 795096 and 850744, other ftbfs. done.
+
+ 15:22:17 <ubottu> Launchpad bug 795096 in turbojson (Ubuntu Oneiric) "FTBFS with Python 2.7 as default" [High,Triaged] https://launchpad.net/bugs/795096
+
+ 15:22:18 <ubottu> Launchpad bug 850744 in quickly (Ubuntu) "quickly crashed with ImportError in __main__: No module named quickly" [High,Confirmed] https://launchpad.net/bugs/850744
+
+ 15:22:19 <ubottu> Launchpad bug 832782 in python-omniorb (Ubuntu Oneiric) "python-omniorb version 3.5-3 failed to build in oneiric" [High,Fix released] https://launchpad.net/bugs/832782
+
+ 15:22:20 <ubottu> Launchpad bug 835008 in nipype (Ubuntu Oneiric) "nipype version 0.4.1-1 failed to build in oneiric" [High,Fix released] https://launchpad.net/bugs/835008
+
+ 15:22:21 <ubottu> Launchpad bug 831344 in cardstories (Debian) "cardstories version 1.0.6-1 failed to build in oneiric" [Unknown,New] https://launchpad.net/bugs/831344
+
+ 15:22:53 <cjwatson> some cross-build fixes
+
+ 15:22:53 <cjwatson> gfxboot-theme-ubuntu: Lubuntu localisation (bug 855977)
+
+ 15:22:53 <cjwatson> d-i: handle /dev/zram* the same way as /dev/ramzswap*; fix a collection of Xen installation bugs (bug 720558, bug 857548, bug 857662); netcfg hostname fix (bug 856088); installation-guide update; working on bug 851704; fixed up i18n for console-setup harder :-) (bug 860562)
+
+ 15:22:55 <ubottu> Launchpad bug 855977 in gfxboot-theme-ubuntu (Ubuntu) "Entries with "Lubuntu" are not translated on the boot menu on any Lubuntu ISO" [Undecided,Fix released] https://launchpad.net/bugs/855977
+
+ 15:22:58 <cjwatson> grub: fix arcane linking bug (bug 837815)
+
+ 15:22:59 <slangasek> ev: the particular problem being fixed was that if there were two DMs installed on a system that had been upgraded (e.g., lightdm+gdm), one of these will stop at *startup*, so plymouth starts as soon as the runlevel event happens.  I don't think ubiquity-dm is affected by this
+
+ 15:23:00 <cjwatson> ubiquity: working on networkless hang on timezone page (bug 837217) - incidentally, by contrast with the mumble discussion, I found the GI Soup interface perfectly reasonable :-)
+
+ 15:23:01 <ubottu> Launchpad bug 720558 in grub (Ubuntu Natty) "Ubuntu 10.04 currently requires groot= workaround with pvgrub" [High,Fix committed] https://launchpad.net/bugs/720558
+
+ 15:23:02 <ubottu> Launchpad bug 857548 in grub-installer (Ubuntu Natty) "no longer possible to select GRUB Legacy by preseeding" [High,Fix committed] https://launchpad.net/bugs/857548
+
+ 15:23:04 <ubottu> Launchpad bug 857662 in debian-installer (Ubuntu P-series) "Should xenbus_probe_frontend be built-in?" [Medium,Triaged] https://launchpad.net/bugs/857662
+
+ 15:23:04 <cjwatson> various UEFI secure boot discussions, spilled over onto ubuntu-users@ and the like
+
+ 15:23:06 <ubottu> Launchpad bug 856088 in netcfg (Ubuntu Oneiric) "Expert install defaults to invalid hostname" [High,Fix released] https://launchpad.net/bugs/856088
+
+ 15:23:07 <ubottu> Launchpad bug 851704 in grub2 (Ubuntu Oneiric) "GRUB reports error after successful installation (Alternate)" [High,Confirmed] https://launchpad.net/bugs/851704
+
+ 15:23:07 <cjwatson> ADSL fixed last week; now have twice the bandwidth I had before, which is still not a lot but there you go
+
+ 15:23:08 <ubottu> Launchpad bug 837815 in grub (Ubuntu Oneiric) "Grub 0.97-29ubuntu62 gives error "Error 6: Mismatched or corrupt version of stage1/stage2"" [Critical,Fix released] https://launchpad.net/bugs/837815
+
+ 15:23:09 <ubottu> Launchpad bug 837217 in ubiquity (Ubuntu Oneiric) "Time Zone selector hangs and ubiquity freezes if network connection is firewalled" [Medium,In progress] https://launchpad.net/bugs/837217
+
+ 15:23:10 <cjwatson> a bit generally distracted at the moment due to family medical issues
+
+ 15:23:13 <cjwatson> ..
+
+ 15:23:13 <ev> slangasek: cool, just making sure
+
+ 15:23:29 <slangasek> ev: but switching to emitting the 'desktop-shutdown' symbol would be nice anyway in the long term, to simplify our job logic
+
+ 15:23:44 <ev> noted
+
+ 15:23:46 <mvo_> slangasek: apt-key - I really much appreciated your help with that one, excellent plan
+
+ 15:24:22 <slangasek> mvo_: glad it helped!  what's the timeline for getting those changes in, then?  Will we have it in oneiric before final release?
+
+ 15:24:56 <mvo_> slangasek: I want to get some additional review from #security, but I think that is within the scope
+
+ 15:25:14 <slangasek> cjwatson: what's the state of cross-buildability now?  how far have we bitrotted?
+
+ 15:26:00 <cjwatson> I think I've cured the worst of the bitrot, although python2.6 doesn't seem to cross-build for me which is a current impedance to a lot of stuff
+
+ 15:26:12 <jhunt> a general upstart point: we should be updating upstart-events(7) when we add new events like desktop-shutdown and recovery.
+
+ 15:26:21 <cjwatson> wookey and I have some mismatches on what we're trying to make work
+
+ 15:26:51 <cjwatson> mvo: do you think you could upload that sha512 fix in apt to Debian?  if I have that there, I can upload xdeb to Debian and sync
+
+ 15:27:01 <cjwatson> (modulo FFe)
+
+ 15:27:41 <slangasek> hmm, speaking of gfxboot-theme-ubuntu, while debugging my boot flickers over the weekend, I had a poke at putting the plymouth logo on the grub background... I don't suppose anyone's planning for grub2 to grow a '-center' option for the background_image command? :)
+
+ 15:27:42 <cjwatson> slangasek: what we don't have, and what I think needs to be a priority in P if we're taking this seriously, is a regularly updated dashboard of current failures that *isn't* in the form of a spreadsheet attached to a wiki page
+
+ 15:27:52 <slangasek> heh, yes
+
+ 15:28:05 <mvo_> cjwatson: I looked at this the other day, its only a bug in experimental currently, unstable is fine
+
+ 15:28:13 <slangasek> jhunt: shall I open a task on upstart for this bug?
+
+ 15:28:30 <cjwatson> mvo: oh really?  ok, excellent
+
+ 15:28:30 <mvo> cjwatson: or will xdeb go to experimental too?
+
+ 15:28:34 <cjwatson> mvo: no, unstable
+
+ 15:28:52 <cjwatson> slangasek: center - hm, I think I tried to add -x and -y at one point, I forget what went wrong
+
+ 15:29:09 <mvo> cjwatson: yeah, unstable in debian is a bit behind because of the massive ABI break and the binary NMUs still will requires
+
+ 15:29:16 <jhunt> slangasek: cool, thx.
+
+ 15:29:18 <cjwatson> slangasek: cross-building> so at the moment unfortunately even answering your question is rather arduous.  Linaro's work is largely based on natty
+
+ 15:30:01 <slangasek> cjwatson: my current method is to use 'convert' to switch the logo from RGBA to RGB and expand it out to the dimensions that I happen to know my display comes up at... not very portable, and imagemagick isn't in the base system :)
+
+ 15:30:02 <cjwatson> I have 84 cross-built packages in my tree, but of course that's only a small core - I was trying to see if I could get all of Ubuntu Core to work
+
+ 15:30:29 <cjwatson> slangasek: I don't think putting the plymouth logo on the grub background is in general realistic, which is why I haven't pursued this
+
+ 15:30:49 <slangasek> fair enough
+
+ 15:30:54 <cjwatson> slangasek: it means it is really really obvious when your manufacturer hasn't bothered to put the KMS panel resolution in EDID
+
+ 15:31:11 <slangasek> I was spending a lot of time rebooting my old laptop this weekend, so I gave it a go
+
+ 15:31:13 <cjwatson> at least with a plain filled background, one purple screen looks much like another
+
+ 15:31:19 * slangasek nods
+
+ 15:31:39 <cjwatson> though it would be nice if the logo faded in rather than just being blitted
+
+ 15:31:45 <cjwatson> bling
+
+ 15:32:44 * slangasek grins
+
+ 15:33:17 <slangasek> [TOPIC] Bugs
+
+ 15:33:24 <slangasek> bdmurray: what's buggy? :)
+
+ 15:33:40 <cjwatson> (please don't say "everything")
+
+ 15:33:54 <slangasek> it's his job to be more selective ;)
+
+ 15:34:03 <bdmurray> almost everything!
+
+ 15:34:05 <bdmurray> ;-)
+
+ 15:34:08 <ev> hahaha
+
+ 15:34:09 <slangasek> well done!
+
+ 15:34:12 <mvo> lol
+
+ 15:34:18 <ev> ship it!
+
+ 15:34:50 <bdmurray> bug 855042 seems rather important and is still new but has a fair bit of information
+
+ 15:34:52 <ubottu> Launchpad bug 855042 in ubiquity (Ubuntu) "ubiquity hangs while jockey-text at 100% CPU" [High,New] https://launchpad.net/bugs/855042
+
+ 15:36:01 <cjwatson> let's have that be Confirmed at least
+
+ 15:36:06 <cjwatson> I have a horrible feeling that's hw-dependent
+
+ 15:36:11 <ev> surely that's a jockey bug
+
+ 15:36:38 <bdmurray> jockey creates its own log file right? would that be worth getting?
+
+ 15:37:15 <ev> stderr, as far as I'm aware
+
+ 15:37:26 <ev> but presumably this is reproduceable outside of ubiquity
+
+ 15:37:29 <bdmurray> apport.hookutils.attach_file_if_exists(report, '/var/log/jockey.log')
+
+ 15:37:30 <ev> so they could just redirect
+
+ 15:37:32 <ev> ah
+
+ 15:37:34 <ev> neato
+
+ 15:38:09 <stgraber> based on the syslog, the hardware seems to use intel graphics and most of the rest seems to be intel too
+
+ 15:38:36 <cjwatson> hmm, why is that asking for confirmation?  we don't pass --confirm
+
+ 15:38:42 <ev> ohhhhh
+
+ 15:38:50 <cjwatson> afaics confirm_action is only called inside an 'if confirm:' guard
+
+ 15:38:53 <ev> I thought we fixed this AGES ago?
+
+ 15:39:16 <cjwatson> oh
+
+ 15:39:18 <cjwatson> self.set_handler_enable(h_id, 'enable', True)
+
+ 15:39:22 <cjwatson> in check_composite
+
+ 15:39:41 <cjwatson> so that always asks for confirmation regardless (third arg = confirm)
+
+ 15:40:13 <ev> but confirm shouldn't matter? We feed it y\n with LC_ALL set to C
+
+ 15:40:49 <cjwatson> oh, we do?
+
+ 15:41:19 <cjwatson> I see no LC_ALL=C in ./scripts/simple-plugins
+
+ 15:41:42 <ev> ah
+
+ 15:41:55 <ev> I was foolishly looking in plugininstall.py
+
+ 15:41:58 <cjwatson> nor any y/n passing
+
+ 15:42:24 <cjwatson> (and if jockey-text is using stdio there, it'll probably break debconf, too)
+
+ 15:43:10 * cjwatson wonders why this is duplicated between plugininstall and simple-plugins
+
+ 15:44:06 <ev> indeed, an oversight
+
+ 15:44:14 <ev> oh
+
+ 15:44:21 <ev> because we need to do the latter in the chroot
+
+ 15:44:38 <ev> otherwise bad things happen, according to pitti, but I can't recall exactly what
+
+ 15:44:48 <bdmurray> okay so you two are looking into this now?
+
+ 15:44:53 <slangasek> sounds like they have it triaged :)
+
+ 15:44:54 <slangasek> other bugs?
+
+ 15:45:20 <bdmurray> bug 861303 recently reported by scottk
+
+ 15:45:21 <ubottu> Launchpad bug 861303 in python-numpy (Ubuntu Oneiric) "import numpy fails badly" [Critical,New] https://launchpad.net/bugs/861303
+
+ 15:45:30 <ev> (sidebar, scripts/simple-plugins should die in a fire)
+
+ 15:45:37 <bdmurray> the title is wrong / misleading
+
+ 15:46:38 <slangasek> very strange
+
+ 15:47:13 <slangasek> anyone have any guesses why python modules would suddenly be unable to resolve symbols in a package build?
+
+ 15:47:42 <barry> slangasek: which symbols?  all of them? :)
+
+ 15:48:01 <slangasek> barry: Py_InitModule4
+
+ 15:48:35 <barry> slangasek: i was afraid you might say that.  now i have to remember which package i fixed something similar in
+
+ 15:48:47 <slangasek> barry: cool; will you follow up on the bug?
+
+ 15:48:58 <barry> slangasek: 861303, right?
+
+ 15:49:24 <slangasek> barry: yep
+
+ 15:49:29 <barry> slangasek: will do
+
+ 15:50:14 <bdmurray> the other 2 I'm looking at are more long term the traceback in bug 850482 is causing some incorrect duplicate marking
+
+ 15:50:15 <ubottu> Launchpad bug 850482 in update-manager (Ubuntu) "update-manager crashed with SystemError in mark_install(): E:Unable to correct problems, you have held broken packages." [Undecided,Incomplete] https://launchpad.net/bugs/850482
+
+ 15:50:43 <bdmurray> I'm wondering if there is a way to make that error more verbose to prevent this incorrect duplicate marking
+
+ 15:51:25 <mvo> I can look into that after the meeting, maybe need to just append the pkgname to the error string
+
+ 15:51:37 <bdmurray> mvo: okay thanks!
+
+ 15:52:13 <bdmurray> finally bug 69176 (not a typo) ;-)
+
+ 15:52:14 <ubottu> Launchpad bug 69176 in ubiquity (Ubuntu) "No notification in Ubiquity for bad sectors" [Low,Triaged] https://launchpad.net/bugs/69176
+
+ 15:52:21 * slangasek nods
+
+ 15:52:44 <bdmurray> I recently found a ubiquity bug regarding bad sectors when trying to use ntfsresize
+
+ 15:53:10 <bdmurray> while there aren't a lot of these it seems like it might be helpful to deal with this situation better
+
+ 15:53:14 <slangasek> kinda hard to get bad sector notification into the GUI, because there's no clear back channel for this... anyone have any clever ideas about how to handle that one?
+
+ 15:53:39 <cjwatson> I have some preliminary work for talking to external fs tools in a smarter way
+
+ 15:54:02 <cjwatson> this becomes more urgent for parted 3.0 because it drops the buggy and unmaintained filesystem code there
+
+ 15:54:03 * doko just came back
+
+ 15:54:12 <cjwatson> but there's no way it'll be in place for oneiric
+
+ 15:54:34 <cjwatson> mostly I'm focusing on fixing the lack of decent progress output on many mkfs/resize ops in the installer
+
+ 15:54:46 <cjwatson> but I think it could probably be used to handle other problems too
+
+ 15:55:02 * slangasek waves to doko
+
+ 15:55:04 <bdmurray> right of course I was thinking of targetting it for P
+
+ 15:55:40 <cjwatson> yeah; still quite a bit to go but that might be realistic
+
+ 15:55:53 <slangasek> cool
+
+ 15:55:55 <slangasek> thanks, bdmurray
+
+ 15:56:01 <slangasek> [TOPIC] AOB
+
+ 15:56:12 <slangasek> anything else before we all turn into pumpkins?
+
+ 15:56:13 <cjwatson> FWIW the bug list I'm tracking for release meetings is http://reports.qa.ubuntu.com/reports/kernel-bugs/reports/rls-mgr-o-tracking-bugs.html
+
+ 15:56:34 <ev> I have two things. One, lets talk about integration tests at UDS.  That is, what would it take to fire off the ubiquity test harness when someone uploads GTK+ (run all the unit tests for any reverse deps for the package being built)?
+
+ 15:57:16 <ev> And two, http://www.vagrantup.com - VirtualBox + puppet/chef - great for working on things that you at some point want IS to provision, but can't bother waiting on RTs
+
+ 15:57:27 <barry> slangasek: hopefully not 1487 lb pumpkins
+
+ 15:57:34 <ev> especially when you're working with others, as you just pass around the config
+
+ 15:58:25 <slangasek> ev: integration tests> can you talk to Pete to make sure QA is covering this topic at UDS?
+
+ 15:59:15 <ev> slangasek: will do
+
+ 15:59:24 <slangasek> ev: vagrantup - that only helps when you have the local hardware resources to provision it yourself, I guess? :)
+
+ 15:59:38 <cjwatson> I've got IS to give me an rsync module on cocoplum accessible from lillypilly so that I can have an all-arches dists/ mirror there
+
+ 15:59:43 <ev> well, it's a virtual machine
+
+ 15:59:59 <cjwatson> this will let us have all-arches rmadison and start moving various archive tools off cocoplum when they only need Packages/Sources
+
+ 16:00:16 <cjwatson> and reduce the ssh-with-restricted-keys madness for a bunch of stsuff
+
+ 16:00:25 <cjwatson> planning on spending a bit of time doing that after final freeze
+
+ 16:00:57 <slangasek> ev: right, but you need to have hardware with enough idle cpu and disk to provision the vms for the jobs you're doing, I guess
+
+ 16:02:34 <slangasek> cjwatson: lillypilly> very nice
+
+ 16:02:49 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

@@ -1,0 +1,612 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 16 Sep at 15:00 &mdash; 15:41 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-09-16-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:00.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/pocl/+bug/1942895 => actual problem fixed and PR pending to solve the described problem (https://github.com/pocl/pocl/pull/988)  (alexghiti, 15:07)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/sasmodels/+bug/1943152 and https://bugs.launchpad.net/ubuntu/+source/silx/+bug/1943149 should be unblocked with pocl  (alexghiti, 15:07)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nx-libs/+bug/1943129 working patch but wait for PR to validate it (https://github.com/ArcticaProject/nx-libs/pull/1023)  (alexghiti, 15:07)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nvidia-settings/+bug/1943030 working patch but discussion ongoing about its “requirement”  (alexghiti, 15:07)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/rust-nodrop-union/+bug/1943148 fails on all arches and deprecated -> quid?  (alexghiti, 15:07)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/tachyon/0.99~b6+dsx-9ubuntu1/+build/22072848 tachyon packages now available on riscv64, bug report to debian ongoing.  (alexghiti, 15:07)
+ * ''LINK:'' https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=994390 : fails to install because depends on libreoffice-core, patch pending to add build dependency instead.  (alexghiti, 15:07)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:10.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:10)
+ * ''LINK:'' https://autopkgtest.ubuntu.com/packages/mutter/impish/armhf   (doko, 15:15)
+ * ''LINK:'' https://autopkgtest.ubuntu.com/packages/netplan.io/impish/armhf   (doko, 15:15)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html   (bdmurray, 15:23)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html   (bdmurray, 15:23)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:26.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:26)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:37.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (56)
+ * vorlon (46)
+ * ubottu (37)
+ * dbungert (24)
+ * doko (19)
+ * jawn-smith (19)
+ * schopin (18)
+ * slyon (14)
+ * alexghiti (13)
+ * juliank (11)
+ * waveform (8)
+ * ginggs (5)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:47 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert xypron ginggs schopin alexghiti)
+
+ 15:01 <bdmurray> waveform juliank schopin mwhudson doko bdmurray xypron dbungert slyon sil2100 vorlon ginggs alexghiti jawn-smith
+
+ 15:01 <waveform> * Verified fix for impish USB boot failures on various models (LP: #1943097)
+
+ 15:01 <waveform> * Finished ISO testing generator pi (and/or other) test cases (https://code.launchpad.net/~waveform/ubuntu-manual-tests/+git/ubuntu-manual-tests/+merge/408427)
+
+ 15:01 <waveform> * Still poking about various sense hat packages
+
+ 15:01 <waveform> * Investigated Core18 ALSA issue reported by cert team (probable non-issue; discovered newer Pi400 boards fail ethernet in the process, but Pi400 not supported on Core 18 anyway)
+
+ 15:01 <waveform> * Investigating plymouth failure on Pi server images (definitely all installed in initrd, definitely running ... but not working)
+
+ 15:01 <waveform> * Verifying fix for USB storage issues (LP: #1930629) with a variety of SATA-USB interfaces on several Pis
+
+ 15:01 <ubottu> Launchpad bug 1943097 in Ubuntu "Kernel 5.13 broke my Ubuntu 21.10 on RPI4 8Gb" [Undecided, Confirmed] https://launchpad.net/bugs/1943097
+
+ 15:01 <ubottu> Launchpad bug 1930629 in linux-raspi (Ubuntu Impish) "Raspberry pi 4 USB controller randomly crashes" [Undecided, Fix Committed] https://launchpad.net/bugs/1930629
+
+ 15:01 <waveform> * Pi meetings
+
+ 15:01 <waveform> (done)
+
+ 15:02 <bdmurray> juliank:
+
+ 15:02 <juliank> * sponsored openssl 1.1.1l-1ubuntu1
+
+ 15:02 <juliank> * fixed the grub2-signed versioned deps, and uploaded grub2-unsigned to match recent grub2 upload
+
+ 15:02 <juliank> * uploaded the riscv64 changes for sbsigntool, gnu-efi, cpu-checker to Debian unstable
+
+ 15:02 <juliank> * investigation into, and fixing of, autopkgtest systemd upstream CI
+
+ 15:02 <juliank> * grub2/bionic wanted initrdfail fixes, but does not even support initrdless, backporting feature too
+
+ 15:02 <juliank> (done)
+
+ 15:02 <schopin> * openssl:
+
+ 15:02 <schopin> + look some more into transition to v3, looking for tracking issues in the upstream projects that FTBFS
+
+ 15:02 <schopin> + autopkgtest regressions for 1.1.1l-1ubuntu1:
+
+ 15:02 <schopin> - mosquitto: cannot reproduce locally, but retrigger didn't work?
+
+ 15:02 <schopin> - puma, asterisk, kopanocore: retriggered, all OK
+
+ 15:02 <schopin> - sysdig (arm64): seems to be a build problem with kernel headers, retrying with linux-meta-aws as additional trigger worked
+
+ 15:02 <schopin> * netplan:
+
+ 15:02 <schopin> + Housekeeping:
+
+ 15:02 <schopin> - close an old PR as superseded by a later contribution
+
+ 15:02 <schopin> - close PR #8 regarding partial application of invalid configuration as WONTFIX
+
+ 15:02 <ubottu> Bug 8 in Launchpad itself "Translator forums/means of communication" [Low, Won't Fix] https://launchpad.net/bugs/8
+
+ 15:02 <schopin> + Looked into LP: #1942930 and formulated a plan...
+
+ 15:02 <ubottu> Launchpad bug 1942930 in netplan "Unset a subtree crashes" [Undecided, Triaged] https://launchpad.net/bugs/1942930
+
+ 15:02 <schopin> + ... that necessitates new C APIs, prompting me to work on the whole libnetplan API clarification
+
+ 15:02 <schopin> PR which can be found there: https://github.com/canonical/netplan/pull/227
+
+ 15:02 <ubottu> Pull 227 in canonical/netplan "API/ABI cleanup" [Open]
+
+ 15:02 <schopin> + Looked into using linker scripts to be able to evolve our APIs without breaking the current ABI too much
+
+ 15:02 <schopin> (done)
+
+ 15:03 <bdmurray> doko:
+
+ 15:03 <doko> - OpenJDK 17 final release, SRUs to hirsute, focal and bionic
+
+ 15:03 <doko> - c-t-b build mess ... Still cannot reproduces the issue on the buildds locally
+
+ 15:03 <doko> - fixing some ftbfs seen with no-change uploads
+
+ 15:03 <doko> - libffi update. It's NOT a transition, and doesn't have new features, just getting rid off the insane snapshot introduced during my vacations last year.
+
+ 15:03 <doko> - work around two ftbfs on ppc64el
+
+ 15:03 <doko> - some haskell updates to get packages installable on riscv64 again
+
+ 15:03 <doko> (done)
+
+ 15:04 <bdmurray> testing of Error Tracker in PS5
+
+ 15:04 <bdmurray> 360s
+
+ 15:04 <bdmurray> sponsored m4 (II), scilab (BB, FF) for schopin
+
+ 15:04 <bdmurray> sponsored plymouth fixing LP: #1942987 for duflu for Impish
+
+ 15:04 <bdmurray> special SRU review of libreoffice for HH
+
+ 15:04 <bdmurray> review of 21.10 bugs in JIRA
+
+ 15:04 <bdmurray> research into command-not-found data for riscv64 and Focal
+
+ 15:04 <bdmurray> wrote some launchpadlib code to check package sizes in manifest files
+
+ 15:04 <ubottu> Launchpad bug 1942987 in plymouth (Ubuntu Impish) "Live session shutdown prompt is missing, just keeps spinning" [Medium, Fix Committed] https://launchpad.net/bugs/1942987
+
+ 15:04 <bdmurray> spent some time looking into why core files might be truncated on the Live CD
+
+ 15:04 <bdmurray> 18.04.6 point release work
+
+ 15:04 <bdmurray> 21.10 Beta work
+
+ 15:04 <bdmurray> ✔ done
+
+ 15:04 <bdmurray> xypron is out
+
+ 15:04 <dbungert> * subiquity - add CLA check
+
+ 15:04 <bdmurray> dbungert:
+
+ 15:04 <dbungert> * subiquity/curtin -  apt components handling - PRs for python-apt usage and
+
+ 15:04 <dbungert> component adjustment pending review
+
+ 15:04 <dbungert> * subiquity/u-d-i - Disable autoinstall.  Add ability to Subiquity on command
+
+ 15:04 <dbungert> line of server to explicitly set autoinstall to an empty string, and in this
+
+ 15:04 <dbungert> scenario it should not load autoinstall data from the explicit file or
+
+ 15:04 <dbungert> cloud-init.  Add matching command line arg to u-d-i.
+
+ 15:04 <dbungert> * subiquity/u-d-i - for a time, the curtin version that subiquity wanted was
+
+ 15:04 <dbungert> different from what u-d-i was actually building into the snap.  Add a CI test
+
+ 15:04 <dbungert> to enforce.  Also send a PR to help automate that process of updating
+
+ 15:04 <dbungert> subiquity and updating the snapcraft file to match.
+
+ 15:04 <dbungert> * subiquity/u-d-i - Design updates for the Storage API, and begin the V2
+
+ 15:04 <dbungert> version that doesn't have to converse in curtin actions.
+
+ 15:04 <dbungert> * squashfs-tools vs things - squashfs-tools had a security upload, which
+
+ 15:04 <dbungert> retriggered some tests.  Casper failed on a known flaky test LP: #1938325,
+
+ 15:04 <dbungert> which was cleared for now by test retries.  On LP: #1943008 it was pointed
+
+ 15:04 <ubottu> Launchpad bug 1938325 in casper (Ubuntu) "adt failure: '/cdrom not ext4 with todisk'" [Undecided, New] https://launchpad.net/bugs/1938325
+
+ 15:04 <dbungert> out that this depend on libgcc-s1 should be made explicit, which I agree with
+
+ 15:04 <ubottu> Launchpad bug 1943008 in squashfs-tools (Ubuntu) "snapd autopkgtest smoke/sandbox failure on impish" [Undecided, Confirmed] https://launchpad.net/bugs/1943008
+
+ 15:04 <dbungert> and have uploaded a debdiff which is pending sponsorship.  To get this
+
+ 15:04 <dbungert> cluster to migrate requires a snapd with cgroupsv2 (fixed in git)
+
+ 15:04 <dbungert> and systemd/248.3-1ubuntu7.
+
+ 15:04 <dbungert> (done)
+
+ 15:05 <slyon> - joining MIR team & some discussions (wiki updates, rustc process, ..)
+
+ 15:05 <slyon> - handling adsys MIR review, LP: #1936907
+
+ 15:05 <slyon> - systemd cgroupsv2, snapd landed the support upstream \o/, lxc: bug #1943704
+
+ 15:05 <slyon> - integrated/staged proper fix for systemd-oomd (LP: #1942113)
+
+ 15:05 <slyon> - investigating potentiall systemd-resolved regression (LP: #1934221)
+
+ 15:05 <slyon> === Netplan ===
+
+ 15:05 <slyon> - some roadmap grooming
+
+ 15:05 <slyon> (done)
+
+ 15:05 <ubottu> Launchpad bug 1936907 in adsys (Ubuntu) "[MIR] ADSys" [Undecided, New] https://launchpad.net/bugs/1936907
+
+ 15:05 <ubottu> Bug 1943704 in lxc (Ubuntu) "lxc fails autopkgtests on (pure) cgroups v2 enabled system" [Undecided, New] https://launchpad.net/bugs/1943704
+
+ 15:05 <ubottu> Launchpad bug 1942113 in systemd (Ubuntu) "systemd unit test regression in autopkgtest (oomd-utils)" [Undecided, Triaged] https://launchpad.net/bugs/1942113
+
+ 15:05 <ubottu> Launchpad bug 1934221 in systemd (Ubuntu Impish) "systemd-resolve segfault" [Undecided, Fix Released] https://launchpad.net/bugs/1934221
+
+ 15:05 <bdmurray> sil_2100 is away at the moment
+
+ 15:05 <bdmurray> vorlon:
+
+ 15:06 <vorlon> * uploaded pam for LP: #1860826; focal to follow after it migrates
+
+ 15:06 <vorlon> * merge of pam 1.4.0 deferred until JJ
+
+ 15:06 <vorlon> * looked at internal kpis, found that my data source had disappeared, working with IS
+
+ 15:06 <ubottu> Launchpad bug 1860826 in pam (Ubuntu Focal) "pam_unix(sudo:auth): Couldn't open /etc/securetty: No such file or directory" [Undecided, Confirmed] https://launchpad.net/bugs/1860826
+
+ 15:06 <vorlon> * uploaded gnome-settings-daemon for LP: #1943768, per discussion on ubuntu-devel
+
+ 15:06 <ubottu> Launchpad bug 1943768 in localechooser (Ubuntu) "gsd defaults to wrong keymap for Sinhala (Sri Lanka) locale" [Undecided, Fix Committed] https://launchpad.net/bugs/1943768
+
+ 15:06 <vorlon> * reviewing the state of libffi in -proposed, as it was noted to now be blocking a number of packages
+
+ 15:06 <vorlon> * sorting of various issues for the 18.04.6 point release
+
+ 15:06 <vorlon> * remembering seeds need updated for the kernel udeb ABI bump
+
+ 15:06 <vorlon> (done)
+
+ 15:06 <bdmurray> ginggs:
+
+ 15:06 <ginggs> * looked at the autopkgtest failures in boost 1.74.0-8ubuntu3 now that it is testing the 1.74 packages instead of the ones from 1.71
+
+ 15:06 <ginggs> * we've decided to wait until mdadm 4.2 release for focal, but i've been looking at the packaging changes for a backport
+
+ 15:06 <ginggs> * worked on fuse3 for s390-tools LP: #1935666, updated the PR
+
+ 15:06 <ginggs> * investigating the impact of merging or removing tasksel LP: #1929807
+
+ 15:07 <ubottu> Launchpad bug 1935666 in Ubuntu on IBM z Systems "s390-tools FTBFS when built with libfuse3-dev" [High, New] https://launchpad.net/bugs/1935666
+
+ 15:07 <ubottu> Launchpad bug 1929807 in tasksel (Ubuntu Impish) "tasksel not merged for a while" [Undecided, New] https://launchpad.net/bugs/1929807
+
+ 15:07 <ginggs> (done)
+
+ 15:07 <alexghiti> Riscv64 packages:
+
+ 15:07 <alexghiti> https://bugs.launchpad.net/ubuntu/+source/pocl/+bug/1942895 => actual problem fixed and PR pending to solve the described problem (https://github.com/pocl/pocl/pull/988)
+
+ 15:07 <alexghiti> https://bugs.launchpad.net/ubuntu/+source/sasmodels/+bug/1943152 and https://bugs.launchpad.net/ubuntu/+source/silx/+bug/1943149 should be unblocked with pocl
+
+ 15:07 <alexghiti> https://bugs.launchpad.net/ubuntu/+source/nx-libs/+bug/1943129 working patch but wait for PR to validate it (https://github.com/ArcticaProject/nx-libs/pull/1023)
+
+ 15:07 <alexghiti> https://bugs.launchpad.net/ubuntu/+source/nvidia-settings/+bug/1943030 working patch but discussion ongoing about its “requirement”
+
+ 15:07 <ubottu> Launchpad bug 1942895 in pocl (Ubuntu) "Build fails on riscv64" [Medium, In Progress]
+
+ 15:07 <alexghiti> https://bugs.launchpad.net/ubuntu/+source/rust-nodrop-union/+bug/1943148 fails on all arches and deprecated -> quid?
+
+ 15:07 <alexghiti> https://launchpad.net/ubuntu/+source/tachyon/0.99~b6+dsx-9ubuntu1/+build/22072848 tachyon packages now available on riscv64, bug report to debian ongoing.
+
+ 15:07 <ubottu> Pull 988 in pocl/pocl "CMakeLists.txt: Handle 'undefined' values returned by getconf" [Open]
+
+ 15:07 <alexghiti> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=994390 : fails to install because depends on libreoffice-core, patch pending to add build dependency instead.
+
+ 15:07 <alexghiti> Ubuntu-meta (ubuntu-desktop[-minimal]): PR ongoing
+
+ 15:07 <alexghiti> Sifive Unmatched board
+
+ 15:07 <ubottu> Launchpad bug 1943152 in sasmodels (Ubuntu) "riscv64 packages are not published for impish" [Undecided, Incomplete]
+
+ 15:07 <alexghiti> Patch linux-riscv to have functional reset: working, needs cleanup before taking this and submit upstream
+
+ 15:07 <alexghiti> Patch u-boot to have functional reset: more or less working, debug ongoing.
+
+ 15:07 <ubottu> Launchpad bug 1943149 in silx (Ubuntu) "riscv64 packages are not published for impish" [Undecided, Incomplete]
+
+ 15:07 <ubottu> Launchpad bug 1943129 in nx-libs (Ubuntu) "Add support for riscv64" [Wishlist, New]
+
+ 15:07 <alexghiti> (done)
+
+ 15:07 <ubottu> Pull 1023 in ArcticaProject/nx-libs "nx-X11: Add support for riscv64 architecture" [Open]
+
+ 15:07 <ubottu> Launchpad bug 1943030 in nvidia-settings (Ubuntu) "Enable riscv64 build of nvidia-settings" [Undecided, Incomplete]
+
+ 15:07 <ubottu> Launchpad bug 1943148 in rust-nodrop-union (Ubuntu) "Build fails" [Undecided, New]
+
+ 15:07 <ubottu> Debian bug 994390 in libreoffice-voikko "libreoffice-voikko: Add build dependency to libreoffice-core" [Normal, Open]
+
+ 15:07 <bdmurray> jawn-smith:
+
+ 15:08 <jawn-smith> * Openssh failure digging
+
+ 15:08 <jawn-smith> * Narrowed down to an issue with host running kernel <= 5.8 while container runs impish (5.13)
+
+ 15:08 <jawn-smith> * Still determining if it's a test environment issue or actual bug in openssh
+
+ 15:08 <jawn-smith> * Re-created LP: #1943097 and did a little troubleshooting before handing off to kernel team
+
+ 15:08 <ubottu> Launchpad bug 1943097 in Ubuntu "Kernel 5.13 broke my Ubuntu 21.10 on RPI4 8Gb" [Undecided, Confirmed] https://launchpad.net/bugs/1943097
+
+ 15:08 <jawn-smith> * Go 1.17 baseline retesting
+
+ 15:08 <jawn-smith> * 19 packages fail with Go 1.17 but not Go 1.16
+
+ 15:08 <jawn-smith> * Created FFE request. LP: #1943502
+
+ 15:08 <ubottu> Launchpad bug 1943502 in golang-defaults (Ubuntu) "Feature Freeze Exception: Update golang-defaults to 1.17" [Undecided, Confirmed] https://launchpad.net/bugs/1943502
+
+ 15:08 <jawn-smith> * +1 Maintenance
+
+ 15:08 <jawn-smith> * gitlab-workhorse: uploaded patch to fix FTBFS with Go 1.17, but it failed to build on 1.16. oops.
+
+ 15:08 <jawn-smith> * golang-github-biogo-hts: patch uploaded for Go 1.17
+
+ 15:08 <jawn-smith> * golang-github-gin-gonic-gin: patch uploaded for Go 1.17
+
+ 15:08 <jawn-smith> * golang-github-sevylar-go-daemon: patch uploaded for Go 1.17
+
+ 15:08 <jawn-smith> * textql: patch uploaded for Go 1.17
+
+ 15:08 <jawn-smith> * golang-github-marten-seemann-qtls-go1-15: appears to be a leaf that provides no binaries
+
+ 15:08 <jawn-smith> * Should be removed, but I need to determine if it is also a leaf in Debian first
+
+ 15:08 <jawn-smith> [done]
+
+ 15:09 <bdmurray> any questions on status?
+
+ 15:10 <bdmurray> #topic Release Incoming Bugs
+
+ 15:10 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:11 <bdmurray> bug 1871538 is already carded I'll clean it up after
+
+ 15:11 <ubottu> Bug 1871538 in dbus (Ubuntu Impish) "dbus timeout-ed during an upgrade, taking services down including gdm" [High, Incomplete] https://launchpad.net/bugs/1871538
+
+ 15:11 <slyon> cleaned
+
+ 15:12 <bdmurray> I gather bug 1943288 isn't a bug per se
+
+ 15:12 <ubottu> Bug 1943288 in libffi (Ubuntu) "Soname change and transition started without a ffe" [High, Confirmed] https://launchpad.net/bugs/1943288
+
+ 15:12 <doko> the bug title is bogus. no soname change, no transition
+
+ 15:12 <bdmurray> bug 1943189 - juliank I think you'd looked at this once
+
+ 15:12 <ubottu> Bug 1943189 in packagekit (Ubuntu) "'cannot refresh whilst network offline' bug" [Medium, New] https://launchpad.net/bugs/1943189
+
+ 15:13 <vorlon> but behavior changes that are breaking GNOME revdeps, evidently
+
+ 15:13 <juliank> bdmurray: yeah, apparently we want to take it
+
+ 15:13 <vorlon> doko: you said you're working on it, do you undersand the GNOME regressions at this point?
+
+ 15:13 <doko> yes, it was one wrong config
+
+ 15:13 <vorlon> ok
+
+ 15:14 <doko> there are no regressions anymore. but am I now supposed to fix any accumulated glib regressions?
+
+ 15:14 <bdmurray> juliank: do you have time to sponsor it or should someone else do that?
+
+ 15:14 <juliank> bdmurray: I can do that
+
+ 15:15 <vorlon> doko: what glib regressions are you talking about?
+
+ 15:15 <bdmurray> juliank: thanks
+
+ 15:15 <doko> looking at https://autopkgtest.ubuntu.com/packages/oss4/impish/arm64
+
+ 15:15 <vorlon> doko: it looks like we should be able to unblock this; given the severity of LP: #1943362, it would be good to be sure that your fix solves that problem as well
+
+ 15:15 <ubottu> Launchpad bug 1943362 in libffi (Ubuntu) "update to this pkg crashes fresh install of ubuntu preventing long-in screen from appearing or anything else" [Undecided, Confirmed] https://launchpad.net/bugs/1943362
+
+ 15:15 <doko> https://autopkgtest.ubuntu.com/packages/mutter/impish/armhf
+
+ 15:15 <doko> https://autopkgtest.ubuntu.com/packages/netplan.io/impish/armhf
+
+ 15:16 <vorlon> doko: well if you want this package to migrate, you'll need to do something?  But I'm unclear why no-change rebuilds were needed anyway
+
+ 15:16 <slyon> that netplan armhf/LXD test needs a systemd trigger, to use the version from -proposed, which contains a relevant systemd-networkd fix
+
+ 15:18 <slyon> (triggered)
+
+ 15:19 <bdmurray> I'm going to punt bug 1940011 to JJ
+
+ 15:19 <doko> ok, I'll add that one for netplan
+
+ 15:19 <ubottu> Bug 1940011 in update-notifier (Ubuntu) "Reduce cron spam from weekly update-notifier-common" [Low, New] https://launchpad.net/bugs/1940011
+
+ 15:20 <bdmurray> bug 1939413
+
+ 15:20 <ubottu> Bug 1939413 in protobuf (Ubuntu) "/usr/lib/aarch64-linux-gnu/libprotobuf.a’ generated with LTO version 9.2 instead of the expected 11.0" [Undecided, Triaged] https://launchpad.net/bugs/1939413
+
+ 15:20 <bdmurray> Is anybody familiar with this or should we look at it next week?
+
+ 15:21 <bdmurray> next week then
+
+ 15:21 <vorlon> skimming the bug it looks like it might be sorted
+
+ 15:22 <bdmurray> bug 1942603 already has a card so I've removed the tag
+
+ 15:22 <ubottu> Bug 1942603 in ubiquity (Ubuntu Impish) "ubiquity - manual partitioning; edit partition & cannot select/do anything" [Undecided, New] https://launchpad.net/bugs/1942603
+
+ 15:22 <bdmurray> it looks like bug 1943109 is already fix committed
+
+ 15:22 <ubottu> Bug 1943109 in openssl (Ubuntu) "Merge 1.1.1l-1 version from Debian" [Undecided, Fix Committed] https://launchpad.net/bugs/1943109
+
+ 15:23 <bdmurray> so let's drop the tag
+
+ 15:23 <bdmurray> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html
+
+ 15:23 <bdmurray> that's empty
+
+ 15:23 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:24 <bdmurray> this is really about linux-firmware not initramfs-tools correct?
+
+ 15:24 <schopin> looks like it, yes.
+
+ 15:24 <bdmurray> bug 1939986
+
+ 15:25 <ubottu> Bug 1939986 in linux-firmware (Ubuntu) "Missing firmware files, in Ubuntu 20.04 LTS, for initramfs, when it loads i915" [Undecided, Confirmed] https://launchpad.net/bugs/1939986
+
+ 15:25 <bdmurray> okay let's mark the initramfs-tools as invalid then
+
+ 15:25 <vorlon> if someone's confident in that could they mark it invalid for initramfs-tools?
+
+ 15:25 * vorlon nods
+
+ 15:26 <bdmurray> #topic Team proposed-migration report
+
+ 15:26 <bdmurray> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:26 <bdmurray> vorlon:
+
+ 15:27 <bdmurray> I think jawn-smith talked about openssh already
+
+ 15:27 <jawn-smith> I did
+
+ 15:28 <slyon> I'm still working on the systemd outfall. snapd landed support upstream recently and I'm talking to LXD team currently about a lxc fix
+
+ 15:28 <vorlon> and squashfs-tools has an open bug describing the issues there; dbungert are you driving this?
+
+ 15:28 <dbungert> vorlon: yes
+
+ 15:28 <vorlon> (possibly blocked on snapd team?)
+
+ 15:28 <vorlon> slyon: thanks
+
+ 15:28 <schopin> I'm working on openssl, mosquitto is the only remaining failure.
+
+ 15:28 <vorlon> grub2 hmm why's that still stuck
+
+ 15:29 <dbungert> yes, I'm not sure that we can do much until new a snapd version is available
+
+ 15:29 <vorlon> juliank: grub2?
+
+ 15:29 <vorlon> wait do I need to refresh
+
+ 15:29 <vorlon> yes I need to refresh
+
+ 15:29 <vorlon> sorry
+
+ 15:29 <vorlon> not grub2
+
+ 15:29 * juliank confused
+
+ 15:29 <vorlon> openssl
+
+ 15:29 <juliank> openssl is schopin's upload which I sponsored
+
+ 15:30 <vorlon> schopin: openssl is your upload, do you need any help sorting the regressions or are you on top of this?
+
+ 15:30 <schopin> mosquitto is the only holdout, still hoping to get through it :)
+
+ 15:30 <vorlon> thanks
+
+ 15:31 <vorlon> there's a sphinx autopkgtest regression blocking webkit2gtk, but it looks likely this is actually a webkit2gtk regression on armhf, so passing
+
+ 15:32 <vorlon> aptdaemon autopkgtest failure blocking pygobject, which is doko's upload; doko, are you going to drive sorting the autopkgtest regressions on these?
+
+ 15:32 <vorlon> (or should we back the uploads out of -proposed since they're not strictly needed)
+
+ 15:32 <vorlon> similar story on glib2.0
+
+ 15:32 <doko> I have been told by julian that aptdaemon just needs continuous retrying
+
+ 15:32 <vorlon> sure - are you driving this then?
+
+ 15:33 <vorlon> netplan.io/armhf, someone know the issue there?
+
+ 15:33 <doko> and it just passed
+
+ 15:33 <vorlon> ok
+
+ 15:34 <doko> we just talked about netplan, slyon retried
+
+ 15:34 <slyon> already re-triggerd the netplan.io/armhf test
+
+ 15:34 <vorlon> alrighty
+
+ 15:34 <slyon> (with systemd/248.3-1ubuntu7 trigger)
+
+ 15:34 <vorlon> then there are some packages just waiting for libffi to migrate, libffi should become a candidate soon as long as we're sure it's not breaking people's gdm and can close the blocking bug
+
+ 15:34 <vorlon> gcc-11-cross ftbfs; doko?
+
+ 15:35 <doko> yes, that's the c-t-b mess. on it
+
+ 15:35 <vorlon> ok
+
+ 15:35 <vorlon> then the rest are newer and either SEP (curl - security) or known issues or in progress
+
+ 15:35 <vorlon> bdmurray:
+
+ 15:35 <dbungert> I wonder if that ubiquity vs libffi is a real regression:  test_interface_translated (test_gtkui.TestFrontend) ... Segmentation fault (core dumped)
+
+ 15:36 <bdmurray> How could we check?
+
+ 15:36 <vorlon> dbungert: could be - the test happened with the older libffi
+
+ 15:36 <vorlon> retry with the newer?
+
+ 15:36 <doko> dbungert, it passed an hour ago
+
+ 15:37 <bdmurray> okay then
+
+ 15:37 <bdmurray> #topic AOB
+
+ 15:37 <jawn-smith> bdmurray, vorlon: I know we discussed it a bit yesterday, but is anything else needed for LP: #1943502 ?
+
+ 15:37 <ubottu> Launchpad bug 1943502 in golang-defaults (Ubuntu) "Feature Freeze Exception: Update golang-defaults to 1.17" [Undecided, Confirmed] https://launchpad.net/bugs/1943502
+
+ 15:38 <vorlon> jawn-smith: I approved the FFe, so something needs to be uploaded?
+
+ 15:38 * juliank is off next week: Mon & Fri, moving Sat
+
+ 15:38 <bdmurray> I can sponsor that
+
+ 15:39 <jawn-smith> We can see if mwhudson has opinions first
+
+ 15:39 <bdmurray> Just a friendly reminder that the Beta is next week
+
+ 15:41 <bdmurray> okay, thanks everybody
+
+ 15:41 <vorlon> thanks!
+
+ 15:41 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

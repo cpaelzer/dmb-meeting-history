@@ -1,0 +1,208 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: DMB meeting, started by sil2100, 21 Mar at 19:11 &mdash; 19:57 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-03-21-19.11.log.html
+
+
+
+== Meeting summary ==
+
+=== Package Set/Per Package Uploader Applications ===
+
+Discussion started by sil2100 at 19:12.
+
+ * '''fnordahl - per-package upload rights for the openvswitch and ovn packages'''  (sil2100, 19:12)
+  * ''LINK:'' https://wiki.ubuntu.com/fnordahl/uppuapp   (sil2100, 19:12)
+
+
+
+== People present (lines said) ==
+
+ * fnordahl (30)
+ * sil2100 (27)
+ * ddstreet (18)
+ * teward (10)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 19:11 <sil2100> #startmeeting DMB meeting
+
+ 19:11 <meetingology> Meeting started at 19:11:14 UTC.  The chair is sil2100.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 19:11 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 19:11 <sil2100> So maybe let's start with our applicant!
+
+ 19:12 <sil2100> #topic Package Set/Per Package Uploader Applications
+
+ 19:12 <sil2100> #subtopic fnordahl - per-package upload rights for the openvswitch and ovn packages
+
+ 19:12 <sil2100> #link https://wiki.ubuntu.com/fnordahl/uppuapp
+
+ 19:12 <sil2100> fnordahl: hello!
+
+ 19:12 <fnordahl> Hello there, thank you for receiving my application!
+
+ 19:12 <sil2100> fnordahl: please introduce yourself briefly!
+
+ 19:13 <fnordahl> My name is Frode, I'm located in Oslo/Norway and have worked with/on Ubuntu for several years. I have always have had a focus on network pieces and I stil find those very interesting.
+
+ 19:15 <sil2100> So you're applying for PPU for 'openvswitch' and 'ovn', right?
+
+ 19:16 <fnordahl> That is correct. The interest in Open vSwitch and OVN started out from its use in cloud, but recently it has become a more and more important piece in the infrastructure due to developments of network bandiwdth and the need for offloading flows into hardware etc.
+
+ 19:16 <sil2100> One thing to think about for our DMB members is whether we should create a packageset or maybe just a personal PPU - but we'll think about it later, I don't think this is relevant to the application itself
+
+ 19:16 <sil2100> Ok, questions? teward? ddstreet?
+
+ 19:17 <sil2100> I need a moment to take a look at the application
+
+ 19:17 <teward> fnordahl: under what cases should you *NOT* upload a package during a cycle?
+
+ 19:17 <ddstreet> fnordahl i assume you did not see my ping in ubuntu-release after you sent your email, but why aren't you applying to be part of the openstack packageset/team instead?
+
+ 19:17 <teward> also ^^ that
+
+ 19:17 <sil2100> ddstreet: we'd have to add ovn and openvswith to that packageset though!
+
+ 19:17 <ddstreet> well...right, isn't that more appropriate?
+
+ 19:17 <fnordahl> ddstreet: the team is split into multiple focused sub teams, so I work solemnly on Open vSwitch and OVN.
+
+ 19:18 <fnordahl> ddstreet: sometimes we aid in stuff above such as OpenStack too of course, but I would not be working on the other OpenStack packages.
+
+ 19:19 <sil2100> ddstreet: ...I guess, I always grouped them together in my mind. But then again I think they're more like 'related' but not 'part of'. Maybe it's a good discussion to have
+
+ 19:19 <fnordahl> teward: It is important for me to stay up to date on the release schedule. As Ubuntu is a time based release, it is very important that everyone work with this in mind so that we hit the release on time.
+
+ 19:19 <teward> that... isn't an answer to the question I asked :P
+
+ 19:20 <teward> at what points in the development cycle should you be cautious about uploading package updates during the cycle?
+
+ 19:20 <teward> ... and now i'm overly redundant >.<
+
+ 19:20 <teward> (i have a 10min hardstop btw for awareness)
+
+ 19:20 <fnordahl> teward: that is what I'm getting at :) Any major changes would need to be uploaded prior to the FeatureFreeze
+
+ 19:20 <teward> sorry i'm running in "VeryImpatientMode" today >.>
+
+ 19:21 <teward> FT job has me running at a billion RPMs.
+
+ 19:21 <ddstreet> openvswitch/ovn are a subset of openstack, they make no sense at all without the rest of openstack, so it wouldn't make sense to create a separate packageset just for them (separate from openstack) - so i think the only rational choices here are either fnordahl goes into openstack pkgset/team, or gets ppu for those specific pkgs
+
+ 19:21 <fnordahl> ddstreet: openvswitch/ovn is used outside of OpenStack, both in LXD and in Kubernetes.
+
+ 19:21 <ddstreet> and it seems fnordahl would prefer just ppu instead of joining openstack pkgset team
+
+ 19:21 <ddstreet> lxd uses ovn?
+
+ 19:22 <fnordahl> ddstreet: yes
+
+ 19:22 <ddstreet> you mean it *can* use ovn, or it always uses ovn?
+
+ 19:22 <fnordahl> ddstreet: it can use it
+
+ 19:22 <fnordahl> teward: did that answer your question btw?
+
+ 19:22 <ddstreet> yeah...would anyone ever set up lxd with ovn without openstack?
+
+ 19:22 <fnordahl> ddstreet: yes
+
+ 19:22 <ddstreet> ah ok well i suppose it is separate then
+
+ 19:25 * ddstreet starts to set up ovn with lxd ;-)
+
+ 19:25 <fnordahl> :)
+
+ 19:25 <ddstreet> nothing else from me
+
+ 19:25 <teward> i keep getting pulled left right up and down at FT job even though i work from home so  *summons Cthulu for reasons*
+
+ 19:25 <sil2100> fnordahl: can you tell me what's happening to a package uploaded to Ubuntu from the moment of upload until the moment it moves to the release pocket?
+
+ 19:26 <teward> (I have no more questions 'cause sil asked the other one i was going to ask)
+
+ 19:27 <fnordahl> sil2100: In Ubuntu there is multiple pockets where packets live. Before going to the -main or -updates pocket the package will sitt in the -proposed pocket for a period (normally a week I believe) before it gets further promotion. If the upload is for a stable release (SRU) it would also need extra verification to confirm the upload addresses the issue at hand.
+
+ 19:28 <fnordahl> There are also other queues, autopackage tests that packages need to go through before hitting any pocket.
+
+ 19:29 <sil2100> fnordahl: that's almost good. You mentioned a wait period in -proposed - can you elaborate a bit more about that?
+
+ 19:31 <ddstreet> i have 1 more q actually once you are done sil2100
+
+ 19:33 <fnordahl> sil2100: So in the development release it appears I was mistaken about there being a fixed time before promotion.
+
+ 19:34 <fnordahl> There is a set of criterias that need to be met, such as builds for all architectures, dependencies satisfiable, no bugs on -proposed, passes tests etc before it can be promoted.
+
+ 19:35 <fnordahl> The purpose is also to get exposure to a smaller audience which have opted into -proposed so that one can get a reading before the package goes into -main in case there are unforseen problems
+
+ 19:35 <sil2100> fnordahl: is the promotion from -proposed a manual process?
+
+ 19:37 <sil2100> fnordahl: and a final follow up question - you're mentioning a -main pocket. Can you tell me more about it? Is the name correct?
+
+ 19:40 <fnordahl> I would think the package test infrastructure is at least partially automated, but I do not currently know if the promotion in the -development release is automatic if the criterias are met or if there is a manual vetting process at the end.
+
+ 19:42 <fnordahl> So pockets, when you frame the question it in that way it makes me wonder if I've used the wrong name
+
+ 19:43 <fnordahl> main is a set of packages that receive support, other classes of packages are described as being in "universe", "multiverse" etc
+
+ 19:43 <fnordahl> But regardless of support state, there are -updates -proposed and other pockets for them.
+
+ 19:44 <fnordahl> So I guess main is not a correct name for a pocket in that sense
+
+ 19:44 <ddstreet> sil2100 any follow up? i have just 1 more q
+
+ 19:44 <sil2100> fnordahl: correct, we call this the 'release' pocket basically. As you have written, main and universe are components
+
+ 19:45 <sil2100> No more questions from me, ddstreet go ahead!
+
+ 19:45 <ddstreet> fnordahl are you familiar with, or do you currently participate in, the sru exception process for openstack packages (which includes openvswitch/ovn)?
+
+ 19:45 <ddstreet> specifically the point release exception
+
+ 19:46 <fnordahl> ddstreet: yes, I am aware of there being what is described as an MRE, which allows SRU of upstream appointed point releases
+
+ 19:47 <ddstreet> i assume you would participate in that for the openvswitch/ovn packages, i.e. you would be uploading new point release versions sometimes?
+
+ 19:47 <fnordahl> Yes, that is the intention. We are currently behind on one of the OVN  ones now which we want to correct
+
+ 19:48 <ddstreet> can you summarize the differences between the normal sru process and the openstack sru exception process?
+
+ 19:48 <ddstreet> at least the most important one(s)
+
+ 19:50 <fnordahl> If we for example have patches for three LP bugs in OVN and want to SRU those under the normal process, we need to perform full verification which includes a control test with a unpactched pacakge and demonstrate that a patched package resolves the problem for each separate bug (i.e. on 3 LP bugs).
+
+ 19:51 <fnordahl> With the sru exception process we instead perform a distro regression test on a whole set of changes, blessed by the upstream community, and when we find no problems we can SRU the set of changes from the point releae in one go.
+
+ 19:52 <fnordahl> ddstreet: at least that is the most important difference from performing the verification perspective. did that answer your question?
+
+ 19:52 <ddstreet> yep, thanks! nothing else from me
+
+ 19:54 <sil2100> Ok, thank you for answering our questions
+
+ 19:54 <fnordahl> Thank you for asking them and taking the time to consider my application!
+
+ 19:54 <sil2100> hm, I think we'll move this to the ML, but it should hopefully be fast as there's just one member that didn't yet have the occassion to ask questions
+
+ 19:55 <sil2100> I think we'll vote then, via e-mail, since questions provide valuable information for all of us
+
+ 19:55 <sil2100> So that would be most fair
+
+ 19:55 <fnordahl> Sounds good to me, should I subscribe to the devel-permissions list or will I be on Cc?
+
+ 19:56 <sil2100> Ok... bad news is that I also actually have to go AFK in a moment, so I'd say let's end the meeting - I finished like one action item, but everything else is still in progress
+
+ 19:56 <sil2100> fnordahl: I'll keep you in the loop o/
+
+ 19:56 <sil2100> But subscribing to devel-permissions is a good idea anyway ;)
+
+ 19:57 <sil2100> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

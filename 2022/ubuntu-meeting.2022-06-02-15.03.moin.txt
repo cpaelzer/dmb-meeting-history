@@ -1,0 +1,404 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 02 Jun at 15:03 &mdash; 15:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-06-02-15.03.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by jawn-smith at 15:03.
+
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:08.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:08)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:15)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:21)
+
+=== Team proposed-migration report ===
+
+Discussion started by jawn-smith at 15:25.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:26)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:37.
+
+ * ''LINK:'' https://wiki.ubuntu.com/ProposedMigration#autopkgtests   (bdmurray, 15:39)
+ * ''LINK:'' https://ci.debian.net/packages/o/onetbb/unstable/arm64/   (ginggs, 15:44)
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (63)
+ * vorlon (32)
+ * slyon (15)
+ * bdmurray (12)
+ * ginggs (12)
+ * ubottu (9)
+ * bdrung (8)
+ * juliank (5)
+ * mclemenceau (5)
+ * schopin (5)
+ * meetingology (2)
+ * dbungert (1)
+ * enr0n (1)
+ * ogayot (1)
+
+
+
+== Full log ==
+
+
+ 15:03 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:03 <meetingology> Meeting started at 15:03:39 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:03 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:03 <jawn-smith> #topic Lightning Round
+
+ 15:03 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundation-team-updates-thursday-02-june-2022/28714/8
+
+ 15:04 <jawn-smith> Let's all take some time to read through it and ask questions
+
+ 15:04 <jawn-smith> And to congratulate schopin on becoming core dev!
+
+ 15:04 <slyon> wrt. alexghiti's libgpg-error multi-arch fix, we'd need somebody to deploy this: https://code.launchpad.net/~ubuntu-release/autopkgtest/+git/development/+merge/423176
+
+ 15:04 <slyon> maybe vorlon or juliank could help with that?
+
+ 15:05 <vorlon> I thought it autodeploys
+
+ 15:05 <slyon> hasn't been deployed as of a few hours ago
+
+ 15:05 <juliank> It doesn't autodeploy
+
+ 15:05 <juliank> The manual says to run some juju thingy
+
+ 15:06 <juliank> but that might be broken and one has to run git pull
+
+ 15:06 <bdmurray> I'd like to do that after the meeting
+
+ 15:06 <juliank> directly
+
+ 15:06 <vorlon> ok
+
+ 15:06 <slyon> thanks bdmurray
+
+ 15:07 <jawn-smith> Okay, any other questions?
+
+ 15:08 <jawn-smith> #topic Release incoming bugs
+
+ 15:08 <jawn-smith> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 15:08 <jawn-smith> bug 1880029
+
+ 15:08 <ubottu> Bug 1880029 in netplan.io (Ubuntu) "Netplan optional-addresses produces Unknown key name 'OptionalAddresses'" [Medium, Triaged] https://launchpad.net/bugs/1880029
+
+ 15:09 <jawn-smith> slyon: you tagged this
+
+ 15:09 <slyon> we had some discussions wrt netplan's "optional-addresses" and it turned out that it is not working proper ever since
+
+ 15:09 <slyon> (or at least since ~2018)
+
+ 15:09 <slyon> so we should look into that
+
+ 15:10 <jawn-smith> is this something that would be worthy of an SRU?
+
+ 15:10 <slyon> eventually yes, but could be through a full version backport of netplan
+
+ 15:10 <jawn-smith> Okay. mclemenceau would you mind carding this?
+
+ 15:10 <mclemenceau> of course! on it
+
+ 15:11 <jawn-smith> thanks!
+
+ 15:11 <jawn-smith> bug 1976607
+
+ 15:11 <ubottu> Bug 1976607 in systemd (Ubuntu Kinetic) "tests-in-lxd autopkgtest is skipped, due to missing 'lxd' deb" [Medium, Triaged] https://launchpad.net/bugs/1976607
+
+ 15:11 <slyon> that's mine as well
+
+ 15:11 <jawn-smith> this one eve has a patch, so a card seems justified
+
+ 15:11 <jawn-smith> s/eve/even
+
+ 15:11 <slyon> yeah, patch doesn't fully work unfortunately
+
+ 15:11 <jawn-smith> ah okay. Either way if work is being done on it we should go ahead and create a card
+
+ 15:12 <slyon> but we need to fix it. systemd's autopkgtests were reduced post Jammy feature freeze due to the 'lxd' deb being removed
+
+ 15:12 <slyon> so many tests are skipped, which is bad
+
+ 15:12 <jawn-smith> That does indeed sound bad
+
+ 15:12 <mclemenceau> ok carding this then
+
+ 15:12 <jawn-smith> Thanks!
+
+ 15:12 <jawn-smith> bug 1976299
+
+ 15:12 <ubottu> Bug 1976299 in python3.10 (Ubuntu Kinetic) "hashlib.algorithms_available lists algorithms that cannot be used" [Undecided, Confirmed] https://launchpad.net/bugs/1976299
+
+ 15:13 <jawn-smith> I see both schopin and bdmurray commenting on this
+
+ 15:14 <jawn-smith> Is this something you're working on schopin?
+
+ 15:14 <schopin> not actively, no, I just tagged it so that it'd show up on my list.
+
+ 15:15 <jawn-smith> Okay, well sounds important so let's card it
+
+ 15:15 <mclemenceau> ok
+
+ 15:15 <schopin> ack
+
+ 15:15 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:16 <jawn-smith> The first two were already covered under kk
+
+ 15:16 <jawn-smith> bug 1976258
+
+ 15:16 <ubottu> Bug 1976258 in icu (Ubuntu) "icu ftbfs in the jammy release pocket" [Undecided, New] https://launchpad.net/bugs/1976258
+
+ 15:16 <jawn-smith> tagged by doko
+
+ 15:16 <bdmurray> The dbus one was not discussed under kk
+
+ 15:17 <jawn-smith> eh? Okay I'll go back to it
+
+ 15:17 <jawn-smith> I've seen this failing test before from icu
+
+ 15:17 <jawn-smith> At least I'm pretty sure
+
+ 15:17 <jawn-smith> It had something to do with our tzdata being different than Debian's
+
+ 15:18 <jawn-smith> so mclemenceau can you card this and assign to me?
+
+ 15:18 <bdmurray> icu does occassionally get security updates so that seems worth sorting but might be a low priority
+
+ 15:18 <mclemenceau> ok
+
+ 15:18 <jawn-smith> thanks!
+
+ 15:18 <ginggs> jawn-smith: if you think it's a flaky, and needs a retry, i can do that
+
+ 15:18 <jawn-smith> ginggs: if it's the problem I've seen before it's not flakey
+
+ 15:19 <jawn-smith> but rather different names for certain locales that makes the test fail
+
+ 15:19 <jawn-smith> moving on to bug 1968845
+
+ 15:19 <ubottu> Bug 1968845 in dbus (Ubuntu) "Upgrade to 22.04 from 20.04 ends with dbus installation asking for a reboot" [High, Incomplete] https://launchpad.net/bugs/1968845
+
+ 15:19 <jawn-smith> we actually discussed this during the last meeting, hence my purple link
+
+ 15:19 <bdmurray> This was discussed elsewhere and there is a plan
+
+ 15:20 <jawn-smith> Does that plan involve a card?
+
+ 15:20 <bdmurray> It probably should
+
+ 15:20 <jawn-smith> Cool, let's card it and move on
+
+ 15:20 <jawn-smith> rls-ii is empty
+
+ 15:20 <jawn-smith> \o/
+
+ 15:21 <mclemenceau> Ack
+
+ 15:21 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:21 <jawn-smith> bug 1888347
+
+ 15:21 <ubottu> Bug 1888347 in lvm2 (Ubuntu) "blk-availability unmounts filesystems before applications have finished using them" [High, Confirmed] https://launchpad.net/bugs/1888347
+
+ 15:21 <jawn-smith> we discussed this one last week
+
+ 15:22 <bdmurray> I tagged it because there was reference to data loss but the linked bugs are quite different from what the description says
+
+ 15:22 <jawn-smith> It appears there was an action for bdmurray to investigate if this was fixed in focal+
+
+ 15:23 <jawn-smith> bdmurray: have you looked into that?
+
+ 15:23 <slyon> there's also a private bug 1921145 which apparently has an upstream fix and backport provided, so should probably  be verified and included in the next systemd Focal SRU
+
+ 15:25 <bdmurray> Let's ask for a test case from the reporter about the lvm2 bug
+
+ 15:25 <jawn-smith> Sounds good to me
+
+ 15:25 <jawn-smith> That's it for bugs then
+
+ 15:25 <jawn-smith> #topic Team proposed-migration report
+
+ 15:26 <jawn-smith> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:26 <jawn-smith> vorlon: take it away
+
+ 15:26 <vorlon> only 13 packages to discuss
+
+ 15:26 <vorlon> I'll try to be quick
+
+ 15:26 <vorlon> libevent, I know is in progress
+
+ 15:27 <jawn-smith> correct, we have identified a solution
+
+ 15:27 <vorlon> waveform doesn't seem to be around today, but I guess this is still ok to carry over?
+
+ 15:27 <vorlon> doko: are you keeping dash?
+
+ 15:27 <jawn-smith> Yeah, I may end up fixing it while ubuntu-image tests are running or something like that
+
+ 15:28 <vorlon> schopin: are you still driving the MIRs for licensecheck?
+
+ 15:28 <slyon> licensecheck and sphinx are in progress: LP: #1972853
+
+ 15:28 <ubottu> Launchpad bug 1972853 in libxs-parse-sublike-perl (Ubuntu) "[MIR] lib*-perl" [Undecided, Incomplete] https://launchpad.net/bugs/1972853
+
+ 15:28 <vorlon> excellent
+
+ 15:28 <dbungert> dnspython is still mine, I have a plan for the first problem but there is a whole secondary problem that needs investigation.
+
+ 15:28 <schopin> agreed, still working on it.
+
+ 15:28 <slyon> so is libgpg-error, LP: #1975673
+
+ 15:28 <ubottu> Launchpad bug 1975673 in libgpg-error (Ubuntu) "libgpg-error/1.45-2 fails autopkgtest on i386" [Undecided, New] https://launchpad.net/bugs/1975673
+
+ 15:28 <vorlon> schopin: are you also still working on the MIR for sphinx?
+
+ 15:29 <schopin> Yes, we bundled all the perl MIRs in one bug.
+
+ 15:29 <schopin> incidentally that specific one is the one causing the delay.
+
+ 15:29 <vorlon> MIRs for mutt are in progress as mentioned in jawn-smith's weekly report
+
+ 15:30 <vorlon> brltty is waiting on new espeak-ng, which rings a bell for me; I'll have a look at it
+
+ 15:30 <vorlon> paramiko vs libcloud, enr0n seems to be on top of this
+
+ 15:31 <enr0n> Yeah, I tracked down the root cause this morning, and I am working on a patch.
+
+ 15:31 <vorlon> dbungert already mentioned dnspython
+
+ 15:31 <vorlon> that takes us to the new stuff (7 days old)
+
+ 15:31 <vorlon> python-future has some autopkgtest regressions
+
+ 15:31 <vorlon> who can take this?
+
+ 15:31 <ginggs> i'll take that
+
+ 15:31 <vorlon> python-future to ginggs
+
+ 15:31 <vorlon> thanks
+
+ 15:32 <vorlon> python-httplib2: bdrung: ?
+
+ 15:32 <bdrung> yes, i can take that
+
+ 15:32 <vorlon> dpkg: juliank: do you want this?
+
+ 15:33 <juliank> ack
+
+ 15:33 <vorlon> pillow: ogayot: can you take this?
+
+ 15:33 <ginggs> pillow is blocked by skimage which has a new indirect dependency
+
+ 15:33 <ginggs> debian bug #1010595
+
+ 15:33 <ubottu> Debian bug 1010595 in src:xsimd "Please make xsimd available on all platforms" [Normal, Open] https://bugs.debian.org/1010595
+
+ 15:33 <vorlon> are you saying not to give it to ogayot? :)
+
+ 15:34 <ogayot> Seems like we need to wait on Debian. I can take it then.
+
+ 15:37 <vorlon> I believe that's everything for this week
+
+ 15:37 <jawn-smith> #topic AOB
+
+ 15:38 <ginggs> i did have a quick question about bdrung's onetbb thing
+
+ 15:38 <ginggs> just wondering if it may be better to add things to big_packages instead of long_tests
+
+ 15:38 <ginggs> (provided they can run their tests in parallel)
+
+ 15:38 <ginggs> i had some success doing that with mercurial
+
+ 15:39 <bdrung> what is the practical difference between big_packages and long_tests?
+
+ 15:39 <vorlon> big_packages is larger VMs; long_tests extends the timeout
+
+ 15:39 <bdmurray> https://wiki.ubuntu.com/ProposedMigration#autopkgtests
+
+ 15:40 <bdrung> so it needs to be checked if the cmake test suite can be executed in parallel
+
+ 15:41 <vorlon> in terms of the trade-offs, big_packages is better than long_tests if it solves the failure *and* the autopkgtest infra is under low load
+
+ 15:42 <vorlon> however, I don't think our handling of quota for big VMs is very good
+
+ 15:42 <vorlon> so large numbers of packages requiring big_packages ==> increased VM allocation failure rate
+
+ 15:42 <bdrung> seeing "Threads = 1" and "parallel_for" in the autoptkgtest output, so we can test running autopkgtest with different VMs to see how much it gets faster
+
+ 15:43 <vorlon> and in principle, when we get around to implementing baseline retesting, "low load" will become an infrequent state
+
+ 15:43 <bdrung> is it documented somewhere how big those autopkgtest VMs are?
+
+ 15:44 <ginggs> you can probably infer from debian's results
+
+ 15:44 <ginggs> https://ci.debian.net/packages/o/onetbb/unstable/arm64/
+
+ 15:44 <jawn-smith> If you want to test in an environment similar to the autopkgtest environment
+
+ 15:44 <ginggs> 38-52 minutes
+
+ 15:44 <jawn-smith> openstack and juju have the different sizes: m1.small and m1.large
+
+ 15:44 <jawn-smith> most packages run on an m1.small, but big_packages run on an m1.large
+
+ 15:45 <ginggs> also in the wiki bdmurray posted ^
+
+ 15:45 <jawn-smith> There's also an m1.tiny, but I recommend avoiding that
+
+ 15:45 <bdrung> Debian CI on amd64 uses 4 threads and takes 36m.
+
+ 15:45 <bdmurray> locally I use qemu --ram-size=4096 --cpus=4
+
+ 15:46 <bdmurray> i.e. for testing amd64
+
+ 15:46 <bdrung> so the result is: ginggs is right, big_packages is better than long_tests.
+
+ 15:46 <bdrung> i'll put it on my agenda to change that (with some numbers on the runtime in the MR)
+
+ 15:46 <vorlon> jawn-smith: pretty sure we are using a custom VM type that's not an m1.small though I would have to look to see what the difference is
+
+ 15:46 <jawn-smith> ah okay, thanks for the correction
+
+ 15:47 <vorlon> also I'm not sure that 'small' and 'large' have a global definition that's guaranteed to be constant over time
+
+ 15:47 <bdmurray> `tests run on something similar to an m1.small unit`
+
+ 15:47 <vorlon> right, "similar to", uhh
+
+ 15:48 <jawn-smith> One more topic. I heard back from cpaelzer about how to tag the MIR bug so it shows up in excuses but doesn't throw off the MIR team. He suggests adding the "update-excuse" tag, tagging the parent package (mutt) and leaving it assigned to someone so it doesn't show up in the MIR team searches
+
+ 15:48 <jawn-smith> err, not "tagging" the parent package but rather marking it as "affects"
+
+ 15:49 <bdmurray> that's kind of lame
+
+ 15:50 <jawn-smith> Okay, anything else?
+
+ 15:51 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

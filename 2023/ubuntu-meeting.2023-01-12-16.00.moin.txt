@@ -1,0 +1,283 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 12 Jan at 16:00 &mdash; 16:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-01-12-16.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 16:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:09)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:15)
+ * ''LINK:'' https://gitlab.gnome.org/GNOME/gtk/-/issues/3310   (adrien, 16:21)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 16:23)
+
+=== proposed-migration ===
+
+Discussion started by jawn-smith at 16:26.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 16:26)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 16:43.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (42)
+ * jawn-smith (36)
+ * schopin (6)
+ * adrien (5)
+ * bdmurray (3)
+ * bdrung (3)
+ * meetingology (2)
+ * sil2100 (2)
+ * slyon (2)
+ * dbungert (2)
+ * ogayot (2)
+ * enr0n (2)
+ * juliank (1)
+ * waveform (1)
+ * danilogondolfo (1)
+ * ginggs (1)
+ * xypron (1)
+
+
+
+== Full log ==
+
+
+ 16:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:00 <meetingology> Meeting started at 16:00:25 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:00 <jawn-smith> The weekly status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-12-january-2023/33162
+
+ 16:00 <jawn-smith> Let's all take our usual time to read and ask questions
+
+ 16:01 <jawn-smith> Looks like not everybody has done their status
+
+ 16:02 <bdmurray> :-(
+
+ 16:02 * vorlon waves
+
+ 16:03 <sil2100> o/
+
+ 16:04 <vorlon> jawn-smith: adduser/useradd differences? they're always different :)
+
+ 16:04 <jawn-smith> True, but the difference is in the debootstrap output
+
+ 16:04 <vorlon> ah
+
+ 16:05 <jawn-smith> It used to include both, now it doesn't
+
+ 16:05 <bdrung> I like schopin's "Usual batch of PR reviews on apport" entry :D
+
+ 16:05 <schopin> I wasn't feeling like listing them out today :)
+
+ 16:09 <jawn-smith> #topic Release incoming bugs
+
+ 16:09 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 16:10 <jawn-smith> bug 2002426
+
+ 16:10 <jawn-smith> slyon: you tagged this one
+
+ 16:14 <jawn-smith> offline discussion has decided we need to patch licensecheck to work around the new dependencies
+
+ 16:15 <slyon> (as described on the bug report)
+
+ 16:15 <jawn-smith> slyon has volunteered, thanks!
+
+ 16:15 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 16:16 <jawn-smith> bug 1842439
+
+ 16:19 <jawn-smith> lots of discussion about whether or not you can catch a C library segfault within Python code
+
+ 16:19 <vorlon> can but shouldn't need to ;)
+
+ 16:21 <schopin> Do we know if the issue has been identified and marked as NOTFIX upstream, or just not investigated at all?
+
+ 16:21 <adrien> https://gitlab.gnome.org/GNOME/gtk/-/issues/3310
+
+ 16:21 <adrien> I'm not sure how to summarise their stance
+
+ 16:21 <jawn-smith> We seem to agree that this is something that needs to be fixed in gtk, not apport
+
+ 16:21 <jawn-smith> and is therefore back with the desktop team
+
+ 16:23 <jawn-smith> vorlon to add it to the desktop sync agenda
+
+ 16:23 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:23 <jawn-smith> bug 1999345
+
+ 16:24 <jawn-smith> juliank: where are we with this?
+
+ 16:24 <jawn-smith> Still deciding whether or not to include it?
+
+ 16:24 <juliank> no comment yet
+
+ 16:24 <vorlon> doesn't seem like incoming territory to me
+
+ 16:26 <jawn-smith> Sounds like we're removing the tag and assigning security team to review it
+
+ 16:26 <jawn-smith> And that's it for incoming bugs
+
+ 16:26 <jawn-smith> #topic proposed-migration
+
+ 16:26 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:26 <jawn-smith> vorlon:
+
+ 16:26 <vorlon> ooh this should be fun
+
+ 16:27 <schopin> git is basically fixed, just waiting for sync.
+
+ 16:28 <vorlon> schopin: does that mean it's uploaded to unstable and just waiting for autosync?
+
+ 16:28 <dbungert> 101 packages needing attention
+
+ 16:28 <schopin> vorlon: that, and then massage the triggers, I guess.
+
+ 16:28 <vorlon> schopin: can you take this for follow-up then?
+
+ 16:29 <schopin> sure, but feel free to give me another one.
+
+ 16:29 <vorlon> sysvinit mentioned by ogayot in his report, I'll take that for the test retriggering
+
+ 16:29 <ogayot> vorlon: thanks
+
+ 16:30 <jawn-smith> vorlon: I can take debootstrap since I have some familiarity with it
+
+ 16:30 <vorlon> thanks
+
+ 16:30 <vorlon> debootstrap: jawn-smith
+
+ 16:30 <vorlon> libconfig-inifiles-perl, might be an easy one that just requires some proper retriggers because I recognize lemonldap-ng as flaky
+
+ 16:32 <vorlon> bdrung: can you take this?
+
+ 16:32 <waveform> debootstrap's with me I think?
+
+ 16:32 <bdrung> vorlon, ok
+
+ 16:32 <vorlon> apport had a new version to fix autopkgtest failures, I'll retry this
+
+ 16:33 <bdrung> let me handle apport
+
+ 16:33 <vorlon> ok
+
+ 16:33 <vorlon> apport: bdrung
+
+ 16:33 <vorlon> libconfig-inifiles-perl: bdrung
+
+ 16:33 <vorlon> pyyaml is a non-trivial one fwiw
+
+ 16:33 <vorlon> adrien: can you take pyyaml?
+
+ 16:34 <vorlon> these autopkgtest regressions are also relevant to python3-defaults and other revdeps, you'll be killing 5 birds with 3 stones
+
+ 16:34 <adrien> vorlon: sure
+
+ 16:34 <vorlon> pyyaml: adrien
+
+ 16:34 <vorlon> thanks
+
+ 16:34 <vorlon> irssi is just waiting on perl which waits on tests
+
+ 16:34 * jawn-smith volunteers for gnupg2
+
+ 16:34 <vorlon> gnupg2: jawn-smith
+
+ 16:35 <vorlon> bdmurray: can you take xz-utils?
+
+ 16:35 <bdmurray> okay
+
+ 16:36 <adrien> are there really regressions caused by xz-utils? I only notice linux-lowlatency which is a kernel issue iirc
+
+ 16:38 <vorlon> adrien: don't know! it needs investigated and retriggered to where it passes correctly and doesn't block
+
+ 16:39 <vorlon> sphinx-rtd-theme - dbungert can you take this?
+
+ 16:39 <dbungert> vorlon: ack for sphinx-rtd-theme
+
+ 16:40 <vorlon> adrien: elfutils shows the same autopkgtest regressions, so please take it together w/ xz-utils
+
+ 16:40 <vorlon> libcap2 - danilogondolfo ?
+
+ 16:40 <danilogondolfo> sure
+
+ 16:40 <vorlon> python-tz - ginggs ?
+
+ 16:40 <ginggs> ack
+
+ 16:40 <vorlon> python-attrs - xypron ?
+
+ 16:40 <adrien> vorlon: ok
+
+ 16:40 <vorlon> pyasn1 - juliank ?
+
+ 16:41 <xypron> I can have a look at python-attrs
+
+ 16:41 <vorlon> gdb - slyon ?
+
+ 16:41 <slyon> vorlon: ack for gdb
+
+ 16:41 <vorlon> gobject-introspection - enr0n ?
+
+ 16:42 <enr0n> vorlon: ack, but note I am OOO next week so my timeline will be different than normal
+
+ 16:42 <vorlon> ack
+
+ 16:42 <vorlon> it's libreoffice autopkgtest regressions, so it's probably 5 minutes of work followed by a week of waiting anyway ;P
+
+ 16:42 <vorlon> talloc - ogayot ?
+
+ 16:42 <ogayot> vorlon: sure
+
+ 16:42 <vorlon> boost1.74 - schopin ?
+
+ 16:42 <schopin> vorlon: ack
+
+ 16:43 <vorlon> openjdk-lts vs alsa-lib - sil2100 ?
+
+ 16:43 <sil2100> vorlon: ok o/
+
+ 16:43 <vorlon> and then I think everyone who's here has had at least one assigned
+
+ 16:43 <vorlon> jawn-smith:
+
+ 16:43 <jawn-smith> #topic AOB
+
+ 16:44 <jawn-smith> Monday is a US holiday
+
+ 16:44 <enr0n> I am out tomorrow and all of next week
+
+ 16:44 <jawn-smith> I think a few Americans are swapping it for Friday
+
+ 16:44 <bdmurray> I will be here Monday
+
+ 16:44 <jawn-smith> At some point my new house will be ready and I'll disappear for like a week
+
+ 16:44 <jawn-smith> hopefully soon-ish
+
+ 16:45 <vorlon> I'll be out Monday
+
+ 16:45 <jawn-smith> I'll be out Monday as well
+
+ 16:51 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

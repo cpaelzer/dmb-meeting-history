@@ -1,0 +1,399 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 17 Sep at 15:01 &mdash; 15:36 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-09-17-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:01.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:10.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:14.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:23.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (48)
+ * vorlon (24)
+ * xnox (23)
+ * rbalint (15)
+ * tdaitx (14)
+ * doko (12)
+ * ubottu (11)
+ * waveform (8)
+ * juliank (7)
+ * meetingology (3)
+ * seb128 (2)
+ * mclemenceau (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started Thu Sep 17 15:01:25 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <bdmurray> #topic Lightning rounds
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform slyon)
+
+ 15:02 <bdmurray> tdaitx xnox slyon infinity rbalint vorlon sil2100 juliank waveform bdmurray doko mwhudson
+
+ 15:02 <bdmurray> tdaitx:
+
+ 15:02 <tdaitx> * scilab SRU
+
+ 15:02 <tdaitx> - packaged and uploaded scilab 6.0.2/bionic and 6.1.0/focal
+
+ 15:02 <tdaitx> - working on improving regressions description after feedback from bdmurray (thanks for reviewing it)
+
+ 15:02 <tdaitx> * created lp user&team account for jck (private git repo management)
+
+ 15:02 <tdaitx> * triaged LP: #1875918, reproducer is incomplete, report done on openjdk 11.0.7, asked for more info and retry with 11.0.8
+
+ 15:02 <tdaitx> - sent email to jformdesigner support in case they want to test on openjdk 11.0.8 and/or provide more tests as they have disabled support for our openjdk and now show an alert asking users to download openjdk from adoptopenjdk
+
+ 15:02 <ubottu> Launchpad bug 1875918 in openjdk-lts (Ubuntu) "openjdk crash: jdk11+eclipse+jformdesigner" [Low,Incomplete] https://launchpad.net/bugs/1875918
+
+ 15:02 <tdaitx> * updated apport merge request for LP: #1775219 after feedback from bdmurray
+
+ 15:02 <ubottu> Launchpad bug 1775219 in apport (Ubuntu) "incorrectly reports package as unsupported if apt cache is empty" [Undecided,Confirmed] https://launchpad.net/bugs/1775219
+
+ 15:02 <tdaitx> * took another look at the top errors in errors.u.b for openjdk
+
+ 15:02 <tdaitx> - provided additional stacktraces and hotspot error log for upstream bug
+
+ 15:02 <tdaitx> * looking at LP: #1887142 for focal, downgrading to libhibernate-validator-java 4.3.4-1 works (same deb that was superseded on focal)
+
+ 15:02 <ubottu> Launchpad bug 1887142 in pdfsam (Ubuntu) "libhibernate-validator-java should be kept at 4.3.4-1" [Undecided,Confirmed] https://launchpad.net/bugs/1887142
+
+ 15:02 <tdaitx> Other:
+
+ 15:02 <tdaitx> - apport hook for openjdk-lts was not actually enabled, feeling sad and stupid (could be also due to 2020)
+
+ 15:03 <tdaitx> (done)
+
+ 15:03 <bdmurray> Is there a bug re the openjdk apport hook?
+
+ 15:03 <bdmurray> xnox:
+
+ 15:03 <xnox> bah
+
+ 15:03 <xnox> one sec
+
+ 15:03 <xnox> grub sru out, in focal
+
+ 15:03 <xnox> finalrd backports in progress
+
+ 15:03 <xnox> cherrypicks into bionic cause test-suite errors (not sure why)
+
+ 15:03 <xnox> ubuntu-core-initrd release for UC20 in progress
+
+ 15:04 <xnox> fixed my FTBFS bugs (somewhat)
+
+ 15:04 <xnox> minor bug fixes for s390x in progress
+
+ 15:04 <xnox> done
+
+ 15:04 <tdaitx> bdmurray: no, I have a local change that I will submit as a merge request
+
+ 15:04 <xnox> slyon:
+
+ 15:04 <xnox> - Tried setting up autopkgtest on Canonistack via ssh/nova runner, resigned
+
+ 15:04 <xnox> - Figured out how to execute autopkgtest on real infra via PPA
+
+ 15:04 <xnox> * Sent email about it to ubuntu-devel
+
+ 15:04 <xnox> === Netplan ===
+
+ 15:04 <xnox> - Backlog grooming for 21.04 roadmap
+
+ 15:04 <xnox> - Debugged/re-worked 'cloud-init' test for first-boot OVS issue
+
+ 15:04 <xnox> * Tracing hidden problems on autopkgtest infra, very frustrating
+
+ 15:04 <xnox> - Released netplan 0.100-0ubuntu3 package
+
+ 15:04 <xnox> - Working on netplan get/set/try/commit/abort (dbus) commands for UC20, PR#163
+
+ 15:04 <xnox> * incl. initial integration with libnetplan via ctypes
+
+ 15:04 <xnox> - Supported NM snap building/testing
+
+ 15:04 <xnox> (done)
+
+ 15:05 <bdmurray> rbalint:
+
+ 15:05 <rbalint> * fixed logrotate FTBFS
+
+ 15:05 <rbalint> * fixed autopkgtest-bisector to not use -proposed in sbuild
+
+ 15:05 <rbalint> * +1 maintenance
+
+ 15:05 <rbalint> * still landing glibc to Groovy fixing packages around it
+
+ 15:05 <rbalint> * verified all Focal glibc SRU bugs and filed hints to make it ready for release
+
+ 15:05 <rbalint> * testing merged systemd, 246.5-1ubuntu1, landing it soon
+
+ 15:05 <rbalint> * partner work
+
+ 15:05 <rbalint> (done)
+
+ 15:05 <bdmurray> vorlon:
+
+ 15:06 <vorlon> * +1 maintenance: working now to help the glibc transition
+
+ 15:06 <vorlon> * NBS, uninstallables cleanup
+
+ 15:06 <vorlon> (done)
+
+ 15:06 <bdmurray> sil2100 is on holiday
+
+ 15:06 <bdmurray> juliank:
+
+ 15:06 <juliank> * fixed nfs-utils ftbfs
+
+ 15:06 <juliank> * grub focal SRU
+
+ 15:06 <juliank> * analyzing shim->grub->shim->grub->kernel load failure
+
+ 15:07 <juliank> (doen)
+
+ 15:07 <waveform> * Working on MIR for rpi-eeprom & libraspberrypi-bin (LP: #1895137; LP: #1785133 merged into former)
+
+ 15:07 <waveform> * Working on firmware bump for linux-firmware-raspi2 (also related to MIR above)
+
+ 15:07 <waveform> * Fixed initramfs issue in pibootctl (released 0.5.2)
+
+ 15:07 <waveform> * Worked on new u-boot-less "desktop" branch for pi-gadget (derived from similar "classic" branch; to be pushed once new unpacked kernel lands)
+
+ 15:07 <waveform> * Working on raspi-config port
+
+ 15:07 <ubottu> Launchpad bug 1895137 in rpi-eeprom (Ubuntu) "[MIR] rpi-eeprom" [Undecided,Incomplete] https://launchpad.net/bugs/1895137
+
+ 15:07 <waveform> * Onboarding meetings
+
+ 15:07 <ubottu> Error: Launchpad bug 1785133 could not be found
+
+ 15:07 <waveform> * Tested "more new stuff"
+
+ 15:07 <waveform> (done)
+
+ 15:07 <doko> bdmurray:
+
+ 15:07 <bdmurray> updated daisy in production to pretend to accept crashes re snaps
+
+ 15:07 <bdmurray> updated daisy to provide more information when it OOPSes
+
+ 15:07 <bdmurray> additional testing of LP: #1886748
+
+ 15:07 <bdmurray> discovered and reported insufficient removals LP: #1894919
+
+ 15:07 <ubottu> Launchpad bug 1886748 in ubuntu-release-upgrader (Ubuntu Focal) "upgrade from 18.04 to 20.04 fails to calculate if libomp5 is installed" [High,Confirmed] https://launchpad.net/bugs/1886748
+
+ 15:07 <ubottu> Launchpad bug 1894919 in ubuntu-release-upgrader (Ubuntu Focal) "gnome-software-plugin-snap consider an unwanted removal for 20.04 ubuntu-desktop" [Undecided,In progress] https://launchpad.net/bugs/1894919
+
+ 15:07 <bdmurray> uploaded a fix for the above bug
+
+ 15:07 <bdmurray> uploaded u-r-u SRUs for the server team and esm-apps changes
+
+ 15:07 <bdmurray> investigation into / testing of LP: #1891657
+
+ 15:07 <bdmurray> tracking of uc20 work
+
+ 15:07 <ubottu> Launchpad bug 1891657 in apport (Ubuntu Groovy) "systemd 100% cpu usage apport-autoreport.service: Failed with result 'start-limit-hit'" [Undecided,Confirmed] https://launchpad.net/bugs/1891657
+
+ 15:08 <bdmurray> started a discussion re libreoffice SRUs
+
+ 15:08 <bdmurray> ✔ done
+
+ 15:08 <doko> - glibc reviews, cross-toochain-base updates
+
+ 15:08 <doko> - cross compiler updates for groovy
+
+ 15:08 <doko> - finally built the cross compiler updates for focal
+
+ 15:08 <doko> - prepared gdb SRU
+
+ 15:08 <doko> - prepared cvise SRU
+
+ 15:08 <doko> - python2.7 SRU
+
+ 15:08 <doko> - python3.9 SRU
+
+ 15:08 <doko> - python3.8 SRU
+
+ 15:08 <doko> - packaged openjdk-15 release
+
+ 15:08 <doko> - gcc-snapshot build
+
+ 15:08 <doko> (done)
+
+ 15:09 <vorlon> fixed bug #: 1895133 not 1784133 :)
+
+ 15:09 <bdmurray> any questions regarding status?
+
+ 15:10 <bdmurray> #topic Release incoming bugs
+
+ 15:10 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <bdmurray> so bug 1893924 is leftover because the rls-gg tags did not get removed
+
+ 15:10 <ubottu> bug 1893924 in gnutls28 (Ubuntu Groovy) "memory leak in GnuTLS iov operations used by Samba" [High,New] https://launchpad.net/bugs/1893924
+
+ 15:10 <bdmurray> sad
+
+ 15:10 <bdmurray> so nothing new there
+
+ 15:11 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:11 <bdmurray> bug 1888726
+
+ 15:11 <ubottu> bug 1888726 in netplan.io (Ubuntu) "systemd-udevd regression: some renamed network interfaces stuck in "pending" state" [Undecided,Confirmed] https://launchpad.net/bugs/1888726
+
+ 15:12 <bdmurray> this sounds like somthing for a netplan.io developer to look at so maybe we should wait for next week
+
+ 15:13 <rbalint> i think we should take it though
+
+ 15:13 <bdmurray> take it for looking into?
+
+ 15:13 <rbalint> yes
+
+ 15:14 <bdmurray> I'm okay with that
+
+ 15:14 <mclemenceau> Ok I'll card it then
+
+ 15:14 <bdmurray> That's it for bugs then
+
+ 15:14 <bdmurray> #topic Team proposed-migration report
+
+ 15:15 <vorlon> [LINK] https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:15 <rbalint> oslogin is still mine
+
+ 15:15 <vorlon> google-compute-engine-oslogin: still the MIR process
+
+ 15:16 <vorlon> setuptools: xnox this was yours and doesn't look any different than last week to my eye. Are you working on this or should it be handed off?
+
+ 15:16 <xnox> yes i shall do it
+
+ 15:17 <vorlon> thanks
+
+ 15:17 <vorlon> lintian is blocked by MIRs; juliank actually synced this for an autopkgtest fix so we ought to care about landing it in the release pocket
+
+ 15:17 <vorlon> juliank: are you good to take this one?
+
+ 15:18 <juliank> how many?
+
+ 15:18 <juliank> I guess so
+
+ 15:18 <vorlon> juliank: 3 MIRs :)
+
+ 15:18 <juliank> Gotta add a JIRA task with 3 subtasks
+
+ 15:20 <vorlon> dbus: appears to have introduced actual regressions in autopkgtests on i386; this is a desktop team upload, so leaving it to them (with support as needed)
+
+ 15:20 <vorlon> and then there's glibc, glibc, glibc, which is understood and in progress (mostly waiting for a lot of test results)
+
+ 15:21 <vorlon> rsync is xnox's upload, but since he's doing setuptools, does someone else want to take this one? bdmurray?
+
+ 15:21 <bdmurray> I can have a look
+
+ 15:22 <vorlon> thanks
+
+ 15:22 <vorlon> then more glibc, more glibc, etc
+
+ 15:23 <vorlon> and that's the end of the list
+
+ 15:23 <vorlon> bdmurray:
+
+ 15:23 <bdmurray> #topic AOB
+
+ 15:24 <bdmurray> Given that the grub SRU is out there's been some discussion regarding enabling release upgrades. I wonder if we should wait for bug 1894919 to be fixed?
+
+ 15:24 <ubottu> bug 1894919 in ubuntu-release-upgrader (Ubuntu Focal) "gnome-software-plugin-snap consider an unwanted removal for 20.04 ubuntu-desktop" [Undecided,In progress] https://launchpad.net/bugs/1894919
+
+ 15:25 <bdmurray> Not fixing it means people will have a bunch of pakcages to autoremove after the upgrade - so its not terrible.
+
+ 15:25 <vorlon> so they're autoremovable but will not be removed by the release upgrader?
+
+ 15:25 <bdmurray> Then again it shouldn't take long for that to migrate so we could just enable upgrades next week.
+
+ 15:26 <vorlon> ok
+
+ 15:26 <vorlon> I think I'm good with waiting one more week
+
+ 15:26 <bdmurray> Then are you willing to review it since its my SRU? ;-)
+
+ 15:27 <vorlon> yes
+
+ 15:27 <bdmurray> Thanks!
+
+ 15:27 <rbalint> i'd like to have the focal glibc sru released, i think it is ready
+
+ 15:27 <bdmurray> that's all I have
+
+ 15:27 <bdmurray> rbalint: there's still the i386 autopkgtest failure for glibc
+
+ 15:28 <bdmurray> any other other business?
+
+ 15:28 <rbalint> bdmurray, it regressed in release
+
+ 15:29 <rbalint> bdmurray, also filed a hint https://code.launchpad.net/~rbalint/britney/hints-ubuntu-focal/+merge/390768
+
+ 15:30 <bdmurray> rbalint: okay, I've opened a tab
+
+ 15:30 <rbalint> bdmurray, thanks!
+
+ 15:30 <bdmurray> alright then going once
+
+ 15:30 <seb128> vorlon, dbus seemed to have the same failure before the new upload, e.g https://objectstorage.prodstack4-5.canonical.com/v1/AUTH_77e2ada1e7a84929a74ba3b87153c0ac/autopkgtest-groovy/groovy/i386/d/dbus/20200916_033044_8a138@/log.gz
+
+ 15:32 <vorlon> seb128: ah so it's only new apparmor which breaks things, so a proper trigger should be enough to get it through
+
+ 15:34 <vorlon> seb128: so, retried with correct cherry-picking from proposed
+
+ 15:34 <seb128> vorlon, thanks
+
+ 15:36 <bdmurray> Okay, thanks everybody!
+
+ 15:36 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

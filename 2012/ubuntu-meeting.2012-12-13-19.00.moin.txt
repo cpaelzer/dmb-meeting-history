@@ -1,0 +1,691 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jono at 19:00:23 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-12-13-19.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+
+
+
+Meeting ended at 14:01:14 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jono (102)
+ * cielak (82)
+ * doctormon (32)
+ * mhall119 (20)
+ * tgm4883 (19)
+ * CrestedNewt (10)
+ * janos_ (10)
+ * JasnaBencic (5)
+ * s-fox (5)
+ * gepatino (5)
+ * AndroUser (4)
+ * meetingology (4)
+ * barry (3)
+ * bdrung (2)
+ * Zilvador (2)
+ * stgraber (2)
+ * ubottu (2)
+ * davidcalle (2)
+ * cwayne (1)
+ * b7uesm1rf (1)
+ * mfisch (1)
+ * solarcloud_3scrn (1)
+
+
+
+== Full Log ==
+
+
+ 19:00:23 <jono> #startmeeting
+
+ 19:00:23 <meetingology> Meeting started Thu Dec 13 19:00:23 2012 UTC.  The chair is jono. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 19:00:23 <meetingology> 
+
+ 19:00:23 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 19:00:33 <jono> hey everyone, and welcome to the Ubuntu Accomplishments meeting!
+
+ 19:00:38 <jono> who is here for the meeting?
+
+ 19:00:43 <s-fox> o/
+
+ 19:00:48 <JasnaBencic> o/
+
+ 19:00:54 <cwayne> \o
+
+ 19:00:56 <cielak> o/
+
+ 19:01:01 <jono> \o/
+
+ 19:01:04 <jono> :-)
+
+ 19:01:13 <jono> mhall119, are you here too?
+
+ 19:01:41 <jono> so unfortunately I have to leave in 30m for a call, but I have a few agenda topics to raise
+
+ 19:01:47 <jono> is it OK if I raise these first?
+
+ 19:01:52 <cielak> sure
+
+ 19:01:56 <jono> awesome :-)
+
+ 19:02:03 <jono> so the first is regarding the server deployment
+
+ 19:02:27 <jono> so mhall119 has been taking care of getting the validation, admin, and web gallery deployment instructions in place
+
+ 19:02:37 <jono> one thing we need to decide on is how we push changes to IS for deployment
+
+ 19:02:51 <jono> typically they prefer to simply pull a branch for a deployment
+
+ 19:02:58 <jono> as such, I wanted to propose the following:
+
+ 19:03:10 <jono> - we will have the staging and production servers set up
+
+ 19:03:20 <jono> - staging pulls from trunk for each of the server-related projects
+
+ 19:03:54 <cielak> will we have a separate project for the admin dashboard?
+
+ 19:03:58 <jono> - when we cut a new release of a project, trunk is branched to a version number (as we do with the -daemon and -viewer projects), and that version is pushed to production
+
+ 19:04:10 <jono> cielak, right now the admin is just a branch, but I will set up a project
+
+ 19:04:11 <mhall119> jono: I'm here
+
+ 19:04:17 <cielak> okay
+
+ 19:04:17 <jono> does that workflow sound OK to you folks?
+
+ 19:04:32 <cielak> seems fine to me
+
+ 19:04:34 <jono> this way we can then just file an RT with a branch pull for an update
+
+ 19:04:38 <s-fox> sounds like a good idea to me
+
+ 19:04:40 <jono> mhall119, do you think IS will be happy with that?
+
+ 19:04:52 <mhall119> jono: why would staging pull from trunk?
+
+ 19:05:08 <jono> mhall119, as that is where we develop the projects
+
+ 19:05:20 <jono> the idea being that you only push to trunk when your code works :-)
+
+ 19:05:23 <jono> so trunk is sacred
+
+ 19:05:29 <mhall119> so this is feature staging, not deployment staging
+
+ 19:05:35 <cielak> so the projects that are going to have their 'production' branches are the validation server, the dashboard and comunity-accomplishments?
+
+ 19:05:36 <jono> mhall119, right
+
+ 19:05:38 <mhall119> ok
+
+ 19:05:53 <jono> cielak, right, so the only weird one is UCA
+
+ 19:06:04 <jono> we can have production branches for validation, admin, and gallery
+
+ 19:06:22 <jono> actually I guess we can just do the same for UCA
+
+ 19:06:39 <jono> my thinking here though is that the server won't pull UCA from trunk and instead pull it from the releases PPA
+
+ 19:06:59 <jono> as the accoms live in /usr/share
+
+ 19:07:00 <cielak> the production one? or the staging one?
+
+ 19:07:07 <jono> cielak, for production
+
+ 19:07:12 <cielak> right
+
+ 19:07:21 <cielak> this is fine with me
+
+ 19:07:51 <jono> cool
+
+ 19:07:57 <jono> mhall119, sound OK with you?
+
+ 19:08:36 <mhall119> jono: yeah, we'd want to pull from something close to what users are using
+
+ 19:08:42 <mhall119> so PPA instead of trunk
+
+ 19:08:43 <jono> sounds good
+
+ 19:08:47 <jono> yep
+
+ 19:08:53 <jono> OK, I will document this on a wiki page
+
+ 19:08:57 <jono> and then we can point IS at it
+
+ 19:09:03 <jono> to ensure it is what they expect
+
+ 19:09:22 <jono> so the other topic I wanted to discuss was getting ready for the release in 13.04
+
+ 19:09:30 <jono> last night I was chatting to Janos about the gallery
+
+ 19:09:36 <jono> unfortunately he can't be in this meeting
+
+ 19:10:01 <jono> he has created a milestone and suggested we file bugs against the milestone that we need fixing in preparation for the release
+
+ 19:10:10 <jono> I wanted to suggest we do the same across our different projects
+
+ 19:10:18 <jono> I know we have many of these bugs already
+
+ 19:10:32 <jono> cielak, how are things looking with the daemon/viewer in terms of quality?
+
+ 19:11:05 <cielak> we have not messed up anything, but new features that were added have not yet been thoroughly tested
+
+ 19:11:27 <jono> cielak, so I think we are going to want to put in place a more rigerous testing plan for this next release
+
+ 19:11:37 <cielak> as for the daemon and the viewer, I tend to assign bugs to 0.4 milestones
+
+ 19:11:44 <jono> sounds good
+
+ 19:11:50 <jono> did we decide on a 0.4 release date?
+
+ 19:11:53 <jono> I seem to remeber feb
+
+ 19:11:59 <cielak> 15 feb
+
+ 19:12:03 <jono> cool
+
+ 19:12:07 <jono> this makes sense
+
+ 19:12:21 <jono> so I think if we can shoot to have the server deployed by then and release 0.4
+
+ 19:12:35 <jono> and then why don't we focus on getting our accoms and any other bug fixed after that
+
+ 19:12:42 <jono> so the release after 0.4 will be 1.0
+
+ 19:12:48 <jono> and will be the release in 13.04
+
+ 19:12:49 <jono> make sense?
+
+ 19:13:09 <cielak> so you mean we do not care much about bug fixing for 0.4, but for 1.0 instead??
+
+ 19:13:22 <jono> my thinking is that 0.4 is all about bug fixing
+
+ 19:13:28 <jono> I personally think we should lock down features
+
+ 19:13:41 <jono> but to focus on the server, daemon and viewer mainly for 0.4
+
+ 19:13:52 <jono> and then we focus on UCA for 1.0 and any other bugs
+
+ 19:14:04 <cielak> okay, let it be this way
+
+ 19:14:14 <jono> cielak, is that OK with you?
+
+ 19:14:16 <cielak> there are two more major features I'd like to implement in 0.4
+
+ 19:14:20 <jono> oh?
+
+ 19:14:30 <cielak> so just wanted to ensure I understand the plan well ;)
+
+ 19:14:50 <jono> :-)
+
+ 19:15:14 <jono> which features, cielak?
+
+ 19:15:37 <cielak> first is getting the daemon to run scripts in paralell
+
+ 19:15:55 <cielak> this will improve the performance, as most of time scripts are just waiting for servers to respond
+
+ 19:16:12 <cielak> this is kind of experimental, I will investigate how that changes resource usage and execution time
+
+ 19:16:22 <jono> cielak, sounds cool
+
+ 19:16:36 <cielak> and the other thing is support for custom validation servers for third-party collection
+
+ 19:16:55 <jono> cielak, right
+
+ 19:16:59 <cielak> just to make our platform fully expandable
+
+ 19:17:02 <jono> yup
+
+ 19:17:12 <jono> cielak, are you going to work on both of those features?
+
+ 19:17:44 <cielak> I should have some more time to work on that during the winter break, and I am really excited to work on them, but if anyone wants, help is very welcome ;)
+
+ 19:17:54 <cielak> plus there is the thing of making the daemon a DBus service
+
+ 19:18:39 <jono> cielak, right
+
+ 19:18:54 <jono> cielak, would you mind emailing didrocks and discussing the dbus work there?
+
+ 19:18:59 <jono> I know you have not had as much IRC time
+
+ 19:19:10 <jono> I am hoping the dbus thing won't be a blocker for inclusion in the USC
+
+ 19:19:34 <cielak> I will, but first I will reproduce all the problems, to clarify what I had troubles with
+
+ 19:19:40 <jono> sounds great
+
+ 19:19:47 <jono> thanks, cielak :-)
+
+ 19:20:09 <cielak> just being busy recently, but that should change soon
+
+ 19:20:14 <jono> ok, I will take some time later to put together a release schedule with these dates
+
+ 19:20:16 <jono> cielak, awesome
+
+ 19:20:24 <jono> we are not far off our 1.0 goal :-)
+
+ 19:20:32 <jono> this is going to be *awesome*
+
+ 19:20:34 <jono> :-)
+
+ 19:20:43 <jono> it will be super cool to see people's trophies on the web
+
+ 19:20:47 <jono> and shared on Twitter :-)
+
+ 19:20:58 <cielak> indeed!
+
+ 19:21:07 <jono> ok, those were my agenda items
+
+ 19:21:14 <jono> any other topics?
+
+ 19:21:31 <s-fox> i have none.
+
+ 19:22:01 <cielak> I have one
+
+ 19:22:10 <JasnaBencic> a lot of things I don't understand but this is great :) .... cielak should I still focus on 10.04 or new versions of Ubuntu so I can catch up with you guys easier?
+
+ 19:22:30 <cielak> JasnaBencic: we never really supporter 10.04
+
+ 19:22:47 <jono> JasnaBencic, , 12.04 is our minimum version
+
+ 19:22:51 <jono> cielak, what topic?
+
+ 19:22:52 <cielak> I expect you may be successful running Accomplishments on 10.04, but we can't guarantee that
+
+ 19:23:13 <cielak> I wanted to ask if anyone has recently followed the Accomplishments Writing Guide
+
+ 19:23:29 <cielak> I don't remember us updating it frequently
+
+ 19:23:40 <cielak> so it might be wise to check if it's not outdated
+
+ 19:23:44 <doctormon> Sorry late, is meeting still happening?
+
+ 19:23:51 <cielak> doctormon: yes! :)
+
+ 19:24:23 <jono> cielak, I haven't checked into it recently
+
+ 19:24:34 <jono> this is something we should check into, particularly after 0.4
+
+ 19:24:48 <jono> doctormon, still going  :-)
+
+ 19:24:49 <s-fox> Zilvador,   did you follow the guide?
+
+ 19:24:54 <jono> although I have to run in a few mins
+
+ 19:25:40 <cielak> so this is a thing that certainly should land on our todo list
+
+ 19:25:49 <doctormon> I'm here to tend to the code submitted for gtk-shelves; message to jono might have been lost in the pipes.
+
+ 19:26:09 <Zilvador> s-fox, I did. And I am planning to go through it soon to update it.
+
+ 19:26:18 <s-fox> ^ cielak  :)
+
+ 19:26:21 <cielak> doctormon: I would be interested in examining your code
+
+ 19:26:46 <jono> doctormon, did you file a MP?
+
+ 19:26:47 <cielak> Zilvador: awesome! you are very welcome to improve it :)
+
+ 19:26:53 <jono> ok, sorry folks, I need to run to this call
+
+ 19:26:56 <Zilvador> :)
+
+ 19:26:58 <jono> thanks for joining everyone!
+
+ 19:27:03 <jono> feel free to keep discussing
+
+ 19:27:03 <cielak> thanks jono! see you :)
+
+ 19:27:03 <doctormon> jono: No, because it's not production code.
+
+ 19:27:07 <jono> just end the meeting when you need to
+
+ 19:27:13 <jono> doctormon, ok
+
+ 19:27:22 <cielak> doctormon: you did a simple proof-of-concept GTK app, right?
+
+ 19:27:26 <JasnaBencic> thank you jono
+
+ 19:27:31 <doctormon> cielak: lp:~doctormo/junk/gtk-shelves
+
+ 19:27:51 <jono> doctormon, have a screenshot?
+
+ 19:28:14 <doctormon> Took a while to root through all the gtk bolocks though. The gtk devs were unhappy about it, *shrug* but it works.
+
+ 19:28:26 <doctormon> jono: You've seen the screenshot already, the difference is now you can scroll.
+
+ 19:28:34 <doctormon> (without it messing up)
+
+ 19:28:36 <jono> doctormon, can you link us again?
+
+ 19:28:54 <mhall119> doctormon: have you tested it on various GTK themes?  I had one way of doing it that worked on some, but not others
+
+ 19:29:26 <cielak> doctormon: testing out, this looks fine, but I wonder what would happen if the items would have variable height
+
+ 19:29:42 <doctormon> cielak: Bad things
+
+ 19:30:00 <doctormon> mhall119: Yes, this works by painting, not styles.
+
+ 19:30:29 <doctormon> jono: Image is gone on imagebin, cielak can you generate a screenshot for jono?
+
+ 19:30:29 <cielak> oops, the accomplishments viewer has items of different heights... is there a chance your trick could be applied in such case too?
+
+ 19:31:03 <doctormon> cielak: No, you'd have to find the height of the row and change the image accordingly. That's a lot of code.
+
+ 19:31:10 <mhall119> doctormon: cool
+
+ 19:31:11 <doctormon> Recommend you change the viewer habbit.
+
+ 19:31:50 <doctormon> (actually what I have is control over the icon display, it paints them all as a fixed size anyway)
+
+ 19:32:15 <cielak> doctormon: the point is that the different height is not because icon size, but because the accompishment title varies, and long titles (or long translations) result in higher rows
+
+ 19:32:32 <doctormon> I took the titles out, too much trouble.
+
+ 19:32:33 <mfisch> cielak: sorry I had another meeting
+
+ 19:33:06 * davidcalle has just arrived
+
+ 19:33:24 <cielak> yeah, but there is no way we could not display the title in the viewer
+
+ 19:33:28 <cielak> hello davidcalle :)
+
+ 19:33:41 * davidcalle waves :)
+
+ 19:33:42 <doctormon> But it is possible to calculate the pango paint size of the text and consider that in the painting. But we're talking about a very different order of magnatude on the code there.
+
+ 19:33:59 <cielak> there is a screenshot of doctormon's experimental branch: http://i.imgur.com/f6fAY.png
+
+ 19:34:13 <doctormon> For instance, repeating each row is done by the context, we'd have to manually do all that.
+
+ 19:34:19 <cielak> doctormon: yes, I expect so
+
+ 19:34:37 <cielak> this would also significantly affect performance
+
+ 19:35:35 <doctormon> Probably. There are ways to show the title though. have a fixed number of letters and use an elipse. Do a hover over screen with title and other info.
+
+ 19:35:58 * janos_ these icons in the shot are not so good... simpler would be better
+
+ 19:36:03 <doctormon> Useful once we get the icon-level and branding destinctions in there. Maybe the trophies will each be unique enough.
+
+ 19:36:06 <cielak> a hover would make browsing difficult
+
+ 19:36:48 <doctormon> cielak: It's not for browsing, it's for admiring. Browsing is when you want to view the achievements you don't have yet. No?
+
+ 19:36:49 <janos_> is the UI searchable with ctrl-F or something?
+
+ 19:36:50 <cielak> a fixed number of letters is't a perfect solution too, though, look at how varied the titles are
+
+ 19:36:52 <janos_> i think titles are important
+
+ 19:37:22 <cielak> janos_: the trunk/dailies contain already a search feature
+
+ 19:37:53 <cielak> doctormon: so that would make sense only once we have tons of easily distinguishable icons for trophies
+
+ 19:38:04 <janos_> cielak: thanks i just meant that to highlight the importance of titles (searchability)
+
+ 19:38:13 <doctormon> We could afix the position and give each more space, 3 lines height each.
+
+ 19:38:13 <janos_> but i do see doctormon's point about admiration
+
+ 19:38:58 <janos_> can a one-line title be vertical aligned in the middle?
+
+ 19:39:00 <cielak> a fixed 3 lines height seems like a kind of a good solution
+
+ 19:39:13 <doctormon> janos_: It would be if we painted it ;-)
+
+ 19:39:29 <cielak> yeah, if painted manually, we can do everything
+
+ 19:39:53 <cielak> using a custom, not theme-dependent font+size would be significant
+
+ 19:40:18 <doctormon> So, we don't use the listview as just a painting canvas. We hijack the icon's own paint mechanism to do that side of things.
+
+ 19:40:42 <doctormon> So it's basically 3 hijacks of different widget/parts.
+
+ 19:40:44 <cielak> but drawing the text manually has one disadvantage - the more we move away from standard GTK, the more accesibility features we may loose
+
+ 19:41:07 <doctormon> cielak: In this case not, we're not painting the text onto the iconview widget.
+
+ 19:41:25 <cielak> but onto it's embeded label?
+
+ 19:41:36 <doctormon> cielak: But the item's own internal draw method. The text is still in the item's data store, the item still has a bounding box. It's all good.
+
+ 19:41:53 <cielak> aah
+
+ 19:41:58 <cielak> that's fine indeed
+
+ 19:42:11 <doctormon> Now don't ask me about drag and drop :-P
+
+ 19:42:16 <doctormon> It might work ;-)
+
+ 19:42:30 <cielak> it should... I guess, but we never supported it anyway
+
+ 19:42:57 <cielak> I don't see any use of dragging the trophies, neither within nor outsite the window
+
+ 19:43:44 <cielak> doctormon: and I expect this would not interfere with GtkTreeModelFilters we use?
+
+ 19:43:56 <cielak> silly me, of course it wouldn't
+
+ 19:45:42 <doctormon> :-)
+
+ 19:45:44 <cielak> my opinion is that it would be worth to work on that in a viewer's branch
+
+ 19:46:14 <doctormon> I've tried hacking on the viewers code, but it's deps are far too high for devel
+
+ 19:46:27 <cielak> what do you mean?
+
+ 19:46:34 <doctormon> (I can't get it to run without a server, dbus and all that other guff running)
+
+ 19:46:56 <cielak> doctormon: you will need dbus and the accomplishments-daemon
+
+ 19:47:05 <cielak> server shouldn't be needed, though
+
+ 19:47:28 <doctormon> Exactly why do I need the daemon for to test a viewer? Is there no test daemon with pre-set data?
+
+ 19:47:47 <cielak> the viewer is just the frontend for the daemon
+
+ 19:48:05 <cielak> it does not know at all how accomplishments work, how to process their files etc
+
+ 19:48:16 <cielak> it asks the daemon to do whatever is needed
+
+ 19:48:34 <cielak> a good thing about that is that it keeps the viewer much less complicated for you to hack
+
+ 19:48:46 <cielak> but there is no way you could run it without the daemon
+
+ 19:49:58 <cielak> anyway, awesome work with the branch :) It would be great if you could reproduce these effects in the viewer, but if not I guess I could work on that, your code seems clear to me
+
+ 19:50:23 <cielak> in case of problems with getting the daemon to run you are welcome in #ubuntu-accomplishments
+
+ 19:50:26 * gepatino waves. sorry I'm late
+
+ 19:50:38 <cielak> hi gepatino, good to see you :)
+
+ 19:51:21 <cielak> okay, there are 10 more minutes time left, so if anyone wants to discuss anything else, please go ahead!
+
+ 19:52:14 <gepatino> is there something to talk about the web gallery?
+
+ 19:52:39 <cielak> janos_: ^
+
+ 19:53:19 <doctormon> thanks guys!
+
+ 19:53:28 <mhall119> the only problem I had deploying the gallery was that the samples/users.json is out of date
+
+ 19:53:38 <mhall119> and wasn't setting the share id/folder properly
+
+ 19:53:54 <mhall119> probably made for an older version of the data model
+
+ 19:56:00 <jono> cielak, do you have a screenshot of doctormon's branch?
+
+ 19:56:25 <cielak> jono: http://i.imgur.com/f6fAY.png
+
+ 19:56:45 <jono> cielak, cool
+
+ 19:57:03 <jono> would be cool if the trophies could have a little shadow too
+
+ 19:57:38 <cielak> I think this is to be done in the accomplishment icon
+
+ 19:57:39 <jono> cielak, so is he going to work on a production branch?
+
+ 19:58:01 <cielak> yes, it seems so
+
+ 19:58:07 <jono> cool
+
+ 19:58:13 <mhall119> we should change all the trophies to ponies
+
+ 19:59:16 <cielak> mhall119: +1 for a new ponies-related accomplishments collection
+
+ 20:00:13 <cielak> right, we're running out of time and it seems there is nothing more to discuss
+
+ 20:00:20 <cielak> thanks everyone for joining us!
+
+ 20:02:59 <gepatino> mhall119, could you send a mail with this info to the list? I'll try to take a look at it
+
+ 20:03:31 <gepatino> I mean the issue with the samples/users.json file, not the ponies icons :)
+
+ 20:05:57 * janos_ reading up
+
+ 20:07:12 <JasnaBencic> meeting done? cielak you'll get a lot of questions from me via mail :)  I'm very happy that I came here despite I didn't understand a lot :)
+
+ 20:08:17 <cielak> JasnaBencic: sure. you are also welcome to ask us all via the mailing list we use
+
+ 20:08:34 <JasnaBencic> ok
+
+ 20:09:13 <janos_> mhall119: oh the samples/users.json was just for an initial proof of concept demo
+
+ 20:11:17 <janos_> mhall119, gepatino: yup, samples/users.json is just for developers, should not be in prod. I will update the readme
+
+ 20:11:47 <gepatino> ok
+
+ 20:12:26 <janos_> oh i see the meeting is over :) heading over to the other channel then, bye all
+
+ 20:17:05 <mhall119> ok
+
+ 02:59:00 <b7uesm1rf> ok im here! we can party now lol!
+
+ 18:28:44 <tgm4883> Is anyone here for the Ubuntu TV meeting?
+
+ 18:29:09 <tgm4883> because I will totally have a meeting if anyone wants to have one
+
+ 18:29:46 <AndroUser> sry - crestednewt here. forgot about hospital appoint for wife
+
+ 18:30:05 <mhall119> tgm4883: do you have anything to discuss or show off?
+
+ 18:30:29 <tgm4883> not much, currently I've finished getting the mythtv scope working again using JSON instead of XML
+
+ 18:30:31 <AndroUser> i have nothing. bobweaver has gone quiet
+
+ 18:31:03 <mhall119> I know he's been experimenting with stuff on the old 2d code
+
+ 18:31:05 <tgm4883> Currently writing the tvguide lens and mythtv guide scope
+
+ 18:31:10 <mhall119> not sure if there's anything new on the NUX side
+
+ 18:31:29 * tgm4883 shrugs
+
+ 18:31:51 <tgm4883> we should discuss meetings for Dec 21 and Dec 28
+
+ 18:32:06 <tgm4883> since those are right square in holiday time
+
+ 18:32:11 <mhall119> yeah, holiday season means things will be slow for a while
+
+ 18:32:28 <AndroUser> i suggest they be cancelled
+
+ 18:33:00 <tgm4883> Personally, I think we should cancel Dec 28 meeting, and move the community questions meeting either to Dec 21st, or Jan 4th
+
+ 18:33:21 <tgm4883> I say the 21st, unless people think that is too close to christmas
+
+ 18:33:31 <tgm4883> in which case we can cancel that meeting too
+
+ 18:33:58 <mhall119> I'll be working
+
+ 18:34:28 <AndroUser> its my dads birthday so i will be out
+
+ 18:34:40 <tgm4883> Some people (me) will have that day off for travel
+
+ 18:34:45 <tgm4883> although i'm not going anywhere
+
+ 18:37:28 <CrestedNewt> sorry in docs waiting room - just downloaded this app
+
+ 18:37:53 <CrestedNewt> but will have to go when called in
+
+ 18:38:43 <CrestedNewt> so my suggestion is that the next 2 meetings are postponed intil the new year
+
+ 18:39:01 <tgm4883> Jan 4th
+
+ 18:39:09 <CrestedNewt> agreed
+
+ 18:39:16 <tgm4883> mhall119, can you cancel the next 2 meetings in the calendar?
+
+ 18:39:28 <mhall119> sure thing
+
+ 18:40:13 <mhall119> done
+
+ 18:40:44 <tgm4883> awesome
+
+ 18:40:50 <tgm4883> anything else from anyone?
+
+ 18:41:28 <CrestedNewt> not from me until i can talk to bobweaver offline
+
+ 18:42:36 <CrestedNewt> as i have offered to do the documentation
+
+ 18:46:06 <tgm4883> well then I think that ends the meeting then
+
+ 18:46:22 <tgm4883> if anyone needs to get ahold of me, feel free to ping me in #ubuntu-tv
+
+ 18:46:34 <CrestedNewt> (thinks ppl have gone quiet as they are suprised that i can write :-))
+
+ 18:46:55 <CrestedNewt> tgm4883. ok
+
+ 18:49:52 <CrestedNewt> is someone going to circ the meeting or should i just read it from archives?
+
+ 18:52:36 <CrestedNewt> gtg sry  oncologist calling us in. laters all and have a good christmas
+
+ 18:53:27 <tgm4883> oncologist.... Good luck
+
+ 22:22:45 <solarcloud_3scrn> !meeting
+
+ 22:22:47 <ubottu> Team meetings are held in #ubuntu-meeting - See « /msg ubottu logs » for transcripts.
+
+ 13:57:56 <bdrung> !dmb-ping
+
+ 13:57:56 <ubottu> bdrung, cody-somerville, Laney, micahg, barry, tumbleweed, stgraber: DMB ping
+
+ 13:58:02 <bdrung> meeting in a few minutes
+
+ 13:58:10 * barry waves
+
+ 14:00:05 * stgraber waves
+
+ 14:00:08 <meetingology> barry: Error: Can't start another meeting, one is in progress.
+
+ 14:00:19 <barry> :(
+
+ 14:01:03 <barry> #endmeeting
+
+ 14:01:14 <stgraber> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

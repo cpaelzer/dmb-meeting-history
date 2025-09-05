@@ -1,0 +1,604 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 11 Feb at 16:00 &mdash; 16:59 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-02-11-16.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 16:00.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 16:09.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 16:09)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 16:18)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 16:22)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 16:29.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 16:30)
+ * ''LINK:'' https://code.launchpad.net/~rbalint/autopkgtest-cloud/+git/autopkgtest-cloud/+merge/397740   (rbalint, 16:51)
+
+=== AOB ===
+
+Discussion started by bdmurray at 16:53.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (59)
+ * vorlon (44)
+ * ubottu (24)
+ * slyon (19)
+ * sil2100 (18)
+ * JawnSmith (16)
+ * rbalint (16)
+ * doko (15)
+ * tdaitx (14)
+ * juliank (13)
+ * xnox (10)
+ * dbungert (9)
+ * waveform (8)
+ * mclemenceau (4)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 16:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:00 <meetingology> Meeting started at 16:00:11 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:00 <mclemenceau> o/
+
+ 16:00 <bdmurray> #topic Lightning Round
+
+ 16:00 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint mwhudson juliank waveform slyon jawnsmith dbungert)
+
+ 16:01 <bdmurray> xnox juliank tdaitx waveform bdmurray slyon jawnsmith doko rbalint vorlon dbungert mwhudson sil2100
+
+ 16:01 <xnox> skip
+
+ 16:01 <juliank> * released apt 2.1.19 and apt 2.1.20 (fixing small 2.1.19 test regression), highlights:
+
+ 16:01 <juliank> - Include all translations when building the cache (LP: #1907850)
+
+ 16:01 <ubottu> Launchpad bug 1907850 in apt (Ubuntu Hirsute) "Cache not generated for all translations" [Undecided,Confirmed] https://launchpad.net/bugs/1907850
+
+ 16:01 <juliank> - A ton of fuzzing fixes from David Kalnischkies
+
+ 16:01 <juliank> * discussed with people in #debian-ftp about OpenPGP
+
+ 16:01 <juliank> * fixed libdatrie autopkgtest regression (forwarded to Debian)
+
+ 16:01 <juliank> * fixed libassuan autopkgtest regression by cherry-picking Debian merge request
+
+ 16:01 <juliank> (done)
+
+ 16:01 <bdmurray> tdaitx:
+
+ 16:02 <bdmurray> waveform: ?
+
+ 16:02 <tdaitx> * created the merge proposal for popcon
+
+ 16:02 <tdaitx> - tried to do on top of 1.71 (sitting on merge), but couldn't get LP to hide 1.71 patches without the merge showing conflicts in the web
+
+ 16:02 <tdaitx> * synced a couple packages that didn't need merge
+
+ 16:02 <tdaitx> * jck
+
+ 16:02 <tdaitx> - reduced the number of jobs needed
+
+ 16:02 <tdaitx> - cleaned a bunch of old containers in all the nodes and removed old unused workspaces
+
+ 16:02 <tdaitx> - tested singlevm with network classloading so the container agent can be smaller, but some tests don't run in this mode and there are a bunch more failures (but documentation seems to indicate this should be more stable, go figure)
+
+ 16:02 <tdaitx> * looked over jtr files for long running tests
+
+ 16:02 <tdaitx> Other:
+
+ 16:02 <tdaitx> - on +1 main today and tomorrow
+
+ 16:02 <tdaitx> - it's holiday from Mon-Wed, only planning on taking out Mon, will use the rest for swap
+
+ 16:02 <tdaitx> (done)
+
+ 16:02 <waveform> * u-boot-rpi Bionic verification (LP: #1903054)
+
+ 16:02 <waveform> * findutils merge (LP: #1915005)
+
+ 16:02 <waveform> * Worked on packaging for liblgpio, librgpio, rgpiod, rgs
+
+ 16:02 <waveform> * Working on initramfs-tools merge
+
+ 16:02 <waveform> * Pi meetings
+
+ 16:02 <waveform> (done)
+
+ 16:02 <ubottu> Launchpad bug 1903054 in u-boot (Ubuntu Bionic) "[SRU] Please merge u-boot 2020.10+dfsg-1 from Debian unstable" [High,Fix committed] https://launchpad.net/bugs/1903054
+
+ 16:02 <ubottu> Launchpad bug 1915005 in findutils (Ubuntu) "Please merge findutils 4.8.0 from Debian unstable" [Wishlist,New] https://launchpad.net/bugs/1915005
+
+ 16:03 <bdmurray> sponsored ubiquity to Focal for William but it was rejected again
+
+ 16:03 <bdmurray> reviewed and merged William's fix for LP: #1902025
+
+ 16:03 <bdmurray> sent email regarding point releases and phased updates
+
+ 16:03 <bdmurray> reviewed and merged dbungert's fix for LP: #1706168
+
+ 16:03 <ubottu> Launchpad bug 1902025 in update-manager (Ubuntu Groovy) "hwe kernel not scoped under "Ubuntu Base"" [Medium,Triaged] https://launchpad.net/bugs/1902025
+
+ 16:03 <ubottu> Launchpad bug 1706168 in update-notifier (Ubuntu) "dialog shouldn't be display if Command doesn't exist" [Medium,In progress] https://launchpad.net/bugs/1706168
+
+ 16:03 <bdmurray> updated meta-release file for 20.04.2
+
+ 16:03 <bdmurray> used bileto to do a security only build of whoopsie for LP: #1914481
+
+ 16:03 <bdmurray> SRU verification of whoopsie issue re Bionic servers LP: #1914481
+
+ 16:03 <bdmurray> submitted an MP fixing the phased-updater considering "just" released packages
+
+ 16:03 <ubottu> Launchpad bug 1914481 in whoopsie (Ubuntu Groovy) "use the size of the data when determining the server response" [Undecided,Fix committed] https://launchpad.net/bugs/1914481
+
+ 16:03 * xnox ready
+
+ 16:03 <bdmurray> sent email to ubuntu-devel regarding hwe support in Ubuntu 20.04
+
+ 16:03 <bdmurray> sync of skiboot for mclemenceau
+
+ 16:03 <bdmurray> discovered hirsute contents.gz files were 40 bytes :-(
+
+ 16:03 <bdmurray> ✔ done
+
+ 16:03 <bdmurray> xnox: go ahead
+
+ 16:03 <slyon> xnox:
+
+ 16:04 <xnox> refix cgo in rustc for riscv64
+
+ 16:04 <xnox> attempt riscv64 cross build of rustc, fails with lto, need to redo it again
+
+ 16:04 <xnox> riscv64 images advertised on sifive forums https://forums.sifive.com/t/ubuntu-20-04-lts-images-for-hifive-unleashed-qemu-vms/4429
+
+ 16:04 <xnox> ubiquity fixes.... for .2 and .2.0
+
+ 16:04 <xnox> working on making installer more testable with nvidia with tseliot
+
+ 16:04 <xnox> working on grub maas arm64 secureboot & accelerated UEFI
+
+ 16:04 <xnox> done
+
+ 16:04 <slyon> - alpha merge party
+
+ 16:04 <slyon> + netplan.io 0.101-4ubuntu1, user-setup 1.87ubuntu1, lvm2 2.03.11-2ubuntu1
+
+ 16:04 <slyon> + s390-tools[-signed] 2.15.1-1ubuntu1, needs ubuntu-archive queue review (signing)
+
+ 16:04 <slyon> - proposed-migration
+
+ 16:04 <slyon> + network-manager MP, for new systemd autopkgtest fixes, pending upload by Seb
+
+ 16:04 <slyon> + libreadonly-perl
+
+ 16:04 <slyon> - sponsoring for mclemenceau
+
+ 16:04 <slyon> + logrotate 3.18.0-1ubuntu1, pyxdg 0.27-2 (bug #1915211, bug #1915347)
+
+ 16:04 <ubottu> bug 1915211 in logrotate (Ubuntu) "Please merge logrotate 3.18.0-1 (main) from Debian unstable (main) Edit" [Wishlist,In progress] https://launchpad.net/bugs/1915211
+
+ 16:04 <ubottu> bug 1915347 in pyxdg (Ubuntu) "Sync pyxdg 0.27-2 (main) from Debian unstable (main)" [Undecided,In progress] https://launchpad.net/bugs/1915347
+
+ 16:04 <slyon> - Working on NetworkManager patched keyfile test-suite
+
+ 16:04 <slyon> + using new libnetplan YAML backend
+
+ 16:04 <slyon> === Netplan ===
+
+ 16:04 <slyon> - Bug triage
+
+ 16:04 <slyon> + subiquity bug #1882162 (duplicate of netplan bug #1881832)
+
+ 16:04 <slyon> + bug #1915349, bug #1915348, bug #1908944
+
+ 16:04 <slyon> - Prepared new PR#189 for NM YAML backend integration
+
+ 16:04 <ubottu> bug 1882162 in subiquity (Ubuntu) "subiquity creates wrong network configuration (wrong NIC name)" [Undecided,Confirmed] https://launchpad.net/bugs/1882162
+
+ 16:04 <slyon> (done)
+
+ 16:04 <ubottu> bug 1882162 in subiquity (Ubuntu) "duplicate for #1881832 subiquity creates wrong network configuration (wrong NIC name)" [Undecided,Confirmed] https://launchpad.net/bugs/1882162
+
+ 16:04 <ubottu> bug 1915349 in netplan "please add anchors" [Undecided,New] https://launchpad.net/bugs/1915349
+
+ 16:04 <ubottu> bug 1915348 in netplan "'find in page' doesn't work" [Undecided,Incomplete] https://launchpad.net/bugs/1915348
+
+ 16:04 <ubottu> bug 1908944 in netplan "Line number in route error is incorrect" [Low,Triaged] https://launchpad.net/bugs/1908944
+
+ 16:04 <JawnSmith> Feb 11 2021
+
+ 16:04 <JawnSmith> * LP: #1829401 Crash in software-properties when mirror is invalid
+
+ 16:04 <ubottu> Launchpad bug 1829401 in software-properties (Ubuntu Groovy) "gi.repository.GLib.GError: pk-client-error-quark: could not do untrusted question as no klass support" [High,Fix committed] https://launchpad.net/bugs/1829401
+
+ 16:04 <JawnSmith> - (SRUs to groovy and focal)
+
+ 16:04 <JawnSmith> * Reduce test size for software-properties
+
+ 16:04 <JawnSmith> * Merge sudo from debian upstream
+
+ 16:04 <JawnSmith> * Proposed migration for python3-defaults
+
+ 16:04 <JawnSmith> * LP: #1910815 race condition on grub systemd services
+
+ 16:04 <ubottu> Launchpad bug 1910815 in grub2 (Ubuntu) "race on boot between multiple invocations of grub-editenv" [Undecided,Confirmed] https://launchpad.net/bugs/1910815
+
+ 16:04 <JawnSmith> [done]
+
+ 16:05 <doko> - four or five main merges
+
+ 16:05 <doko> - cross-toolchain-base updates for glibc 2.33
+
+ 16:05 <doko> - compiler updates
+
+ 16:05 <doko> - investigate wrong owner ship in package builds. LP: #1915250
+
+ 16:05 <doko> No solution yet, work around is in place
+
+ 16:05 <bdmurray> doko:
+
+ 16:05 <ubottu> Launchpad bug 1915250 in fakeroot (Ubuntu) "buildd file owner/group for shared libraries " [High,Confirmed] https://launchpad.net/bugs/1915250
+
+ 16:05 <doko> - some brainstorming about x86_64 v2
+
+ 16:05 <doko> - some python packaging discussions with Debian and upstream
+
+ 16:05 <doko> - fixing autopkg tests for issues triggered by setuptools
+
+ 16:05 <doko> - landed non-conflicting dbg/dbgsym packages
+
+ 16:05 <doko> - watching the autopkg test queues
+
+ 16:05 <doko> (done), and you're too slow ;p
+
+ 16:05 <rbalint> * uploaded wireshark 3.4.3-1 via Debian
+
+ 16:05 <rbalint> * merged mdadm
+
+ 16:05 <rbalint> * landing systemd 247.3-1ubuntu1
+
+ 16:05 <rbalint> * poking glibc to migrate
+
+ 16:05 <rbalint> * partner work
+
+ 16:05 <rbalint> (done)
+
+ 16:06 <bdmurray> vorlon:
+
+ 16:06 <vorlon> * slow week, not much done last Thu/Fri due to illness
+
+ 16:06 <vorlon> * working through the list of reviews I'm tagged on in JIRA
+
+ 16:06 <vorlon> * britney hints for bambam regression blocking imagemagick
+
+ 16:06 <vorlon> * merged changes to phased-updater
+
+ 16:06 <vorlon> * reviewing an outstanding MP from LocutusOfBorg on auto-sync
+
+ 16:06 <vorlon> * reviewing merge of popularity-contest for tdaitx
+
+ 16:06 <vorlon> * discussions around improving throughput of packages from RPiOS
+
+ 16:06 <vorlon> * snow incoming, may not get much done this afternoon if I'm busy counting the flakes
+
+ 16:07 <vorlon> * off tomorrow
+
+ 16:07 <vorlon> * Monday is a holiday here, off for that
+
+ 16:07 <vorlon> (done)
+
+ 16:07 <dbungert> * New hire stuff might be done
+
+ 16:07 <dbungert> * open-iscsi update excuses: based on logfile analysis suggest just doing retests as needed, package might benefit from minor tuning to test suite to address a timeout
+
+ 16:07 <dbungert> * autoinstall-generator: project visibile on github, doing foundational work
+
+ 16:07 <dbungert> * LP: #1913321 MIR for libiniparser1 - MIR team still considering, last feedback is recognition that library is quasi-redundant with existing libraries but an expectation that the API is different
+
+ 16:07 <ubottu> Launchpad bug 1913321 in mtd-utils (Ubuntu Hirsute) "[MIR] iniparser (dependency of mtd-utils)" [Undecided,New] https://launchpad.net/bugs/1913321
+
+ 16:07 <dbungert> * Pending items: SRU for LP: #1821412, irssi merge, autoinstall-generator work                               (done)
+
+ 16:07 <ubottu> Launchpad bug 1821412 in update-notifier (Ubuntu) ""System program problem" report button does nothing" [High,Fix released] https://launchpad.net/bugs/1821412
+
+ 16:07 <bdmurray> sil2100:
+
+ 16:07 <sil2100> o/
+
+ 16:08 <sil2100> - Sick day on Monday
+
+ 16:08 <sil2100> - SRU reviews and releases
+
+ 16:08 <sil2100> - Released 20.04.2!
+
+ 16:08 <sil2100> * Performed finalization steps
+
+ 16:08 <sil2100> * .2 retrospective meeting
+
+ 16:08 <sil2100> * Updating and improving the point-release process
+
+ 16:08 <sil2100> - Work on preparing the hotfix for 20.04.2, 20.04.2.0
+
+ 16:08 <sil2100> * Updates to cdimage, debian-cd etc.
+
+ 16:08 <sil2100> * Getting the ubiquity fix approved and pushed through
+
+ 16:08 <sil2100> * Multiple discussions about the issue at hand and testing
+
+ 16:08 <sil2100> * Coordination, performing some iso sanity testing (flavors, mocked OEM nvidia)
+
+ 16:08 <sil2100> - Updates in documentation
+
+ 16:08 <sil2100> - Looking into sqlite3 proposed migration
+
+ 16:08 <sil2100> - Started on updates of some cloud packages
+
+ 16:08 <sil2100> - Releasing new core18 to stable, investigating if the core20 update has been done
+
+ 16:08 <sil2100> - In-progress review of netplan's NM work - thinking about it right now
+
+ 16:08 <sil2100> (done)
+
+ 16:08 <bdmurray> any questions on status?
+
+ 16:09 <bdmurray> #topic Release Incoming Bugs
+
+ 16:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs
+
+ 16:10 <bdmurray> bug 1915120
+
+ 16:10 <ubottu> bug 1915120 in ubiquity (Ubuntu) "FTBFS - netcfg tests fail on hirsute" [Critical,New] https://launchpad.net/bugs/1915120
+
+ 16:11 <bdmurray> That seems worth fixing but it's a PPA version?
+
+ 16:11 <bdmurray> okay, let's card that
+
+ 16:12 <mclemenceau> ok
+
+ 16:12 <bdmurray> bug 1910815 - are you working on that JawnSmith ?
+
+ 16:12 <ubottu> bug 1910815 in grub2 (Ubuntu) "race on boot between multiple invocations of grub-editenv" [Undecided,Confirmed] https://launchpad.net/bugs/1910815
+
+ 16:12 <JawnSmith> Yes I am, I have an MP in
+
+ 16:13 <bdmurray> Okay, so I think a card would be redundant.
+
+ 16:13 <bdmurray> juliank: Are you reviewing this?
+
+ 16:13 <bdmurray> bug 1795278
+
+ 16:13 <ubottu> bug 1795278 in software-properties (Ubuntu) "software-properties-{qt,kde} attempts to use KUrl but it doesn't exist" [Undecided,Triaged] https://launchpad.net/bugs/1795278
+
+ 16:16 <bdmurray> There is something of a patch there.
+
+ 16:17 <bdmurray> But it affects the kde and qt frontends so...
+
+ 16:18 <bdmurray> I think we should pass on that unless somebody wants to JFDI it on a Friday
+
+ 16:18 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs
+
+ 16:18 <bdmurray> bug 1904271
+
+ 16:18 <ubottu> bug 1904271 in python3.9 (Ubuntu) "Python 3.9 package is missing dependency on tzdata" [Undecided,New] https://launchpad.net/bugs/1904271
+
+ 16:19 <bdmurray> This was reopened by Colin
+
+ 16:22 <bdmurray> let's leave that for now
+
+ 16:22 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 16:23 <bdmurray> There are a couple of bugs about hwe-support-status being out of data for 20.04.
+
+ 16:23 <bdmurray> s/data/date/
+
+ 16:24 <bdmurray> both of those seem worth fixing to me
+
+ 16:24 <bdmurray> so let's card those
+
+ 16:25 <bdmurray> bug 1912652
+
+ 16:25 <ubottu> bug 1912652 in glibc (Ubuntu) "package libc6 2.31-0ubuntu9.1 failed to install/upgrade: new libc6:arm64 package post-removal script subprocess returned error exit status 127" [Undecided,Confirmed] https://launchpad.net/bugs/1912652
+
+ 16:26 <rbalint> +1 for carding
+
+ 16:26 <bdmurray> rbalint: What is the upgrade path here?
+
+ 16:26 <rbalint> bdmurray, libc6-lse went away in hirsute, libc6 taking over
+
+ 16:26 <rbalint> (providing it)
+
+ 16:27 <bdmurray> so upgrading from Focal to Hirsute?
+
+ 16:27 <rbalint> Focal -> Groovy for now
+
+ 16:28 <rbalint> is what breaks
+
+ 16:28 <bdmurray> but also eventually Focal to Insatiable?
+
+ 16:28 <rbalint> yes, it i got the Insatiable part right :-)
+
+ 16:28 <rbalint> for now i think the quirk in u-r-u will do it
+
+ 16:28 <bdmurray> Anyway, let's card that too.
+
+ 16:29 <mclemenceau> ok I carded it
+
+ 16:29 <bdmurray> #topic Team proposed-migration report
+
+ 16:29 <bdmurray> vorlon:
+
+ 16:30 <vorlon> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:30 <vorlon> python3-defaults
+
+ 16:30 <vorlon> JawnSmith: any luck with this?
+
+ 16:31 <JawnSmith> Resolved 6 of 7 regressions, just need to resolve that grub service file race condition
+
+ 16:31 <bdmurray> The ubuntu-image issue is related to the grub mp
+
+ 16:31 <JawnSmith> yes that's correct
+
+ 16:31 <bdmurray> what about python-anndata?
+
+ 16:31 <JawnSmith> That is new, I'll take a look
+
+ 16:32 <JawnSmith> 6 of 8 I suppose
+
+ 16:33 <vorlon> just needs a retry against the new version of the package
+
+ 16:35 <vorlon> pexpect: tdaitx: ?
+
+ 16:35 <vorlon> and I'm going to unblock python3-defaults, ubuntu-image regression has been isolated
+
+ 16:36 <tdaitx> mine, needs more investigation, works locally but lp fails
+
+ 16:36 <vorlon> ok
+
+ 16:37 <tdaitx> it fails on the test phase with some "cannot find name for group ID 108", in case someone saw this before
+
+ 16:37 <vorlon> rbalint: systemd blocking network-manager?
+
+ 16:37 <rbalint> vorlon, landing the systemd-side fix already
+
+ 16:37 <vorlon> ok
+
+ 16:38 <vorlon> mtd-utils -> iniparser MIR: dbungert ?
+
+ 16:39 <bdmurray> I'm retrying the software-properties ones
+
+ 16:39 <vorlon> juliank: libassuan?
+
+ 16:39 <juliank> it's fixed
+
+ 16:39 <juliank> like I uploaded hours ago :)
+
+ 16:40 <vorlon> ok
+
+ 16:40 <vorlon> xnox: you said you were going to reupload boost-defaults, which doesn't seem to have happened? also the autopkgtest regressions are on boost1.74 which is still on me
+
+ 16:40 <dbungert> vorlon: no movement since last time
+
+ 16:41 <vorlon> dbungert: will you get to it this week?
+
+ 16:41 <mclemenceau> iniparser is being reviewed by the MIR team
+
+ 16:41 <dbungert> ^
+
+ 16:41 <vorlon> ok, the action from last week was for dbungert was to follow up on the MIR bug, is that done?
+
+ 16:42 <vorlon> juliank: libdatrie?
+
+ 16:42 <juliank> I uploaded a fews hours ago too :)
+
+ 16:42 <juliank> bad report :(
+
+ 16:42 <vorlon> heh
+
+ 16:42 <vorlon> report based on latest britney run
+
+ 16:43 <juliank> britney slow :(
+
+ 16:43 <vorlon> e2fsprogs, iproute2 xfsprogs are mine
+
+ 16:43 <dbungert> vorlon: I reviewed their IRC logs from the meeting and it was pointed out that libiniparser was quasi-redundant with other ini libs, but they expected that APIs were different.  Shall I ping ddstreet?
+
+ 16:43 <xnox> vorlon:  yes.
+
+ 16:44 <vorlon> dbungert: well I understood the agreed action is to follow up on the MIR bug and there's nothing new in https://bugs.launchpad.net/ubuntu/+source/iniparser/+bug/1913321 maybe you should put your feedback there?
+
+ 16:44 <ubottu> Launchpad bug 1913321 in mtd-utils (Ubuntu Hirsute) "[MIR] iniparser (dependency of mtd-utils)" [Undecided,New]
+
+ 16:44 <dbungert> vorlon: OK
+
+ 16:44 <vorlon> ok new packages not previously assigned
+
+ 16:45 <vorlon> libjson-perl: waveform: can you look at this?
+
+ 16:45 <waveform> vorlon, yup
+
+ 16:45 <vorlon> dbus-python is more software-properties, so presumably also bdmurray
+
+ 16:45 <vorlon> acl: JawnSmith: ?
+
+ 16:45 <JawnSmith> sure I can take acl
+
+ 16:45 <vorlon> liburi-perl: slyon?
+
+ 16:46 <slyon> vorlon: ack
+
+ 16:46 <JawnSmith> software properties is a case of the test being just way too long. I'm working on an update to shrink the test size while still achieving the same coverage
+
+ 16:46 <vorlon> perl: doko?
+
+ 16:46 <bdmurray> \o/
+
+ 16:46 <doko> mehh, yes
+
+ 16:49 <vorlon> libclass-xsaccessor-perl, I'll take a look
+
+ 16:51 <vorlon> iputils vs systemd, same failure profile as acl; JawnSmith can you look at both of these?
+
+ 16:51 <vorlon> (and check with rbalint if it's something that will be fixed on the systemd/test runner side)
+
+ 16:51 <JawnSmith> On it
+
+ 16:51 <rbalint> https://code.launchpad.net/~rbalint/autopkgtest-cloud/+git/autopkgtest-cloud/+merge/397740
+
+ 16:52 <vorlon> and zip is lintian failing on armhf so should be taken along with liburi-perl, slyon
+
+ 16:52 <slyon> vorlon: okay
+
+ 16:52 <vorlon> setuptools: juliank?
+
+ 16:53 <vorlon> and then I'll stop there for this week
+
+ 16:53 <juliank> fine
+
+ 16:53 <vorlon> bdmurray:
+
+ 16:53 <bdmurray> #topic AOB
+
+ 16:53 <doko> two things
+
+ 16:53 <bdmurray> Monday is a US holiday, but I'm out tomorrow.
+
+ 16:54 <doko> -fcf-protection and cet flags ...
+
+ 16:54 <doko> can we have a meeting with security, xnox, vorlon?
+
+ 16:55 <rbalint> i'm out tomorrow
+
+ 16:56 <waveform> I'll be out tomorrow morning and maybe afternoon
+
+ 16:59 <bdmurray> okay, thanks everybody!
+
+ 16:59 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

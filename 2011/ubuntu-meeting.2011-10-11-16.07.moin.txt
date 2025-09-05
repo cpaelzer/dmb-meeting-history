@@ -1,0 +1,345 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by zul at 16:07:23 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-10-11-16.07.log.html
+.
+
+
+
+== Meeting summary ==
+
+''ACTION:'' Review ACTION points from previous meeting  (zul, 16:08:23)
+ *Oneiric Development
+
+ *Ubuntu Server Team Events
+
+ *Weekly Updates & Questions for the QA Team (hggdh)
+
+ *Weekly Updates & Questions for the Kernel Team (smb)
+
+ *Weekly Updates & Questions regarding Ubuntu ARM Server (NCommander)
+
+ *Weekly Updates & Questions from the Ubuntu Community
+
+
+
+Meeting ended at 16:33:46 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * Review ACTION points from previous meeting
+
+
+
+== People present (lines said) ==
+
+ * zul (66)
+ * hggdh (17)
+ * Daviey (10)
+ * shattered (9)
+ * hallyn_ (9)
+ * smoser (7)
+ * ubottu (7)
+ * jamespage (5)
+ * meetingology (4)
+ * NCommander (3)
+ * utlemming (3)
+ * Ursinha (1)
+
+
+
+== Full Log ==
+
+
+ 16:07:23 <zul> #startmeeting
+
+ 16:07:23 <meetingology> Meeting started Tue Oct 11 16:07:23 2011 UTC.  The chair is zul. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:07:23 <meetingology> 
+
+ 16:07:23 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:07:29 <hallyn_> i forgot last week
+
+ 16:07:34 <zul> welcome to the last oneiric before release
+
+ 16:07:36 <zul> hallyn_: ack
+
+ 16:07:44 <zul> she can do it next week ;)
+
+ 16:07:59 <zul> so lets get started
+
+ 16:08:23 <zul> [action] Review ACTION points from previous meeting
+
+ 16:08:23 * meetingology Review ACTION points from previous meeting
+
+ 16:08:42 <Ursinha> I thought I was there already :)
+
+ 16:08:43 <zul> so it says here hggdh and Spamaps to discusss SRU verification work
+
+ 16:08:52 <zul> has this been done?
+
+ 16:09:08 <zul> im assuming no because Spamaps was in boston last week
+
+ 16:09:19 <zul> ok then
+
+ 16:09:21 <hallyn_> hggdh was going to test within the hour last week
+
+ 16:09:23 <hallyn_> hggdh: ^
+
+ 16:09:39 <zul> hggdh well come back
+
+ 16:09:44 <hallyn_> k
+
+ 16:10:00 <zul> jamespage to follow up with jhunt on udev/lvm bugs
+
+ 16:10:08 <jamespage> followed up
+
+ 16:10:11 <zul> cool
+
+ 16:10:24 <jamespage> things appear to have improved with some of the udev changes made since last week
+
+ 16:10:30 <zul> cool beans
+
+ 16:10:32 <jamespage> but I think there is one issue still outstanding
+
+ 16:10:33 <hallyn_> for udev, yes
+
+ 16:10:39 <hallyn_> lvm still has problem
+
+ 16:10:43 <zul> looks like an SRU
+
+ 16:10:47 <hallyn_> y
+
+ 16:11:05 <zul> archive is in lock down unless if it gets fixed pretty soon
+
+ 16:11:12 <smoser> it'd be useful to say which bugs we're talking about
+
+ 16:11:27 <zul> bug 801494
+
+ 16:11:28 <ubottu> Launchpad bug 801494 in Ubuntu "Multi part LVM layout: system fails to boot due to missing volumes" [High,Incomplete] https://launchpad.net/bugs/801494
+
+ 16:11:40 <hallyn_> incomplete?
+
+ 16:11:43 <zul> thats the one
+
+ 16:11:53 <zul> according to the agenda
+
+ 16:12:35 <zul> thoughts?
+
+ 16:12:52 <hallyn_> bug 818177
+
+ 16:12:54 <ubottu> Launchpad bug 818177 in udev (Ubuntu Precise) "boot failures because 'udevadm exit' times out while udevd waits for an already-dead thread" [High,Fix released] https://launchpad.net/bugs/818177
+
+ 16:13:26 <zul> yay i heard people whining about that one :)
+
+ 16:13:52 <zul> also previous meetings:
+
+ 16:14:02 <zul> smoser, utlemming and smb to follow up on Bug 854050
+
+ 16:14:02 <zul> utlemming to figure out qemu image situation (carry-over)
+
+ 16:14:02 <zul> Daviey to talk to ttx and keystone honcho for guidance about oneiric package
+
+ 16:14:03 <ubottu> Launchpad bug 854050 in linux (Ubuntu) "BUG at /build/buildd/linux-2.6.38/mm/swapfile.c:255" [Medium,Confirmed] https://launchpad.net/bugs/854050
+
+ 16:14:13 <zul> is any of that done as well? ^^^
+
+ 16:14:35 <zul> if not ill move on
+
+ 16:14:56 <utlemming> yes, the images are good
+
+ 16:15:02 <zul> cool
+
+ 16:15:13 <zul> #topic Oneiric Development
+
+ 16:15:15 <smoser> what does "images are good" mean?
+
+ 16:15:22 <hggdh> I am back
+
+ 16:15:23 <utlemming> smoser: the arm images boot inside qemu
+
+ 16:15:36 <Daviey> Hey chaps
+
+ 16:15:38 <Daviey> I am here...
+
+ 16:15:38 <utlemming> they were fixed by the updated kerenl
+
+ 16:15:42 <Daviey> we are looking pretty good
+
+ 16:15:46 <smoser> oh. so in regard to bug 854050. why did we just jump past that i wonder.
+
+ 16:15:47 <ubottu> Launchpad bug 854050 in linux (Ubuntu) "BUG at /build/buildd/linux-2.6.38/mm/swapfile.c:255" [Medium,Confirmed] https://launchpad.net/bugs/854050
+
+ 16:15:51 <Daviey> Currently in a real life meeting, makign it hard for me to be here.
+
+ 16:15:58 <smoser> i hvae no status on that. but people have tested smb's kernels and they appear good.
+
+ 16:17:15 <zul> cool...so oneiric is being released this week so we need help ISO testing so Im thinking people should be ISO testing when its available.
+
+ 16:17:24 <zul> #topic Ubuntu Server Team Events
+
+ 16:17:40 <Daviey> London Release Party this thursday.
+
+ 16:17:41 <zul> last week was the ODS and Conference a bunch of people were there
+
+ 16:17:44 <Daviey> <-- will be there
+
+ 16:17:49 <zul> UDS at the end of the month
+
+ 16:18:00 <zul> i wont be at any release party because Ottawa is lame
+
+ 16:18:08 <zul> any other events?
+
+ 16:18:37 <zul> i think i mentioned the big ones
+
+ 16:18:51 <zul> #topic Weekly Updates & Questions for the QA Team (hggdh)
+
+ 16:18:55 <zul> hi hggdh
+
+ 16:18:59 <hggdh> hi
+
+ 16:19:00 <zul> any updates?
+
+ 16:19:42 <hggdh> relating to the squid bug -- spamaps was unavailable last week; I tried it, and I do not get a fsck running on restart
+
+ 16:19:44 <hggdh> BUT
+
+ 16:19:56 <hggdh> I still get a /var busy, remounted RO
+
+ 16:20:11 <zul> interesting i might poke it today as well
+
+ 16:20:19 <zul> any else?
+
+ 16:20:20 <hggdh> so I need to checkpoint with Clint, and find out what gives
+
+ 16:20:36 <hggdh> this week, unsurprisingly, is release week
+
+ 16:20:51 <hggdh> we need all help possible to QA all images -- server and otherwise
+
+ 16:20:53 <hggdh> so...
+
+ 16:20:56 <hggdh> please...
+
+ 16:20:58 <hggdh> HELP
+
+ 16:21:04 <zul> cool..
+
+ 16:21:08 <hggdh> a final note
+
+ 16:21:30 <hggdh> jamespage and I are working on getting the EC2 tests passed over to QA
+
+ 16:21:36 <hggdh> ..
+
+ 16:21:44 <jamespage> w00t
+
+ 16:21:44 <zul> sweet
+
+ 16:21:54 <Daviey> hggdh: when will you have the results?
+
+ 16:22:06 <hggdh> Daviey: which results?
+
+ 16:22:12 <Daviey> hggdh: EC2.
+
+ 16:23:02 <hggdh> Daviey: I am sure this will not be completely done solely by me this week, I am still working on understanding all, and we will need some changes on AWS accounts
+
+ 16:23:16 <hggdh> but hopefully, soon
+
+ 16:23:20 <zul> so..
+
+ 16:23:31 <zul> #topic Weekly Updates & Questions for the Kernel Team (smb)
+
+ 16:23:33 <jamespage> Daviey: hggdh and I will kickoff the ec2 tests when we get the nod on the RC images
+
+ 16:23:38 <zul> hi smb
+
+ 16:23:48 <Daviey> jamespage: rocking..
+
+ 16:24:02 <shattered> I have a Q re: bug 794570
+
+ 16:24:04 <ubottu> Launchpad bug 794570 in linux (Ubuntu Lucid) "igbvf driver is missing from virtual-flavored kernel" [Medium,Triaged] https://launchpad.net/bugs/794570
+
+ 16:24:04 <Daviey> smb will not be here for this section
+
+ 16:24:40 <shattered> should be easy to fix
+
+ 16:25:01 <zul> shattered: you will want to talk to smb after the meeting
+
+ 16:25:15 <zul> #topic Weekly Updates & Questions regarding Ubuntu ARM Server (NCommander)
+
+ 16:25:22 <zul> Ncommander around?
+
+ 16:25:38 <NCommander> yup
+
+ 16:25:47 <NCommander> (lagging slightly, but I'm here)
+
+ 16:25:52 <zul> any update?
+
+ 16:26:17 <NCommander> ARM server is looking good and solid for release. No major bugs to report (although there is aknown issue with guided partitioning during netboot installs on omap3/4)
+
+ 16:26:18 <smoser> shattered, feel free to ping me in #ubuntu-server, or #ubuntu-kernel and we'll ping smb together if you're interested in some help doing so.
+
+ 16:26:26 <shattered> ok
+
+ 16:26:35 <shattered> I have a bunch of other bugs
+
+ 16:26:57 <zul> NCommander: cool
+
+ 16:27:04 <zul> any questions for NCommander
+
+ 16:27:46 <zul> ok moving on
+
+ 16:27:59 <zul> #topic Weekly Updates & Questions from the Ubuntu Community
+
+ 16:28:10 <shattered> that's me
+
+ 16:28:16 <zul> im just going to combine this with the Open Discussion part as well
+
+ 16:28:20 <zul> hi shattered
+
+ 16:28:29 <shattered> how about bug 517574
+
+ 16:28:30 <ubottu> Launchpad bug 517574 in net-snmp (Ubuntu) "Please backport agent/mibgroup/host/hr_swrun.c to 5.4.1" [Wishlist,Confirmed] https://launchpad.net/bugs/517574
+
+ 16:28:54 <zul> shattered: ill take a nother look at it soon
+
+ 16:29:12 <zul> anything else?
+
+ 16:29:34 <shattered> bug 315763
+
+ 16:29:35 <ubottu> Launchpad bug 315763 in initramfs-tools (Ubuntu) "netboot: aic94xx sequencer firmware is missing from initrd.gz" [Undecided,Incomplete] https://launchpad.net/bugs/315763
+
+ 16:29:52 <shattered> I'm not sure it's assigned to the right package
+
+ 16:30:17 <zul> shattered: as smoser said take it to #ubuntu-server after the meeting
+
+ 16:30:27 <shattered> okay
+
+ 16:30:36 <zul> so is anyone else going to a release party other than Daviey
+
+ 16:30:42 <smoser> zul, but that was a different bug he was asking about
+
+ 16:31:26 <zul> smoser: still i think it would be more beneficial to discuss it on #ubuntu-server after the meeting
+
+ 16:32:06 <smoser> yeah, the point of this meeting is only to list topics, not to discuss anything...
+
+ 16:32:12 <zul> right
+
+ 16:32:17 <zul> im glad you agree :)
+
+ 16:33:05 <zul> if anyone doesnt have anything else then im going to end the meeting
+
+ 16:33:44 <zul> thanks for coming
+
+ 16:33:46 <zul> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

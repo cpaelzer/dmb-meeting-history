@@ -1,0 +1,191 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:03:19 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-12-03-18.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:03:25)
+ *Announcements
+
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/xine-ui.html   (jdstrand, 18:23:49)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libguestfs.html   (jdstrand, 18:23:52)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/policycoreutils.html   (jdstrand, 18:23:55)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pnp4nagios.html   (jdstrand, 18:23:59)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/dtach.html   (jdstrand, 18:24:05)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:27:22 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (32)
+ * sbeattie (12)
+ * jjohansen (7)
+ * sarnold (6)
+ * meetingology (3)
+ * tyhicks (3)
+ * ubottu (1)
+ * micahg (1)
+
+
+
+== Full Log ==
+
+
+ 18:03:19 <jdstrand> #startmeeting
+
+ 18:03:19 <meetingology> Meeting started Mon Dec  3 18:03:19 2012 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:03:19 <meetingology> 
+
+ 18:03:19 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:03:24 <jdstrand> The meeting agenda can be found at:
+
+ 18:03:25 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:03:31 <jdstrand> [TOPIC] Announcements
+
+ 18:05:28 <jdstrand> thanks to jbicha for his work on cups-pk-helper to fix bug #1083416. Help testing the package would be much appreciated-- if interested, please comment in the bug that the package in proposed works for you (Ubuntu 11-10 - 12.10)
+
+ 18:05:30 <ubottu> Launchpad bug 1083416 in cups-pk-helper (Ubuntu Quantal) "cups-pk-helper security vulnerability CVE-2012-4510" [Undecided,Fix committed] https://launchpad.net/bugs/1083416
+
+ 18:06:06 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:06:10 <jdstrand> I'll go first
+
+ 18:06:53 <jdstrand> I worked quite a bit on secure boot last week. namely identifying test cases, documenting how to perform them and how to perform key database updates
+
+ 18:07:49 <jdstrand> my secureboot-db package is basically done, but I have a couple more things to test there. I will be finishing that and forwarding all my work to various teams (eg, qa, foundations) so they can benefit as well
+
+ 18:08:16 <jdstrand> in addition to that, I plan on working on MIR audits this week, then if I have time, picking up something from the list
+
+ 18:08:28 <jdstrand> oh, and I'm in the happy place
+
+ 18:08:46 <jdstrand> Marc is out today, but I know he is on triage and has a couple updates he is working on
+
+ 18:08:49 <jdstrand> sbeattie: you're next
+
+ 18:09:07 <sbeattie> I'm again working on apparmor and display manager stuff this week
+
+ 18:09:20 <sbeattie> still working on prototyping
+
+ 18:09:52 <sbeattie> I also spent some of last week working a bit on tests, for upstream apparmor, apparmor in QRT, and the kernel in QRT
+
+ 18:10:03 <sbeattie> I may do a bit more this week
+
+ 18:10:23 <sbeattie> I also need to prep for the upstream apparmor monthly meeting this week.
+
+ 18:11:04 <sbeattie> I may use up a day of holiday later this week, I need to sort out using up the rest of the time I have available this year.
+
+ 18:11:13 <jdstrand> sbeattie: there was something last week about aptch review-- I didn't follow up on that-- how did that go?
+
+ 18:11:41 <sbeattie> eh, I didn't get as far on that as I wanted; I should also look at that again as well.
+
+ 18:12:12 <sbeattie> In particular, I want to understand and review where jjohansen is going with his parser patch set
+
+ 18:12:36 <sbeattie> anyway, I think that's it for me. micahg?
+
+ 18:13:29 <micahg> webkit and chromium still in progress, Firefox 17.0.1 just went out the door, I think that's it for now, tyhicks: tag
+
+ 18:13:50 <tyhicks> I'll be working on the apparmor dbus mediation items
+
+ 18:14:27 <tyhicks> I need to get a couple small updates in the dbus-dev ppa and then I'll look to jj for advice on what to tackle next
+
+ 18:14:42 <tyhicks> that's it for me - jjohansen you're up
+
+ 18:15:46 <jjohansen> well, I will push out apparmor 3 alpha 1 this week, and will continue on the labeling stacking patches
+
+ 18:16:33 <jdstrand> oh, is it apparmor 3 and not apparmor 2.8?
+
+ 18:17:08 <jjohansen> jdstrand: yeah it will be apparmor 3.0, 2.8 is currently what is in quantal/raring
+
+ 18:17:31 <jdstrand> oh, duh
+
+ 18:17:53 <jdstrand> are we planning a 2.8.1? /me wonders why he was thinking about 2.8...
+
+ 18:18:07 <sbeattie> well, we hadn't decided on 2.9 vs 3.0
+
+ 18:18:21 <jjohansen> of course its being deved as 2.8.99 or what ever because versioning issues between rpm and deb
+
+ 18:18:37 <jdstrand> ok, sorry to de-rail
+
+ 18:18:44 <jjohansen> sbeattie: err yeah we did, at the monthly meeting 2 months ago
+
+ 18:19:30 <sbeattie> heh
+
+ 18:20:02 <jjohansen> anyways we can always rehash in the apparmor meeting tomorrow :)
+
+ 18:20:14 <jjohansen> I think that is it from /me sarnold your up
+
+ 18:20:14 <sbeattie> no, no, let's not. :)
+
+ 18:20:18 <jjohansen> :)
+
+ 18:20:41 <sarnold> I finally published perl last week, so this week I picked up libxml2 and tiff
+
+ 18:21:14 <sarnold> when working on tiff, I found some initial hurdles, my rebuilds weren't stripped and appeared to lack any ofthe hardening
+
+ 18:21:57 <sarnold> sbeattie suggested I should do a test build of that package on the ppa and see what comes out; that makes enough sense :) but perhaps osmeone else will spot this one without burning 10*N(arch) minutes on the builders first....
+
+ 18:22:26 <jdstrand> I'll help look at that
+
+ 18:22:28 <sarnold> I'm also on community this week, I think it'd fun to do some d2u syncing or merging, I haven't done that yet.
+
+ 18:22:56 <sarnold> I'm leaving to visit family in CA at the end of the week, friday will probably be a shorter day, I expect to make that up evenings this week
+
+ 18:23:25 <sarnold> I think that's it for me, jdstrand ?
+
+ 18:23:35 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:23:38 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:23:42 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:23:49 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/xine-ui.html
+
+ 18:23:52 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libguestfs.html
+
+ 18:23:55 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/policycoreutils.html
+
+ 18:23:59 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/pnp4nagios.html
+
+ 18:24:05 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/dtach.html
+
+ 18:24:13 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:24:34 <jdstrand> There are a lot of merge opportunities for packages listed in http://people.canonical.com/~ubuntu-security/d2u/. Performing these updates is a great way to help Ubuntu and bolster your developer application.
+
+ 18:24:46 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:27:20 <jdstrand> sbeattie, micahg, tyhicks, jjohansen, sarnold: thanks!
+
+ 18:27:22 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

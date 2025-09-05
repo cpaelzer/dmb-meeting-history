@@ -1,0 +1,253 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 19 Sep at 16:35 &mdash; 16:59 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-09-19-16.35.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:35.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 16:57.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/musl.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gridengine.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/php-cas.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gitlab.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pdns.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 16:57.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * tyhicks (38)
+ * jjohansen (11)
+ * jdstrand (10)
+ * chrisccoulson (9)
+ * ratliff (8)
+ * mdeslaur (7)
+ * sbeattie (6)
+ * sarnold (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:35 <tyhicks> #startmeeting
+
+ 16:35 <meetingology> Meeting started Mon Sep 19 16:35:35 2016 UTC.  The chair is tyhicks. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:35 <meetingology> 
+
+ 16:35 <meetingology> Available commands: action commands idea info link nick
+
+ 16:35 <tyhicks> The meeting agenda can be found at:
+
+ 16:35 <tyhicks> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:35 <tyhicks> [TOPIC] Weekly stand-up report
+
+ 16:35 <tyhicks> jdstrand: you're up
+
+ 16:36 <jdstrand> hi!
+
+ 16:36 <jdstrand> last week worked on the docker interface, updated snappy-debug for new policy/bug fixes, various snappy policy updates, browser-support feedback/improvements, fine-grained autoconnects in snapd, picked up dbus-app discussion, and provided lots of reviews/help/etc to namespace sharing in snap-confine
+
+ 16:36 <jdstrand> this week plan to finish up the namespace sharing card
+
+ 16:36 <jdstrand> finish the docker interface
+
+ 16:36 <jdstrand> respond to feedback on dbus-app interface
+
+ 16:36 <jdstrand> investigate CLONE_NEWUSER issue (I think it is fixed with latest snap-confine, need to fully confirm)
+
+ 16:37 <jdstrand> a few policy updates
+
+ 16:37 <jdstrand> work on snap declarations (PR reviews, review tools updates, etc)
+
+ 16:37 <jdstrand> investigate what network-namespace interface might look like
+
+ 16:37 <jdstrand> that's it from me
+
+ 16:38 <mdeslaur> I'm in the happy place this week
+
+ 16:38 <mdeslaur> tomorrow, I'm on patch piloting
+
+ 16:38 <mdeslaur> I am currently release tomcat updates
+
+ 16:38 <mdeslaur> and have started working on clamav updates
+
+ 16:38 <mdeslaur> that's pretty much what I'll be doing this week
+
+ 16:38 <mdeslaur> sbeattie: you're up
+
+ 16:38 <sbeattie> I'm also in the happy place this week
+
+ 16:39 <sbeattie> I'm finishing up sponsoring an update left over from last week (mariadb)
+
+ 16:39 <tyhicks> ah, two happy place weeks in a row :)
+
+ 16:39 <sbeattie> I have kernel USNs to publish since they went out this morning
+
+ 16:39 <sbeattie> I have some apparmor patches to review
+
+ 16:40 <sbeattie> I'll probably try to pick up an additional update as well
+
+ 16:40 <mdeslaur> tyhicks: yeah! It's like paradise! :)
+
+ 16:40 <sbeattie> that'll likely consume my week. tyhicks, over to you
+
+ 16:41 <tyhicks> I'm on community this week
+
+ 16:41 <tyhicks> now that the kernels have published, I need to go verify an apparmor userspace SRU
+
+ 16:42 <tyhicks> jdstrand: ^ fyi, that'll also feed into your SRU
+
+ 16:42 <tyhicks> jdstrand: so watch for that this week
+
+ 16:42 <tyhicks> I think I'm through all my pending snap-confine reviews
+
+ 16:43 <tyhicks> I'm still testing xenial's apparmor in trusty for an SRU
+
+ 16:43 <tyhicks> and I'm finally working on seccomp logging again
+
+ 16:43 <tyhicks> in fact, I probably need to make a band-aid fix to the 4.8 kernel around seccomp logging this week
+
+ 16:44 <tyhicks> that's it for me
+
+ 16:44 <tyhicks> jjohansen: you're up
+
+ 16:44 <jjohansen> I'm still working on 4.8 an lxc/d stacking
+
+ 16:45 <jjohansen> we landed a mostly working 4.8 for the kt on the weekend, but it has at least one odd known regression in the test suite to track down
+
+ 16:46 <jjohansen> and not the full set of patches to support lxc/d landed with it as they were exhibiting more bugs
+
+ 16:46 <tyhicks> jjohansen: what test is failing?
+
+ 16:46 <jjohansen> so, I'll be tracking those down this week and they will go in after the beta kernel
+
+ 16:47 <jjohansen> tyhicks: the exec_stack tests
+
+ 16:47 <jjohansen> however they weren't failing in the kernel
+
+ 16:47 <jjohansen> it is userspace segfaulting
+
+ 16:48 <jjohansen> I can't say however its not the kernels fault yet
+
+ 16:48 <tyhicks> jjohansen: let me know if I need to help you straighten that out
+
+ 16:48 <jjohansen> tyhicks: ack
+
+ 16:48 <tyhicks> jjohansen: I could take the userspace portion over and let you sort out the other issue(s)
+
+ 16:48 <jjohansen> tyhicks: maybe, we can discuss off line
+
+ 16:48 * tyhicks nods
+
+ 16:48 <jjohansen> err, after the meeting
+
+ 16:49 <tyhicks> sounds like a full week
+
+ 16:49 <tyhicks> sarnold: you're up
+
+ 16:49 <sarnold> I'm on bug triage this week
+
+ 16:50 <sarnold> also burning down the list of MIRs, which I understand need some juggling
+
+ 16:50 <sarnold> wds is underway, I should be able to finish it by eod
+
+ 16:50 <tyhicks> great
+
+ 16:50 <sarnold> there's also outstanding apparmor patches I'd love to review, but .. time.
+
+ 16:50 <sarnold> anyway that's me, chrisccoulson?
+
+ 16:52 <ratliff> chrisccoulson may still be out since he had to step away
+
+ 16:53 <ratliff> I'll go ahead and he can jump in anytime if he is around
+
+ 16:53 <ratliff> I'm on CVE triage this week.
+
+ 16:53 <chrisccoulson> I'm back now :)
+
+ 16:53 <tyhicks> hi chrisccoulson :)
+
+ 16:53 <chrisccoulson> I'll let you finish
+
+ 16:53 <ratliff> go ahead chrisccoulson
+
+ 16:53 <chrisccoulson> oh, ok :)
+
+ 16:53 <chrisccoulson> I've got a Firefox update to do this week, plus a small Oxide update
+
+ 16:54 <chrisccoulson> I'll likely be spending a little bit of time on Firefox again (related to menubar / snappy)
+
+ 16:55 <tyhicks> still have any oxide documentation work remaining?
+
+ 16:55 <chrisccoulson> I landed a bunch of documentation last week in Oxide (http://people.canonical.com/~chrisccoulson/oxide-documentation/overview.html). I'm looking forward to doing stuff this week that doesn't involve writing documentation
+
+ 16:55 <chrisccoulson> heh
+
+ 16:55 <chrisccoulson> I filed a bunch of bugs last week whilst writing documentation, and I imagine I'll spend some time this week fixing those
+
+ 16:55 <chrisccoulson> That's me done
+
+ 16:56 <ratliff> I will also be looking into the pillow update
+
+ 16:56 <ratliff> Spending quality time on the Unity 8 MIR Trello board
+
+ 16:56 <ratliff> And doing further sprint planning
+
+ 16:56 <ratliff> back to you tyhicks
+
+ 16:57 <tyhicks> thanks
+
+ 16:57 <tyhicks> [TOPIC] Highlighted packages
+
+ 16:57 <tyhicks> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:57 <tyhicks> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:57 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/musl.html
+
+ 16:57 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/gridengine.html
+
+ 16:57 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/php-cas.html
+
+ 16:57 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/gitlab.html
+
+ 16:57 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/pdns.html
+
+ 16:57 <tyhicks> [TOPIC] Miscellaneous and Questions
+
+ 16:58 <tyhicks> Does anyone have any other questions or items to discuss?
+
+ 16:59 <tyhicks> jdstrand, mdeslaur, sbeattie, jjohansen, sarnold, ChrisCoulson, ratliff: Thanks!
+
+ 16:59 <tyhicks> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

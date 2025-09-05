@@ -1,0 +1,493 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by mclemenceau, 30 Sep at 15:05 &mdash; 15:39 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-09-30-15.05.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by mclemenceau at 15:05.
+
+
+=== Release incoming bugs (hirsute) ===
+
+Discussion started by mclemenceau at 15:14.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs   (mclemenceau, 15:14)
+
+=== Release incoming bugs (focal) ===
+
+Discussion started by mclemenceau at 15:14.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (mclemenceau, 15:14)
+
+=== Release incoming bugs (impish) ===
+
+Discussion started by mclemenceau at 15:15.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (mclemenceau, 15:15)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/livecd-rootfs/2.741   (vorlon, 15:28)
+
+=== Team proposed-migration report ===
+
+Discussion started by mclemenceau at 15:29.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (mclemenceau, 15:29)
+
+=== AOB ===
+
+Discussion started by mclemenceau at 15:36.
+
+
+
+
+== People present (lines said) ==
+
+ * mclemenceau (39)
+ * ubottu (31)
+ * jawn-smith (24)
+ * slyon (23)
+ * vorlon (20)
+ * dbungert (19)
+ * schopin (17)
+ * xypron (7)
+ * ginggs (7)
+ * waveform (6)
+ * doko (6)
+ * alexghiti (5)
+ * juliank (5)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:05 <mclemenceau> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:05 <meetingology> Meeting started at 15:05:25 UTC.  The chair is mclemenceau.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:05 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:05 <mclemenceau> #topic Lightning rounds
+
+ 15:06 <xypron> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert xypron ginggs schopin alexghiti)
+
+ 15:06 <xypron> xypron dbungert vorlon waveform alexghiti slyon bdmurray doko sil2100 schopin jawn-smith juliank mwhudson ginggs
+
+ 15:06 <mclemenceau> \o/ thx xypron
+
+ 15:06 <xypron> Working on OpenSBI reset,
+
+ 15:06 <xypron> investigating linker generated lists
+
+ 15:06 <xypron> ran into problems with bintutils ignoring KEEP in a linker script
+
+ 15:07 <xypron> New vim has been released, fianally showing "impish" as no errror in changelog
+
+ 15:07 <xypron> <done>
+
+ 15:07 <dbungert> * subiquity - roadmap planning for JJ
+
+ 15:07 <dbungert> * subiquity/u-d-i - continue on v2 storage.  Adding final details, automated
+
+ 15:07 <dbungert> testing, fixing issues.  Expect it ready for review late Monday.
+
+ 15:07 <dbungert> * curtin - prep for a small curtin release to support MAAS with two fixed they
+
+ 15:07 <dbungert> want.  Either a targeted release that gets SRUed to focal, or MAAS is willing
+
+ 15:07 <dbungert> to use a build from a PPA.
+
+ 15:07 <dbungert> * livecd-rootfs/u-d-i - investigate problem with install type layers causing
+
+ 15:07 <dbungert> the standard install to fail, but not minimal.  Fix the type declaration in
+
+ 15:07 <dbungert> the catalog of install types.  Thanks to seb & mwhudson for heavy guidance
+
+ 15:07 <dbungert> for the fix.
+
+ 15:07 <dbungert> * subiquity - fix the deserializer.  This enables callers of the API to send
+
+ 15:07 <dbungert> partial objects when those objects have default values defined for the
+
+ 15:07 <dbungert> omitted fields.
+
+ 15:07 <dbungert> (done)
+
+ 15:07 <mclemenceau> thx dbungert, vorlon you around?
+
+ 15:08 <mclemenceau> ok waveform then?
+
+ 15:08 <waveform> * Verified fix for USB failures on various Pis under focal (LP: #1930629)
+
+ 15:08 <waveform> * Debugging HDMI display failure / display freeze under impish with kms (LP: #1944397)
+
+ 15:08 <waveform> * prepping alternate do-release-upgrade workaround to force fkms in case the above can't be fixed in 5.13
+
+ 15:08 <waveform> * Worked on built-before script
+
+ 15:08 <waveform> * Pi meetings
+
+ 15:08 <waveform> (done)
+
+ 15:08 <ubottu> Launchpad bug 1930629 in linux-raspi (Ubuntu Impish) "Raspberry pi 4 USB controller randomly crashes" [Undecided, Fix Released] https://launchpad.net/bugs/1930629
+
+ 15:08 <ubottu> Launchpad bug 1944397 in linux-firmware-raspi2 (Ubuntu Impish) "HDMI does not display anything with Impish RPi desktop image" [Undecided, Confirmed] https://launchpad.net/bugs/1944397
+
+ 15:08 <alexghiti> Sv48 patchset: https://patchwork.kernel.org/project/linux-riscv/list/?series=555063
+
+ 15:08 <alexghiti> Pocl no-changes rebuild broke all architectures, testsuite fails https://launchpad.net/ubuntu/+source/pocl/1.6-5build1
+
+ 15:09 <alexghiti> LP #1944741: Fix partition names for Unmatched board => merged in debian git repository
+
+ 15:09 <alexghiti> Reset on unmatched: i2c sequence not correct as per Dialog employee https://patchwork.kernel.org/project/linux-riscv/patch/20210921053356.1705833-1-alexandre.ghiti@canonical.com/
+
+ 15:09 <ubottu> Launchpad bug 1944741 in util-linux (Debian) "HiFive Unmatched partitions are named 'Unleashed'" [Unknown, Confirmed] https://launchpad.net/bugs/1944741
+
+ 15:09 <alexghiti> (done)
+
+ 15:09 <slyon> - Interview & take-home test
+
+ 15:09 <slyon> - more SRU discussions wrt. phased-updater (LP: #1934221)
+
+ 15:09 <slyon> - cgroupv2 enabled systemd migrated \o/ (LP: #1850667)
+
+ 15:09 <slyon> * after snapd 2.53 landed, I uploaded my lxc patch and triggered a few tests
+
+ 15:09 <slyon> - sponsored s390-tools[-signed] SRUs for fheimes into H & F (LP: #1942908)
+
+ 15:09 <slyon> - sponsored pocl rebuild for alexghiti (LP: #1942895)
+
+ 15:09 <slyon> - trying to get onto debian-devel, but somehow they have some server problems..
+
+ 15:09 <slyon> === Netplan ===
+
+ 15:09 <ubottu> Launchpad bug 1934221 in systemd (Ubuntu Hirsute) "systemd-resolve segfault" [Undecided, Confirmed] https://launchpad.net/bugs/1934221
+
+ 15:09 <ubottu> Launchpad bug 1850667 in snapd "Switch to 'unified' cgroup hierarchy (cgroupv2)" [High, Fix Committed] https://launchpad.net/bugs/1850667
+
+ 15:09 <ubottu> Launchpad bug 1942908 in Ubuntu on IBM z Systems "Fixing zKVM: Host Key Document Verification - SRU to U20.04LTS" [High, In Progress] https://launchpad.net/bugs/1942908
+
+ 15:09 <ubottu> Launchpad bug 1942895 in pocl (Ubuntu) "Build fails on riscv64 in qemu user emulation" [Medium, In Progress] https://launchpad.net/bugs/1942895
+
+ 15:09 <slyon> - verified netplan SRU for Bionic (LP: #1926442)
+
+ 15:09 <slyon> - 0.103 SRUs landed in Hirsute & Focal \o/ (LP: #1938920)
+
+ 15:09 <slyon> - initial testing of the new core20/edge base image (v0.103 vs NM snap)
+
+ 15:09 <slyon> - Implemented PR#231, got it reviewed
+
+ 15:09 <slyon> * I uploaded this bugfix for snapd in 0.103-0ubuntu6 (LP: #1943120)
+
+ 15:09 <slyon> - Review (& merged several) of schopin's API consolidation PRs
+
+ 15:09 <slyon> * PR#229, PR#230, PR#227, PR#232 (TIL: linker scripts, nice!)
+
+ 15:09 <ubottu> Launchpad bug 1926442 in Snappy "[SRU] cannot execute 'netplan generate' from within a snap" [Medium, Confirmed] https://launchpad.net/bugs/1926442
+
+ 15:09 <slyon> - Merged PR#225, needs SRU (LP: #1771740)
+
+ 15:09 <slyon> (done)
+
+ 15:09 <ubottu> Launchpad bug 1938920 in netplan.io (Ubuntu Impish) "[SRU] Update to netplan.io 0.103" [Undecided, Fix Released] https://launchpad.net/bugs/1938920
+
+ 15:09 <ubottu> Bug 231 in Launchpad itself "Mass bug manipulation not team aware" [Medium, Fix Released] https://launchpad.net/bugs/231
+
+ 15:09 <ubottu> Launchpad bug 1943120 in netplan.io (Ubuntu Hirsute) "interface not  removed" [Undecided, New] https://launchpad.net/bugs/1943120
+
+ 15:09 <ubottu> Bug 232 in Launchpad itself "Bug privacy appears to not be team aware" [Medium, Fix Released] https://launchpad.net/bugs/232
+
+ 15:09 <ubottu> Bug 225 in Launchpad itself "Search navigation and listing summary text are confusing." [Medium, Fix Released] https://launchpad.net/bugs/225
+
+ 15:09 <ubottu> Launchpad bug 1771740 in netplan.io (Ubuntu Impish) "Expose link offload options" [Undecided, New] https://launchpad.net/bugs/1771740
+
+ 15:09 <mclemenceau> bdmurray is out today
+
+ 15:09 <mclemenceau> doko?
+
+ 15:10 <doko> - attended GNU toolchain track at Plumbers last week
+
+ 15:10 <doko> - short week (two days only)
+
+ 15:10 <doko> - working ginggs through the test rebuild procedure
+
+ 15:10 <doko> - helping a non-distro collegue with packaging issues
+
+ 15:10 <doko> - wrote two jira issues
+
+ 15:10 <doko> (done)
+
+ 15:10 <mclemenceau> schopin
+
+ 15:10 <schopin> * openssl:
+
+ 15:10 <schopin> + Looked into ceph and dovecot failures to build against openssl3.0.0, with
+
+ 15:10 <schopin> varying success
+
+ 15:10 <schopin> + Worked on formulating a proper plan for a transition to 3.0.0 in 22.04
+
+ 15:10 <schopin> * netplan: (all merges by slyon, thanks!!)
+
+ 15:10 <schopin> + Reviewed PR#231 (LP: #1943120) for slyon
+
+ 15:10 <schopin> + Fixed a latent bug in the YAML normalization code in the tests (PR#229),
+
+ 15:10 <ubottu> Bug 231 in Launchpad itself "Mass bug manipulation not team aware" [Medium, Fix Released] https://launchpad.net/bugs/231
+
+ 15:10 <ubottu> Launchpad bug 1943120 in netplan.io (Ubuntu Hirsute) "interface not  removed" [Undecided, New] https://launchpad.net/bugs/1943120
+
+ 15:10 <schopin> merged.
+
+ 15:10 <schopin> + Unified the enum2string "features" in the codebase, now always done via
+
+ 15:10 <schopin> `netplan_$ENUM_name(val)`. This is actually the first step towards a new
+
+ 15:10 <schopin> libnetplan API that should be more resilient towards API breakages in the
+
+ 15:10 <schopin> future. PR#230, merged
+
+ 15:11 <schopin> + I finally got PR#227 merged. Kudos to slyon, that one wasn't easy to
+
+ 15:11 <ubottu> Bug 227 in Baz (deprecated) "baz branch doesn't rollback on bad gpg signature" [Medium, Invalid] https://launchpad.net/bugs/227
+
+ 15:11 <schopin> review. It's mostly a cleanup PR that separates the public and private
+
+ 15:11 <schopin> parts of libnetplan, to help future maintenance.
+
+ 15:11 <schopin> + Posted a PR to fix some bugs and leaks in the parser error paths. PR#237
+
+ 15:11 <schopin> ✓ done
+
+ 15:11 <jawn-smith> * made tweaks to patch in LP: #1944621 per reviewer suggestions
+
+ 15:11 <ubottu> Launchpad bug 1944621 in openssh (Ubuntu) "sshd in chroot has regression with glibc 2.34" [Medium, Confirmed] https://launchpad.net/bugs/1944621
+
+ 15:11 <jawn-smith> * LP: #1944475 SRU to hirsute
+
+ 15:11 <ubottu> Launchpad bug 1944475 in ubuntu-release-upgrader (Ubuntu Impish) "DistUpgradeViewNonInteractive is now interactive" [High, Fix Released] https://launchpad.net/bugs/1944475
+
+ 15:11 <jawn-smith> * Go 1.17 transition:
+
+ 15:11 <jawn-smith> * syncthing is only package currently blocking golang-defaults 1.17.
+
+ 15:11 <jawn-smith> * syncthing is actually blocked by a regression in golang-github-lucas-clemente-quic-go
+
+ 15:11 <jawn-smith> * the above package needs a newly packaged dependency that I have added to a PPA
+
+ 15:11 <jawn-smith> * It also has an unrelated failing s390x autopkgtest that I am still looking into
+
+ 15:11 <jawn-smith> * Re-write ubuntu-image in Go:
+
+ 15:11 <jawn-smith> * Decided to pick up the make_disk step as I'm concerned we will need another snapd PR made
+
+ 15:11 <jawn-smith> * Almost have functionality for this state working, then need to write tests
+
+ 15:11 <jawn-smith> [done]
+
+ 15:11 <mclemenceau> thx!
+
+ 15:11 <mclemenceau> juliank, you're next
+
+ 15:11 <juliank> * packagekit upload: Refresh wait-until-online-to-activate-systemd-service.patch with fixes (LP: #1943189)
+
+ 15:12 <ubottu> Launchpad bug 1943189 in packagekit (Ubuntu Hirsute) "'cannot refresh whilst network offline' bug" [Undecided, Confirmed] https://launchpad.net/bugs/1943189
+
+ 15:12 <juliank> * grub2 initrdfail work for bionic LP: #1925507, LP: #1929860, LP: #1901553
+
+ 15:12 <ubottu> Launchpad bug 1925507 in grub2 (Ubuntu Focal) "grub-common: snapd autopkgtests fail on s390x" [Undecided, Fix Released] https://launchpad.net/bugs/1925507
+
+ 15:12 <juliank> * had a first look at the shim riscv64 patch set xpyron posted, getting excited about riscv64
+
+ 15:12 <ubottu> Launchpad bug 1929860 in grub2 (Ubuntu Bionic) "initrdfail can result in resuming with different initrd images and hanging resume" [Undecided, New] https://launchpad.net/bugs/1929860
+
+ 15:12 <ubottu> Launchpad bug 1901553 in grub2 (Ubuntu Focal) "Improve documentation around initrdless boot" [Undecided, Fix Released] https://launchpad.net/bugs/1901553
+
+ 15:12 <juliank> (done)
+
+ 15:12 <mclemenceau> ginggs
+
+ 15:12 <ginggs> * finished investigation of tasksel merge/sync LP: #1929807
+
+ 15:12 <ginggs> * prepared preliminary focal SRU of mdadm 4.2 RC2 (still waiting on 4.2 final) LP: #1890248
+
+ 15:12 <ginggs> * started second impish test rebuild https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20210927-impish-impish.html
+
+ 15:12 <ginggs> scheduled first round of retries
+
+ 15:12 <ginggs> * status update of fuse MIR LP: #1934510
+
+ 15:12 <ubottu> Launchpad bug 1929807 in tasksel (Ubuntu Impish) "tasksel not merged for a while" [Undecided, New] https://launchpad.net/bugs/1929807
+
+ 15:12 <ubottu> Launchpad bug 1890248 in mdadm (Ubuntu Focal) "SRU of mdadm to Focal" [Undecided, New] https://launchpad.net/bugs/1890248
+
+ 15:12 <ubottu> Launchpad bug 1934510 in fuse3 (Ubuntu) "[MIR] fuse3 as a dependency of qemu 6.0 and GNOME apps" [Undecided, Incomplete] https://launchpad.net/bugs/1934510
+
+ 15:12 <ginggs> (done)
+
+ 15:13 <mclemenceau> any question on status?
+
+ 15:13 <mclemenceau> Ok let's look into bugs now
+
+ 15:14 <mclemenceau> #topic Release incoming bugs (hirsute)
+
+ 15:14 <mclemenceau> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs
+
+ 15:14 <mclemenceau> nothing for foundations
+
+ 15:14 <mclemenceau> #topic Release incoming bugs (focal)
+
+ 15:14 <mclemenceau> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:15 <slyon> nothing
+
+ 15:15 <mclemenceau> alright let's look at Impish too
+
+ 15:15 <mclemenceau> #topic Release incoming bugs (impish)
+
+ 15:15 <mclemenceau> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:16 <mclemenceau> there's a few here
+
+ 15:16 <mclemenceau> LP: #1943077
+
+ 15:16 <ubottu> Launchpad bug 1943077 in squashfs-tools (Ubuntu) "snapd fails to autopkgtest on mksquashfs, which is looking for libgcc_s" [Undecided, New] https://launchpad.net/bugs/1943077
+
+ 15:17 <juliank> looks like an issue to solve in snapd?
+
+ 15:17 <dbungert> yes, snapd should see a new upload based on picking up libgcc, snapd team is talking about doing so
+
+ 15:18 <mclemenceau> ok snapd team is working on that one
+
+ 15:19 <mclemenceau> LP: #1943816
+
+ 15:19 <ubottu> Launchpad bug 1943816 in OEM Priority Project "'ubuntu-drivers install' needs to be used when installing nvidia-driver if enabling 'third-party packages'" [Critical, Confirmed] https://launchpad.net/bugs/1943816
+
+ 15:21 <mclemenceau> Looks like bug may affect both ubiquity and ubuntu-drivers-common
+
+ 15:22 <mclemenceau> let's leave it in seb and alberto's end. keep it tagged ii so we can double check next week
+
+ 15:23 <mclemenceau> next LP: #1944519
+
+ 15:23 <ubottu> Launchpad bug 1944519 in casper (Ubuntu) "Ubuntu Mate shutdown prompt is missing - system reboots at once" [Undecided, Confirmed] https://launchpad.net/bugs/1944519
+
+ 15:25 <mclemenceau> with the release coming up soon, we should give it a look, let's card it
+
+ 15:25 <mclemenceau> last for impish LP: #1944004
+
+ 15:25 <ubottu> Launchpad bug 1944004 in livecd-rootfs (Ubuntu) "snapd.seeded.service never finishes on non-amd64" [Undecided, In Progress] https://launchpad.net/bugs/1944004
+
+ 15:27 <vorlon> this one should definitely be fixed for impish; however I sponsored the livecd-rootfs upload already
+
+ 15:28 <vorlon> so I think this might be fix-released but we were missing a bug ref in the changelog
+
+ 15:28 <vorlon> https://launchpad.net/ubuntu/+source/livecd-rootfs/2.741
+
+ 15:28 <vorlon> is in impish release but didn't auto-close the bug
+
+ 15:29 <ginggs> syntax error in changelog
+
+ 15:29 <mclemenceau> and that's it for bugs
+
+ 15:29 <mclemenceau> #topic Team proposed-migration report
+
+ 15:29 <mclemenceau> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:29 <mclemenceau> vorlon you're up
+
+ 15:30 <vorlon> ginggs: I assume it didn't like it due to the missing space; amusingly, launchpad UI has no problem and still makes it a link
+
+ 15:30 * vorlon nods
+
+ 15:30 <vorlon> openssh stuck for 30 days
+
+ 15:30 <vorlon> who was working on this? :)
+
+ 15:30 <jawn-smith> that's me!
+
+ 15:30 <jawn-smith> I have a patch uploaded to LP: #1944621
+
+ 15:30 <ubottu> Launchpad bug 1944621 in openssh (Ubuntu) "sshd in chroot has regression with glibc 2.34" [Medium, Confirmed] https://launchpad.net/bugs/1944621
+
+ 15:30 <jawn-smith> It has verbal okay from cjwatson, and just needs sponsoring
+
+ 15:31 <vorlon> jawn-smith: ah, 'uploaded' meaning to the bug report?
+
+ 15:31 <jawn-smith> yes
+
+ 15:31 <vorlon> great, then I'll upload today
+
+ 15:31 <dbungert> openssh still will have the snapd test failure with libgcc, so we may want to again hint for that case once the upload occurrs
+
+ 15:31 <jawn-smith> thanks!
+
+ 15:32 <jawn-smith> vorlon: there's a typo in that patch actually
+
+ 15:32 <jawn-smith> s/failues/failures
+
+ 15:32 <jawn-smith> I can add another patch to the LP bug unless it's easy for you to fix
+
+ 15:32 <vorlon> I can fix it
+
+ 15:32 <jawn-smith> thanks! It's just in a comment so won't impact functionality
+
+ 15:32 <vorlon> then we also have golang-defaults, blocked by syncthing auotpkgtest regression
+
+ 15:32 <slyon> dbungert: I think the tests/smoke/sandbox test of snapd should pass now with snapd 2.53
+
+ 15:32 <vorlon> this is new since last week, but has been stuck now for 6 days
+
+ 15:32 <slyon> at least it did when tested against systemd
+
+ 15:33 <dbungert> slyon: unfortunately not, see the latest test results against glibc
+
+ 15:33 <vorlon> syncthing seems it might be regressed in release - should this just be hinted?
+
+ 15:33 <jawn-smith> vorlon: I covered the status of syncthing in my status
+
+ 15:33 <vorlon> oh, reading up :)
+
+ 15:34 <slyon> dbungert: it was a big flaky for me, but yeah that glibc tests shows a slightly different error message, related to libgcc_s.so
+
+ 15:34 <vorlon> jawn-smith: ok, if the regression is due to clemente, is it reasonable to hint this?
+
+ 15:34 <jawn-smith> It needs a new package added to -universe and a couple of fixes to a dependency called golang-github-lucas-clemente-quic-go
+
+ 15:34 <vorlon> (not to say you can't keep working on fixing the packages)
+
+ 15:34 <jawn-smith> That seems fine to me, I will keep working them
+
+ 15:35 <dbungert> slyon: I'm curious what makes you say that, it looks like the same issue to me.  What difference do you see?
+
+ 15:35 <vorlon> ok I will hint it (it's also in the failure list for glibc, we don't need more entanglement there)
+
+ 15:35 <jawn-smith> vorlon: thanks!
+
+ 15:35 <vorlon> and that's all the packages that need looking at right now
+
+ 15:35 <vorlon> mclemenceau:
+
+ 15:35 <mclemenceau> thx
+
+ 15:36 <mclemenceau> #topic AOB
+
+ 15:36 <slyon> dbungert: this old openssh failure does not contain the "libgcc_s.so.1 must be installed for pthread_cancel to work" line: https://autopkgtest.ubuntu.com/results/autopkgtest-impish/impish/amd64/s/snapd/20210831_011750_8a144@/log.gz
+
+ 15:36 <mclemenceau> any other topics that need attention?
+
+ 15:36 <slyon> (but that might have been pre-gcc upload?)
+
+ 15:38 <dbungert> while I don't understand what's going on in that log, the failure that is happening now for snapd is expected to me
+
+ 15:38 <mclemenceau> alright then I think we're done, thanks everyone
+
+ 15:39 <mclemenceau> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

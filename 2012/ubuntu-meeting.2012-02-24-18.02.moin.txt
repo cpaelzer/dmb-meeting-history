@@ -1,0 +1,607 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by wendar at 18:02:48 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-24-18.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/AppReviewBoard/Agenda   (wendar, 18:03:36)
+ *Discuss acceptance criteria for separate Unity Lens and Scope packages
+''LINK:'' https://lists.ubuntu.com/archives/app-review-board/2012-February/000484.html   (wendar, 18:12:07)
+
+ *Policy check on QMuttNotifier (indicator, rather than stand-alone app)
+
+ *Policy check on EasyISO (filesystem mount/unmount utility)
+''LINK:'' https://myapps.developer.ubuntu.com/dev/apps/655/   (wendar, 18:55:41)
+
+ *General status of ARB queue
+
+
+
+Meeting ended at 19:10:50 UTC.
+
+
+
+== Votes ==
+
+
+ * To approve stgraber's proposal for handling Lenses and Scopes in ARB managed combined packages
+   For: 4 Against: 0 Abstained: 0
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * wendar (122)
+ * ajmitch (57)
+ * mhall119 (41)
+ * stgraber_ (22)
+ * meetingology (12)
+ * coolbhavi (9)
+ * stgraber (8)
+ * broder (2)
+
+
+
+== Full Log ==
+
+
+ 18:02:48 <wendar> #startmeeting
+
+ 18:02:48 <meetingology> Meeting started Fri Feb 24 18:02:48 2012 UTC.  The chair is wendar. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:02:48 <meetingology> 
+
+ 18:02:48 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:03:08 <ajmitch> .wi n56
+
+ 18:03:16 <ajmitch> as you can see...
+
+ 18:03:36 <wendar> [Link] https://wiki.ubuntu.com/AppReviewBoard/Agenda
+
+ 18:03:43 <wendar> no past actions to review
+
+ 18:04:00 <wendar> are stgraber and mhall119 here?
+
+ 18:04:14 * ajmitch cleared off the past meeting items as they were decided at the meeting
+
+ 18:04:25 * stgraber waves
+
+ 18:04:32 <wendar> ajmitch: yes, that's good
+
+ 18:04:42 <ajmitch> hi stgraber
+
+ 18:05:04 <mhall119> o/
+
+ 18:05:12 <wendar> ah, excellent
+
+ 18:05:14 <coolbhavi> hi mhall119
+
+ 18:05:26 <mhall119> hi
+
+ 18:05:40 <wendar> [TOPIC] Discuss acceptance criteria for separate Unity Lens and Scope packages
+
+ 18:06:08 <wendar> So, this was discussed in the TB meeting this week.
+
+ 18:06:46 <wendar> And, they are willing to make an exception that allows scopes to be packaged separately from their related lenses, if the ARB recommends that as the best solution.
+
+ 18:07:12 <mhall119> Does everybody have a clear understanding of what I'm asking for and why?
+
+ 18:07:18 <wendar> Where we are now is basically: Does this make sense?
+
+ 18:07:57 <wendar> Or, on a deeper level: How are we going to manage the process of approving Scopes and Lenses so it doesn't overload us, risk poor quality, or set bad precedents for the future?
+
+ 18:08:29 <wendar> Whatever we choose, does impact our workflow.
+
+ 18:08:45 <wendar> mhall119: How about a quick summary?
+
+ 18:08:46 <mhall119> after our meeting with the TB, stgraber send a proposal to the ARB mailing list that I think would satisfy the need of lens/scope developers, without compromising the stability of the extras archive, and I am +1 on his proposal
+
+ 18:08:49 <ajmitch> mhall119: can you give a (very) brief explanation of what a lense does & what a scope does
+
+ 18:09:17 <mhall119> Quick summary: Lenses and scopes can be written independently of eachother, and we want to allow authors to submit them to the ARB separately
+
+ 18:09:31 <mhall119> the current rules of the ARB don't allow the scope's package to Depend on the len's package
+
+ 18:09:43 <mhall119> but without that Depends, you can have someone installing a scope they can't use
+
+ 18:10:40 <coolbhavi> mhall119, I just found out that in the ARB review shift past week
+
+ 18:11:05 <mhall119> a Lens provides UI information to the Unity Dash, a Scope provides search results to the Dash, to be displayed according to the Lens
+
+ 18:11:51 <mhall119> A Scope needs to know about it's Lens, but a Lens doesn't need to know about the Scopes that use it
+
+ 18:12:07 <wendar> [LINK] https://lists.ubuntu.com/archives/app-review-board/2012-February/000484.html
+
+ 18:12:32 <mhall119> so what I'm seeking is a way for a Scope author to submit their scope without the Lens author having to be involved
+
+ 18:14:37 <wendar> good summary, thanks
+
+ 18:14:52 <wendar> has everyone read stgraber's post from earlier this week?
+
+ 18:14:56 <wendar> (the link above)
+
+ 18:14:58 <mhall119> again, I am +1 on stgraber's recommended (in that link) and would be willing to help with the initial packaging
+
+ 18:15:01 <coolbhavi> yes
+
+ 18:15:15 <ajmitch> mhall119: the one problem in that mail from stgraber is that each scope would need to be updated by users if a new one is added for the lense - how many scopes do you see being created per lens?
+
+ 18:15:33 <mhall119> my only concern is how much added work it will be for the ARB to handle all the packaging of lenses and scopes
+
+ 18:16:05 <wendar> yes, I think we need to talk in more detail about how this solution might work
+
+ 18:16:24 <wendar> I'm assuming we'd maintain a team bzr branch for each Lens
+
+ 18:16:24 <ajmitch> it's not a lot of extra work to have them as one source package in a branch, from what I can see
+
+ 18:16:28 <mhall119> ajmitch: as few as 0 external scopes, and probably commonly 5-6 external scopes, but could be more
+
+ 18:16:38 <wendar> in which case, we can accept scope submissions as merge proposals
+
+ 18:16:57 <wendar> which would significantly lessen the load
+
+ 18:17:14 <wendar> I also had a question about upgrades
+
+ 18:17:34 <wendar> since upgrading to a new Ubuntu release (i.e. Oneiric->Precise) is a resubmission for Extras
+
+ 18:17:59 <wendar> that would mean that we drop all scopes, start fresh with the Lens, and accept any new scope submissions for the new release
+
+ 18:18:09 <stgraber_> sorry looks like I can't reach hetzner from here at the moment (and so lost my IRC session ...)
+
+ 18:18:33 <wendar> which would save us the work of upgrading all the independent scopes for incompatible API changes
+
+ 18:18:34 <mhall119> wendar: is that because of the API change, or will this happen at every release?
+
+ 18:18:45 <stgraber_> last I got was "18:12 < mhall119> so what I'm seeking is a way for a Scope author to submit their scope without the Lens author having to be involved", can someone paste me what I missed in private?
+
+ 18:18:46 <wendar> mhall119: this is standard for all Extras apps
+
+ 18:19:02 <wendar> mhal119: we don't do any upgrades, just resubmissions
+
+ 18:19:11 <mhall119> wendar: ok, so all packages(even the lens) would need to be re-submitted?
+
+ 18:19:24 <stgraber_> yes
+
+ 18:19:29 <wendar> mhall119: now, the author may resubmit what is essentially just a straight copy of the old app updated for the new release
+
+ 18:20:05 <wendar> mhall119: this allows for an easy "dropping off" effect of old apps where the author hasn't taken the trouble to make them work on the new release
+
+ 18:20:20 <mhall119> wendar: ok, so this proposal wouldn't change that, it just means that the ARB would have to handle updating the packaging every release
+
+ 18:20:38 <wendar> mhall119: right, this wouldn't change the policy
+
+ 18:20:42 <mhall119> ok
+
+ 18:20:57 <ajmitch> mhall119: I expect that from precise onwards, the lens API should be pretty stable?
+
+ 18:21:01 <wendar> mhall119: well, I'm suggesting the ARB wouldn't even have to handle much in the way of updating the packaging
+
+ 18:21:18 <coolbhavi> wendar, seems good enough keeping API changes in view like a new version based on old one
+
+ 18:21:20 <wendar> mhall119: if we treat each new release as "start over with the Lens"
+
+ 18:21:21 <stgraber_> ajmitch: thanks for the copy/paste
+
+ 18:21:24 <mhall119> ajmitch: I've been told that it won't change, under penalty of death
+
+ 18:21:29 <ajmitch> heh
+
+ 18:21:49 <wendar> mhall119: that's good :)
+
+ 18:22:04 <mhall119> of course, they said that before they changed it last time too :)
+
+ 18:22:14 <stgraber_> so to answer the ARB time issue with my proposed solution, my feeling is that it'd actually be much faster than what we do at the moment
+
+ 18:22:21 <wendar> mainly, I'm looking for ways to mitigate the load on the ARB, and the "resubmit at each new Ubuntu release" is definitely one or them
+
+ 18:22:39 <stgraber_> currently we need to review a full package every time if not actually do one for them (in most cases ...)
+
+ 18:22:54 <stgraber_> with my proposal we could have something completely templated that we just copy/paste when we get the lens
+
+ 18:23:06 <ajmitch> a couple of small issues that I can see - need a single debian/copyright for the source package, and need to integrate build systems as lenses & scopes can be written in anything that talks dbus
+
+ 18:23:10 <stgraber_> and from that point on, adding a scope is just copying two files and adding a debian/control and debian/changelog entry
+
+ 18:23:33 <ajmitch> stgraber_: that's assuming they're just written in python, rather than compiled from vala
+
+ 18:23:35 <mhall119> ajmitch: can we limit this to just python lenses and scopes for the time being?
+
+ 18:23:35 <wendar> stgraber: yes, one of the things I mentioned when you were temporarily off IRC is that with your proposal scope submissions could take the form of branch merge proposals to the ARB branch for the Lens
+
+ 18:23:42 <wendar> stgraber: which would be nice and simple
+
+ 18:23:44 <ajmitch> mhall119: gladly
+
+ 18:24:14 <ajmitch> but someone would need to explain to contributors why we only take certain scopes & not others
+
+ 18:24:16 <wendar> ajmitch: the single debian/copyright file would list the copyrights for each author separately
+
+ 18:24:16 <stgraber_> correct, debian/copyright should be easy to do using DEP5
+
+ 18:24:38 <ajmitch> wendar: right, easy to list them, someone has to do the work to put it together
+
+ 18:24:40 <stgraber_> so far all the lenses and scopes have been trivial python script, these are easy to deal with on the packaging side
+
+ 18:24:46 <ajmitch> whether that be by some automated method
+
+ 18:24:47 <wendar> ajmitch: indeed
+
+ 18:24:53 <stgraber_> I indeed expect any C lens/scope to be much harder though
+
+ 18:25:31 <mhall119> the vast, vast majority of community-developed lenses and scopes are python
+
+ 18:25:33 <wendar> ajmitch: ah, that is a good point, we should talk with the pkg-me devs about getting lens/scope packaging into their automated tools
+
+ 18:25:36 <mhall119> in fact, I don't know of any that aren't
+
+ 18:25:50 <wendar> (not for Oneiric, but can help down the road)
+
+ 18:26:05 <ajmitch> mhall119: there are examples in vala
+
+ 18:26:32 <mhall119> ajmitch: yes, but we can reasonably assume that most will be in Python
+
+ 18:26:38 <wendar> stgraber: the lenses/scopes I've written have all been in vala, they're still pretty simple and straightforward
+
+ 18:26:39 <ajmitch> wendar: mhall119 has been working on getting his lens/scope stuff into quickly, so it helps on that end :)
+
+ 18:26:46 <mhall119> especially with Singlet + a Quickly template being in 12.04
+
+ 18:26:50 <wendar> stgraber: it's a good API
+
+ 18:27:02 <stgraber> (back from here)
+
+ 18:27:22 <wendar> so, if Quickly had an "add a new scope" option, that could make our lives really simple
+
+ 18:27:37 <ajmitch> so at the moment, we're mostly +1 on the proposal, for python lenses/scopes?
+
+ 18:27:40 <mhall119> wendar: which is technically possible
+
+ 18:27:52 <wendar> mhall119: yup
+
+ 18:28:07 <wendar> ajmitch: yes, I'm in favor of stgraber's proposal
+
+ 18:28:22 <wendar> ajmitch: we have some details to work out, but it's good overall
+
+ 18:28:25 <mhall119> an added benefit of stgraber's proposal is that it doesn't require any rules changes
+
+ 18:28:31 <ajmitch> mhall119: it'd be really nice to get unity to reload its list of lenses without reloading :)
+
+ 18:28:46 <ajmitch> wendar: great
+
+ 18:28:56 <mhall119> ajmitch: yeah, that's low on their priority list though, so unless someone outside of DX does it, it's not likely for 12.04
+
+ 18:28:57 <wendar> should we carry it to a vote?
+
+ 18:28:58 <stgraber> ajmitch: oh yeah, that one is really annoying ;)
+
+ 18:29:26 <ajmitch> wendar: might need to set #voters, but yeah
+
+ 18:29:26 <mhall119> ajmitch: I've got unity building locally, and trying to understand enough C++ to implement the fix myself, but don't count on it
+
+ 18:29:57 <ajmitch> mhall119: yeah, I took a brief walk through the code to see how possible it'd be
+
+ 18:30:12 <ajmitch> maybe I need to sit down with thomi & have him explain it :)
+
+ 18:30:34 <mhall119> ajmitch: mhr3 was helping me, njpatel would be a good person to talk to as well
+
+ 18:30:40 <wendar> #vote To approve stgraber's proposal for handling Lenses and Scopes in ARB managed combined packages
+
+ 18:30:40 <meetingology> Please vote on: To approve stgraber's proposal for handling Lenses and Scopes in ARB managed combined packages
+
+ 18:30:40 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 18:30:48 <wendar> +1
+
+ 18:30:48 <meetingology> +1 received from wendar
+
+ 18:30:49 <ajmitch> +1
+
+ 18:30:49 <meetingology> +1 received from ajmitch
+
+ 18:31:04 <stgraber> +1
+
+ 18:31:04 <meetingology> +1 received from stgraber
+
+ 18:31:17 <ajmitch> coolbhavi: still awake? :)
+
+ 18:31:26 <coolbhavi> +1 provided resubmission cycle doesnt have overloading effect
+
+ 18:31:26 <meetingology> +1 provided resubmission cycle doesnt have overloading effect received from coolbhavi
+
+ 18:31:37 <wendar> #endvote
+
+ 18:31:37 <meetingology> Voting ended on: To approve stgraber's proposal for handling Lenses and Scopes in ARB managed combined packages
+
+ 18:31:37 <meetingology> Votes for:4 Votes against:0 Abstentions:0
+
+ 18:31:37 <meetingology> Motion carried
+
+ 18:32:02 <wendar> We can review how this went at the start of the Precise cycle, and decide if we need to make any changes.
+
+ 18:32:09 <ajmitch> ok, now to take it to the TB list, should get it passed there quickly
+
+ 18:32:33 <mhall119> does this still need to go to the TB, since it's not a rule change?
+
+ 18:32:34 <wendar> ajmitch: actually, since we aren't making any policy changes, they won't need to vote
+
+ 18:32:41 <ajmitch> wendar: even better
+
+ 18:32:55 <wendar> ajmitch: but, I'll summarize and post to the TB list, so they know for the next meeting
+
+ 18:33:04 <ajmitch> thanks
+
+ 18:33:19 <mhall119> I propose we start with a single lens+scope combination to work out the kinks and get a package template, would you like to target Oneiric or Precise?
+
+ 18:33:24 <wendar> mhall119: we can start setting up the first repos this afternoon if you have time
+
+ 18:33:31 <mhall119> wendar: I do
+
+ 18:33:31 <wendar> mhall119: Oneiric for now
+
+ 18:33:34 <mhall119> ok
+
+ 18:33:47 <wendar> mhall119: so start with any Lenses that use the Oneiric APIs
+
+ 18:34:11 <wendar> thanks mhall119!
+
+ 18:34:19 <mhall119> wendar: I'll pick a couple of candidates, and send them to the ARB's mailing list?
+
+ 18:34:30 <mhall119> or should I submit them through MyApps?
+
+ 18:34:57 <wendar> mhall119: if you want to discuss which are most appropriate to start with, we can talk on the list or IRC
+
+ 18:35:01 <stgraber_> mhall119: look at the unity-lens-utilities one as an example
+
+ 18:35:13 <wendar> mhall119: but, if you're pretty certain, go ahead and submitt to MyApps
+
+ 18:35:20 <stgraber_> mhall119: it currently contains a lens and two scopes
+
+ 18:35:22 <wendar> mhall119: that way it's in the queue
+
+ 18:35:32 <stgraber_> mhall119: all of them in python and all of them nicely protected by apparmor
+
+ 18:35:36 <mhall119> stgraber_: that's already in USC isn't it?
+
+ 18:35:44 <stgraber_> mhall119: yep, that one is already in extras
+
+ 18:35:54 <stgraber_> mhall119: so you can just look at the branch and re-use for the others
+
+ 18:36:33 <mhall119> stgraber_: ok, so we'll use that as a packaging template, and I'll find a new candidate for our first run
+
+ 18:36:40 <stgraber_> mhall119: http://code.launchpad.net/~stgraber/+junk/arb-utilities-lens/
+
+ 18:36:40 <coolbhavi> mhall119 I would be interested in testing lenses+scopes out in oneiric as I pointed out past week
+
+ 18:37:03 <mhall119> coolbhavi: check the onehundredscopes project on LP, there's a bunch of them there
+
+ 18:37:08 <wendar> coolbhavi: great!
+
+ 18:38:12 <coolbhavi> mhall119, sure will pull them this weekend and have a look. Thanks!
+
+ 18:38:37 <wendar> a few quick other agenda items
+
+ 18:38:43 <wendar> [TOPIC] Policy check on QMuttNotifier (indicator, rather than stand-alone app)
+
+ 18:39:04 <wendar> I'm suggesting that we reject this one.
+
+ 18:39:09 <mhall119> thanks everyone for bearing with me and helping find a resolution on this
+
+ 18:39:20 <ajmitch> imo, indicators are fine - they're standalone enough
+
+ 18:39:48 <wendar> mhall119: thank you, and we look forward to seeing those Lenses and Scopes coming through :)
+
+ 18:39:56 <mhall119> so do I?
+
+ 18:39:57 <ajmitch> not trying to be contrary, but they've got similar desktop integration requirements that lenses do
+
+ 18:40:00 <mhall119> :), not ?
+
+ 18:40:48 <stgraber_> I think indicators should be fine, as long as they live in /opt and just ship the required desktop file out of it and properly namespaced
+
+ 18:41:00 <stgraber_> obviously depending on exactly what the indicator does though
+
+ 18:41:04 <wendar> it says it requires konsole
+
+ 18:41:14 <stgraber_> oh, that sounds wrong ;)
+
+ 18:41:26 <ajmitch> it's because it pops up a terminal to load mutt in
+
+ 18:41:50 <stgraber_> sure but we have x-terminal-emulator for that
+
+ 18:41:52 <wendar> which violates our "no command-line apps" policy
+
+ 18:41:55 <ajmitch> not sure how kde-dependent the rest of the code is, and if we're wanting to accept things for other desktops :)
+
+ 18:42:01 <wendar> though, in an indirect way
+
+ 18:42:14 <ajmitch> very indirect, the no command-line apps was mostly due to PATH
+
+ 18:42:26 <wendar> I brought it to discuss, because it's a bit of an edge case
+
+ 18:42:28 <stgraber_> well, our policy says we don't accept command line apps, this one isn't, it just calls one ;)
+
+ 18:43:05 <ajmitch> I think it's an edge case for a different reason - does the software centre separate things by desktop environment, or indicate somehow that it's for kde?
+
+ 18:43:06 <wendar> aye, we don't have a specific security requirement about launching other command-line apps from GUI apps
+
+ 18:43:20 <wendar> ajmitch: not currently, no
+
+ 18:43:49 <wendar> It just seems like the kind of thing Kubuntu should be reviewing
+
+ 18:44:55 <wendar> If people would prefer, I can bounce it back with our new policy of requiring a PPA
+
+ 18:45:07 <wendar> so, the author would need to resubmit
+
+ 18:45:19 <wendar> but, I didn't want to do that if there was no chance we'd ever accept it
+
+ 18:45:35 <wendar> it doesn't seem fair to ask the author for a bunch of work and then say "Sorry, we can't accept it"
+
+ 18:45:59 <ajmitch> right, I don't think we have any policy on derivatives, or if we should
+
+ 18:46:03 <wendar> It currently doesn't even have build instructions, just bare source code.
+
+ 18:47:23 <wendar> I could also simply ask how heavily this depends on KDE
+
+ 18:47:56 <coolbhavi> wendar, then I m also a bit skeptical because the software centre doesnt categorize it under different DE's but we can have it in the description that its for kde. But is there an option to launch mutt without cli? havent tried it though
+
+ 18:47:58 <wendar> like, if it's a KDE indicator, rather than a Unity indicator, and installing it would essentially pull in KDE as a dependency
+
+ 18:48:14 <wendar> then, that would violate our policies about modifying low-level system components
+
+ 18:49:37 <ajmitch> wendar: I just built it, it doesn't pull in any KDE libs, just Qt
+
+ 18:50:18 <wendar> ajmitch: did you install it? does it integrate with the Oneiric Unity indicators?
+
+ 18:50:36 <ajmitch> wendar: I haven't installed it, just tried running it in-place on precise
+
+ 18:50:38 <coolbhavi> people sorry have to leave because m getting very sleepy
+
+ 18:50:51 <ajmitch> it complained about ~/.muttrc not existing & didn't get further than that
+
+ 18:50:57 <wendar> okay, thanks coolbhavi, we're just about done
+
+ 18:51:02 <ajmitch> coolbhavi: ok, thanks for being here :)
+
+ 18:51:50 <wendar> Sounds like the general consensus is that we could accept this.
+
+ 18:52:04 <wendar> So, I'll go ahead and ask him to make the usual fixes.
+
+ 18:52:20 <ajmitch> if it's not going to break a normal desktop, it should be ok
+
+ 18:52:39 <wendar> [TOPIC] Policy check on EasyISO (filesystem mount/unmount utility)
+
+ 18:52:40 <ajmitch> the author should probably check ~/.mutt/muttrc as well :)
+
+ 18:53:04 <stgraber> wendar: mount/unmount requires root and so gksudo => reject
+
+ 18:53:17 <ajmitch> this is just for ISOs, can't it be done with FUSE?
+
+ 18:54:06 <wendar> a quick grep shows that it's using fuseiso
+
+ 18:55:25 <ajmitch> so it doesn't look like it should need any root privileges in that case
+
+ 18:55:41 <wendar> [LINK] https://myapps.developer.ubuntu.com/dev/apps/655/
+
+ 18:56:03 <wendar> ajmitch: I can't say that for sure until I do the full code review
+
+ 18:56:19 <stgraber> if it never uses root permissions, then I guess it's fine
+
+ 18:56:32 <ajmitch> wendar: it currently fails if fuseiso isn't installed
+
+ 18:56:50 <wendar> ajmitch: that would mean fuseiso would be a package dependency
+
+ 18:57:09 <ajmitch> yep
+
+ 18:57:33 <ajmitch> it's in universe
+
+ 18:57:52 <wendar> ajmitch: that's okay, Extras are allowed to depend on universe
+
+ 18:58:04 <wendar> it's enabled by default
+
+ 18:58:25 <ajmitch> right, was just mentioning that it's at least packaged already :)
+
+ 18:58:32 <broder> can't nautilus do something like that already?
+
+ 18:58:36 <ajmitch> sorry if I'm not making much sense, still waking up
+
+ 18:58:42 <wendar> my main question was whether this was appropriate at all for Extras
+
+ 18:58:53 <wendar> as in, it's more of a filesystem tool than an "app"
+
+ 18:59:55 <wendar> with the potential to interfere with other filesystem tools (like nautilus)
+
+ 19:00:14 <wendar> like, what if there's some race condition on who mounts what when and where?
+
+ 19:00:16 <broder> gvfs can already open iso files and expose them through gvfs-fuse - is there more of a value add here than mounting the iso at an arbitrary path?
+
+ 19:00:40 <ajmitch> when I run the app, it looks extremely basic
+
+ 19:01:08 <wendar> "Apps should be useful or interesting to a general audience. "
+
+ 19:01:31 <wendar> is it?
+
+ 19:02:31 <wendar> We're at the end of our time
+
+ 19:02:34 <stgraber> if gvfs takes care of the use case already, then there's not much point in the app
+
+ 19:02:43 <stgraber> other than making the feature more visible to the user
+
+ 19:02:57 <ajmitch> at a glance I think it's potentially useful for exposing it in an easy way
+
+ 19:03:20 <wendar> Sounds like this will need more general discussion.
+
+ 19:04:07 <wendar> so, carry to the mailing list
+
+ 19:04:11 <ajmitch> ok
+
+ 19:04:11 <wendar> one last thing
+
+ 19:04:18 <wendar> [TOPIC] General status of ARB queue
+
+ 19:04:24 <wendar> We're actually doing quite well.
+
+ 19:04:31 <wendar> Only 20 apps in the queue.
+
+ 19:04:37 <wendar> of which, 5 are new
+
+ 19:04:54 <wendar> Some lingering issues for the MyApps developers:
+
+ 19:05:09 * ajmitch needs to catch up & push stuff to voting once little things like patching are sorted :)
+
+ 19:05:12 <wendar> - We need a way to list apps that are waiting for replys from the developer
+
+ 19:05:43 <ajmitch> does someone want to take ubuntu-tweak & reply to the feedback?
+
+ 19:05:50 <wendar> - We're waiting on the patch application that will allow us to drop apps that have already launched from the queue, instead of keeping them forever in Pending QA status.
+
+ 19:06:32 <wendar> ajmitch: Can we switch back to only having reviewers "own" one app at a time?
+
+ 19:06:43 <wendar> ajmitch: I'm running out of things to package.
+
+ 19:06:51 <ajmitch> wendar: of course
+
+ 19:07:02 <wendar> ajmitch: which one are you currently working on?
+
+ 19:07:07 <ajmitch> tagplayer
+
+ 19:07:17 <wendar> cool, I'll leave that one
+
+ 19:07:25 <ajmitch> I don't want to be a blocker on anything else
+
+ 19:07:48 <wendar> I'll do a general mailing list post and make sure I'm not working over the top of anyone else.
+
+ 19:08:23 <wendar> I think once we clear out some of the backlog, we'll be in good shape
+
+ 19:08:44 <wendar> The "new" submissions are pretty easy to tend in a couple of hours a week
+
+ 19:08:51 <wendar> so, the review shifts will take care of them
+
+ 19:09:25 <wendar> And, that's all.
+
+ 19:09:52 <wendar> ajmitch: are you following up with dpitkin on the changes to see apps waiting for feedback?
+
+ 19:10:00 <wendar> ajmitch: should I note that as an action item for you?
+
+ 19:10:06 <ajmitch> yes, it's on my weekend todo list
+
+ 19:10:13 <wendar> sweet, thanks!
+
+ 19:10:46 <wendar> And, thanks everybody!
+
+ 19:10:50 <wendar> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

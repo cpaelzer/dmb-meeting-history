@@ -1,0 +1,271 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 26 Oct at 15:02 &mdash; 15:44 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-10-26-15.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:02.
+
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:03.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:03)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:03)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:05)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:05)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:14.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:14)
+
+=== AOB ===
+
+Discussion started by juliank at 15:16.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (50)
+ * vorlon (25)
+ * adrien (11)
+ * dbungert (6)
+ * slyon (6)
+ * bdmurray (3)
+ * meetingology (2)
+ * schopin (2)
+ * enr0n (1)
+ * bdrung (1)
+
+
+
+== Full log ==
+
+
+ 15:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:02 <meetingology> Meeting started at 15:02:22 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:02 <juliank> #topic Lightning rounds
+
+ 15:02 <juliank> We are going to skip this today, as discourse is down
+
+ 15:03 <juliank> #topic Release incoming bugs
+
+ 15:03 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 15:03 <juliank> oh that's not there yet
+
+ 15:03 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:03 <juliank> bug 2038807
+
+ 15:04 <juliank> I'll go tag this and ping some people if they have insight
+
+ 15:04 <bdmurray> We were waiting for you to look at it.
+
+ 15:05 <juliank> Yes and I want to talk to upstream :)
+
+ 15:05 <juliank> Maybe they fixed it already?
+
+ 15:05 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:05 <juliank> empty
+
+ 15:05 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:05 <vorlon> really nothing else in incoming for mantic? huh
+
+ 15:05 <dbungert> I had one I wanted to discuss for NN - LP: #2040481
+
+ 15:06 <bdmurray> Well there is this upgrade bug... ;-)
+
+ 15:06 <vorlon> yeah but it's not incoming, it just needs sponsorship
+
+ 15:06 <juliank> bug 2037667
+
+ 15:06 <juliank> seems a kernel bug
+
+ 15:06 <juliank> ah no a systemd-networkd bug
+
+ 15:07 <slyon> juliank: well.. kernel wants systemd to be investigated
+
+ 15:07 <juliank> or collision of bugs :)
+
+ 15:07 <slyon> basically, kernel increased validation for gre tunnels, which makes (old) systemd-networkd fail. Passes on newer systemd-networkd
+
+ 15:07 <slyon> they wanted us (enr0n?) to investigate if the corresponding networkd fix could be backported
+
+ 15:07 <juliank> Sounds reasonable
+
+ 15:07 <juliank> enr0n: Can you investigate that?
+
+ 15:08 <enr0n> juliank: sure, can do
+
+ 15:08 <slyon> I can help with spotting the relevant systemd commits. Didn't have time to do that today
+
+ 15:09 <juliank> -ff is empty
+
+ 15:13 <juliank> we'll be right back here :D
+
+ 15:14 <juliank> #topic Team proposed-migration report
+
+ 15:14 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:14 <juliank> this is weird
+
+ 15:15 <vorlon> it's correct and based on noble
+
+ 15:16 <juliank> I guess nothing is late yet :D
+
+ 15:16 <vorlon> openjdk-17 is ftbfs on riscv64
+
+ 15:16 <vorlon> with no build log because riscv64 is sad
+
+ 15:16 <vorlon> so I've retried it now
+
+ 15:16 <juliank> hooray
+
+ 15:16 <vorlon> nothing else here
+
+ 15:16 <juliank> #topic AOB
+
+ 15:16 <dbungert> I had one I wanted to discuss for NN - LP: #2040481
+
+ 15:17 <dbungert> I'm wondering if that ppp package should be in the pool
+
+ 15:17 <juliank> does subiquity support setting this up?
+
+ 15:17 <dbungert> no
+
+ 15:17 <dbungert> so you could do an offline install, but I'm not sure what the plan would be to eventually get it online
+
+ 15:17 <juliank> I guess you want to do ubuntu-drivers stuff to auto-install that if modem detected
+
+ 15:18 <vorlon> historically it's in the pool so you have it available offline and worst case can manually install it
+
+ 15:18 <juliank> like other driver packages?
+
+ 15:18 <juliank> but yeah including in the pool for manual bootstrap is enough
+
+ 15:18 <juliank> go for it!
+
+ 15:18 <juliank> reassign to um ubuntu-meta?
+
+ 15:19 <dbungert> I think that makes sense, thanks
+
+ 15:19 <vorlon> fwiw my Ubuntu Internet gateway uses pppoe on top of netplan, but I had to do all the pppoe myself :)
+
+ 15:20 <juliank> vorlon wanted to discuss dpkg misbuilt compiler flags buig
+
+ 15:20 <juliank> * bug
+
+ 15:20 <vorlon> yes, LP: #2040518
+
+ 15:20 <vorlon> so as I mentioned to juliank, the correct dpkg status is 'wontfix' because we don't want to change dpkg behavior
+
+ 15:20 <adrien> vorlon: I'm curious as to how you're doing that because I should install a new gateway/server in a few weeks or months
+
+ 15:20 <vorlon> but this is something that needs attention for noble
+
+ 15:20 <adrien> (this is for another time of course :) )
+
+ 15:20 <vorlon> adrien: networkd-dispatcher!
+
+ 15:21 <slyon> adrien: see bug #1769034
+
+ 15:21 <adrien> thanks!
+
+ 15:21 <vorlon> so we need to get this in the queue for noble as a high priority. juliank should I just set the bug back to triaged on dpkg for now?
+
+ 15:21 <vorlon> or do we want to pull it in as a jira card manually
+
+ 15:21 <juliank> Better file a jira epic and add tasks to that
+
+ 15:22 <juliank> Don't want all packages / the overarching thing in a single jira bug issue
+
+ 15:22 <juliank> (because then individual bugs would be annoying to handle)
+
+ 15:23 <juliank> epic to fix regressions, with spike to identify them?
+
+ 15:23 <vorlon> and since this is off roadmap what am I doing with that epic to make sure it gets prioritized :)
+
+ 15:23 <vorlon> +spike
+
+ 15:24 <juliank> put spike in the next pulse and bug people?
+
+ 15:24 <vorlon> k
+
+ 15:24 <vorlon> I'll follow through on that then, thanks
+
+ 15:25 <juliank> ta!
+
+ 15:25 <juliank> any other business?
+
+ 15:25 <adrien> I have another topic: for my openssl SRU there's a fix for default encryption parameters in openssl for blowfish ocb
+
+ 15:25 <bdrung> I like to suggest to look at the top entries on https://errors.ubuntu.com/?release=Ubuntu%2023.10&user=foundations-bugs&period=week
+
+ 15:26 <adrien> the issue introduces an incompatibility between everything else and jammy
+
+ 15:26 <bdmurray> bdrung: on a regular basis ideally
+
+ 15:26 <adrien> fixing it will however introduce an incompatibility between jammy-before-the-fix and jammy-after-the-fix
+
+ 15:27 <juliank> hmm
+
+ 15:27 <juliank> adrien: how important is blowfish in practice?
+
+ 15:27 <adrien> reason to fix: get compat back; reason not to fix: incompat for files created before the update and read after the update
+
+ 15:27 <schopin> that'd be bug 1990216
+
+ 15:27 <juliank> I'm more worried about regressions in the release
+
+ 15:27 <adrien> I think fairly few people use it and people who use it probably shouldn't use it anymore (if only for its low speed)
+
+ 15:28 <juliank> I agree with schopin's comment I think
+
+ 15:29 <juliank> But I feel I don't have full context
+
+ 15:29 <adrien> and we couldn't find an objective way/metric/whatever to decide whether we should try to include such a change or not
+
+ 15:29 <adrien> is there anything specific you think you're missing?
+
+ 15:30 <juliank> I don't grok the bug fully yet
+
+ 15:30 <vorlon> adrien: is this an SRU that's already in the queue?
+
+ 15:31 <vorlon> this is the sort of thing you will certainly need to get feedback specifically from the SRU team on
+
+ 15:32 <adrien> vorlon: no, ad we dropped that specific change from the upcoming SRU
+
+ 15:32 <vorlon> my gut reaction is "oops we broke compatibility with older stuff; but it's been in the stable release for 1.5y so it is what it is"
+
+ 15:32 <vorlon> which seems to be the way you're leaning
+
+ 15:35 <slyon> discourse is back up: feel free to paste your weekly status reports: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-26-oct-2023/39759
+
+ 15:35 <schopin> damnit, now I'm going to have to write it up!
+
+ 15:35 <vorlon> oh damn ^^ that
+
+ 15:35 <vorlon> I thought I was off the hook! :)
+
+ 15:44 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

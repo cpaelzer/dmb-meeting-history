@@ -1,0 +1,374 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:01:27 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-05-08-15.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' https://code.launchpad.net/~kirkland/ubuntu-release-upgrader/1173209/+merge/162798   (bdmurray, 15:27:26)
+
+ *AOB
+
+
+
+Meeting ended at 15:38:14 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (44)
+ * stokachu (29)
+ * stgraber (28)
+ * ubottu (18)
+ * bdmurray (10)
+ * cjwatson (9)
+ * doko (7)
+ * barry (6)
+ * ev (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01:27 <slangasek> #startmeeting
+
+ 15:01:27 <meetingology> Meeting started Wed May  8 15:01:27 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01:27 <meetingology> 
+
+ 15:01:27 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01:37 <slangasek> [TOPIC] lightning round
+
+ 15:01:40 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:01:43 <slangasek> stgraber doko ev slangasek xnox barry bdmurray cjwatson stokachu jodh
+
+ 15:01:44 <slangasek> stgraber: hi :)
+
+ 15:02:06 * stgraber waves
+
+ 15:02:14 <stgraber> First report in a month or so. Been traveling, releasing 13.04, sprinting and finally back home.
+
+ 15:02:17 <stgraber> Feature work:
+
+ 15:02:19 <stgraber> - Image based updates (BLUEPRINT: foundations-1305-image-based-updates)
+
+ 15:02:22 <stgraber> - Finalized design of the whole solution during the sprint, https://wiki.ubuntu.com/ImageBasedUpgrades
+
+ 15:02:25 <stgraber> - Implemented early proof of concept server-side at: https://phablet.stgraber.org (sprint channel)
+
+ 15:02:28 <stgraber> - Got a working test client at: lp:~stgraber/+junk/resolver-sprint-demo
+
+ 15:02:31 <stgraber> - Started rewriting the current server code to move from squashfs to tar.xz and run without privileges
+
+ 15:02:34 <stgraber> - Opened RT ticket for the server infrastructure
+
+ 15:02:36 <stgraber> - Trying to get the next steps for the GPG side of things sorted
+
+ 15:02:39 <stgraber> - Mobile sync and provisioning (OMA)
+
+ 15:02:42 <stgraber> - Spent some time discussing with Tony Espy about state of OMA CP in Android and how the ofono/android driver will deal with that
+
+ 15:02:44 <stgraber> Other work:
+
+ 15:02:47 <stgraber> - Merges. isc-dhcp merged, netbase synced, started looking at ifupdown and ifenslave-2.6
+
+ 15:02:50 <stgraber> - Changed dependencies of ltt-control as we now have lttng in the Ubuntu kernel
+
+ 15:02:53 <stgraber> - Bugfixes/SRU for LXC, cherry-picking high priority bugs into 13.04
+
+ 15:02:55 <stgraber> - Upstart in saucy now has user sessions enabled by default. The only Xsession script that had to be ported was gpg-agent.
+
+ 15:02:59 <stgraber> - Some work on the QA tracker to allow product leads to trigger rebuilds
+
+ 15:03:01 <stgraber> - Reinstalled my usual set of test machines on saucy
+
+ 15:03:04 <stgraber> TODO:
+
+ 15:03:06 <stgraber> - Continue porting the image based server side code to python3-tarfile
+
+ 15:03:09 <stgraber> - Get some kind of UI and API on the new rebuild feature of the QA tracker
+
+ 15:03:12 <stgraber> - Continue with the remaining merges
+
+ 15:03:14 <stgraber> (DONE)
+
+ 15:05:47 <stokachu> stgraber: that pattern matching for dhcp worked awesome
+
+ 15:05:51 <stokachu> thanks for that
+
+ 15:06:49 <slangasek> doko: around?
+
+ 15:07:24 <stgraber> stokachu: yay! should have thought of that before I applied that patch to 13.04, we could have save ourselves that patch entirely ;)
+
+ 15:09:15 <slangasek> ev: go ahead
+
+ 15:09:20 <ev> very short week - sprint last week, holiday Monday and Tuesday
+
+ 15:09:21 <ev> Stagingstack deployments of the entire infrastructure now exist as of the sprint - https://errors.staging.ubuntu.com/
+
+ 15:09:21 <ev> Spending my time getting the final bits done on the charms so we can go live on prodstack (OOPS reporting to a central server, handling our various cron jobs, etc)
+
+ 15:09:28 <ev> (done - iknowright?)
+
+ 15:09:52 <barry> :-o
+
+ 15:10:26 <slangasek> !
+
+ 15:10:38 <ev> ha
+
+ 15:11:05 <slangasek> * in Oakland last week - lots and lots of planning meetings :)
+
+ 15:11:05 <slangasek> * these will feed into the public discussions at vUDS next week - many of the relevant blueprints have already been registered
+
+ 15:11:08 <slangasek> * doing merges for saucy; merged kexec-tools, then ran into a terribly knotty acpica-unix NMU that needs serious fixing before getting merged
+
+ 15:11:11 <slangasek> * working on syncing Debian/Ubuntu on the upstart architecture
+
+ 15:11:13 <slangasek> * on vacation next week, so will miss UDS for the most part... if you have any sessions you need me at, be sure to ping me directly and I'll see if I can make it
+
+ 15:11:16 <slangasek> (done)
+
+ 15:11:19 <slangasek> xnox on vacation
+
+ 15:11:20 <slangasek> barry:
+
+ 15:11:35 <barry> - recovering from the sprint (i.e. getting my inbox to below 500 messages ;)
+
+ 15:11:40 <barry> - merging in and refactoring resolver fixes from the plane ride and stgraber's demo branch.  switching gpg code over to python3-gnupg which provides a somewhat more straightforward api (despite missing an necessary feature, easily hacked around).
+
+ 15:11:44 <barry> - lp:~barry/+junk/resolver is the canonical location and should now be up-to-date
+
+ 15:11:48 <barry> - lots of TODOs described in the branch.  top priorities include checking image zip signatures and plumbing through the reboot initiation.
+
+ 15:11:52 <barry> done.
+
+ 15:12:31 <bdmurray> ubuntu-release-upgrader bug triage
+
+ 15:12:31 <bdmurray> investigation into bug 390319
+
+ 15:12:31 <bdmurray> investigation into bug 1175637 regarding kernels being marked as manually installed
+
+ 15:12:34 <bdmurray> testing / fixing of package-version-new-buckets API call on errors
+
+ 15:12:34 <ubottu> bug 390319 in update-notifier (Ubuntu) "Ubuntu does not automatically check for updates, even when set to" [Medium,Invalid] https://launchpad.net/bugs/390319
+
+ 15:12:36 <ubottu> bug 1175637 in unattended-upgrades (Ubuntu) "Kernel updates are being marked as manually installed" [Undecided,New] https://launchpad.net/bugs/1175637
+
+ 15:12:47 <bdmurray> uploaded apport bug fix for cloud_archive hook error in 1173240
+
+ 15:12:50 <bdmurray> worked on phased updater glue code between launchpad and errors
+
+ 15:12:59 <bdmurray> ✔ done
+
+ 15:14:34 <cjwatson> Really being kicked in the head by jetlag this week.  Apologies for doziness.
+
+ 15:14:37 <cjwatson> foundations-1305-arm64-bringup: Resurrected the auto-cross-builder and finished off raring builds last week.  Need to start it up for saucy.
+
+ 15:14:40 <cjwatson> A bit of UDS prep.  I've registered all the blueprints I know we want at this point.
+
+ 15:14:43 <cjwatson> foundations-1305-click-package: Prepared and posted initial click-package announcement.  Publicising prototype early next week; need to make some progress on new unpack directory layout and hooks interface before then.
+
+ 15:14:47 <cjwatson> Packaged OpenSSH 6.2p1.
+
+ 15:14:49 <cjwatson> Various merges and such.  Went through a number of packages orphaned in Debian and applied Ubuntu patches to them so we can sync.
+
+ 15:14:52 <cjwatson> Holiday on Friday.
+
+ 15:14:55 <cjwatson> ..
+
+ 15:15:03 <stokachu> bug 1022545 - Waiting on SRU
+
+ 15:15:04 <stokachu> bug 1144612 - Waiting on SRU
+
+ 15:15:04 <stokachu> bug 1169740 - Waiting on SRU
+
+ 15:15:05 <ubottu> bug 1022545 in rsyslog (Ubuntu Raring) "Backport upstream bugfix "$PreserveFQDN on" not working properly" [Undecided,In progress] https://launchpad.net/bugs/1022545
+
+ 15:15:07 <stokachu> bug 604717 - I dont believe this is SRU worthy, would like opinion.
+
+ 15:15:08 <stokachu> bug 1175687 - This is for one binary but we might as well convert rpm to multi-arch
+
+ 15:15:08 <ubottu> bug 1144612 in cifs-utils (Ubuntu Precise) "mount.cifs incorrectly update /etc/mtab when -o remount is used" [Medium,In progress] https://launchpad.net/bugs/1144612
+
+ 15:15:09 <ubottu> bug 1169740 in rsyslog (Ubuntu Quantal) "rsyslog hangs loading modules" [Undecided,New] https://launchpad.net/bugs/1169740
+
+ 15:15:11 <stokachu> bug 857983 - In verified state, needs some attention to move forward
+
+ 15:15:14 <stokachu> bug 1004775 - This just hit unapproved queue, however, due to importance would like to see this approved.
+
+ 15:15:14 <ubottu> bug 604717 in ntp (Ubuntu) "Please convert init script to upstart" [Wishlist,Triaged] https://launchpad.net/bugs/604717
+
+ 15:15:15 <ubottu> bug 1175687 in rpm (Ubuntu) "Please mark rpm2cpio Multi-Arch: foreign" [Undecided,New] https://launchpad.net/bugs/1175687
+
+ 15:15:16 <ubottu> bug 857983 in gpointing-device-settings (Ubuntu Quantal) "The Pointing Devices menu item is missing after upgrading to Oneiric" [Medium,Fix committed] https://launchpad.net/bugs/857983
+
+ 15:15:17 <stokachu> bug 1121874 - Just uploaded, needs sponsor/sru, not expecting that today but just to add to my current list.
+
+ 15:15:17 <ubottu> bug 1004775 in network-manager (Ubuntu Precise) "NetworkManager restarts dnsmasq and adds host route on every IPv6 route lookup" [High,In progress] https://launchpad.net/bugs/1004775
+
+ 15:15:18 <ubottu> bug 1121874 in mysql-5.5 (Ubuntu Raring) "MySQL launch fails silently if < 4MB of disk space is available" [Medium,Triaged] https://launchpad.net/bugs/1121874
+
+ 15:15:20 <stokachu> misc:
+
+ 15:15:24 <stokachu> - Going to start looking existing porting efforts of ubuntu touch to sgs2 and attempt to contribute
+
+ 15:15:27 <stokachu> - continue working on python-salesforce
+
+ 15:15:30 <stokachu> (done)
+
+ 15:16:19 * doko woke up
+
+ 15:16:34 <cjwatson> You're having a day like mine then ...
+
+ 15:17:43 <slangasek> stokachu: bug #604717 might be SRU-worthy, *if* the current behavior results in services trying to start out of order and failing
+
+ 15:17:44 <ubottu> bug 604717 in ntp (Ubuntu) "Please convert init script to upstart" [Wishlist,Triaged] https://launchpad.net/bugs/604717
+
+ 15:18:40 <stokachu> slangasek: ok ill follow up with support/OP
+
+ 15:18:49 <slangasek> stokachu: #857983> according to http://people.canonical.com/~ubuntu-archive/pending-sru.html, there's another bug in that upload, bug #796171, which hasn't been verified yet
+
+ 15:18:50 <ubottu> bug 796171 in gpointing-device-settings (Debian) "Does not appear in Xfce's main menu" [Unknown,New] https://launchpad.net/bugs/796171
+
+ 15:19:17 <stokachu> slangasek: ah my bad i keep forgetting to check that page
+
+ 15:19:50 <slangasek> stokachu: 1175687> looks straightforward; do you need support there, or are you just going to push a patch to sponsors?
+
+ 15:20:28 <slangasek> stokachu: oh, and is that the t-mobile sgs2 or the international sgs2? :)
+
+ 15:20:42 <stokachu> at&t i777
+
+ 15:20:50 <stokachu> at least thats the one i have
+
+ 15:21:00 <slangasek> stgraber: can you take bug #1004775?
+
+ 15:21:02 <ubottu> bug 1004775 in network-manager (Ubuntu Precise) "NetworkManager restarts dnsmasq and adds host route on every IPv6 route lookup" [High,In progress] https://launchpad.net/bugs/1004775
+
+ 15:21:17 <slangasek> ah drat
+
+ 15:21:21 <slangasek> that helps me not at all!
+
+ 15:21:31 <stokachu> haha sorry! :D
+
+ 15:21:35 <slangasek> doko: morning!  want to give your status?
+
+ 15:22:23 <stgraber> slangasek: I'd be happy to if I was on the SRU team ;)
+
+ 15:22:33 <slangasek> stgraber: oh, I thought it still needed sponsorship
+
+ 15:22:40 <stgraber> slangasek: nope, it's in unapproved
+
+ 15:22:47 <slangasek> well, FINE then
+
+ 15:22:48 <slangasek> :)
+
+ 15:22:56 <stokachu> yea that one just hit unapproved queue
+
+ 15:23:04 <stokachu> but its a hot one :)
+
+ 15:23:26 <slangasek> I'll have a look at it this morning
+
+ 15:23:46 <stokachu> cool man really appreciate it
+
+ 15:23:49 <slangasek> doko: ?
+
+ 15:24:55 <doko> ahh
+
+ 15:25:04 <doko> - started with merges
+
+ 15:25:16 <doko> - preparing a test rebuild
+
+ 15:25:50 <doko> - tomorrow is bank holiday, and intending not to work on Friday (swapping the May 1 bank holiday)
+
+ 15:25:53 <doko> (end)
+
+ 15:26:07 <slangasek> :-)
+
+ 15:26:10 <slangasek> [TOPIC] Bugs
+
+ 15:26:23 <slangasek> bdmurray: you had a bug you posted to the team list earlier... did anyone follow up on that?
+
+ 15:26:38 <slangasek> (I've misplaced the mail so I don't have the bug #, sorry)
+
+ 15:27:07 <bdmurray> I think infinity did and kirkland added a merge proosal
+
+ 15:27:18 <slangasek> ok
+
+ 15:27:26 <bdmurray> https://code.launchpad.net/~kirkland/ubuntu-release-upgrader/1173209/+merge/162798
+
+ 15:27:27 <stokachu> bug 859600 is not blocked by the other keyring bug
+
+ 15:27:28 <ubottu> bug 859600 in gnome-keyring (Ubuntu Precise) "Please convert gnome-keyring to multiarch" [High,In progress] https://launchpad.net/bugs/859600
+
+ 15:27:45 <stokachu> but i think libgcr needs multi-arch now
+
+ 15:28:12 <slangasek> bdmurray: so we'll leave that in infinity's hands?
+
+ 15:28:36 <bdmurray> slangasek: yes, sounds good
+
+ 15:28:42 <stokachu> bug 1094496 was verified by OP
+
+ 15:28:44 <ubottu> bug 1094496 in gnome-keyring (Ubuntu Precise) "gnome-keyring-daemon leaks memory" [High,Fix released] https://launchpad.net/bugs/1094496
+
+ 15:29:02 <slangasek> stokachu: yep, so that's good for publication... 859600 needs sponsorship then?
+
+ 15:29:45 <stokachu> slangasek: yes sir
+
+ 15:30:00 <slangasek> can someone here sponsor gnome-keyring to precise for bug #859600?  it's been pending for a while... now that it's unblocked on the other SRU, we should get that in
+
+ 15:30:02 <ubottu> bug 859600 in gnome-keyring (Ubuntu Precise) "Please convert gnome-keyring to multiarch" [High,In progress] https://launchpad.net/bugs/859600
+
+ 15:31:42 <slangasek> stgraber: how about you, since the last bug didn't stick? ;)
+
+ 15:32:30 <stgraber> slangasek: sure, I can take that one ;)
+
+ 15:33:01 <stokachu> also bug 1022545 and 1144612 needs sponsors
+
+ 15:33:04 <ubottu> bug 1022545 in rsyslog (Ubuntu Raring) "Backport upstream bugfix "$PreserveFQDN on" not working properly" [Undecided,In progress] https://launchpad.net/bugs/1022545
+
+ 15:33:05 <ubottu> bug 1144612 in cifs-utils (Ubuntu Precise) "mount.cifs incorrectly update /etc/mtab when -o remount is used" [Medium,In progress] https://launchpad.net/bugs/1144612
+
+ 15:34:16 <slangasek> stokachu: if nobody gets to them before then, I have my patch pilot day coming up next week
+
+ 15:34:29 <stokachu> slangasek: ok sounds good
+
+ 15:34:48 <slangasek> [TOPIC] AOB
+
+ 15:34:51 <slangasek> anything else, then?
+
+ 15:35:47 <stokachu> im good
+
+ 15:36:59 <slangasek> anyone? :)
+
+ 15:37:34 <doko> im tired
+
+ 15:38:12 * slangasek lets doko get back to being a zombie
+
+ 15:38:14 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

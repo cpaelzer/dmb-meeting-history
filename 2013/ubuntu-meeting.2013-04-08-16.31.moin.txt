@@ -1,0 +1,240 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 16:31:21 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-04-08-16.31.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 16:31:22)
+ *Announcements
+
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/network-manager-openvpn.html   (jdstrand, 16:55:21)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/mpack.html   (jdstrand, 16:55:24)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gromacs.html   (jdstrand, 16:55:29)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ngircd.html   (jdstrand, 16:55:32)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/revelation.html   (jdstrand, 16:55:35)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 16:58:01 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (36)
+ * chrisccoulson (11)
+ * mdeslaur (10)
+ * tyhicks (9)
+ * sarnold (7)
+ * sbeattie (6)
+ * jjohansen (5)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 16:31:21 <jdstrand> #startmeeting
+
+ 16:31:21 <meetingology> Meeting started Mon Apr  8 16:31:21 2013 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:31:21 <meetingology> 
+
+ 16:31:21 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:31:21 <jdstrand> The meeting agenda can be found at:
+
+ 16:31:22 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:31:30 <jdstrand> [TOPIC] Announcements
+
+ 16:31:54 <jdstrand> People may have noticed this before, but we have a new meeting time: 16:30 UTC
+
+ 16:32:01 <jdstrand> Thanks to Angel Abad (angelabad) who provided a debdiff for quantal for almanah (LP: #1155000), and Christian Kuersteiner (ckuerste) who provided a debdiff for precise for tomcat7 (LP: #1115053). Your work is very much appreciated and will keep Ubuntu users secure. Great job!
+
+ 16:32:04 <ubottu> Launchpad bug 1155000 in almanah 0.9 "[SRU] CVE-2013-1853: Almanah doesn't encrypt the database" [Critical,Fix released] https://launchpad.net/bugs/1155000
+
+ 16:32:06 <ubottu> Launchpad bug 1115053 in tomcat7 (Ubuntu Raring) "Multiple open vulnerabilities in tomcat7 in 12.04 and 11.10" [Undecided,Fix released] https://launchpad.net/bugs/1115053
+
+ 16:32:15 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:32:18 <jdstrand> I'll go first
+
+ 16:32:28 <jdstrand> I'm on triage this week
+
+ 16:33:09 <jdstrand> april planning should all be done with everyone working on it (thanks to mdeslaur and jjohansen for helping me with the planning)
+
+ 16:33:43 <jdstrand> I was also able to finish the 13.10 planning for the most part
+
+ 16:34:25 <jdstrand> but there still is a requirement that needs to be nailed down that I am working on. if it goes well, it shouldn't require significant effort for 13.10
+
+ 16:35:05 <jdstrand> I worked on refining the unity apparmor abstractions a bit, and plan to push those to the ppa at some point
+
+ 16:35:15 <jdstrand> I've got a couple of audits to finish up on
+
+ 16:36:27 <jdstrand> I think performance reviews are all done for now, but I might have something else to do there
+
+ 16:36:45 <jdstrand> and, hopefully I'll have time to pick up an update
+
+ 16:36:49 <jdstrand> mdeslaur: you're up
+
+ 16:37:03 <mdeslaur> I'm currently working on the nvidia driver updates
+
+ 16:37:21 <mdeslaur> and am wrestling with jockey at the moment which for some reason doesn't like the new version
+
+ 16:37:35 <mdeslaur> I have haproxy updates to test also
+
+ 16:37:42 <mdeslaur> so I'll probably be publishing those two this week
+
+ 16:37:50 <mdeslaur> and will go down the list, time permitting
+
+ 16:37:53 <mdeslaur> that's it from me
+
+ 16:37:58 <mdeslaur> oh, and am on community
+
+ 16:38:00 <mdeslaur> sbeattie: you're up
+
+ 16:38:21 <sbeattie> I'm once again working on display manager confinement
+
+ 16:38:52 <sbeattie> I'm focusing on writing some example applications to help drive where we need to mediate in the display manager.
+
+ 16:39:01 <mdeslaur> awesomesauce
+
+ 16:39:21 <sbeattie> I sadly have one last objective task to finish up, due to brain-damage on my part last week.
+
+ 16:39:33 <sbeattie> and that's pretty much it for me.
+
+ 16:39:45 <sbeattie> tyhicks: you're up
+
+ 16:39:48 <jdstrand> sbeattie: I gave you a link last week about touch apps that use the SDK. you may be able to use/steal one of those (I didn't look at them at all though, so fyi only)
+
+ 16:40:06 <sbeattie> yeah, I'll look at those
+
+ 16:40:14 <tyhicks> I'm working on work items from https://blueprints.launchpad.net/ubuntu/+spec/security-1304-appisolation-dbus
+
+ 16:40:29 <tyhicks> Currently finishing up the "dbus - parser tests"
+
+ 16:40:38 <tyhicks> I started on it last week and still have some more to do
+
+ 16:40:59 <tyhicks> After that, I'll likely start on one of the other test related work items
+
+ 16:41:45 <tyhicks> In spare time, I'm trying to get an eCryptfs fix for improved AES-NI performance ready for the 3.10 merge window
+
+ 16:41:48 <tyhicks> That's it for me
+
+ 16:41:55 <tyhicks> jjohansen: you're up
+
+ 16:42:05 <jjohansen> I am working on the apparmor labeling work again this week.
+
+ 16:42:05 <jjohansen> I will be pushing an updated kernel that merges the current labeling and dbus dev branches
+
+ 16:43:23 <tyhicks> jjohansen: do you think that the socket labelling stuff will make it into that kernel too?
+
+ 16:43:28 <jjohansen> and there will be some dbus testing under the new labeled sockets
+
+ 16:43:33 <jjohansen> tyhicks: yes
+
+ 16:43:57 <tyhicks> good to hear :)
+
+ 16:44:48 <jjohansen> sarnold: your up
+
+ 16:45:38 <sarnold> I'm finishing up some vbulletin plugin reviews today; I've got another package for MIR audit to do
+
+ 16:46:54 <sarnold> my first charm was accepted into the charm store :) I haven't yet looked to see exactly how someone else would use it, but I'm hoping to address one of the raised issues (admin email address) -- they've got a 30-day-quiet --> implies api is somewhat 'fixed' sort of rule, and I'd like to avoid tripping that :)
+
+ 16:47:13 <sarnold> perhaps depending upon priorities I'll get to that this week, perhaps not
+
+ 16:47:14 <mdeslaur> sarnold: oh, cool, congrats!
+
+ 16:47:17 <sarnold> thanks mdeslaur :)
+
+ 16:47:45 <sarnold> chrisccoulson: you're up
+
+ 16:48:09 <chrisccoulson> i've been working on mozilla updates this week. thanks to jdstrand for walking me through that process :)
+
+ 16:48:49 <jdstrand> sarnold: congrats on the charm acceptance! :)
+
+ 16:48:52 <chrisccoulson> there's currently some process issues wrt webapps
+
+ 16:49:14 <jdstrand> sarnold: was that the unattended upgrades one?
+
+ 16:49:47 <chrisccoulson> i'm also tracking a couple of crashes from the firefox update
+
+ 16:49:47 <sarnold> jdstrand: thanks, yes, unattended-upgrades :)
+
+ 16:49:54 <jdstrand> sarnold: nice
+
+ 16:50:02 <jdstrand> chrisccoulson: you're welcome-- you did a great job :)
+
+ 16:50:23 <chrisccoulson> unfortunately, not much progress with chromium automated testing this last week, but i'll hopefully be able to get back on that this week
+
+ 16:50:26 <sarnold> chrisccoulson: congrats on the first one down :)
+
+ 16:50:47 <chrisccoulson> there's still issues with chromium crashing on arm, which i've not been able to reproduce on my system
+
+ 16:51:17 <chrisccoulson> i need to take a look at that this week to unblock updates for U4A
+
+ 16:53:00 <chrisccoulson> i guess we need to start to figure out our webkit story this week, which is somewhat complicated by last weeks announcement
+
+ 16:53:55 <chrisccoulson> i was going to suggest that one way of solving our 2-supported-js-engines-in-main issue would be to enable v8 in qtwebkit
+
+ 16:54:12 <chrisccoulson> but it seems that following last weeks announcement, apple are purging the v8 bindings
+
+ 16:54:20 <jdstrand> fun
+
+ 16:54:24 <chrisccoulson> so that idea is a non-starter really
+
+ 16:54:39 <chrisccoulson> i think that's it from me
+
+ 16:55:02 <jdstrand> so I think it's back to me
+
+ 16:55:05 <jdstrand> [TOPIC] Highlighted packages
+
+ 16:55:09 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:55:13 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 16:55:21 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/network-manager-openvpn.html
+
+ 16:55:24 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/mpack.html
+
+ 16:55:29 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/gromacs.html
+
+ 16:55:32 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ngircd.html
+
+ 16:55:35 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/revelation.html
+
+ 16:55:43 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 16:55:46 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 16:57:58 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold, chrisccoulson: thanks!
+
+ 16:58:01 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

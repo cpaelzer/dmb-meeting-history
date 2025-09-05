@@ -1,0 +1,332 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 01 Mar at 16:00 &mdash; 16:30 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2018/ubuntu-meeting.2018-03-01-16.00.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:00.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 16:17.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:27.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (39)
+ * bdmurray (17)
+ * xnox (13)
+ * ubottu (10)
+ * tdaitx_ (9)
+ * Odd_Bloke (9)
+ * cyphermox (7)
+ * rcj (6)
+ * sil2100 (6)
+ * tribaal (4)
+ * fginther (4)
+ * philroche (3)
+ * meetingology (3)
+ * nacc (2)
+ * rbalint (1)
+ * cpaelzer (1)
+ * gaughen (1)
+
+
+
+== Full Log ==
+
+
+ 16:00 <slangasek> #startmeeting
+
+ 16:00 <meetingology> Meeting started Thu Mar  1 16:00:28 2018 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00 <meetingology> 
+
+ 16:00 <meetingology> Available commands: action commands idea info link nick
+
+ 16:00 <Odd_Bloke> |o|
+
+ 16:00 <slangasek> [TOPIC] Lightning round
+
+ 16:00 <gaughen> o/
+
+ 16:00 <slangasek> $ echo $(shuf -e slangasek bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson rcj philroche Odd_Bloke tribaal fginther juliank)
+
+ 16:00 <slangasek> fginther Odd_Bloke bdmurray juliank sil2100 philroche doko infinity rcj cyphermox mwhudson slangasek xnox tdaitx rbalint tribaal
+
+ 16:01 <slangasek> fginther: ?
+
+ 16:03 <tdaitx_> nice, I got time to make some coffee
+
+ 16:03 <Odd_Bloke> I can go.
+
+ 16:03 <Odd_Bloke> * Continued refactoring of internal codebases to support minimal images
+
+ 16:03 <Odd_Bloke> * Preparation for engineering sprint next week
+
+ 16:03 <Odd_Bloke> * Preparation for partner visits in the two weeks after that
+
+ 16:03 <Odd_Bloke> * Switched GCE artful image publication to our new build system
+
+ 16:03 <Odd_Bloke> * Removed unscd from the Azure bionic images, we're replacing it with the built-in systemd-resolved
+
+ 16:03 <Odd_Bloke> * Various other small bits for partners
+
+ 16:03 <Odd_Bloke> (done)
+
+ 16:03 <bdmurray> SRU team duties
+
+ 16:03 <bdmurray> merged my changelog changes for partner images
+
+ 16:03 <bdmurray> investigated retracer workload (created a couple of cards w/ ideas)
+
+ 16:03 <bdmurray> sponsored xenial patch for LP: #1652641
+
+ 16:03 <bdmurray> investigated, tested update-manager details & conf prompt window size
+
+ 16:03 <ubottu> Launchpad bug 1652641 in apt-xapian-index (Ubuntu Xenial) "crash in indexer.py, AttributeError: 'NoneType' object has no attribute 'unlink'" [Medium,In progress] https://launchpad.net/bugs/1652641
+
+ 16:03 <bdmurray> uploaded fix for update-manager config file prompt size (LP: #1689668)
+
+ 16:03 <bdmurray> uploaded fix for update-manager details window size (LP: #1690541)
+
+ 16:03 <bdmurray> struggled to figure out LP: #1752053 was causing by desktop issues
+
+ 16:03 <bdmurray> wrote a bug pattern for LP: #1705345 (consolidated duplicates too)
+
+ 16:03 <bdmurray> tested some mini.iso installation issues
+
+ 16:03 <ubottu> Launchpad bug 1689668 in aptdaemon (Ubuntu Artful) "dialog to resolve config file conflicts can be only one line high" [High,Confirmed] https://launchpad.net/bugs/1689668
+
+ 16:03 <ubottu> Launchpad bug 1690541 in update-manager (Ubuntu) "Scrolled windows in update-manager are too small to read" [High,Confirmed] https://launchpad.net/bugs/1690541
+
+ 16:03 <ubottu> Launchpad bug 1752053 in nvidia-graphics-drivers-390 (Ubuntu) "nvidia-390 fails to boot graphical display" [Critical,Confirmed] https://launchpad.net/bugs/1752053
+
+ 16:03 <ubottu> Launchpad bug 1705345 in plymouth (Ubuntu) "Installing packages hangs on plymouth --ping" [Critical,Triaged] https://launchpad.net/bugs/1705345
+
+ 16:04 <bdmurray> done
+
+ 16:04 <bdmurray> juliank:
+
+ 16:05 <slangasek> sil2100:
+
+ 16:05 <sil2100> - SRU reviews and releases
+
+ 16:05 <sil2100> - Kernel SRU reviews and releases
+
+ 16:05 <sil2100> - NEW reviews of pyxs and rax-nova-agent
+
+ 16:05 <sil2100> - 16.04.4
+
+ 16:05 <sil2100> (done)
+
+ 16:05 <philroche> * Cloud image build system maintenance
+
+ 16:05 <philroche> * Completed EOL process for Zesty on major public clouds
+
+ 16:05 <philroche> (done)
+
+ 16:06 <slangasek> doko is off
+
+ 16:06 <slangasek> infinity is off
+
+ 16:06 <slangasek> rcj:
+
+ 16:06 <xnox> philroche, whoop whoop
+
+ 16:06 <rcj> present
+
+ 16:08 <rcj> HIGHLIGHT: Migrated Google Compute Engine images to use default gzip compression for initramfs for all releases.  This reverts the customization from bug #1527405 that used XZ for compression.  This change improves boot time.
+
+ 16:08 <ubottu> Error: Launchpad bug 1527405 could not be found
+
+ 16:09 <rcj> * Cloud-image design work for new publication tooling.
+
+ 16:09 <rcj> * Debugging work for cloud-image boot failure due to grub config issue.
+
+ 16:09 <rcj> (done)
+
+ 16:10 <rcj> cyphermox:
+
+ 16:10 <cyphermox> - netplan:
+
+ 16:10 <cyphermox> - rework routing
+
+ 16:10 <cyphermox> - autopkgtests!
+
+ 16:10 <cyphermox> - various bugfixing (bridge prio, NM snap support, etc.)
+
+ 16:10 <cyphermox> - systemd
+
+ 16:10 <cyphermox> - post-review PR fixes
+
+ 16:10 <cyphermox> (done)
+
+ 16:11 <xnox> ubottu, i think you should still generate links, even if the bug is not found, cause you know - some people can see private bugs....
+
+ 16:11 <ubottu> xnox: I am only a bot, please don't think I'm intelligent :)
+
+ 16:11 <slangasek> * was off on Tuesday, swap for the upcoming travel
+
+ 16:11 <slangasek> * work on resolving migrations stuck in -proposed
+
+ 16:11 <slangasek> * autopkgtest queue nudging
+
+ 16:11 <slangasek> * discussions about gnupg pulling lots of extra stuff into minimal
+
+ 16:11 <slangasek> * discussions around archive rebuilds for spectre v2
+
+ 16:11 <slangasek> (done)
+
+ 16:11 <slangasek> xnox:
+
+ 16:11 <nacc> xnox: it's a LP thing (iirc) -- you can't distinguish between non-existent and not-visible bugs without auth
+
+ 16:11 <xnox> uploading things to transition ruby2.5 as only ruby
+
+ 16:11 <xnox> uploading new releases / patches for z14 crypto support
+
+ 16:11 <xnox> uploaded new powerpc-utils
+
+ 16:11 <xnox> uploaded livecd-rootfs, which builds multi-lowerdir overlayfs squashfs for maas installation in subiquity (something similar maybe used for desktop-minimal in the future too, Laney didrocks
+
+ 16:11 <xnox> test point release s390x images
+
+ 16:11 <xnox> done
+
+ 16:11 <nacc> xnox: i guess the link is the same regardless
+
+ 16:11 <tdaitx_> * OpenJDK 9 as default JDK
+
+ 16:11 <tdaitx_> - patching, tracking status on debian, rebuilding
+
+ 16:11 <tdaitx_> - moved to stage 2, same failures as stage 1
+
+ 16:11 <tdaitx_> - armhf is unstable, got a few intermittent segfaults and rebuilding eventually fixes those
+
+ 16:11 <tdaitx_> * OpenJDK 8 & 7 security updates
+
+ 16:11 <tdaitx_> - Planned to ship 8 to the security team today
+
+ 16:11 <tdaitx_> - OpenJDK 7 still requires some work, few patches no long apply cleanly (ongoing)
+
+ 16:12 <tdaitx_> (done)
+
+ 16:12 <xnox> nacc, yeah, there are bugs/# url that should always work.
+
+ 16:12 <slangasek> rbalint:
+
+ 16:14 <slangasek> tribaal:
+
+ 16:14 <tribaal> * CVE tracking
+
+ 16:14 <tribaal> * Vanguard for a 3rd week in a row. Send valium plz.
+
+ 16:14 <tribaal> * Sent code to snapcraft to enable LXD profiles in cleanbuild (https://github.com/snapcore/snapcraft/pull/1969)
+
+ 16:14 <tribaal> (done)
+
+ 16:14 <fginther> * Developing automated testing and publication updates for a partner cloud
+
+ 16:14 <fginther> * Reviewing design proposal for improved satellite cloud publication
+
+ 16:14 <fginther> * Helped debug a publication issue
+
+ 16:14 <fginther> (done)
+
+ 16:15 <slangasek> any questions?
+
+ 16:17 <slangasek> [TOPIC] Bugs
+
+ 16:17 <slangasek> [LINK] http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html#foundations-bugs
+
+ 16:17 <bdmurray> we are taking on bug 1385524 correct?
+
+ 16:17 <ubottu> bug 1385524 in update-manager (Ubuntu Bionic) "[SRU] update-manager-text crashes in all supported releases" [High,Confirmed] https://launchpad.net/bugs/1385524
+
+ 16:18 <slangasek> yes
+
+ 16:18 <bdmurray> bug 1751011 is new
+
+ 16:18 <ubottu> bug 1751011 in bash (Ubuntu) "bash crashes in qemu-user environments (bionic)" [Undecided,Confirmed] https://launchpad.net/bugs/1751011
+
+ 16:19 <xnox> do we even support qemu-user.....
+
+ 16:19 <slangasek> bdmurray: that one seems like it's just a merge?
+
+ 16:20 <slangasek> xnox: generally no
+
+ 16:20 <xnox> yeah, a merge
+
+ 16:20 <slangasek> but it seems to be a trivial merge
+
+ 16:20 <rbalint> o/
+
+ 16:20 * xnox ponders if i can just upload it
+
+ 16:20 <slangasek> hmm the solution was to drop building with -pie
+
+ 16:21 <bdmurray> Ah, yeah I'd looked at that.
+
+ 16:21 <slangasek> do we want a no-pie bash in order to support qemu-user?
+
+ 16:21 <slangasek> bdmurray: I'd decline this one
+
+ 16:21 <bdmurray> slangasek: ack
+
+ 16:22 <bdmurray> Jean-Baptiste reported bug 1751252
+
+ 16:22 <ubottu> bug 1751252 in glib2.0 (Ubuntu) "ubiquity crashed with signal 5 in _XEventsQueued()" [Medium,New] https://launchpad.net/bugs/1751252
+
+ 16:22 <cpaelzer> xnox: qemu-user* is universe - and best effort + community support
+
+ 16:23 <slangasek> invalid literal for int() - ugh
+
+ 16:23 <slangasek> probably locale-dependent
+
+ 16:23 <xnox> slangasek, maybe you should remove it from -proposed then....
+
+ 16:23 <slangasek> and yeah, seems we should take that
+
+ 16:24 <slangasek> xnox: done. :P
+
+ 16:26 <slangasek> anything else on bugs?
+
+ 16:27 <slangasek> [TOPIC] AOB
+
+ 16:27 <slangasek> anything else?
+
+ 16:29 * sil2100 is fine
+
+ 16:29 <slangasek> oh
+
+ 16:29 <slangasek> rbalint: did you want to give status?
+
+ 16:30 <slangasek> guess not
+
+ 16:30 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

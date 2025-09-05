@@ -1,0 +1,591 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cielak at 18:05:14 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-11-15-18.05.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/Accomplishments/Agenda   (mfisch, 18:06:03)
+ *Discussing whether general direction of project applies to the whole sysytem or just community accomplishments.
+
+ *Feedback on starting the daemon as a dbus .service, causing it to be running regardless of user will.
+
+ *Sync up with the team on the idea of expanding the .accomplishment format to support keywords/tags.
+
+ *Looking for opportunities for new contributors and discussing how we should deal with suggesting work to them.
+''LINK:'' http://mhall119.com/2012/02/contributing-to-unity-for-non-developers-keywords/ is an example you can look at, I got a lot of new contributors adding keywords to .desktop files with that  (mhall119, 18:40:24)
+''LINK:'' https://wiki.ubuntu.com/Accomplishments/AccomplishmentIdeas/LocalAccomplishments   (cielak, 18:45:51)
+
+
+
+Meeting ended at 19:04:57 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cielak (110)
+ * mhall119 (75)
+ * mfisch (63)
+ * s-fox (17)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 18:05:14 <cielak> #startmeeting
+
+ 18:05:14 <meetingology> Meeting started Thu Nov 15 18:05:14 2012 UTC.  The chair is cielak. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:05:14 <meetingology> 
+
+ 18:05:14 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:05:33 <cielak> sigh
+
+ 18:05:36 <cielak> nevermind
+
+ 18:05:44 <mhall119> what?
+
+ 18:05:44 <mfisch> ?
+
+ 18:05:48 <cielak> okay, so here is the agenda: https://wiki.ubuntu.com/Accomplishments/Agenda
+
+ 18:06:03 <mfisch> #link https://wiki.ubuntu.com/Accomplishments/Agenda
+
+ 18:06:37 <cielak> first thing I'd like to consult concerns what we clarified on UDS
+
+ 18:06:38 <mhall119> I think the chair has to do that
+
+ 18:06:43 <mfisch> ok
+
+ 18:06:55 <cielak> that the accomplishemnts should not be level-based
+
+ 18:07:13 <mhall119> #topic Discussing whether general direction of project applies to the whole sysytem or just community accomplishments.
+
+ 18:07:18 <mfisch> I think that was the direction we came back to yes
+
+ 18:07:20 <mhall119> ^ cielak try pasting that
+
+ 18:07:29 <cielak> #topic Discussing whether general direction of project applies to the whole sysytem or just community accomplishments.
+
+ 18:07:39 <cielak> oh, cool
+
+ 18:07:50 <mhall119> so, just to fill me in, what is the general direction that was talked about?
+
+ 18:08:06 <cielak> okay, so my idea is that we may do the platform support level-based accomplishments, but disable this feature for community accoms
+
+ 18:08:29 <cielak> this way third-party collections could make use of 'dificulty' fields in .accomplishment files
+
+ 18:08:40 <cielak> but we would leave them unused for ubuntu-community-accomplishments
+
+ 18:09:21 <mhall119> how would that field be used in the view/gallery?
+
+ 18:09:45 <s-fox> sorry i'm late for the meeting, bad traffic
+
+ 18:10:15 <cielak> I think that the details page might display a number of stars (1-5) for accomplishments etc, but that's more a design question
+
+ 18:10:52 <cielak> what I mean is that it might make sense to implement support for such thing in the daemon, but since it's not cool for community accoms, this field would be not used for them
+
+ 18:11:21 <cielak> and in case of community accoms a 'N/A' would be displayed instead of stars
+
+ 18:11:25 <cielak> does that make sense?
+
+ 18:11:35 <cielak> hey s-fox :)
+
+ 18:11:49 <mhall119> and this would be enforced just be the approval process accomplishments go through?
+
+ 18:12:33 <cielak> I am not sure how this applies to approval process
+
+ 18:12:47 <mfisch> I want to avoid special logic for the community apps
+
+ 18:12:51 <mfisch> accomps I mean
+
+ 18:12:55 <mhall119> I mean, there wouldn't be something in the code that tries to stop it from being used for community accomplishments, right?
+
+ 18:13:04 <cielak> true
+
+ 18:13:38 <mhall119> ok
+
+ 18:13:40 <mfisch> the accoms themselves would just leave it out
+
+ 18:14:05 <cielak> I'm not sure if there is any special logic, just as field 'tips' is optional, so would 'difficulty' (or whatever) be
+
+ 18:14:13 <mfisch> right
+
+ 18:14:14 <mhall119> makes sense
+
+ 18:14:18 <mfisch> I'm +1 on that
+
+ 18:14:22 <mhall119> I have no objection to this
+
+ 18:14:32 <cielak> cool, thanks :)
+
+ 18:14:59 <cielak> I have also recently looked in how we can make daemon a DBus service, and I have two concerns about this solution
+
+ 18:15:10 <cielak> #topic Feedback on starting the daemon as a dbus .service, causing it to be running regardless of user will.
+
+ 18:15:27 <mfisch> what are the concerns?
+
+ 18:15:36 <cielak> the point is that once we install a .service, the daemon will always be started when user logs in
+
+ 18:15:47 <mfisch> Why?
+
+ 18:15:53 <cielak> currently we give him a choice, and automatic startup is disablable
+
+ 18:15:53 <mhall119> no, I think it can be only on-demand
+
+ 18:15:58 <mfisch> yes it can be on-demand
+
+ 18:16:05 <mfisch> when the first dbus call is made, dbus will launch it
+
+ 18:16:30 <mfisch> and honestly that is standard operating procedure for almost everything
+
+ 18:16:35 <mfisch> lenses and scopes for example
+
+ 18:16:46 <cielak> hm, that's odd, from my tests it was always starting regardless of whether it was requested or not
+
+ 18:16:57 <mhall119> so the "automatically at startup" would just call the dbus service during session startup, otherwise it waits until the user loads the viewer
+
+ 18:17:17 <mhall119> cielak: do you have the Unity trophy lens?
+
+ 18:17:23 <cielak> I do
+
+ 18:17:27 <mhall119> that's probably starting it
+
+ 18:17:29 <mfisch> thats whats launching it then
+
+ 18:17:38 <cielak> aaah! this makes a lot of sense
+
+ 18:17:46 <mfisch> I'm not even sure we need an automatically at startup field anymore
+
+ 18:17:53 <cielak> so I'll be back to playing around with it, then ;)
+
+ 18:17:59 <mhall119> it only makes sense as an option if the user doesn't have the lens
+
+ 18:18:08 <mhall119> if you have the lens, it'll need to be running from startup
+
+ 18:18:27 <mfisch> do we get notifications if the service is running but the app is closed?
+
+ 18:19:08 <cielak> another thing I have notices with DBus (yet this problem was present even before I tried setting up a service) is the way the daemon is closed when user session ends
+
+ 18:19:35 <cielak> I have discussed that with mfisch few weeks ago
+
+ 18:19:44 <mfisch> what was the issue?
+
+ 18:19:55 <cielak> what I ended up with, is that for some reason the daemon is killed when user logs out
+
+ 18:20:06 <mfisch> the session is over at that point
+
+ 18:20:06 <cielak> it does not receive a SIGTERM, it's simply killed
+
+ 18:20:26 <mhall119> does it need to do any cleanup before it exits?
+
+ 18:20:32 <cielak> yeah, it does
+
+ 18:20:37 <mhall119> for what?
+
+ 18:20:42 <cielak> removing the pidfile is a must
+
+ 18:20:47 <mfisch> it doesn't get any signal?
+
+ 18:20:57 <mhall119> what is the pidfile used for?
+
+ 18:21:07 <mfisch> yeah thats a good question, I bet we dont need it anymore
+
+ 18:21:12 <cielak> otherwise, if the pidfile is left, there is no way to distinguish if the daemon is running or not
+
+ 18:21:20 <mfisch> sure there is
+
+ 18:21:24 <mfisch> you query it on dbus
+
+ 18:21:28 <mhall119> if we only start it via dbus, then dbus handles that
+
+ 18:21:32 <cielak> what if it got stuck?
+
+ 18:21:50 <mfisch> and "autostart" is handled by a simple dbus message too, not by manually launching it
+
+ 18:21:53 <mhall119> dbus won't launch a new process if one is running
+
+ 18:22:37 <cielak> ah, so again it's dbus who cares about that stuff
+
+ 18:22:39 <mfisch> I think that the service getting stuck is another issue
+
+ 18:22:51 <mfisch> yeah, once we let dbus launch us, we should let dbus handle everything
+
+ 18:23:01 <mhall119> yeah, so basically what jono did with cron and pidfiles, dbus does automagically
+
+ 18:23:02 <mfisch> having us manually start or kill a process that dbus started will lead to bad news
+
+ 18:23:06 <mhall119> and dbus does it better ;)
+
+ 18:23:06 <mfisch> yes
+
+ 18:23:29 <cielak> odd that despite studying dbus for a week I have not discovered it's core goodies :)
+
+ 18:23:43 <mhall119> you could study it for a year and still find surprises ;)
+
+ 18:23:55 <mfisch> I've been debugging a dbus signal issue all week
+
+ 18:24:00 <cielak> okay, so the conclusion is that I need to learn DBus more before I start playing with it at all, hehe ;)
+
+ 18:24:14 <mhall119> playing makes you learn faster
+
+ 18:24:23 <mhall119> breaking makes you learn faster still
+
+ 18:24:24 <mfisch> I think it's simpler than that
+
+ 18:24:34 <mfisch> remove all the cronjob/pid file code
+
+ 18:24:47 <mfisch> change autostart from a launch to sending a dbus message
+
+ 18:24:52 <mfisch> that will force dbus to start it
+
+ 18:24:58 <mfisch> then you're done I think
+
+ 18:25:06 <cielak> mfisch: actually, no way to remove it, as twistd relies on the file not existing
+
+ 18:25:19 <mfisch> do we still need twistd?
+
+ 18:25:46 <cielak> ooh, porting the code out of twistd now would be a really great deal
+
+ 18:25:54 <cielak> I guess we do
+
+ 18:25:59 <mfisch> what else does twistd give us?
+
+ 18:26:02 <mhall119> what is twisted used for?
+
+ 18:26:04 <cielak> all that @deferred stuff is twisd magic
+
+ 18:26:32 <mhall119> I don't know enough about the daemon internals to know
+
+ 18:26:42 <cielak> and it's meant to ensure our code is not multi-threading etc.
+
+ 18:27:24 <cielak> don't get me wrong, I'd LOVE to get rid of twistd
+
+ 18:27:35 <mhall119> make jono re-write it in go
+
+ 18:27:37 <mfisch> this needs more investigation
+
+ 18:27:39 <mhall119> :)
+
+ 18:28:02 <mfisch> I vote that we investigate more and revisit this
+
+ 18:28:06 <cielak> mfisch: +1
+
+ 18:28:24 <mhall119> +1
+
+ 18:28:39 <cielak> okay, so let's move to next topic on my list
+
+ 18:28:49 <cielak> #topic Sync up with the team on the idea of expanding the .accomplishment format to support keywords/tags.
+
+ 18:29:03 <cielak> have you played with my latest MP for the viewer? I know mfisch did
+
+ 18:29:18 <mfisch> cielak: I need to respond to you, will try to do that tonight
+
+ 18:29:25 <cielak> mfisch: cool ;)
+
+ 18:29:37 <mhall119> I haven't, no
+
+ 18:30:00 <cielak> mhall119: basically it implements much quickler filtering + a search feature
+
+ 18:30:14 <cielak> and I'd like to go one step further with te search feature
+
+ 18:30:17 <mhall119> cielak: still using iconview?
+
+ 18:30:49 <cielak> currently it looks just in the accomplsihment title, and because of that searching for 'CC' will not find community-council accoms
+
+ 18:30:56 <cielak> mhall119: still!
+
+ 18:31:27 <cielak> mhall119: the magic is to use GtkTreeModelFilter and never clear the main model
+
+ 18:31:51 <cielak> my idea is that we may want to add an optional 'keywords' field in .accomplishment files
+
+ 18:32:07 <cielak> which would list synonyms, common typos etc. for the accomplishment
+
+ 18:32:25 <cielak> so that the search feature could check the title and the keywords
+
+ 18:33:12 <mhall119> +1 for keywords
+
+ 18:33:15 <cielak> that's gonna be easy to implement, yet I think all changes to .accomplishments format are worth discussing :)
+
+ 18:33:40 <mfisch> +1 too for keywords
+
+ 18:33:50 <cielak> awesome, thanks for your feedback ;)
+
+ 18:33:59 <mfisch> lets file bugs to go back and add keywords to existing accomps too
+
+ 18:34:25 <cielak> exactly, I guess this is a cool assignment for a new contributor
+
+ 18:34:46 <mhall119> tag the bugs with "bitesize"
+
+ 18:34:49 <cielak> quite easy, and helps to get familiar with accoms structure
+
+ 18:35:09 <mhall119> having bitesize bugs makes it easy to point new contributors to a list of things they can do
+
+ 18:35:10 <cielak> and since we are speaking about new contributors...
+
+ 18:35:13 <cielak> #topic Looking for opportunities for new contributors and discussing how we should deal with suggesting work to them.
+
+ 18:35:29 <mfisch> so i was thinking some about this
+
+ 18:35:35 <cielak> there is at least 3 people who are willing to contribute
+
+ 18:35:48 <mfisch> and the current process of doing a MP and what-not may be causing people to not contribute
+
+ 18:36:02 <cielak> some of them are not interested in comtributing accoms, and I think they are very welcome to do some hacking in the viewer etc.
+
+ 18:36:25 <mfisch> ah I was thinking of accomps writers
+
+ 18:36:50 <cielak> mfisch: so you have ideas on how we can improve accomps writers experience?
+
+ 18:37:24 <mfisch> no great ideas, but I wonder if the LP merge process is stopping people
+
+ 18:37:33 <mhall119> so in my experience, this is what I'd recommend:
+
+ 18:37:35 <mfisch> perhaps the script writing is also a problem
+
+ 18:37:40 <s-fox> mfisch,  the merge thing was akward to learn, but not that difficult once you get your head around it
+
+ 18:37:48 <s-fox> that is my experience anyway :)
+
+ 18:37:50 <mhall119> 1) Give a list of specific targets (like adding keywords to existing accoms)
+
+ 18:38:03 <mhall119> 2) Give detailed step-by-step instructions for how to do it
+
+ 18:38:06 <cielak> on the other hand, there was noone who contacted us in terms of not being able to send their contribution
+
+ 18:38:27 <mhall119> 3) Give detailed step-by-step instructions for how to submit it (bzr commit, bzr push, create an MP, etc)
+
+ 18:38:52 <mhall119> 4) Blog about it (get jono to promote your blog post)
+
+ 18:39:17 <mhall119> 5) Mosty importantly, publicaly thank the people who do contribute, seeing others get praise motivates people to get involved too
+
+ 18:39:35 <mfisch> I'd like a blog post to include some specific ideas for ones people can write
+
+ 18:39:40 <mfisch> I know we have a todo list somewhere
+
+ 18:40:02 <cielak> mhall119: agreed, except for the blog part this is what I usually do
+
+ 18:40:07 <mfisch> I guess that's what mhall119 said in 1)
+
+ 18:40:23 <cielak> mfisch: I have some more bitesize bugs to fill in
+
+ 18:40:24 <mhall119> http://mhall119.com/2012/02/contributing-to-unity-for-non-developers-keywords/ is an example you can look at, I got a lot of new contributors adding keywords to .desktop files with that
+
+ 18:40:47 <cielak> where is ours todo list so that I can add this ideas there?
+
+ 18:41:25 <cielak> mhall119: ooh, cool guide, we surely need something like that
+
+ 18:41:40 <mhall119> cielak: write one ;)
+
+ 18:41:42 <mfisch> lets take a todo for that
+
+ 18:41:46 <cielak> I surely will
+
+ 18:42:00 <mfisch> I can help write it, just worried about over-committing to stuff right now
+
+ 18:42:06 <mfisch> nexus7 is still crazy
+
+ 18:42:25 <mhall119> mfisch: fix the primary-mouse-button-getting-stuck bug :P
+
+ 18:43:01 <cielak> If I recall correctly, the accoms-writing guide had detailed instructions on how to use bzr to submit changes
+
+ 18:43:14 <cielak> they may need refreshing, though
+
+ 18:43:46 <cielak> any more ideas on what simple activities we may assign to newcommers?
+
+ 18:44:17 <cielak> also, smartboyhw wanted to contribute new accoms, but we're running out of reasonable ideas
+
+ 18:44:43 <mhall119> nope, just make sure you always give an over-abundance of information.  People don't get discouraged by being told what they already know, but they will get discouraged if they're not told something they do need to know
+
+ 18:44:57 <cielak> yeah, totally :)
+
+ 18:45:02 <mfisch> there's got to me hundreds of ideas for desktop
+
+ 18:45:17 <mfisch> install ubuntu on ARM is one I'm a fan of
+
+ 18:45:31 <mhall119> +1 for desktop, just get people to go through the apps on their Launcher and think of accomplishments they can write for each
+
+ 18:45:51 <cielak> https://wiki.ubuntu.com/Accomplishments/AccomplishmentIdeas/LocalAccomplishments
+
+ 18:45:57 <cielak> this may be worth refreshing too
+
+ 18:46:33 <mhall119> One benefit of the "write something for an app on your launcher" is that they will be targetting an app they commonly use
+
+ 18:46:51 <mfisch> cielak: lets take an action to update that wiki page with ideas
+
+ 18:47:13 <mhall119> someone might have no interest in deja dup or gwibber, but if they have Tomboy notes stuck to their launcher, they would probably know what kind of accomplishments to write for that
+
+ 18:47:39 <cielak> agreed
+
+ 18:47:46 <mfisch> "Tomboy didn't erase my notes for 3 months"
+
+ 18:48:05 <mhall119> also, we talked at UDS about getting new icon images for people to use, that would be a good way for artists to get involved
+
+ 18:48:14 <mhall119> mfisch: oh come on now
+
+ 18:48:20 <mhall119> we should make them something possible
+
+ 18:48:28 <mfisch> lol
+
+ 18:48:39 <cielak> I guess Martin took the artwork work item
+
+ 18:48:40 * mhall119 happens to love Tomboy and hasn't lost anything in years
+
+ 18:48:53 <mhall119> cielak: yeah, but there are more artists than just him
+
+ 18:49:02 <cielak> sure :)
+
+ 18:49:34 <cielak> I thought it might be appropriate to contact him and suggest he lead the artwork update
+
+ 18:49:55 <mhall119> is there a website other than the wiki for the Accomplishments project?
+
+ 18:49:58 <cielak> it may be easier for him to reach for other artists and cooperate
+
+ 18:50:04 <cielak> nope
+
+ 18:50:14 <cielak> except for trophies.ubuntu.com
+
+ 18:50:18 <mhall119> if he has time, he took several work items this UDS
+
+ 18:50:58 <cielak> anyway, contacting him would be fair
+
+ 18:51:19 <mhall119> yeah, maybe he could write a blog calling for more artist contributors
+
+ 18:51:34 <cielak> indeed
+
+ 18:51:42 <s-fox> you know i could ask the arty types on the ubuntu forums for help if you want.
+
+ 18:51:51 <mhall119> s-fox: that's a good idea too
+
+ 18:52:13 <mhall119> we might want a list of "wanted" images
+
+ 18:52:18 <s-fox> i mean they are great for producing icons for developers
+
+ 18:52:40 <mhall119> I'm thinking we could use a Ribbon, a medal, a certificate, etc
+
+ 18:53:04 <mhall119> maybe a couple variations on the current trophy image
+
+ 18:53:16 <s-fox> I know what i'd like to see, have the ask ubuntu icons match what they are on the website
+
+ 18:53:27 <mhall119> +1
+
+ 18:53:31 <cielak> +1!
+
+ 18:53:53 <mhall119> all of that should go into a call for artist contributors, so they have a list of things they know we want
+
+ 18:54:17 <mhall119> for the askubuntu ones, someone would need to check on copyright license for them
+
+ 18:54:27 <mhall119> mfisch: ^^
+
+ 18:54:47 <mfisch> ok
+
+ 18:54:51 <mhall119> thanks
+
+ 18:54:55 <mfisch> we can ask jorge
+
+ 18:55:03 <mhall119> ok, I can do that
+
+ 18:55:05 <s-fox> even if we can't use those exact icons it would be good to have something like a ribbon?
+
+ 18:55:12 <mhall119> yeah
+
+ 18:55:31 <mhall119> also, let's ask for these in SVG, so we can easily re-color them, or add to them, etc
+
+ 18:55:37 <mfisch> +1
+
+ 18:55:39 <cielak> svg is a must
+
+ 18:55:49 <cielak> we might want to change icon size one day
+
+ 18:55:57 <cielak> + it is different in the lens
+
+ 18:56:13 <s-fox> i thought svg was just for vectors?  wouldn't we want something like a psd or whatever gimp uses?
+
+ 18:56:34 <mfisch> we can render svg though
+
+ 18:56:42 <s-fox> ahh :)
+
+ 18:57:04 <mhall119> svg would be just as good, just edit it in Inkscape
+
+ 18:57:11 <cielak> indeed ;)
+
+ 18:57:27 <cielak> with 3 minutes left I should ask if anyone has something else to discuss?
+
+ 18:57:39 <cielak> s-fox, any progress on forum accomplishments?
+
+ 18:58:14 <s-fox> not touched it cielak , it looks like the ubuntu forums might actually be getting the upgrade soon so the html might change
+
+ 18:58:28 <cielak> ooh
+
+ 18:58:35 <cielak> ideally the accoms would be html-independent
+
+ 18:58:43 <cielak> I am not sure how much this is doable, though
+
+ 18:58:47 <s-fox> trying to get an idea as to when it will happen. no point spending time on making it work when the structure of the page might change
+
+ 18:58:58 <cielak> true
+
+ 18:59:08 <s-fox> especially if it looks like it might come in before the new year
+
+ 18:59:12 <mfisch> speaking of that, cielak I'm going to wait on pep8 until your search stuff is done
+
+ 18:59:40 <s-fox> i am looking forward to doing more with regex though! :D
+
+ 18:59:59 <cielak> then again, the search stuff is waiting for your review ;) so whenever you'll have some spare time
+
+ 19:00:13 <mhall119> s-fox: wasn't there a forums API we were going to get?
+
+ 19:00:33 <cielak> mhall119: haha!
+
+ 19:01:12 <cielak> mhall119: let me find you the link to the ticket
+
+ 19:01:26 <s-fox> mhall119,  we were met with silence. twice i believe
+
+ 19:01:34 <mhall119> ah, ok
+
+ 19:01:36 <mhall119> nvm then
+
+ 19:01:36 <cielak> mhall119: https://rt.ubuntu.com/Ticket/Display.html?id=19790
+
+ 19:01:38 <s-fox> jono even poked them for a response
+
+ 19:02:08 <cielak> we can't wait endlessly, so we'll use a workaround
+
+ 19:02:19 <mhall119> ok
+
+ 19:02:20 <cielak> okay, anyone has something more to discuss?
+
+ 19:03:08 <s-fox> maybe channel promotion ?
+
+ 19:03:23 <cielak> what do you mean?
+
+ 19:03:56 <s-fox> mind you , i suppose that would come with getting more people involved with the project anyway
+
+ 19:04:12 <cielak> likely ;)
+
+ 19:04:44 <cielak> okay, so thanks everyone for coming and your feedback, have a nice day!
+
+ 19:04:57 <cielak> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,449 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 13 Jun at 14:32 &mdash; 15:08 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-06-13-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:33)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:40)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:46.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:46)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:55.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:55)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:55)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:57.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:57)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:57)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:57)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:58.
+
+ * ''LINK:'' https://lists.ubuntu.com/archives/ubuntu-devel/2023-June/date.html   (sarnold, 15:01)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues/26  :D  (sarnold, 15:06)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (121)
+ * sarnold (25)
+ * seb128 (19)
+ * didrocks (9)
+ * dviererbe (5)
+ * eslerm (4)
+ * joalif (4)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:32 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:41 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:32 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:33 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:33 <cpaelzer> #topic current component mismatches
+
+ 14:33 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <dviererbe> wow
+
+ 14:33 <sarnold> omg
+
+ 14:33 <cpaelzer> wut
+
+ 14:34 <didrocks> spamassin is assassinating us :p
+
+ 14:34 <cpaelzer> the moment you zoom out and realize the thing at the top is yours
+
+ 14:34 <cpaelzer> oh no :-/
+
+ 14:34 <cpaelzer> let me pass that to the team
+
+ 14:34 <cpaelzer> and then we look what else is in the report
+
+ 14:35 <didrocks> hopefully, we don’t care about the recommends and then, no big deal
+
+ 14:35 <sarnold> I assume it's on this graph because we do care about recommends
+
+ 14:35 <eslerm> is this MIR still valid? https://bugs.launchpad.net/ubuntu/+source/libnet-idn-encode-perl/+bug/1494890
+
+ 14:35 <didrocks> sarnold: yeah, I mean, just a question of removing the recommends
+
+ 14:35 <sarnold> afterall, we have to teach users about apt install --no-install-recommends all the time :(
+
+ 14:35 <sarnold> ahhh
+
+ 14:36 <cpaelzer> ok, looking at others
+
+ 14:36 <cpaelzer> libww-perl -> libhttp-cookiejar-perl
+
+ 14:36 <cpaelzer> ruby-rack
+
+ 14:37 <cpaelzer> ruby is a transiton to 3.0 which kanashiro[m] is on top already
+
+ 14:37 <cpaelzer> ruby-rack I should say
+
+ 14:37 <cpaelzer> which was even a requirement in the pcs MIR last cycle
+
+ 14:37 <cpaelzer> so consider that under control
+
+ 14:37 <cpaelzer> how about this www-perl?
+
+ 14:37 <cpaelzer> slyon isn't here, that sounds like foundations
+
+ 14:38 <cpaelzer> let me ping mclemenceau ^^
+
+ 14:38 <cpaelzer> mclemenceau: could you have someone look after the component mismatch in mantic-proposed please
+
+ 14:38 <sarnold> woah looks like launchpad got a stylesheet refresh
+
+ 14:38 <cpaelzer> did it?
+
+ 14:38 <cpaelzer> indeed
+
+ 14:39 <cpaelzer> libhttp-cookiejar-perl: libhttp-cookiejar-perl
+
+ 14:39 <cpaelzer> [Reverse-Depends: libwww-perl (MAIN)]
+
+ 14:39 <cpaelzer> mclemenceau: that is the one you could look at
+
+ 14:39 <cpaelzer> everything else is known
+
+ 14:39 <cpaelzer> no further action
+
+ 14:40 <cpaelzer> except me finding someone to unbreak this massive tree behind spamassassin
+
+ 14:40 <cpaelzer> #topic New MIRs
+
+ 14:40 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:40 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:40 <cpaelzer> 4 in the queue
+
+ 14:40 <dviererbe> There is also https://bugs.launchpad.net/ubuntu/+source/boot-managed-by-snapd/+bug/2023366
+
+ 14:40 <cpaelzer> all of them we have seen before
+
+ 14:40 <cpaelzer> dviererbe: that is subscribed to the wrong team
+
+ 14:40 <didrocks> yeah, some for quite some time as I was the only available MIR reviewer around and can only take 2 by pulse
+
+ 14:41 <cpaelzer> today myself and joalif can take a few if possible
+
+ 14:41 <didrocks> so, for next pulse, I can take 2 of them (I guess cairo/pango in the order of deps, apart if someone else can parallelize those)
+
+ 14:41 <joalif> yup
+
+ 14:41 <cpaelzer> and it is fair to limit the number per pulse or whatever cycle you plan for
+
+ 14:41 <seb128> technically those are new version of packages already in main but I guess you want to review them again?
+
+ 14:42 <cpaelzer> dviererbe: we are the "MIR approval team" not the "Mir development team"
+
+ 14:42 <cpaelzer> dviererbe: I fixed the subscription
+
+ 14:42 <dviererbe> thanks
+
+ 14:42 <dviererbe> weirdly that was the only team that popped up when I searched for mir
+
+ 14:42 <cpaelzer> I'd take boot-managed-by-snap
+
+ 14:42 <cpaelzer> as I'm curious by the name
+
+ 14:43 <cpaelzer> didrocks: is "next pulse" today or next week or even later?
+
+ 14:43 <dviererbe> its mostly just a transitional package
+
+ 14:43 <didrocks> cpaelzer: next week
+
+ 14:43 <cpaelzer> ok
+
+ 14:43 <cpaelzer> joalif: pick one of your choice please
+
+ 14:43 <cpaelzer> in case one seems nicer than the other to you
+
+ 14:43 <joalif> i can take whatever, let's say the first one
+
+ 14:44 <cpaelzer> it is important to consider the comment of seb128
+
+ 14:44 <cpaelzer> usually if this is just a foo1 to foo2
+
+ 14:44 <cpaelzer> it is a fast path
+
+ 14:44 <cpaelzer> and not a full review
+
+ 14:44 <sarnold> \o/
+
+ 14:44 <cpaelzer> we do sanity checks, ensuer the old reviews didn't say "just this time" or such
+
+ 14:44 <cpaelzer> and then approve
+
+ 14:44 <cpaelzer> joalif: ok you take pangomm2.48 then
+
+ 14:45 <joalif> yes
+
+ 14:45 <cpaelzer> joalif: if your check on this confirms that it is "the same as we have, just versioned source and all is fine"
+
+ 14:45 <cpaelzer> then we can next week assign the rest assuming they are similar fast paths
+
+ 14:45 <cpaelzer> does that work for everyone?
+
+ 14:45 <didrocks> sounds good to me
+
+ 14:45 <joalif> ok
+
+ 14:46 <cpaelzer> ok, let us go on then
+
+ 14:46 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:46 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:46 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:46 <sarnold> man that's a lot of incompletes
+
+ 14:47 <cpaelzer> not that many recent though
+
+ 14:47 <cpaelzer> We haven't closed incompletes for a while
+
+ 14:48 <cpaelzer> I think we had some number of days to mark them invalid
+
+ 14:48 <sarnold> yeah, we tend to focus on the happy end of the list (for good reasons :) .. but some of these oolldd things make me sad, heh
+
+ 14:48 <cpaelzer> let me close all pre 2023
+
+ 14:48 <cpaelzer> I think they are incomplete and got no update for so long
+
+ 14:48 <cpaelzer> it is correct for expectation management
+
+ 14:48 <cpaelzer> to call them incomplete
+
+ 14:49 <cpaelzer> WDYT?
+
+ 14:49 <sarnold> yeah, it's probably fine to just blanket set them all invalid. it might be a nice reminder to the folks who might sitll be around
+
+ 14:49 <didrocks> yeah, sounds like the correct approach to me
+
+ 14:50 <cpaelzer> give me a minute
+
+ 14:51 <sarnold> heh, argyll, updated a few months ago, opened in 2011
+
+ 14:52 <eslerm> I think conditinal ACK requirements like autopkgtests should be met before promotion so that we don't get into this state, but that can be specified by MIR/Security reivews going forward
+
+ 14:54 <cpaelzer> dine
+
+ 14:54 <sarnold> thanks
+
+ 14:54 <sarnold> probably some of these are changing business needs
+
+ 14:54 <sarnold> others might be simply overlooked TODO items that were never fulfilled
+
+ 14:54 <cpaelzer> eslerm: yes, conditional ack requirements are meant to be met
+
+ 14:54 <cpaelzer> ack on the chance for overlook
+
+ 14:54 <cpaelzer> that was the reason we started to number them
+
+ 14:54 <cpaelzer> it made it easier to track them
+
+ 14:55 <cpaelzer> I need to continue in the matter of time
+
+ 14:55 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:55 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:55 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:55 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:55 <cpaelzer> I have today reviewed and merged a few
+
+ 14:56 <cpaelzer> there is effort for me and dviererbe before the remaining PRs are re-reviewed here
+
+ 14:56 <cpaelzer> on the issues
+
+ 14:56 <cpaelzer> one is a discussion on the same topic as the re-review PR
+
+ 14:56 <cpaelzer> and let me - for now - just say yes, we do not speak about resourcing yet
+
+ 14:56 <cpaelzer> but we need to have in place how we think it works before I combine myself and other directors to be the meta-VP and make a decision
+
+ 14:57 <cpaelzer> sarnold: are you ok to go into https://github.com/canonical/ubuntu-mir/issues/24 when there is more time left?
+
+ 14:57 <sarnold> cpaelzer: yes
+
+ 14:57 <cpaelzer> thanks
+
+ 14:57 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:57 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:57 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:57 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:57 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:57 <cpaelzer> Internal link
+
+ 14:57 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:57 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:57 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:57 <cpaelzer> nothing too surprising here
+
+ 14:58 <sarnold> we've got MIRs assigned around, so far I think there's happy thoughts
+
+ 14:58 <cpaelzer> indeed
+
+ 14:58 <cpaelzer> LGTM
+
+ 14:58 <cpaelzer> #topic Any other business?
+
+ 14:58 <seb128> o/
+
+ 14:58 <cpaelzer> the PRs and issues nowadays cover most of the usual AOB topics
+
+ 14:59 <cpaelzer> seb128: have you been waiting for this and brought something new?
+
+ 14:59 <cpaelzer> or just seen the highlight that happened a while ago?
+
+ 14:59 <seb128> no, I've topics
+
+ 14:59 <seb128> first is https://bugs.launchpad.net/ubuntu/+source/webp-pixbuf-loader/+bug/1979121 ... what's the status?
+
+ 14:59 <seb128> it is assigned to you since decembre but didn't get any activity so I wonder if it got forgotten somehow?
+
+ 14:59 <cpaelzer> this is a classic fallen therough the cracks
+
+ 14:59 <cpaelzer> sorry
+
+ 14:59 <cpaelzer> I'll look at it
+
+ 15:00 <seb128> thanks
+
+ 15:00 <cpaelzer> you said topicS
+
+ 15:00 <cpaelzer> next?
+
+ 15:00 <seb128> the other topic is that I stated a discussion about symbols for c++ libraries on ubuntu-devel@
+
+ 15:00 <seb128> unsure if you guys follow the list of if I should cross reference to github?
+
+ 15:00 <seb128> started*
+
+ 15:01 <eslerm> link please
+
+ 15:01 <sarnold> https://lists.ubuntu.com/archives/ubuntu-devel/2023-June/date.html
+
+ 15:01 <eslerm> thanks
+
+ 15:01 <seb128> eslerm, https://lists.ubuntu.com/archives/ubuntu-devel/2023-June/042600.html
+
+ 15:02 <sarnold> I keep hearing that the kde symbols handling is really nice stuff; I don't understand why it's not the default for all our packages
+
+ 15:02 <seb128> if you didn't read it yet it's probably better to discuss it another time after people had time to read
+
+ 15:02 <sarnold> perhaps that's a better question on the list, though :)
+
+ 15:03 <seb128> that was mentioned, still it doesn't solve most of the issues raised
+
+ 15:03 <seb128> like the difference between architectures and how tedious the process is
+
+ 15:03 <sarnold> it sounds almost as bad as debian/copyright
+
+ 15:04 <sarnold> I'll throw some questions on the list, I don't know nearly enough about what these files provide for us
+
+ 15:05 <sarnold> hopefully that'll keep the conversation moving :) (or cause everyone to roll their eyes at me, either way)
+
+ 15:05 <cpaelzer> FYI - I'm double booked now, less focus :-/
+
+ 15:05 <didrocks> (I guess the biggest blocker is the multi-arch aspect with different symbols)
+
+ 15:06 <seb128> that's not a topic that needs to be discussed/resolved here or now, I just wanted to check if you follow devel or if I should start the same discussion as a github ticket or something
+
+ 15:06 <sarnold> https://github.com/canonical/ubuntu-mir/issues/26  :D
+
+ 15:07 <seb128> sarnold, thanks!
+
+ 15:07 <sarnold> seb128: and thank you :D
+
+ 15:07 <cpaelzer> which means we will revisit it every week
+
+ 15:07 <seb128> sarnold, update the title to mention c++
+
+ 15:07 <cpaelzer> until we find qorum and enough time to tihnk deep enough about it
+
+ 15:07 <seb128> we don't have those issues for plain C
+
+ 15:07 <cpaelzer> C symbols are worth for sure
+
+ 15:07 <sarnold> ack, done
+
+ 15:07 <cpaelzer> C++ symbols would be worth if only they would work
+
+ 15:07 <seb128> thx
+
+ 15:07 <cpaelzer> thank
+
+ 15:07 <cpaelzer> s
+
+ 15:08 <seb128> and that was it from me for today :p
+
+ 15:08 <sarnold> pfew :D
+
+ 15:08 <cpaelzer> great
+
+ 15:08 <cpaelzer> we are over time
+
+ 15:08 <cpaelzer> let me close it here
+
+ 15:08 <cpaelzer> and we all handle more next week
+
+ 15:08 <cpaelzer> thank you!
+
+ 15:08 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

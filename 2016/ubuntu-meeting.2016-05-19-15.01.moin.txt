@@ -1,0 +1,585 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 19 May at 15:01 &mdash; 15:35 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-05-19-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:01.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:26.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (41)
+ * pitti (30)
+ * cyphermox (28)
+ * chiluk (26)
+ * bdmurray (25)
+ * ubottu (23)
+ * infinity (19)
+ * caribou (16)
+ * barry (15)
+ * sil2100 (14)
+ * xnox (9)
+ * tdaitx (6)
+ * robru (5)
+ * doko (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Thu May 19 15:01:06 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <slangasek> [TOPIC] Lightning round
+
+ 15:01 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk)
+
+ 15:01 <slangasek> barry caribou pitti sil2100 bdmurray robru infinity tdaitx doko cyphermox xnox slangasek chiluk
+
+ 15:02 <barry> oh great
+
+ 15:02 <sil2100> barry: winner!
+
+ 15:02 <slangasek> :)
+
+ 15:02 * barry scrolls through his gtimelog
+
+ 15:02 <barry> pyflakes 1.2.2-3, 1.2.3-1
+
+ 15:02 <barry> upgrade desktop to yakkety
+
+ 15:03 <barry> started a libpeas resync w/debian (ppa: barry/libpeasresync)
+
+ 15:03 <barry> python-flake8 2.5.4-3 (debian bug #824195)
+
+ 15:03 <ubottu> Debian bug 824195 in src:python-flake8 "python-flake8: FTBFS: Tries to download older version of pyflakes" [Serious,Fixed] http://bugs.debian.org/824195
+
+ 15:03 <barry> looked again at LP: #1512792 - still can't repro
+
+ 15:03 <ubottu> Launchpad bug 1512792 in python-pip (Ubuntu) "Pip crashes with cryptography/cffi/openssl error" [Medium,Confirmed] https://launchpad.net/bugs/1512792
+
+ 15:03 <barry> various and sundry pycon planning stuff
+
+ 15:03 <barry> various and sundry ubuntu-image work
+
+ 15:03 <barry> reviewed some branches for robru
+
+ 15:04 <barry> pyparsing 2.1.4+dfsg1-1
+
+ 15:04 <barry> --done--
+
+ 15:04 <caribou> Bugfix :
+
+ 15:04 <caribou> - multipath coredump:
+
+ 15:04 <caribou> LP: #1532789 - uploaded for SRU
+
+ 15:04 <caribou> - Waiting for customer confirmation
+
+ 15:04 <ubottu> Launchpad bug 1532789 in multipath-tools (Ubuntu Trusty) "Trusty multipath-tools suffering seg faults" [High,Fix committed] https://launchpad.net/bugs/1532789
+
+ 15:04 <caribou> - Apache 2.4.18(xenial) backport (LP: #1335068)
+
+ 15:04 <caribou> Uploaded to backport
+
+ 15:04 <ubottu> Launchpad bug 1335068 in trusty-backports "Please backport apache2 2.4.10-1ubuntu1 (main) from Utopic" [Undecided,Fix released] https://launchpad.net/bugs/1335068
+
+ 15:04 <caribou> Development work:
+
+ 15:04 <caribou> - makedumpfile development
+
+ 15:04 <caribou> Various contribution from HPE
+
+ 15:04 <caribou> further fix for s390 enablement
+
+ 15:04 <caribou> Work on new DEP8 tests
+
+ 15:04 <caribou> - vsftpd DEP8 regression
+
+ 15:04 <caribou> Argueing with upstream Debian to avoid delta
+
+ 15:05 <caribou> - Various sponsoring : bash-completion, multipath-tools
+
+ 15:05 <caribou> ☑ Done
+
+ 15:05 <pitti> only a 4-day week
+
+ 15:05 <pitti> 16.10 planning:
+
+ 15:05 <pitti> - Discuss/research/draft convergence-y-replace-upstart blueprint; I have an initial working prototype now, needs more refinement/testing/packaging
+
+ 15:05 <pitti> - https://blueprints.launchpad.net/ubuntu/+spec/foundations-y-local-resolver: stil waiting for slangasek to review and accept for yakkety
+
+ 15:05 <pitti> - Network YAML config drafting with rharper; will have a meeting next week to discuss the remaining design issues and implementation plan
+
+ 15:05 <pitti> autopkgtest:
+
+ 15:05 <pitti> - quite some infrastructure maintenance due to some cloud issues, tests causing tmpfail loops, and s390x reorg
+
+ 15:05 <pitti> - britney: Produce update_output_notest.txt with a dry run ignoring test results, for easier lib transition untangling
+
+ 15:05 <pitti> - dpkg: Record test dependencies in Sources index, for implementing reverse test dependency triggering (#1491145); second patch version sent to Debian for review
+
+ 15:05 <pitti> - Test new arm64 kernels on the armhf lxd boxes in scalingstack (#1531768)
+
+ 15:05 <pitti> distro:
+
+ 15:05 <pitti> - apport: Fix UnicodeDecodeError in ubiquity hook (#1446537)
+
+ 15:05 <pitti> - Investigate apport regression on amd64, libnih/gcc problem (#1580601)
+
+ 15:05 <pitti> - pollinate: Fix dependency loops during boot (#1576333)
+
+ 15:05 <pitti> - upower: Fix behaviour when connecting to daemon fails (#1546641)
+
+ 15:05 <pitti> - Review Marco's upower kbd brightness patch (https://bugs.freedesktop.org/show_bug.cgi?id=95457)
+
+ 15:05 <ubottu> Freedesktop bug 95457 in general "KbdBacklight.GetBrightness always returns the cached value for keyboards with hardwired controls" [Normal,New]
+
+ 15:05 <pitti> - lots of SRU processing
+
+ 15:06 <pitti> - patch pilot shift
+
+ 15:06 <pitti> (end)
+
+ 15:06 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:06 <sil2100> - RTM status meetings
+
+ 15:06 <sil2100> - More work on OTA-11, preparing re-spins, pushing on fixes, snapshot copies etc.
+
+ 15:06 <sil2100> - Adding ubuntu-pd support to commitlogs, enabling frieza commitlogs
+
+ 15:06 <sil2100> - Discussing the future of the SDK seeds with the SDK team
+
+ 15:06 <sil2100> - Looking into the batch package copy from overlay to yakkety before trio landings
+
+ 15:06 <sil2100> - Xenial touch transition
+
+ 15:06 <sil2100> * Improving the automated arm64-availability scripts
+
+ 15:06 <sil2100> * Enabling arm64 in packaging for the touch meta package, backporting to xenial
+
+ 15:06 <sil2100> * Discussing the arm64 oxide and ciborium situation
+
+ 15:06 <sil2100> - Landing team tools improvements, some ideas on a specific snapshot re-spin tool
+
+ 15:06 <sil2100> (done)
+
+ 15:07 <bdmurray> submitted RT to have missing assets investigated
+
+ 15:07 <bdmurray> found out the assets system changed on me
+
+ 15:07 <bdmurray> submitted a different RT to stop using assets.u.c altogether
+
+ 15:07 <bdmurray> fixed bug with errors charm and allow_bug_filing option on precise
+
+ 15:07 <bdmurray> confirmed failed-queue retracers no long run into "ERROR: ExecutablePath" does not exist issues
+
+ 15:07 <bdmurray> wrote cassandra driver code to find crash reports about architectures we don't retrace
+
+ 15:07 <bdmurray> submitted RT to get some arm64 cores to test retracing
+
+ 15:07 <bdmurray> reported Errors / Diasy bug LP: #1582295 (too many R's)
+
+ 15:07 <bdmurray> worked with webops to migrate ET to PS4.5 swift
+
+ 15:07 <bdmurray> dealt with the mess (retracers hanging, large queues) that became
+
+ 15:07 <bdmurray> reported apport bug LP: #1581682 re duplicate signature for package install failures
+
+ 15:07 <ubottu> Launchpad bug 1582295 in Errors "package versions table shows multiple packages from release pocket" [Undecided,New] https://launchpad.net/bugs/1582295
+
+ 15:07 <ubottu> Launchpad bug 1581682 in apport (Ubuntu Xenial) "Duplicate signature for Package problems missing info" [Medium,Fix committed] https://launchpad.net/bugs/1581682
+
+ 15:07 <bdmurray> worked on improvements to duplicate signature in the ubuntu hook
+
+ 15:07 <bdmurray> commited fixes for apport bugs (LP: #1548421, LP: #1581682)
+
+ 15:07 <bdmurray> research into and upload fix to Trusty for apport bug (LP: #1339663)
+
+ 15:07 <bdmurray> investigation into LP: #1566201
+
+ 15:07 <bdmurray> research into apport bug (LP: #1446537)
+
+ 15:07 <bdmurray> review of apport package hooks that use attach_root_command_output (LP: #1446537)
+
+ 15:07 <ubottu> Launchpad bug 1548421 in apport (Ubuntu Xenial) "python stacktrace during 'apport-bug'" [High,Fix committed] https://launchpad.net/bugs/1548421
+
+ 15:07 <ubottu> Launchpad bug 1339663 in apport (Ubuntu Trusty) "ubuntu-bug fails with "whoopsie-upload-all: error: unrecognized arguments" when /var/lib/apport/autoreport exists" [High,Fix committed] https://launchpad.net/bugs/1339663
+
+ 15:07 <ubottu> Launchpad bug 1566201 in apturl (Ubuntu) "/usr/bin/apturl-gtk:AttributeError:/usr/bin/apturl-gtk@47:main:enableChannel:doEnableChannel" [High,Triaged] https://launchpad.net/bugs/1566201
+
+ 15:07 <ubottu> Launchpad bug 1446537 in apport (Ubuntu Xenial) "apport hook fails in add_info with TypeError: 'str' does not support the buffer interface" [Undecided,In progress] https://launchpad.net/bugs/1446537
+
+ 15:07 <bdmurray> SRU verification of trusty bug (LP: #989819)
+
+ 15:07 <ubottu> Launchpad bug 989819 in Daisy "Make duplicate signature more specific for DBusException and OSError" [High,Confirmed] https://launchpad.net/bugs/989819
+
+ 15:07 <bdmurray> pushed apport change to tag bugs apport-hook-error
+
+ 15:07 <bdmurray> ✔ done
+
+ 15:07 <robru> lp:bileto
+
+ 15:07 <robru> - work on parallelizing builds continues
+
+ 15:07 <robru> lp:canonical-mojo-specs
+
+ 15:07 <robru> - fixes for passing token from bileto to jenkins
+
+ 15:07 <robru> (done)
+
+ 15:07 <infinity> - Meetings and start work on 'ubuntu-image' with zyga and barry
+
+ 15:07 <infinity> - Bug triage, AA, SRU, etc work for 16.04.1
+
+ 15:07 <infinity> - Work with Andy on AA training, added him to snakefruit
+
+ 15:07 <infinity> - Existential crisis regarding impending surgery, drafted a hasty will to leave my free time to pitti and my sarcasm to doko
+
+ 15:08 <infinity> (done)
+
+ 15:08 <tdaitx> = JCK 8
+
+ 15:08 <tdaitx> * Debugging JFrame tests to get them working; JFrames are still still showing up yellow with no content
+
+ 15:08 <tdaitx> = Other
+
+ 15:08 <tdaitx> * OpenJDK 6/7/8 bugs:
+
+ 15:08 <tdaitx> - Triage, reproducing (or not), testing fixes, reporting issues upstream (913434, 1582229, 1581835, 1564780, 1580996)
+
+ 15:08 <tdaitx> (done)
+
+ 15:08 <doko> - short week (two bank holidays)
+
+ 15:08 <doko> - yakkety merges
+
+ 15:08 <doko> - GCC cross build fixes
+
+ 15:08 <doko> (done)
+
+ 15:09 <cyphermox> - sponsored bridge-utils for chiluk
+
+ 15:09 <cyphermox> - secure boot integration
+
+ 15:09 <cyphermox> - finished fixing up SB/shim on yakkety for third-party drivers
+
+ 15:09 <cyphermox> - dkms + grub uploads to use update-secureboot-policy.
+
+ 15:09 <cyphermox> - setup local maas environment
+
+ 15:09 <cyphermox> - testing IPv6 PXE boot with grub.
+
+ 15:09 <cyphermox> - grub patches for timers (EFI) on Hyper-V (bug LP: #1519836)
+
+ 15:09 <cyphermox> - preparing grub, shim-signed, dkms SRUs
+
+ 15:09 <ubottu> Launchpad bug 1519836 in grub2-signed (Ubuntu Xenial) "MaaS fails to boot Hyper-V Generation 2 virtual machines" [High,New] https://launchpad.net/bugs/1519836
+
+ 15:09 <pitti> infinity: you mean your *entire* 5 minutes of free time per week? /me is overwhelmed
+
+ 15:09 <chiluk> thought it was cifs-utils.
+
+ 15:09 <cyphermox> - monday May 23 is Victoria/Patriots day
+
+ 15:09 <cyphermox> (done)
+
+ 15:09 <xnox> s390-dasd/dasd -> preseed support in yakkety, unapproved for xenial bug #1572941
+
+ 15:09 <xnox> netcfg -> unapproved sru for netcfg/vlan_id bug #1567687, and turning off dhcp preseed bug [s390x] bug #1572607
+
+ 15:09 <xnox> upstart -> review/merge & upload fixes for testsuite and desktop environment propagation, unapproved sru
+
+ 15:09 <xnox> helping to enable touch packages on arm64 in yakkety
+
+ 15:09 <xnox> meetings about ongoing s390x "support"
+
+ 15:09 <xnox> meetings about images for L1CC
+
+ 15:09 <xnox> prep for Debconf
+
+ 15:09 <xnox> off next week
+
+ 15:10 <xnox> ..
+
+ 15:10 <ubottu> bug 1572941 in Ubuntu on IBM z Systems "s390-dasd module does not perform with preseed file" [Critical,In progress] https://launchpad.net/bugs/1572941
+
+ 15:10 <ubottu> bug 1567687 in netcfg (Ubuntu Xenial) "add vlan support" [Undecided,New] https://launchpad.net/bugs/1567687
+
+ 15:10 <ubottu> bug 1572607 in netcfg (Ubuntu Xenial) "netcfg/disable_autoconfig=true still prompts for "Auto-configure networking?"" [High,Triaged] https://launchpad.net/bugs/1572607
+
+ 15:10 <cyphermox> chiluk: do you also need cifs sponsored?
+
+ 15:10 <infinity> pitti: I suspect I'll have a lot more free time if I'm dead.  You can have it all!
+
+ 15:10 <chiluk> cyphermox: I'm pretty sure you sponsored cifs-utils not bridge-utils.
+
+ 15:10 * pitti is scared
+
+ 15:10 <cyphermox> chiluk: oh, right, I'm mixing things up
+
+ 15:10 <chiluk> no prob.
+
+ 15:11 <cyphermox> chiluk: sponsored cifs-utils for you, bridge-utils for rhaper.
+
+ 15:11 <chiluk> don't worry cyphermox I will need more sponsorship
+
+ 15:11 <chiluk> pesky customers always getting in the way.
+
+ 15:12 <chiluk> slangasek: ??
+
+ 15:13 <slangasek> chiluk: !!
+
+ 15:13 <chiluk> your turn.
+
+ 15:13 <slangasek> * attended the snappy sprint in Vancouver last week! good sprint, brought back some urgent work items for the team which I've been discussing with a few of you (ubuntu-image)
+
+ 15:13 <slangasek> * working on documenting SRU exceptions for various Canonical projects that have upstream QA (juju, snapd)
+
+ 15:13 <slangasek> * brought a cold with me from the previous sprint through customs into Vancouver and back, so less productive than expected at the beginning of the week; but mostly cleared up now
+
+ 15:13 <slangasek> * discussions around z Series systems
+
+ 15:13 <slangasek> * uploaded a fix for a regression in the lsb SRU to trusty (LP: #1582813)
+
+ 15:13 <ubottu> Launchpad bug 1582813 in lsb (Ubuntu Trusty) "service --status-all always reports upstart managed daemons as running" [High,Fix committed] https://launchpad.net/bugs/1582813
+
+ 15:13 <slangasek> * various discussions with the team about priorities for the new cycle
+
+ 15:13 <slangasek> * learning a bit more about how packaging of golang software works
+
+ 15:13 <slangasek> * will be off this morning aside from this meeting
+
+ 15:13 <slangasek> (done)
+
+ 15:14 <infinity> 15:13 < slangasek>  * learning a bit more about how packaging of golang software works
+
+ 15:14 <infinity> My condolences.
+
+ 15:14 <chiluk> * LP #1576747 - Will test
+
+ 15:14 <chiluk> * LP #1581236 - Haswell does not reach greater than pc3.
+
+ 15:14 <chiluk> * LP #1579917 - Skylake with nvme does not reach greater than pc2
+
+ 15:14 <chiluk> * LP #1581141 - cifs-utils
+
+ 15:14 <chiluk> * LP #1581595 - partman-auto-lvm
+
+ 15:14 <chiluk> * Will continue merging when my day job responsibilities allow.
+
+ 15:14 <chiluk> * Got network performance issue in STS Lab ironed out *100 mb link on router.
+
+ 15:14 <chiluk> - done -
+
+ 15:14 <ubottu> Launchpad bug 1576747 in network-manager (Ubuntu) "Network manager unable to control wifi after suspend in 16.04" [High,Confirmed] https://launchpad.net/bugs/1576747
+
+ 15:14 <ubottu> Launchpad bug 1581236 in linux (Ubuntu) "Power state does not drop lower than pc03 for package (Haswell i7-4500U) " [Medium,Incomplete] https://launchpad.net/bugs/1581236
+
+ 15:14 <ubottu> Launchpad bug 1579917 in linux (Ubuntu) "Skylake processor never reaches low power states on X1 Carbon gen 4 with NVMe drive" [Medium,Triaged] https://launchpad.net/bugs/1579917
+
+ 15:14 <ubottu> Launchpad bug 1581141 in cifs-utils (Ubuntu) "Merge from debian cifs-utils_6.5-2" [Low,Fix released] https://launchpad.net/bugs/1581141
+
+ 15:14 <ubottu> Launchpad bug 1581595 in partman-auto-lvm (Ubuntu) "Merge from debian partman-auto-lvm 59" [Low,In progress] https://launchpad.net/bugs/1581595
+
+ 15:14 <slangasek> infinity: I have a package with a "transitional" binary package, which if I drop it from debian/control, causes the package to FTBFS ;)
+
+ 15:14 <chiluk> fyi cyphermox 1581595 is awaiting sponsorship
+
+ 15:15 <cyphermox> yeah you got my curiosity when I saw a d-i component
+
+ 15:15 <chiluk> yeah.. I'm kind of just picking things at random when they pique my interests.
+
+ 15:15 <infinity> slangasek: And not just because it goes from multi-binary to single-binary and installs to a different location?
+
+ 15:15 <chiluk> if anyone has suggestions on which packages to work on first let me know.
+
+ 15:16 <chiluk> I reserve the right to ignore your suggestions though.
+
+ 15:16 <slangasek> infinity: proooobably not
+
+ 15:16 <cyphermox> chiluk: just fyi, I personally don't mind since you seem to know what you're doing from what I've seen, but I was once told it was polite to ask the TIL owner before doing merges :)
+
+ 15:16 <slangasek> s/polite/efficient/
+
+ 15:16 <cyphermox> that too
+
+ 15:16 <infinity> slangasek: I keep meaning to file a debhelper bug begging to fix that for compat 10, and just always install to debian/tmp.
+
+ 15:17 <slangasek> infinity: yes plz
+
+ 15:17 <cyphermox> +1
+
+ 15:17 <chiluk> what's the best way to look that up the TIL owner?
+
+ 15:17 <slangasek> chiluk: merges.u.c
+
+ 15:17 <cyphermox> mom doesn't lie, usually
+
+ 15:17 <slangasek> chiluk: or "latest entry in the changelog"
+
+ 15:17 <chiluk> yeah I didn't think that made them the owner.
+
+ 15:18 <slangasek> it's owner-by-default
+
+ 15:18 <chiluk> but just most probably the owner
+
+ 15:18 <caribou> infinity: got bitten by that with mstflint on Xenial & uploaded a binary package w/o the binaries :-/
+
+ 15:19 <slangasek> ok; any other questions re: status?
+
+ 15:19 <cyphermox> slangasek: chiluk: since we do get the changelog in merges.u.c anyway, would it be worth it to try to bring up stats for who is the most likely owner via number of changelog entries?
+
+ 15:19 <cyphermox> not that that's in any way a priority ;)
+
+ 15:20 <slangasek> cyphermox: I think the current approach of TIL is fine
+
+ 15:21 <slangasek> if you touched it most recently, you are more likely to have time to work on the merge than someone who touched it 5 times 3 years ago
+
+ 15:21 <cyphermox> true
+
+ 15:21 <infinity> doko and I had a discussion at the CDO sprint wherein we opined that perhaps no-change uploads should retain the previous uploader's name in the changelog (so it would just look like a sponsored upload).
+
+ 15:21 <slangasek> and if you don't have time to work on the merge, someone can take the merge from you as appropriate
+
+ 15:21 <cyphermox> I got no questions
+
+ 15:21 <infinity> So TIL is more appropriately the "last meaningful upload".
+
+ 15:22 <slangasek> infinity: well, it's not uncommon for me to do a no-change upload, find that I'm now TIL, and do a force-sync that otherwise wouldn't get done for a cycle
+
+ 15:22 <slangasek> but perhaps my experience is not representative
+
+ 15:23 <pitti> yeah, same here
+
+ 15:23 <pitti> i. e. one earns a lot of merges when doing lib transitions, but at least that cleans up some long-overdue merges
+
+ 15:23 <infinity> pitti: When you forced dpkg through, did you do anything about the (real) devscripts test regression?
+
+ 15:24 <infinity> pitti: If not, I'll file the Debian bug and get that fixed.
+
+ 15:24 <bdmurray> Could we not count no-change uploads somehow?
+
+ 15:24 <pitti> infinity: no, not yet; I just kept it as a tab (just like the nfs-utils regression), but didn't get to devscripts yet
+
+ 15:25 <pitti> infinity: and devscripts was already broken by an earlier dpkg, so that's why I did'nt consider it a blocker for 1.18.7
+
+ 15:25 <pitti> (or earlier whatever)
+
+ 15:26 <infinity> pitti: It was?  It looked like it was passing before dpkg.
+
+ 15:26 <slangasek> bdmurray: could; I just don't think it's worth the effort.  If anyone in particular is bothered by being TIL on too many packages, they can always offer them up
+
+ 15:26 <slangasek> [TOPIC] AOB
+
+ 15:26 <pitti> infinity: http://autopkgtest.ubuntu.com/packages/d/devscripts/yakkety/amd64/
+
+ 15:26 <bdmurray> slangasek: offer them up where?
+
+ 15:27 <slangasek> bdmurray: here, ubuntu-devel, wherever :)
+
+ 15:27 <doko> bdmurray, what do you mean by "not count"?
+
+ 15:27 <slangasek> anything else, today?
+
+ 15:27 <barry> any travis experts among us?
+
+ 15:27 <cyphermox> there is always some victim^Wenthusiastic new developer who might want to take care of package XYZ
+
+ 15:28 <slangasek> I went to elementary school with a travis
+
+ 15:28 <infinity> I know a Travis who's a total jerk.
+
+ 15:28 <pitti> slangasek, bdmurray: I think the best place to "offer" them is the comment column in MoM
+
+ 15:28 <barry> only if he turned into a stand-up comedian named travis c.i.
+
+ 15:28 <slangasek> pitti: good point
+
+ 15:28 <pitti> simple to use, and right where you'd expect them
+
+ 15:28 <pitti> and a lot of merges have such a comment already
+
+ 15:28 <slangasek> barry: heh
+
+ 15:28 <chiluk> i know 3 Travis's  one of which sends sexts to groupme volleyball groups by accident.
+
+ 15:29 <infinity> ...
+
+ 15:29 <infinity> chiluk: You win.
+
+ 15:29 <infinity> chiluk: Or lose...
+
+ 15:29 <chiluk> infinity: bad flashbacks.
+
+ 15:29 * barry is glad he asked
+
+ 15:30 <slangasek> :)
+
+ 15:30 <slangasek> alright, anything else?
+
+ 15:30 <cyphermox> chiluk: fyi isc-dhcp might be manageable. not easy, but fun
+
+ 15:30 <chiluk> alrighty... I'm trying to do quassel right now, but it's not the cleanest of package.. as I have a personal interest in quassel working well.
+
+ 15:31 <cyphermox> chiluk: thanks for that
+
+ 15:31 <cyphermox> slangasek: nothing here.
+
+ 15:31 <chiluk> nothing else slangasek
+
+ 15:31 <bdmurray> Oh, I could use some help with bug 1566201.
+
+ 15:31 <ubottu> bug 1566201 in apturl (Ubuntu) "/usr/bin/apturl-gtk:AttributeError:/usr/bin/apturl-gtk@47:main:enableChannel:doEnableChannel" [High,Triaged] https://launchpad.net/bugs/1566201
+
+ 15:32 <sil2100> All good here, just waiting for you to have a few free cycles to give me some advice on the batch copy stuff
+
+ 15:32 <bdmurray> It happens an awful lot in Xenial.
+
+ 15:33 <slangasek> checked quickly that adobe-flashplugin is published to xenial partner (it is)
+
+ 15:34 <cyphermox> bdmurray: that reminds me of something I touched last cycle
+
+ 15:34 * cyphermox greps
+
+ 15:34 <slangasek> bdmurray: just ran the command from the commandline and it didn't crash immediately
+
+ 15:34 <slangasek> great, cyphermox will take it :)
+
+ 15:34 <bdmurray> I've fixed a couple of tracebacks in that bug but I'm somewhat stuck on the last one.
+
+ 15:35 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

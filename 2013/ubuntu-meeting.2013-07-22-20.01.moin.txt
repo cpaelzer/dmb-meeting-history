@@ -1,0 +1,869 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 22 Jul at 20:01 &mdash; 20:59 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-07-22-20.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== action review ===
+The discussion about "action review" started at 20:02.
+
+
+=== development series alias name ===
+The discussion about "development series alias name" started at 20:03.
+
+  * ''Vote:'' series name for "always at development series" is: "rolling" (Denied)
+  * ''Vote:'' series name for "always at development series" is: "next" (Carried)
+  * ''Vote:'' series name for "always at development series" is: "devel" (Carried)
+
+=== Discussion and vote on OpenSSL as a system library. Follow-up fro mthe last couple of meetings and ML discussion. ===
+The discussion about "Discussion and vote on OpenSSL as a system library. Follow-up fro mthe last couple of meetings and ML discussion." started at 20:32.
+
+
+=== Xen MRE for upstream stable releases (Stefan Bader) ===
+The discussion about "Xen MRE for upstream stable releases (Stefan Bader)" started at 20:33.
+
+
+=== extending KDE MRE (ScottK) ===
+The discussion about "extending KDE MRE (ScottK)" started at 20:46.
+
+  * ''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-July/001666.html was ScottK's mail
+
+=== Scan the mailing list archive for anything we missed ===
+The discussion about "Scan the mailing list archive for anything we missed" started at 20:57.
+
+
+=== beer ===
+The discussion about "beer" started at 20:59.
+
+
+
+
+== Vote results ==
+
+ * series name for "always at development series" is: "next"
+  * Motion carried (For/Against/Abstained 4/1/1)
+ * series name for "always at development series" is: "rolling"
+  * Motion denied (For/Against/Abstained 1/3/2)
+ * series name for "always at development series" is: "devel"
+  * Motion carried (For/Against/Abstained 5/0/1)
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (113)
+ * rickspencer3 (61)
+ * kees (43)
+ * mdz (41)
+ * meetingology (36)
+ * cjwatson (32)
+ * ScottK (30)
+ * smb (21)
+ * stgraber (9)
+ * soren (7)
+ * beuno (1)
+
+
+
+== Full Log ==
+
+
+ 20:01 <pitti> #startmeeting
+
+ 20:01 <meetingology> Meeting started Mon Jul 22 20:01:39 2013 UTC.  The chair is pitti. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:01 <meetingology> 
+
+ 20:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 20:01 <soren> o/
+
+ 20:01 <pitti> hey soren
+
+ 20:02 <pitti> #topic action review
+
+ 20:02 <pitti> kees to review outstanding provisional MREs -- as he doesn't seem to be here, I guess we defer this?
+
+ 20:02 <pitti> I don't see anything else, did I miss something?
+
+ 20:03 <pitti> #topic development series alias name
+
+ 20:03 <kees> hi! here now
+
+ 20:03 <pitti> apparently this was being discussed last time, with: current proposals are "rolling" (preferred by Rick) and "next' (preferred by the TB).
+
+ 20:03 <kees> still looking at mres
+
+ 20:03 <pitti> oh, hey kees!
+
+ 20:03 <pitti> kees: ok, so carrying over is ok?
+
+ 20:04 <kees> yeah, thanks
+
+ 20:04 <pitti> OOI, does "preferred by the TB" mean that everyone else on the TB likes "next" better, or was it "just" a majority?
+
+ 20:05 <kees> everyone preferred "next"
+
+ 20:05 <pitti> "rolling" seems to be more of a goal/promise still, while we might need to change "next" again in the future which would make the change pointless
+
+ 20:05 <ScottK> Since the last meeting I sent in a request for extending the KDE MRE, does that get covered in kees' action or discussed separately?
+
+ 20:05 <pitti> ScottK: I think it's a separate discussion, kees' was only for the existing provisional MREs
+
+ 20:05 <mdz> pitti, it was unanimous among the TB
+
+ 20:05 <pitti> ScottK: I replied on-list
+
+ 20:05 <kees> ScottK: separate, I was reviewing existing for their update histories
+
+ 20:05 <mdz> but we wanted rickspencer3 to have a chance to weigh in
+
+ 20:05 <rickspencer3> is it time to discuss "rolling" vs. "next"? or was that a pre-amble?
+
+ 20:05 <ScottK> OK.
+
+ 20:05 <pitti> rickspencer3: yes, please go
+
+ 20:05 <rickspencer3> ok
+
+ 20:05 <mdz> rickspencer3, it is time
+
+ 20:06 <cjwatson> might need to change> could you elaborate?
+
+ 20:06 <pitti> mdz: (two more of your "no more re-election for me" mails on tb@, FYI; but I got the original alreadY)
+
+ 20:06 <pitti> cjwatson: I mean at a time when we actually drop the non-LTS releases
+
+ 20:06 <pitti> and have an actual rolling release
+
+ 20:06 <pitti> AFAIUI, this was merely deferred, not entirely rejected by sabdfl?
+
+ 20:07 <cjwatson> I am mostly neutral, i.e. mostly just want the discussion to be done
+
+ 20:07 <pitti> but "rolling" at this time is aiming a bit high indeed, although we do better than I initially feared
+
+ 20:07 <kees> that will be a sad day (dropping non-LTS)
+
+ 20:07 <mdz> pitti, still zero on https://lists.ubuntu.com/archives/technical-board/2013-July/thread.html
+
+ 20:07 <pitti> with 9 months of support it's not that much of a release anyway
+
+ 20:07 <cjwatson> I had a very slight preference for next I suppose
+
+ 20:07 <rickspencer3> kees, well, naturally I beg to differ
+
+ 20:07 <kees> rickspencer3: :)
+
+ 20:07 <rickspencer3> :)
+
+ 20:08 <pitti> I don't have a strong opinion, but I slightly prefer "rolling" as that's what the effect is for the user
+
+ 20:08 <kees> i prefer the short stable to long stable
+
+ 20:08 <rickspencer3> is this the time when I should make my case?
+
+ 20:08 <cjwatson> yes
+
+ 20:08 <pitti> rickspencer3: please, just speak up
+
+ 20:08 <rickspencer3> ok, first, thanks for inviting me
+
+ 20:08 <kees> the 6 month cadance, is to me, what makes ubuntu so great.
+
+ 20:08 <pitti> rickspencer3: (we don't have a formal "you have the mike" usually)
+
+ 20:08 <kees> (if I could spell)
+
+ 20:08 <rickspencer3> so, I think that "rolling" is much better than "next"
+
+ 20:08 <rickspencer3> the "development" release is really usable every day, and has been since 12.04
+
+ 20:09 <rickspencer3> this sym link will provide the experience of a rolling release, you are always on the tip, and it flips over when we release
+
+ 20:09 <rickspencer3> I think "rolling" describes the experience quite well, and "next" does not describe this experience
+
+ 20:09 <rickspencer3> I also think the notion of "next" is a result of thinking about Ubuntu development the way we used to do it
+
+ 20:10 <mdz> "rolling" to me implies a continuous flow, rather than stepwise upgrades
+
+ 20:10 <rickspencer3> calling it "next" suggests that it will only be useful in the future
+
+ 20:10 <cjwatson> one of my concerns is that we still have DIF, and that there seems to be pressure against changing rust
+
+ 20:10 <rickspencer3> mdz well, I think that's exactly what the sym link will provide
+
+ 20:10 <cjwatson> that
+
+ 20:10 <kees> it's not a release, and I want there to be no confusion. "usable" does not mean "stable" which is what a release means to me.
+
+ 20:10 <rickspencer3> kees, well, that's fine
+
+ 20:10 <pitti> mdz: and that's what it is, isn't it?
+
+ 20:10 <rickspencer3> I'm not sure how to express it then
+
+ 20:11 <kees> "next" is what it is. it's unfinished
+
+ 20:11 <kees> and seems nicer than calling the symlink "usable" :)
+
+ 20:11 <rickspencer3> kees, but that suggests that you are using something that will reach some point of completeness later
+
+ 20:11 <pitti> I find "next" a little unspecific -- the next what?
+
+ 20:11 <mdz> pitti, not to me. "rolling" is more like debian unstable or testing, with only incremental updates
+
+ 20:11 <mdz> what we're talking about here is a big batch of updates every 6 months
+
+ 20:12 <mdz> no?
+
+ 20:12 <pitti> err, do we?
+
+ 20:12 <rickspencer3> mdz no
+
+ 20:12 <kees> next ubuntu release is what it is. you're always running what's next.
+
+ 20:12 <mdz> ok, I'm confused then
+
+ 20:12 <rickspencer3> what it would mean is that you were using what we would essentially call the "development version"
+
+ 20:12 <pitti> I thought right now {next,rolling} == saucy, and it would be t as soon as we release saucy
+
+ 20:12 <mdz> it's been a month and I hardly remember the discussion
+
+ 20:12 <pitti> i. e. "always the devel release"
+
+ 20:12 <rickspencer3> then the day that version releases, the sym link gets moved to the next version
+
+ 20:12 <kees> mdz: it's an alias like "sid" or "unstable"
+
+ 20:12 <cjwatson> we don't in practice roll for the last three months or so
+
+ 20:12 <mdz> ok
+
+ 20:12 <pitti> right, it sometimes flies and sometimes crawls
+
+ 20:13 <mdz> I don't really mind what it's called then
+
+ 20:13 <rickspencer3> cjwatson, actually, I think we d
+
+ 20:13 <rickspencer3> o
+
+ 20:13 <cjwatson> we so font
+
+ 20:13 <cjwatson> don't
+
+ 20:13 <mdz> all I remember is that hackles went up when "rolling release" was mentioned
+
+ 20:13 <cjwatson> gah swype
+
+ 20:13 <pitti> I'd prefer devel > rolling > next, but no strong opinion to argue about it for a long time
+
+ 20:13 <rickspencer3> cjwatson, maybe I don't know what you mean
+
+ 20:14 <rickspencer3> but it seems to me that I get lots of changes at the end of the cycle, sometimes big ones
+
+ 20:14 * ScottK raises hands for hackles over rolling.  It seems inaccurate.
+
+ 20:14 <kees> right. it's not a release and "rolling" is already too associated with that concept.
+
+ 20:14 <cjwatson> we stop taking new upstreams routinely
+
+ 20:14 <rickspencer3> cjwatson, true
+
+ 20:14 <cjwatson> that is what people expect from rolling
+
+ 20:14 <rickspencer3> it slows down, but we take many big changes
+
+ 20:14 <cjwatson> from Canonical
+
+ 20:14 <rickspencer3> we take a kernel, no?
+
+ 20:14 <ScottK> The big changes at the end are because people can't keep a schedule, not because it's supposed to be that way.
+
+ 20:15 <cjwatson> not really from elsewhere
+
+ 20:15 <kees> kernel is frozen almost before  anything else
+
+ 20:15 <cjwatson> a bit, but I really do not think that is what people expect
+
+ 20:15 <rickspencer3> ok
+
+ 20:15 <cjwatson> they want us to just keep going and not freeze
+
+ 20:15 <rickspencer3> to me, the essence of "rolling" is really that you just subscribe to the sym link
+
+ 20:15 <rickspencer3> you expect your desktop always works
+
+ 20:16 <rickspencer3> and you get changes as fast as Ubuntu puts them in
+
+ 20:16 <cjwatson> I honestly don't think that's what everyone else means
+
+ 20:16 <rickspencer3> and there never is a "release"
+
+ 20:16 <cjwatson> I am happy to make the symlink work and would like to
+
+ 20:16 <cjwatson> but it's not rolling
+
+ 20:16 <kees> rickspencer3: i have no problem with the idea of the symlink. we all agreed that was great. just the name was the issue.
+
+ 20:17 <rickspencer3> kees, sure, it;s fine
+
+ 20:17 <pitti> we don't have a good precedent for rolling to compare it against really
+
+ 20:17 <rickspencer3> I was asked to come and explain why I liked "rolling"
+
+ 20:17 <rickspencer3> I appreciate the opportunity
+
+ 20:17 <pitti> even sid isn't truly rolling in that sense, it had been frozen for over a year
+
+ 20:17 <rickspencer3> I don't really like "next" at all
+
+ 20:17 <rickspencer3> but, I am not on the TB
+
+ 20:18 <pitti> FWIW, I don't like "next" either, it doesn't tell me anything; I'd rather have "devel" then, as that's what it actually is -- the current development series
+
+ 20:18 <kees> rickspencer3: we reviewed the suggested list from uds. if rolling is bad and next is bad, we need a new list, i think
+
+ 20:18 <rickspencer3> I think I would prefer for the TB to make a decision
+
+ 20:18 <rickspencer3> If it's arbitrary, then I would ask that you pick "rolling"
+
+ 20:19 <rickspencer3> but if it's not, I really would support whatever
+
+ 20:19 <rickspencer3> kees, does that make sense?
+
+ 20:19 <mdz> this is basically invisible to users, right?
+
+ 20:19 <mdz> who is the name important to?
+
+ 20:19 <kees> sure
+
+ 20:19 <ScottK> Except they'll have to opt in to it somehow
+
+ 20:19 <ScottK> They'll be opting in to a name.
+
+ 20:19 <mdz> they will?
+
+ 20:19 <kees> i don't want any mistake made about it being a release. that's my criteria
+
+ 20:19 <rickspencer3> mdz yes
+
+ 20:19 <mdz> seems like we would have the opportunity to describe in prose what they're getting
+
+ 20:19 <pitti> it somehow needs to be exposed in software-properties
+
+ 20:19 <mdz> rather than just giving them a word
+
+ 20:20 <rickspencer3> but we could describe the feature in the GUI however we wanted
+
+ 20:20 <rickspencer3> so, you make a good point
+
+ 20:20 <rickspencer3> it's doubly arbitrary
+
+ 20:20 <mdz> and yet it seems important to you and ScottK
+
+ 20:20 <pitti> kees: in that regard, terminology is already flawed; neither "rolling" nor "devel" are actual releases
+
+ 20:20 <pitti> they are precisely the series which are *not* released, after all :)
+
+ 20:21 <cjwatson> we were also going to let developers upload to it
+
+ 20:21 <kees> "rolling" has alreadt been publically associated with being a release
+
+ 20:21 <ScottK> If it wasn't already a package name, I'd suggest horizon, since no matter how long you go towards it, you never get there.
+
+ 20:21 <kees> "devel" is accurate, but so many things are called devel
+
+ 20:21 <pitti> but how is "rolling" a release, in any sense of the word?
+
+ 20:21 <cjwatson> so it's not arbitrary,it will influence developer behaviour
+
+ 20:21 <cjwatson> and I'm
+
+ 20:21 <ScottK> pitti: It's not and that was part of the problem with the proposal.  We ought not mix this up with that.
+
+ 20:22 <cjwatson> concerned that it's incompatible with our current freeze processes
+
+ 20:22 <kees> pitti: it is not pitti it wouldn't be in reality, but existing persepctions will confuse it
+
+ 20:22 <mdz> how about we agree to delegate to http://www.dotomator.com/web20.html
+
+ 20:22 <rickspencer3> mdz fine "Voope" it is
+
+ 20:22 <mdz> I like "zoomdog"
+
+ 20:22 <pitti> "Thoughtpath"
+
+ 20:22 <cjwatson> ha
+
+ 20:23 <kees> zoomdog. winnar
+
+ 20:23 * ScottK got "Gabify".
+
+ 20:23 <ScottK> I think that's what's going on right now.
+
+ 20:24 <mdz> I want to cry when I think of all the brain power that has already been absorbed by this question
+
+ 20:24 <pitti> so, as this is a rather classic bikeshedding argument and we could be here all night, how about we just vote on the existing proposals and get it done? or rickspencer3, would you like to discuss more?
+
+ 20:24 <kees> rickspencer3: you don't like "next" but would be okay with it since it's not very visible?
+
+ 20:24 <rickspencer3> pitti, I've said all I can say, I think
+
+ 20:24 <mdz> pitti, +1 on drawing to a quick conclusion
+
+ 20:24 <rickspencer3> kees, I don't like "next", but I don't think me being "okay with it" is terribly apropos
+
+ 20:25 <rickspencer3> I think this is a TB decision
+
+ 20:25 <rickspencer3> and I won't quit Ubuntu if I don't get my way
+
+ 20:25 <rickspencer3> ;)
+
+ 20:25 <pitti> so, our options are "next" and "rolling", or were there any others?
+
+ 20:25 <kees> rickspencer3: well, I'd prefer something you're happy with
+
+ 20:25 <pitti> has "devel" even been on the table from the UDS discussin?
+
+ 20:25 <mdz> all things considered, we can't possibly consider all things
+
+ 20:25 <kees> pitti: the list we looked at was from uds,but I can't find the url
+
+ 20:25 <rickspencer3> kees, I don't see how we will get past this
+
+ 20:26 <rickspencer3> in a way that makes everyone totally happy
+
+ 20:26 <kees> devel was on it.
+
+ 20:26 <rickspencer3> and it is such a small small thing in the scheme of things
+
+ 20:26 <cjwatson> I would prefer tofind something everyone likes, but that doesn't seem possible
+
+ 20:26 <pitti> kees: ah, ok; so in between rolling, next, and devel?
+
+ 20:26 <rickspencer3> rolling it is!
+
+ 20:26 <rickspencer3> good choice
+
+ 20:26 <rickspencer3> next topic?
+
+ 20:26 <kees> and things like head, master, tip, etc
+
+ 20:27 <cjwatson> I'm not vehemently against rolling, but I see definite problems with it
+
+ 20:27 <pitti> for counting I propose three separate votes, one for each name; multiple +1 allowed, the one with the most votes wins; ok?
+
+ 20:27 <mdz> sure
+
+ 20:27 <pitti> (I can't figure out CC at this time of the night)
+
+ 20:28 <mdz> but risks a tie
+
+ 20:28 <kees> that's probably best
+
+ 20:28 * rickspencer3 braces
+
+ 20:28 <mdz> at least it's fast
+
+ 20:28 <pitti> #vote series name for "always at development series" is: "rolling"
+
+ 20:28 <meetingology> Please vote on: series name for "always at development series" is: "rolling"
+
+ 20:28 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 20:28 <pitti> +1
+
+ 20:28 <meetingology> +1 received from pitti
+
+ 20:28 <kees> -1
+
+ 20:28 <meetingology> -1 received from kees
+
+ 20:28 <mdz> +0
+
+ 20:28 <meetingology> +0 received from mdz
+
+ 20:28 <stgraber> -1
+
+ 20:28 <meetingology> -1 received from stgraber
+
+ 20:28 <cjwatson> +0
+
+ 20:28 <meetingology> +0 received from cjwatson
+
+ 20:28 <soren> -1 (zoomdog ftw1)
+
+ 20:28 <meetingology> -1 (zoomdog ftw1) received from soren
+
+ 20:28 <pitti> #endvote
+
+ 20:28 <meetingology> Voting ended on: series name for "always at development series" is: "rolling"
+
+ 20:28 <meetingology> Votes for:1 Votes against:3 Abstentions:2
+
+ 20:28 <meetingology> Motion denied
+
+ 20:28 <pitti> #vote series name for "always at development series" is: "next"
+
+ 20:28 <meetingology> Please vote on: series name for "always at development series" is: "next"
+
+ 20:28 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 20:28 <mdz> +0
+
+ 20:28 <meetingology> +0 received from mdz
+
+ 20:28 <pitti> -1
+
+ 20:28 <meetingology> -1 received from pitti
+
+ 20:28 <kees> +1
+
+ 20:28 <meetingology> +1 received from kees
+
+ 20:29 <soren> +1
+
+ 20:29 <meetingology> +1 received from soren
+
+ 20:29 <cjwatson> +1
+
+ 20:29 <meetingology> +1 received from cjwatson
+
+ 20:29 <stgraber> +1
+
+ 20:29 <meetingology> +1 received from stgraber
+
+ 20:29 <pitti> #endvote
+
+ 20:29 <meetingology> Voting ended on: series name for "always at development series" is: "next"
+
+ 20:29 <meetingology> Votes for:4 Votes against:1 Abstentions:1
+
+ 20:29 <meetingology> Motion carried
+
+ 20:29 <pitti> #vote series name for "always at development series" is: "devel"
+
+ 20:29 <meetingology> Please vote on: series name for "always at development series" is: "devel"
+
+ 20:29 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (private votes don't work yet, but when they do it will be by messaging the channel followed by +1/-1/+0 to me)
+
+ 20:29 <pitti> +1
+
+ 20:29 <meetingology> +1 received from pitti
+
+ 20:29 <cjwatson> +1
+
+ 20:29 <meetingology> +1 received from cjwatson
+
+ 20:29 <kees> +0
+
+ 20:29 <meetingology> +0 received from kees
+
+ 20:29 <soren> +1
+
+ 20:29 <meetingology> +1 received from soren
+
+ 20:29 <stgraber> +1
+
+ 20:29 <meetingology> +1 received from stgraber
+
+ 20:29 <mdz> +1
+
+ 20:29 <meetingology> +1 received from mdz
+
+ 20:29 <pitti> #endvote
+
+ 20:29 <meetingology> Voting ended on: series name for "always at development series" is: "devel"
+
+ 20:29 <meetingology> Votes for:5 Votes against:0 Abstentions:1
+
+ 20:29 <meetingology> Motion carried
+
+ 20:29 <soren> Wow. Unexpected.
+
+ 20:29 <pitti> wow
+
+ 20:30 <mdz> I demand a recount with condorcet voting
+
+ 20:30 <pitti> so we name the developmetn series ... "devel"?
+
+ 20:30 <kees> lol
+
+ 20:30 <rickspencer3> devel
+
+ 20:30 <pitti> mdz: if you know the procedure, please do
+
+ 20:30 <soren> So we spend weeks debating about "next" vs "rolling" and end up choosing "devel". I love it.
+
+ 20:30 <mdz> pitti, kidding
+
+ 20:30 <rickspencer3> ?
+
+ 20:30 <ScottK> It's possible there was some strategic voting there.
+
+ 20:30 <soren> It's no zoomdog, but hey.
+
+ 20:30 <rickspencer3> Interestingly I just bought a condo in a small condo building. There is no storage, so no where to store my bike. So, in a couple of weeks I need to start a literal discussion about a bike shed.
+
+ 20:30 <kees> red!
+
+ 20:31 <cjwatson> ScottK:not from me
+
+ 20:31 <beuno> rickspencer3, surely it will be names rolling? :)
+
+ 20:31 <pitti> ScottK: order shouldn't have mattered?
+
+ 20:31 * ScottK was kidding (mostly)
+
+ 20:31 <kees> i voted how I felt. devel over rolling, but not really FOR it
+
+ 20:31 <rickspencer3> it's funny that we have so much trouble naming this "thing"
+
+ 20:31 <pitti> so, anyone who wants to propose something new, please start a new thread and try to convince people that it's really a lot better :)
+
+ 20:32 <ScottK> The bikeshed is painted now.  that's the main thing.
+
+ 20:32 <pitti> *phew*
+
+ 20:32 <pitti> rickspencer3: thanks for being at the meeting
+
+ 20:32 <pitti> #topic Discussion and vote on OpenSSL as a system library. Follow-up fro mthe last couple of meetings and ML discussion.
+
+ 20:32 * ScottK thought that was voted on last time.
+
+ 20:32 <pitti> I thought this had already been concluded at the last meeting, according to mdz's summary?
+
+ 20:32 <kees> that's settled
+
+ 20:32 <mdz> yes, I thought so too
+
+ 20:32 <mdz> I didn't get to updating the wiki
+
+ 20:32 <pitti> ack, thanks
+
+ 20:32 <mdz> I barely got the minutes out
+
+ 20:33 <pitti> #topic Xen MRE for upstream stable releases (Stefan Bader)
+
+ 20:33 <smb> \o
+
+ 20:33 <kees> if there have been good srus, I' for a provisional. it sounds like it gets good testing
+
+ 20:33 <pitti> I didn't reply because even from my years-long SRU time I can't remember a xen SRU
+
+ 20:33 <smb> kees, not sure what exactly you mean by some good srus
+
+ 20:34 <kees> smb	have there been xen SRUs already?
+
+ 20:34 <smb> pitti, Usually only cves
+
+ 20:34 <pitti> it seems a bit surprising that maintenance suddenly has gone up, but if it did, I'm fine with a provisional MRE as well
+
+ 20:34 <kees> that didn't have regressions?
+
+ 20:34 <smb> But since a while there is also upstream stable releases
+
+ 20:34 <smb> (and probably none yet really looked there)
+
+ 20:34 <pitti> smb: right, but these aren't subject to SRU restrictions anyway
+
+ 20:34 <smb> No, I started to think about it as
+
+ 20:35 <smb> a) it is a bit like we already do with the kernel
+
+ 20:35 <smb> b) security patches are based on the latest stable series
+
+ 20:35 <smb> And the upstream stable releases go through reviews and afaik through regression testing
+
+ 20:36 <smb> So it just seems a sensible approach to keep the version maintained even after release without too much more work
+
+ 20:36 <pitti> smb: what kind of testing do, or can we do, on proposed xen updates? like, running various existing test suites on various ubuntu releases under xen ?
+
+ 20:37 <pitti> smb: and what magnitude of changes do we talk about here? like, the occasional bug fix, or lots of reegineering?
+
+ 20:37 <pitti> (the latter would actually surprise me)
+
+ 20:37 <smb> pitti, I am not sure there is really anything going on testing wise beyond the tests I do
+
+ 20:38 <smb> and those are more manual by putting the updated hypervisor on two testboxes (amd and intel) and then fire up thy dom0 and pvm and hvm guest
+
+ 20:38 <smb> pitti, And for magnitude, the number of check-ins may seem large but it is restricted to bugfixes and small contain improvements not re-engenieering
+
+ 20:38 <pitti> ah, reading the proposed diffs now, it's quite a list
+
+ 20:39 <smb> pitti, mostly because I took the commit from git
+
+ 20:39 <pitti> so yeah, not quite possible to verify them all, we need some good regression testing there
+
+ 20:39 <smb> I mean the short version oof commit ids
+
+ 20:40 <smb> pitti, because we don't trust upstream?
+
+ 20:40 <kees> i think we're better off with the fixes than without, so I'd likea provisional mre. if things stay smooth, it should get full mre quickly
+
+ 20:41 <pitti> smb: well, with that magnitude of changes it's not about trust, but about throwing more eyes on it, plus testing it in the ubuntu specific environment/binary build etc, which upstream can't do
+
+ 20:41 <pitti> smb: i. e. a newer xen package on precise might behave differently than what upstream tested on a different kernel?
+
+ 20:42 <smb> pitti, I would always keep with the same minor version (so precise is xen 4.1.x and remains on that stream)
+
+ 20:42 <smb> For raring it would be 4.2.x
+
+ 20:42 <pitti> smb: I think if we can define some regression testing, like "boot the last N releases/LTS default install and verify some list of things (networking, file system test suite, etc.)", we have some standard process which we can even automate
+
+ 20:42 <pitti> smb: right
+
+ 20:43 <smb> pitti, Ah well ok. Though in some way I do those things but the question is how to document and have a tickoff list
+
+ 20:43 <pitti> so a comment like "Would like to see this as upgrading to 13.04/xen 4.2.1 broke pci-e passthrough for me but is fixed in 4.2.2." suggests that upstream microreleases are good to get in, but also that xen is not completely regression proof (which is certainly understandable between major releases)
+
+ 20:43 <pitti> smb: right, hence my question how we currently test them
+
+ 20:43 <pitti> smb: doing these manually sounds cumbersome
+
+ 20:44 <pitti> I agree to kees' "pro provisional MRE", we can discuss some verification strategy with the SRU team in these "update to x.y.z" bugs
+
+ 20:45 <pitti> cjwatson, soren, mdz, stgraber, any objections? ^
+
+ 20:45 <mdz> yes
+
+ 20:45 <pitti> mdz: please go ahead
+
+ 20:45 <stgraber> I'm fine with a provisional MRE
+
+ 20:45 <mdz> oh, sorry, I meant no
+
+ 20:45 <pitti> ah :)
+
+ 20:45 <cjwatson> no objections
+
+ 20:45 <mdz> yes I support a provisional MRE
+
+ 20:46 <pitti> great, that's settled; smb, thanks for joining
+
+ 20:46 <smb> thanks
+
+ 20:46 * smb goes back melting
+
+ 20:46 <pitti> #agreed provisional MRE for Xen, with defining more formal testing on the first SRU with the SRU team
+
+ 20:46 <pitti> #topic extending KDE MRE (ScottK)
+
+ 20:47 <pitti> I'm mostly +1 on this (as I said on the ML), with the exception of lightdm-kde where I would like to know first what kind of changes goes into it
+
+ 20:48 * ScottK is researching that now
+
+ 20:48 <stgraber> When was that sent tl the ML?
+
+ 20:48 <cjwatson> link would be good
+
+ 20:48 <pitti> my gut feeling is that we should be rather careful with this, and while it's certainly ok to update to new upstream microreleases, the individual changes ought to be reviewed more carefully than for the apps
+
+ 20:48 <ScottK> stgraber: Wed Jul 17 15:37:22 2013
+
+ 20:49 <pitti> https://lists.ubuntu.com/archives/technical-board/2013-July/001666.html was ScottK's mail
+
+ 20:49 <pitti> hm, my response hasn't gotten to the archive yet
+
+ 20:49 <ScottK> I got it though.
+
+ 20:49 <pitti> other than what I said above, I just said "I experienced several of those during my active ~ubuntu-sru time and
+
+ 20:49 <pitti> can confirm this."
+
+ 20:49 <pitti> those == KDE SRUs
+
+ 20:49 <stgraber> hmm, must have missed this... and no access to email at the moment
+
+ 20:50 <ScottK> We just finished doing 4.10.5 last week.
+
+ 20:50 <pitti> ScottK: yeah, the magic of CC: :)
+
+ 20:51 <stgraber> list looks reasonable to me
+
+ 20:51 * stgraber looks some more
+
+ 20:52 <pitti> to me as well, with the only "paranoia" bit that jumps out being lightdm-kde
+
+ 20:52 <pitti> although I guess that's mostly the chrome, not the plumbings
+
+ 20:52 <ScottK> We don't have an immediate need for that as raring has the current release.
+
+ 20:52 <ScottK> Yes, it should be just the front end bits.
+
+ 20:54 <stgraber> lightdm-kde is a separate frontend for lightdm, so if it's maintained by the kubntu folks with the same process as other kde packages, I'm fine with it
+
+ 20:54 <kees> yeah, I agree with pitti. looks good with questions about lightdm-kde. :)
+
+ 20:54 <pitti> and to be fair, I would have counted all of these as "KDE" as per https://wiki.ubuntu.com/StableReleaseUpdates/MicroReleaseExceptions anyway ..
+
+ 20:55 <ScottK> OK.  We've been pretty strict about limiting it to the core KDE.
+
+ 20:55 <pitti> ok, so it seems no further questions/objections?
+
+ 20:56 <pitti> ScottK: so, seems we have a winner!
+
+ 20:56 <ScottK> Great.
+
+ 20:56 <pitti> ScottK: do you want to keep lightdm-kde in the list, or rather put it back to reviewing individual changes?
+
+ 20:57 <pitti> TBH I don't have a really good idea how sensitive it would be to different hw/acceleration and the like
+
+ 20:57 <ScottK> Let's wait until there's an update and then I'll bring it back with a concrete example in hand.
+
+ 20:57 <pitti> ack
+
+ 20:57 <pitti> #topic Scan the mailing list archive for anything we missed
+
+ 20:58 <pitti> nothing else that I can see
+
+ 20:58 <ScottK> If the archive was up to date, there would be something.
+
+ 20:58 <pitti> my mailbox also doesn't have anything else
+
+ 20:58 <pitti> and mutt makes them stand out in green for me :)
+
+ 20:58 <ScottK> Not that we expect the TB to act on it today, but Laney, on behalf of the TB, sent out a proposal on modifying PPU.
+
+ 20:59 <ScottK> Message-ID: <20130722200701.GC22297@iota>
+
+ 20:59 <pitti> oh, in fact I just got it
+
+ 20:59 <ScottK> (I got a copy via the TB list)
+
+ 20:59 <pitti> but it's longish, perhaps we could give us some time to digest
+
+ 20:59 <ScottK> This is something to review and consider.
+
+ 20:59 <mdz> ah, hadn't seen that as I was looking at the archive
+
+ 20:59 <mdz> reading now
+
+ 20:59 <mdz> ah, yes, we're out of time anyway
+
+ 20:59 <pitti> I propose to carry?
+
+ 20:59 <ScottK> Yes.  I wanted to bring it to your attention to reivew.
+
+ 20:59 <pitti> thanks
+
+ 20:59 <ScottK> Yes
+
+ 20:59 <pitti> #topic beer
+
+ 20:59 <pitti> err, I meant
+
+ 20:59 <pitti> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

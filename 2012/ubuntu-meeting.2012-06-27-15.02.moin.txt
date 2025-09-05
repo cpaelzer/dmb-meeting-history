@@ -1,0 +1,888 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:47 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-06-27-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' http://pad.lv/872824   (stokachu, 15:27:43)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/foundations-o-live-build   (cjwatson, 15:29:39)
+
+ *AOB
+
+
+
+Meeting ended at 15:55:24 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (90)
+ * infinity (51)
+ * stokachu (42)
+ * ogra_ (36)
+ * stgraber (34)
+ * cjwatson (32)
+ * ev (32)
+ * xnox (19)
+ * jodh (16)
+ * ubottu (16)
+ * bdmurray (11)
+ * doko (11)
+ * barry (11)
+ * mvo (6)
+ * meetingology (3)
+ * highvoltage (1)
+ * cyphermox (1)
+
+
+
+== Full Log ==
+
+
+ 15:02:47 <slangasek> #startmeeting
+
+ 15:02:47 <meetingology> Meeting started Wed Jun 27 15:02:47 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:47 <meetingology> 
+
+ 15:02:47 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:52 <slangasek> [TOPIC] lightning round
+
+ 15:02:54 <slangasek> doko: go ahead
+
+ 15:03:05 <doko> - python 3.3.0 beta1 work (upstreaming patches, updating libffi, packaging)
+
+ 15:03:05 <doko> - wip: python3.3 cross build
+
+ 15:03:05 <doko> - help wanted: why no output when building the extension modules
+
+ 15:03:05 <doko> - gcc updates, applied temporary work around to fix std::list ABI incompatibility
+
+ 15:03:06 <doko> - sent another gcc-multiarch update upstream, forwarded arm patches
+
+ 15:03:08 <doko> - started reworking pysmbc python3, based on upstream feedback
+
+ 15:03:10 <doko> - packaged openjdk-6 security update/release
+
+ 15:04:33 <slangasek> doko: can you expand on the help wanted, give us a pointer to where it is you're expecting output and not seeing it?
+
+ 15:04:34 <doko> ..
+
+ 15:04:42 <doko> slangasek, chatting with barry
+
+ 15:04:46 <slangasek> ok
+
+ 15:04:55 * barry looked at that "no output when building ext modules" back in the 2.6-ish time frame iirc.  at the time, i had no clue what's going on there :(
+
+ 15:05:01 <slangasek> is the std::list temporary work-around consistent with what upstream is planning for 4.7.2?
+
+ 15:05:23 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:05:26 <slangasek> jodh stokachu ogra bdmurray xnox doko barry slangasek cjwatson ev stgraber infinity
+
+ 15:05:29 <slangasek> jodh: your turn next
+
+ 15:05:35 <doko> I didn't get any feedback from upstream ... it's something planned, but it got quiet again
+
+ 15:05:38 <jodh> * boot/upstart: stateful re-exec support:
+
+ 15:05:38 <jodh> - lots of code refactoring to KISS ;)
+
+ 15:05:38 <jodh> - lots of progress on JobClass serialisation/deserialisation.
+
+ 15:05:38 <jodh> - working on breaking circular references between objects.
+
+ 15:05:39 <barry> slangasek: there's no bug # and it doesn't break the build, but it's sure annoying
+
+ 15:05:41 <jodh> * misc: Sick Monday.
+
+ 15:05:45 <jodh> 𝆲
+
+ 15:05:48 <jodh> 
+
+ 15:06:21 <stokachu> jodh: does that mean you are done?
+
+ 15:06:24 <stokachu> i cant tell what that is :P
+
+ 15:06:38 <jodh> stokachu: sliding glissando :)
+
+ 15:06:43 <stokachu> ahh
+
+ 15:06:55 <stokachu> *** INPROGRESS http://pad.lv/578536
+
+ 15:06:57 <ubottu> Launchpad bug 578536 in autofs5 (Ubuntu Natty) "when stopped, automount orphans some mounts" [Medium,Fix committed]
+
+ 15:06:57 <stokachu> DEADLINE: <2012-06-27 Thu> SCHEDULED: <2012-06-26 Tue>
+
+ 15:06:59 <stokachu> Backported 2 patches that address hanging automount and listing
+
+ 15:07:01 <cjwatson> Or U+FFFD REPLACEMENT CHARACTER as it came through here ...
+
+ 15:07:01 <stokachu> stale mount points in /proc/mounts during a re-read of map entries,
+
+ 15:07:03 <stokachu> commits here http://is.gd/RpIFyQ, waiting OP testing results.
+
+ 15:07:08 <stokachu> *** TODO http://pad.lv/977952
+
+ 15:07:08 <ubottu> Launchpad bug 977952 in libbonoboui (Ubuntu Precise) "Please transition libbonoboui to multi-arch" [Medium,Triaged]
+
+ 15:07:09 <stokachu> DEADLINE: <2012-07-06 Wed> SCHEDULED: <2012-06-26 Tue>
+
+ 15:07:11 <stokachu> Blocked on http://pad.lv/977947 being completed.
+
+ 15:07:12 <ubottu> Launchpad bug 977947 in libbonobo (Ubuntu Quantal) "Please transition libbonobo to multi-arch" [Medium,Triaged]
+
+ 15:07:19 <stokachu> *** http://pad.lv/977964 [50%]
+
+ 15:07:20 <ubottu> Launchpad bug 977964 in libart-lgpl (Ubuntu Precise) "Please transition libart-lgpl to multi-arch" [Medium,Triaged]
+
+ 15:07:20 <stokachu> **** DONE SRU template
+
+ 15:07:22 <stokachu> **** TODO needs debdiff for precise.
+
+ 15:07:24 <stokachu> DEADLINE: <2012-06-27 Wed> SCHEDULED: <2012-06-22 Fri>
+
+ 15:07:26 <stokachu> ...
+
+ 15:07:36 <stokachu> org-mode rules btw
+
+ 15:07:50 <jodh> stokachu: +1000
+
+ 15:07:53 <barry> stokachu: that is one of the tops on my list to investigate
+
+ 15:07:54 * xnox we can tell
+
+ 15:08:05 <stokachu> xnox: lol :P
+
+ 15:08:25 <jodh> stokachu: you tried the mobile versions too?
+
+ 15:08:30 <xnox> stokachu: export to text buffer may format it slightly nicer with C-c a
+
+ 15:08:37 <stokachu> jodh: not yet
+
+ 15:08:47 * xnox or was it C-c C-e a
+
+ 15:08:48 <jodh> stokachu: the Android version can sync using U1!
+
+ 15:08:50 <stokachu> xnox: ok ill try that next, still learning everything
+
+ 15:08:56 <stokachu> jodh: love it!
+
+ 15:09:04 <jodh> stokachu: oh yeah.
+
+ 15:09:06 <stokachu> jodh: there are some functions i gotta write to not load inline images etc
+
+ 15:09:11 <stokachu> i think that crashes on android
+
+ 15:09:31 <jodh> stokachu: images? I just do text :)
+
+ 15:09:33 <barry> jodh: is that MobileOrg perhaps? (iOS)
+
+ 15:09:41 <xnox> emacs24 still needs chasing up, btw.
+
+ 15:09:54 <stokachu> jodh: ditta is awesome
+
+ 15:09:58 <stokachu> for charts etc
+
+ 15:10:15 <slangasek> stokachu: so as far as blocking on 977947, I'm not aware that anyone else is working on this - do you intend to take this up to unblock yourself?
+
+ 15:10:16 <jodh> barry: the iOS version isn't quite as feature-ful (doesn't work with U1 for example), but is slicker.
+
+ 15:10:32 <stokachu> slangasek: yea im planing on working both libonobo bugs
+
+ 15:10:36 <slangasek> stokachu: ok cool
+
+ 15:10:43 <barry> jodh: free as in beer and speech! :)
+
+ 15:10:46 <xnox> barry: originally iOS was the first one, but now android version overtook in feature
+
+ 15:10:52 <stokachu> slangasek: ill have more next week once we do the point release meeting tomorrow
+
+ 15:10:55 <slangasek> stokachu: I've included some general notes on the bug regarding Tom's patch; just ask if you have questions
+
+ 15:10:59 <slangasek> ogra_: your turn
+
+ 15:11:02 <ogra_> done:
+
+ 15:11:02 <ogra_> * uploaded some merges
+
+ 15:11:02 <ogra_> * got ac100 images building again
+
+ 15:11:02 <ogra_> * switched the arm world to live images (omap omap4 and mx5)
+
+ 15:11:02 <ogra_> * did set foundations-q-drop-preinst-images to implemented
+
+ 15:11:02 <ogra_> todone:
+
+ 15:11:04 <ogra_> * uploaded some merges
+
+ 15:11:06 <ogra_> * got ac100 images building again
+
+ 15:11:08 <ogra_> * switched the arm world to live images (omap omap4 and mx5)
+
+ 15:11:10 <ogra_> * did set foundations-q-drop-preinst-images to implemented
+
+ 15:11:11 * barry installs
+
+ 15:11:12 <ogra_> todo:
+
+ 15:11:14 <ogra_> * start on foundations-q-hwpack-integration
+
+ 15:11:16 <ogra_> * start taking a look at the QA stuff for arm in preparation of the QA sprint end of the month
+
+ 15:11:18 <ogra_> do:
+
+ 15:11:19 <slangasek> "todone"? :)
+
+ 15:11:20 <ogra_> * start on foundations-q-hwpack-integration
+
+ 15:11:22 <ogra_> * start taking a look at the QA stuff for arm in preparation of the QA sprint end of the month
+
+ 15:11:23 <jodh> xnox: there seem to be 2 android versions too :)
+
+ 15:11:24 <ogra_> ..
+
+ 15:11:26 <ogra_> err
+
+ 15:11:35 <ogra_> isgnore everything after do:
+
+ 15:11:38 <ogra_> thats weird
+
+ 15:11:43 <slangasek> ahh, double-paste one inside the other :)
+
+ 15:11:48 <ogra_> yeah
+
+ 15:12:01 <ogra_> funnily i have the marked text in the terminal in front of me
+
+ 15:12:06 <ogra_> without such an issue
+
+ 15:12:14 <ogra_> and can paste properly
+
+ 15:12:16 <bdmurray> wrote username and password scrubber for apt sources files in apt-clone
+
+ 15:12:17 <bdmurray> investigation into duplicates of bug 541595
+
+ 15:12:17 <bdmurray> modified bug pattern for bug 541595 to specify an apt version to reduce false duplicates
+
+ 15:12:19 <ubottu> Launchpad bug 541595 in dpkg "[Master] package failed to install/upgrade: package is already installed and configured" [Undecided,New] https://launchpad.net/bugs/541595
+
+ 15:12:19 <bdmurray> removal of bug patterns for fixed bugs
+
+ 15:12:25 <bdmurray> updated bug pattern checker to also check the properties of duplicates and see if a package version is specified
+
+ 15:12:28 <bdmurray> work on arsenal to find bug tasks that have been reopened
+
+ 15:12:31 <bdmurray> set up a regression tagged bug subscription and sent instructions to SRU team
+
+ 15:12:34 <bdmurray> arsenal-cron mailing list request, setup and configuration
+
+ 15:12:42 <bdmurray> ⌁ done ⌁
+
+ 15:12:55 <slangasek> ogra_: and I saw your bug report this morning about 'quiet splash' being missing from the armhf live image boot options; are you blocked on someone else to fix that?
+
+ 15:13:21 <ogra_> slangasek, nope, minro fix in debian-cd
+
+ 15:13:25 <ogra_> *minor
+
+ 15:13:29 <slangasek> ok
+
+ 15:13:29 * jodh stands back to avoid bdmurrays sparks.
+
+ 15:13:39 <ogra_> i'm just to busy with the images atm, i'll do it after A2
+
+ 15:13:51 <ogra_> (the bug was just a todo item actually)
+
+ 15:14:00 <stokachu> barry: http://doc.norang.ca/org-mode.html
+
+ 15:14:07 <stokachu> barry: my favorite reference for org-mode
+
+ 15:14:25 <slangasek> ogra_: ack
+
+ 15:14:30 <barry> stokachu: thanks!  i know what i'm doing tonight :)
+
+ 15:15:17 <infinity> barry: You wild man, you.
+
+ 15:15:18 <slangasek> xnox:
+
+ 15:15:21 <xnox> * sent cleaned up patch for libpeas to debian
+
+ 15:15:21 <xnox> * SRU mdadm, e2fsprogs + writing test cases
+
+ 15:15:21 <xnox> * upload autofs merge, and updates to mdadm, btrfs-tools (patches submitted to debian)
+
+ 15:15:21 <xnox> * added testcase to dpkg bug 1015567 and added further TODO items
+
+ 15:15:22 <xnox> * alpha 2 RAID testing (VM and bare metal)
+
+ 15:15:24 <ubottu> Launchpad bug 1015567 in dpkg (Ubuntu Quantal) "upgrade failed: mixed non-coinstallable and coinstallable package instances present" [High,Triaged] https://launchpad.net/bugs/1015567
+
+ 15:15:24 <xnox> * continuing work on ubiquity-lvm/luks
+
+ 15:15:26 <xnox> ǝnop
+
+ 15:15:48 <infinity> xnox: s/n/u/
+
+ 15:15:51 <slangasek> don't you mean əuop?
+
+ 15:16:02 * xnox failed with upside-down unicode characters
+
+ 15:16:14 <infinity> ǝuop
+
+ 15:16:26 * infinity isn't sure which char slangasek is using for that bloated ə
+
+ 15:16:38 <barry> more discussion w/upstream about xapian py3; currently there are a couple of competing opinions :/ with no clear direction yet.  finished libpeas py3. lots of random py3 porting consultations with various folks.  bug 1013490; bug 1016170 (still debugging). sponsored python3-pam port. reviewed unattended-upgrade py3 port.  looked at command-not-found for py3, but needs mvo to upload.  worked on twisted py3 buildbot (waiting on at least
+
+ 15:16:38 <barry> one more outgoing port hole).  prepped python-mode 6.0.9 for debian but will probably wait until 6.0.10 is released.  todo: more work on xapian py3.  done.
+
+ 15:16:40 <ubottu> Launchpad bug 1013490 in update-manager (Ubuntu Quantal) "update-manager crashed with ImportError in /usr/lib/python3/dist-packages/DistUpgrade/DistUpgradeQuirks.py: No module named plugincore.manager" [High,Fix released] https://launchpad.net/bugs/1013490
+
+ 15:16:42 <ubottu> Launchpad bug 1016170 in plymouth (Ubuntu) "No login screen unless "quiet splash" removed from boot line" [High,New] https://launchpad.net/bugs/1016170
+
+ 15:16:44 <cjwatson> infinity: U+0259 LATIN SMALL LETTER SCHWA
+
+ 15:17:07 <stokachu> Welcome to RenegadeBBS
+
+ 15:17:15 <infinity> cjwatson: Except not small at all in the font I'm using.  xnox's was the right size.  Weird.
+
+ 15:17:25 * ogra_ always wondered why unicode does not have a <blink>
+
+ 15:17:31 <ogra_> tag
+
+ 15:19:16 * slangasek яesponds to xnox's failed upside-down unicode by scatteяing inappяopяiate cyяillic chaяacteяs thяoughout
+
+ 15:19:29 * xnox likes
+
+ 15:19:30 <ogra_> lol
+
+ 15:19:35 <slangasek> * Secure Boot
+
+ 15:19:35 <slangasek> * SRU team work - learning that regression-* tags are not being used well, so doing some turfing
+
+ 15:19:38 <slangasek> * and TB discussions about streamlining the MRE process for SRUs
+
+ 15:19:39 <slangasek> (done)
+
+ 15:19:42 <slangasek> * getting a semblance of accuracy on http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html
+
+ 15:19:45 <slangasek> * troubleshooting regression in 802.11n behavior in quantal kernel with my Intel wireless (bug #1015834)
+
+ 15:19:46 <ubottu> Launchpad bug 1015834 in linux (Ubuntu) "Centrino Ultimate-N 6300 wireless connection is unreliable after upgrading to quantal" [High,Incomplete] https://launchpad.net/bugs/1015834
+
+ 15:19:47 * mvo hugs barry for the xapian work, even if the upstream path is not quite clear yet
+
+ 15:20:32 <slangasek> cjwatson:
+
+ 15:20:36 <ogra_> pfft, upstreams ...
+
+ 15:20:37 <barry> mvo: btw, if you have any opinions on str v bytes: http://trac.xapian.org/ticket/346
+
+ 15:20:54 <cjwatson> UEFI:
+
+ 15:20:54 <cjwatson> * Secure boot planning and discussion.
+
+ 15:20:54 <cjwatson> * Further work on efilinux menu patch; v2 out for review.
+
+ 15:20:54 <cjwatson> * Pushed up Launchpad custom-uefi branch for review.  Various comments which I'm attempting to address.
+
+ 15:20:57 <cjwatson> Launchpad:
+
+ 15:21:00 <cjwatson> * Remove change-override.py from Launchpad, now that there's an API replacement.
+
+ 15:21:03 <cjwatson> * Copy custom uploads when copying debian-installer/update-manager uploads between pockets.
+
+ 15:21:07 <cjwatson> * Discussed ddtp-tarball uploads with Michael.  These have now been rearranged so that we don't need a dodgy archiveuploader back door to make them work, and so that copies should be possible shortly.
+
+ 15:21:11 <cjwatson> * Finished code to unrestrict librarian files when using Archive.copyPackage to copy from private PPAs.  This is now confirmed to work for the security team, obsoleting unembargo-package.py.
+
+ 15:21:16 <cjwatson> Miscellaneous:
+
+ 15:21:18 <cjwatson> * Various syncs and merges.
+
+ 15:21:21 <cjwatson> * Downgrade new debootstrap warning which always occurs on Ubuntu to info message (bug 1017398).
+
+ 15:21:22 <ubottu> Launchpad bug 1017398 in debootstrap (Ubuntu) "Quantal Server and alternate automated installation failed with error "Failed to retrieve InRelease"" [Undecided,Fix released] https://launchpad.net/bugs/1017398
+
+ 15:21:24 <cjwatson> * Fix missing hid-generic in initramfs (bug 1017991).
+
+ 15:21:25 <ubottu> Launchpad bug 1017991 in initramfs-tools (Ubuntu) "Keyboard stops working after completing 'Check disk'" [Undecided,Fix released] https://launchpad.net/bugs/1017991
+
+ 15:21:27 <cjwatson> ¶
+
+ 15:21:35 <mvo> cjwatson: \o/ for ddtp copies
+
+ 15:21:41 <ev> - Very short week. Holiday on Thursday and Friday. Conference on Tuesday.
+
+ 15:21:41 <ev> - More work on the Daisy duplicates database backend for Apport.
+
+ 15:21:41 <ev> - Finished up the recoverable errors API branch of apport, submitted a merge
+
+ 15:21:41 <ev> request. Martin echoed the earlier statements of Ted: DBus is heavyweight
+
+ 15:21:41 <ev> for this. I will be discussing alternatives with him in the MP:
+
+ 15:21:41 <ev> https://code.launchpad.net/~ev/apport/recoverable-errors/+merge/111840
+
+ 15:21:41 <ev> - Work refactoring the error reports from application hangs branch after
+
+ 15:21:42 <ev> receiving feedback from Martin:
+
+ 15:21:53 <ev> https://code.launchpad.net/~ev/apport/reports-from-hangs/+merge/111179
+
+ 15:21:54 <ev> - Started investigating options for the "ideal" line on the front of
+
+ 15:21:54 <ev> http://errors.ubuntu.com. This will show the average number of crashes for
+
+ 15:21:54 <ev> users who had the most recent version of the application that crashed
+
+ 15:21:54 <ev> installed (and its dependencies). Apport already has something like this
+
+ 15:21:54 <ev> built in, but it writes it as a translated string to the report file and
+
+ 15:21:54 <ev> only accounts for whether the version installed is the most recent version
+
+ 15:21:55 <ev> in the cache. Cassandra is not really built for tons of small random reads,
+
+ 15:21:55 <ev> so I may have to involve Redis or Memcached. I'm going to talk to Rob and
+
+ 15:22:05 <ev> James Troup about it once I've done a bit more research. Suggestions always
+
+ 15:22:05 <ev> welcome.
+
+ 15:22:05 <ev> - Attended the Software Experts Summit in London. Notes forthcoming, but the
+
+ 15:22:05 <ev> big takeaway was write software to fail. There was an excellent talk by the
+
+ 15:22:05 <ev> security lead on Bing where he detailed just how fault tolerant their entire
+
+ 15:22:05 <ev> system is. Whole racks of computers can disappear and it will happily chug
+
+ 15:22:07 <cjwatson> mvo: I'll probably land it after custom-uefi, though, as the branches are rather overlapping
+
+ 15:22:12 <ev> along (and indeed they effectively weld shut entire shipping crates of
+
+ 15:22:12 <ev> racks). He also stressed when working in a system where realtime feedback is
+
+ 15:22:12 <ev> possible to focus more on metrics and real usage of the system than unit
+
+ 15:22:12 <ev> tests. Unit tests are only an approximation of how the system might be used.
+
+ 15:22:12 <ev> They'll rarely catch the things you don't anticipate.  I'll try to better
+
+ 15:22:12 <ev> explain this and Microsoft's approach in my trip report.
+
+ 15:22:15 <ev> (done)
+
+ 15:22:36 <infinity> ev: "very short week" shouldn't fill my scrollback buffer.  Just sayin'.
+
+ 15:22:37 <ogra_> oh, was a short week then
+
+ 15:22:38 <stgraber> right, "very short week", that only used half of my screen vertical space ;)
+
+ 15:22:46 <ev> hahahahaha, I love you all
+
+ 15:22:50 <stokachu> LOL
+
+ 15:23:04 <stgraber> Short week, Monday was a public holiday (Quebec day), next Monday is one too (Canada day).
+
+ 15:23:08 <stgraber> - Containers
+
+ 15:23:10 <stgraber> - Some more work on python3-lxc, available for testing in ppa:stgraber/experimental
+
+ 15:23:13 <stgraber> - Helped testing the current SRU, preparing the next one
+
+ 15:23:16 <stgraber> - Pushed some more bugfixes and apparmor improvements to quantal.
+
+ 15:23:18 <stgraber> - Still need some more work on memory/error management in my C code...
+
+ 15:23:21 <stgraber> - ISO tracker
+
+ 15:23:23 <stgraber> - Minor UI fix in preparation for alpha-2. Landed on Friday.
+
+ 15:23:26 <stgraber> - Networking
+
+ 15:23:28 <stgraber> - Prepared a batch of network related updates: isc-dhcp, ifupdown, netbase, resolvconf
+
+ 15:23:31 <stgraber> - Went through the network related bug lists, closed a few dozen bugs so far, triaging the
+
+ 15:23:34 <stgraber> rest. Still have to go through 4-5 packages then will try to fix as many of these bugs
+
+ 15:23:37 <stgraber> before uploading the new packages to Quantal.
+
+ 15:23:40 <stgraber> - Other
+
+ 15:23:42 <stgraber> - Alpha-2 related work (product changes on ISO tracker, Edubuntu, ...)
+
+ 15:23:45 <stgraber> - TODO this week
+
+ 15:23:47 <stgraber> - Prepare tomorrow's SRU team meeting (go through bug lists)
+
+ 15:23:50 <stgraber> - Continue working on the network packages, hoping to have all of them uploaded on Thursday/Friday.
+
+ 15:23:53 <stgraber> - Some more LXC work, testing the new hooks that Serge added, rebasing the API branch on that.
+
+ 15:23:56 <stgraber> - Go through the pending-sru and help for these that are stuck on verification-needed
+
+ 15:23:59 <stgraber> (DONE)
+
+ 15:24:19 <slangasek> I think I'm going to celebrate Oregon Day next week
+
+ 15:24:20 <slangasek> just 'cause
+
+ 15:24:28 <slangasek> maybe Portland Day while I'm at it
+
+ 15:24:28 <stokachu> hah
+
+ 15:24:35 <infinity> There's such a thing as Oregon Day?
+
+ 15:24:44 <xnox> stgraber: there will be massive Canada Day celebrations in London at Trafalgar Square ;-)
+
+ 15:24:44 <ogra_> onyl in portland
+
+ 15:24:54 <cjwatson> stgraber: Which reminds me, I started trying to verify the ubiquity precise-proposed bug there, but had to make the livefses use -proposed first :-)  I'll have another go
+
+ 15:24:55 <slangasek> infinity: well there's a Quebec Day, and I don't see what's so special about them
+
+ 15:25:00 <barry> only on portlandia?
+
+ 15:25:01 <slangasek> so I figure that means I get a day too ;)
+
+ 15:25:05 <infinity> slangasek: Syrup.
+
+ 15:25:08 * xnox thinks to go there for some maple syrup
+
+ 15:25:13 <slangasek> vermont has syrup
+
+ 15:25:20 <ogra_> but but... they speak french in an english speking country
+
+ 15:25:26 <infinity> slangasek: Vermont also has a bunch of French Canadians.  Coincidence?
+
+ 15:25:33 <infinity> And loggers.
+
+ 15:25:34 <ev> xnox: I'm sooooo tempted to work the crowd introducing myself to all the "Americans"
+
+ 15:25:37 <infinity> And flannel.
+
+ 15:25:42 <infinity> Vermont is basically Quebec.
+
+ 15:25:42 <slangasek> yes, entirely a coincidence
+
+ 15:25:52 <infinity> ⸘
+
+ 15:25:52 <infinity> This week:
+
+ 15:25:52 <infinity> - A lot of PlusOneMaint-related fixing and transitioning and such
+
+ 15:25:52 <infinity> - Caught up on a bunch of TILM merges and sync
+
+ 15:25:52 <infinity> - Looking into britney2 for our proposed->release migration purposes
+
+ 15:25:54 <infinity> - Spent some over the weekend looking into armel/mono and armel toolchain issues
+
+ 15:25:58 <infinity> - Threw some help at Alpha2 ubuntustudio issues, and respins
+
+ 15:26:00 <infinity> Next week:
+
+ 15:26:02 <infinity> - Should be working almost exclusively on making britney do useful things
+
+ 15:26:05 <infinity> ‽
+
+ 15:26:10 <cjwatson> Yay
+
+ 15:26:36 <infinity> "some over the weekend"... I English good.
+
+ 15:26:38 <slangasek> infinity: it's legal in Vermont to have English-only road signs, so no, it's not Quebec ;)
+
+ 15:27:12 <highvoltage> heh
+
+ 15:27:15 <stgraber> slangasek: hehe, Quebec is pretty much a separate country, at least, quite a lot of people like to think it's ;)
+
+ 15:27:22 <infinity> slangasek: Meh.  Flannel and syrup and duck-sounding accents.
+
+ 15:27:31 <slangasek> stgraber: that's what I'm sayin', Portland should also have its own recognized holiday ;)
+
+ 15:27:31 <infinity> slangasek: The rest is minor implementation details.
+
+ 15:27:34 <slangasek> [TOPIC] Bugs
+
+ 15:27:38 <stgraber> slangasek: ;)
+
+ 15:27:43 <stokachu> http://pad.lv/872824
+
+ 15:27:44 <ubottu> Launchpad bug 872824 in network-manager-strongswan (Ubuntu Precise) "Network-manager locks up when adding strongSwan VPN connection" [Critical,Triaged]
+
+ 15:27:54 <stgraber> oh, that's my bug isn't it? :)
+
+ 15:27:58 <stokachu> stgraber: there is a patch (apparently not ideal workaround)
+
+ 15:28:23 <stokachu> was curious if this is something we will still consider for 12.04.1 (could potentionally be a discussion for tom)
+
+ 15:28:32 <stokachu> or even consider for 12.10
+
+ 15:28:52 <stgraber> well, it's a universe package...
+
+ 15:29:08 <cjwatson> Argh, why are the precise livefses still lacking -proposed
+
+ 15:29:27 <stgraber> it's also not completely clear whether that patch alone would work or if you need to take my package of the latest upstream + that patch
+
+ 15:29:39 <cjwatson> Oh God, I'm an idiot
+
+ 15:29:39 <cjwatson> https://blueprints.launchpad.net/ubuntu/+spec/foundations-o-live-build
+
+ 15:29:45 <cjwatson> "[cjwatson] Add a way to enable proposed updates: TODO"
+
+ 15:29:50 <cjwatson> I never did do that
+
+ 15:30:09 <stgraber> hehe :)
+
+ 15:30:17 <infinity> cjwatson: Didn't this come up the last time we discussed it, too?
+
+ 15:30:22 <cjwatson> Possibly
+
+ 15:30:24 <infinity> cjwatson: Like, in Oakland?
+
+ 15:30:40 <stokachu> stgraber: do i need to actually setup vpn to reproduce or can i just attempt the client side through NM
+
+ 15:30:43 <cjwatson> So I guess I'd better fix that forthwith
+
+ 15:30:50 <infinity> cjwatson: I notice it every time I look at BuildLiveCD.  And then promptly do nothing about it.  You can totally blame me.
+
+ 15:31:03 <slangasek> stgraber, stokachu: "it's a universe package" - meaning the fix isn't tied to the 12.04.1 image releases
+
+ 15:31:19 <cjwatson> infinity: I always blame you
+
+ 15:31:22 <stgraber> stokachu: last I tried, it'd explode before it'd start talking to the server
+
+ 15:31:22 <slangasek> it certainly looks appropriate for an SRU anyway
+
+ 15:31:24 <stokachu> slangasek: should i remove the 12.04.1 milestone
+
+ 15:31:40 <stgraber> stokachu: I think -updates would be more appropriate
+
+ 15:32:11 <slangasek> stokachu: I am not so interested in the accounting of the milestones - if you intend it to be worked on in that timeframe, .2 is fine for the milestone target
+
+ 15:32:12 <stokachu> stgraber: ok ill run the tests myself and see targetted precise-updates milestone
+
+ 15:32:14 <infinity> cjwatson: That's fair.
+
+ 15:32:56 <slangasek> stokachu, stgraber: do you have what you need for that bug, then?
+
+ 15:33:05 <stokachu> slangasek: yea i think so
+
+ 15:33:07 <slangasek> ok
+
+ 15:33:09 <slangasek> other bugs?
+
+ 15:33:14 <stgraber> stokachu: you probably should talk with cyphermox about that bug (if you haven't already) as he's the NetworkManager maintainer. I'm happy to help testing (as I have the server side)
+
+ 15:33:25 <bdmurray> not from me
+
+ 15:33:31 <stokachu> slangasek: im targetting these mainly for setting expectations to higher power :D
+
+ 15:33:56 <stgraber> stokachu: but we have worse NetworkManager bugs to fix first (for packages that are actually in main ;))
+
+ 15:34:03 <slangasek> stokachu: any more bugs on your side that need discussing?
+
+ 15:34:13 <stokachu> slangasek: we're good
+
+ 15:34:28 <slangasek> bug #1017001
+
+ 15:34:30 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:35:08 <slangasek> so this cropped up over the weekend and had me worrying that we have some kind of regression in lucid->precise upgradability
+
+ 15:35:16 <slangasek> because there were a pair of them reported within 24h of each other
+
+ 15:35:42 <slangasek> but I haven't seen more, so now I just think instead that we have latent problems with lucid->precise upgradability :/
+
+ 15:36:02 * cyphermox likes reading Foundations team meeting logs
+
+ 15:36:23 <slangasek> something seems to be going wrong with setup of packages with circular dependencies... I have no idea why
+
+ 15:36:29 <stgraber> slangasek: the trace looks almost identical to bug 937196, I think I mentioned it on IRC the other day, can't remember if you saw that
+
+ 15:36:30 <slangasek> anyone else have an idea what's going on here?
+
+ 15:36:31 <ubottu> Launchpad bug 937196 in ifupdown (Ubuntu) "10.04 LTS -> 12.04 upgrade failed: ifupdown depends on upstart and initscripts but they are not configured" [High,Confirmed] https://launchpad.net/bugs/937196
+
+ 15:37:18 <slangasek> stgraber: I saw the comment, yeah - I think there was something that left me unconvinced they were the same bug, let me see
+
+ 15:38:10 <slangasek> yeah, it may be the same bug indeed
+
+ 15:38:16 <slangasek> but is this an apt bug or a dpkg bug?
+
+ 15:38:34 * doko is leaving now
+
+ 15:38:38 * slangasek waves to doko
+
+ 15:38:39 <stgraber> not sure, I vaguely rmeember the other bug being in "can't reproduce, needs mvo" state...
+
+ 15:38:39 <slangasek> thanks
+
+ 15:38:43 <infinity> dpkg: error processing dpkg (--configure):
+
+ 15:38:44 <infinity> package dpkg is already installed and configured
+
+ 15:38:48 <infinity> ^--- Cute
+
+ 15:38:53 <cjwatson> That's usually an apt bug
+
+ 15:39:03 <slangasek> well, that part is secondary
+
+ 15:39:06 <cjwatson> i.e. it's failed to correctly predict the state
+
+ 15:39:41 <slangasek> the root error is dpkg failing to configure ifupdown because upstart and initscripts aren't configured yet, but I believe there's a legitimate circular dependency there?
+
+ 15:40:15 <cjwatson> (But if this is lucid's apt — I haven't looked — then that was known to have some such bugs I think)
+
+ 15:40:29 <slangasek> it's the release-upgrader apt
+
+ 15:40:33 <cjwatson> hm
+
+ 15:40:34 <infinity> slangasek: If friendly-recovery wasn't breaking upstart, we wouldn't be in this situation.
+
+ 15:41:16 <slangasek> infinity: we also wouldn't be in the situation if the package manager wasn't buggy, and I think we get more bang for our buck if we fix that ;)
+
+ 15:41:29 <infinity> slangasek: Yeah, yeah. ;)
+
+ 15:41:30 <xnox> i wonder if changing breaks -> conflicts would improve the situation.
+
+ 15:41:45 <xnox> cause then the upstart stuff should be done before friendly recovery
+
+ 15:41:46 <slangasek> because it's the same bug in 937196 and 1017001, but *not* the same set of packages
+
+ 15:41:55 <slangasek> xnox: by definition, no
+
+ 15:41:59 <xnox> ok
+
+ 15:42:31 <slangasek> we really don't want to permute the package relationships to try to work around this - that's like chasing lumps in wallpaper
+
+ 15:42:53 <slangasek> but for my part I'm not sure if this is even an apt bug or a dpkg bug
+
+ 15:43:07 <slangasek> we may have to wait until we can safely keep apt-clone attachments in LP before we can make headway
+
+ 15:43:14 <infinity> slangasek: Depends on how many dpkg runs there are here.
+
+ 15:43:36 <slangasek> yeah, and I'm not sure we have enough info in the bug report to say that
+
+ 15:43:48 <infinity> slangasek: Sure you do.  Count the "reading database" bits.
+
+ 15:44:12 <slangasek> I wasn't aware that was a 1:1 mapping to dpkg calls?
+
+ 15:44:27 <infinity> slangasek: Well, at one point in time, it used to be.  Perhaps not anymore.
+
+ 15:44:34 <slangasek> anyway, even if we count the dpkg calls that doesn't tell us whether dpkg was asked to configure all the packages in one go
+
+ 15:44:39 <slangasek> we only see the package it *failed* to configure
+
+ 15:44:46 * infinity nods.
+
+ 15:45:17 <slangasek> mvo: ^^ if you're around and have any ideas about how we can debug this without an apt clone file, that would be welcome :)
+
+ 15:46:03 <bdmurray> slangasek: what bug number?
+
+ 15:46:03 <slangasek> in the meantime, doesn't sound like anybody else has any brilliant ideas for solving it
+
+ 15:46:06 <cjwatson> It's a 1:1 mapping to ensure_allinstfiles_available calls, which I think winds up being more or less unpack and remove
+
+ 15:46:12 <slangasek> bdmurray: bug #1017001 + bug #937196
+
+ 15:46:15 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:46:16 <ubottu> Launchpad bug 937196 in ifupdown (Ubuntu) "10.04 LTS -> 12.04 upgrade failed: ifupdown depends on upstart and initscripts but they are not configured" [High,Confirmed] https://launchpad.net/bugs/937196
+
+ 15:46:38 <mvo> slangasek: uh, sorry, which bug was that?
+
+ 15:46:44 <infinity> mvo: Look up.
+
+ 15:46:49 <mvo> bug #937196 ?
+
+ 15:46:56 * infinity nods.
+
+ 15:47:06 <slangasek> mvo: bug #1017001, bug #937196: lucid release-upgrader apt  + dpkg are somehow failing to configure packages when there's a dependency loop
+
+ 15:47:20 <slangasek> but it's not *generally* reproducible
+
+ 15:47:59 <mvo> hrm
+
+ 15:48:18 <slangasek> when we get to the bottom of it, we should probably backport to precise apt as well so that this doesn't still hit us for p->t upgrades
+
+ 15:48:18 * infinity isn't sure 937196 relates specifically to loops at all, but rather just that a deconfigured/broken package didn't then get configured before its deps.  Do we know definitively that this is the result of a loop?
+
+ 15:48:36 <slangasek> infinity: I know that there is a loop, and I don't see any other cases of apt doing out-of-order configuration
+
+ 15:49:37 <infinity> slangasek: Oh!
+
+ 15:49:42 <slangasek> initscripts Depends: upstart Provides: upstart-job Depends: initscripts, ifupdown Depends: upstart-job, initscripts
+
+ 15:49:44 <infinity> slangasek: Right, upstart/initscripts.
+
+ 15:50:01 <slangasek> so this one's a double circular dep
+
+ 15:50:11 <slangasek> but the other bug is a single circular dep between libc6:i386 and libgcc1:i386
+
+ 15:50:24 <infinity> slangasek: I bet that's actually completely deterministic, based on the "postinst versus no-postinst" loop-breaking rule.
+
+ 15:50:49 <infinity> Unless initscripts has a postinst.
+
+ 15:50:50 <slangasek> infinity: it's not failing to run the maintainer scripts, it's declaring that the dependencies aren't satisfied
+
+ 15:50:51 * infinity looks.
+
+ 15:51:04 <slangasek> apt is supposed to be asking dpkg to configure them as a set
+
+ 15:51:14 <slangasek> dpkg is supposed to sort out which one to configure first based on its own internal rules
+
+ 15:51:33 <slangasek> and even if they all have postinsts, dpkg is supposed to play russian roulette
+
+ 15:51:40 <infinity> Yeah, and they do.
+
+ 15:51:47 <infinity> So nevermind deterministic.
+
+ 15:52:16 <slangasek> and bear in mind that this is only reproducible for a relatively small percentage of users, and is *not* reproducible with any of the upgrade profiles being used in jenkins
+
+ 15:52:17 <infinity> And apt may be asking dpkg to do them as a set, it's hard to tell from the log.
+
+ 15:52:20 * slangasek nods
+
+ 15:52:27 <infinity> It clearly didn't unpack/deconfigure as a set, but...
+
+ 15:52:36 <slangasek> ok, I think we should take this offline, we've squeezed as much out of it as we can in this meeting
+
+ 15:52:40 <slangasek> [TOPIC] AOB
+
+ 15:52:42 <slangasek> AOB?
+
+ 15:53:01 * mvo read them now
+
+ 15:54:06 <infinity> We seem rather AOBless.
+
+ 15:54:18 <ogra_> AOBlessed ?
+
+ 15:55:23 <slangasek> yep, seems so
+
+ 15:55:24 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

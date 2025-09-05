@@ -1,0 +1,597 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 08 Feb at 16:04 &mdash; 16:39 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2018/ubuntu-meeting.2018-02-08-16.04.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:05.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 16:19.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:38.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (50)
+ * bdmurray (43)
+ * juliank (38)
+ * cyphermox (21)
+ * xnox (20)
+ * sil2100 (19)
+ * ubottu (17)
+ * rbalint (11)
+ * fginther (11)
+ * Odd_Bloke (10)
+ * tdaitx (8)
+ * doko (7)
+ * philroche (5)
+ * tribaal (3)
+ * meetingology (3)
+ * gaughen (2)
+
+
+
+== Full Log ==
+
+
+ 16:04 <slangasek> #startmeeting
+
+ 16:04 <meetingology> Meeting started Thu Feb  8 16:04:03 2018 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:04 <meetingology> 
+
+ 16:04 <meetingology> Available commands: action commands idea info link nick
+
+ 16:05 <slangasek> [TOPIC] Lightning round
+
+ 16:05 <slangasek> $ echo $(shuf -e slangasek bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson rcj philroche Odd_Bloke tribaal fginther juliank)
+
+ 16:05 <gaughen> o/
+
+ 16:05 <slangasek> doko mwhudson juliank cyphermox rcj rbalint xnox sil2100 philroche Odd_Bloke slangasek infinity bdmurray tdaitx fginther tribaal
+
+ 16:05 <slangasek> doko: hello!
+
+ 16:05 <doko> oops
+
+ 16:05 <doko> - FOSDEM Free Java track
+
+ 16:05 <doko> - spent most of the time working on migration ...
+
+ 16:05 <doko> - GCC 8 uploaded, binutils fixed (arm64 kernel builds)
+
+ 16:05 <doko> - some phone calls this week
+
+ 16:05 <doko> (done)
+
+ 16:06 <slangasek> juliank:
+
+ 16:06 <juliank> merges / syncs:
+
+ 16:06 <juliank> - wget: just a new upstream minor release
+
+ 16:06 <juliank> - dash: dropping the profiled guiding patches, as there's no measurable gain anymore with systemd booting us
+
+ 16:06 <juliank> uploaded fixes / features:
+
+ 16:06 <juliank> - multipath-tools: fixed kpartx regression breaking image builds (bug 1747044)
+
+ 16:06 <juliank> - ubuntu-release-upgrader: only add valid releases (bug 1744722)
+
+ 16:06 <juliank> - util-linux: backported lscpu fixes, but blocked by other upload stuck in proposed (bug 1732865)
+
+ 16:06 <juliank> - software-properties: run apt-get update
+
+ 16:06 <ubottu> bug 1747044 in multipath-tools (Ubuntu) "kpartx 0.7.4-2ubuntu1 in bionic does not remove loop devices" [Critical,Fix released] https://launchpad.net/bugs/1747044
+
+ 16:06 <ubottu> bug 1744722 in ubuntu-release-upgrader (Ubuntu Artful) "Unknown bad source brings up during 'zesty' to 'artful' upgrade and It break the process" [Critical,Fix committed] https://launchpad.net/bugs/1744722
+
+ 16:06 <ubottu> bug 1732865 in util-linux (Ubuntu Xenial) "[LTCTest][OPAL][FW860.20] lscpu failed to list cpu max and min frequencies" [Undecided,In progress] https://launchpad.net/bugs/1732865
+
+ 16:06 <juliank> needs review:
+
+ 16:06 <juliank> - ubuntu-release-upgrader: double check source release https://code.launchpad.net/~juliank/ubuntu-release-upgrader/double-check-source-release/+merge/337258 (bug 1725359)
+
+ 16:06 <juliank> - grub2: show shorter version on screen, hide complete one in variable https://code.launchpad.net/~juliank/grub/+git/ubuntu/+merge/337338 (bug 1723434)
+
+ 16:06 <juliank> - socat, pv: MIRs. socat might be hard - it overlaps a lot with netcat, previous attempt was cancelled (bug 1746891 [pv])
+
+ 16:06 <ubottu> bug 1725359 in ubuntu-release-upgrader (Ubuntu) "release detection relies on lsb-release" [Low,In progress] https://launchpad.net/bugs/1725359
+
+ 16:06 <ubottu> bug 1723434 in grub2 (Ubuntu) "grub2 splash screen displays excessively long package version number" [Undecided,Fix committed] https://launchpad.net/bugs/1723434
+
+ 16:06 <ubottu> bug 1746891 in pv (Ubuntu) "[MIR] pv" [Undecided,New] https://launchpad.net/bugs/1746891
+
+ 16:06 <juliank> WiP stuff (upstreams):
+
+ 16:06 <juliank> - apt: (1) Make it check that 'Date' is not from the future; (2) Switch to C++14, and some cleanup
+
+ 16:06 <juliank> - multipath-tools: Forwarding the patches for the regression upstream, needs some rework
+
+ 16:06 <juliank> I guess I should get that stuck apt SRU from last year forward too.
+
+ 16:06 <juliank> (done)
+
+ 16:07 <sil2100> This mwhudson guy, always missing our weekly meetings...
+
+ 16:07 <sil2100> Shame on him
+
+ 16:07 <xnox> juliank, the overlap is known.... is it possible to use netcat on the images that use socat, per chance?
+
+ 16:07 <cyphermox> - debugging grub2 tftp with slangasek
+
+ 16:07 <cyphermox> - netplan: added bash completion
+
+ 16:07 <cyphermox> - netplan: upstream systemd work to support keeping an interface offline but configured at boot
+
+ 16:07 <cyphermox> - debugging ubuntu-server:live build w/ preinstalled subiquity snap
+
+ 16:07 <cyphermox> - juju-core SRU of 2.3.2 to xenial
+
+ 16:07 <cyphermox> - MIR: reviewing libfastjson
+
+ 16:07 <cyphermox> - various cat herding / administrativia
+
+ 16:07 <cyphermox> (done)
+
+ 16:08 <juliank> xnox: I guess somebody else knows more about that :)
+
+ 16:08 <rbalint> (short week)
+
+ 16:08 <rbalint> * fix opengcs FTBFS (upstreamed): LP: #1746697
+
+ 16:08 <ubottu> Launchpad bug 1746697 in opengcs (Ubuntu) "Opengcs FTBFS on 32 bit architectures" [Low,Fix released] https://launchpad.net/bugs/1746697
+
+ 16:08 <rbalint> * fixed tests for mtd-utils (#889868), now it is in proper shape for MIR
+
+ 16:08 <rbalint> * internal image testing and testbed setup follow-ups
+
+ 16:08 <rbalint> (done)
+
+ 16:09 <bdmurray> xnox: your turn
+
+ 16:09 <xnox> #HIGHLIGHT openssl1.1.0 is landing in Ubuntu
+
+ 16:09 <xnox> Upgrading opencryptoki to 3.8.2
+
+ 16:09 <xnox> Upgrading systemd to 237 (autopkgtests fixing stage)
+
+ 16:09 <xnox> Ubuntu-keyring now ships more keys - e.g. cloud images, simplestreams, dbg
+
+ 16:09 <xnox> Keyboard step moved earlier in ubiquity (with sil2100)
+
+ 16:09 <xnox> (done)
+
+ 16:10 <bdmurray> sil2100:
+
+ 16:10 <sil2100> - SRU reviews and releases
+
+ 16:10 <sil2100> - Stable kernel reviews and releases (retpoline incoming)
+
+ 16:10 <sil2100> - Fixing and testing autopilot tests for the early-keyboard ubiquity branch
+
+ 16:10 <sil2100> * Released by xnox
+
+ 16:10 <sil2100> - Fixing the ppp FTBFS after the openssl1.1 rebuild
+
+ 16:10 <sil2100> - walinuxagent:
+
+ 16:10 <sil2100> * Preparing, testing and releasing for bionic
+
+ 16:10 <sil2100> * Backporting to stable series, pre-SRU testing, getting approved
+
+ 16:10 <sil2100> * Phil prepared test images, waiting for MS to do their testing
+
+ 16:10 <sil2100> - Fixing the packageset refreshing scripts for bionic
+
+ 16:10 <sil2100> - Updating the kubuntu packageset as per request
+
+ 16:10 <sil2100> - Clean-up of unverified xenial language-packs from -proposed
+
+ 16:10 <sil2100> - Preparing branch for KPI metrics for canonical-foundations bugs
+
+ 16:10 <sil2100> - Some ubuntu-image discussions with Loic
+
+ 16:10 <sil2100> (done)
+
+ 16:11 <bdmurray> sil2100: Are you using Influx DB?
+
+ 16:11 <philroche> * Cloud image build system Vanguard
+
+ 16:11 <bdmurray> philroche:
+
+ 16:11 <philroche> * Cloud image build system maintenance & development
+
+ 16:11 <philroche> * walinuxagent testing
+
+ 16:11 <philroche> * Released ubuntu-watch-packages snap
+
+ 16:11 <philroche> (done)
+
+ 16:11 <Odd_Bloke> * (POTENTIAL HIGHLIGHT) Backported upstream code to move Vagrant from using Atlas to Vagrant Cloud for boxes, due to Atlas API endpoints being shut down (https://bugs.launchpad.net/bugs/1747426); community testing of the fixes strongly encouraged
+
+ 16:11 <bdmurray> Odd_Bloke:
+
+ 16:11 <ubottu> Launchpad bug 1747426 in cloud-images "Vagrant <2.x can no longer fetch box metadata from Hashicorp" [Undecided,New]
+
+ 16:11 <Odd_Bloke> * Spent some time helping the MAAS team fix a bug with deploying precise images (for ESM customers)
+
+ 16:11 <Odd_Bloke> * Filed a bug I found while using bionic: https://bugs.launchpad.net/bugs/1748029
+
+ 16:11 <ubottu> Launchpad bug 1748029 in mutter (Ubuntu) "Dragging and dropping a window in the top bar causes GNOME shell to become unusable" [Undecided,New]
+
+ 16:11 <Odd_Bloke> * A variety of partner work
+
+ 16:11 <Odd_Bloke> (done)
+
+ 16:11 <sil2100> bdmurray: no, the old prometheus thing as with all the original metrics - is that not a thing anymore?
+
+ 16:11 <Odd_Bloke> slangasek:
+
+ 16:12 <bdmurray> sil2100: that's not the new hotness
+
+ 16:12 <xnox> Odd_Bloke, +!
+
+ 16:12 <sil2100> Damn...
+
+ 16:12 <xnox> Odd_Bloke, +1
+
+ 16:12 <bdmurray> sil2100: lets talk after this
+
+ 16:12 <Odd_Bloke> xnox: +1 to...?
+
+ 16:12 <xnox> mutter bug about dragging things
+
+ 16:12 <rbalint> Odd_Bloke: it is for you, personally :-)
+
+ 16:13 <Odd_Bloke> xnox: I think I'm on X, not Wayland.
+
+ 16:13 <slangasek> * proposed-migration: trying to unstick the world
+
+ 16:13 <slangasek> * autopkgtests: shepherding the infrastructure
+
+ 16:13 <slangasek> * BOS01 compute moved to BOS02 for a redeploy of BOS01 region
+
+ 16:13 <slangasek> * Tracked various glitches that were causing test runners to die
+
+ 16:13 <slangasek> * Optimized the arm64 runners to give them a boost, now the runner setup takes < 3m per dispatch instead of 8+m
+
+ 16:13 <Odd_Bloke> Because we aren't shipping Wayland as the default in bionic.
+
+ 16:13 <slangasek> * closed out on grub2 tftp (LP: #1743249)
+
+ 16:13 <ubottu> Launchpad bug 1743249 in MAAS "High IO on the system prevents MAAS to provide PXE config in a timely manner (less than 30 secs)" [Undecided,Fix committed] https://launchpad.net/bugs/1743249
+
+ 16:13 <slangasek> * discussions around retpoline in 18.04
+
+ 16:13 <slangasek> * discussions around openjdk security support in 18.04
+
+ 16:13 <slangasek> (done)
+
+ 16:13 * xnox needs to doublecheck what i am running
+
+ 16:13 * fginther wishes he knew about that BOS01 thing yesterday
+
+ 16:13 <bdmurray> irc discussion with web ops re: mojo spec and certs and sm-cert
+
+ 16:13 <bdmurray> irc discussion with webops regarding sm-cert and its usage
+
+ 16:13 <bdmurray> tested sm-cert with daisy.staging.u.com errors.staging.u.com
+
+ 16:13 <bdmurray> modified mojo spec to use certs created by sm-cert
+
+ 16:13 <bdmurray> submitted RT re review of latest ET mojo spec MP
+
+ 16:14 <bdmurray> modified (and tested) mojo spec MP after reviewer feedback
+
+ 16:14 <bdmurray> submitted RT re request for pagerduty account
+
+ 16:14 <bdmurray> setup pagerduty account for ET monitoring
+
+ 16:14 <bdmurray> submitted RT regarding ET mojo spec setup in CI
+
+ 16:14 <bdmurray> dug into apport test failure w/ new gdb and fixed it (string change)
+
+ 16:14 <bdmurray> bug triage of apport bug LP: #1746874
+
+ 16:14 <bdmurray> modified bug-bot to tag bugs v-failed-$release for slangasek
+
+ 16:14 <bdmurray> modified w.u.c/EndOfLifeProcess for fixing rmadison
+
+ 16:14 <bdmurray> created an image sizes KPI and submitted a PR for it
+
+ 16:14 <bdmurray> irc dicsussions w/ OddBloke and powersj re: Influx DB vs prometheus
+
+ 16:14 <ubottu> Launchpad bug 1746874 in apport (Ubuntu) "gnome-shell and Xwayland sometimes leave $HOME/core files (should be /var/crash files)" [High,Triaged] https://launchpad.net/bugs/1746874
+
+ 16:14 <bdmurray> submitted RT re: Influx DB credentials
+
+ 16:14 <slangasek> fginther: how do you mean?  I saw MPs last week requesting to move the cloud tests from BOS01 to BOS02 and I thought they landed
+
+ 16:14 <bdmurray> modified cloud image sizes KPI to use Influx DB and then to use special time field
+
+ 16:14 <bdmurray> submitted PR re: jenkins job for cloud image sizes KPI
+
+ 16:14 <bdmurray> backfilled cloud image sizes in Influx DB
+
+ 16:14 <bdmurray> done
+
+ 16:14 <bdmurray> made a pretty graph of cloud image sizes
+
+ 16:14 <bdmurray> investigation into fetchmail, dnscrypt-proxy for LP: 1713803
+
+ 16:14 <ubottu> Launchpad bug 1713803 in android-androresolvd (Ubuntu) "replacement of resolvconf with systemd needs integration" [Low,Triaged] https://launchpad.net/bugs/1713803
+
+ 16:14 <tdaitx> Short week: half-days this week, out tomorrow [1] flying back home
+
+ 16:14 <tdaitx> * At Fosdem in the  free java sessions
+
+ 16:14 <tdaitx> * Sorting out what Oracle means about OpenJDK support
+
+ 16:14 <tdaitx> * Testing the armhf port for 8u161
+
+ 16:14 <tdaitx> * Checking openjdk 9/10 support for packages on main (libreoffice/tomcat)
+
+ 16:14 <tdaitx> * Started investigating possible sources of binary incompatibilities between java packages build with 8 and running on openjdk 9 and/or 10
+
+ 16:14 <tdaitx> [1] Note: the domestic leg got moved to the next day, I might be taking new flights altogether
+
+ 16:14 <tdaitx> (done)
+
+ 16:14 * juliank runs gnome session on X and it hangs a lot for a few seconds each.
+
+ 16:15 <fginther> slangasek, those MP only moved one of the arches over, there was still one left on BOS01 this week
+
+ 16:15 <slangasek> fginther: mm.
+
+ 16:16 <slangasek> fginther: you can tell us more about it now, it's your turn
+
+ 16:16 <fginther> * Out sick Monday
+
+ 16:16 <fginther> * Cloud-image vanguard
+
+ 16:16 <fginther> * Debugged a bionic image build issue: lp: #1747044
+
+ 16:16 <fginther> * Updated cloud tests to tolerate a specific platform anomaly
+
+ 16:16 <fginther> * Shared some jenkins best practices in a discussion with three other teams doing CI and test automation
+
+ 16:16 <ubottu> Launchpad bug 1747044 in multipath-tools (Ubuntu) "kpartx 0.7.4-2ubuntu1 in bionic does not remove loop devices" [Critical,Fix released] https://launchpad.net/bugs/1747044
+
+ 16:16 <fginther> * Writing tests for partner cloud image publication code
+
+ 16:16 <fginther> * Investigating work needed for a new image build
+
+ 16:16 <fginther> * feeling sad about BOS01
+
+ 16:16 <fginther> (done)
+
+ 16:16 <tribaal> * Snowboarding most of the week. Mountains <3
+
+ 16:16 <tribaal> * Still upgrading our build infrastructure to use snaps.
+
+ 16:16 <tribaal> (done)
+
+ 16:17 <slangasek> questions on status?
+
+ 16:19 <bdmurray> nope
+
+ 16:19 <slangasek> [TOPIC] Bugs
+
+ 16:19 <slangasek> [LINK] http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html#foundations-bugs
+
+ 16:20 <doko> snowboarding!
+
+ 16:20 <bdmurray> I tagged 3 bug reports this week for that list
+
+ 16:20 <slangasek> so there's a 6-digit bug marked critical
+
+ 16:20 <Odd_Bloke> Snowboarding is a feature, not a bug, doko. ;)
+
+ 16:20 <bdmurray> bug 940030
+
+ 16:20 <ubottu> bug 940030 in rsyslog (Ubuntu) "rsyslog stops working after logrotate until restarted" [Critical,Confirmed] https://launchpad.net/bugs/940030
+
+ 16:21 <juliank> Interesting. We should check what the somewhat-blocked 8.32 does
+
+ 16:22 <slangasek> I call shenanigans on that bug, my rsyslog is working fine post-rotation
+
+ 16:22 <juliank> I don't have a /var/log/syslog
+
+ 16:22 <xnox> slangasek, hmmm.... why do we default to rsyslog, instead of syslog-ng with the journal plugin?
+
+ 16:22 <juliank> did we drop it?
+
+ 16:22 <slangasek> oh, but *not* /var/log/syslog
+
+ 16:22 <juliank> What no, I do
+
+ 16:22 <cyphermox> rsyslog and /var/log/syslog work well here.
+
+ 16:22 <slangasek> bdmurray: +1 for sorting this out, it should be a quick fix
+
+ 16:22 <xnox> slangasek, or why have rsyslog, if journald provides /var/log/syslog facility by itself too
+
+ 16:23 <slangasek> xnox: why not bikeshed?
+
+ 16:23 <juliank> If we could get rid of rsyslog in main
+
+ 16:23 <juliank> it would solve our problem with it depending on fastjson now :D
+
+ 16:23 <slangasek> xnox: you mean the syslog-ng that's been stuck in -proposed for a release cycle, right?
+
+ 16:23 <cyphermox> juliank: replacing it with something else with still requiring MIRing something
+
+ 16:23 <xnox> slangasek, heh
+
+ 16:23 <slangasek> anyway, taking 940030 for the stack; yes it wants follow-through
+
+ 16:23 <juliank> cyphermox: yeah, but hopefully not a second library, a fork of something we have
+
+ 16:24 <cyphermox> juliank: meh
+
+ 16:24 <cyphermox> slangasek: was there another bug?
+
+ 16:24 <slangasek> bdmurray: what else?
+
+ 16:24 <bdmurray> bug 1089195
+
+ 16:24 <ubottu> bug 1089195 in update-manager (Ubuntu) "linux-headers will eat your inodes on LTS." [Undecided,Confirmed] https://launchpad.net/bugs/1089195
+
+ 16:24 <xnox> ouch
+
+ 16:25 <juliank> I think there's a more general autoremoval thing for that
+
+ 16:25 <rbalint> imo we should take that, i'm working on update-manager to remove newly unused packages
+
+ 16:25 <slangasek> that sounds like a straight duplicate of the kernel autoremoval bug
+
+ 16:25 <cyphermox> +1
+
+ 16:25 <rbalint> slangasek: yes, mostly
+
+ 16:25 <juliank> It is precisely the bug rbalint is working on, yes
+
+ 16:26 <juliank> well headers instead of kernels, but that makes no difference
+
+ 16:26 <slangasek> not mostly, if the work on kernel autoremovals doesn't exactly fix this bug then the work on kernel autoremovals is incomplete
+
+ 16:26 <rbalint> it is almost the same, because the existing headers are not newly unused, but i would like to covert that, too, yes
+
+ 16:26 <juliank> I also have that stuff on my apt auto-auto-removal idea thing
+
+ 16:26 <slangasek> can someone who knows where the lead bug is for that work dupe this to it?
+
+ 16:27 <juliank> rbalint: that applies to the kernel images too
+
+ 16:27 <slangasek> juliank, rbalint: can one of you find the bug to dupe this to, and we'll move on?
+
+ 16:27 <rbalint> juliank: yes
+
+ 16:28 <slangasek> bdmurray: next?
+
+ 16:28 <bdmurray> bug 1746874
+
+ 16:28 <ubottu> bug 1746874 in apport (Ubuntu) "gnome-shell and Xwayland sometimes leave $HOME/core files (should be /var/crash files)" [High,Triaged] https://launchpad.net/bugs/1746874
+
+ 16:28 <juliank> slangasek: done
+
+ 16:29 <bdmurray> "Xwayland and gnome-shell are co-dependent processes. If one crashes then the other will also crash. So we need apport to be capable of handling both crashes simultaneously.
+
+ 16:29 <rbalint> juliank: done by, me, too :-)
+
+ 16:29 <juliank> rbalint: lol
+
+ 16:29 <slangasek> bdmurray: huh
+
+ 16:30 <cyphermox> wow
+
+ 16:30 <bdmurray> because apport is already running it aborts
+
+ 16:30 <slangasek> bdmurray: that's an interesting symptom, yes let's follow up
+
+ 16:30 <slangasek> (claiming)
+
+ 16:31 <cyphermox> weird, I would have thought you'd just have a second apport running in that case
+
+ 16:31 <bdmurray> Its trying to stop the system from being dos'ed
+
+ 16:31 <slangasek> cyphermox: bug suggests that because core_use_pid isn't set, something (kernel or apport) treats them as identical
+
+ 16:31 <cyphermox> yeah
+
+ 16:31 * juliank pretends its a kernel bug
+
+ 16:31 <slangasek> anyway, claimed
+
+ 16:31 <bdmurray> What no
+
+ 16:32 <bdmurray> ERROR: apport (pid 1946) Mon Feb 5 12:05:58 2018: another apport instance is already running, aborting
+
+ 16:32 <cyphermox> slangasek: yes
+
+ 16:32 <juliank> bdmurray: so it's an apport feature :D
+
+ 16:32 <cyphermox> well, I'm surprised at that, because you could conceivable have more than one process crash very close to each other.
+
+ 16:32 <juliank> it should queue them up I guess
+
+ 16:32 <slangasek> xnox: LP: #1739672 is still in 'incoming' and only marked triaged, is that fix-committed yet or not?
+
+ 16:32 <ubottu> Launchpad bug 1739672 in systemd (Ubuntu) "Regression in getaddrinfo(): calls block for much longer on Bionic (compared to Xenial), please disable LLMNR" [High,Triaged] https://launchpad.net/bugs/1739672
+
+ 16:32 <bdmurray> "This avoids bringing down the system to its knees if there is a series of crashes"
+
+ 16:32 <cyphermox> and all that it's doing is the pipe thing to start apport
+
+ 16:32 <juliank> but you probably do want some crash dropping?
+
+ 16:33 <bdmurray> So it was deliberate choice by that guy
+
+ 16:33 <slangasek> man, that guy
+
+ 16:33 <cyphermox> heh
+
+ 16:33 <xnox> slangasek, i have been pinged to fix that in person at fosdem too. I have removed the tag, does that make it off the list?
+
+ 16:34 * juliank blames the guy they shot up into space in a tesla
+
+ 16:34 <slangasek> xnox: are you telling me it's NOT fix committed yet?
+
+ 16:34 <bdmurray> maybe just disabling that check on devel releases is good enough
+
+ 16:34 <xnox> slangasek, there are autopkgtests failures in systemd that i'm fixing it.
+
+ 16:35 <xnox> slangasek, (umockdev + udisks mis-compat with udev)
+
+ 16:35 <slangasek> xnox: that doesn't actually answer my question
+
+ 16:35 <xnox> slangasek, it is not fix committed, as in, it is not in bionic-proposed.
+
+ 16:35 <slangasek> xnox: if it's committed to the package vcs, it's fix-committed
+
+ 16:35 <slangasek> and we should mark it as such so you can take it off my nag list ;)
+
+ 16:35 <cyphermox> bdmurray: I wonder if queueing the crashes would be so bad
+
+ 16:37 <slangasek> bdmurray: anything else on bugs?
+
+ 16:37 <bdmurray> slangasek: Not from me
+
+ 16:37 <slangasek> ok, anyone else? :)
+
+ 16:38 <slangasek> [TOPIC] AOB
+
+ 16:38 <slangasek> aaaand anything else?
+
+ 16:39 <xnox> done
+
+ 16:39 <gaughen> no
+
+ 16:39 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

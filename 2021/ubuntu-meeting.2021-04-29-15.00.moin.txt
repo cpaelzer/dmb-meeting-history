@@ -1,0 +1,540 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 29 Apr at 15:00 &mdash; 15:49 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-04-29-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:00.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:08.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:09)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:30)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:35)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:45.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 15:45)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:45.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (82)
+ * ubottu (32)
+ * sil2100 (31)
+ * juliank (30)
+ * slyon (19)
+ * dbungert (15)
+ * doko (11)
+ * JawnSmith (8)
+ * vorlon (6)
+ * mclemenceau (4)
+ * meetingology (2)
+ * Laney (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:50 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:01 <dbungert> o/
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox doko sil2100 rbalint mwhudson juliank waveform slyon jawnsmith dbungert)
+
+ 15:01 <bdmurray> mwhudson dbungert slyon sil2100 bdmurray vorlon rbalint jawnsmith juliank waveform xnox doko
+
+ 15:01 <dbungert> (2 week edition)
+
+ 15:01 <dbungert> * LP: #1919251 - fix locale/interactive sessions / serial update - finish/merge
+
+ 15:01 <ubottu> Launchpad bug 1919251 in subiquity "Unable to set locale when using interactive-sections in Automated Installs" [Undecided,In progress] https://launchpad.net/bugs/1919251
+
+ 15:01 <dbungert> * LP: #1925048 - commit workaround.  Forcing a crash in other areas
+
+ 15:01 <ubottu> Launchpad bug 1925048 in Ubuntu on IBM z Systems "subiquity installer crashed on FCP/multipath installation" [High,New] https://launchpad.net/bugs/1925048
+
+ 15:01 <dbungert> doesn't trigger this though, so how do we get even into this state?
+
+ 15:01 <dbungert> * Subiquity - use networkctl instead of harsher process restarts thru systemd -
+
+ 15:01 <dbungert> while the idea seems sound, networkctl on bionic/focal has features missing
+
+ 15:01 <dbungert> that I'm using, so either I need a different solution or a vendored backport
+
+ 15:01 <dbungert> * LP: #1925722 - fix for curtin where, when we're formatting multiple disks and
+
+ 15:01 <ubottu> Launchpad bug 1925722 in curtin "cannot deploy ESXi to non-sda drive" [Undecided,In progress] https://launchpad.net/bugs/1925722
+
+ 15:01 <dbungert> dd-ing not the first one, it would reimage the wrong disk.
+
+ 15:01 <dbungert> Next action - update tests to cover this scenario
+
+ 15:02 <dbungert> * LP: #1926298 - my previous work on LP: #1706168 was flawed and introduced a
+
+ 15:02 <ubottu> Launchpad bug 1926298 in update-notifier (Ubuntu) "Segfault added in the recent changes" [High,Confirmed] https://launchpad.net/bugs/1926298
+
+ 15:02 <dbungert> segfault.  Leverage more glib functionality to fix that and simplify.
+
+ 15:02 <ubottu> Launchpad bug 1706168 in update-notifier (Ubuntu) "dialog shouldn't be display if Command doesn't exist" [Medium,Fix released] https://launchpad.net/bugs/1706168
+
+ 15:02 <dbungert> * Subiquity roadmap planning
+
+ 15:02 <dbungert> (done)
+
+ 15:02 <slyon> - Interviews/homework reviews
+
+ 15:02 <slyon> - Town Hall
+
+ 15:02 <slyon> - on +1 maintenance last week
+
+ 15:02 <slyon> * finalizing +1 work this week, post archive opening
+
+ 15:02 <slyon> * auctex, baycomepp, atlas, ap-utils, gsmlib, cgminer, clamfs, csh, gramophone2
+
+ 15:02 <slyon> - Prepared snapd PR for NM snap integration (LP: #1926442)
+
+ 15:02 <slyon> * https://github.com/snapcore/snapd/pull/10212
+
+ 15:02 <ubottu> Launchpad bug 1926442 in Snappy "cannot execute 'netplan generate' from within a snap" [Undecided,New] https://launchpad.net/bugs/1926442
+
+ 15:02 <slyon> * setup and run "spread" tests locally against core20/edge
+
+ 15:02 <slyon> - Testing & improving NetworkManager snap on UC20, MP#400398
+
+ 15:02 <slyon> === Netplan ===
+
+ 15:02 <slyon> - Investigated regression on core20/edge (LP: #1922898)
+
+ 15:02 <slyon> * fixed in PR#206, pending SRUs
+
+ 15:02 <slyon> * re-uploaded to ubuntu-image PPA, incl. regression fix
+
+ 15:02 <slyon> - Focal SRU verification for bug #1919453, bug #1922898 (Groovy still pending)
+
+ 15:02 <slyon> - Prepared & merged small fix for 'netplan set', PR#207
+
+ 15:02 <slyon> * not needed for DBus based Config.Set() command
+
+ 15:02 <ubottu> Launchpad bug 1922898 in netplan.io (Ubuntu Groovy) "[SRU] SEGFAULT on upgrade to 0.102-0ubuntu1~20.04.1" [Undecided,Confirmed] https://launchpad.net/bugs/1922898
+
+ 15:02 <slyon> - Some bug triaging
+
+ 15:02 <slyon> - Working on YAML generator & corresponding test system (a little, at least)
+
+ 15:02 <ubottu> bug 1919453 in netplan.io (Ubuntu Groovy) "[SRU][FFe] Update to netplan.io 0.102" [Undecided,Fix committed] https://launchpad.net/bugs/1919453
+
+ 15:02 <slyon> (done)
+
+ 15:02 <bdmurray> sil2100:
+
+ 15:02 <sil2100> Oooh
+
+ 15:02 <sil2100> Yes
+
+ 15:03 <sil2100> - SRU reviews and releases
+
+ 15:03 <sil2100> - Last week - 21.04 release! Busy busy!
+
+ 15:03 <sil2100> - Helping out with archive opening for 21.10
+
+ 15:03 <sil2100> - Regaring that - verified debootstrap for g/f/b/x
+
+ 15:03 <sil2100> - ESM britney:
+
+ 15:03 <sil2100> * Discussed other approaches to fetching private result logs
+
+ 15:03 <sil2100> * Per discussions, switched to an SSO based result fetcher
+
+ 15:03 <sil2100> * Rebased both the britney2 and autopkgtest-cloud ESM parts against latest big deployment changes
+
+ 15:03 <sil2100> * Tested individual infrastructure bits locally
+
+ 15:03 <sil2100> * Tweaking final iteration script per discussion with security
+
+ 15:03 <doko> bdmurray: s/xnox//g
+
+ 15:03 <sil2100> - Switching Bileto and security-britney (public) to use the new creds after the redeploy
+
+ 15:03 <sil2100> - Processed core20 rebuild with the new glibc
+
+ 15:03 <sil2100> - ...and then reverted the new glibc as core20 was broken with it, so iterated on that
+
+ 15:03 <sil2100> - UI customization:
+
+ 15:03 <sil2100> * Reviewed snapd PR mirroring our ubuntu-image PR, both looking fine
+
+ 15:03 <bdmurray> doko: he was here part of the time!
+
+ 15:03 <sil2100> * Fixed merge conflicts on the UI side, bumped the snapd dependency
+
+ 15:03 <sil2100> - Pi DTB improvements:
+
+ 15:03 <sil2100> * Merged the pending pidtbs UC20 PR, build snaps of the gadget and got those into egde
+
+ 15:03 <sil2100> * Created cherry-picks for UC18, built snaps for arm64 and pushed those to edge
+
+ 15:03 <sil2100> * Blocked auto-migration of the pi/18 gadget until we have confirmation that we're ready
+
+ 15:03 <sil2100> - Some ubuntu-image golang rewrite discussions with William - getting some initial action items!
+
+ 15:03 <sil2100> - Candidate interviews
+
+ 15:03 <sil2100> - Release retrospective
+
+ 15:03 <bdmurray> doko: fixed though
+
+ 15:03 <sil2100> - Dusting out the old archival scripting
+
+ 15:03 <sil2100> - Documented and added the HardwareEnablementFreeze
+
+ 15:04 <sil2100> (done)
+
+ 15:04 <bdmurray> reported upgrade crash from bionic LP: #1924604
+
+ 15:04 <bdmurray> investigation into update-manager autopkgtest failure after apt update (LP: #1924809)
+
+ 15:04 <ubottu> Launchpad bug 1924604 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade crashed with KeyError in __getitem__(): "The cache has no package named 'python-is-python2'"" [Undecided,New] https://launchpad.net/bugs/1924604
+
+ 15:04 <bdmurray> uploaded fixes for the above
+
+ 15:04 <ubottu> Launchpad bug 1924809 in update-manager (Ubuntu) "apt 2.0.5 in focal causes autopkgtest failures for update-manager" [Undecided,In progress] https://launchpad.net/bugs/1924809
+
+ 15:04 <bdmurray> review / upload of update-notifier changes for ESM Apps
+
+ 15:04 <bdmurray> updates to the deb2snap transition for upgrades from X to B
+
+ 15:04 <bdmurray> SRU verification of LP: #1922297
+
+ 15:04 <bdmurray> uploaded u-r-u with a warning regarding upgrades to hirsute
+
+ 15:04 <bdmurray> reported u-r-u B to F bug report python-bson-ext LP: #1925972
+
+ 15:04 <bdmurray> 21.04 release and 21.10 release opening
+
+ 15:04 <ubottu> Launchpad bug 1922297 in ubuntu-release-upgrader (Ubuntu Hirsute) "20.10 to 21.04: snap does not upgrade channel" [High,Fix released] https://launchpad.net/bugs/1922297
+
+ 15:04 <ubottu> Launchpad bug 1925972 in ubuntu-release-upgrader (Ubuntu) "Upgrade from 18.04 to 20.04 not calculatable if python-bson-ext is installed" [Undecided,New] https://launchpad.net/bugs/1925972
+
+ 15:04 <bdmurray> and some other stuff I forgot to write down
+
+ 15:04 <bdmurray> ✔ done
+
+ 15:05 <bdmurray> vorlon:
+
+ 15:05 <JawnSmith> * ISO testing Ubuntu 21.04
+
+ 15:05 <JawnSmith> * LP: #1925971 SRU linux-firmware-raspi2 bluetooth fixes to groovy/focal
+
+ 15:05 <JawnSmith> * LP: #1926378 SRU pi-bluetooth enablement for Pi 400 and CM4
+
+ 15:05 <ubottu> Launchpad bug 1925971 in linux-firmware-raspi2 (Ubuntu Groovy) "SRU bluetooth fixes and CVEs to focal and groovy" [Undecided,New] https://launchpad.net/bugs/1925971
+
+ 15:05 <JawnSmith> * Re-write ubuntu-image in golang for better snapd integration
+
+ 15:05 <ubottu> Launchpad bug 1926378 in pi-bluetooth (Ubuntu) "SRU pi-bluetooth from hirsute to focal to enable all models" [Undecided,New] https://launchpad.net/bugs/1926378
+
+ 15:05 <JawnSmith> * Start work on booting Ubuntu on BeagleV SBC
+
+ 15:05 <JawnSmith> * +1 maintenance yesterday
+
+ 15:05 <JawnSmith> * Candidate Interviews
+
+ 15:05 <JawnSmith> [done]
+
+ 15:06 <bdmurray> juliank:
+
+ 15:06 <juliank> * apt 1.2.35 for xenial:
+
+ 15:06 <juliank> - JSON hook backport
+
+ 15:06 <juliank> - zstd support backport
+
+ 15:06 <juliank> - couple test suite fixes
+
+ 15:06 <juliank> * apt 1.3.3:
+
+ 15:06 <juliank> - couple of fixes by DonKult and typo fix by bdmurray
+
+ 15:06 <juliank> - removed the deprecation warning for json hooks 0.1 to give snapd team some breathing room with updating snapd
+
+ 15:06 <juliank> * python-apt compressor lookup fixes (primarily for zstd support); down to focal, bionic/xenial wip.
+
+ 15:06 <juliank> (done)
+
+ 15:06 <juliank> (IIRC)
+
+ 15:06 <doko> 1.3.3?
+
+ 15:07 <bdmurray> Dave is out
+
+ 15:07 <doko> - archive opening
+
+ 15:07 <doko> - finally dropping the armel/armhf gcc multilib builds, just tedious work
+
+ 15:07 <doko> - GCC 11.1 release, gcc-11 SRU for hirsute, backports for bionic and focal
+
+ 15:07 <doko> - gcc-10 build fun, package build aborts after 40h+, for the third time ...
+
+ 15:07 <doko> - looking at various gcc-N packaging bits
+
+ 15:07 <doko> - supposed to do +1 maintenance, which doesn't work this week. will do it next week
+
+ 15:07 <doko> (done)
+
+ 15:07 <bdmurray> Any questions on status?
+
+ 15:08 <bdmurray> #topic Release Incoming Bugs
+
+ 15:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:09 <bdmurray> bug 1910841
+
+ 15:09 <ubottu> bug 1910841 in ubuntu-release-upgrader (Ubuntu) "upgrader should notify user if all pockets are disabled due not having a release file" [Medium,Triaged] https://launchpad.net/bugs/1910841
+
+ 15:10 <bdmurray> Lets just take it as it should be relatively easy
+
+ 15:11 <mclemenceau> Ok I'll card it
+
+ 15:11 <bdmurray> bug 1842047 was raised by the community team so we should card that too
+
+ 15:11 <ubottu> bug 1842047 in ubiquity-slideshow-ubuntu (Ubuntu) "Flavors should use their slideshows when shipping to the end user" [Undecided,Triaged] https://launchpad.net/bugs/1842047
+
+ 15:12 <bdmurray> bug 1923464
+
+ 15:12 <ubottu> bug 1923464 in u-boot-menu (Ubuntu) "ideally should boot rootfs from a matching hard drive" [Undecided,New] https://launchpad.net/bugs/1923464
+
+ 15:13 <bdmurray> juliank: You had an opinion on this?
+
+ 15:13 <juliank> Right, sort of don't see how it fits in with resilient boot having ESPs on multiple drives
+
+ 15:13 <juliank> which might be different than the /
+
+ 15:13 <bdmurray> Okay, then lets punt it while you and xnox discuss it
+
+ 15:14 <bdmurray> bug 1925625
+
+ 15:14 <ubottu> Error: Launchpad bug 1925625 could not be found
+
+ 15:14 <bdmurray> bug 1925265
+
+ 15:14 <ubottu> bug 1925265 in ubuntu-meta (Ubuntu) "Fresh install of hirsute-preinstalled-desktop-arm64+raspi has packages to autoremove" [Undecided,New] https://launchpad.net/bugs/1925265
+
+ 15:14 <bdmurray> That just seemed weird to me but is it worth working on?
+
+ 15:16 <bdmurray> It probably isn't raspi-image specific
+
+ 15:16 <sil2100> I think we should take it
+
+ 15:16 <sil2100> Would be nice to do a clean up of our preinstalled images in that case, as it might also be the same case for riscv
+
+ 15:17 <bdmurray> Okay, let's take it.
+
+ 15:18 <mclemenceau> ok
+
+ 15:18 <sil2100> Ok, missed the part it's about desktop, so uh, but still
+
+ 15:18 <bdmurray> bug 1925483 was release noted so is something we should think about
+
+ 15:18 <ubottu> bug 1925483 in ubiquity (Ubuntu) "Initial user login after ubiquity starts X11 desktop, not Wayland" [Undecided,New] https://launchpad.net/bugs/1925483
+
+ 15:20 <bdmurray> If its fixed after reboot the question might be is there a substantially different user experience.
+
+ 15:21 <bdmurray> Given the performance difference lets take it.
+
+ 15:21 <bdmurray> bug 1925529
+
+ 15:21 <ubottu> bug 1925529 in ubuntu-release-upgrader (Ubuntu) ""ReleaseNotesViewer" does not display anything with the text view" [Undecided,New] https://launchpad.net/bugs/1925529
+
+ 15:22 <bdmurray> Given that we were using the release announcement to convey important information this seems worth fixing.
+
+ 15:22 <bdmurray> So let's card that.
+
+ 15:22 <bdmurray> bug 1925745
+
+ 15:22 <ubottu> bug 1925745 in ubuntu-meta (Ubuntu) "Hirsute: Cannot install ubuntu-desktop due to unmet dependencies" [Undecided,Confirmed] https://launchpad.net/bugs/1925745
+
+ 15:23 <bdmurray> juliank: I tagged this one because of the user experience with regards to sorting out what phasing meant.
+
+ 15:24 <juliank> ack
+
+ 15:24 <mclemenceau> carded the previous 2
+
+ 15:24 <bdmurray> Do you have any ideas how it might be more informative?
+
+ 15:24 <bdmurray> thanks!
+
+ 15:24 <juliank> not sure how this happened
+
+ 15:25 <juliank> There's nothing we can do to make apt tell you more information really
+
+ 15:25 <bdmurray> it was a 0 day SRU (I think) that we didn't fully phase
+
+ 15:25 <juliank> bzut ubuntu-release-upgrader-gtk should be phasing identical to ubuntu-release-upgrader-core
+
+ 15:25 <juliank> so it should install ubuntu-release-upgrader-gtk 21.04.10, not 21.04.11
+
+ 15:26 <bdmurray> Oh, I see.
+
+ 15:26 <juliank> I'll have to go play with it I guess
+
+ 15:27 <bdmurray> Okay, thanks so let's move it to apt and card it.
+
+ 15:27 <bdmurray> bug 1924823
+
+ 15:27 <ubottu> bug 1924823 in ubiquity (Ubuntu) "ESP on install medium automatically configured as ESP for install, failing install" [Undecided,Triaged] https://launchpad.net/bugs/1924823
+
+ 15:28 <juliank> yes, we want to solve this more properly I think
+
+ 15:28 <juliank> It's not super urgent
+
+ 15:29 <bdmurray> Should we still card it then?
+
+ 15:29 <juliank> yeah
+
+ 15:29 <mclemenceau> ok
+
+ 15:29 <juliank> I figured out what's going on with the phasing, and it's sort of Laney's fault ;)
+
+ 15:30 <Laney> what
+
+ 15:30 <juliank> Laney: You said new installs should not be phasing :D
+
+ 15:30 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs
+
+ 15:30 <juliank> Laney: Now if you have a package installed from same source package like u-r-u-core, installing u-r-u-gtk will fail :D
+
+ 15:30 <juliank> Laney: So I need to invent more magic to fix that :D
+
+ 15:31 <juliank> Laney: But mostly just joking about it being your fault :D
+
+ 15:31 <bdmurray> moving on then to bug 1919177 which was release noted
+
+ 15:31 <ubottu> bug 1919177 in cloud-init (Ubuntu) "Azure: issues with accelerated networking on Hirsute" [Undecided,Incomplete] https://launchpad.net/bugs/1919177
+
+ 15:32 <vorlon> ... or revisit this "new installs should not be phasing" assertion?
+
+ 15:32 <juliank> vorlon: Need to read the backlog, but I agreed with the argument
+
+ 15:33 <bdmurray> lets card that so we track helping out the CPC team
+
+ 15:33 <bdmurray> bug 1926267
+
+ 15:33 <ubottu> bug 1926267 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade failed silently after failed to connect to snap service" [Undecided,New] https://launchpad.net/bugs/1926267
+
+ 15:34 <bdmurray> There's an mp there so I'll card it
+
+ 15:34 <bdmurray> bug 1923477 was also release noted
+
+ 15:34 <ubottu> bug 1923477 in ubiquity (Ubuntu Impish) "No WiFi on installed system if drivers were installed using 'Additional Drivers' in live-session before starting the installer." [Undecided,Confirmed] https://launchpad.net/bugs/1923477
+
+ 15:35 <bdmurray> And that's a pretty poor experience so let's card that
+
+ 15:35 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:36 <bdmurray> bug 1921427
+
+ 15:36 <ubottu> bug 1921427 in update-notifier (Ubuntu) "/usr/lib/update-notifier/list-oem-metapackages:AttributeError:/usr/lib/update-notifier/list-oem-metapackages@56:write_oem_metapackage_list" [Undecided,New] https://launchpad.net/bugs/1921427
+
+ 15:37 <bdmurray> looking at the error tracker there aren't a ton of crashes about this
+
+ 15:37 <bdmurray> so let's pass on it for now
+
+ 15:38 <bdmurray> bug 1921593 I think I should test this again with the clonefile attached
+
+ 15:38 <ubottu> bug 1921593 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade fails with no error" [Undecided,New] https://launchpad.net/bugs/1921593
+
+ 15:38 <bdmurray> so passing on that
+
+ 15:38 <bdmurray> bug 1924604
+
+ 15:38 <ubottu> bug 1924604 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade crashed with KeyError in __getitem__(): "The cache has no package named 'python-is-python2'"" [Undecided,New] https://launchpad.net/bugs/1924604
+
+ 15:38 <bdmurray> This can happen if universe is not enabled
+
+ 15:39 <bdmurray> vorlon: I forget did you have an opinion on this?
+
+ 15:39 <juliank> Laney: that was you right, who said t
+
+ 15:39 <juliank> oops, sorry
+
+ 15:39 <juliank> Wrong keys pressed + backlog
+
+ 15:40 <vorlon> bdmurray: I think the opinion I offerred is that we shouldn't be excessively concerned about making an upgrade "work" under those circumstances, we should just make sure we don't crash ugly
+
+ 15:40 <bdmurray> I think the current behavior could be called ugly
+
+ 15:40 * vorlon nods
+
+ 15:40 <bdmurray> so let's card that
+
+ 15:41 <bdmurray> bug 1925972
+
+ 15:41 <ubottu> bug 1925972 in ubuntu-release-upgrader (Ubuntu) "Upgrade from 18.04 to 20.04 not calculatable if python-bson-ext is installed" [Undecided,New] https://launchpad.net/bugs/1925972
+
+ 15:41 <bdmurray> so there are still a lot of upgrade failures from B to F
+
+ 15:41 <bdmurray> this might be one reason why
+
+ 15:42 <bdmurray> I didn't find out why python-bson-ext is causing upgrade failures but its definitely that python2 quirk
+
+ 15:42 <bdmurray> so let's card that too
+
+ 15:42 <bdmurray> bug 1920107
+
+ 15:42 <ubottu> bug 1920107 in finalrd (Ubuntu) "Failed messages of sd-umount shown with reboot/shutdown" [Undecided,Incomplete] https://launchpad.net/bugs/1920107
+
+ 15:43 <bdmurray> that's incomplete so let's pass on it
+
+ 15:44 <bdmurray> and I'm already working on bug 1924809
+
+ 15:44 <ubottu> bug 1924809 in update-manager (Ubuntu) "apt 2.0.5 in focal causes autopkgtest failures for update-manager" [Undecided,In progress] https://launchpad.net/bugs/1924809
+
+ 15:44 <bdmurray> that's that for bugs
+
+ 15:45 <bdmurray> #topic Team proposed-migration report
+
+ 15:45 <doko> skip that
+
+ 15:45 <vorlon> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:45 <bdmurray> okay!
+
+ 15:45 <doko> there's nothing ready
+
+ 15:45 <vorlon> but nothing here because everything's too young after impish opened
+
+ 15:45 <vorlon> so yes, move on
+
+ 15:45 <bdmurray> #topic AOB
+
+ 15:47 <bdmurray> I'm out starting tomorrow until next Thursday
+
+ 15:49 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

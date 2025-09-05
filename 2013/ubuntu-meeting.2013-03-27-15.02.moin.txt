@@ -1,0 +1,712 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:08 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-03-27-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' https://errors.ubuntu.com/bucket/?id=%2Fusr%2Fbin%2Fupdate-manager%3Alibreoffice-emailmerge%3A_inline_callbacks%3Acommit%3A_inline_callbacks%3A_run_in_dialog   (bdmurray, 15:25:36)
+
+ *AOB
+
+
+
+Meeting ended at 16:03:45 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (80)
+ * ev (46)
+ * bdmurray (41)
+ * stgraber (38)
+ * xnox (31)
+ * ogra_ (27)
+ * ubottu (23)
+ * jodh (20)
+ * cjwatson (19)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02:08 <slangasek> #startmeeting
+
+ 15:02:08 <meetingology> Meeting started Wed Mar 27 15:02:08 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:08 <meetingology> 
+
+ 15:02:08 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:19 <slangasek> jodh: thanks for confirming I'm in the right place ;-)
+
+ 15:02:27 <slangasek> [TOPIC] lightning round
+
+ 15:02:30 <jodh> :)
+
+ 15:02:32 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 15:02:35 <slangasek> stgraber doko bdmurray cjwatson barry ogra jodh xnox ev slangasek stokachu
+
+ 15:04:02 <stgraber> Feature work:
+
+ 15:04:02 <stgraber> - Upstart (BLUEPRINT: foundations-r-upstart-user-session-enhancements)
+
+ 15:04:02 <stgraber> - Ported ssh-agent and im-config to user sessions, giving us fully working user sessions now.
+
+ 15:04:05 <stgraber> - Pushed those new jobs and an updated dbus job to the archive.
+
+ 15:04:07 <stgraber> - Quick packaging review of upstart 1.8 and helped preparing the bzr branch.
+
+ 15:04:10 <stgraber> - Looked at the state of the dconf bridge, did some minor fixes.
+
+ 15:04:13 <stgraber> - Discussed nm-connection-* events, to be added for 13.10.
+
+ 15:04:15 <stgraber> - Container (BLUEPRINT: servercloud-r-lxc)
+
+ 15:04:18 <stgraber> - Usual code review.
+
+ 15:04:20 <stgraber> - Fixed some issues with make dist/clean.
+
+ 15:04:23 <stgraber> - We now allow armhf cloud instances.
+
+ 15:04:25 <stgraber> - Some small tweaks to lxc-start-ephemeral.
+
+ 15:04:28 <stgraber> - Mostly feature frozen for 0.9, planning to release on Monday.
+
+ 15:04:30 <stgraber> - Some LXC/Android debugging.
+
+ 15:04:33 <stgraber> - Mobile updates (BLUEPRINT: foundations-1303-single-image-update)
+
+ 15:04:35 <stgraber> - Had a few more meetings on the implementation of image based updates.
+
+ 15:04:38 <stgraber> - Updated https://wiki.ubuntu.com/ImageBasedUpgrades/Mobile to something we feel should be a good first implementation.
+
+ 15:04:41 <stgraber> - Created https://wiki.ubuntu.com/ImageBasedUpgrades/Mobile/LocalPackages to cover the installation of extra packages from the archive.
+
+ 15:04:44 <stgraber> Other work:
+
+ 15:04:47 <stgraber> - Some random discussions on LXC, initial review of a Go binding, ...
+
+ 15:04:49 <stgraber> - Testing the quantal isc-dhcp SRU.
+
+ 15:04:52 <stgraber> - Poked people to send their ubiquity-slideshow-ubuntu updates in, reviewed, fixed, got new translation templates and pushed everything.
+
+ 15:04:55 <stgraber> - DMB meeting
+
+ 15:04:57 <stgraber> Other time spent:
+
+ 15:05:00 <stgraber> - Peer reviews
+
+ 15:05:02 <stgraber> TODO:
+
+ 15:05:05 <stgraber> - Track down ACL bug in QATracker
+
+ 15:05:07 <stgraber> - Start prototyping image based upgrades.
+
+ 15:05:10 <stgraber> - Come up with the list of Xsession scripts that still need porting to upstart user-sessions (outside of standard desktop install).
+
+ 15:05:13 <stgraber> - ifupdown SRU to quantal and precise
+
+ 15:05:15 <stgraber> Holidays:
+
+ 15:05:18 <stgraber> - This Friday is a national holiday.
+
+ 15:05:20 <stgraber> - Next Monday is also a national holiday but I'll be working anyway (swap day)
+
+ 15:05:23 <stgraber> (DONE)
+
+ 15:05:34 <slangasek> doko_: here?  (your turn)
+
+ 15:08:44 <bdmurray> I'll start then
+
+ 15:08:50 <slangasek> bdmurray: thanks
+
+ 15:08:54 <bdmurray> review of ubuntu-release-upgrader bug day work (i.e. bug triage)
+
+ 15:08:54 <bdmurray> review of and reply to release upgrader bugs email to the bugsquad mailing list
+
+ 15:08:57 <bdmurray> duplicate search of bug 1045559 (Ultimate Edition images broken)
+
+ 15:08:58 <ubottu> bug 1045559 in Ultimate Edition "Ultimate Edition images are broken. Use official Ubuntu 12.04 LTS images." [Undecided,New] https://launchpad.net/bugs/1045559
+
+ 15:09:00 <bdmurray> investigation into ubiquity bug 1159566 regarding problem with merge list
+
+ 15:09:00 <ubottu> bug 1159566 in redeclipse (Ubuntu) "FFe: Sync redeclipse 1.4-1 (multiverse) from Debian experimental (contrib)" [Wishlist,Fix released] https://launchpad.net/bugs/1159566
+
+ 15:09:03 <bdmurray> errors: updated user parameter setting to not clobber package or release setting
+
+ 15:09:09 <bdmurray> errors: removed ~ stuff from subscriber_name in errors
+
+ 15:09:09 <bdmurray> errors: redesign of new buckets for package / version work
+
+ 15:09:09 <bdmurray> errors: wrote code and merge proposals for new buckets work
+
+ 15:09:09 <bdmurray> errors: pushed a fix for bug 1160023
+
+ 15:09:09 <bdmurray> reported bug 1159996 regarding daisy / errors
+
+ 15:09:11 <ubottu> bug 1160023 in Errors "Bucket page links to a release specific page" [Medium,Fix committed] https://launchpad.net/bugs/1160023
+
+ 15:09:12 <bdmurray> reported errors bug 1160023 regarding raring specific link
+
+ 15:09:13 <ubottu> bug 1159996 in Daisy "bucketmetadata has a key for source package but daisy inserts binary package" [High,New] https://launchpad.net/bugs/1159996
+
+ 15:09:17 <bdmurray> uploaded SRU for bug 1120322 to Precise
+
+ 15:09:17 <bdmurray> uploaded bash-completion SRU bug 1019217
+
+ 15:09:17 <bdmurray> uploaded aptdaemon bug fix for bug 898851
+
+ 15:09:18 <ubottu> bug 1120322 in aptdaemon (Ubuntu Precise) "update-manager crashed with UnboundLocalError in show_diff(): local variable 'line_number' referenced before assignment" [High,Fix committed] https://launchpad.net/bugs/1120322
+
+ 15:09:20 <ubottu> bug 1019217 in bash-completion (Ubuntu Precise) "[SRU] Tab completion with tar -df, -tf, and -xf don't support spaces in file name" [Medium,Confirmed] https://launchpad.net/bugs/1019217
+
+ 15:09:21 <ubottu> bug 898851 in aptdaemon (Ubuntu) "update-manager crashed with TypeError in function(): Must be number, not tuple" [High,Fix released] https://launchpad.net/bugs/898851
+
+ 15:09:40 <bdmurray> speaking of bug 898851 I can't find a bucket for it at errors so I'm uncertain whether or not to SRU it
+
+ 15:09:56 <bdmurray> SRU verification of bug 1094777
+
+ 15:09:56 <bdmurray> special SRU review of ubuntu-geoip and gnome-screenshot
+
+ 15:09:56 <bdmurray> investigation into firefox-lp-improvements issue with loading tags / stock replies
+
+ 15:09:58 <ubottu> bug 1094777 in ubuntu-release-upgrader (Ubuntu) "Can't use c-n-r-gtk to initiate Quantal -> Raring update" [High,Fix released] https://launchpad.net/bugs/1094777
+
+ 15:09:59 <bdmurray> performance review work
+
+ 15:10:12 <bdmurray> I'm out next week Wed through Fri
+
+ 15:10:18 <bdmurray> done
+
+ 15:10:32 <slangasek> stgraber: setting aside the extra-packages question, when do you think you'll have a first prototype of image updates?
+
+ 15:10:49 <cjwatson> Self-appraisal.
+
+ 15:10:49 <cjwatson> Lots more work on cdimage.
+
+ 15:10:49 <cjwatson> * Put together a system for letting Jenkins control which images are marked as "current" based on the output of automatic tests.  This is now just waiting for QA to hook it up from their side.
+
+ 15:10:53 <cjwatson> * I'm a few hundred lines of unit tests away from having a complete Python rewrite of publish-release, after which there are only a few small odds and ends left in shell.
+
+ 15:10:56 <cjwatson> openssh upload including fix for bug 952185 and Upstart ssh-agent user job support.
+
+ 15:10:59 <cjwatson> Tried to sort out the Haskell transition a bit more, since it's making it very difficult to see what else is stuck in -proposed.  Fixed haskell-cryptohash on powerpc, and made some progress with haskell-conduit on armhf but currently stalled (http://hackage.haskell.org/trac/ghc/ticket/7794).  Much swearing.
+
+ 15:10:59 <ubottu> bug 952185 in gdm (Ubuntu Precise) "~/.pam_environment not parsed by default" [Medium,In progress] https://launchpad.net/bugs/952185
+
+ 15:11:04 <cjwatson> Reviewed addition of autopkgtest to libpipeline.
+
+ 15:11:06 <cjwatson> Reviewed pkg-config change in phablet-team/ppa; preparing matching upload to raring.
+
+ 15:11:09 <cjwatson> National holidays this Friday and Monday.
+
+ 15:11:12 <cjwatson> ..
+
+ 15:11:40 <stgraber> slangasek: I expect to have the code to generate the diffs serverside and the downloader/updater tool done this week. I have no clear estimation of the time needed to get the ClockWord changes done and get that stuff actually running on the nexus7
+
+ 15:12:25 <slangasek> stgraber: ok
+
+ 15:14:29 <ogra_> no barry ?
+
+ 15:15:49 <slangasek> stgraber: can I ask you to flesh out the blueprint with some work items now that there's a clearer description of the work? (https://blueprints.launchpad.net/ubuntu/+spec/foundations-1303-single-image-update)
+
+ 15:15:55 <slangasek> no barry (vac)
+
+ 15:16:01 <slangasek> ogra_: your turn then
+
+ 15:16:03 <ogra_> ah, going ahead then
+
+ 15:16:11 <ogra_> done:
+
+ 15:16:11 <ogra_> * started on the livecd-rootfs changes for building android base images on the amd64 builder
+
+ 15:16:11 <ogra_> * various bughunts
+
+ 15:16:11 <ogra_> * fixes for ubuntu-session in ubuntu touch
+
+ 15:16:11 <ogra_> * added legal disclaimer to cdimage download page
+
+ 15:16:12 <ogra_> * hunt down issue with mtp when trying to flash ubuntu touch (bug 1160847)
+
+ 15:16:13 <ubottu> bug 1160847 in gvfs (Ubuntu) "please add an option to inhibit gvfs mtp mounts " [High,Confirmed] https://launchpad.net/bugs/1160847
+
+ 15:16:14 <ogra_> * power management on ubuntu touch meeting
+
+ 15:16:15 <stgraber> slangasek: ah yeah, good point, I'll do that
+
+ 15:16:16 <ogra_> * some flash-kernel discussions about handling server installs as well as LXC containers
+
+ 15:16:20 <ogra_> * lost a good bunch of unsaved work thanks to indicator-weather producing a 36G .xsession-errors in about 30min (and filling my disk to 100%) :/
+
+ 15:16:22 <slangasek> stgraber: thanks much!
+
+ 15:16:23 <ogra_> todo:
+
+ 15:16:25 <ogra_> * finish building of android image parts for ubuntu touch on the livefs builder
+
+ 15:16:27 <ogra_> * look into android-x86 or other emulator possibilities to ship with the SDK
+
+ 15:16:29 <ogra_> * look into abilities to update the kernel from packages on android based images
+
+ 15:16:31 <ogra_> ..
+
+ 15:16:42 <jodh> * blueprints:
+
+ 15:16:42 <jodh> - foundations-r-upstart-roadmap: np.
+
+ 15:16:43 <jodh> - foundations-r-upstart-user-session-enhancements
+
+ 15:16:43 <jodh> - Made initctl2dot(8) user-session-aware.
+
+ 15:16:46 <jodh> - Progress on DEP-8 python test harness.
+
+ 15:16:49 <jodh> - Released Upstart 1.8 and landed in Raring with a new
+
+ 15:16:52 <jodh> upstart-monitor package (yah - I did the splits! :-)
+
+ 15:16:55 <jodh> * misc:
+
+ 15:16:58 <jodh> - Completed appraisal and peer reviews.
+
+ 15:17:02 <jodh> - Finished mountall apport hook and handed to slangasek for Debian sync.
+
+ 15:17:05 <jodh> - Updates to https://wiki.ubuntu.com/Apport/DeveloperHowTo
+
+ 15:17:08 <jodh> - Friday+Monday are a national holiday.
+
+ 15:17:11 <jodh> * TODO:
+
+ 15:17:14 <jodh> - bug 1157713.
+
+ 15:17:16 <ubottu> bug 1157713 in upstart "upstart tests which run without inotify fail occasionally" [Undecided,New] https://launchpad.net/bugs/1157713
+
+ 15:17:17 <jodh> - Upstart Raring TechnicalOverview details.
+
+ 15:17:21 <jodh> - investigate system behaviour wrt slangaseks quiesced event.
+
+ 15:17:24 <jodh> ṃ
+
+ 15:17:24 <jodh> 
+
+ 15:18:15 <xnox> oh me.
+
+ 15:18:24 <xnox> * Regenerated app-install-data-ubuntu (needs another upload to include
+
+ 15:18:24 <xnox> 100's of scopes)
+
+ 15:18:24 <xnox> * revert ubiquity to metacity VM, pending test.
+
+ 15:18:24 <xnox> * fix qt4's moc failing bug #1119656
+
+ 15:18:24 <xnox> * fix mdadm bug #1127867
+
+ 15:18:24 <xnox> * did test rebuild with boost1.53 and forward some bugs to Debian.
+
+ 15:18:27 <ubottu> bug 1119656 in qt4-x11 (Ubuntu) "plot-qt demo fails to build with Boost 1.53" [High,Fix released] https://launchpad.net/bugs/1119656
+
+ 15:18:28 <xnox> Looking very good: http://people.canonical.com/~xnox/boost1.53/
+
+ 15:18:28 <ubottu> bug 1127867 in mdadm (Ubuntu Precise) "/etc/udev/rules.d/65-mdadm.vol_id.rules uses non-existent 'vol_id'" [High,In progress] https://launchpad.net/bugs/1127867
+
+ 15:18:30 <xnox> * Working on tracing down bug #1080701
+
+ 15:18:32 <ubottu> bug 1080701 in ubiquity (Ubuntu Raring) "After 'Preparing to install Ubuntu' screen, raring installation hangs" [High,Confirmed] https://launchpad.net/bugs/1080701
+
+ 15:18:32 <xnox> * Working on implementing a few utah installer tests (static analysis
+
+ 15:18:34 <xnox> & lvm installations)
+
+ 15:18:36 <xnox> * Short week had this monday off, and Friday-Monday is Eastern.
+
+ 15:18:38 <xnox> * Did reviews...
+
+ 15:18:40 <xnox> * Fix upstart job integration between avahi & cups (remote queues) bug #1158686
+
+ 15:18:41 <ubottu> bug 1158686 in avahi (Ubuntu) "When restarting avahi-daemon cups does not reconnect to it - workaround" [High,Fix released] https://launchpad.net/bugs/1158686
+
+ 15:18:42 <xnox> * Fix top fuse/ntfs-3g crasher bug #1019806
+
+ 15:18:43 <ubottu> bug 1019806 in ntfs-3g (Ubuntu) "ntfs-3g crashed with SIGABRT in get_node()" [Medium,Confirmed] https://launchpad.net/bugs/1019806
+
+ 15:18:45 <xnox> ..
+
+ 15:19:20 <stgraber> xnox: do we now have a wiki page on how to update app-install-data-ubuntu?
+
+ 15:19:36 <ev> - Performance review.
+
+ 15:19:36 <ev> - Debugging problems with the retracer deployment on stagingstack.
+
+ 15:19:36 <ev> - Quite a few fixes to the retracer code.
+
+ 15:19:36 <ev> - Slowed down massively by an inability to deploy to lcy02:
+
+ 15:19:36 <ev> https://rt.admin.canonical.com/Ticket/Display.html?id=60371
+
+ 15:19:36 <ev> - Whinging at James. Please follow up with canonical support if you're
+
+ 15:19:42 <ev> receiving error states when deploying to canonistack. They wont have the
+
+ 15:19:42 <ev> incentive to buy more hardware if they don't know there's a problem.
+
+ 15:19:42 <ev> - Discussion with Martin, James, and Tom Haddon on never marking retraces as
+
+ 15:19:42 <ev> failed:
+
+ 15:19:42 <ev> https://bugs.launchpad.net/daisy/+bug/1159849
+
+ 15:19:44 <ubottu> Launchpad bug 1159849 in Daisy "We shouldn't ever mark retraces as failed." [Undecided,New]
+
+ 15:19:46 <slangasek> xnox: what's the context of reverting ubiquity to metacity?
+
+ 15:19:53 <ev> So we will ask for a new core file from the next person in line when a
+
+ 15:19:54 <ev> retrace of the respective Stacktrace Address Signature for that crash fails.
+
+ 15:19:54 <ev> To be clear, this is gated. We're only asking for a core file per SAS when we
+
+ 15:19:54 <ev> don't have one or just discarded one because it failed.
+
+ 15:19:54 <ev> The end result of this will be that you wont see these pages that give you no
+
+ 15:20:01 <ev> actionable information and a worryingly high instance count:
+
+ 15:20:01 <ev> https://errors.ubuntu.com/bucket/?id=failed%3A%2Fsbin%2Finit%3A11%3Ai686%3A%2Flib%2Fi386-linux-gnu%2Flibpthread-2.15.so%2B61b8%3A%2Flib%2Fi386-linux-gnu%2Flibc-2.15.so%2Bb8083%3A%2Flib%2Fi386-linux-gnu%2Flibpthread-2.15.so%2B10464%3A%2Fsbin%2Finit%2Bab29%3A%2Fsbin%2Finit%2Bc25d%3A%2Fsbin%2Finit%2Bd295%3A%2Fsbin%2Finit%2Bf714%3A%2Flib%2Fi386-linux-gnu%2Flibnih.so.1.0.0%2Bd6d1%3A%2Fsbin%2Finit%2B4f23
+
+ 15:20:05 <ev> - Lots of improvements to https://errors.ubuntu.com. Let me know if you're not
+
+ 15:20:05 <ev> using this every day and why, or what we can do to improve the experience for
+
+ 15:20:05 <ev> you.
+
+ 15:20:10 <ev> - Started to teach apport to look for dbgsyms relative to the crash report, not
+
+ 15:20:10 <ev> to the release it came from. This was manifesting as not being able to
+
+ 15:20:10 <ev> retrace crashes from precise when some of the dependencies are present in
+
+ 15:20:15 <ev> -proposed. We've worked around this for right now by removing proposed from
+
+ 15:20:15 <ev> our retracer sources.
+
+ 15:20:15 <ev> - Code review for Brian. Discussion on the implementation of phased updates.
+
+ 15:20:15 <ev> The plan of the moment is to poll Errors from Launchpad or some intermediate
+
+ 15:20:18 <xnox> stgraber: not yet, I did updates & comments in the package. But I now know that I didn't do it quite right. Will document better in the package and link up from release-relevant wiki.
+
+ 15:20:19 <ev> service, rather than Errors pushing the data out. This is nice for data
+
+ 15:20:19 <ev> locality. Launchpad knows the versions that need to be compared for the
+
+ 15:20:19 <ev> phasing, it also knows who to notify when the the list of new buckets it gets
+
+ 15:20:23 <ev> from Errors is not empty.
+
+ 15:20:23 <ev> Blocked:
+
+ 15:20:23 <ev> - https://portal.admin.canonical.com/60205 - This will give us a (hopefully)
+
+ 15:20:26 <ev> much better picture on the average errors per calendar day graph. It's got a
+
+ 15:20:26 <ev> fair few things in front of it on the webops queue:
+
+ 15:20:26 <ev> https://portal.admin.canonical.com/ruins?team=losa
+
+ 15:20:27 <ev> (done)
+
+ 15:20:49 <xnox> slangasek: compiz or window decorates or both crashing and hence preventing the user from doing any keyboard input and thus preventing a user from completing installation.
+
+ 15:21:16 <stgraber> xnox: cool, thanks
+
+ 15:21:20 <ogra_> slangasek, tons of bugs we drowned in since the switch ...
+
+ 15:21:50 <xnox> slangasek: not reproducible in the ubuntu full desktop session. Thus very specific to ubiquity-dm. Revert to metacity is a safe/known to work revert. And there is little compiz development time available.
+
+ 15:22:00 <ogra_> the environment simply isnt the same
+
+ 15:22:18 <ogra_> something to re visit in 13.10
+
+ 15:22:19 <cjwatson> also we were using metacity up to quantal (I'd forgotten it was so recent)
+
+ 15:22:26 <slangasek> xnox: ack, thanks for the explanation
+
+ 15:22:28 <xnox> slangasek: also compiz & touch keyboard fighting over focus resulting in not being able to focus input field and have a working touch keyboard simultaniously.
+
+ 15:22:49 <slangasek> * assisting with the upstart 1.8 release
+
+ 15:22:49 <slangasek> * discussions around image-based updates
+
+ 15:22:49 <slangasek> * FFe discussions
+
+ 15:22:49 <slangasek> * monthly planning cadence: getting plans together for April
+
+ 15:22:49 <slangasek> * planning for client sprint in May
+
+ 15:22:51 <slangasek> * discussed within Canonical the proposal to drop Wubi from release; no objections, now I need to get this announced
+
+ 15:22:54 <slangasek> * spending some time hacking on compiz, to try to fix the worst window placement bugs that have been plaguing me forever; not sure yet if it's fixable without a library ABI change
+
+ 15:22:58 <slangasek> * on vacation from tomorrow until Tuesday
+
+ 15:23:01 <slangasek> (done)
+
+ 15:23:02 <xnox> cjwatson: slangasek: yeah correct. compiz was "new in raring feature" and didn't work out as good as hoped =)
+
+ 15:23:20 <xnox> (plus the space saving is not there, as compiz is using libmetacity for window decorators)
+
+ 15:23:22 <slangasek> and stokachu is off sprinting
+
+ 15:23:35 <slangasek> so that's everyone that's here
+
+ 15:23:39 <slangasek> #topic Bugs
+
+ 15:23:41 <slangasek> bdmurray:
+
+ 15:23:45 <ogra_> yay for dropping wubi \o/
+
+ 15:24:13 <xnox> slangasek: i'm pinged on the website front w.r.t. wubi. Drop it from ubuntu.com for 13.04 release?
+
+ 15:24:53 <slangasek> xnox: if we're not releasing it for 13.04, then yes... :)
+
+ 15:25:12 <bdmurray> bug 1158926 is trending high on errors
+
+ 15:25:13 <ubottu> bug 1158926 in update-manager (Ubuntu) "update-manager crashed with libreoffice-emailmerge in _run_in_dialog()" [Medium,New] https://launchpad.net/bugs/1158926
+
+ 15:25:36 <bdmurray> https://errors.ubuntu.com/bucket/?id=%2Fusr%2Fbin%2Fupdate-manager%3Alibreoffice-emailmerge%3A_inline_callbacks%3Acommit%3A_inline_callbacks%3A_run_in_dialog
+
+ 15:25:39 <slangasek> xnox: the comment from Steve George was that he would "ask Web to remove it entirely from the site going forward".  I don't know if he meant that would be retroactive for previous releases that are shown on the site
+
+ 15:26:13 <bdmurray> its not clear to me if that's a libreoffice bug or not
+
+ 15:26:21 <slangasek> xnox: but, I think that's "their" call; we released Wubi previously, whether they decide to link to advertise the previous releases on the website is up to them
+
+ 15:26:27 <xnox> slangasek: well 12.04.2 is affected and there are no releases prior to that.
+
+ 15:26:46 <xnox> as in wubi and 12.04.2 don't like each other =)
+
+ 15:26:50 <slangasek> I think cjwatson was keen to fix the 12.04.2-affecting bug
+
+ 15:26:58 <xnox> cjwatson: ack.
+
+ 15:27:14 * slangasek looks at 1158926
+
+ 15:27:49 <slangasek> bdmurray: hrm, difficult to tell from that backtrace
+
+ 15:28:00 <slangasek> bdmurray: are there any associated dpkg/apt logs?
+
+ 15:28:08 <bdmurray> oh earlier in the terminal log we see this
+
+ 15:28:26 <bdmurray> dpkg: error processing /var/cache/apt/archives/libreoffice-common_1%3a4.0.2~rc1-0ubuntu1~raring1~ppa2_all.deb (--unpack): trying to overwrite '/usr/lib/libreoffice/program/officehelper.py', which is also in package libreoffice-emailmerge 1:4.0.1-0ubuntu2
+
+ 15:28:30 <bdmurray> dpkg-deb: error: subprocess paste was killed by signal (Broken pipe)
+
+ 15:28:47 <slangasek> yeah, libreoffice bug then
+
+ 15:28:58 <bdmurray> right, I'd missed that sorry
+
+ 15:29:45 <bdmurray> bug 1157943 has a patch
+
+ 15:29:46 <ubottu> bug 1157943 in apt (Ubuntu) "apt-get update fails hash checks on https repositories when file size changes" [Undecided,New] https://launchpad.net/bugs/1157943
+
+ 15:32:30 * slangasek follows up and asks David for comment
+
+ 15:33:40 <bdmurray> when reviewing the ubuntu-release-upgrader bugs I came across bug 1078653 which seemed rather odd
+
+ 15:33:41 <ubottu> bug 1078653 in ubuntu-release-upgrader (Ubuntu) "GRUB_PREFIX not set after dist-upgrade" [Undecided,Confirmed] https://launchpad.net/bugs/1078653
+
+ 15:35:51 <bdmurray> additionally there were a multitude of failed upgrades due to PPA versions of Xorg packages and I wonder what we can do to make the upgrade process better
+
+ 15:36:07 <cjwatson> 1078653 looks like a non-updated conffile
+
+ 15:36:13 <slangasek> yep
+
+ 15:36:25 <slangasek> so someone chose "keep my version" and kept an incompatible version
+
+ 15:36:42 <slangasek> should probably be marked 'invalid' with explanation?
+
+ 15:36:50 <cjwatson> or they weren't prompted
+
+ 15:36:52 <cjwatson> does the upgrader prompt?
+
+ 15:37:00 <slangasek> it's meant to
+
+ 15:37:32 <cjwatson> would it be in /var/log/apt/term.log if it did?
+
+ 15:37:44 <slangasek> no idea
+
+ 15:38:03 <slangasek> IIRC yes
+
+ 15:39:05 <slangasek> bdmurray: so, maybe follow up and ask for logs (which seem not to be attached)?
+
+ 15:39:28 <bdmurray> slangasek: sounds good
+
+ 15:39:37 <cjwatson> I'm following up
+
+ 15:39:41 <slangasek> bdmurray: but as we don't have any other indications of conffile prompting not working correctly, I'd say it's a low priority issue (and ultimately probably invalid)
+
+ 15:40:32 <cjwatson> it does seem likely, just being paranoid
+
+ 15:40:42 <cjwatson> ok, https://bugs.launchpad.net/ubuntu/+source/ubuntu-release-upgrader/+bug/1078653/comments/8
+
+ 15:40:44 <ubottu> Launchpad bug 1078653 in ubuntu-release-upgrader (Ubuntu) "GRUB_PREFIX not set after dist-upgrade" [Undecided,Incomplete]
+
+ 15:41:35 <slangasek> bdmurray: xorg ppa and upgrades> not sure; it's hard for the upgrader to know what the right thing to do is
+
+ 15:42:09 <slangasek> do we want ppa packages downgraded on release upgrade?  do we want the ppa to be kept enabled, and upgrade to newer edge packages?
+
+ 15:42:31 <slangasek> is there a general rule that we can apply, or is this all specific to the xorg ppa?
+
+ 15:42:32 <bdmurray> sure, but it could be more informative about why it failed for the ubuntu-x-swat ppa at least
+
+ 15:44:03 <slangasek> bdmurray: what does it say today?
+
+ 15:45:38 <bdmurray> ERROR Dist-upgrade failed: 'E:Unable to correct problems, you have held broken packages.'
+
+ 15:45:48 <bdmurray> see bug 1069133 for an example
+
+ 15:45:49 <ubottu> bug 1069133 in ubuntu-release-upgrader (Ubuntu) "Get upgrade error 12.04 - 12.10 "Could not determine upgrade" - xorg from ppa" [Undecided,New] https://launchpad.net/bugs/1069133
+
+ 15:46:17 <slangasek> ok
+
+ 15:46:44 <slangasek> is anyone here keen to take a stab at that?
+
+ 15:47:51 <slangasek> bdmurray: sounds like a punt for now :/
+
+ 15:48:18 <xnox> slangasek: is that just upgrade from 12.04 -> 12.10 with x-ppa enabled?
+
+ 15:48:22 <slangasek> xnox: yes
+
+ 15:48:24 * xnox can easily run this.
+
+ 15:48:43 <slangasek> the release upgrader disables ppas, which makes a mess of the upgrade path when your ppas have pulled in newer versions of core packages
+
+ 15:48:45 <xnox> and poke to troubleshoot it. VMs in tmpfs are very fast with local mirrors =)
+
+ 15:49:19 <slangasek> xnox: seems like the best outcome we can hope for right now is a more detailed error message, perhaps directing users to ppa-purge before upgrading
+
+ 15:49:47 <slangasek> or perhaps describing how to keep the core ppa enabled during upgrade, so apt can calculate an upgrade correctly?
+
+ 15:50:04 <slangasek> xnox: you want to take it then?
+
+ 15:50:16 * xnox assigned the bug to myself
+
+ 15:50:19 <slangasek> SOLD to the man in the hat
+
+ 15:50:26 <slangasek> bdmurray: anything else?
+
+ 15:51:34 <bdmurray> bug 1090656 could use some brainstorming as to how this may have happened.
+
+ 15:51:36 <ubottu> bug 1090656 in policykit (Ubuntu) "Passwords aren't accepted anymore by PolicyKit" [Undecided,Confirmed] https://launchpad.net/bugs/1090656
+
+ 15:53:12 <bdmurray> From what I can gather it seems that at some point in time people are not able to upgrade their systems due to a password error.
+
+ 15:53:18 <slangasek> I am confused by the bug description, why is glatzor berating himself
+
+ 15:53:35 <bdmurray> he converted a question into a bug so became the owner of it I believe
+
+ 15:53:43 <slangasek> ah :)
+
+ 15:53:49 <bdmurray> he asked me if I'd seen similar issues to that type of issue
+
+ 15:54:43 <slangasek> there seems to be very little information to go on in the bug
+
+ 15:54:49 <slangasek> what version is this happening with?
+
+ 15:54:56 <ogra_> 11.1
+
+ 15:54:57 <ogra_> :)
+
+ 15:55:26 <ogra_> the january edition :)
+
+ 15:55:33 <slangasek> yeah
+
+ 15:55:50 <slangasek> so the follow-up still sounds like "being prompted for a password but user doesn't know what the password is"
+
+ 15:56:03 <slangasek> unlike the initial description from a different user
+
+ 15:56:37 <slangasek> bdmurray: sorry, brainstorming doesn't give me any ideas as to a cause; I think we need more engagement from the affected users to narrow it down
+
+ 15:56:55 <slangasek> (not any cause that's actually a bug in the software, I mean)
+
+ 15:56:58 <ogra_> did we ever have any way of doing an install without a password ?
+
+ 15:57:17 <slangasek> ogra_: "there's a password" != "the user knows the password"
+
+ 15:57:45 <xnox> "the user knows the password" != "system is using expected caps lock & keyboard layout"
+
+ 15:57:46 <bdmurray> or maybe there is a derivative that allows installing w/o a password.
+
+ 15:57:47 <ogra_> "he had to down load the software and reinstall it and TOLD me he put NO PASSWORDS in"
+
+ 15:58:04 <slangasek> the original submitter is clear about knowing the password and not having it honored; the follow-up comments are much more muddled
+
+ 15:58:05 <ogra_> sounds to me like he did a reinstall without setting a password
+
+ 15:58:41 <jodh> could it be that our password policy somehow became more restrictive and their passwords now fail to comply and get rejected?
+
+ 15:58:54 <slangasek> ogra_: I don't think it's useful to try to read the tea leaves here; we need more information
+
+ 15:58:57 <slangasek> jodh: nope
+
+ 15:58:58 <cjwatson> password policies only ever affect changing a password, not entering an already-set one
+
+ 15:59:03 <slangasek> precisely
+
+ 15:59:07 <ogra_> yeah
+
+ 15:59:10 <slangasek> #topic AOB
+
+ 15:59:17 <slangasek> one minute :)
+
+ 15:59:17 <ev> slangasek: are you buried in other stuff and shall I pick up the NDA discussion with legal? Also, can you remember if we said that python tracebacks and sanitised stacktraces (locals and arguments removed) would be okay for an unauthenticated view? I remember James saying as much in a separate chat, but I can't recall if we reached consensus on that.
+
+ 16:00:06 <slangasek> ev: am buried; if you want to pick it up, be my guest, would appreciate a cc: when you do; and I don't recall any discussion about sanitized stacktraces being public
+
+ 16:00:06 <ev> also, does anyone have suggestions on how I can better spread the word on errors.u.c? Should I go around handing people data? :)
+
+ 16:00:18 <ev> slangasek: *nods*
+
+ 16:00:25 <ev> slangasek: any objections to sanitised stacktraces?
+
+ 16:01:00 <slangasek> ev: I object to the spelling ;)
+
+ 16:01:10 <slangasek> ev: otherwise, I only object if it's buggy
+
+ 16:01:17 <ev> yeah, me too in most instances
+
+ 16:02:12 <ev> I just keep reminding myself that as poor and British as my spelling and grammar get, I'll never reduce myself to writing "James's".
+
+ 16:02:15 <ev> slangasek: noted
+
+ 16:02:26 <ev> thanks
+
+ 16:02:53 <slangasek> anything else?
+
+ 16:03:45 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

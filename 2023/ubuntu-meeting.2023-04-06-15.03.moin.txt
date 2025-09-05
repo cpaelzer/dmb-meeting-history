@@ -1,0 +1,172 @@
+== Meeting information ==
+
+ * #ubuntu-meeting meeting, started by juliank, 06 Apr at 15:03 &mdash; 15:28 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-04-06-15.03.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:10.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:10)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:12)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs is empty  (juliank, 15:12)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:12.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:13)
+
+=== AOB ===
+
+Discussion started by juliank at 15:21.
+
+ * ''LINK:'' https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20230324-lunar-lunar.html#foundations-bugs-team   (ginggs, 15:22)
+
+
+
+== People present (lines said) ==
+
+ * juliank (30)
+ * ginggs (9)
+ * enr0n (6)
+ * schopin (4)
+ * bdmurray (3)
+ * meetingology (2)
+ * bdrung (2)
+ * slyon (2)
+ * waveform (1)
+ * sil2100 (1)
+
+
+
+== Full log ==
+
+
+ 15:03 <juliank> #startmeeting
+
+ 15:03 <meetingology> Meeting started at 15:03:51 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:03 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:04 <juliank> This week's status is available at https://discourse.ubuntu.com/t/foundations-team-updates-thursday-06-april-2023/
+
+ 15:10 <schopin> waveform: congrats on sbuild \o/
+
+ 15:10 <juliank> #topic Release incoming bugs
+
+ 15:10 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <waveform> only took me (looks at history) two months!
+
+ 15:11 <bdrung> paride, good idea to check for crash files on upgrades.
+
+ 15:11 <juliank> bug 2012698 - seems like it's being handled?
+
+ 15:12 <slyon> yes, seems like
+
+ 15:12 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:12 <juliank> bug 1999345 has no news yet, let's carry on
+
+ 15:12 <juliank> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs is empty
+
+ 15:12 <juliank> #topic Team proposed-migration report
+
+ 15:13 <juliank> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:14 <juliank> ubiquity ftbfs, vorlon uploaded that
+
+ 15:14 <schopin> looks like a tz issue... :)
+
+ 15:14 <bdmurray> Oh, I had to do some SRus in the past for timezone stuff
+
+ 15:15 <juliank> bdmurray volunteers to fix it
+
+ 15:15 <enr0n> ginggs: why did you trigger a migration-reference test for systemd on lunar/arm64?
+
+ 15:15 <juliank> cryptsetup blocking linux-meta-riscv (5.19.0.1004.4 to 6.2.0.19.19.2) for 0 days
+
+ 15:16 <bdmurray> Yeah, I'll fix ubiquity
+
+ 15:16 <ginggs> enr0n: queues were empty so i retried all regressions, and then triggered migration-reference tests for those that still failed
+
+ 15:16 <juliank> I think this cryptsetup is a kernel adt matrix issue or something
+
+ 15:17 <bdrung> bdmurray, I volunteer to review the change (since it is probably related to my tzdata changes)
+
+ 15:17 <bdmurray> but with the flaky infra doing a migration-reference/0 could create a failing baseline
+
+ 15:17 <enr0n> ginggs: ah, okay
+
+ 15:18 <schopin> as long as someone with a bd* nick handles it... :)
+
+ 15:18 <juliank> Who wants to check cryptsetup and follow up with kernel perhaps?
+
+ 15:18 <juliank> cryptsetup: juliank - oh well
+
+ 15:18 <juliank> glibc: schopin ?
+
+ 15:19 <schopin> ack
+
+ 15:19 <juliank> systemd: enr0n ?
+
+ 15:20 <juliank> I think both are just retries due to flaky infra
+
+ 15:20 <enr0n> juliank: sure, that just needs a retry from the looks of it
+
+ 15:20 <enr0n> Which I cannot trigger myself :)
+
+ 15:20 * juliank triggers
+
+ 15:20 <enr0n> thanks
+
+ 15:20 <juliank> ah ginggs already triggered
+
+ 15:20 <juliank> this might be a regression in the rpi kernel
+
+ 15:21 <juliank> so uh kernel team
+
+ 15:21 <juliank> that's all
+
+ 15:21 <juliank> #topic AOB
+
+ 15:22 <ginggs> FTBFS party
+
+ 15:22 <ginggs> https://people.canonical.com/~ginggs/ftbfs-report/test-rebuild-20230324-lunar-lunar.html#foundations-bugs-team
+
+ 15:22 <enr0n> I am EOW starting in about 1.5 hours
+
+ 15:22 <slyon> easter holidays are coming up. Fri & Mon off for many of us
+
+ 15:23 <ginggs> fwupd-signed and grub2-signed don't need to be investigated
+
+ 15:23 * juliank expects a new neighbour below the office room to move in, old one moved out Monday, I'd move on a long weekend, myself
+
+ 15:23 <ginggs> bdrung has initramfs-tools
+
+ 15:24 <ginggs> dviererbe has tar
+
+ 15:24 <ginggs> bdmurray has ubiquity
+
+ 15:26 <ginggs> slyon took cmake
+
+ 15:27 <juliank> I took aptdaemon
+
+ 15:27 <juliank> (There may be more build failing later and nobody wants to deal with that)
+
+ 15:27 <ginggs> schopin took icu
+
+ 15:28 <juliank> that's a wrap
+
+ 15:28 <sil2100> o/
+
+ 15:28 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

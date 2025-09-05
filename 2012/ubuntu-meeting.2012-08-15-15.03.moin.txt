@@ -1,0 +1,814 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:03:34 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-08-15-15.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' https://code.launchpad.net/~dmitrij.ledkov/ubuntu/quantal/lvm2/merge95/+merge/119696   (xnox, 15:15:43)
+
+ *12.04.1
+''LINK:'' https://bugs.launchpad.net/ubuntu/precise/+bugs?field.milestone=49926 still shows a number of non-fix-committed bugs; I imagine we need to start bumping milestones?  (slangasek, 15:34:21)
+
+ *Bugs
+''LINK:'' https://errors.ubuntu.com/bucket/?id=%2Fusr%2Flib%2Fubiquity%2Fbin%2Fubiquity%3AValueError%3Awatch_debconf_fd_helper%3Aprocess_input%3Await%3Acleanup%3Apreseed%3A%3Clambda%3E%3Acommand that's the error report url  (bdmurray, 15:42:54)
+''LINK:'' https://errors.ubuntu.com/bucket/?id=/usr/bin/update-manager:AttributeError:_on_config_file_conflict:run:show_diff   (bdmurray, 15:45:19)
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/ubuntu-release-upgrader/+bugs?orderby=-id&start=0   (bdmurray, 15:50:54)
+
+ *AOB
+
+
+
+Meeting ended at 16:02:44 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (107)
+ * slangasek (76)
+ * bdmurray (29)
+ * stgraber (28)
+ * infinity (26)
+ * xnox (26)
+ * ubottu (20)
+ * ogra_ (16)
+ * stokachu (15)
+ * jodh (15)
+ * doko (9)
+ * meetingology (3)
+ * barry (3)
+ * smartboyhw (1)
+
+
+
+== Full Log ==
+
+
+ 15:03:34 <slangasek> #startmeeting
+
+ 15:03:34 <meetingology> Meeting started Wed Aug 15 15:03:34 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03:34 <meetingology> 
+
+ 15:03:34 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:03:37 * slangasek waves
+
+ 15:04:01 <stokachu> o/
+
+ 15:04:12 <xnox> hola!
+
+ 15:04:17 * ogra_ jumps
+
+ 15:04:26 * stgraber waves
+
+ 15:04:59 * smartboyhw waves
+
+ 15:05:04 <jodh> o/
+
+ 15:05:07 <slangasek> #topic lightning round
+
+ 15:05:11 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:05:14 <slangasek> infinity jodh slangasek cjwatson stgraber stokachu xnox barry doko bdmurray ev ogra
+
+ 15:05:33 <infinity> - AA and SRU things, including a full round of kernel SRUs
+
+ 15:05:34 <infinity> - Uploaded eglibc to both quantal and precise with several fixes, including sorting AVX/FMA4 detection issues
+
+ 15:05:36 <infinity> - Updated tzdata in all releases
+
+ 15:05:39 <infinity> - Started poking at livefs-in-soyuz things
+
+ 15:05:41 <infinity> [..]
+
+ 15:05:56 <jodh> * boot/upstart:
+
+ 15:05:56 <jodh> - Discussion with slangasek re ConfSource handling.
+
+ 15:05:56 <jodh> - Stateful re-exec now working in a rudimentary fashion.
+
+ 15:05:56 <jodh> - Attempting to make code work with json-c 0.9 problematic in that it
+
+ 15:05:59 <jodh> won't work on 64-bit systems without some trickery. Current feeling
+
+ 15:06:02 <jodh> is to mandate json-c 0.10. Upstream Debian maintainer for libjson0
+
+ 15:06:05 <jodh> package is planning to work on this, but I'll remind him.
+
+ 15:06:08 <jodh> - Currently trying to identify why post re-exec events do not trigger
+
+ 15:06:12 <jodh> jobs (may be due to the way I've had to disable D-Bus connection
+
+ 15:06:15 <jodh> handling, but still investigating).
+
+ 15:06:18 <jodh> 𐤒dd
+
+ 15:06:21 <jodh> 
+
+ 15:07:05 <slangasek> phoenician‽
+
+ 15:07:21 <jodh> slangasek: impressed, yes! ;)
+
+ 15:07:31 <stokachu> infinity: thanks for the tzdata
+
+ 15:08:32 <infinity> stokachu: Did you have a chance to look at the tarball and/or docs I did for you to let me know if the process all made sense to you?
+
+ 15:08:45 <stokachu> infinity: yea im reading them this morning
+
+ 15:09:22 <slangasek> stgraber: why don't you go ahead of me
+
+ 15:09:29 <stokachu> infinity: i wasn't aware of uupdate
+
+ 15:09:32 <stgraber> sure
+
+ 15:09:41 <stgraber> - 12.04.1
+
+ 15:09:41 <stgraber> - 12.04.1 team meeting and minutes
+
+ 15:09:41 <stgraber> - Went through all the targeted/milestoned bugs for 12.04.1, updated status based on comments and queue status.
+
+ 15:09:44 <stgraber> - Verified a bunch of SRUs.
+
+ 15:09:47 <stgraber> - Continuing release process.
+
+ 15:09:49 <stgraber> - Fixed 10.04 to 12.04 upgrades using media only. Looking at a few more issues and regressions caused by this.
+
+ 15:09:52 <stgraber> - Done reviews and granted exceptions where reasonable. Uploaded a libxml-sax-perl fix and fixed edubuntu-artwork too.
+
+ 15:09:55 <stgraber> - Other
+
+ 15:09:58 <stgraber> - Implemented package list for all flavours to be used for the supported flag: http://people.canonical.com/~stgraber/supported-packages/lists/
+
+ 15:10:01 <stgraber> - Implemented upload permissions report for the DMB at: http://people.canonical.com/~stgraber/permissions/
+
+ 15:10:04 <stgraber> - Talked with Ted about image based system
+
+ 15:10:06 <stgraber> - Merge partman-iscsi
+
+ 15:10:09 <stgraber> - Some ARB app review, the app showdown made the ARB New queue reach 140 packages... Still 50 to review...
+
+ 15:10:12 <stgraber> - TODO this week
+
+ 15:10:15 <stgraber> - Continue the work on 12.04.1.
+
+ 15:10:17 <stgraber> (DONE)
+
+ 15:11:11 <xnox> slangasek? or stokachu? or me?
+
+ 15:11:30 <slangasek> I'll go next, one sec :)
+
+ 15:12:46 <slangasek> * had surgery, so was technically off work yesterday
+
+ 15:12:46 <slangasek> * working with jodh around upstart stateful re-exec
+
+ 15:12:46 <slangasek> * sponsored upload of kexec-tools so it works with our current vmcoreinfo-less packages
+
+ 15:12:49 <slangasek> * lots of SRU processing for .1
+
+ 15:12:49 <slangasek> (done)
+
+ 15:12:51 <slangasek> * diving into various errors.u.c reports to identify any point-release regressions
+
+ 15:13:11 <stokachu> worked with support to get kexec-tools sru in shape and uploaded, failed attempt at getting tzdata in proper form for inclusion which resulted in more documentation added to the wiki which clarifies the process, still drowned in an increase in issues through customer channels, finalizing appmenu-gtk for multi-arch. done.
+
+ 15:13:43 <stokachu> infinity: the documentation makes sense and clarifies a lot for me, thanks for doing that
+
+ 15:14:23 <infinity> stokachu: NP.
+
+ 15:14:30 <slangasek> jodh: given the json-c maintainer's radio silence, please go ahead with preparing the packaging for 0.10 and we can propose a debdiff to Debian when it's ready
+
+ 15:14:49 <jodh> slangasek: roger! :)
+
+ 15:15:04 <infinity> stokachu: As stated before, I don't mind taking ownership of tzdata ANYWAY, but perhaps you should do 2012f when it comes out, to make sure the docs and knowlege transfer stick, should you need to do it in a hurry sometime,.
+
+ 15:15:21 <stokachu> infinity: ok will do
+
+ 15:15:42 <xnox> * Catch up on merges:
+
+ 15:15:43 <xnox> - dash, btrfs-tools, boost-mpi-sour1.49, boost1.49, e2fsprogs,
+
+ 15:15:43 <xnox> partman-crypto
+
+ 15:15:43 <xnox> - lvm2 merge in progress, see questions for anyone (slangasek?!) in the merge proposal
+
+ 15:15:43 <xnox> https://code.launchpad.net/~dmitrij.ledkov/ubuntu/quantal/lvm2/merge95/+merge/119696
+
+ 15:15:43 <xnox> * Fixed bugs, due to ubiquity crypt work landing:
+
+ 15:15:46 <xnox> - http://pad.lv/1035167
+
+ 15:15:47 <ubottu> Launchpad bug 1035167 in ubiquity (Ubuntu) "Choose a security key - page " [High,Fix released]
+
+ 15:15:47 <xnox> - http://pad.lv/1034954
+
+ 15:15:49 <ubottu> Launchpad bug 1034954 in ubiquity (Ubuntu Quantal) "ubiquity crashed with KeyError in get_autopartition_choice(): None" [High,Fix released]
+
+ 15:15:50 <xnox> - http://pad.lv/1035514
+
+ 15:15:51 <ubottu> Launchpad bug 1035514 in ubiquity (Ubuntu) "ubiquity screens are too tall, can't see forward button" [High,Fix released]
+
+ 15:15:52 <xnox> * 20120809 - Did a small patch-piloting session (11 syncs for Logan)
+
+ 15:15:54 <xnox> * mdadm SRU is finally fully verified and promoted into -updates
+
+ 15:15:56 <xnox> * Working on regaining vertical space to make automatic crypt option
+
+ 15:15:58 <xnox> visible by default (currently it is still hidden behind command line
+
+ 15:16:00 <xnox> argument)
+
+ 15:16:01 <xnox> ☙❦❧
+
+ 15:16:19 <barry> short week due to vacation.  patch piloted.  bug 1016212.  gwibber backend python3 porting.  dmb meeting.  upgraded main machine to quantal.  fixed unrelated email failure.  done.
+
+ 15:16:24 <ubottu> Launchpad bug 1016212 in pygobject "gtimelog crashed with SIGSEGV in gtk_style_context_get_valist()" [Low,Confirmed] https://launchpad.net/bugs/1016212
+
+ 15:16:39 <slangasek> stokachu: increase in customer issues> interesting... is that due to an increase in customers? :-)
+
+ 15:16:52 <doko> - power outage in my work room, fuse always turns the power off :-/
+
+ 15:16:52 <doko> - python2.7 and python3.2 updates, commit some pending patches upstream
+
+ 15:16:52 <doko> - gcc-4.7 cross fixes
+
+ 15:16:52 <doko> - binutils aarch64 test build
+
+ 15:16:52 <doko> - openjdk-7 merges
+
+ 15:16:53 <doko> - linaro connect week (virtual)
+
+ 15:16:55 <doko> (done)
+
+ 15:17:00 <stokachu> slangasek: indeed :) this is a good thing
+
+ 15:17:16 <bdmurray> bug triage of iso-testing bug reports
+
+ 15:17:17 <bdmurray> bug triage of memtest86+ bug reports
+
+ 15:17:17 <bdmurray> modified to bug pattern consolidation script to skip bugs tagged bot-stop-nagging
+
+ 15:17:20 <bdmurray> updated meta-release file to point to precise-updates instead of precise-security
+
+ 15:17:22 <slangasek> xnox: I will look at lvm2 today
+
+ 15:17:22 <bdmurray> updated meta-release-lts-development on changelogs.ubuntu.com
+
+ 15:17:34 <bdmurray> tested bug 1026068 regarding update-manager
+
+ 15:17:34 <bdmurray> errors.ubuntu.com API code modifications to deal with API changes and more
+
+ 15:17:35 <ubottu> Launchpad bug 1026068 in ubuntu-release-upgrader (Ubuntu) "Quantal Crashes as upgrade starts" [High,Incomplete] https://launchpad.net/bugs/1026068
+
+ 15:17:37 <bdmurray> modified greying of last seen column in errors.ubuntu.com
+
+ 15:17:39 <bdmurray> research into bug 936186 regarding software-properties
+
+ 15:17:40 <ubottu> Launchpad bug 936186 in software-properties (Ubuntu Precise) "add-apt-repository crashed with error in get_ppa_info_from_lp(): (23, 'Failed writing body (0 != 1607)')" [High,Triaged] https://launchpad.net/bugs/936186
+
+ 15:17:42 <bdmurray> research into bug 989819 regarding crash signatures and making them more specific
+
+ 15:17:43 <ubottu> Launchpad bug 989819 in apport (Ubuntu) "the signatures match code should probably consider the exception for python errors" [High,Triaged] https://launchpad.net/bugs/989819
+
+ 15:17:45 <bdmurray> research into bug 1020994 regarding drop in reporting volume at error tracker
+
+ 15:17:45 <ubottu> Launchpad bug 1020994 in Errors "Investigate why we're not showing many errors for the development release" [Undecided,New] https://launchpad.net/bugs/1020994
+
+ 15:17:48 <bdmurray> fixed issue with apt-clone in precise-proposed and python2.7 vs python2.6 syntax
+
+ 15:17:51 <bdmurray> modified sru report to show last bug comment
+
+ 15:17:58 <bdmurray> done
+
+ 15:17:59 <ev> bdmurray: thanks for the patches!
+
+ 15:18:10 <ev> - Fixed bugs that cropped up in the new errors.ubuntu.com, and ones that the
+
+ 15:18:10 <ev> increased attention to it surfaced.
+
+ 15:18:10 <ev> - Set the y-axis to 0 to fix deceptive graphs.
+
+ 15:18:10 <ev> - Correctly escape the problem identifiers so that failed-to-retrace
+
+ 15:18:10 <ev> problem pages do not raise an exception.
+
+ 15:18:11 <ev> - Fix the month view of the most common problems page (grumbles about UTF8).
+
+ 15:18:20 <ev> - Had a conversation with Colin and the Launchpad team about how to best talk
+
+ 15:18:20 <ev> to and cache data from Launchpad for our "ideal line" calculation. The ideal
+
+ 15:18:20 <ev> line is the number of crashes where all the packages in the dependency
+
+ 15:18:20 <ev> chain for the crashed application were up to date at the time of sending,
+
+ 15:18:20 <ev> divided by the number of unique users seen in a 90 day period. A few
+
+ 15:18:21 <ev> strategies were discussed, but Robert suggested first getting this
+
+ 15:18:21 <ev> talking to Launchpad and then seeing just how much extra work needs to be
+
+ 15:18:22 <ev> done to speed it up.
+
+ 15:18:26 <ev> - Had conversations with Matthew, Robert, and others over whether our ideal
+
+ 15:18:26 <ev> line calcuation is correct. Matthew is going to take this to canonical-tech
+
+ 15:18:26 <ev> for further discussion, but for the moment we're dropping the ideal line
+
+ 15:18:26 <ev> calculation as designed above.
+
+ 15:18:32 <ev> - Wrote a script to back-populate system identifiers (SHA-512 hashes of the
+
+ 15:18:32 <ev> system uuid) into the individual error reports in the database. These
+
+ 15:18:33 <ev> existed in a separate column family that mapped from system identifier to
+
+ 15:18:33 <ev> error reports for that system (so we can have a dialog in
+
+ 15:18:33 <ev> gnome-control-center that lists your crashes), but we need the reverse
+
+ 15:18:33 <ev> mapping for this "90 days of unique users" calculation. It took about 12
+
+ 15:18:33 <ev> hours to complete running from my laptop through an ssh tunnel into the DC.
+
+ 15:18:34 <ev> 
+
+ 15:18:40 <ev> There is an exponentially increasing number of such tasks. I think we're
+
+ 15:18:41 <ev> going to need Hadoop and its map/reduce goodness wired to Cassandra much
+
+ 15:18:41 <ev> sooner than I originally thought. I'll ask webops to tackle that after we're
+
+ 15:18:41 <ev> done with the staging Cassandra database.
+
+ 15:18:41 <ev> - Wrote another script to back-populate unique user counts on a per-release
+
+ 15:18:41 <ev> basis. This ended up hitting Cassandra too hard and had to be killed.
+
+ 15:18:41 <ev> Retuned and run through to completion.
+
+ 15:18:52 <ev> - Modified oops-repository to start recording unique user counts on a
+
+ 15:18:52 <ev> per-release basis (so we don't have to keep back-populating). Filed RT 55227
+
+ 15:18:52 <ev> for this. Deployed.
+
+ 15:18:52 <ev> - Chat with Brian over some errors.ubuntu.com mysteries, specifically why
+
+ 15:18:52 <ev> we're missing the DistroRelease field for a sizeable set of crashes. Talked
+
+ 15:18:53 <ev> to Tom about getting him read-only access to Cassandra, but they're keen on
+
+ 15:18:53 <ev> getting the staging DB done first. Re-raised and filed RT 55226 at Tom's
+
+ 15:18:54 <ev> request to discuss possible solutions.
+
+ 15:19:01 <ev> - Got caught up on Daisy and Errors bug triage.
+
+ 15:19:01 <ev> - Ported my branch to use data from Launchpad to colorize the rows from
+
+ 15:19:01 <ev> launchpadlib (not threadsafe) to straight HTTP. Merged into trunk and wired
+
+ 15:19:01 <ev> it to jml's wonderful AtomicFileCache, which needed a new release of
+
+ 15:19:01 <ev> lazr.restfulclient and some small changes to build in lucid.
+
+ 15:19:02 <ev> 
+
+ 15:19:02 <slangasek> doko: fuse turns the power off?  surely this is evidence that userland filesystems are a bad idea
+
+ 15:19:12 <ev> With this branch in place, lines in the most common problems table are
+
+ 15:19:12 <ev> greyed out if the linked bug is marked as completed. If the 'Last seen'
+
+ 15:19:12 <ev> version is older than the most recent published version, that column will be
+
+ 15:19:12 <ev> greyed out. If a linked bug is marked as complete but the 'Last seen'
+
+ 15:19:12 <ev> version is the newest version, that column will be marked red (potential
+
+ 15:19:13 <ev> regression). This needs some work. Complete includes the Invalid status and
+
+ 15:19:13 <ev> the code currently requires all linked bug tasks to be complete for its own
+
+ 15:19:14 <ev> interpretation of the complete state.
+
+ 15:19:22 <ev> - Fix to whitelist the retracer APIs in open ID. We now have:
+
+ 15:19:23 <ev> https://errors.ubuntu.com/retracers-results/
+
+ 15:19:23 <ev> https://errors.ubuntu.com/retracers-average-processing-time/
+
+ 15:19:23 <ev> - Chat with Andy on the correct algorithm for kernel oops signature
+
+ 15:19:23 <ev> generation. I'm going to cook something up and then feed it lots of data
+
+ 15:19:23 <ev> from launchpadlib, then ask him to review. The signature generation is the
+
+ 15:19:23 <ev> main thing blocking kernel oops reports on http://errors.ubuntu.com.
+
+ 15:19:33 <ev> - Chat with Michael Hall, who has been asked by Jono to get bug reports
+
+ 15:19:33 <ev> enabled for packages in extras.ubuntu.com. Fixing apport should be fairly
+
+ 15:19:33 <ev> straightforward:
+
+ 15:19:33 <ev> https://bugs.launchpad.net/ubuntu/+source/apport/+bug/1036224
+
+ 15:19:33 <ev> - Fighting juju and Canonistack. Finally got just the latter working and a
+
+ 15:19:33 <ev> Cassandra test environment built.
+
+ 15:19:37 <ubottu> Launchpad bug 1036224 in apport (Ubuntu) "Whitelist extras.ubuntu.com in apport's native-origins" [Medium,Confirmed]
+
+ 15:19:42 <ev> - Wrote a script to populate the test Cassandra DB with sample data, then test
+
+ 15:19:42 <ev> the performance and load of the unique users by release back population
+
+ 15:19:42 <ev> code.
+
+ 15:19:42 <ev> - Improved logging in our retracers and finally fixed retracing of 12.04
+
+ 15:19:42 <ev> crashes \0/. This turned out to be oneiric sources in the apt configuration
+
+ 15:19:43 <ev> for apport-retrace. Worked a fix through with webops.
+
+ 15:19:43 <ev> - Started building out operational graphs. I've made one for instances over
+
+ 15:19:44 <ev> time, and will shortly add another for problems over time.
+
+ 15:19:54 <ev> - Mail announcing my intent to send a regular posting of the state of the
+
+ 15:19:55 <ev> Error Tracker project. It is my hope that this will encourage contributions
+
+ 15:19:55 <ev> and keep people like Brian in sync with the conversations we're having in
+
+ 15:19:55 <ev> Bluefin.
+
+ 15:19:55 <ev> - Investigated the current state of Cassandra-backed Django data models in
+
+ 15:19:55 <ev> support of RT 55322. We'll have to use sqlite for this openid stuff.
+
+ 15:19:57 <doko> ev: summary, not a short story ;-P
+
+ 15:20:13 <ev> - Started integration django-openid-auth into lp:errors. Just need to sort out
+
+ 15:20:13 <ev> how to force specific groups via the OpenID AX extension.
+
+ 15:20:13 <ev> 🏁
+
+ 15:20:16 <infinity> doko: s/short //
+
+ 15:20:31 <ogra_> hey you managed to scroll off a fulHD resolution with 8pt font in xchat ... thats a new record
+
+ 15:20:39 <ogra_> done:
+
+ 15:20:40 <ogra_> * live-installer works fine with flash-kernel again
+
+ 15:20:40 <ogra_> * started with /etc/default/flash-kernel (looking into rootfs UUID detection atm)
+
+ 15:20:40 <ogra_> * dug more into Bug 1018907, seems debian actually has libdrm-omap1 as well as xserver-xorg-video-omap (with drm support)
+
+ 15:20:40 <ogra_> looking into integrating both into the panda images
+
+ 15:20:41 <ubottu> Launchpad bug 1018907 in plymouth (Ubuntu Quantal) "plymouth in quantal on arm does only boot with black screen" [High,Triaged] https://launchpad.net/bugs/1018907
+
+ 15:20:43 <ogra_> * tested linux-ti-omap4 3.5 port from ppisati on server and desktop, works fine apart from the known issues on bug 1035289
+
+ 15:20:44 <ubottu> Launchpad bug 1035289 in linux-ti-omap4 (Ubuntu) "Ubuntu-3.5.0-205.10 testing" [Undecided,New] https://launchpad.net/bugs/1035289
+
+ 15:20:46 <ogra_> * bricked my freescale mx6 board (by following the linaro howto) and recovered it (using a freescale tool under winXP in a VM ... that ate a whole day to install *sigh*)
+
+ 15:20:49 <ogra_> * piloting
+
+ 15:20:51 <ogra_> todo:
+
+ 15:20:53 <ogra_> * bug 1028905
+
+ 15:20:54 <ubottu> Launchpad bug 1028905 in cdrom-detect (Ubuntu Quantal) "cdrom-detect in quantal omap4 hangs trying to look for install media on an extended partition" [High,Confirmed] https://launchpad.net/bugs/1028905
+
+ 15:20:55 <ogra_> * move on with flash-kernel transition from boot.scr to preEnv.txt
+
+ 15:20:57 <ogra_> * spec item cleanup
+
+ 15:20:59 <ogra_> ..
+
+ 15:21:05 <stokachu> andddddddd i just finished all of stephen kings books... twice.
+
+ 15:21:07 <xnox> just some questions to ev.
+
+ 15:21:33 <ev> :)
+
+ 15:21:42 <xnox> * hadoop - I deploy 100 node hadoop clusters in ~40 minutes .... $ juju deploy hadoop
+
+ 15:21:54 <xnox> or do you need something in constant access?
+
+ 15:22:06 <stokachu> barry: emacs supports deploying to hadoop now :P
+
+ 15:22:14 <ev> xnox: it's a bit more complicated than that ;)
+
+ 15:22:18 <xnox> ok.
+
+ 15:22:28 <ev> we need to wire hadoop to cassandra
+
+ 15:22:34 <barry> stokachu: M-x firehose RET
+
+ 15:22:38 <ev> and provide something like hive or pig
+
+ 15:22:47 <xnox> ev: is the ideal line comming back or not ever?
+
+ 15:22:51 <ev> xnox: http://wiki.apache.org/cassandra/HadoopSupport
+
+ 15:23:01 <ev> xnox: it was never there, but it will arrive soon
+
+ 15:23:09 <ev> the code is done
+
+ 15:23:15 <ev> just needs to be cleaned up and deployed
+
+ 15:23:39 <xnox> ev: ok.
+
+ 15:23:40 <xnox> ..
+
+ 15:23:46 * xnox haha slangasek on fuse.
+
+ 15:26:03 <doko> heh, still don't know why the fuse turns off :-/
+
+ 15:27:13 <barry> doko: stuxnet
+
+ 15:27:45 <slangasek> haha
+
+ 15:27:54 <slangasek> ok
+
+ 15:27:59 <slangasek> any more questions on status?
+
+ 15:28:37 <slangasek> btw, thanks to everyone who's keeping up on their patch piloting
+
+ 15:29:30 <slangasek> it's really nice to see the queue being held down, and I know it's satisfying for our contributors to be getting feedback on their submissions
+
+ 15:29:39 <slangasek> so keep up the good work :)
+
+ 15:30:00 <stokachu> patch.pilots++
+
+ 15:30:12 <slangasek> #topic 12.04.1
+
+ 15:30:37 <slangasek> there are a couple of bugs of note on this topic
+
+ 15:30:49 <slangasek> one is the nspr issue... bug #1036794
+
+ 15:30:51 <ubottu> Launchpad bug 1036794 in nspr (Ubuntu Precise) "unmet dependencies during update of nspr4: libnspr4 : Breaks: evolution-plugins (< 3.2.0-0ubuntu2) but 2.32.2-0ubuntu7 is to be installed" [High,Triaged] https://launchpad.net/bugs/1036794
+
+ 15:31:06 <slangasek> I don't know that we need to discuss it here though, I think infinity, stgraber and I can shake that out on #ubuntu-release after the meeting
+
+ 15:31:19 <slangasek> the other one is the lucid->precise pre-depends issue
+
+ 15:31:28 <slangasek> jibel found us a reproducer for this (thanks, jibel!)
+
+ 15:31:42 <slangasek> bug #1017001
+
+ 15:31:44 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:31:56 <stgraber> yeah, I'm poking at 1036794 at the moment, so we can probably just discuss in #ubuntu-release
+
+ 15:32:11 <slangasek> can I get a volunteer to look at 1017001 and try to pin it down?
+
+ 15:32:33 <slangasek> (very VMable... the reproducer is in the bug description now)
+
+ 15:32:45 <infinity> Just a pre-dep ordering issue?
+
+ 15:32:49 <infinity> I can poke it.
+
+ 15:33:11 <slangasek> a pre-dep ordering issue that has been latent since release and we haven't been able to reproduce, yes :)
+
+ 15:33:21 <slangasek> infinity: ok, assigning to you
+
+ 15:33:23 <infinity> Yes, but with a reproducer, yay.
+
+ 15:33:35 <slangasek> thanks
+
+ 15:33:45 <slangasek> stgraber: anything else for 12.04.1 that bears mentioning?
+
+ 15:33:48 <ev> xnox: I realised I was somewhat wrong. The way we're calculating the ideal line is wrong. Matthew has some proposed math for it that he's going to send to canonical-tech.
+
+ 15:34:04 <ev> so it may be some time before the line comes back
+
+ 15:34:21 <slangasek> https://bugs.launchpad.net/ubuntu/precise/+bugs?field.milestone=49926 still shows a number of non-fix-committed bugs; I imagine we need to start bumping milestones?
+
+ 15:34:39 <stgraber> yeah, I have an action to do the mass bumping to 12.04.2 for these
+
+ 15:34:42 * xnox did ev just finished reading his own novel...? =)
+
+ 15:34:48 <ev> ha ha ha
+
+ 15:35:09 <ev> I write it throughout the week. I can't be expected to remember every detail ;)
+
+ 15:35:21 <stgraber> besides that, we're mostly at the reviewing the queue, accepting stuff and monitoring new bugs part of the process
+
+ 15:35:28 <slangasek> stgraber: ok.  Any in that list that you think *shouldn't* be bumped, and we should be trying to get a last-minute upload for instead?
+
+ 15:35:39 <stgraber> I don't believe we have anything besides the apt stuff that we might want to see uploaded and included
+
+ 15:36:04 <slangasek> the usb-creator one is marked 'fix committed' but was verification-failed, I think
+
+ 15:36:16 <slangasek> stgraber: which apt stuff?
+
+ 15:36:18 * infinity has someone verifying the FMA4/AVX stuff on his affected hardware right now, in hopes that we can re-open that discussion.
+
+ 15:36:24 <stgraber> slangasek: bug 1017001
+
+ 15:36:26 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:36:27 <slangasek> ok
+
+ 15:36:36 <slangasek> (which is hopefully not actually an apt bug, but we'll see :)
+
+ 15:37:00 <infinity> slangasek: It may well be an apt misfeature, but fixing it in metadata's almost certainly going to be saner for an SRU.
+
+ 15:37:03 <infinity> (We'll see)
+
+ 15:37:05 <stgraber> slangasek: the fix for usb-creator was indeed marked verification-failed. But I don't think it's critical enough for a last minute fix + upload so I didn't spend more time trying to fix it yet
+
+ 15:37:34 <infinity> slangasek: Also, where's the reproducer you claim jibel found for that bug?  The last few comments in the log are people still claiming they can't reproduce. :P
+
+ 15:37:49 <slangasek> stgraber: ok, so I guess you'll be bumping the milestone on that one
+
+ 15:37:59 <slangasek> infinity: it's in the bug description
+
+ 15:38:03 <infinity> slangasek: Oh, he updated the des... Yeah.
+
+ 15:38:05 <infinity> Who reads those?
+
+ 15:38:06 <slangasek> :)
+
+ 15:38:15 <stgraber> slangasek: yeah
+
+ 15:38:18 <slangasek> infinity: people who read my comments on IRC telling them to read them? ;)
+
+ 15:38:32 <infinity> slangasek: I did all my reading for the day with ev's report.
+
+ 15:38:50 <slangasek> #topic Bugs
+
+ 15:38:52 <ev> hahaha
+
+ 15:39:28 <slangasek> bdmurray: anything you want to highlight?
+
+ 15:40:01 <bdmurray> bug 1027648 is ridiculously high on errors.ubuntu.com
+
+ 15:40:03 <ubottu> Launchpad bug 1027648 in ubiquity (Ubuntu Quantal) "ubiquity crashed with ValueError in command(): I/O operation on closed file." [High,Confirmed] https://launchpad.net/bugs/1027648
+
+ 15:41:18 <infinity> bdmurray: Does this apply to precise, too?  Comments suggest that it might...
+
+ 15:41:26 <slangasek> infinity: it's on the errors.u.c for 12.04, so yes
+
+ 15:41:30 * slangasek targets
+
+ 15:41:33 <infinity> Check.
+
+ 15:42:36 * infinity wonders if there's an obvious linear reproducer, or if it's a race.
+
+ 15:42:54 <bdmurray> https://errors.ubuntu.com/bucket/?id=%2Fusr%2Flib%2Fubiquity%2Fbin%2Fubiquity%3AValueError%3Awatch_debconf_fd_helper%3Aprocess_input%3Await%3Acleanup%3Apreseed%3A%3Clambda%3E%3Acommand that's the error report url
+
+ 15:43:00 <slangasek> anyone (other than infinity who's already volunteered today) want to look into that one?
+
+ 15:43:12 <bdmurray> and there are reports from 2.10.19
+
+ 15:43:27 <infinity> xnox loves python and ubiquity.
+
+ 15:44:05 <ev> and debconf
+
+ 15:44:08 <ev> everyone loves debconf
+
+ 15:44:26 <infinity> I have nothing against debconf.
+
+ 15:44:32 <ev> I have everything against debconf
+
+ 15:44:39 <slangasek> infinity: that's because you don't work on partman ;)
+
+ 15:44:53 <infinity> It's people abusively wrapping debconf and getting lost in a twisty maze of file descriptors that I have issues with. ;)
+
+ 15:45:01 <ev> lol
+
+ 15:45:03 <slangasek> heh
+
+ 15:45:05 <bdmurray> then there is also bug 875879 which is trending up on errors.ubuntu.com
+
+ 15:45:06 <ev> touché
+
+ 15:45:06 <ubottu> Launchpad bug 875879 in update-manager (Ubuntu) "update-manager crashed with AttributeError in show_diff(): 'NoneType' object has no attribute 'group'" [Medium,Triaged] https://launchpad.net/bugs/875879
+
+ 15:45:17 <ev> woo, errors.ubuntu.com
+
+ 15:45:19 <bdmurray> https://errors.ubuntu.com/bucket/?id=/usr/bin/update-manager:AttributeError:_on_config_file_conflict:run:show_diff
+
+ 15:45:48 <bdmurray> looks like it is really an aptdaemon issue
+
+ 15:46:15 <slangasek> so based on what that bug is, I think we'll see it trending down again soon
+
+ 15:46:38 <slangasek> it triggers only when there's an update that includes a conffile that the user has modified locally
+
+ 15:46:51 <slangasek> and the current spike is probably related to some specific SRU that's just gone in
+
+ 15:47:22 <slangasek> that doesn't make it less important to fix - quite the contrary.  I'm just saying that it's probably going to fall off errors.u.c and we shouldn't let it fall off our priority list
+
+ 15:47:49 <bdmurray> right
+
+ 15:48:45 <slangasek> any volunteers for that one?  (if not I think we keep it in the queue for now)
+
+ 15:50:02 <slangasek> no volunteers then
+
+ 15:50:13 <slangasek> bdmurray: anything else?
+
+ 15:50:46 <bdmurray> looking at ubuntu-release-upgrader bugs I see a few crashed with SIGABRT in __assert_fail_base() bug reports
+
+ 15:50:54 <bdmurray> https://bugs.launchpad.net/ubuntu/+source/ubuntu-release-upgrader/+bugs?orderby=-id&start=0
+
+ 15:51:21 <bdmurray> I don't know what that is about…
+
+ 15:51:32 <slangasek> hmm
+
+ 15:52:04 <slangasek> and do-partial-upgrade is in python?
+
+ 15:52:33 * slangasek confirms
+
+ 15:53:10 <slangasek> bdmurray: do they all show xcb in the stack trace, like bug #1031400 does?
+
+ 15:53:11 <ubottu> Error: Launchpad bug 1031400 could not be found
+
+ 15:54:45 <slangasek> bdmurray: seems to be a strange X error.  Maybe ask the desktop team?
+
+ 15:54:52 <bdmurray> great
+
+ 15:55:10 <bdmurray> its probably the same xcb error that was in update-manager
+
+ 15:55:32 <slangasek> ah.  did that get tracked down?
+
+ 15:55:47 <bdmurray> looking but I don' t hink so
+
+ 15:55:57 <slangasek> ok
+
+ 15:56:09 <slangasek> stokachu: any bugs from your side that you want us to know about?
+
+ 15:56:33 <bdmurray> bug 930839 for the record
+
+ 15:56:35 <ubottu> Launchpad bug 930839 in update-manager (Ubuntu) "update-manager crashed with SIGABRT in __assert_fail_base(): Assertion !xcb_xlib_unknown_req_in_deq failed in dequeue_pending_request" [Medium,Triaged] https://launchpad.net/bugs/930839
+
+ 15:57:16 <slangasek> yep, that looks very similar
+
+ 15:57:40 <bdmurray> ev is there a way to find a problem linked to that bug on errors?
+
+ 15:58:07 <stokachu> slangasek: tzdata and kexec-tools were taken care of so im good
+
+ 15:58:10 <ev> bdmurray: not at present, no
+
+ 15:58:18 <ev> we don't have a mapping in that direction
+
+ 15:58:34 <slangasek> stokachu: ok cool
+
+ 15:58:39 <stokachu> ill have appmenu-gtk done soon but ill ping after meeting
+
+ 15:59:17 <slangasek> bdmurray: ah, looks like there's been some analysis on 930839.  The next thing to check is whether we're calling the gdk thread init function from these apps
+
+ 15:59:51 <slangasek> #topic AOB
+
+ 15:59:59 <slangasek> anything else?
+
+ 16:00:13 <infinity> Bacon.
+
+ 16:00:34 <stokachu> im friends with beggin strips on facebook
+
+ 16:00:36 <ogra_> & eggs ?
+
+ 16:00:40 <stokachu> love that dog
+
+ 16:00:43 <stgraber> slangasek: bug 1037001
+
+ 16:00:45 <ubottu> Launchpad bug 1037001 in ubiquity (Ubuntu) "[l10n][zh_CN] Indicator menus should be fully localized for installer" [High,New] https://launchpad.net/bugs/1037001
+
+ 16:00:51 <stgraber> just mentioned by seb in #ubuntu-devel
+
+ 16:01:03 <stgraber> I highly doubt we can do something about it for the point release though
+
+ 16:01:54 <slangasek> stgraber: hrrm.  Well, please target it to precise, at least, so it stays on the radar
+
+ 16:02:44 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

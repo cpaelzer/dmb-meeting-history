@@ -1,0 +1,626 @@
+#title #ubuntu-meeting: ubuntu-arm
+
+Meeting started by ogra_ at 15:08:02 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-08-15.08.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *spec status, http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html
+
+ *ARM Server Status (NCommander, Daviey)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *ARM Porting/FTBFS status (NCommander, janimo)
+
+ *ARM Hardfloat status (infinity)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *QA Status (GrueMaster, mahmoh)
+
+ *Linaro Updates (rsalveti)
+''ACTION:'' rsalveti to track the gles driver status for armhf for the vendors we support  (rsalveti, 15:45:54)
+''ACTION:'' work with jcrigby to update the mx53 kernel  (rsalveti, 15:46:40)
+''ACTION:'' rsalveti to kick someone to fix bug 838200  (GrueMaster, 15:46:52)
+
+ *AOB
+
+
+
+Meeting ended at 15:48:09 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * rsalveti to track the gles driver status for armhf for the vendors we support
+ * work with jcrigby to update the mx53 kernel
+ * rsalveti to kick someone to fix bug 838200
+
+
+
+== Action items, by person ==
+
+ * rsalveti
+ ** rsalveti to track the gles driver status for armhf for the vendors we support
+ ** rsalveti to kick someone to fix bug 838200
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (128)
+ * infinity (42)
+ * rsalveti (37)
+ * GrueMaster (31)
+ * janimo (13)
+ * ppisati (12)
+ * meetingology (6)
+ * doko (2)
+ * ahs3 (1)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 15:08:02 <ogra_> #startmeeting ubuntu-arm
+
+ 15:08:02 <meetingology> Meeting started Thu Dec  8 15:08:02 2011 UTC.  The chair is ogra_. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:08:02 <meetingology> 
+
+ 15:08:02 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:08:20 <ogra_> agenda is at https://wiki.ubuntu.com/ARM/Meeting/2011/20111208
+
+ 15:08:31 <ogra_> seems ther are no action items
+
+ 15:08:35 <ogra_> :)
+
+ 15:08:48 <ogra_> so lets go over the standing items ...
+
+ 15:09:18 <ogra_> [topic] spec status, http://status.ubuntu.com/ubuntu-precise/ubuntu-arm.html
+
+ 15:09:45 <ogra_> doesnt look bad ... are all specs on there now ?
+
+ 15:09:51 <ogra_> shout if you are missing any
+
+ 15:09:56 <infinity> I should probably fill in some work items on my specs before I get yelled at, shouldn't I?
+
+ 15:10:04 <ogra_> might help
+
+ 15:10:12 <infinity> And I should break the livefs-in-soyuz WI out of image-pipeline into a spec. :/
+
+ 15:10:23 <infinity> Cause, well, a month of work isn't a WI.
+
+ 15:10:24 <ogra_> also make sure they are approved, have a prio and are assigned to precise by davidm
+
+ 15:10:54 <GrueMaster> My bare-metal spec is still under review.
+
+ 15:11:08 <ogra_> poke davidm please, once he is back
+
+ 15:11:24 <GrueMaster> Not that it matters much.  It was mainly designed to be informational.
+
+ 15:11:30 <ogra_> i really would like to have the tracker working before i start my vacation in a week
+
+ 15:11:32 <infinity> ogra_: I'm on holidays in a week and a day.  Can I count on you to bug me to make sure my specs are sane before that?
+
+ 15:11:48 <infinity> (Today's a bit too busy on the armhf porting front for me to do too much paperwork/drafting)
+
+ 15:11:54 <ogra_> infinity, will try to, i'm on vac. from 19th on myself
+
+ 15:12:07 <ogra_> moving on then ...
+
+ 15:12:07 <infinity> ogra_: From the 16th here. :)
+
+ 15:12:19 <ogra_> well, thats the same :P
+
+ 15:12:27 <infinity> ogra_: No, as in, I'm taking the 16th off.
+
+ 15:12:39 <ogra_> [topic] ARM Server Status (NCommander, Daviey)
+
+ 15:12:47 <ogra_> aha ... yeah, ok, thats different
+
+ 15:13:11 <ogra_> Daviey, any server news (since NCommander seems to have vanished off the face of the earth)
+
+ 15:13:43 * ogra_ suspects not ...
+
+ 15:14:04 <ogra_> well, lets move on ... we can come back to it if someone serverish shows up
+
+ 15:14:12 <ogra_> [topic] Kernel Status (cooloney, ppisati)
+
+ 15:14:28 <ppisati> armhf support has hit the archive (as you may have noticed)
+
+ 15:14:35 <ppisati> and 3.2.0-x too
+
+ 15:14:38 <ogra_> apart from mx5 i think
+
+ 15:14:39 <infinity> Has anyone taken the 3.2 omap4 for a solid spin on a Panda yet?
+
+ 15:14:44 * ahs3 is server-ish but has no news
+
+ 15:15:00 <ppisati> infinity: i found a bug this morning
+
+ 15:15:10 <ppisati> ogra_: mx5? is it community supported or what?
+
+ 15:15:16 <ogra_> ppisati, linaro
+
+ 15:15:17 <infinity> Now that mine's not stuck building ghc, I can make it grumpy with 3.2 and armhf.
+
+ 15:15:33 <infinity> ppisati: Yay bugs.  Is it any worse than the ones we currently have? :)
+
+ 15:15:44 <ppisati> infinity: panic on reboot if a usbhdd is used, i already pushed a new kernel with an ext4 fix and that too
+
+ 15:16:07 <ppisati> if pulling the cord on reboot is not a problem, feel free to update now
+
+ 15:16:09 <ogra_> we only provide SD images anyway ... just ignore it :P
+
+ 15:16:14 <infinity> ppisati: Snazzy.  I need to test if 3.2.x fixes all my NPTL/TLS woes, and I suspect it will, from what markos has been saying.
+
+ 15:16:15 <ppisati> else, wait until tomorrow
+
+ 15:16:21 <ppisati> ok
+
+ 15:16:27 <GrueMaster> No, don't ignore it!
+
+ 15:16:31 <ogra_> heh
+
+ 15:16:39 * ogra_ wasnt serious
+
+ 15:16:47 <ppisati> ogra_: do you want me to do the armhf stuff for mx5?
+
+ 15:16:51 <janimo> sorry fior being late, hhello
+
+ 15:16:57 <ogra_> ppisati, ask jcrigby
+
+ 15:17:00 <ppisati> ok
+
+ 15:17:02 <infinity> ppisati: Should be jcrigby's alley, no?
+
+ 15:17:02 <ogra_> janimo, np
+
+ 15:17:05 <janimo> ppisati, is that not linaro task?
+
+ 15:17:19 <ogra_> janimo, i guess john appreciated help
+
+ 15:17:23 <janimo> zalong with a 3.0 kernel for mx5 whic I hear is available
+
+ 15:17:27 * ppisati leaves the mx5 to its destiny...
+
+ 15:17:28 <infinity> Anyhow, we're in no huge rush on mx5/armhf.  We have Panda and ac100 to play with.
+
+ 15:17:28 <GrueMaster> I would assume we want armHF on mx5, since everything else is moving off armel.
+
+ 15:17:28 <ppisati> :)
+
+ 15:17:31 <ogra_> and we would appreciate being able to build images :)
+
+ 15:17:32 <infinity> And lots of bugs to shake out.
+
+ 15:17:43 <ogra_> yeah
+
+ 15:18:09 <ogra_> GrueMaster, we do, but we're suddenly so ahead of time that it doesnt bite us to wait another week or two
+
+ 15:18:24 <infinity> Well, and we have plenty of userspace bugs to shake out.
+
+ 15:18:28 <ogra_> especially for an image thats a "tech preview"
+
+ 15:18:35 <infinity> Kernel space is identical from armel to armhf, so I'm less concerned.
+
+ 15:18:41 <ogra_> any other kernel bits ?
+
+ 15:18:44 <infinity> We'll get there.
+
+ 15:18:46 <ogra_> else i'll move
+
+ 15:19:03 <infinity> ogra_: Boogie on.
+
+ 15:19:05 <ogra_> [topic] ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:19:12 <ogra_> (and everyone else :) )
+
+ 15:19:20 <infinity> Thanks to armhf, the armel FTBFS list is looking better too. :P
+
+ 15:19:23 <infinity> In fact, the whole distro is.
+
+ 15:19:24 <ogra_> armhf ftbfs looks very very good
+
+ 15:19:30 <infinity> armhf == free rebuild test.
+
+ 15:19:33 <janimo> gave back a few things, next up libo test, once I install armhf on the board
+
+ 15:19:34 <ogra_> yep
+
+ 15:19:58 <infinity> libreoffice needs love.  Not sure if doko and Sweetshark are still going back and forth on that.
+
+ 15:20:04 <infinity> I hope so.
+
+ 15:20:09 * ogra_ looked into some bits and wasted a lot of time for getting an ubiquity build env up today...
+
+ 15:20:10 <infinity> I'm working on ghc and gnat.
+
+ 15:20:20 <janimo> infinity, I'll look at it, doko said he's done as far as he's concerned
+
+ 15:20:23 <infinity> And we have people pondering looking at fpc.
+
+ 15:20:51 <ogra_> anything else ?
+
+ 15:21:04 <GrueMaster> netinstall.
+
+ 15:21:09 <infinity> (fpc needs a full port and bootstrap at the upstream level, if you speak fluent pascal and arm ASM without context-switching between the two, speak up)
+
+ 15:21:12 <ogra_> ftbfs ??
+
+ 15:21:38 <GrueMaster> No, fail to install.  libc6 udeb.
+
+ 15:21:44 * ogra_ moves on
+
+ 15:21:49 <ogra_> [topic] ARM Hardfloat status (infinity)
+
+ 15:21:53 <ogra_> :)
+
+ 15:22:03 <ogra_> i guess there isnt much to add
+
+ 15:22:03 <infinity> There we go.  Now you can bring up netinst. ;)
+
+ 15:22:12 <ogra_> wouldnt that belong into images ?
+
+ 15:22:25 <infinity> other than "things are going really, really well with armhf" (much better than expected), we have some bugs to shake out.  Installer oopses, etc.
+
+ 15:22:31 <GrueMaster> Someone is moving the meeting too fast for me to type.
+
+ 15:22:42 <infinity> ogra_: It's both?  I dunno. :P
+
+ 15:22:48 <infinity> ogra_: It's HF-specific, I believe.
+
+ 15:22:52 <ogra_> the queue seems to have ~3000 packages ... is that accurate ?
+
+ 15:22:56 <infinity> ogra_: Yeah.
+
+ 15:22:59 <ogra_> wow
+
+ 15:23:01 <doko> qtmobility needs fixing
+
+ 15:23:05 <ogra_> so we should be doen by the weekend
+
+ 15:23:19 <infinity> ogra_: FSVO "done"... There's lots to do still.
+
+ 15:23:27 <ogra_> doko, universe *shrug* .... that has time
+
+ 15:23:36 <doko> ogra_, kubuntu package set
+
+ 15:23:42 <infinity> Universe is big.  Fix early, fix often.
+
+ 15:23:44 <ogra_> argh
+
+ 15:24:07 <ogra_> how about the kubuntu guys ? did someone talk to them ?
+
+ 15:24:23 <infinity> It just has a bad symbols file.
+
+ 15:24:26 <infinity> 5 minute fix.
+
+ 15:24:27 <infinity> Move on.
+
+ 15:24:30 <ogra_> k
+
+ 15:24:41 <ogra_> [topic] ARM Image Status (ogra, NCommander)
+
+ 15:24:49 <ogra_> started hf testbuilds
+
+ 15:25:00 <ogra_> which was somehow trashed in the middle by broken packages
+
+ 15:25:09 <ogra_> a new omap4 build is just running now
+
+ 15:25:27 <ogra_> if that succeeds too (ac100 works already) i will switch on autobuilds tomorrow
+
+ 15:25:32 <infinity> netinst needs (at least) my mklibs fix uploaded and a d-i rebuild.
+
+ 15:25:34 <infinity> But might need more.
+
+ 15:25:35 <ogra_> for everything but mx5
+
+ 15:25:47 <GrueMaster> yep.   hunspell-en-us broke the world (not just arm)
+
+ 15:25:51 <ogra_> yep
+
+ 15:25:53 <infinity> It sure did.
+
+ 15:25:59 <ogra_> but its fixed
+
+ 15:26:03 <ogra_> as is ubiquity
+
+ 15:26:25 <ogra_> so i dont expect the currently running omap4 build to fall over
+
+ 15:26:53 <ogra_> but we'll see :)
+
+ 15:27:01 <ogra_> anything else for images
+
+ 15:27:18 * ogra_ waits for GrueMaster to not speeed to fast for the old man :)
+
+ 15:27:29 <GrueMaster> Hey!
+
+ 15:27:36 <ogra_> *g*
+
+ 15:27:46 <ogra_> ok, moving then
+
+ 15:27:51 <infinity> We're all old. :P
+
+ 15:27:58 <ogra_> [topic] QA Status (GrueMaster, mahmoh)
+
+ 15:28:04 <ogra_> GrueMaster, stage is all yours
+
+ 15:28:25 <GrueMaster> Still working on automation for SRU testing.  Seems that everytime I get one test working for QRT, another breaks, due to x86 requirements.
+
+ 15:28:56 <ogra_> how about your jenkins stuff, when is that due to move to the official jenkins instance ?
+
+ 15:29:10 <GrueMaster> And I still don't have a clear scenario on what to test for SRU approval.  Currently I run the QRT kernel tests, and a few other things.
+
+ 15:29:28 <ogra_> (doesnt seem to be there yet ... i was looking for it for a report i had to write for david yesterday)
+
+ 15:29:36 <GrueMaster> I won't move it to Jenkins until I can get it stabilized here.
+
+ 15:29:40 <ogra_> ah, k
+
+ 15:29:55 <GrueMaster> And since I have very little visibility with them, it is much harder.
+
+ 15:30:00 <ogra_> well SRU approval is indeed tricky
+
+ 15:30:11 <ogra_> since it usually refers to one specific bug
+
+ 15:30:23 <ogra_> which your test would have to reproduce
+
+ 15:30:27 <GrueMaster> Only in that there is no documented "This is what we run to approve".
+
+ 15:30:51 <ogra_> well, "does the bug still occur" is what we run i would guess
+
+ 15:31:04 <ogra_> no idea if thats even remotely automatable
+
+ 15:31:23 <ogra_> you can surely automate regression testing ...
+
+ 15:31:25 <GrueMaster> Problem with that is that there are a LOT of tests that were fixed on x86 that still exist on arm.
+
+ 15:31:31 <ogra_> but likely not the verifgication
+
+ 15:31:56 <GrueMaster> I can only automate what I know (which isn't much).
+
+ 15:32:00 <ogra_> right
+
+ 15:32:30 <GrueMaster> And when the upstream test scripts keep breaking, I have to manually intervene.
+
+ 15:32:36 <GrueMaster> Making automation moot.
+
+ 15:32:38 <ogra_> indeed :/
+
+ 15:33:13 <GrueMaster> So far, this have been my primary focus since UDS.  And it is taking way too much of my time.
+
+ 15:33:47 <ogra_> any chance to get some external help from i.e. linaro ?
+
+ 15:34:00 <ogra_> i would assume they suffer similar issues in some areas
+
+ 15:34:08 <ogra_> or do they do everything from scratch
+
+ 15:34:32 <GrueMaster> It isn't really a linaro thing.  It is mainly working with the security team to fix their wrt test scripts.
+
+ 15:34:56 <ogra_> ah, yeah, and thats something linaro doesnt touch at all
+
+ 15:35:01 <GrueMaster> And linaro is more interested in performance benchmarking.  Not sure they do any SRU testing.
+
+ 15:35:12 <ogra_> they dont do SRUs indeed
+
+ 15:35:38 <ogra_> anything else for QA ?
+
+ 15:36:08 <GrueMaster> I would like to thank NCommander (if he were here) for providing me a hacked netinstall for Maverick & Natty on Panda.  At least I can automate the install for that part of the SRU testing.
+
+ 15:36:31 * ogra_ applauds the absent NCommander
+
+ 15:36:43 <GrueMaster> It also has helped expose a bug introduced in another package (procps) that was in proposed.
+
+ 15:36:56 <GrueMaster> That affected all platforms.
+
+ 15:37:02 <ogra_> great
+
+ 15:37:24 <GrueMaster> And I'm done.
+
+ 15:37:41 <ogra_> [topic] Linaro Updates (rsalveti)
+
+ 15:37:46 <GrueMaster> Nothing more to see here, move along.
+
+ 15:37:51 * rsalveti waves
+
+ 15:37:57 <ogra_> heys rsalveti
+
+ 15:38:08 <rsalveti> guess no much to report during this week
+
+ 15:38:18 <rsalveti> marcin was able to push some of the fixes to doko
+
+ 15:38:20 <janimo> rsalveti, do you know what the status of mx5 3.0 kernel is?
+
+ 15:38:21 <rsalveti> for the cross toolchain
+
+ 15:38:44 <rsalveti> janimo: we should be pushing a new 3.1 kernel soon, once jcrigby is done with the ci bp
+
+ 15:38:45 <ogra_> rsalveti, with the enormous speed that armhf gets forward we are very likely to swithch asap
+
+ 15:38:50 <GrueMaster> Can you nudge your guys to fix the beagleXM network issue?
+
+ 15:38:51 <rsalveti> probably in the next few days
+
+ 15:38:53 <ogra_> rsalveti, is linaro prepared for that ?
+
+ 15:39:07 <rsalveti> ogra_: sure :-)
+
+ 15:39:15 <rsalveti> we also want to switch asap :-)
+
+ 15:39:17 <ogra_> (wrt binary drivers mainly)
+
+ 15:39:18 <janimo> rsalveti, ah great. So 3.1 will be pushed to the archives
+
+ 15:39:27 <rsalveti> ogra_: well, that's the complicated part
+
+ 15:39:37 <rsalveti> talked with ti but that is still not a priority for them
+
+ 15:39:41 <ogra_> rsalveti, i'll bring the panda stuff up in tomorrows call
+
+ 15:39:53 <ogra_> but what about beagle ?
+
+ 15:39:56 <rsalveti> yeah, would be better to do the follow up tomorrow
+
+ 15:40:01 <ogra_> or other vendors
+
+ 15:40:13 <rsalveti> ogra_: same thing, they don't care much about armhf atm
+
+ 15:40:18 <ogra_> do you have any lever in linaro you could move them with ?
+
+ 15:40:23 <ogra_> sigh
+
+ 15:40:28 <rsalveti> sure, anmar is our guy for it
+
+ 15:40:32 <rsalveti> will ping him about it
+
+ 15:40:36 <ogra_> that smells like another release without unity 3d
+
+ 15:40:48 <ogra_> even though we have the code now
+
+ 15:40:51 <rsalveti> nicolas said he'd try to build the driver for armhf
+
+ 15:40:58 <ogra_> nothing we will support can run it
+
+ 15:41:09 <rsalveti> and then see how that goes, but if he needs to put some work on that, it'll probably be hard to have it released
+
+ 15:41:11 <ogra_> rsalveti, right, as i said, thats for the call rtomorrow
+
+ 15:41:12 <rsalveti> yeah
+
+ 15:41:26 <janimo> rsalveti, regarding the cross-build of firefox and chromium that riku is doing, do you know what can be done to get the multiarch-fixed libs in precise? They are now in a PPA, and riku has no upload right, but I am not sure if anything is done to push them ATM
+
+ 15:41:35 <ogra_> and he is aware that he has all bits for building already
+
+ 15:41:57 <rsalveti> janimo: yeah, that's why we have https://blueprints.launchpad.net/linaro-ubuntu/+spec/push-multiarch-changes-for-cross-precise
+
+ 15:42:12 <rsalveti> janimo: the goal for this bp is to have at least everything in a bug with the patch attached
+
+ 15:42:20 <rsalveti> but atm he's doing well on both ubuntu and debian
+
+ 15:42:36 <rsalveti> janimo: and also poked him to update your request for feedback
+
+ 15:42:47 <janimo> rsalveti, I saw that but it was not clear to me whether wotk is ongoing or stalled (or not a prio for linaro)
+
+ 15:42:53 <janimo> wrt pushing to the main archive
+
+ 15:43:05 <rsalveti> janimo: that's the main thing he's working atm
+
+ 15:43:08 <janimo> ok
+
+ 15:43:11 <rsalveti> he finished the chromium one already
+
+ 15:43:17 <janimo> thanks
+
+ 15:43:20 <rsalveti> so now he's just working on pushing it to precise
+
+ 15:43:26 <rsalveti> feel free to ping him about it anytime
+
+ 15:43:42 <rsalveti> guess that's all from my side
+
+ 15:43:43 * ogra_ guesses FF has a higher prio on our side
+
+ 15:43:52 <rsalveti> so two actions
+
+ 15:44:01 <ogra_> at least thats how i understood smagoun
+
+ 15:44:05 <janimo> well having all the depends in is what matter a lot too, as others use them
+
+ 15:44:14 <rsalveti> yup
+
+ 15:44:16 <ogra_> yep
+
+ 15:44:44 <ogra_> anything else ? more questions ?
+
+ 15:44:49 <rsalveti> nops
+
+ 15:44:54 * ogra_ moves to AOB then
+
+ 15:44:54 <rsalveti> how to add action with this bot?
+
+ 15:45:02 <rsalveti> should use #action?
+
+ 15:45:10 <ogra_> i think angled brackets
+
+ 15:45:19 <ogra_> but hash might also work
+
+ 15:45:31 <ogra_> try it :)
+
+ 15:45:42 <infinity> I thought it was square braces? :P
+
+ 15:45:54 <rsalveti> #action rsalveti to track the gles driver status for armhf for the vendors we support
+
+ 15:45:54 * meetingology rsalveti to track the gles driver status for armhf for the vendors we support
+
+ 15:45:56 <ogra_> youre so square :P
+
+ 15:45:56 <GrueMaster> Its hash, but has to be done by the moderator.
+
+ 15:45:58 <rsalveti> yup :-)
+
+ 15:46:04 <GrueMaster> Or that.
+
+ 15:46:06 <ogra_> GrueMaster, apparentl not :)
+
+ 15:46:21 <ogra_> rsalveti, you said two actions ?
+
+ 15:46:37 * ogra_ waits for the second before he moves to AOB
+
+ 15:46:40 <rsalveti> #action work with jcrigby to update the mx53 kernel
+
+ 15:46:40 * meetingology work with jcrigby to update the mx53 kernel
+
+ 15:46:44 <rsalveti> done!
+
+ 15:46:45 <ogra_> great :)
+
+ 15:46:52 <GrueMaster> #action rsalveti to kick someone to fix bug 838200
+
+ 15:46:52 * meetingology rsalveti to kick someone to fix bug 838200
+
+ 15:46:53 <ubottu> Launchpad bug 838200 in u-boot-linaro (Ubuntu Precise) "No network support on Beagle XM" [High,Confirmed] https://launchpad.net/bugs/838200
+
+ 15:46:58 <rsalveti> sorry, I'm in two meetings
+
+ 15:47:00 <ogra_> [topic] AOB
+
+ 15:47:03 <rsalveti> GrueMaster: thanks
+
+ 15:47:04 <ogra_> anyone ?
+
+ 15:47:13 <GrueMaster> :)
+
+ 15:47:14 * ogra_ has nothing
+
+ 15:47:21 <infinity> I'm dry.
+
+ 15:47:41 <ogra_> seems nobody else either
+
+ 15:47:45 <ogra_> going once
+
+ 15:47:52 <ogra_> twice...
+
+ 15:48:02 <ogra_> sold to the guy in underwear ....
+
+ 15:48:05 <ogra_> #ednmeeting
+
+ 15:48:09 <ogra_> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

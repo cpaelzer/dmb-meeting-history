@@ -1,0 +1,241 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 23 Feb at 16:36 &mdash; 17:04 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-02-23-16.36.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 16:37.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:37.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:01.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ckeditor.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/obby.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/zookeeper.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/davfs2.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gambas3.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:02.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * tyhicks (40)
+ * jjohansen (11)
+ * sbeattie (9)
+ * jdstrand (8)
+ * chrisccoulson (6)
+ * mdeslaur (5)
+ * sarnold (4)
+ * ubottu (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:36 <tyhicks> #startmeeting
+
+ 16:36 <meetingology> Meeting started Mon Feb 23 16:36:48 2015 UTC.  The chair is tyhicks. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:36 <meetingology> 
+
+ 16:36 <meetingology> Available commands: action commands idea info link nick
+
+ 16:36 <tyhicks> The meeting agenda can be found at:
+
+ 16:36 <tyhicks> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:37 <tyhicks> [TOPIC] Announcements
+
+ 16:37 <tyhicks> Chris Pollock provided a debdiff for lucid for ClamAV (LP: #1420819). Your work is very much appreciated and will keep Ubuntu users secure. Great job! Smile :)
+
+ 16:37 <ubottu> Launchpad bug 1420819 in clamav (Ubuntu) "ClamAV 0.98.6 security update for Lucid" [Medium,Fix released] https://launchpad.net/bugs/1420819
+
+ 16:37 <tyhicks> [TOPIC] Weekly stand-up report
+
+ 16:37 <tyhicks> jdstrand: you're up
+
+ 16:38 <jdstrand> hi!
+
+ 16:39 <jdstrand> I plan on focusing on snappy this week. specifically, hw access
+
+ 16:39 <jdstrand> I need to also update the SnappyConfinement spec since it is out of date
+
+ 16:39 <jdstrand> tyhicks: we need to discuss overlayfs with slangasek sometime soon
+
+ 16:40 <jdstrand> tyhicks: we don't have to plan that now, but let's discuss after the meeting
+
+ 16:40 * tyhicks nods
+
+ 16:40 <jdstrand> I also need to get to some review tools changes
+
+ 16:41 <jdstrand> I'll move on to other bits after that (frameworks, fingerprint, etc)
+
+ 16:41 <jdstrand> I think that's it from me
+
+ 16:42 <tyhicks> thanks
+
+ 16:42 <tyhicks> mdeslaur: your turn
+
+ 16:43 <mdeslaur> I'm currently testing the samba updates
+
+ 16:43 <mdeslaur> I plan on publishing samba and e2fsprogs updates today
+
+ 16:44 <mdeslaur> and some ca-certificates updates with a new bundle in them
+
+ 16:44 <mdeslaur> after that, I'm going to work on freetype updates
+
+ 16:44 <mdeslaur> that's it for me, sbeattie, you're up
+
+ 16:44 <sbeattie> I'm on cve triage this week, so relearning that.
+
+ 16:45 <tyhicks> :)
+
+ 16:45 <sbeattie> I need to push for sponsorship of apparmor and apparmor-easyprof-ubuntu into vivid, after completing testing of that last week
+
+ 16:46 <sbeattie> I've uploaded gcc-5 packages with pie by default and set as the default compiler to https://launchpad.net/~sbeattie/+archive/ubuntu/gcc-pie-amd64/, and will be testing those.
+
+ 16:46 <sbeattie> (gcc-5 is the planned compiler for vivid+1)
+
+ 16:46 <sbeattie> that's pretty much it for me.
+
+ 16:46 <chrisccoulson> fantastic, I look forward to fixing the fall out of that in oxide :)
+
+ 16:47 <tyhicks> sbeattie: nice!
+
+ 16:47 <sbeattie> chrisccoulson: it will be awesome, I assure, based on some of the gcc-5 breakage I've seen already.
+
+ 16:47 <chrisccoulson> sbeattie, I'll just assign all bugs to doko
+
+ 16:47 <sbeattie> hehe
+
+ 16:47 <sbeattie> tyhicks: you're up.
+
+ 16:48 <tyhicks> I will retest and publish ecryptfs-utils security updates after the changes get acked for merging upstream
+
+ 16:48 <tyhicks> I need to review and test an ecryptfs kernel fix from cking (thanks!)
+
+ 16:49 <tyhicks> I need to dig into an ecryptfs data loss issue on btrfs
+
+ 16:49 <tyhicks> I'll propose a v2 of the libapparmor API changes this week
+
+ 16:50 <tyhicks> and I need to review some overlayfs related changes that went into 4.0-rc1 over the weekend
+
+ 16:51 <tyhicks> they look like they might be related to a patch set that jjohansen and I thought may fix some of the issues that we are seeing with overlayfs and apparmor
+
+ 16:51 <tyhicks> that'll feed into the discussion that jdstrand mentioned above
+
+ 16:51 <tyhicks> that's it for me
+
+ 16:51 <tyhicks> jjohansen: you're up
+
+ 16:52 <jjohansen> I need to dig into why the fd inheritance tests are dying on krillin bug 1423810
+
+ 16:52 <jjohansen> poke someone again to verify the fix for bug 1408833 works for them, so I can push it to the kt.
+
+ 16:52 <jjohansen> Hopefully get a discussion of v2 libapparmor aa_features API in
+
+ 16:52 <ubottu> bug 1423810 in apparmor (Ubuntu) "[krillin] apparmor fd_inheritance regression test causes kernel to crash" [Undecided,New] https://launchpad.net/bugs/1423810
+
+ 16:52 <ubottu> bug 1408833 in AppArmor "broken postinst test for uvtool-libvirt on utopic" [Undecided,Confirmed] https://launchpad.net/bugs/1408833
+
+ 16:53 <jjohansen> It looks like I might need to possibly poke at some overlayfs changes
+
+ 16:54 <jjohansen> and of course I have apparmor kernel cleanups for upstream to continue working
+
+ 16:54 <jjohansen> on
+
+ 16:54 <jjohansen> I think that is it for me, sarnold you're up
+
+ 16:54 <tyhicks> jjohansen: are you making much progress on the upstreaming work or has there been too many other distractions popping up?
+
+ 16:55 <jjohansen> tyhicks: less progress than I would like, there have been a fair few distractions, but it depends on the week
+
+ 16:55 <tyhicks> ok
+
+ 16:56 <jjohansen> I need to focus on getting a first set of patches together to push this next cycle
+
+ 16:56 <tyhicks> that'd be great
+
+ 16:56 <jjohansen> yeah
+
+ 16:56 <tyhicks> especially now that AA mediation landed in upstream D-Bus
+
+ 16:56 <tyhicks> folks will want to start using that soon :)
+
+ 16:56 <tyhicks> go ahead, sarnold
+
+ 16:57 <jjohansen> oh yes, and a big congratulations to tyhicks on pushing that through
+
+ 16:57 <sbeattie> +1
+
+ 16:57 <sarnold> I'm on community this week; I'm working on several MIRs for the server team, horizon security update, and talking with ibm about the ppc64-diag mir review from a few weeks ago
+
+ 16:57 <sarnold> tyhicks: hehe, yes, congratulations :)
+
+ 16:57 <tyhicks> thanks! :)
+
+ 16:58 <sarnold> I might get an apparmor patch or two reviewed in the meantime for some variety, but I'm not likely to make it through an entire patch series.
+
+ 16:58 <sarnold> that's it for me, chrisccoulson?
+
+ 16:58 <chrisccoulson> I should be back to a normal working routine this week
+
+ 16:58 <chrisccoulson> I've got Firefox + Thunderbird updates to do
+
+ 16:59 <chrisccoulson> And other than that, I'll be working on embargoed stuff
+
+ 16:59 <chrisccoulson> that's me done
+
+ 17:01 <tyhicks> [TOPIC] Highlighted packages
+
+ 17:01 <tyhicks> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:01 <tyhicks> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:01 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/ckeditor.html
+
+ 17:01 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/obby.html
+
+ 17:01 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/zookeeper.html
+
+ 17:02 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/davfs2.html
+
+ 17:02 <tyhicks> http://people.canonical.com/~ubuntu-security/cve/pkg/gambas3.html
+
+ 17:02 <tyhicks> [TOPIC] Miscellaneous and Questions
+
+ 17:02 <tyhicks> Does anyone have any other questions or items to discuss?
+
+ 17:04 <tyhicks> jdstrand, mdeslaur, sbeattie, jjohansen, chrisccoulson: Thanks!
+
+ 17:04 <tyhicks> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

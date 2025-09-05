@@ -1,0 +1,181 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Technical Board meeting, started by rbasak, 19 Jul at 19:14 &mdash; 19:28 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-07-19-19.14.log.html
+
+
+
+== Meeting summary ==
+
+=== Action Review ===
+
+Discussion started by rbasak at 19:15.
+
+
+=== Definition of our third party repository policy. See https://docs.google.com/document/d/1apUKR4gtOrfPGCWmtoebaQUhoy-fG8Cyo3VKJyhnpD0/edit ===
+
+Discussion started by rbasak at 19:17.
+
+
+=== Scan the mailing list archive for anything we missed (standing item) ===
+
+Discussion started by rbasak at 19:24.
+
+
+=== Check up on community bugs (standing item) ===
+
+Discussion started by rbasak at 19:25.
+
+
+=== Select a chair for the next meeting (next from https://launchpad.net/~techboard/+members) ===
+
+Discussion started by rbasak at 19:26.
+
+
+=== AOB ===
+
+Discussion started by rbasak at 19:26.
+
+
+
+
+== People present (lines said) ==
+
+ * rbasak (40)
+ * vorlon (13)
+ * sil2100 (6)
+ * meetingology (2)
+ * ubottu (1)
+
+
+
+== Full log ==
+
+
+ 19:14 <rbasak> #startmeeting Technical Board
+
+ 19:14 <meetingology> Meeting started at 19:14:52 UTC.  The chair is rbasak.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 19:14 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 19:15 <rbasak> #topic Action Review
+
+ 19:15 * rbasak (everyone) review the Ubuntu Backports Team Charter for ratification
+
+ 19:15 * rbasak (everyone) formal ratification of third party seeded snap security policy (finalize wording on the Google Doc)
+
+ 19:15 <rbasak> ^ this one I'm still working on
+
+ 19:15 * rbasak vorlon to circle around with store, snapcraft, et all, and revise the snap source revision policy to be more clear with regards to rebuildability and GPL compliance. (rbasak, 19:06)
+
+ 19:15 <rbasak> ^ blocked on me?
+
+ 19:15 * rbasak sil2100 to start a draft summarizing the OEM archive portion of the meeting which x-nox and TB will review, edit, and ratify before we move on to figuring out the next step (rbasak, 19:08)
+
+ 19:15 * rbasak rbasak to draft a proposal of the DMB-proposed inactivity expiration policy for TB ratification (sil2100, 19:20)
+
+ 19:15 <rbasak> ^ still pending
+
+ 19:15 * rbasak cyphermox to follow up with the CC regarding the TB nominations and election (sil2100, 19:23)
+
+ 19:16 <rbasak> Any progress on the others that needs reporting please? Otherwise carry everything over?
+
+ 19:16 <vorlon> rbasak: yeah I think that's blocked on the draft policy at this point
+
+ 19:16 <sil2100> Yeah, mine is a bit of a stupid thing. I had notes on the OEM Archive status but still didn't quite get to getting those formally written down
+
+ 19:16 <sil2100> I'm actually trying to do some of the writing right now
+
+ 19:16 <rbasak> OK so carry over everything?
+
+ 19:17 <rbasak> #topic Definition of our third party repository policy. See https://docs.google.com/document/d/1apUKR4gtOrfPGCWmtoebaQUhoy-fG8Cyo3VKJyhnpD0/edit
+
+ 19:17 <vorlon> afaik yes
+
+ 19:17 <rbasak> I've made some progress in identifying relevant snaps
+
+ 19:17 <rbasak> I scanned the archive for dependencies on snapd on the assumption that all "transitional packages" would pull them in.
+
+ 19:17 <rbasak> Also I scanned some set of seeds to see what seeds might seed snaps directly. See my question in #ubuntu-devel - did I get them all?
+
+ 19:17 <rbasak> I stuck them in an appendix at the bottom of the document for now.
+
+ 19:18 <rbasak> The only unusual things are ember/cyphesis-cpp that came in through Debian
+
+ 19:18 <rbasak> And freeshow which was packaged as a snap by ubuntu-studio (AFAICT) and then seeded.
+
+ 19:18 <vorlon> there are transitional deb-to-snap packages in Debian?
+
+ 19:18 <rbasak> Indeed :)
+
+ 19:18 <vorlon> o_O
+
+ 19:19 <sil2100> wow
+
+ 19:19 <rbasak> See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=950926
+
+ 19:19 <ubottu> Debian bug 950926 in ember "ember: Using packages to install 'snap' packages is not a correct use of the packaging system" [Serious, Open]
+
+ 19:19 <rbasak> On these ones, I think it would make sense to apply our policy completely, possibly blocklisting autosync if the requirements are not met. But I'll talk to the maintainer first.
+
+ 19:20 <rbasak> On the Ubuntu Studio freeshow, I expect the snap can be trivially adjusted to meet our requirements anyway. I'll talk to Eickmeyer
+
+ 19:20 <rbasak> Are there any other sources of snaps I might have missed?
+
+ 19:21 <vorlon> sounds complete to me
+
+ 19:21 <vorlon> with the caveat that packages might have missed the dep on snapd on account of it being in the base system
+
+ 19:22 <rbasak> Any ideas on identifying those?
+
+ 19:22 <vorlon> uh codesearch.ubuntu.com
+
+ 19:22 <vorlon> (does not exist)
+
+ 19:22 <rbasak> I think I might know someone. But I suspect that searching for "snap" will have too many false positives :-/
+
+ 19:23 <vorlon> 'snap install'?
+
+ 19:23 <rbasak> But that doesn't really stop us determining a policy and dealing with new things as they are discovered.
+
+ 19:23 * vorlon nods
+
+ 19:23 <rbasak> subprocess.check_call(['snap', 'install']) etc :-/
+
+ 19:24 <rbasak> If there are no other comments, I'll carry on with this and we can move on from this topic?
+
+ 19:24 <sil2100> +1 o/
+
+ 19:24 <rbasak> #topic Scan the mailing list archive for anything we missed (standing item)
+
+ 19:25 <vorlon> (FWIW I assumed we would only need to worry about this in maintainer scripts, which are 99.9% shell)
+
+ 19:25 <rbasak> Only the post from Philipp Kewisch. sil2100 and I have already talked to him.
+
+ 19:25 <rbasak> #topic Check up on community bugs (standing item)
+
+ 19:25 <vorlon> I invited him to this meeting but he may not make it
+
+ 19:26 <sil2100> It was a good talk. But I forgot to make any notes during the meeting
+
+ 19:26 <rbasak> No community bugs listed.
+
+ 19:26 <rbasak> #topic Select a chair for the next meeting (next from https://launchpad.net/~techboard/+members)
+
+ 19:26 <sil2100> Could have been a good idea for the other TB members to read, eh...
+
+ 19:26 <rbasak> vorlon I guess? :-P
+
+ 19:26 <rbasak> #topic AOB
+
+ 19:26 <rbasak> AOB?
+
+ 19:27 <vorlon> that's to me as next chair?  sure
+
+ 19:27 <rbasak> I'll change the agenda doc accordingly :-)
+
+ 19:28 <rbasak> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

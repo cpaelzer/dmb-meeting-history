@@ -1,0 +1,604 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 04 Feb at 16:01 &mdash; 16:42 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-02-04-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:02.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:27.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (59)
+ * pitti (50)
+ * sil2100 (23)
+ * caribou (23)
+ * cyphermox (21)
+ * xnox (21)
+ * ubottu (17)
+ * robru (16)
+ * bdmurray (16)
+ * doko (11)
+ * barry (10)
+ * chiluk (4)
+ * meetingology (3)
+ * genii (1)
+
+
+
+== Full Log ==
+
+
+ 16:01 <slangasek> #startmeeting
+
+ 16:01 <meetingology> Meeting started Thu Feb  4 16:01:27 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:01 * genii makes a large pot of coffee
+
+ 16:02 <slangasek> [TOPIC] Lightning round
+
+ 16:02 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk)
+
+ 16:02 <slangasek> tdaitx pitti slangasek doko infinity barry caribou xnox sil2100 chiluk robru bdmurray cyphermox
+
+ 16:02 <slangasek> tdaitx: hello!
+
+ 16:02 <cyphermox> I lost :(
+
+ 16:03 <pitti> sooo close!
+
+ 16:03 * pitti tosses a candy towards tdaitx
+
+ 16:04 <slangasek> pitti: ok, go ahead :)
+
+ 16:05 <pitti> ci train sprint:
+
+ 16:05 <pitti> - fought way too long with trying to deploy to Canonistack (lcy01 is broken, no response to STS ticket; lcy02 timing out)
+
+ 16:05 <pitti> - fought way too long with mojo and trying to deploy to juju-local; got a working rollout at last, updated lots of missing details on the https://wiki.ubuntu.com/citrain/Development; reproduced again in clean VM
+
+ 16:05 <pitti> - implement proper log rotation in bileto, land bileto charm fix
+
+ 16:05 <pitti> - Investigate flipping between running and approved; identified and fixed at least one reason (#1537866)
+
+ 16:05 <pitti> autopkgtest:
+
+ 16:05 <pitti> - Further debug arm64 breakage in scalingstack; making some progress, but still blocked by #1531768
+
+ 16:05 <pitti> - Investigate broken ppc64el xenial cloud images (#1541757)
+
+ 16:05 <pitti> distro:
+
+ 16:05 <pitti> - openvpn: Apply script-security hack from init.d script to the .service (#1454725)
+
+ 16:05 <pitti> - python-distutils-extra: Some bug fixes, modernize packaging
+
+ 16:05 <pitti> - schroot: Test/upload Tyler's patch for fixing recursive bind mounts in schroot (#1430557)
+
+ 16:05 <pitti> - systemd: Make package build and tests work against upstream master (preparation for hooking this into upstream git PRs)
+
+ 16:05 <pitti> - systemd: merge with Debian, fix /run/lock regression (#1541775)
+
+ 16:05 <pitti> - Review caribou's rsyslog merge, discuss cleaning it up, sponsor
+
+ 16:05 <pitti> - Review/comment supported-build-depends proposal
+
+ 16:05 <pitti> - ongoing: Consistently use /etc/adjtime for UTC vs. LOCAL, grep archive for catching all of it (#1541532)
+
+ 16:05 <pitti> (end)
+
+ 16:06 <slangasek> * merges: shadow now updated, clearing one of the oldest merges off the list and adding a systemd unit to its upstart job
+
+ 16:06 <slangasek> * and dh_systemd still makes me angry
+
+ 16:06 <slangasek> * working on standing up .deb based images for rpi2 to go with the snappy images for this cycle
+
+ 16:06 <slangasek> * presentation prep work for the snappy sprint in 2 weeks
+
+ 16:06 <slangasek> * discussions around the creation of the preinstalled snappy images and infrastructure needed
+
+ 16:06 <slangasek> * still on baby watch
+
+ 16:06 <slangasek> (done)
+
+ 16:06 <doko> what is wrong with dh_systemd?
+
+ 16:07 <doko> - FOSDEM, free java room
+
+ 16:07 <doko> - following the unannounced openmpi transition
+
+ 16:07 <doko> - netcdf transition
+
+ 16:07 <doko> - llvm-3.8, fix ftbfs, prepare for transitin
+
+ 16:07 <doko> - removed last references to ruby2.1, removed now.
+
+ 16:07 <doko> - python3.4 removal still waits for numpy to migrate.
+
+ 16:07 <doko> - binutils update
+
+ 16:07 <doko> - prepare gccgo-6, (with go 1.6 support)
+
+ 16:07 <doko> (done)
+
+ 16:07 <slangasek> doko: it should have been a minor extension to dh_installinit
+
+ 16:07 <barry> no infinity?
+
+ 16:07 <pitti> slangasek: FWIW, /etc/init/passwd.conf would more efficiently transition to a tmpfiles.d/ snippet than a .service calling rm
+
+ 16:07 <slangasek> and it should have been done as part of debhelper instead of an add-on that now everyone has to build-depend on separately for the default init system
+
+ 16:07 <barry> debian bug #811110
+
+ 16:07 <ubottu> Debian bug 811110 in wnpp "ITP: dirtbike -- convert installed Python packages to wheels" [Wishlist,Fixed] http://bugs.debian.org/811110
+
+ 16:08 <slangasek> pitti: ah, thanks for the hint
+
+ 16:08 <pitti> slangasek: (let's talk off-meeting)
+
+ 16:08 <barry> pip 7.1.2, 8.0.2, 8.0.2-1 (still needs work and fixes to virtualenv)
+
+ 16:08 <slangasek> pitti: I hadn't considered tmpfiles.d being used to remove files from /etc :)
+
+ 16:08 <barry> LP: #1541407
+
+ 16:08 <ubottu> Launchpad bug 1541407 in apt-xapian-index (Ubuntu) "/usr/share/apt-xapian-index/update-apt-xapian-index-dbus:SyntaxError" [High,Fix released] https://launchpad.net/bugs/1541407
+
+ 16:08 <barry> like pitti, i fought the mojo and the mojo won.
+
+ 16:08 <barry> virtual sprint on bileto
+
+ 16:08 <barry> --done--
+
+ 16:09 <caribou> Bugfix :
+
+ 16:09 <caribou> - LP #1528101 - vm.min_free_kbytes crash issues
+
+ 16:09 <ubottu> Launchpad bug 1528101 in kexec-tools (Ubuntu) "ISST-LTE: kdump failed: second kernel booting hangs after /scripts/init-bottom when large min_free_kbytes value being set" [Undecided,Confirmed] https://launchpad.net/bugs/1528101
+
+ 16:09 <caribou> Solution would be overly complex for a corner case
+
+ 16:09 <caribou> - LP #1534106 - rsyslog segfault with juju
+
+ 16:09 <caribou> merged rsyslog 8.16.0-2 which should fix this
+
+ 16:09 <ubottu> Launchpad bug 1534106 in rsyslog (Ubuntu) "rsyslogd crashed with SIGSEGV with juju-local configuration" [High,Triaged] https://launchpad.net/bugs/1534106
+
+ 16:09 <xnox> \o/
+
+ 16:09 <caribou> Development work:
+
+ 16:09 <caribou> - LP #1540537 - libvirt sponsorship
+
+ 16:09 <caribou> WIP
+
+ 16:09 <caribou> - LP #1539483 - rsyslog merge
+
+ 16:09 <ubottu> Launchpad bug 1540537 in libvirt (Ubuntu Vivid) "make ovs-vsctl not raise error if there's no portData available." [Medium,In progress] https://launchpad.net/bugs/1540537
+
+ 16:09 <ubottu> Launchpad bug 1539483 in rsyslog (Ubuntu) "Please merge rsyslog 8.16.0-1 (main) from Debian unstable (main)" [Wishlist,Fix released] https://launchpad.net/bugs/1539483
+
+ 16:09 <caribou> - LP: #1540491 - merge clamav
+
+ 16:09 <caribou> - Learn new git merge workflow for clamav
+
+ 16:09 <ubottu> Launchpad bug 1540491 in clamav (Ubuntu) "Please merge clamav 0.99+dfsg-1 (main) from Debian stable" [Wishlist,Confirmed] https://launchpad.net/bugs/1540491
+
+ 16:09 <caribou> ☑ Done
+
+ 16:10 <xnox> * Fiddling with s/-m32/-m31/
+
+ 16:10 <xnox> * uploaded d-i, s390-tools, choose-mirror, s390-netdevice
+
+ 16:10 <xnox> * unbroke adt tests on multipath-tools (somewhat), mysql
+
+ 16:10 <xnox> * debugging parted crashes, on lvm, on dasd - reffered to upstream contributor LP: 1541510
+
+ 16:10 <xnox> * uploaded upstart (minor old bugfix upload)
+
+ 16:10 <xnox> * nodejs (with patch from previously deffered upstream fix)
+
+ 16:10 <ubottu> Launchpad bug 1541510 in parted (Ubuntu) "parted crashes on lvm, on a dasd drive" [High,Confirmed] https://launchpad.net/bugs/1541510
+
+ 16:10 <xnox> * systemd with shorter network names, there is now space for :vlan-id
+
+ 16:10 <xnox> * FOSDEM
+
+ 16:10 <xnox> * Started nomination process for DMB - anybody wants to join?! =)
+
+ 16:10 <xnox> ..
+
+ 16:11 <sil2100> - Sick with flu the whole week, productivity lowered
+
+ 16:11 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 16:11 <sil2100> - RTM Status meetings
+
+ 16:11 <sil2100> - system-image:
+
+ 16:11 <sil2100> * Review of a community submitted device-alias merge
+
+ 16:11 <sil2100> * Creation of the new PD-related frieza channels
+
+ 16:11 <sil2100> * Helping debugging some local s-i servers for the community
+
+ 16:11 <sil2100> - OTA-9.5:
+
+ 16:11 <sil2100> * Preparing snapshot, creating first semi-candidate image
+
+ 16:11 <sil2100> * Work on scheduling and importing the new custom and device tarballs
+
+ 16:11 <sil2100> * Bug triaging, chasing upstreams
+
+ 16:11 <sil2100> - +1-maintenance and patch piloting
+
+ 16:11 <slangasek> xnox: -m31 - augh?
+
+ 16:11 <sil2100> * Merge denemo from Debian per sponsoring request
+
+ 16:11 <sil2100> * Sponsor SRU for live-build
+
+ 16:11 <sil2100> * Publish doko's multi-arch changes for some CI Train projects
+
+ 16:11 <barry> sil2100: i saw your mp, will get to it when i can
+
+ 16:11 <sil2100> * Looking into one livecd-rootfs review
+
+ 16:11 <sil2100> - Landing Team tools:
+
+ 16:11 <sil2100> * Changes to the issue tracker for better blocker tracking for OTA purposes
+
+ 16:11 <sil2100> * New small helper script additions
+
+ 16:11 <sil2100> * Fixing the snapshotting script to workaround issue with packages from private builders
+
+ 16:12 <xnox> slangasek, because lib32* packages do not come for free =) well, at least 2 did not.
+
+ 16:12 <sil2100> - Different MP reviews (most related to touch)
+
+ 16:12 <sil2100> (done)
+
+ 16:12 <caribou> xnox: do you think that adding zfcpdump to kdump-config be useful ?
+
+ 16:12 <xnox> slangasek, they had -m64 packages, but no -m31 packages.
+
+ 16:12 <xnox> caribou, YES!
+
+ 16:12 <sil2100> barry: \o/ thanks, it's still WIP paused until this crazy milestone is done but I'd like someone to take a look at it in the meantime
+
+ 16:12 * doko forgot 30 multiarchifications
+
+ 16:12 <xnox> caribou, that's the only way to get a dump out of those things.
+
+ 16:13 <caribou> xnox: I'll see what can be done; we already implemented firmware assisted dumps for Power8
+
+ 16:13 <slangasek> xnox: what packages ?  we haven't agreed to do any engineering work to enable -m31 builds...  is this upstream in Debian?
+
+ 16:13 <xnox> slangasek, let's talk after meeting.
+
+ 16:13 <chiluk> sounds like my turn then.
+
+ 16:13 <chiluk> - Requested security team put comments on the launchpad bugs when SRU's are pulled from -proposed due to CVEs.  This is all due to CVE confusion in #1527062.  The kernel team may need to modify their scripts accodingly as well.
+
+ 16:13 <chiluk> - Other than that mostly non-public support casework this week.
+
+ 16:13 <chiluk> -done-
+
+ 16:14 <robru> * coaching pitti, barry, bdmurray in ci-train/bileto bugfixing for sprint this week
+
+ 16:14 <robru> * prepped bugs, organizing priorities and pointing out where in code to work on fixes
+
+ 16:14 <robru> * reviewing & merging the copious amounts of work done by pitti, barry, bdmurray this week
+
+ 16:14 <robru> * many, many, many iterations on the deployment instructions so that you can almost, sorta, kinda, deploy ci-train into canonistack.
+
+ 16:14 <robru> (done)
+
+ 16:14 <bdmurray> modified mojo spec to use the dse version of cassandra and testing it
+
+ 16:14 <bdmurray> investigation into 16.04 retrace failures for seb128
+
+ 16:14 <bdmurray> uploaded whoopsie to Xenial (doko's multiarch changes)
+
+ 16:14 <bdmurray> reported that Supported time frame for xenial packages is wrong
+
+ 16:14 <bdmurray> ubuntu-release-upgrader merge proposal review and testing for LP: #153880
+
+ 16:14 <ubottu> Launchpad bug 153880 in texlive-base (Ubuntu) "Update manager hangs during install from Feisty to Gutsy" [Undecided,Expired] https://launchpad.net/bugs/153880
+
+ 16:14 <bdmurray> uploaded ubuntu-release-upgrader to Xenial
+
+ 16:15 <bdmurray> worked on creating a snap for a WeMo server
+
+ 16:15 <bdmurray> prep for bileto sprint
+
+ 16:15 <bdmurray> bileto sprint (LP: #1488956, LP: #1530870, LP: #1541258)
+
+ 16:15 <ubottu> Launchpad bug 1488956 in Bileto "Lander IRC nickname should be fetched from Launchpad" [Wishlist,Fix released] https://launchpad.net/bugs/1488956
+
+ 16:15 <ubottu> Launchpad bug 1530870 in CI Train [cu2d] "Ticket's published_versions should state series information" [Wishlist,Fix released] https://launchpad.net/bugs/1530870
+
+ 16:15 <ubottu> Launchpad bug 1541258 in CI Train [cu2d] "Stop writing useless files." [Undecided,Fix released] https://launchpad.net/bugs/1541258
+
+ 16:15 <bdmurray> ✔ done
+
+ 16:15 <cyphermox> - [MIR] appstream review
+
+ 16:15 <cyphermox> - [MIR] fwupd review
+
+ 16:15 <cyphermox> - [MIR] s390-tools review
+
+ 16:15 <cyphermox> - [Misc] sablecc update
+
+ 16:15 <cyphermox> - [trusty] multipath-tools on LVM (bug lp:#1540401)
+
+ 16:15 <cyphermox> - [trusty] libaudit openssh/shadow verification (bug lp:#1478087)
+
+ 16:15 <cyphermox> advance warning, prepare for the bug link flood...
+
+ 16:15 <cyphermox> - [trusty] ubiquity 2.18.8.12 merge from jderose (bug lp:#1539266)
+
+ 16:15 <cyphermox> - [trusty] multipath/parted bugfixes (bug lp:#1432062, bug lp:#1473903, bug lp:#1486370, bug lp:#1496210, bug lp:#1503286, bug lp:#1526984, bug lp:#1536008, bug lp:#1538775)
+
+ 16:15 <cyphermox> - [vivid] NetworkManager backport
+
+ 16:15 <slangasek> bdmurray: I think I pushed the merge for the xenial support time frame, is that fixed now in the metadata?
+
+ 16:16 <cyphermox> ... or not?
+
+ 16:16 <cyphermox> - backporting IPv6 support for broadband modems
+
+ 16:16 <cyphermox> - [xenial] s390-tools upload
+
+ 16:16 <cyphermox> - removed Build-Depends on libsysfs
+
+ 16:16 <cyphermox> - [xenial] multipath-tools bugfix (bug lp:#1540660)
+
+ 16:16 <cyphermox> - also fix rebuilds and add autopkgtest
+
+ 16:16 <cyphermox> (done)
+
+ 16:16 <caribou> cyphermox: lp# w/o a space is not picked up
+
+ 16:16 <cyphermox> doh.
+
+ 16:16 * cyphermox fixes his sed+xslt
+
+ 16:16 <slangasek> :)
+
+ 16:16 <slangasek> alright
+
+ 16:16 <slangasek> any questions?
+
+ 16:17 <caribou> I got one for AOB
+
+ 16:17 <slangasek> robru: would you like to give any more detail about this week's vsprint?
+
+ 16:18 <bdmurray> slangasek: hmm, I'm not seeing support at all
+
+ 16:18 <bdmurray> s/support/Supported/
+
+ 16:18 <slangasek> bdmurray: we're talking about the metadata in the Packages file, right?
+
+ 16:19 <robru> slangasek: sorry I forgot to prep notes last night so that was written in a hurry
+
+ 16:19 <slangasek> bdmurray: it's possible my merge broke it, since it landed this week (after discussion on #ubuntu-release last week)... is there a bug #?
+
+ 16:19 <slangasek> robru: well, I'm just asking if you want to talk about how it's going... not read from notes :)
+
+ 16:20 <robru> slangasek: many many bugs fixed, lemme see: https://bugs.launchpad.net/bileto/+bug/1488956 https://bugs.launchpad.net/cupstream2distro/+bug/1530870 https://bugs.launchpad.net/bileto/+bug/1513649 https://bugs.launchpad.net/bileto/+bug/1538717 https://bugs.launchpad.net/bileto/+bug/1538716 https://bugs.launchpad.net/bileto/+bug/1538718
+
+ 16:20 <ubottu> Launchpad bug 1488956 in Bileto "Lander IRC nickname should be fetched from Launchpad" [Wishlist,Fix released]
+
+ 16:20 <ubottu> Launchpad bug 1530870 in CI Train [cu2d] "Ticket's published_versions should state series information" [Wishlist,Fix released]
+
+ 16:20 <ubottu> Launchpad bug 1513649 in Bileto "Warn when publishing to vivid and destination PPA field is left blank" [Undecided,Fix released]
+
+ 16:20 <ubottu> Launchpad bug 1538717 in Bileto "implement log rotation for iterate.py" [Undecided,Fix released]
+
+ 16:20 <ubottu> Launchpad bug 1538716 in Bileto "Needs a clickable index of static files." [Undecided,Fix released]
+
+ 16:20 <bdmurray> slangasek: I noticed via apt-cache show but imagine that looks at the Packages file. Checking another system after running apt-get update the Supported info disappeared
+
+ 16:21 <robru> slangasek: it's going really well, the guys are picking things up quick, I'm quite pleased with how fast everything's gone. all the prep last week is paying off for sure
+
+ 16:21 <slangasek> bdmurray: ok, very likely that it somehow managed to regress then.  If there's no bug open, let's take it to #ubuntu-release for discussion after (and find somebody who can tell me where I can find the output of the script)
+
+ 16:21 <bdmurray> slangasek: no bug, sounds fine
+
+ 16:21 <slangasek> robru: cool.  getting close to having an actually reliably deployable development environment from mojo? :)
+
+ 16:22 <pitti> slangasek: the instructions work now; it still needs to run mojo two or three times, but just that
+
+ 16:22 <robru> slangasek: close to as good as it's going to get. what makes it difficult is that a) canonistack is really slow and flaky, and b) the amount of creds required is staggering and creating them all new is a royal pain
+
+ 16:22 <slangasek> pitti: because of canonistack reliability problems?
+
+ 16:23 <robru> slangasek: yep
+
+ 16:23 <pitti> yeah, forget canonistack
+
+ 16:23 * slangasek nods
+
+ 16:23 <pitti> slangasek: I meant in juju-local
+
+ 16:23 <slangasek> robru: right, but I assume the creds stuff can be done once per developer?
+
+ 16:23 <pitti> I tried about 10 to 15 times, it always times out
+
+ 16:23 <robru> pitti: oh you got juju local working? last I heard you switched to canonistack because of some issue
+
+ 16:23 <slangasek> pitti: so it takes 2-3 runs even for local?
+
+ 16:23 <robru> slangasek: true, each developer can re-use their own creds
+
+ 16:23 <pitti> I set up a new LP account with a new GPG and SSH key; that part is by far the most work
+
+ 16:24 <robru> yeah
+
+ 16:24 <pitti> as it needs lots of veriifcation emails, uploading a new key, etc.
+
+ 16:24 <pitti> slangasek: yeah, there are some juju-local bugs
+
+ 16:24 <pitti> like, the juju agent often doesn't finish installation, and it's stuck forever in "waiting for agent to run"
+
+ 16:24 <slangasek> I wonder if it would make sense to omit the LP integration pieces from the devel setup, and just mock it somehow
+
+ 16:24 <slangasek> pitti: ah, doh
+
+ 16:25 <slangasek> anyway, cool - glad to hear you've got it down to "just" juju bugs and creds :)
+
+ 16:25 <pitti> so killing those broken machines and re-running works
+
+ 16:25 <robru> slangasek: I'm not sure how that would even look. it's very tightly coupled to lp, from interacting with PPAs to querying lplib about packages and stuff.
+
+ 16:26 <pitti> I guess for robru it's fine to use his own LP user and creds
+
+ 16:26 <pitti> but I don't want to create a password-less GPG user for my account
+
+ 16:26 <slangasek> robru: I mean for the ppa interaction part.  Querying lplib about packages in the main archive should still work the same.  OTOH, being tightly coupled to LP is a good thing, it means you don't have too many wheels reinvented :)
+
+ 16:26 <pitti> lp:~pitti can do too much damage everywhere :)
+
+ 16:26 <robru> pitti: I used my own because I wasn't bothered by the issue where you need a passwordless gpg in order to be able to sign packages; I just do builds in staging rather than use my own deployment
+
+ 16:26 <slangasek> pitti: pretty sure robru's account also has privileges in places, and that he was aiming for core-dev...
+
+ 16:27 <slangasek> [TOPIC] AOB
+
+ 16:27 <slangasek> anything else today?
+
+ 16:28 <pitti> so, it's set then -- robru will charm up Launchpad, we can roll it out into two more containers
+
+ 16:28 <barry> pitti: agreed
+
+ 16:28 * pitti runs away really fast to evade the bullets
+
+ 16:28 <robru> slangasek: yeah my account has lots of access but the thing is that I didn't associate a passwordless gpg key with my account as is required for a fully functioning deployment
+
+ 16:28 <slangasek> robru: right, that's fine then
+
+ 16:28 <caribou> there is a request to backport the mstflint version in Xenial to the other stable releases as it becomes inoperatable with newer hardware from mellanox
+
+ 16:28 <cyphermox> oh
+
+ 16:28 <slangasek> caribou: sounds to me like an appropriate hardware enablement SRU
+
+ 16:29 <pitti> I hope today we can finish the web-clicky version of "retry my failed tests in a silo"
+
+ 16:29 <caribou> there is quite a gap b/w trusty's version and Xenial
+
+ 16:29 <caribou> slangasek: what's the best approach for the SRU : a massive debdiff b/w the two versions ?
+
+ 16:29 <slangasek> caribou: does it carry risk of regression for other hardware, though, and if so how will it be validated?  Maybe it's better to put it in trusty as a parallel package?
+
+ 16:30 <caribou> slangasek: parallel package as in -backports ?
+
+ 16:30 <caribou> slangasek: right now, the ones pushing for this the harder are Mellanox themselves
+
+ 16:31 <slangasek> caribou: I mean package it under a different name (mstflint-4 or mstflint-why-cant-hardware-interfaces-be-stable)
+
+ 16:31 <slangasek> -backports would seem ok to me as well
+
+ 16:31 <caribou> mstfint-4 could be a valid solution, we'll investigate that
+
+ 16:32 <caribou> slangasek: ok, thanks!
+
+ 16:32 <slangasek> what else?
+
+ 16:33 <bdmurray> It's EoL day right?
+
+ 16:33 <slangasek> yes and no
+
+ 16:33 <slangasek> yes for desktop and server, no for snappy and phone :)
+
+ 16:33 <slangasek> bdmurray: did you already flip meta release?
+
+ 16:34 <pitti> oh, schroot removal o'clock!
+
+ 16:34 <pitti> more seriously, what about running vivid autopkgtests? I figure we still need them for the phone
+
+ 16:34 <barry> pitti: indeed :)
+
+ 16:34 <pitti> we just won't get any updated cloud images any more
+
+ 16:34 <bdmurray> slangasek: No, I was having issues upgrading from T to W but will today. Oh, that's interesting I was working on rejejct crashes from 15.04 but then what about the phone...
+
+ 16:35 <slangasek> pitti, bdmurray: we ought not change anything on the infrastructure side for vivid right now
+
+ 16:35 <pitti> OOI, is there a timeline for migrating to wily or xenial?
+
+ 16:35 <xnox> pitti, hardware EOL?
+
+ 16:36 <slangasek> pitti: I don't have any timeline
+
+ 16:36 <xnox> pitti, cause like armhf abi breaks in qdouble, and c++11 abi are hard to "upgrade" to.
+
+ 16:36 <pitti> xnox: right, but that problem won't become any easier with time passing
+
+ 16:37 <pitti> i. e. with pre-built apps in the store
+
+ 16:37 <xnox> pitti, right, but e.g. hopefully one day all things become arm64, with a hard/good qdouble and c++11 abi.
+
+ 16:37 <pitti> wow
+
+ 16:38 <slangasek> heh
+
+ 16:38 <xnox> (and hopefully we will not have c+=14 abi problem)
+
+ 16:38 <pitti> that sounds like vivid super-LTS
+
+ 16:38 <slangasek> pitti: it is an issue that we should keep pressing on, and not just wait until all of the armhf devices are EOL
+
+ 16:38 <slangasek> I'd suggest ubuntu-phone for that :)
+
+ 16:39 <pitti> well, potentially we could upload the rest of vivid to the overlay PPA, and that then becomes the "full" vivid-touch archive?
+
+ 16:40 <xnox> \o/ problem solved
+
+ 16:40 <pitti> well, not really
+
+ 16:40 <pitti> but we could at least drop vivid from /ubuntu
+
+ 16:40 <slangasek> no
+
+ 16:40 <slangasek> vivid is staying where it is
+
+ 16:40 <pitti> someone still needs to provide updates for the touch-y packages
+
+ 16:41 <slangasek> and this is not the meeting to discuss this :)
+
+ 16:41 <pitti> ok, so I'll keep everything running
+
+ 16:42 <slangasek> pitti: alright, great :)
+
+ 16:42 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

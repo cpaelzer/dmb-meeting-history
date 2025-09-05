@@ -1,0 +1,329 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 28 Feb at 15:29 &mdash; 15:58 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-02-28-15.29.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:33)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/inetutils/+bug/2008789   (slyon, 15:35)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:44)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:50.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:50)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:53.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:53)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:53)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:57.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (96)
+ * sarnold (10)
+ * eslerm (8)
+ * didrocks (8)
+ * joalif (8)
+ * meetingology (2)
+ * slyon (2)
+
+
+
+== Full log ==
+
+
+ 15:29 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:29 <meetingology> Meeting started at 15:29:51 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:29 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:29 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage eslerm
+
+ 15:30 <slyon> (but I think most foundations stuff should be covered, I left comments where needed)
+
+ 15:30 <eslerm> good morning o/
+
+ 15:30 <cpaelzer> hi, giving everyone a minute or two for everyone to see th eping
+
+ 15:30 <cpaelzer> hi eslerm and slyon
+
+ 15:30 <didrocks> hey
+
+ 15:31 <joalif> o/
+
+ 15:33 <cpaelzer> ok, let me get going ...
+
+ 15:33 <cpaelzer> #topic current component mismatches
+
+ 15:33 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:33 <cpaelzer> we are past FF, so hopefully that is the last huge list
+
+ 15:34 <cpaelzer> inetutils is a false positive ont he bug of slyon that tracks those
+
+ 15:34 <cpaelzer> but since it was gone and shows up again, I wonder if we can do something about it
+
+ 15:34 <cpaelzer> or if someone accidentially promoted something wrong
+
+ 15:35 <cpaelzer> perl tihngs are assigned already
+
+ 15:35 <slyon> https://bugs.launchpad.net/ubuntu/+source/inetutils/+bug/2008789
+
+ 15:35 <cpaelzer> uh slyon, in that csae let me remove it from bug 1980663
+
+ 15:35 <sarnold> good morning
+
+ 15:35 <eslerm> o/
+
+ 15:36 <cpaelzer> done
+
+ 15:36 <cpaelzer> now it will find the right bug
+
+ 15:36 <cpaelzer> interesting
+
+ 15:36 <cpaelzer> maybe sarnold or eslerm can clarify https://bugs.launchpad.net/ubuntu/+source/xdp-tools/+bug/2002103
+
+ 15:36 <eslerm> just a note, the component mismatches svg is difficult to read with color blindness (protanopia and deuteranopia)
+
+ 15:36 <cpaelzer> eslerm: patches welcome
+
+ 15:37 <cpaelzer> while you look into that - python-oslo has got bugs filed for their dependencies by jamespage and team - I guess those are under control
+
+ 15:37 <cpaelzer> python-yappi seems not yet covered there
+
+ 15:38 <didrocks> openstack dep?
+
+ 15:38 <cpaelzer> oh crap, I didn't see ndctl yet
+
+ 15:38 <cpaelzer> didrocks: yes yappi seems openstack (from python-oslo)
+
+ 15:38 <sarnold> cpaelzer: xdp-tools looks ready to migrate to main
+
+ 15:38 <cpaelzer> thanks sarnold
+
+ 15:40 <cpaelzer> I filed https://bugs.launchpad.net/ubuntu/+source/libtracefs/+bug/2008799 for ndctl
+
+ 15:40 <sarnold> (obligatory thinking aloud that a tracking process like the kernel team sru workflow with entries for each step might be easier to read, eg https://bugs.launchpad.net/kernel-sru-workflow/+bug/1968954  :)
+
+ 15:41 <cpaelzer> indeed, worth a look
+
+ 15:41 <cpaelzer> could be complex though as this will transition differently per bug task
+
+ 15:41 <cpaelzer> if a case has multiple packages affected, they will be in different states
+
+ 15:43 <cpaelzer> I'll promote xdp-tools after the meeting
+
+ 15:43 <sarnold> man, inetutils .. that's a blast from the past. oof.
+
+ 15:43 <cpaelzer> indeed
+
+ 15:43 <cpaelzer> ok, all in mismatches have open cases now
+
+ 15:43 <cpaelzer> none forgotten
+
+ 15:43 <cpaelzer> next section of the meeting
+
+ 15:43 <cpaelzer> #topic New MIRs
+
+ 15:44 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:44 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:44 <cpaelzer> oh wow
+
+ 15:44 <cpaelzer> 5
+
+ 15:44 <cpaelzer> I could take the perl ones
+
+ 15:44 <cpaelzer> they are usually rather mechanical, so I can better do them in between meetings
+
+ 15:44 <didrocks> I can take 1 or 2, but it will be for next pulse (already full for this one)
+
+ 15:44 <joalif> some are false positives i think
+
+ 15:44 <cpaelzer> looking for reviewers of nullboot and mini-iso-tools
+
+ 15:44 <sarnold> nullboot is likely in the wrong spot in the flowchart
+
+ 15:45 <cpaelzer> joalif: which ones do you tihnk are false positives?
+
+ 15:45 <joalif> nullboot
+
+ 15:46 <joalif> i had done the review of it
+
+ 15:46 <cpaelzer> oh yeah that just ended in an odd state
+
+ 15:46 <cpaelzer> it is acked
+
+ 15:46 <cpaelzer> and not in mismatches
+
+ 15:46 <didrocks> yes
+
+ 15:47 <cpaelzer> joalif: was yours an ack as well?
+
+ 15:47 <cpaelzer> reading ...
+
+ 15:47 <cpaelzer> yep
+
+ 15:47 <joalif> yes iirc
+
+ 15:47 <joalif> was waiting for sec review
+
+ 15:47 <cpaelzer> thanks, status updated
+
+ 15:48 <didrocks> (it would have been good to have an update on the recommended todo though)
+
+ 15:48 <eslerm> nullboot has security's ack
+
+ 15:48 <cpaelzer> ack didrocks, I asked for it
+
+ 15:49 <cpaelzer> ok in that case mini-iso-tools to grab
+
+ 15:49 <didrocks> if this can wait early next pulse, I’m happy to grab it
+
+ 15:49 <cpaelzer> maybe license-perl at lower urgency for didrocks then?
+
+ 15:49 <cpaelzer> those are usually not as pushy
+
+ 15:49 <didrocks> as you prefer :)
+
+ 15:50 <cpaelzer> hehe
+
+ 15:50 <cpaelzer> joalif: would you be up to have a look at the mini-iso-tools ?
+
+ 15:50 <joalif> sure
+
+ 15:50 <cpaelzer> thanks
+
+ 15:50 <cpaelzer> thereby all new cases are assigned
+
+ 15:50 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:50 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:50 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:51 <cpaelzer> inetutils isn't ready yet
+
+ 15:51 <cpaelzer> bug 2003549 waits for an FFE approval
+
+ 15:51 <cpaelzer> other than that is mostly ready as prepared by athos
+
+ 15:52 <cpaelzer> bug 2004516 waits on things and was assigned someone to work on (no action from us)
+
+ 15:52 <cpaelzer> bug 1997560 also went back and is now assigne to desktop to resolve
+
+ 15:52 <cpaelzer> and 2003272 is back on till
+
+ 15:52 <cpaelzer> ok all in incomplete have an owner
+
+ 15:53 <cpaelzer> good for now I'd think
+
+ 15:53 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:53 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:53 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:53 <cpaelzer> Internal link
+
+ 15:53 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:53 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:53 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:53 <cpaelzer> thank you @ extended security team for all the completions recently
+
+ 15:53 <cpaelzer> from my teams POV puma is the only one not yet assigned but rather urgent
+
+ 15:54 <cpaelzer> I see the face of alexm on the ticket
+
+ 15:54 <cpaelzer> but not "in progress"
+
+ 15:54 <cpaelzer> does this fit together sarnold eslerm ?
+
+ 15:54 <eslerm> I'm working on pcs this week and puma is assigned, should be complete with time to FFe
+
+ 15:54 <eslerm> if puma needs extra help I can assist
+
+ 15:55 <cpaelzer> puma - as you know - is the last bit of a big change
+
+ 15:55 <cpaelzer> hence we'd appreaciate to not come uin much later
+
+ 15:55 <cpaelzer> since we will make pacemaker switch crmsh -> pcsd
+
+ 15:55 <sarnold> aye, unfortunately amurray is also our primary snapd contact, another high-priority and high-importance demand on our resources; it might make sense to ask eslerm to pick it up if amurray hasn't started yet
+
+ 15:55 <cpaelzer> not rushing you but like until today in a week as the latest ?
+
+ 15:55 <cpaelzer> ok
+
+ 15:56 <sarnold> we can discuss with amurray when his day starts
+
+ 15:56 <cpaelzer> you can internally check if there has been progress made, I'd not want to be the reason to step on each others toes
+
+ 15:56 <cpaelzer> thanks sarnold
+
+ 15:56 <cpaelzer> btw I had to smile on "with time to FFe" eslerm, as that would be -5 back in time from now on
+
+ 15:56 <sarnold> yeah :/ trying to fast-context-switch stuff in progress is definintely an exhausting step :)
+
+ 15:56 <cpaelzer> indeed
+
+ 15:57 <cpaelzer> but time is almost up and the rest looks good
+
+ 15:57 <cpaelzer> #topic Any other business?
+
+ 15:57 <cpaelzer> not from me
+
+ 15:57 <eslerm> should be doable to take puma, but need to run past my workload with aburrage
+
+ 15:57 <didrocks> nothing from me
+
+ 15:57 <sarnold> heh, aburrage is out all this week. :/ anyway, I'll talk with amurray in a few hours
+
+ 15:57 <joalif> nothing
+
+ 15:57 <sarnold> nothing from me
+
+ 15:57 <eslerm> none from me
+
+ 15:58 <cpaelzer> being out means he won't say no :-)
+
+ 15:58 <cpaelzer> thank you all!
+
+ 15:58 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,350 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 02 Mar at 16:00 &mdash; 16:42 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-03-02-16.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:10.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:10)
+
+=== proposed-migration ===
+
+Discussion started by juliank at 16:16.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:16)
+
+=== AOB ===
+
+Discussion started by juliank at 16:35.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (52)
+ * juliank (30)
+ * liushuyu (10)
+ * schopin (9)
+ * dbungert (7)
+ * zhsj (6)
+ * slyon (5)
+ * bdrung (4)
+ * waveform (3)
+ * bdmurray (3)
+ * enr0n (3)
+ * adrien (3)
+ * meetingology (2)
+ * ginggs (2)
+ * dviererbe (2)
+ * ogayot (2)
+ * danilogondolfo (1)
+ * xypron (1)
+ * mclemenceau (1)
+
+
+
+== Full log ==
+
+
+ 16:00 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:00 <meetingology> Meeting started at 16:00:47 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:00 <waveform> \o
+
+ 16:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:00 <zhsj> o/
+
+ 16:01 <liushuyu> o/
+
+ 16:01 <juliank> The weekly status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-02-march-2023/34287
+
+ 16:01 <ginggs> o/
+
+ 16:01 <slyon> o/
+
+ 16:01 <juliank> I forgot I had a meeting the past 30 minutes so mine isn't yet :(
+
+ 16:02 * bdmurray just posted his
+
+ 16:02 <dviererbe> Hello o/
+
+ 16:02 <ogayot> o/
+
+ 16:03 * juliank has posted
+
+ 16:04 <vorlon> hmm jawn-smith not here to ask about libarchive "very stuck"
+
+ 16:04 <schopin> vorlon: I picked it up
+
+ 16:05 <schopin> should be unstuck once reprepro is published (and triggered correctly)
+
+ 16:06 <vorlon> ok
+
+ 16:08 <dbungert> audio troubles, brb
+
+ 16:09 <liushuyu> do we have any proposed migrations to hand out this week?
+
+ 16:09 <juliank> later later
+
+ 16:10 <juliank> but I take it we're all done reading now
+
+ 16:10 <juliank> #topic Release incoming bugs
+
+ 16:10 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 16:10 <juliank> bug 2008279
+
+ 16:10 <juliank> seems to be with desktop?
+
+ 16:11 <juliank> I left a comment asking
+
+ 16:11 <juliank> bug 2008789
+
+ 16:12 <juliank> there's a jira issue for this
+
+ 16:13 <juliank> I'm gonna remove the tag because it has an issue to track it internally
+
+ 16:15 <juliank> rls-kk is empty
+
+ 16:15 <juliank> rls-jj has bug 1999345 only which is unchanged status (still w/ security)
+
+ 16:16 <juliank> #topic proposed-migration
+
+ 16:16 <juliank> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:17 <juliank> libarchive I understand is going soon
+
+ 16:17 <bdrung> I'll take tzdata (since I caused it and know exactly what to do)
+
+ 16:17 <vorlon> schopin: you said libarchive should pass with a retry once "reprepro is published" which it appears to be, so I guess this is in flight and you'll resolve it soon?
+
+ 16:18 <schopin> vorlon: yes.
+
+ 16:18 <juliank> licensecheck has bug 2003083 as excuse
+
+ 16:18 <waveform> sbuild's still with me
+
+ 16:18 <vorlon> licensecheck has MIRs that were rejected
+
+ 16:18 <vorlon> I don't remember who was working on that one, liushuyu ?
+
+ 16:18 <vorlon> no, that was devscripts
+
+ 16:19 <vorlon> so I'm not sure MIRs were rejected for licensecheck at all, sorry
+
+ 16:19 <liushuyu> I was working on libdigest-md5-file-perl and libswitch-perl for devscripts
+
+ 16:19 <juliank> was adrien working on this?
+
+ 16:19 <vorlon> yes, adrien did the MIR in https://bugs.launchpad.net/ubuntu/+source/libstring-license-perl/+bug/2003083 so this is in progress/blocked by MIR team
+
+ 16:20 <vorlon> sbuild: waveform: are you ok to continue on this one?
+
+ 16:20 <waveform> yes
+
+ 16:21 <vorlon> schopin: are you still following glibc?
+
+ 16:21 <vorlon> also dammit I just now realized I put my weekly status update in the old discourse post *again* because the link to the old post in the content is more obvious in the emails than the link to the current post
+
+ 16:21 <schopin> vorlon: yes. I have lilypond, aad-auth and python2.7 that are new failures.
+
+ 16:22 <schopin> The rest can be ignored for various reasons.
+
+ 16:23 <vorlon> I see python2.7 blocking, that's an oops from me, there was a badtest hint that I dropped prematurely
+
+ 16:23 <schopin> great, one down two to go.
+
+ 16:24 <vorlon> devscripts: *this* is the one with the rejected MIRs
+
+ 16:24 <vorlon> so it's assigned, but depends on upstream Debian discussions and isn't critical for lunar
+
+ 16:24 <bdrung> I volunteer for reviewing merge request for devscripts in Debian, but someone else should provide the patches
+
+ 16:24 <vorlon> libio-socket-ssl-perl: adrien: can you take this?
+
+ 16:24 <liushuyu> I can work on devscripts, I have the patches ready
+
+ 16:25 <vorlon> liushuyu: ack thanks
+
+ 16:25 <vorlon> tcl8.6: just needs hinted around a blacklisted autopkgtest, I'll take this
+
+ 16:25 <liushuyu> ... however I don't have an account on Debian Salsa instance
+
+ 16:25 <juliank> make one :)
+
+ 16:25 <liushuyu> I can't open an MR on it
+
+ 16:25 <vorlon> boost1.74: bdmurray: can you work on this?
+
+ 16:25 <vorlon> liushuyu: it's an awkward signup process but you should get one
+
+ 16:25 <bdrung> liushuyu, poke me once you have the MR submitted
+
+ 16:26 <vorlon> lsb: dbungert?
+
+ 16:26 <bdmurray> vorlon: I'm heading out on holiday tomorrow until the 10th-ish
+
+ 16:26 <slyon> liushuyu: otherwise you could also create a merge-proposal on launchpad against devscripts
+
+ 16:26 <vorlon> bdmurray: ack
+
+ 16:26 <dbungert> lsb is in progress, much of it is complete with retests, dpdk has a test in the queue
+
+ 16:26 <slyon> so we can at least land the fixes in Ubuntu. Going through Debian/upstream would be better, though
+
+ 16:26 <zhsj> liushuyu: just poke admin on #salsa @ oftc
+
+ 16:26 <dbungert> cyrus-impad test look like nonsense, I was condering badtest
+
+ 16:26 <enr0n> vorlon: I had libio-socket-ssl-perl last week. Just waiting on test retries.
+
+ 16:27 <vorlon> ok
+
+ 16:27 <liushuyu> juliank: The new accont creation is restricted currently. I haven't get my account approved yet
+
+ 16:27 <dbungert> danilogondolfo: did you look at lsb vs pcs or lsb vs rspamd?
+
+ 16:27 <vorlon> adrien: can you take boost1.74 then?
+
+ 16:28 <adrien> I can look at that
+
+ 16:28 <adrien> that scares me :D
+
+ 16:28 <danilogondolfo> dbungert, I did, they pass locally. I saw they were retried and failed again. I need to understand why...
+
+ 16:28 <vorlon> there's very little left to chase on boost1.74, I did most of it this week already
+
+ 16:28 <vorlon> so waveform had lsb-release-minimal but now we have lsb
+
+ 16:29 <schopin> lsb was with danilogondolfo
+
+ 16:29 <vorlon> ok
+
+ 16:29 <vorlon> cd-boot-images is blocked by kernels
+
+ 16:29 <juliank> I think it's ready I'm confirming with xnox
+
+ 16:30 <dbungert> lsb was split between danilogondolfo and myself
+
+ 16:30 <vorlon> numpy: dbungert can you take this one?
+
+ 16:30 <juliank> (we released shim already)
+
+ 16:30 <dbungert> vorlon: ack for numpy
+
+ 16:30 <vorlon> glibc blocking audit, might just need a retry
+
+ 16:30 <vorlon> audit: ginggs?
+
+ 16:31 <ginggs> sure
+
+ 16:31 <vorlon> lintian: dviererbe?
+
+ 16:31 <vorlon> simplejson: xypron?
+
+ 16:31 <xypron> ok
+
+ 16:31 <liushuyu> zhsj: will do
+
+ 16:31 <dviererbe> ok
+
+ 16:31 <vorlon> libsereal-decoder-perl: juliank?
+
+ 16:31 <liushuyu> bdrung: understood
+
+ 16:32 <juliank> ack
+
+ 16:32 <vorlon> sphinx/librsvg: slyon?
+
+ 16:32 <slyon> ok
+
+ 16:32 <vorlon> python3.11: enr0n?
+
+ 16:32 <enr0n> vorlon: ack
+
+ 16:32 <vorlon> xz-utils: ogayot?
+
+ 16:33 <vorlon> libzstd: liushuyu?
+
+ 16:33 <ogayot> vorlon: ack, I might no be able to get to it before next meeting since I'm off next week though
+
+ 16:33 <vorlon> publicsuffix: I'll take this
+
+ 16:33 <vorlon> ogayot: ok
+
+ 16:33 <liushuyu> vorlon: I can take libzstd
+
+ 16:33 <vorlon> liushuyu: thanks
+
+ 16:33 <vorlon> who's not here that should take some
+
+ 16:33 <vorlon> binutils: mwhudson
+
+ 16:33 <vorlon> kmod: vpa1977
+
+ 16:34 <vorlon> python3-stdlib-extensions: zhsj
+
+ 16:34 <zhsj> i merged kmod, so maybe me..
+
+ 16:34 <vorlon> oh
+
+ 16:34 <vorlon> yes, please take kmod and ignore python3-stdlib-extensions
+
+ 16:34 <vorlon> juliank: back to you
+
+ 16:34 <schopin> should vpa1977 take the latter one then?
+
+ 16:35 <vorlon> yes
+
+ 16:35 <juliank> #topic AOB
+
+ 16:35 <juliank> I added a task for mclemenceau to document how to optimally discover proposed-migration items in the jira workflow
+
+ 16:35 <bdmurray> I'm going on holiday until what is effectively the 13th starting tomorrow
+
+ 16:36 <slyon> I'm out tomorrow & monday
+
+ 16:36 <schopin> I'm out on Monday.
+
+ 16:36 <adrien> I'm out on tomorrow
+
+ 16:36 <juliank> Debian hard freeze is next week (the 12th), if you have stuff to upstream hurry up (and only small targeted fixes).
+
+ 16:36 <bdrung> I'll be off tomorrow and there is a local public holiday next Wednesday
+
+ 16:36 <mclemenceau> juliank: Ack ;)
+
+ 16:37 <zhsj> juliank: it's today, 10days migration :)
+
+ 16:37 <enr0n> I have a local public holiday next Tuesday
+
+ 16:37 <dbungert> what do we think about badtesting cyrus-imapd?  It looks like it has been in a bad state for some time, and I'm unsure why we un-badtested it.
+
+ 16:37 <juliank> hmm
+
+ 16:38 <vorlon> dbungert: it hasn't had a badtest hint since Apr 2022 and then only on ppc64el
+
+ 16:38 <vorlon> if it's flaky, a baseline retest (retry-autopkgtest-regressions --no-proposed) is likely better than a badtest
+
+ 16:38 <zhsj> it's timed out?
+
+ 16:39 <zhsj> maybe big package?
+
+ 16:39 <vorlon> sometimes it takes a half hour, sometimes it takes 3 hours
+
+ 16:40 <vorlon> that seems worth investigating before we throw it into long_tests
+
+ 16:42 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

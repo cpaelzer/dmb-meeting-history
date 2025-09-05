@@ -1,0 +1,421 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 06 Jun at 15:00 &mdash; 16:01 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2024/ubuntu-meeting.2024-06-06-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:00.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2024-06-06/   (juliank, 15:00)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:18.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-oo-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:18)
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:30)
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:44)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:46.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:46)
+
+=== AOB ===
+
+Discussion started by juliank at 15:59.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (62)
+ * vorlon (31)
+ * schopin (17)
+ * bdmurray (15)
+ * bdrung (14)
+ * cpete (5)
+ * adrien (4)
+ * dbungert (4)
+ * zhsj (3)
+ * slyon (3)
+ * meetingology (2)
+ * ginggs (2)
+ * Skia (2)
+ * xypron (1)
+ * liushuyu (1)
+ * ogayot (1)
+ * pushkarnk (1)
+ * mkukri (1)
+ * mclemenceau (1)
+ * ravikant_ (1)
+ * mateus-morais (1)
+ * waveform_ (1)
+ * danilogondolfo (1)
+ * tsimonq2 (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:03 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <juliank> #topic Lightning rounds
+
+ 15:00 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2024-06-06/
+
+ 15:00 <zhsj> o/
+
+ 15:00 <ginggs> o/
+
+ 15:00 <Skia> o/
+
+ 15:00 <bdrung> \o
+
+ 15:00 <xypron> o/
+
+ 15:00 <liushuyu> o/
+
+ 15:01 <adrien> \o
+
+ 15:01 <slyon> o/
+
+ 15:01 <ogayot> o/
+
+ 15:01 <pushkarnk> o/
+
+ 15:01 <mkukri> o/
+
+ 15:01 <cpete> o/
+
+ 15:01 <mclemenceau> o/
+
+ 15:02 <ravikant_> o/
+
+ 15:02 <bdmurray> o/
+
+ 15:02 <mateus-morais> o/
+
+ 15:03 <vorlon> o\
+
+ 15:10 <bdrung> reading cpete's status, i got reminded to look at the apport PR again
+
+ 15:11 <bdmurray> cpete: I might be of some assistance with an SRU test plan for apport.
+
+ 15:11 <cpete> bdrung: thank you
+
+ 15:12 <bdrung> we need to sru that and also the fix for bug #2067120
+
+ 15:12 <bdmurray> waveform_: will there be a snap update of rpi-imager?
+
+ 15:12 <cpete> bdmurray: that would be great, thanks. I plan to start that next pulse.
+
+ 15:12 <waveform_> yes, but while the changes are merged upstream they're not released yet (or weren't when I checked a few days ago)
+
+ 15:12 <bdmurray> bdrung: What about the /usr/lib sandbox change?
+
+ 15:13 <bdmurray> cpete: I'm out part of next pulse.
+
+ 15:14 <bdmurray> bdrung: https://bugs.launchpad.net/ubuntu/+source/apport/+bug/2067120/comments/7 for clarity
+
+ 15:14 <bdrung> bdmurray, i need to incorporate your fix (and hopefully add a test case). i'll have an apport session with schopin tomorrow where we can work on that.
+
+ 15:14 <cpete> bdmurray: I'll run my ideas past you sooner then
+
+ 15:16 <bdmurray> Skia: Is there any kind of testing of the base images that can be done in jenkins / the upgrade testing?
+
+ 15:17 <bdmurray> dbungert: "RESULTS WILL VARY." I like your certainty
+
+ 15:18 <juliank> Can we continue, we have a couple of bugs?
+
+ 15:18 <juliank> #topic Release incoming bugs
+
+ 15:18 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-oo-incoming-bug-tasks.html#foundations-bugs
+
+ 15:18 <juliank> bug 1969394
+
+ 15:19 <juliank> This is a desktop+design topic I believe
+
+ 15:19 <juliank> Or wellr seb believes
+
+ 15:20 <vorlon> agreed
+
+ 15:20 <Skia> bdmurray: difficult to say. In that case, the image were booting, but the system just was partially broken afterwards. In any case, the tests were red, meaning we had a look at them, and fixed the issue. The answer might just be that I need to level up in debugging those tests :-)
+
+ 15:21 <juliank> bug 2063467
+
+ 15:21 <juliank> This is a simple quality of life improvement I believe
+
+ 15:21 <vorlon> I'm going to argue that's pretty low priority
+
+ 15:22 <juliank> We could mark just the services that would need restarting that we didn't
+
+ 15:22 <vorlon> compared to all the other things wrong with needrestart :)
+
+ 15:22 <vorlon> and thus shouldn't be taken for foundations
+
+ 15:22 <schopin> +1 on vorlon's remarks :)
+
+ 15:22 <juliank> Untagging
+
+ 15:22 <juliank> bug 2067350
+
+ 15:24 <schopin> doko has been OOO so I think I'll JFDI in glibc in my upcoming merge.
+
+ 15:24 * bdmurray trembles
+
+ 15:24 <juliank> I'll assign it to you and tag it todo
+
+ 15:24 <schopin> bdmurray: don't worry, I'll warm up the queues first with an openssl sponsoring.
+
+ 15:24 <bdmurray> so winter isn't coming? ;-)
+
+ 15:24 <juliank> bug 2015538
+
+ 15:24 <juliank> this one again
+
+ 15:25 <slyon> hehe, maybe. someday
+
+ 15:25 <vorlon> not sure why, process-wise, an MIR bug should be in the -incoming queue
+
+ 15:25 <slyon> It needs somebody doing the (upstream) work
+
+ 15:26 <schopin> vorlon: there's something that needs implementing in there, I believe.
+
+ 15:26 <juliank> vorlon: The queue part is removing the dbus-run-session dependency from gdm, basically
+
+ 15:27 <juliank> There is https://github.com/bus1/dbus-broker/pull/321
+
+ 15:27 <juliank> Which is written in Rust
+
+ 15:27 <juliank> So bluca doesn't want it :D
+
+ 15:28 <juliank> But I guess we can move this to rls-pp-incoming
+
+ 15:28 <juliank> And hope the solution is ready then
+
+ 15:29 <juliank> Well no objections, so moving it
+
+ 15:29 <bdmurray> petable porcupine
+
+ 15:29 <dbungert> pointed panther
+
+ 15:30 <vorlon> postulating pika
+
+ 15:30 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 15:30 <juliank> bug 2066995
+
+ 15:30 <vorlon> please? :)
+
+ 15:31 <bdrung> assign that one to vorlon? ;)
+
+ 15:31 <vorlon> D:
+
+ 15:31 <bdrung> we need to find the root cause.
+
+ 15:31 <schopin> I'm wondering if that's not a whoopsie problem.
+
+ 15:32 <juliank> So this only affects vorlon so far and he's the only one who can investigate? :D
+
+ 15:32 <vorlon> I assume this is only because none of you are having crashes
+
+ 15:32 <juliank> And why don't we log the errno for "could not be opened"
+
+ 15:32 <schopin> Well, the looping part is all vorlon, but the failing to deal with Python crashes I also observed.
+
+ 15:32 <juliank> I don't have apport but systemd-coredump
+
+ 15:32 <juliank> :D
+
+ 15:32 <schopin> not a coredump.
+
+ 15:33 <bdmurray> cupsd and some bluetooth thing crash for me regularly
+
+ 15:33 <bdrung> juliank, you can have both now: systemd-coredump and apport
+
+ 15:33 <juliank> I guess that's true
+
+ 15:33 <vorlon> bdmurray: this is probably python specific
+
+ 15:33 <juliank> I need to set it up, bdrung
+
+ 15:33 <bdmurray> vorlon: you didn't say that in your original statement
+
+ 15:33 <juliank> Ah ok I just had no apport-gtk
+
+ 15:33 <vorlon> bdmurray: the example crash is a python thingy
+
+ 15:34 <vorlon> and the only crashes I've had here on noble have been python
+
+ 15:34 <juliank> Really need to have an "investigate bug" spike
+
+ 15:34 <vorlon> maybe y'all should just run 'grep-merges' :P
+
+ 15:34 <vorlon> merges.ubuntu.com will helpfully make this crash
+
+ 15:35 <vorlon> and then you can see if it's reproducible!
+
+ 15:35 <juliank> I just crashed apport by inserting a raise ValueError
+
+ 15:36 <juliank> Well I'll move on
+
+ 15:37 <juliank> bug 2067622
+
+ 15:37 <bdmurray> oof
+
+ 15:37 <juliank> That seems straightforward, no, ubuntu-release-upgrader has a flag to make it protect some packages
+
+ 15:38 <juliank> Broken cryptsetup-initramfs:amd64 Depends on cryptsetup:amd64 < 2:2.7.0-1ubuntu4 @ii pgP > (>= 2:2.7.0-1ubuntu4)
+
+ 15:38 <juliank> It doesn't help that we break users by purging all packages during the upgrade
+
+ 15:39 <juliank> Assigning to Nick, targetting, and tagging
+
+ 15:39 <juliank> bug 2067916
+
+ 15:39 <schopin> Ah. Yes.
+
+ 15:40 <schopin> Just wanted to discuss the severity of this.
+
+ 15:40 <juliank> If it crashes it should get fixed
+
+ 15:40 <juliank> :D
+
+ 15:40 <bdmurray> but how soon?
+
+ 15:40 <juliank> ASAR
+
+ 15:40 <schopin> Not actually sure it crashes?
+
+ 15:40 <juliank> :D
+
+ 15:41 <juliank> If the data is just garbled but not crashing that may be um not critical
+
+ 15:41 <schopin> I mean, the crash would be for last(1) and a few other tools.
+
+ 15:41 <schopin> And only if they're upgrading.
+
+ 15:42 <juliank> But yeah medium seems fine
+
+ 15:42 <vorlon> things crashing on malformed utmp would almost certainly be security issues that should have been fixed 20 years ago
+
+ 15:42 <juliank> I guess they are not setuid binaries that crash
+
+ 15:43 <juliank> Anyway I'll go tag this and assign it to schopin
+
+ 15:43 <schopin> ACK
+
+ 15:43 <schopin> to the backlog it goes :)
+
+ 15:43 <juliank> OK rls-mm just has the usual 2 desktop bugs masquerading in foundations queue :D
+
+ 15:44 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:44 <juliank> bug 530252
+
+ 15:44 <juliank> This we probably should just untag, it should land via patch pilot
+
+ 15:45 <juliank> Oh I think they directly installed to a luks partition, rather than use lvm
+
+ 15:45 <schopin> Oh wow, 6 digits!
+
+ 15:45 <bdrung> schopin, 5 digits is needed for a "wow"
+
+ 15:45 <vorlon> definitely shouldn't be accepted via the incoming queue, based solely on the bug number :)(
+
+ 15:46 <juliank> Ok ff is mpty too
+
+ 15:46 <juliank> #topic Team proposed-migration report
+
+ 15:46 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:46 <juliank> vorlon:
+
+ 15:47 <vorlon> fwupd-efi is carry-over, sits with me and juliank
+
+ 15:47 <bdrung> regarding dracut blocking systemd 256~rc3-5ubuntu1: I need to merge dracut 102 to fix that.
+
+ 15:48 <vorlon> pyopenssl still stuck - adrien this was assigned to you, and I think you're still working on it wrt python-oauth2client and its revdeps?
+
+ 15:51 <vorlon> gcc-13 I see as 'candidate' but it hasn't moved. bdrung can you take this? means digging into update_output.txt
+
+ 15:51 <bdrung> vorlon, i still have dracut vs systemd
+
+ 15:51 <vorlon> dbungert: ^ can you take this?
+
+ 15:52 <vorlon> cpete: you still have libsub-override-perl yes? (MIR)
+
+ 15:52 <adrien> vorlon: yes, still on it; there's a few packages left
+
+ 15:52 <cpete> vorlon: yes
+
+ 15:52 <dbungert> ack for dracut vs systemd
+
+ 15:52 <vorlon> juliank: apt and cron, I guess this is with you
+
+ 15:52 <vorlon> ?
+
+ 15:52 <vorlon> dbungert: sorry, I meant can you take gcc-13 - leaving dracut v systemd with bdrung
+
+ 15:53 <dbungert> ah, sorry
+
+ 15:53 <dbungert> ack for gcc-13
+
+ 15:53 <juliank> vorlon: Well yes, that should sort itself out with the next apt upload
+
+ 15:53 <vorlon> git: danilogondolfo?
+
+ 15:53 <danilogondolfo> ack
+
+ 15:53 <adrien> vorlon: cinder, python-googleapi done; pydrive sorted out (removal); beancount, fence-agents, python-certbot-dns-google: need to be worked upon; pydrive2: not obvious how to deal with it (assess whether we can remove stuff from python-oauth2client and vendor?)
+
+ 15:54 <vorlon> systemd: enr0n uploaded but he's out this week. ginggs?
+
+ 15:54 <ginggs> ack
+
+ 15:54 <vorlon> and then that's the list
+
+ 15:55 <bdrung> we have fakeroot 1.35-1 that FTBFS
+
+ 15:55 <adrien> well, I have at least one revdep of python-googleapi that will need attention...
+
+ 15:55 <schopin> all arches or armhf?
+
+ 15:55 <schopin> oh, all arches. Not t64, good :)
+
+ 15:55 <bdrung> fakeroot ftbfs on all archs (except riscv64)
+
+ 15:56 <bdrung> so who want to take it?
+
+ 15:56 <bdrung> or vorlon to pick a volunteer
+
+ 15:56 <zhsj> i can take
+
+ 15:56 <vorlon> zhsj: thanks
+
+ 15:56 <zhsj> though not expect a easy fix
+
+ 15:59 <vorlon> juliank:
+
+ 15:59 <juliank> #topic AOB
+
+ 16:00 <tsimonq2> I took https://launchpad.net/ubuntu/+source/debhelper/13.15.3ubuntu1 and https://launchpad.net/ubuntu/+source/bash/5.2.21-2.1ubuntu1 and will follow up on p-m - if these uploads break anything please feel free to ping me.
+
+ 16:01 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

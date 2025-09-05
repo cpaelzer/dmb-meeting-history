@@ -1,0 +1,257 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 16:02:42 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-11-23-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Blueprints
+
+ *AOB
+
+
+
+Meeting ended at 16:21:37 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (36)
+ * stgraber (25)
+ * doko (11)
+ * barry (8)
+ * ev (7)
+ * jhunt_ (6)
+ * ubottu (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:02:42 <cjwatson> #startmeeting
+
+ 16:02:42 <meetingology> Meeting started Wed Nov 23 16:02:42 2011 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:02:42 <meetingology> 
+
+ 16:02:42 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:03:02 <cjwatson> [TOPIC] Lightning round
+
+ 16:03:08 <cjwatson> $ echo $(shuf -e cjwatson barry doko stgraber jhunt ev)
+
+ 16:03:08 <cjwatson> doko ev cjwatson jhunt barry stgraber
+
+ 16:04:47 <doko> - binutils 2.22 release
+
+ 16:04:47 <doko> - GCC updates
+
+ 16:04:47 <doko> - eglibc 2.15: new merge from the trunk, tracked down bug #893605, no solution y
+
+ 16:04:47 <doko> et
+
+ 16:04:47 <doko> - merged and tested the glibc sf/hf linker patch, ldd not yet working
+
+ 16:04:47 <doko> - re-enabled previously disabled ruby1.9.1 packages for main
+
+ 16:04:49 <ubottu> Launchpad bug 893605 in eglibc (Ubuntu) "crashes with glibc-2.14/2.15 on dlopen (seen with kvm and gnucash)" [High,Confirmed] https://launchpad.net/bugs/893605
+
+ 16:04:49 <doko> - some merges
+
+ 16:04:55 <doko> (done)
+
+ 16:05:16 <ev> Assigned to the DX team for this week; building a Jenkins infrastructure around Autopilot and creating tools for safely constructing Autopilot tests without hosing the developer's local configuration.
+
+ 16:05:16 <ev> Back on the crash database come this weekend
+
+ 16:05:16 <ev> (done)
+
+ 16:05:59 <cjwatson> Mostly finished Perl 5.14 transition.  Worked on a few others (ocaml, imagemagick, icu), cleaned up build failures, etc.
+
+ 16:06:02 <cjwatson> Finished drafting my specs.
+
+ 16:06:05 <cjwatson> Looked into the situation with .la files.  I think it would be worth making a bit more of an effort to kill off the ones in Ubuntu which are harmful, but haven't published a report yet.
+
+ 16:06:09 <cjwatson> Experimented with doing a multiarch i386->amd64 crossgrade.  I've uploaded several of the necessary patches and the rest are awaiting upload by others; after that I'll have another go ...
+
+ 16:06:13 <cjwatson> Fixed debootstrap confusion when it tries to install a package with two versions in the Packages file.
+
+ 16:06:16 <cjwatson> Fixed a couple of QA-reported bugs in daily builds: bug 893014, bug 893060, bug 892903.
+
+ 16:06:19 <cjwatson> Discussed server installer plans with Daviey.
+
+ 16:06:19 <ubottu> Launchpad bug 893014 in user-setup (Ubuntu Precise) "'user-setup-udeb' failed with error code 1 on alternate when 'Encrypt your home directory' is selected" [High,Fix released] https://launchpad.net/bugs/893014
+
+ 16:06:21 <ubottu> Launchpad bug 893060 in casper (Ubuntu Precise) "on live session ubiquity launcher asks for password" [Undecided,Fix released] https://launchpad.net/bugs/893060
+
+ 16:06:21 <cjwatson> Some archive infrastructure work: moved a few jobs from ftpmaster to people, arranged for them to attempt to run earlier in the hour and retry later if need be, and filed an RT to allow the next similar chunk of work.
+
+ 16:06:22 <ubottu> Launchpad bug 892903 in partman-crypto (Ubuntu) "encrypted LVM install fails with "unsafe swap space detected"" [High,Fix released] https://launchpad.net/bugs/892903
+
+ 16:06:25 <cjwatson> (done)
+
+ 16:06:41 <jhunt_> Similar to last week: More blueprint work. Raft of Upstart Cookbook
+
+ 16:06:41 <jhunt_> updates (not yet published). Lots of work on Upstart Job Logging -
+
+ 16:06:41 <jhunt_> resolved the failing test issue and reworked the tests for the new
+
+ 16:06:41 <jhunt_> architecture. Currently finishing the required changes to the inotify
+
+ 16:06:41 <jhunt_> handling in the test code.
+
+ 16:06:44 <jhunt_> 𝅘𝅥𝅲
+
+ 16:07:12 <barry> much work on dbus-python for python 3.  branch compiles for both 2.7 and 3.2.  still working on one pesky test failure under python 3, but at least it doesn't crash any more.  will be blogging about it today, and following up on the python-porting mailing list.  also did: consulted for a while w/launchpad guys about a mysterious mailman outage; updated claws plugins; finished up blueprints.  out tomorrow and friday for usa holiday.
+
+ 16:07:13 <barry> done.
+
+ 16:07:34 <stgraber> - Testing tracker
+
+ 16:07:34 <stgraber> - http://91.189.93.73 is usually up to date with what's in the branch
+
+ 16:07:34 <stgraber> - Got most of the UI working, you can now file testing results on it!
+
+ 16:07:34 <stgraber> - Spent most of Monday working on migration scripts and SSO integration to match the 30k users in the current DB with their LP accounts
+
+ 16:07:37 <stgraber> - Getting ready to use the test instance for alpha-1 testing
+
+ 16:07:39 <stgraber> - More UI improvements
+
+ 16:07:42 <stgraber> - Working build notifications
+
+ 16:07:44 <stgraber> - Working subscriptions/unsubscriptions, still need to work on UI a bit
+
+ 16:07:47 <stgraber> - Worked on bug 823366, still need to wait for some feedback from Tom Ellis and try to reproduce slangasek's issue in VM, then upload and SRU time!
+
+ 16:07:49 <ubottu> Launchpad bug 823366 in ifenslave-2.6 (Ubuntu) "bond_primary is ignored in /etc/network/interfaces" [Undecided,Incomplete] https://launchpad.net/bugs/823366
+
+ 16:07:50 <stgraber> - TODO
+
+ 16:07:52 <stgraber> - Get the ISO tracker ready for alpha-1
+
+ 16:07:55 <stgraber> - Setup ISO tracker for Daily testing and get the CD build machine to push the new builds automatically
+
+ 16:07:58 <stgraber> - Look at the new ifupdown in Debian (beta2), isolate the fix for bug 876829 and SRU to Oneiric
+
+ 16:07:59 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Triaged] https://launchpad.net/bugs/876829
+
+ 16:08:01 <stgraber> - Still need to get my iSCSI test setup online again and then look at the merge...
+
+ 16:08:04 <stgraber> (done)
+
+ 16:08:07 <stgraber> (hopefully I'll be able to work a bit on my non-ISO tracker work items next week :))
+
+ 16:08:27 <stgraber> oh, and if you have a few minutes to spare, please try and break the ISO tracker at http://91.189.93.73
+
+ 16:08:41 <stgraber> I'm looking at the logs and fixing anything that breaks :)
+
+ 16:08:44 <cjwatson> since Brian's on holiday, I'll skip the bugs topic; if you have anything you're concerned about, that can be AOB :)
+
+ 16:08:49 <cjwatson> [TOPIC] Blueprints
+
+ 16:09:09 <cjwatson> Does anyone have blueprints they *haven't* finished drafting yet, or that haven't been approved?
+
+ 16:09:25 * doko needs to finish two
+
+ 16:09:30 <cjwatson> (https://blueprints.launchpad.net/~/+specs?role=drafter may help)
+
+ 16:10:26 <cjwatson> The deadline is this Friday, so please send me an IRC message or e-mail when you're done with those and I guess I'll substitute for Steve as approver
+
+ 16:11:36 <cjwatson> [TOPIC] AOB
+
+ 16:12:12 <cjwatson> the multiarch crossgrade stuff I was playing with has the makings of being really cool :)
+
+ 16:12:27 <cjwatson> (I'm not doing anything clever myself, just filling in metadata really)
+
+ 16:12:48 <barry> cjwatson: can you describe more what it would allow us to do?
+
+ 16:12:48 <doko> like Multi-Arch: foreign attributes?
+
+ 16:12:56 <ev> cjwatson: the crash database hasn't been approved: https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-crash-database
+
+ 16:12:57 <cjwatson> barry: upgrade from i386 to amd64 in-place
+
+ 16:13:02 <stgraber> oh, that reminds me I need to push quite a few more Multi-Arch:foreign changes to make upstart:i386 install on amd64 :)
+
+ 16:13:06 <cjwatson> doko: yeah, and a few more serious multiarchings
+
+ 16:13:09 <cjwatson> (like libapt)
+
+ 16:13:09 <barry> nice
+
+ 16:13:18 <cjwatson> ev: ack, thanks
+
+ 16:13:21 <ev> cheers
+
+ 16:13:46 <cjwatson> ev: if you're ready for it to be looked at, please mark it Review or Pending Approval
+
+ 16:14:04 <ev> oops! Thought I had done. That must be why Steve skipped it
+
+ 16:14:12 <ev> done
+
+ 16:14:14 <cjwatson> could be
+
+ 16:15:03 <cjwatson> barry: well, when I say in-place, it requires one reboot in the middle; hard to automate completely
+
+ 16:15:20 <cjwatson> (you need a 64-bit kernel in order to execute any 64-bit binaries)
+
+ 16:15:23 <barry> oh, that's so windows
+
+ 16:15:36 <cjwatson> heh
+
+ 16:15:44 <stgraber> cjwatson: I'm sure you can get rid of that extra reboot by installing qemu-user-static
+
+ 16:15:54 <cjwatson> I thought of that as I was typing it
+
+ 16:15:59 <stgraber> but that's going to make things a lot slower :)
+
+ 16:16:54 <stgraber> then you can try a crossgrade from i386 to armel on a x86_64 machine :)
+
+ 16:17:46 <stgraber> (would need some tweaks to load the binfmt stuff very very early though)
+
+ 16:18:13 <cjwatson> and you'd need to force binfmt-support to stay native-arch - doesn't sound so fun
+
+ 16:18:22 <cjwatson> you could crossgrade a chroot though
+
+ 16:19:01 <barry> that would actually be pretty interesting
+
+ 16:20:13 <cjwatson> anything else, or shall we finish early?
+
+ 16:20:24 <stgraber> nothing here
+
+ 16:20:29 <barry> i'm good
+
+ 16:20:34 <cjwatson> happy thanksgiving, those who celebrate it :)
+
+ 16:20:39 <barry> thanks! :)
+
+ 16:20:59 <doko> one of the faster meetings ...
+
+ 16:20:59 <stgraber> that was months ago ;)
+
+ 16:21:37 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

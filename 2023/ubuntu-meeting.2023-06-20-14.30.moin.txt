@@ -1,0 +1,532 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 20 Jun at 14:30 &mdash; 15:06 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-06-20-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:35.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:35)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:40)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:42.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:42)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:42)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libcamera/+bug/1997560 also needs to be re-reviewed please  (seb128, 14:42)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues/24   (cpaelzer, 14:44)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues/26   (cpaelzer, 14:52)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:03.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:03)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:03)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:03)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:05.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (157)
+ * slyon (18)
+ * seb128 (17)
+ * sarnold (16)
+ * didrocks (10)
+ * joalif (6)
+ * eslerm (4)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:17 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:30 <eslerm> hello o/
+
+ 14:30 <didrocks> o/
+
+ 14:31 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:31 <cpaelzer> hi everyone
+
+ 14:31 <slyon> o/
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <slyon> oh lovely *-perl
+
+ 14:32 <cpaelzer> you missed it last week slyon
+
+ 14:32 <joalif> o/
+
+ 14:32 <cpaelzer> bryce is on the big tree out of spamassassin
+
+ 14:32 <cpaelzer> we haven't settled on a solution yet
+
+ 14:32 <sarnold> good morning
+
+ 14:32 <slyon> haha, OK. I guess I'll investigate libio-compress-brotli-perl
+
+ 14:33 <cpaelzer> slyon: you might, but IIRC matt mentioned that Steve looked at it already
+
+ 14:33 <slyon> ok. I'll check back with them
+
+ 14:33 <cpaelzer> slyon: so ensure to not do redundant work
+
+ 14:34 <cpaelzer> ruby-rack is stuck intentionally for now, kanashiro[m] is on that
+
+ 14:34 <cpaelzer> everything else is known and ok
+
+ 14:34 <cpaelzer> no action here
+
+ 14:35 <cpaelzer> #topic New MIRs
+
+ 14:35 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:35 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:35 <cpaelzer> first of all
+
+ 14:35 <cpaelzer> the easy cases
+
+ 14:36 <cpaelzer> glibmm, gtkmm, cairomm are just source uploads of the same we had
+
+ 14:36 <cpaelzer> so those get usually a fast sanity check if they are really the same
+
+ 14:37 <cpaelzer> joalif: did one of them - and we said if this worked out as expected we will distribute the others and expect them to be quick checks
+
+ 14:37 <joalif> it was fairly simple
+
+ 14:37 <joalif> the source code didnt have extensive changes
+
+ 14:37 <cpaelzer> joalif: and was it, as expected, just the same as before
+
+ 14:37 <cpaelzer> good
+
+ 14:37 <cpaelzer> thanks
+
+ 14:38 <cpaelzer> so today let us hand out the other three
+
+ 14:38 <cpaelzer> but with a low effort expectation
+
+ 14:38 <joalif> i can have one of them
+
+ 14:38 <cpaelzer> I'm happy to take glibmm
+
+ 14:38 <slyon> joalif: which one was the one you handled, could you share the LP reference, so we can use it as a template?
+
+ 14:38 <cpaelzer> joalif:  for another - gtkmm then
+
+ 14:38 <cpaelzer> slyon: cairomm ok?
+
+ 14:38 <slyon> sure!
+
+ 14:38 <didrocks> I can take 2 or have 1 and then, next week another one
+
+ 14:38 <joalif> slyon: https://bugs.launchpad.net/ubuntu/+source/pangomm2.48/+bug/2020267
+
+ 14:38 <slyon> thx
+
+ 14:39 <cpaelzer> the last one is https://bugs.launchpad.net/ubuntu/+source/libhttp-cookiejar-perl/+bug/2024245
+
+ 14:39 <cpaelzer> that might have been the one Matt informed me about
+
+ 14:39 <didrocks> sounds like good Friday’s material then
+
+ 14:39 <didrocks> perl :p
+
+ 14:39 <didrocks> happy to take it
+
+ 14:39 <cpaelzer> indeed it is
+
+ 14:39 <didrocks> well "happy…" it’s perl
+
+ 14:39 <cpaelzer> so slyon the other one is new and for you
+
+ 14:39 <didrocks> but you know what I mean :p
+
+ 14:39 <slyon> ack
+
+ 14:39 <cpaelzer> assigned didrocks
+
+ 14:40 <cpaelzer> thank you all
+
+ 14:40 <cpaelzer> let us look at the incomplete
+
+ 14:40 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:40 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:40 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:40 <cpaelzer> duktape I looked at
+
+ 14:40 <cpaelzer> they did what we asked
+
+ 14:40 <cpaelzer> and committed to do some more later (out of the recommended set)
+
+ 14:41 <cpaelzer> this is ready to promote, but waits for the newly added tests to run on infra once
+
+ 14:41 <cpaelzer> incomplete until then
+
+ 14:41 <sarnold> yay new tests :)
+
+ 14:41 <cpaelzer> you should be happy
+
+ 14:41 <cpaelzer> the other updates have been present last week
+
+ 14:41 <cpaelzer> so that is fine
+
+ 14:42 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:42 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:42 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:42 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:42 <seb128> https://bugs.launchpad.net/ubuntu/+source/libcamera/+bug/1997560 also needs to be re-reviewed please
+
+ 14:42 <cpaelzer> do not mind pull #17 and issue #22 - I haven't found time yet
+
+ 14:42 <cpaelzer> hi seb128, thanks for the ping - having a look
+
+ 14:43 <cpaelzer> slyon: that is your case, can you do that re-check?
+
+ 14:43 <seb128> thx, I expect that's for slyon since he did the first review
+
+ 14:43 <cpaelzer> PR 23 I have requested some changes to make it more useful - waiting on dviererbe
+
+ 14:43 <cpaelzer> that leaves the potentially longer open discussions
+
+ 14:43 <slyon> seb128: cpaelzer: I'll be looking into libcamera and comment on the bug report
+
+ 14:43 <cpaelzer> thanks slyon
+
+ 14:43 <seb128> slyon, thanks
+
+ 14:44 <cpaelzer> both by seth asking for reflection on how we work
+
+ 14:44 <cpaelzer> https://github.com/canonical/ubuntu-mir/issues/24
+
+ 14:44 <cpaelzer> on this, while we are all busy - I do not yet see a real shortage
+
+ 14:44 <cpaelzer> we generally get things adressed in a timely manner
+
+ 14:45 <cpaelzer> and the thought of more work is mostly around re-reviews which we already throttled by suggesting to fill into a constant 1-per-week load
+
+ 14:45 <cpaelzer> so that would be fine
+
+ 14:45 <cpaelzer> furthermore the team composition is meant to be a bit "one of each" for foundation, desktop, server, seg, ...
+
+ 14:45 <cpaelzer> so adding would be ... duplicating?
+
+ 14:45 <cpaelzer> I see no need for either yet
+
+ 14:46 <cpaelzer> the real question in there - for now - I think is "How do we add more?"
+
+ 14:46 <cpaelzer> this isn't defined
+
+ 14:46 <cpaelzer> so far it has been a team discussion and team decision
+
+ 14:46 <cpaelzer> this isn't a place you'd "apply" for unless you got pushed that way by a manager right?
+
+ 14:46 <didrocks> yes, it’s mostly cooptation, and a lot of ubuntu teams are like this
+
+ 14:47 <sarnold> or just sort of volunteered by team mates? :) (hello eslerm, dviererbe :)
+
+ 14:47 <cpaelzer> I know that generally such a question "How do we add more?" in a similar "weakly defined" way is being worked on. As others like SRU and archive admins are like it
+
+ 14:47 <cpaelzer> yes you might be pulled in like eslerm and dviererbe
+
+ 14:47 <slyon> I think I saw a similar discussion on the TB mailing list..
+
+ 14:47 <cpaelzer> but remember that in theory they are good friends but no members, if it ever comes to voting and qorum and such
+
+ 14:48 <cpaelzer> slyon: yes that is what i mean
+
+ 14:48 <cpaelzer> let them sort it out for an example team
+
+ 14:48 <slyon> that is more about Ubuntu, which MIR is not necessarily part of (this is more of Canonical), but we could use the same process, once defined
+
+ 14:48 <cpaelzer> if there is a best practice out of that we might juts pick it up
+
+ 14:48 <cpaelzer> is that a sufficien state for now sarnold?
+
+ 14:48 <sarnold> we've had a few very small meetings, that raised the question.. and if we intend to get through the 2300-ish packages in main in a decade, we might need more help?
+
+ 14:49 <cpaelzer> sarnold: I'd want to bother about that if/once we ever conclude on really being able to do re-reviews as a company
+
+ 14:49 <cpaelzer> we will start slow with the capacity we have, see if the teams can at all follow up
+
+ 14:49 <cpaelzer> and once proven worthwhile we can think about expanding
+
+ 14:49 <sarnold> cpaelzer: okay, so leavaing that aside, you feel like the work is otherwise reasonable enough and not yet cause for concern?
+
+ 14:49 <cpaelzer> yes
+
+ 14:50 <cpaelzer> only the security side of things sometimes stalls :-)
+
+ 14:50 <cpaelzer> but this got better since you sarnold have eslerm as buddy
+
+ 14:50 <sarnold> and occasional meetings with two or three team members showing up is also no cause for concern?
+
+ 14:50 <sarnold> cpaelzer: and much help from others :)
+
+ 14:50 <cpaelzer> indeed
+
+ 14:50 <cpaelzer> sarnold: it hasn't been blocking us that we attend as we are available (like no PTO coverage)
+
+ 14:51 <cpaelzer> if it would be, I'd consider it - but since it worked fine - why make things more ocmplex
+
+ 14:51 <sarnold> cool, thanks for the discussion; and I'm glad to hear the larger question is being asked elsewhere, too
+
+ 14:51 <cpaelzer> indeed
+
+ 14:51 <cpaelzer> sarnold: would you mind copy&paste and self-close your issue?
+
+ 14:51 <sarnold> cpaelzer: good idea
+
+ 14:51 <cpaelzer> my time runs out soon with a hard stop and a conflict
+
+ 14:51 <cpaelzer> trying to present the next case
+
+ 14:52 <cpaelzer> but mind the time
+
+ 14:52 <cpaelzer> https://github.com/canonical/ubuntu-mir/issues/26
+
+ 14:52 <cpaelzer> filed by sarnold but brought up by seb128
+
+ 14:52 <cpaelzer> I can tell you how I feel, and you please tell me what you think - ok?
+
+ 14:52 <cpaelzer> I've seen cases where - with some effort - C++ symbols were made useful
+
+ 14:52 <cpaelzer> due to that I like to ask the teams to give it a shot
+
+ 14:52 <cpaelzer> and I've seen cases
+
+ 14:53 <seb128> the libcamera MIR which is ready for re-review mentioned earlier sort of collide with that (though they are now bumping the soname with every version which might be enough for us to get away with it)
+
+ 14:53 <cpaelzer> where they have tried and based on that came back to explain well why it won#t work int his case
+
+ 14:53 <cpaelzer> seb128: that is a trick to get out, but yeah perma soname bump is avoiding that too
+
+ 14:53 <cpaelzer> so in my mind maybe we should extend the explanation in the RULE lines
+
+ 14:53 <cpaelzer> to explain that people should have a reasonable look
+
+ 14:54 <slyon> did we have precedence for such soname bumping in the past?
+
+ 14:54 <cpaelzer> maybe with a hint where it worked well
+
+ 14:54 <sarnold> does that mean a new libcameraN every release?
+
+ 14:54 <seb128> sarnold, yes
+
+ 14:54 <slyon> I mean.. it avoids the issue that .symobls is trying to fix, so should be acceptable from the MIR perspective?
+
+ 14:54 <cpaelzer> slyon: yes, dpdk does that for example
+
+ 14:54 <cpaelzer> once every year
+
+ 14:54 <cpaelzer> and it was much nicer
+
+ 14:54 <cpaelzer> but
+
+ 14:54 <cpaelzer> we still do symbols tracking there
+
+ 14:55 <sarnold> are we proposing bumping sonames out of cadence with upstream?
+
+ 14:55 <cpaelzer> and it cought errors a few times
+
+ 14:55 <slyon> yes, that means some extra libcameraN transitions, but I guess there are not (yet?) too many reverse dependencies
+
+ 14:55 <cpaelzer> e.g. on supposed stable updates
+
+ 14:55 <cpaelzer> so even if soname gets bumped each time, for SRUs symbols tracking is helpful
+
+ 14:55 <cpaelzer> real life experience
+
+ 14:56 <cpaelzer> which in turn means "so bumps each time" is no reason to say "we won't do symbols tracking"
+
+ 14:56 <cpaelzer> I consider a proper, "this is what I tried, this is why it fails and this is why it is feasible" statement the right way
+
+ 14:56 <slyon> ok. So this ^ might be a problem for the libcamera MIR, seb128
+
+ 14:57 <cpaelzer> I'd not want to give a too easy option to pass on symbols, but also I acknowledge that symbols isn't a strict requirement
+
+ 14:57 <cpaelzer> does that make sense?
+
+ 14:57 <seb128> slyon, I will follow up with a comment stating that
+
+ 14:57 <slyon> thanks
+
+ 14:57 <didrocks> I think this is in line and solidify what we were asking for C++ libs, no? Just more official (give it a shot at least, try it, and assess with the result, but start with trying it)
+
+ 14:57 <slyon> cpaelzer: yes that makes sense. especially the SRU argument is very valid!
+
+ 14:57 <seb128> I still think the experience is expensive and broken
+
+ 14:58 <cpaelzer> maybe your libs really are different than ours
+
+ 14:58 <seb128> there is no decent way to deal with the cross arch difference
+
+ 14:58 <cpaelzer> as it was said multiple times, that might be fine - but it depends on the code seb128
+
+ 14:58 <seb128> like libcamera which synced from Debian had around 190 lines of symbols diff
+
+ 14:59 <cpaelzer> one package might have that issue, explain and demonstrate
+
+ 14:59 <cpaelzer> and get an ack to be without symbols
+
+ 14:59 <seb128> right
+
+ 14:59 <cpaelzer> another package might work well
+
+ 14:59 <seb128> long term I still think that as a project we should aim at doing better
+
+ 14:59 <cpaelzer> which is better than saying "yo do not need to bother about symbols"
+
+ 14:59 <seb128> also symbols don't really cover abi, they wouldn't catch a change in a structure definition
+
+ 14:59 <cpaelzer> I agree to "as a project we should aim at doing better", i Just have no great option and time to work on yet
+
+ 15:00 <seb128> I'm +1 with the 'give it a try be be allowed to explained why it doesn't work for this project'
+
+ 15:00 <cpaelzer> great
+
+ 15:00 <cpaelzer> my next double concurrent meeting has started
+
+ 15:00 <didrocks> same here
+
+ 15:00 <sarnold> happy meeting
+
+ 15:00 <seb128> we were also playing with the alternative option of 'enforce the symbol on amd64, at least it's manageable and better than not having it'
+
+ 15:01 <cpaelzer> would someone be ok to convert this into a PR to mention it more clearly in the RULES section?
+
+ 15:01 <cpaelzer> that would indeed be better if you can get it to work
+
+ 15:01 <eslerm> at next meeting, I would like to discuss the status of LP#1993819
+
+ 15:02 <seb128> it's still tedious, but it's on one arch and be handled locally so probably an acceptable tradeoff for the extra safety
+
+ 15:02 <cpaelzer> eslerm: I've given it a bump to be sure we see it
+
+ 15:02 <eslerm> thanks
+
+ 15:02 <cpaelzer> yep
+
+ 15:02 <sarnold> seb128: is this something you're actively experimenting with? or an idea being kicked around?
+
+ 15:02 <cpaelzer> seb128: would you mind to throw a PR to https://github.com/canonical/ubuntu-mir
+
+ 15:02 <cpaelzer> that way you can ensure the suggested change matches what you'd like
+
+ 15:03 <cpaelzer> and we can check if it matches what we thought to be the outcome of this meeting
+
+ 15:03 <seb128> cpaelzer, I can do that yet
+
+ 15:03 <cpaelzer> thanks
+
+ 15:03 <seb128> np!
+
+ 15:03 <cpaelzer> we are over I know
+
+ 15:03 <cpaelzer> so let us hope to be quick and easy on the last two agenda items
+
+ 15:03 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:03 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:03 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 15:03 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:03 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:03 <cpaelzer> Internal link
+
+ 15:03 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:03 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:03 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:03 <cpaelzer> that looked good recently
+
+ 15:03 <sarnold> there's progress on many MIRs simultaneously :) it's a fun place to be
+
+ 15:04 <cpaelzer> indeed sarnold
+
+ 15:04 <cpaelzer> cargo will be discussed next week as eslerm requested
+
+ 15:04 <cpaelzer> but overall that security queue LGTM
+
+ 15:05 <cpaelzer> you even slowly but surely get to those libheif related packages
+
+ 15:05 <cpaelzer> great
+
+ 15:05 <cpaelzer> I'd bve happy and go on ...
+
+ 15:05 <cpaelzer> #topic Any other business?
+
+ 15:05 <sarnold> none here
+
+ 15:05 <cpaelzer> none here either
+
+ 15:05 <slyon> nothing
+
+ 15:05 <joalif> nothing
+
+ 15:05 <eslerm> same :)
+
+ 15:06 <cpaelzer> these meetings start to run over more often, which isn't too bad as it shows how active and approachable we are. If it is too often we can push more discussions to e.g. GH issues
+
+ 15:06 <cpaelzer> I'd close it out, thank you all
+
+ 15:06 <sarnold> thanks cpaelzer, all :)
+
+ 15:06 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

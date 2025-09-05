@@ -1,0 +1,448 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 25 Aug at 15:01 &mdash; 15:26 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-08-25-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:01.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:16.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (32)
+ * pitti (28)
+ * cyphermox (28)
+ * sil2100 (25)
+ * bdmurray (13)
+ * xnox (13)
+ * tdaitx (13)
+ * infinity (9)
+ * robru (8)
+ * ubottu (8)
+ * caribou (7)
+ * barry (6)
+ * chiluk (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Thu Aug 25 15:01:17 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <slangasek> [TOPIC] Lightning round
+
+ 15:01 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk mwhudson)
+
+ 15:01 <slangasek> xnox chiluk tdaitx mwhudson pitti barry infinity robru sil2100 bdmurray slangasek cyphermox caribou doko
+
+ 15:01 <xnox> ah
+
+ 15:01 <xnox> skip
+
+ 15:01 <chiluk> o/  welcome back slangasek
+
+ 15:02 * pitti watches xnox frantically scribbling down notes
+
+ 15:02 <chiluk> Mostly working on kernel bugs like. https://bugs.launchpad.net/bugs/1616193
+
+ 15:02 <ubottu> Launchpad bug 1616193 in linux (Ubuntu) "3.13: libvirtd: page allocation failure: order:4, mode:0x1040d0" [Undecided,Confirmed]
+
+ 15:02 <chiluk> -done-
+
+ 15:02 <tdaitx> 2016-08-25
+
+ 15:02 <tdaitx> = OpenJDK security update
+
+ 15:02 <tdaitx> - Packaging and testing OpenJDK 6 from IcedTea's mercurial repository
+
+ 15:02 <tdaitx> - Packaged and tested OpenJDK 6 based on IcedTea 1.13.12 (released yesterday) for Trusty and Precise
+
+ 15:02 <tdaitx> = JCK
+
+ 15:02 <tdaitx> - Back to testing
+
+ 15:02 <tdaitx> = OpenJDK 8
+
+ 15:02 <tdaitx> - Fixing jtreg logging for zero and jamvm
+
+ 15:02 <tdaitx> = Other
+
+ 15:03 <tdaitx> - Considering what to snap
+
+ 15:03 <tdaitx> (done)
+
+ 15:03 <pitti> mwhudson is asleep I suppose?
+
+ 15:03 <slangasek> yes :)
+
+ 15:03 <pitti> netplan:
+
+ 15:03 <pitti> - Add "dhcp6" and gateway options (committed, not landed yet due to beta freeze)
+
+ 15:03 <pitti> - Discuss design for VLAN support and start implementing it
+
+ 15:03 <pitti> - Add command for ifupdown config migration; can migrate simple DHCP stanzas and is robust to ignore configs that it does not know about; migration on package upgrade not enabled yet, though
+
+ 15:03 <pitti> - Make "netplan apply" do interface renames by simulating hotplugging
+
+ 15:03 <pitti> - Debug integration test regression, due to NM #1615044
+
+ 15:03 <pitti> - Add code coverage report for python parts and crank up coverage
+
+ 15:03 <pitti> systemd:
+
+ 15:03 <pitti> - SRU fix pid1's stdin/out/err in containers (#1608953)
+
+ 15:03 <pitti> - Provide deputy system service manager for snapd backport (#1616422); I'd appreciate some help from someone knowledgeable about upstart debugging about shutdown not working
+
+ 15:03 <pitti> - udev: Fix vastly inefficient udev rule causing readlink to get called hundreds of times (#1615021)
+
+ 15:04 <pitti> misc:
+
+ 15:04 <pitti> - merge util-linux (CVE fix)
+
+ 15:04 <pitti> - meeting: Next steps for snappy support on 14.04
+
+ 15:04 <pitti> - ubiquity: Clean up obsolete and no-op /etc/network/interfaces and /etc/iftab code
+
+ 15:04 <pitti> - Investigate ppc64el cloud image failure (#1616743)
+
+ 15:04 <pitti> - Reproduce console-conf hang, give feedback and suggestions to mwhudson
+
+ 15:04 <pitti> - Review https://code.launchpad.net/~robru/bileto/publish-job/+merge/302105
+
+ 15:04 <pitti> - lots of SRU review and archive admin
+
+ 15:04 <pitti> (END)
+
+ 15:04 <barry> ubuntu-image: gadget-yaml branch (landed); validate branch (WIP)
+
+ 15:04 <barry> debuntu: python-virtualenv 15.0.3+ds-1 (+ syncpackage); twine 1.8.1-1 (will need FFE); syncpackage xonsh 0.4.4+dfsg-1
+
+ 15:04 <barry> ridin' the snappy train
+
+ 15:05 <barry> sundry sysadmin tasks
+
+ 15:05 <barry> --done--
+
+ 15:05 <infinity> Short week due to a poor illness/work ratio:
+
+ 15:05 <infinity> * Investigated fakeroot/glibc/mklibs interaction, opted for a workaround in mklibs
+
+ 15:05 <infinity> * Working on fixing our langpack altdir patch to stop segfaulting in glibc >= 2.23
+
+ 15:05 <infinity> * More planning with the kernel team on a second attempt to get kernel 4.6 in
+
+ 15:05 <infinity> * General AA/SRU/Release/etc tasks
+
+ 15:05 <infinity> * Fix Support header generation for *-updates, release pocket fix to come
+
+ 15:05 <infinity> (done)
+
+ 15:05 <robru> lp:bileto
+
+ 15:05 <robru> - reviewed and rolled out sil2100's PPA description fixing branch
+
+ 15:05 <robru> - finished new publish job, obsoleting Jenkins entirely
+
+ 15:05 <robru> - began work on git support
+
+ 15:05 <robru> lp:canonical-mojo-specs
+
+ 15:05 <robru> - fixed spec to stop deploying Jenkins in future deployments
+
+ 15:05 <robru> (done)
+
+ 15:05 <chiluk> someone is spreading the ubu-flu.
+
+ 15:05 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:05 <sil2100> - RTM status meetings
+
+ 15:05 <sil2100> - Touch xenial:
+
+ 15:05 <sil2100> * Prepared multiple no-change rebuilds against new android-headers
+
+ 15:05 <sil2100> * Thanks to Vicamo's fixes, the OOBE UI comes up!
+
+ 15:05 <sil2100> * Importing first arm64-enabled device tarball
+
+ 15:05 <sil2100> * Leading weekly meeting, coordinating fixes landings
+
+ 15:05 <sil2100> - zeromq3 and zmqpp update request:
+
+ 15:05 <sil2100> * Coordinating unity-scope-api yakkety-toolchain fixes for the no-change rebuilds
+
+ 15:05 <sil2100> * Filling in FFe, trying to bribe the release team (Steve)
+
+ 15:05 <sil2100> - KPI instrument package auto-rebuilds:
+
+ 15:05 <sil2100> * Looked into using recipes for this (more troublesome due to LP creds and non-bzr projects)
+
+ 15:06 <sil2100> * Wrote a script for auto-rebuilding selected packages on upload with instrumentation
+
+ 15:06 <sil2100> * Set-up an environment for running the script on canonistack
+
+ 15:06 <sil2100> * Waiting for instrument-enable patches, experimented with qtubuntu
+
+ 15:06 <sil2100> - Looking into the yakkety touch image build failures with click packages
+
+ 15:06 <sil2100> - Coordinating the dbus ssh login delay bug fix on xenial/yakkety
+
+ 15:06 <sil2100> - Fixing ubuntu-touch-session for xenial touch images
+
+ 15:06 <sil2100> - Listening in at the presentation of the Alan cloud image build system
+
+ 15:06 <sil2100> - Working on a bileto change for PPA description modification (first real bigger change!)
+
+ 15:06 <sil2100> - Did several image copies for ubuntu-core
+
+ 15:06 <sil2100> - Some DMB duties
+
+ 15:06 <sil2100> (done)
+
+ 15:06 * xnox is ready
+
+ 15:06 <bdmurray> resolved a traceback with the phased-updater
+
+ 15:06 <bdmurray> wrote a test case for the update-notifier hwe change
+
+ 15:06 <bdmurray> SRU verification of HWE stack bugs (update-manager, update-notifier, xserver-xorg-mesa...)
+
+ 15:06 <bdmurray> updated meta-release files to use old-releases instead of archive.u.c for old releases
+
+ 15:06 <bdmurray> investigation into HWE stack update-manager crash at errors.u.c
+
+ 15:06 <bdmurray> wrote database query to find details about the HWE stack update-manager bug
+
+ 15:06 <bdmurray> backported whoopsie patch to Trusty to upload more information w/ crashes
+
+ 15:06 <bdmurray> added more acceptable fields (package manager stuff) to whoopsie for Y, T, X
+
+ 15:06 <bdmurray> sru verification of Trusty bugs LP: #1616571, LP: #1616559
+
+ 15:06 <ubottu> Launchpad bug 1616571 in juju "bootstrap lxd failed to connect" [Undecided,Incomplete] https://launchpad.net/bugs/1616571
+
+ 15:06 <ubottu> Launchpad bug 1616559 in whoopsie (Ubuntu Trusty) "whoopsie should send more data to the Error Tracker" [High,Fix committed] https://launchpad.net/bugs/1616559
+
+ 15:06 <bdmurray> short week due to holidays
+
+ 15:06 <bdmurray> ✔ done
+
+ 15:07 <bdmurray> well one of those was a typo
+
+ 15:07 <bdmurray> bug 1616517
+
+ 15:07 <ubottu> bug 1616517 in whoopsie (Ubuntu Xenial) "whoopsie does not send fields from some package management application crashes" [Medium,Triaged] https://launchpad.net/bugs/1616517
+
+ 15:07 <pitti> chiluk: indeed, I caught it too last week (mostly recovering..)
+
+ 15:08 <slangasek> robru: obsoleting jenkins> is the jenkins unit still up?
+
+ 15:09 <robru> slangasek: the one in production is, but not staging
+
+ 15:09 <slangasek> cool
+
+ 15:09 <pitti> robru: nice!
+
+ 15:09 <slangasek> * road trip + partner meetings last Thursday
+
+ 15:09 <slangasek> * ubuntu-image:
+
+ 15:09 <slangasek> * iterating on grub-pc support
+
+ 15:09 <slangasek> * working on having ubuntu-image implementing the full gadget yaml spec
+
+ 15:09 <slangasek> * console-conf: netplan discussions, triaging of remaining tasks for RTM
+
+ 15:09 <slangasek> * analysis of a strange boot failure on an OpenPOWER system (LP: #1615021)
+
+ 15:09 <slangasek> * SRU processing
+
+ 15:09 <ubottu> Launchpad bug 1615021 in systemd (Ubuntu Xenial) "Unable to network boot Ubuntu 16.04 installer normally on Briggs" [Undecided,In progress] https://launchpad.net/bugs/1615021
+
+ 15:09 <slangasek> * proposed-migration shepherding
+
+ 15:10 <slangasek> * next:
+
+ 15:10 <slangasek> * more ubuntu-image
+
+ 15:10 <slangasek> * looking at creating a snap from scratch with snapcraft
+
+ 15:10 <slangasek> * taking vacation next Thu/Fri
+
+ 15:10 <slangasek> (done)
+
+ 15:10 <cyphermox> - [MIR] review unity-notifications (bug LP: #1613678)
+
+ 15:10 <cyphermox> - debugging grub 'no symbol table' crashes in new builds
+
+ 15:10 <cyphermox> - debugging network-manager openvpn split-tunnelling (bug LP: #1603898)
+
+ 15:10 <cyphermox> - workaround LC_NUMERIC bug in debconf-apt-progress/ubiquity (bug LP: #1611010)
+
+ 15:10 <ubottu> Launchpad bug 1613678 in unity-notifications (Ubuntu) "[MIR] unity-notifications" [Undecided,Incomplete] https://launchpad.net/bugs/1613678
+
+ 15:10 <ubottu> Launchpad bug 1603898 in network-manager (Ubuntu Xenial) "DNS resolution fails when using VPN and routing all traffic over it" [Undecided,New] https://launchpad.net/bugs/1603898
+
+ 15:10 <ubottu> Launchpad bug 1611010 in ubiquity (Ubuntu) "yakkety desktop - non-english installation crashes with /plugininstall.py: ValueError: invalid literal for int() with base 10: ''" [Critical,Fix released] https://launchpad.net/bugs/1611010
+
+ 15:10 <cyphermox> - shim EKU discussions and code review
+
+ 15:10 <cyphermox> - bugfix in shim EKU code
+
+ 15:10 <cyphermox> - console-conf/probert bug fixing
+
+ 15:10 <cyphermox> - discuss / debug grub ipv6 w/ lamont
+
+ 15:10 <cyphermox> - more grub2 dhcpv6 backporting...
+
+ 15:10 <cyphermox> - preparing probert 0.0.6 release
+
+ 15:11 <cyphermox> - preparing subiquity 0.0.7 release
+
+ 15:11 <cyphermox> - coordinating console-conf landing in ubuntu-core
+
+ 15:11 <cyphermox> - review/merge ubiquity hidpi fixes
+
+ 15:11 <cyphermox> - review/merge ubiquity tests from nuclearbob
+
+ 15:11 <cyphermox> - discuss arm64 efi failures w/ apw
+
+ 15:11 <cyphermox> - looking into enabling IPv6 support in OVMF
+
+ 15:11 <cyphermox> (done)
+
+ 15:11 <caribou> Bugfix:
+
+ 15:11 <caribou> dpkg status file corrupt
+
+ 15:11 <caribou> samba winbind statically linked
+
+ 15:11 <caribou> corosync timer questions
+
+ 15:11 <caribou> Meetings
+
+ 15:11 <caribou> (done)
+
+ 15:12 <slangasek> xnox: doko is off today, so you can be doko for the meeting
+
+ 15:12 <xnox> zua - finish d-i integration; openstack vendor metadata; juju suboridnate charm. testing things at the moment before announcing wider testing.
+
+ 15:12 <xnox> boost1.61 / gcc6 ftbfs - down to 35 packages
+
+ 15:12 <xnox> s390x - new s390-tools, enable numactl build, enable zfs/numa/systemtap in libvirt on s390x/ppc64el, new libdfp with zEC12 / z13 support
+
+ 15:12 <xnox> (done)
+
+ 15:12 <slangasek> nice
+
+ 15:12 <slangasek> any questions?
+
+ 15:12 <xnox> slangasek, can we have more armhf builders for a rebuild?
+
+ 15:12 <xnox> armhf/arm64
+
+ 15:12 * xnox pretends to be doko
+
+ 15:13 <slangasek> heh
+
+ 15:13 <pitti> sil2100: you mentioned arm64 -- any news wrt. autopgkgtest requirements/hw ?
+
+ 15:14 <slangasek> pitti: fwiw I've escalated that to Beret
+
+ 15:14 <sil2100> pitti: no news, jibel is all aware, but I guess there still needs to be this discussion who should own the HW
+
+ 15:16 <slangasek> [TOPIC] AOB
+
+ 15:16 <slangasek> anything else?
+
+ 15:16 <cyphermox> my desktop looks all funky, because I have yet to reboot after updating gtk?
+
+ 15:16 <pitti> doesn't look significantly less funky after rebooting, though ;)
+
+ 15:16 <caribou> cyphermox: for some reason I lost the sound indicator on mine
+
+ 15:16 <cyphermox> heh
+
+ 15:17 <sil2100> I'm on holidays starting the 5th, two weeks from then
+
+ 15:17 <pitti> (well, </trolling>)
+
+ 15:17 <cyphermox> pitti: good to know, I'll postpone rebooting then
+
+ 15:17 <pitti> cyphermox: really j/k, should be fine
+
+ 15:17 <cyphermox> what I mean by funky is that I have just about no widgets showing up correctly
+
+ 15:17 <xnox> cyphermox, logout/login helps. but i guess that's pretty much reboot.
+
+ 15:17 <cyphermox> xnox: yeah, that's equivalent :)
+
+ 15:17 <xnox> $ restart unity7
+
+ 15:18 * xnox ...and pray
+
+ 15:18 <cyphermox> meh
+
+ 15:18 <cyphermox> eventually I'll have fewer terminals open
+
+ 15:18 <cyphermox> ... or a wish to let my office get cold again
+
+ 15:19 <slangasek> the real cause of arctic ice melt
+
+ 15:20 <cyphermox> it's *server room warm here*
+
+ 15:20 <tdaitx> cyphermox, fewer terminals open? entropy does not allow that
+
+ 15:21 <slangasek> tdaitx: the third law of terminodynamics?
+
+ 15:21 <cyphermox> yep
+
+ 15:22 * infinity has to be rude and run off to the bathroom in the middle of the meeting; will read scrollback.
+
+ 15:22 <cyphermox> I choose to turn more terminals into a temperature delta eventually
+
+ 15:22 <tdaitx> slangasek, second, I have yet to see the number of terminals remaining contant... ;-)
+
+ 15:23 <slangasek> :)
+
+ 15:23 <slangasek> ok, anything else for real?
+
+ 15:24 <barry> infinity: please turn off your mic
+
+ 15:25 <infinity> barry: I didn't take my mic to the bathroom.
+
+ 15:26 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

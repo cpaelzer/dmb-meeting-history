@@ -1,0 +1,584 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 18 Jun at 15:03 &mdash; 15:45 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-06-18-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:31.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (71)
+ * pitti (47)
+ * infinity (41)
+ * sil2100 (21)
+ * stgraber (18)
+ * robru (17)
+ * bdmurray (15)
+ * barry (13)
+ * doko (13)
+ * ubottu (4)
+ * meetingology (3)
+ * cyphermox (3)
+
+
+
+== Full Log ==
+
+
+ 15:03 <slangasek> #startmeeting
+
+ 15:03 <meetingology> Meeting started Thu Jun 18 15:03:22 2015 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti)
+
+ 15:03 <slangasek> doko jodh caribou robru bdmurray pitti barry cyphermox sil2100 slangasek stgraber infinity
+
+ 15:04 <slangasek> doko: hi, around?
+
+ 15:05 <pitti> is jodh even still officially in the team?
+
+ 15:05 <slangasek> hmm, and we have a change to this list since last time...
+
+ 15:05 <barry> slangasek: i think you need to update your shuf :)
+
+ 15:05 <slangasek> next time should be:
+
+ 15:06 <slangasek> echo $(shuf -e barry doko stgraber bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti
+
+ 15:06 <slangasek> yep
+
+ 15:06 <slangasek> nd no caribou here today
+
+ 15:06 <slangasek> robru:
+
+ 15:07 <robru> one sec
+
+ 15:07 <robru> * CI Train:
+
+ 15:07 <robru> - added script for scanning overlay PPA versions and comparing to wily archive; ensure that matching version numbers have matching binary hashes
+
+ 15:07 <robru> * CI Train Charm:
+
+ 15:07 <robru> - stop clobbering creds with empty files if creds misconfigured
+
+ 15:07 <robru> - add relation for bileto
+
+ 15:07 <robru> * Bileto:
+
+ 15:07 <robru> - fixed some postgres-specific bugs
+
+ 15:07 <robru> * Bileto Charm:
+
+ 15:07 <robru> - add basenode support
+
+ 15:07 <robru> - add relation for ci-train
+
+ 15:07 <robru> * Train mojo Spec:
+
+ 15:07 <robru> - added relation between ci-train and bileto
+
+ 15:07 <robru> - various iterations on postgres configuration
+
+ 15:07 <robru> (done)
+
+ 15:08 <sil2100> robru the magician, charming with his mojo!
+
+ 15:08 <robru> heh
+
+ 15:09 <slangasek> bdmurray:
+
+ 15:09 <slangasek> robru: clobbering creds with empty files> I don't suppose that helps the postgres issues at all?
+
+ 15:10 <bdmurray> continued to work on improvements to apport-retrace to check launchpad for packages not available in archive or on ddebs.u.c
+
+ 15:10 <bdmurray> worked with pitti to get my apport use-lp branch merged (done!)
+
+ 15:10 <bdmurray> worked on hacking in ppa support to apport-retrace
+
+ 15:10 <bdmurray> pushed an apport branch (with a PPA hack) for the retracers to use
+
+ 15:10 <bdmurray> updated daisy config for armhf 15.04 retracers for overlay ppa
+
+ 15:10 <bdmurray> submitted RT to have daisy / apport updated in staging
+
+ 15:10 <robru> slangasek: no that's unrelated, that's on the ci-train side. #is doesn't have creds stored the same way we do in staging and so the charm was clobbering live creds with empty files.
+
+ 15:10 <bdmurray> investigation into the right way to add ppa support to apport
+
+ 15:10 <bdmurray> SRU verifications of python-pip bug fixing LP: #1324391 (fail, then pass)
+
+ 15:10 <ubottu> Launchpad bug 1324391 in python-pip (Ubuntu Trusty) "pip 1.5.4 import an invalid dependencies " [High,Fix committed] https://launchpad.net/bugs/1324391
+
+ 15:10 <bdmurray> discussed with mvo python-apt origin information and PPAs
+
+ 15:10 <bdmurray> discussion with slangasek regarding overlay-ppa and old packages
+
+ 15:10 <bdmurray> investigation into a phased-updater OOPS
+
+ 15:10 <bdmurray> short week as I was in Rochester!
+
+ 15:10 * doko is a bit late ...
+
+ 15:10 <bdmurray> ✔ done
+
+ 15:11 <slangasek> doko: hi, your turn
+
+ 15:11 <sil2100> slangasek: that thing was probably related to the train outage we had on Friday when the cred files went missing
+
+ 15:11 <slangasek> ok
+
+ 15:12 <doko> five me 5min
+
+ 15:12 <slangasek> alright then. pitti:
+
+ 15:12 <pitti> systemd:
+
+ 15:12 <pitti> - create script to build debs for current systemd upstream trunk (into PPA, and running all autopkgtests locally), for a more proper trunk CI
+
+ 15:12 <pitti> - fix various build system and udev regressions in trunk
+
+ 15:12 <pitti> - enable net.ifnames persistant network names by default
+
+ 15:12 <pitti> autopkgtest:
+
+ 15:12 <pitti> - set up ProdStack/Canonistack with IS for cloud-based autopkgtest running, and create autopkgtest cloud runner PoC
+
+ 15:12 <pitti> - various small improvements to adt-run
+
+ 15:12 <pitti> - revive armhf/ppc64el worker nodes after outage
+
+ 15:12 <pitti> misc:
+
+ 15:12 <pitti> - review and land bdmurray's apport branch for downloading older sources/debs from LP
+
+ 15:12 <pitti> - build and test fresh vivid langpacks
+
+ 15:12 <pitti> - postgresql: prepare new upstream security/bug fix releases for all supported Ubuntu releases
+
+ 15:12 <pitti> - reproduce and analyze misconfigured/broken encrypted swap in LVM install mode (#1453738); in progress
+
+ 15:12 <pitti> - various bug fixes in open-scsi, udisks
+
+ 15:12 <pitti> plan:
+
+ 15:12 <pitti> - systemd 221 is around the corner; unlike the previous two versions this should now be a breeze to land thanks to all the new CI
+
+ 15:12 <pitti> - continue working on cloud-based autopkgtest runner
+
+ 15:12 <pitti> - find some time to look into networkd integration with resolvconf and ifup.d/
+
+ 15:12 <pitti> ^D
+
+ 15:13 <barry> doko or me?
+
+ 15:13 <slangasek> barry: go ahead, it hasn't been 5 minutes yet :)
+
+ 15:13 <pitti> barry: 5 mins aren't over yet
+
+ 15:13 <barry> sounds like a monty python sketch...
+
+ 15:13 <barry> short week due to pto
+
+ 15:13 <barry> debuntu: debian bug #776026; python-nose-exclude 0.2.0-4; zope.security 4.0.3-1; virtualenv 13.0.3-1 (ongoing), wheel 0.24.0-2; python-pip 1.5.4-1ubuntu3 for trusty;
+
+ 15:13 <ubottu> Debian bug 776026 in src:wheel "wheel: please make whl files reproducible" [Wishlist,Fixed] http://bugs.debian.org/776026
+
+ 15:13 <barry> si: 2.5.1 to the overlay; struggling with landing 3.0.1 in wily via train (and getting derailed)
+
+ 15:14 <barry> started working on the python3.5 transition plan
+
+ 15:14 <barry> other: upgrade bisecting and other debugging for LP: #1464365
+
+ 15:14 <ubottu> Launchpad bug 1464365 in xorg (Ubuntu) "Resolution is incorrect; screen mostly occluded" [Medium,New] https://launchpad.net/bugs/1464365
+
+ 15:14 <barry> --done--
+
+ 15:14 <doko> - openjdk-9 fixes for ppc64el and arm64
+
+ 15:14 <doko> - updated GCC 5 transition plan
+
+ 15:14 <doko> - openjdk maintainer interviews
+
+ 15:14 <doko> - preparing uploads for gcc 4.8, 4.9 and 5.x release candidates
+
+ 15:14 <doko> - started doing some merges
+
+ 15:14 <doko> - finally gcc-4.8 and binutils SRU's in trusty, uploaded cross packages
+
+ 15:14 <doko> - uploaded python3.4 SRU's
+
+ 15:14 <doko> (done)
+
+ 15:15 <sil2100> cyphermox: ping
+
+ 15:15 <cyphermox> sil2100: I'm on vacation, not actually there :)
+
+ 15:15 <slangasek> cyphermox is still on vacation
+
+ 15:15 <sil2100> Ah, ok :)
+
+ 15:15 <slangasek> sil2100:
+
+ 15:15 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:15 <sil2100> - Prepare OTA-4 release notes
+
+ 15:15 <sil2100> - OTA-4 release:
+
+ 15:15 <sil2100> * Copying images and setting auto-phasing for the period of approx one day
+
+ 15:15 <sil2100> * Preparing community OTA-4 images, promoting those after basic QA
+
+ 15:15 <sil2100> * Promoting ubuntu-developer images
+
+ 15:15 <sil2100> * Preparing non-delta images for arale
+
+ 15:15 <sil2100> - Identifying the system-image situation, preparing landing
+
+ 15:15 <sil2100> - Leading the RTM status meeting
+
+ 15:15 <sil2100> - Updating documentation regarding package twins
+
+ 15:15 <sil2100> - Further work on commitlog generation
+
+ 15:15 <sil2100> - Coordinating the Unity8 big landing
+
+ 15:15 <sil2100> - Lack of sleep and overall tiredness for the whole week
+
+ 15:16 <sil2100> Holiday tomorrow (Friday the 19th)
+
+ 15:16 <sil2100> (done)
+
+ 15:16 <infinity> Do you celebrate every Friday the 19th?
+
+ 15:17 <slangasek> it's a very famous movie in Poland
+
+ 15:17 <infinity> slangasek: (you're up)
+
+ 15:18 <slangasek> * helping unblock the libnettle transition; found blockage due to a mir-related API change that was causing gst-plugins-bad1.0 to FTBFS as of vivid release, working to unwind that through bug #1465958, now waiting for a platform-api landing
+
+ 15:18 <ubottu> bug 1465958 in platform-api (Ubuntu) "gst-plugins-bad1.0 FTBFS: mirclient headers needed" [High,Confirmed] https://launchpad.net/bugs/1465958
+
+ 15:18 <slangasek> * post mortem for the various issues we've run into over the past two months with the overlay ppa not being as featureful as the derived distribution out of the box
+
+ 15:18 <slangasek> * closing in on a decision for the Java maintainer role
+
+ 15:18 <slangasek> * new job opening in the process of being posted, should be visible tomorrow
+
+ 15:18 <slangasek> (I know)
+
+ 15:18 <slangasek> (done)
+
+ 15:18 <slangasek> stgraber:
+
+ 15:18 <stgraber> - Was out on Friday. Now back in Montreal.
+
+ 15:18 <stgraber> - LXC/LXD
+
+ 15:18 <stgraber> - Working on LXD socket activation systemd units.
+
+ 15:18 <stgraber> - Made a first version of the LXD snap.
+
+ 15:18 <stgraber> - Working on the CI infrastructure for LXC-related projects a bit.
+
+ 15:18 <stgraber> - Spent quite a lot of time debugging a weird race condition in LXD.
+
+ 15:18 <stgraber> - Code reviews, bug triaging, other admin paperwork
+
+ 15:18 <stgraber> - Alpha-1
+
+ 15:18 <stgraber> - Some prepwork for alpha-1, mostly sorting out nusakan <-> tracker issues
+
+ 15:18 <stgraber> (done)
+
+ 15:18 <infinity> - Dealing with several transitions in wily
+
+ 15:18 <infinity> - Not one, but *two* emergency kernel security updates
+
+ 15:18 <infinity> - Fixed kernel autopkgtesting
+
+ 15:18 <infinity> - General AA/SRU stuff
+
+ 15:18 <infinity> - Looking into kernel changes we might need to build armhf on arm64
+
+ 15:19 <infinity> - Sobbing uncontrollably over the loss of mvo
+
+ 15:19 <infinity> - Mitigating the above with the 'yay pitti' happy dance
+
+ 15:19 <infinity> - debian-installer and HWE work
+
+ 15:19 <infinity> (done)
+
+ 15:19 <stgraber> :)
+
+ 15:19 <pitti> ♩ \o/ ♫ ♪
+
+ 15:19 <slangasek> infinity: that's to the tune of 'hey mickey', right?
+
+ 15:19 <barry> infinity: where's the youtube video of that dance?
+
+ 15:20 <pitti> (happy dance for fixing kernel tests)
+
+ 15:20 <cyphermox> I think pitti wants to take over UTF-8 summary ending lead. :)
+
+ 15:20 <infinity> barry: It's an easter egg in d-i, go find it.
+
+ 15:20 <slangasek> heh
+
+ 15:20 <slangasek> any questions over status?
+
+ 15:20 <barry> infinity: do you have to fix 5 bugs before it reveals itself?
+
+ 15:21 <slangasek> oh, and doko's binutis/gcc SRUs got released in trusty
+
+ 15:21 <infinity> Yeah, which means we can probably undo a hack in linux-lts-vivid.
+
+ 15:21 <slangasek> (only ignoring 3 and 6 autopkgtest regressions respectively)
+
+ 15:21 * infinity makes a note.
+
+ 15:22 <doko> autopkgtest regressions for trusty?
+
+ 15:22 <slangasek> doko: yes; not caused by either of your SRUs, just caused by letting autopkgtests bitrot for a year in trusty before we started looking at them again
+
+ 15:22 <slangasek> some of them being network-related failures
+
+ 15:22 <sil2100> slangasek: were you able to make that document with the side-by-side comparison of overlay and derived distro for olli?
+
+ 15:23 <slangasek> some being mysql tests that fail because time doesn't stand still and SSL certificates expired
+
+ 15:23 <doko> ahh, I see. where can you see these?
+
+ 15:23 <slangasek> sil2100: in progress; will be done this morning
+
+ 15:23 <pitti> I sent a summary to u-devel@; mostly because of tests relying on quirks/bugs of the null runner which we used back then
+
+ 15:23 <sil2100> Thanks!
+
+ 15:23 <slangasek> doko: you probably can't get a link to the specific set anymore now that we've released the SRUs; there's nothing that you should need to look at however
+
+ 15:24 <slangasek> the most interesting one was a lintian testsuite failure claiming that a binary was now a corrupted elf object - but that error started happening a week *before* binutils was uploaded to trusty-proposed
+
+ 15:24 <infinity> pitti: Speaking of, did you want back on ~ubuntu-sru and ~ubuntu-release so you can have a bit more direct control over this madness?
+
+ 15:24 <pitti> infinity: I need ~release for that, right?
+
+ 15:24 <infinity> pitti: release for devel series, sru for SRUs.
+
+ 15:24 <bdmurray> infinity: you are just going to let this new guy on these teams?
+
+ 15:25 <infinity> pitti: We split the hints across the teams, just like we split the queues.
+
+ 15:25 <infinity> bdmurray: He's emeritus on both teams. :P
+
+ 15:25 <bdmurray> infinity: He might have forgotten how to do things!
+
+ 15:25 <infinity> That's a chance I'm willing to take.
+
+ 15:25 <pitti> I just select all and click "accept"
+
+ 15:26 <infinity> Okay, not willing anymore.
+
+ 15:26 <cyphermox> pitti: I think you mean select all and click Reject :)
+
+ 15:26 <pitti> I'm not yearning for more work, just to manage stuff that's innocently stuck in -proposed a little better
+
+ 15:26 <slangasek> heh
+
+ 15:27 <slangasek> doko: fwiw if you want an overview of failing autopkgtests, in theory https://jenkins.qa.ubuntu.com/view/Trusty/view/AutoPkgTest/ is some kind of one
+
+ 15:27 <infinity> pitti: Team membership doesn't imply forced duties, though it might get you pinged occasionally for help with something.  Anyhow, your call, no one's voluntold into these teams.
+
+ 15:27 <doko> slangasek, thanks, not so nice as update_excuses ...
+
+ 15:27 <pitti> infinity: right, please add me
+
+ 15:27 <stgraber> pitti: select all and click "reject" with "Spite" as the reason, everyone will think you're infinity :)
+
+ 15:28 <infinity> slangasek: Did anyone investigate the lintian regression and sort out what it really was?  The last time lintian had a testsuite explosion like that, it really was a (weird) toolchain regression.
+
+ 15:28 <slangasek> doko: update_excuses gives you the overview for packages that are in progress. for SRUs that were already accepted, it no longer applies
+
+ 15:28 <pitti> oh, we don't have archives for SRUs
+
+ 15:28 <pitti> we do have them for devel
+
+ 15:29 <infinity> pitti: Reactivated in both.
+
+ 15:29 <slangasek> infinity: no.  what I did sort out was that the timing didn't line up with the binutils change, which was what had triggered the test rerun
+
+ 15:29 <pitti> actually, I lie: http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses/trusty/
+
+ 15:29 <pitti> ^ should have all the old excuses?
+
+ 15:29 <slangasek> infinity: (nor the gcc change; first lintian test failure was May 4, SRU accepts were May 13-14)
+
+ 15:30 <slangasek> pitti: oh, it should? interesting
+
+ 15:30 <infinity> slangasek: Sure, timing says it clearly wasn't *that* upload, still would be nice to figure out the cause.  Maybe I'll poke later in my copious free time.
+
+ 15:30 <pitti> conveniently un-clickable, but at least there
+
+ 15:30 <slangasek> doko: ^^ so there is an archive of the excuses if you really care; but with my SRU hat I already reviewed them and declared them to be false positives
+
+ 15:31 <slangasek> [TOPIC] AOB
+
+ 15:31 <slangasek> anything else?
+
+ 15:31 <infinity> Sure.  Since we already hijacked the meeting for sru/release stuff...
+
+ 15:31 <pitti> yes, right now we need to mostly ignore trusty, unless we upload a couple of SRUs to fix tests
+
+ 15:31 <infinity> slangasek, stgraber, pitti : ~ubuntu-release only has one Admin (me), which is suboptimal.  Anyone want to volunteer to be a second Admin?
+
+ 15:31 <slangasek> are we actually to where we're meant to be wrt not regressing the testbeds?
+
+ 15:32 <slangasek> infinity: you can give me bits
+
+ 15:32 <pitti> slangasek: since utopic, yes; trusty had a completely different infrastructure
+
+ 15:32 <infinity> slangasek: Done.
+
+ 15:33 <slangasek> pitti: my meaning is: are we at the point now where the testbed we're using to test trusty SRUs properly models what we were using at the time of trusty release
+
+ 15:33 <slangasek> (per the discussion in Austin)
+
+ 15:33 <infinity> slangasek: I think he's saying "close as it can get", since the runner is completely different, and we can't fix that.
+
+ 15:33 <slangasek> ok
+
+ 15:33 <slangasek> I did see some test failures that appeared to be regressions in the network policy
+
+ 15:34 <slangasek> i.e., use of proxy + accessing Canonical network resources still returning a failure
+
+ 15:34 <pitti> slangasek: they now have build-essential pre-installed; but e. g. the "tests don't have their build deps installed" behaviour is still differnet
+
+ 15:34 <pitti> that too
+
+ 15:34 <pitti> but there's not much I can do about that, we don't have unrestricted network there
+
+ 15:34 <infinity> Network policy is about to change again, so that's an ongoing battle.
+
+ 15:34 <infinity> But hopefully we can do it smoothly.
+
+ 15:34 <slangasek> I'm not asking for an unrestricted network
+
+ 15:34 <pitti> infinity: in scalingstack you mean?
+
+ 15:34 <slangasek> I'm asking for the network policy to actually match what I understood to have been agreed with CI :)
+
+ 15:35 <infinity> pitti: Yeah.  Though, we can probably do better with the move to scalingstack.
+
+ 15:35 <slangasek> which was "external resources on the Canonical network ok (but not yet implemented); truly external resources outside of our control, not ok"
+
+ 15:37 <pitti> slangasek: ah, we still have the old "anything goes via proxy" policy ATM
+
+ 15:37 <slangasek> barry: ^^ this also impacts your system-image tests of course, so if you want to know when your autopkgtests will be allowed to work... :)
+
+ 15:37 <stgraber> ah, that wasn't what you last told me, if that's the plan, then I'll have to turn off a bunch of tests in the LXC testsuite with the next upload
+
+ 15:37 <slangasek> pitti: oh, ok.  I saw some test failures that implied that things were not working, including using the proxy
+
+ 15:37 <pitti> was that "no arbitrary net access" already decided? (I object rather strongly..)
+
+ 15:37 <infinity> I object to that too, unless Debian adopts the same policy.
+
+ 15:38 <stgraber> unless "external resources on the Canonical network ok" includes "squid.internal" in which case, I've got what I need
+
+ 15:38 <infinity> Cause hacking every test from Debian is ungood.
+
+ 15:38 <barry> slangasek: yeah.  although i haven't gotten that far yet, i did re-enable the autopkgtests that do smoketesting against s-i.u.c
+
+ 15:38 <slangasek> tests relying on arbitrary external resources are unreliable tests
+
+ 15:38 <pitti> well, we would just change "one out of 1000 runs fails" with "all runs fail"
+
+ 15:38 <pitti> TBH, the unreliability of tests pales compared to the unreliability of our infrastructure
+
+ 15:38 <pitti> to the point that I can't even remember a single case
+
+ 15:39 <pitti> I mean wrt. remote net access, not in general
+
+ 15:39 <barry> it's also not necessarily a bad thing if you learn that a test relying on an external resource is failing <wink>
+
+ 15:40 <pitti> if I have to retry a failed net-accessing test twice a year, I'll be reeeeeeally happy :)
+
+ 15:40 <slangasek> stgraber: well, at least for the moment it's possible to access via the proxy
+
+ 15:40 <slangasek> (except when this randomly doesn't work)
+
+ 15:40 <infinity> slangasek: We did note that there are valid uses for tests talking to external resources, but often those don't relate to uploads, but should be daily "does my IM client software still work" tests.
+
+ 15:41 <stgraber> slangasek: ok. I got a bunch of e-mails about test failures and the log looked like no network connectivity but it wasn't triggered by one of my uploads so I didn't really look into the failure
+
+ 15:41 <slangasek> infinity: yes
+
+ 15:41 <infinity> slangasek: But if we figure out how to cater to that case, we still need to be able to talk to external resources to do it.
+
+ 15:41 <slangasek> infinity: the conclusion was "this doesn't belong in an autopkgtest run as part of proposed-migration"
+
+ 15:42 <infinity> slangasek: Sure, "... as part of p-m", I agree with, but we're building infra that should be flexible and reusable.
+
+ 15:42 <slangasek> it can be run under a different tenant with a different network policy
+
+ 15:42 * infinity shrugs.
+
+ 15:42 <slangasek> using the same charm on the same cloud
+
+ 15:42 <infinity> Anyhow, stgraber's use case also seems reasonable.  Unless we want to host all his blobs in our network just to make the test 100% reliable instead of 99%, which seems like overengineering for a problem we don't have.
+
+ 15:43 <slangasek> stgraber: I heard something to the effect that Canonical would be doing internal hosting of lxc images; is that the plan?
+
+ 15:43 <stgraber> slangasek: nope
+
+ 15:43 <pitti> infinity: ^ or at least I don't think it's sensible to think about this while 20% of our tests fail due to random infrastructure problems
+
+ 15:44 <stgraber> LXD will be using the cloud images at some point in the near future, but nothing's changing for LXC
+
+ 15:44 <slangasek> stgraber: ah, of course
+
+ 15:44 <infinity> pitti: I like the theory that we'll make the infra five-nines reliable, so other problems become more obvious.
+
+ 15:44 <stgraber> and LXD's own testsuite already doesn't rely on network access at all
+
+ 15:44 <infinity> pitti: But, yeah, let's try to get there first.
+
+ 15:44 <slangasek> ok I think we've discussed this to death
+
+ 15:44 <slangasek> shall we release our captive audience?
+
+ 15:45 <infinity> +1
+
+ 15:45 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

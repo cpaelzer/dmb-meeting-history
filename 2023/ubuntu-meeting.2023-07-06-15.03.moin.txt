@@ -1,0 +1,228 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdrung, 06 Jul at 15:03 &mdash; 15:53 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-07-06-15.03.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by bdrung at 15:03.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-6-jul-2023/36733   (bdrung, 15:03)
+
+=== Release incoming bugs ===
+
+Discussion started by bdrung at 15:19.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:20)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:31)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:31)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (bdrung, 15:32)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdrung at 15:41.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdrung, 15:41)
+
+=== AOB ===
+
+Discussion started by bdrung at 15:51.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (32)
+ * bdrung (26)
+ * bdmurray (4)
+ * schopin (4)
+ * ginggs (3)
+ * dbungert (3)
+ * waveform (3)
+ * meetingology (2)
+ * mclemenceau (1)
+ * sil2100 (1)
+ * zhsj (1)
+ * ogayot (1)
+ * slyon (1)
+ * enr0n (1)
+
+
+
+== Full log ==
+
+
+ 15:03 <bdrung> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:03 <meetingology> Meeting started at 15:03:11 UTC.  The chair is bdrung.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:03 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:03 <bdrung> #topic Lightning rounds
+
+ 15:03 <bdrung> https://discourse.ubuntu.com/t/foundations-team-updates-thursday-6-jul-2023/36733
+
+ 15:04 <bdrung> i'll give everybody some time to read and ask questions
+
+ 15:04 <bdmurray> ginggs: Did you find out why those linux-nvidia-5.19 tests were running?
+
+ 15:07 <vorlon> ginggs: why was there more than one copy of linux-nvidia-5.19 running with a migration-reference/0 trigger?
+
+ 15:07 <vorlon> ah same question as bdmurray
+
+ 15:08 <vorlon> maybe this is a britney bug, or a bug in someone queuing these tests, or
+
+ 15:08 <ginggs> no i did not, and they are still being triggered every 15 minutes or so
+
+ 15:10 <bdmurray> If the requester name is not showing up then the most likely culprit is britney
+
+ 15:10 <vorlon> and if it's on jammy, "every 15 minutes" is possible. I'll open a bug to track this on britney
+
+ 15:10 <vorlon> because we don't want it triggering more than 1 migration-reference/0 test at a time
+
+ 15:13 <vorlon> dbungert: how is systemd related to rsyslog vs busybox-rsyslogd?
+
+ 15:14 <dbungert> vorlon: systemd 253 can do a cleanup of a dangling symlink.  In systemd 252 instead we get a conffile conflict.
+
+ 15:14 <dbungert> I wanted to write up a bug anyhow with details, I'll do so.
+
+ 15:14 <vorlon> ok
+
+ 15:17 <bdrung> Finished reading the status?
+
+ 15:19 <bdmurray> aye
+
+ 15:19 <bdrung> #topic Release incoming bugs
+
+ 15:20 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:20 <bdrung> bug #2025068
+
+ 15:21 <vorlon> "Turns out SIMD isn’t a performance panacea" lol
+
+ 15:21 <bdmurray> This should be targetted to Mantic
+
+ 15:22 <waveform> done; I'm looking into this at the moment
+
+ 15:25 <bdrung> so we should tag this bug as foundations-todo?
+
+ 15:25 <mclemenceau> I think so
+
+ 15:25 <dbungert> vorlon: LP: #2026292
+
+ 15:25 <vorlon> dbungert: cool, will read
+
+ 15:25 <waveform> mclemenceau, okay, tag added
+
+ 15:26 <bdrung> next bug #2025575
+
+ 15:28 <bdrung> that looks like a bug for doko
+
+ 15:29 <bdrung> should we tag it as well?
+
+ 15:29 <schopin> In doubt I say tag it, doko can remove it later if we're wrong.
+
+ 15:30 <bdrung> okay, tagged foundations-todo
+
+ 15:31 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:31 <bdrung> nothing for up \o/
+
+ 15:31 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:31 <bdrung> same here
+
+ 15:32 <bdrung> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:32 <bdrung> bug #2024901
+
+ 15:34 <schopin> So, do we support LVM without separate /boot?
+
+ 15:40 <sil2100> Guess we're taking it in, at least to investigate both the installer side and upgrade side, right?
+
+ 15:40 <bdrung> If not having a separate /boot partition, we should make sure that the installer does not create such setup
+
+ 15:40 <vorlon> even if we do, apparently IBM's own tools don't
+
+ 15:40 <vorlon> but we should reach a conclusion on this bug, so take it
+
+ 15:40 <bdrung> okay, tagging with foundations-todo then.
+
+ 15:41 <bdrung> #topic Team proposed-migration report
+
+ 15:41 <bdrung> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:41 <bdrung> handing over to vorlon
+
+ 15:42 <vorlon> fwupd still here, had discussed with Zixing whether we should stop shipping fwupd on s390x altogether; he has the action to follow up with upstream but he is out today
+
+ 15:42 <zhsj> i'm still working on golang-defaults.
+
+ 15:42 <schopin> libsereal-decoder-perl is still with me, I dropped the ball on it. My bad.
+
+ 15:43 <vorlon> ok
+
+ 15:44 <vorlon> libwww-perl has a pending MIR, I'm waiting for a reply from the Debian maintainers of libwww-thingie-perl
+
+ 15:44 <vorlon> ogayot: are you still looking at sqlite3?
+
+ 15:44 <ogayot> vorlon: it's only waiting for a s390x autopkgtest run, it should migrate after
+
+ 15:45 <vorlon> ok
+
+ 15:46 <vorlon> zhsj said last week he was looking at golang-defaults; I'll assume that's still with him
+
+ 15:46 <schopin> he said so 4mn ago too :)
+
+ 15:46 <vorlon> aha yes
+
+ 15:46 <vorlon> then it was a good assumption!
+
+ 15:47 <vorlon> that takes us to the new stuff
+
+ 15:47 <vorlon> slyon: can you take python-attrs?
+
+ 15:47 <slyon> sure!
+
+ 15:47 <vorlon> rustc, that one is understood, there's some MIRage going on there
+
+ 15:48 <vorlon> gcc-12, leaving with doko as the uploader
+
+ 15:48 <vorlon> boost1.74 is just hung up on the s390x infra issues (test currently blacklisted)
+
+ 15:49 <vorlon> ginggs: do you want to follow through on that one?
+
+ 15:49 <ginggs> vorlon: sure
+
+ 15:49 <vorlon> boost1.74: ginggs:
+
+ 15:49 <vorlon> ginggs: actually can you take all of the build-essential blockers?  several are s390x, but there's a couple others
+
+ 15:50 <ginggs> yeah, i'll take them
+
+ 15:50 <vorlon> thanks
+
+ 15:50 <vorlon> then there's a bunch of packages waiting for s390x autopkgtest results
+
+ 15:50 <vorlon> debianutils vs mariadb-10.6/armhf: I'll look at this one
+
+ 15:50 <vorlon> and that's it for this week
+
+ 15:50 <vorlon> bdrung:
+
+ 15:51 <bdrung> #topic AOB
+
+ 15:51 <enr0n> I will be out tomorrow
+
+ 15:51 <waveform> I'll only be semi-productive tomorrow (another school strike, so I'm balancing parenting duties)
+
+ 15:53 <bdrung> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

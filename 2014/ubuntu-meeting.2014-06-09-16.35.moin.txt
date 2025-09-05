@@ -1,0 +1,297 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 09 Jun at 16:35 &mdash; 17:15 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-06-09-16.35.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 16:35.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:35.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:07.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libapache2-mod-nss.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/dolibarr.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gnumeric.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ircd-ratbox.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ngircd.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:08.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (42)
+ * mdeslaur (24)
+ * jjohansen (19)
+ * sbeattie (11)
+ * chrisccoulson (7)
+ * tyhicks (6)
+ * sarnold (3)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 16:35 <jdstrand> #startmeeting
+
+ 16:35 <meetingology> Meeting started Mon Jun  9 16:35:13 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:35 <meetingology> 
+
+ 16:35 <meetingology> Available commands: action commands idea info link nick
+
+ 16:35 <jdstrand> The meeting agenda can be found at:
+
+ 16:35 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:35 <jdstrand> [TOPIC] Announcements
+
+ 16:35 <jdstrand> Felix Geyer (debfx) provided debdiffs for precise-trusty for mod-wsgi (LP: #1322338). Your work is very much appreciated and will keep Ubuntu users secure. Great job!
+
+ 16:35 <ubottu> Launchpad bug 1322338 in mod-wsgi (Ubuntu Utopic) "CVE 2014-0240 and CVE 2014-0242" [Undecided,Fix released] https://launchpad.net/bugs/1322338
+
+ 16:35 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:35 <jdstrand> I'll go first
+
+ 16:36 <jdstrand> short week this week. I am off Wednesday
+
+ 16:36 <jdstrand> I'm on community this week
+
+ 16:36 <jdstrand> I need to send my ofono hardening work to the phonedations team (ie, where only certain applications can communicate to ofono)
+
+ 16:36 <jdstrand> there is a bit more work to do there, but I have it working on my phone, so that is good
+
+ 16:37 <jdstrand> I have been doing phablet kernel testing for jjohansen-- mako looks good so far, still need to do flo and goldfish, but I imagine jjohansen has those tested already
+
+ 16:37 <jdstrand> I am working on several different openstack updates
+
+ 16:38 <jdstrand> and have various sprint outcomes to still go through
+
+ 16:38 <jjohansen> sure I've run those, there are some basic policy updates, but jdstrand has seen those already
+
+ 16:39 <jjohansen> jdstrand: you pulled in the new apparmor package correct?
+
+ 16:39 <jdstrand> jjohansen: yes
+
+ 16:39 <jjohansen> okay good
+
+ 16:39 <jdstrand> we need to get this into utopic so our delta is as small as possible when we update for abstract, but we can talk about that in jjohansen's time
+
+ 16:40 <jdstrand> mdeslaur: you're up
+
+ 16:40 <mdeslaur> I'm in the happy place this week
+
+ 16:40 <mdeslaur> I have some json-c packages to test, and am currently working on dpkg updates
+
+ 16:40 <mdeslaur> also have to do the non-trivial libtasn backports
+
+ 16:41 <mdeslaur> tomorrow, I'm doing a Q&A for UDS^H^H^Hwhatever replaces UDS
+
+ 16:41 <jdstrand> oh, I guess there is UOS too
+
+ 16:41 <jdstrand> (jeez, busy week)
+
+ 16:41 * sbeattie collects rotten tomatoes for that
+
+ 16:41 <mdeslaur> and I need to look at an updated apparmor package for U
+
+ 16:41 <mdeslaur> jjohansen's packages is missing a couple of the latest commits, which I guess we're going to want
+
+ 16:42 <mdeslaur> so I'll remerge from trunk I guess
+
+ 16:42 <mdeslaur> and, yeah, attend UOS
+
+ 16:42 <jjohansen> mdeslaur: O_o I pulled that fresh on friday
+
+ 16:42 <jjohansen> not that the debian packaging side doesn't need some fixing :)
+
+ 16:43 <mdeslaur> jjohansen: oh, the two missing commits are freom friday
+
+ 16:43 <mdeslaur> d'oh
+
+ 16:43 <mdeslaur> jjohansen: yeah, I'll take a look and see if everything's good with the packaging
+
+ 16:43 <jjohansen> haha, nice
+
+ 16:44 <mdeslaur> that's it from me, sbeattie?
+
+ 16:44 <sbeattie> I'm focusing again on getting pie by default for amd64 in gcc this week
+
+ 16:44 <mdeslaur> sbeattie: what's the current status?
+
+ 16:44 <sbeattie> I have a test compiler that bootstraps and does the right for common cases.
+
+ 16:45 <sbeattie> There's a couple of situations that the gcc testsuite where it's not compiling the .o with -fPIE when it needs to, but tries to link with -pie, which fails, so I'm tracking down why that fails.
+
+ 16:46 <sbeattie> I'm in the middle of setting up a ppa with that compiler as the default, to enable wider testing/benchmarking.
+
+ 16:46 <mdeslaur> cool
+
+ 16:47 <sbeattie> I have some apparmor patches to review and submit.
+
+ 16:47 <mdeslaur> sbeattie: oh, are those good for U too?
+
+ 16:47 <sbeattie> mdeslaur: cboltz's patch is, yes, though I need to dig in to why I can't reproduce his failure in U.
+
+ 16:48 <mdeslaur> ok
+
+ 16:48 <sbeattie> I may try to take a swap day off on friday...
+
+ 16:48 <sbeattie> And I'll be attending UOS.
+
+ 16:49 <sbeattie> That's it for me, I think. tyhicks?
+
+ 16:49 <tyhicks> I'm focusing on my kdbus work item this week
+
+ 16:49 <tyhicks> I keep letting myself get distracted by other work, so I'm only going to plan on that one work item
+
+ 16:49 <tyhicks> I'll sync up w/ everyone once it is done for what I should focus on next
+
+ 16:49 <tyhicks> (Some UOS for me this week, as well)
+
+ 16:49 <tyhicks> That's it for me
+
+ 16:49 <tyhicks> jjohansen: you're up
+
+ 16:50 <jjohansen> So I've got UOS to distract me this week, and a couple of bugs to poke at and at least triage
+
+ 16:51 <jjohansen> We have the utopic touch device kernels in testing, and I think ready to be pulled
+
+ 16:51 <jjohansen> so I will send that request out as soon as its dependencies fall into place (maybe this week)
+
+ 16:52 <mdeslaur> is anything there waiting on a new userspace?
+
+ 16:52 <jjohansen> This basically falls out as: more testing, policy updates, and the new apparmor userspace in U
+
+ 16:53 <jjohansen> mdeslaur: yep, the kernel won't go until that is updated, reason: userspace fixes a compiler issue that results in policy that causes failures under the new kernel
+
+ 16:53 <mdeslaur> hrm
+
+ 16:53 <mdeslaur> ok
+
+ 16:53 <mdeslaur> guess I'll work on that tomorrow or wed then
+
+ 16:55 <jjohansen> Besides testing/collaborating with jdstrand on the policy updates, I'll be working on the apparmor kernel module
+
+ 16:55 * mdeslaur still needs to figure out how he got volunteered to do the U update
+
+ 16:55 <jjohansen> to finish up the missing pieces
+
+ 16:56 <jjohansen> mdeslaur: well it was one of those quick mdeslaur isn't paying attention get him to agree while he is distracted
+
+ 16:56 <sbeattie> mdeslaur: we sent you out to collect beer and cheetos while we decided, to help the volunteering process along.
+
+ 16:56 <sarnold> I'm wondering when we're goign to tell mdeslaur he also volunteered for the T update...
+
+ 16:56 <jdstrand> jjohansen: policy updates should all be in place
+
+ 16:56 * mdeslaur shakes fist at team
+
+ 16:57 <jjohansen> jdstrand: when will they hit the images?
+
+ 16:57 <jdstrand> they are there
+
+ 16:57 <jdstrand> check that off your list :)
+
+ 16:57 <jjohansen> okay, I'll update and see how it goes, and then check it off the list :P
+
+ 16:58 <jjohansen> I think that is it for me, sarnold your up
+
+ 16:58 <jdstrand> on mako I have no denials except with media-hub, but that is unrelated
+
+ 16:58 <jdstrand> (it also works fine and I've pinged jhodapp about it)
+
+ 16:59 <jjohansen> jdstrand: I expect everything will be fine, I just want to run it through the 4 devices to make sure
+
+ 16:59 <jdstrand> sure
+
+ 16:59 * jjohansen wants to avoid the whole your new kernel broke, ... mess
+
+ 17:01 <sarnold> I'm on triage this week; I'm also reading some angry tweets for UOS, investigating click packaging to see how authenticity checks are being performed, and if there's any time left returning to the interminable mod_wsgi fixes for django
+
+ 17:01 <sarnold> I think that's it for me, chrisccoulson?
+
+ 17:02 <chrisccoulson> this week, it's mozilla updates for me
+
+ 17:02 <chrisccoulson> plus one other update
+
+ 17:02 <chrisccoulson> my other main task is fixing bug 1312082, which I hope to have done this week
+
+ 17:02 <ubottu> bug 1312082 in Oxide "Stop using deprecated compositing paths" [High,Triaged] https://launchpad.net/bugs/1312082
+
+ 17:03 <mdeslaur> chrisccoulson: so will the new paths be next on the deprecated list, or are they the current ones? :)
+
+ 17:03 <chrisccoulson> mdeslaur, no, we'll be using the same path as all other platforms :)
+
+ 17:03 <mdeslaur> oh cool :)
+
+ 17:04 <chrisccoulson> i think that's me done
+
+ 17:06 <jdstrand> chrisccoulson: moving away from the deprecated paths is required for the media-hub work to really start, correct?
+
+ 17:06 <chrisccoulson> jdstrand, there's parts of that which can be started without it
+
+ 17:07 <jdstrand> sure, but this has to be done for it
+
+ 17:07 <jdstrand> chrisccoulson: the others are starting on the parts that can be done now, no?
+
+ 17:07 <chrisccoulson> jdstrand, yeah, I think so
+
+ 17:07 * jdstrand saw various bug assignments, etc last week
+
+ 17:07 <jdstrand> cool
+
+ 17:07 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:07 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:08 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:08 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libapache2-mod-nss.html
+
+ 17:08 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/dolibarr.html
+
+ 17:08 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/gnumeric.html
+
+ 17:08 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ircd-ratbox.html
+
+ 17:08 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ngircd.html
+
+ 17:08 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:08 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:15 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold, ChrisCoulson: thanks!
+
+ 17:15 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

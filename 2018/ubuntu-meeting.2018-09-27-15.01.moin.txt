@@ -1,0 +1,424 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 27 Sep at 15:01 &mdash; 15:34 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2018/ubuntu-meeting.2018-09-27-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:01.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 15:16.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:30.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (26)
+ * juliank (20)
+ * cyphermox (17)
+ * tdaitx (14)
+ * ubottu (13)
+ * rbalint (9)
+ * xnox (9)
+ * infinity (9)
+ * bdmurray (9)
+ * gaughen (9)
+ * Odd_Bloke (6)
+ * aleks_bogdanov (6)
+ * philroche (6)
+ * doko (6)
+ * tobikoch_ (5)
+ * rcj (4)
+ * platonical (4)
+ * fginther (4)
+ * meetingology (3)
+ * mdeslaur (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Thu Sep 27 15:01:21 2018 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <slangasek> [TOPIC] Lightning round
+
+ 15:02 <rbalint> o/
+
+ 15:02 <slangasek> $ echo $(shuf -e slangasek bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson rcj philroche Odd_Bloke fginther juliank platonical aleks_bogdanov tobikoch)
+
+ 15:02 <slangasek> juliank rcj philroche bdmurray platonical sil2100 aleks_bogdanov mwhudson tdaitx infinity rbalint tobikoch xnox fginther cyphermox Odd_Bloke slangasek doko
+
+ 15:03 <slangasek> juliank: hi
+
+ 15:03 <juliank> yay, first!
+
+ 15:03 <juliank> last week:
+
+ 15:03 <juliank> * sprint, meetings
+
+ 15:03 <juliank> * changed livecd-rootfs to recursively mark dependencies of metapackages as automatically installed
+
+ 15:03 <juliank> * released apt 1.7.0~rc1, python-apt 1.7.0~rc1, apt 1.7.0~rc2
+
+ 15:03 <juliank> * rebased used autopkgtest (https://code.launchpad.net/~juliank/autopkgtest/+git/development/+merge/355422)
+
+ 15:03 <juliank> this week:
+
+ 15:03 <juliank> * apt 1.7.0~rc2ubuntu1
+
+ 15:03 <juliank> - fixes a nasty bug in python-apt where closing the Cache releases the dpkg lock; unbreaks ubuntu-make git
+
+ 15:03 <juliank> - fixes calculation of elapsed time to not underflow (subtracted usecs from secs instead of usecs)
+
+ 15:03 <juliank> * reviewed changes in update-manager by rbalint
+
+ 15:03 <juliank> * more planning for delta upgrades (repository layout, bloom filters - https://lists.debian.org/deity/2018/09/msg00039.html)
+
+ 15:03 <juliank> * packagekit: fixed multi-arch .list file lookups in dpkg status database (1.1.10-1ubuntu6, https://github.com/hughsie/PackageKit/pull/279)
+
+ 15:03 <juliank> * networkd-dispatcher changes to allow hooks in /etc, overriding hooks with same name in /usr/lib
+
+ 15:03 <juliank> * submitted https://github.com/mvo5/unattended-upgrades/pull/140 enabled unattended-upgrades on devel 21 days prior to release, needs a follow up to (re)add test cases
+
+ 15:03 <juliank> plans for tomorrow:
+
+ 15:03 <juliank> * frontend locking SRUs
+
+ 15:03 <juliank> * test cases for unattended-upgrades change
+
+ 15:03 <juliank> (done)
+
+ 15:03 <juliank> rcj:
+
+ 15:04 <rcj> * moving from bzr to git for build recipes
+
+ 15:04 <rcj> * fixed cosmic seed to include lxd in the server seed
+
+ 15:04 <rcj> * cloud image development work
+
+ 15:04 <rcj> (done)
+
+ 15:05 <philroche> * Team sprint in Brussels
+
+ 15:05 <philroche> * On leave for four days
+
+ 15:05 <philroche> * Public cloud image customisations
+
+ 15:05 <philroche> * Cloud image build system vanguard
+
+ 15:05 <philroche> (done)
+
+ 15:05 <philroche> bdmurray:
+
+ 15:05 <bdmurray> Team sprint in Brussels and then some holiday
+
+ 15:05 <bdmurray> ✔ done
+
+ 15:05 <platonical> Team sprint
+
+ 15:05 <platonical> work on partner image libraries
+
+ 15:05 <platonical> done
+
+ 15:06 <platonical> sil2100:
+
+ 15:07 <aleks_bogdanov> i guess sil2100 is not around
+
+ 15:07 <aleks_bogdanov> * Working on adding minimal simplestreams to cloud_images kpi metrics
+
+ 15:07 <aleks_bogdanov> * Converting cloud_images metrics from Prometheus to InfluxDB
+
+ 15:07 <aleks_bogdanov> * Development jenkins upgrade testing
+
+ 15:07 <aleks_bogdanov> (done)
+
+ 15:07 <aleks_bogdanov> mwhudson:
+
+ 15:08 <tdaitx> mwhudson timezone does not help him joining this meeting, so I will go
+
+ 15:08 <tdaitx> * short weeks: working 6h/day
+
+ 15:08 <tdaitx> * sprint
+
+ 15:08 <tdaitx> * initramfs-tools fixes (LP: #1791959, LP: #1667512, LP: #1793290):
+
+ 15:08 <tdaitx> - remove orphaned old-dkms files from /boot (cosmic done, xenial sru-verified, and bionic sru needs a small fix)
+
+ 15:08 <tdaitx> - limit sync to initramfs /boot filesystem (xenial and bionic verified)
+
+ 15:08 <ubottu> Launchpad bug 1791959 in initramfs-tools (Ubuntu Bionic) "[SRU] remove orphaned initrd old-dkms files in /boot" [Undecided,Fix committed] https://launchpad.net/bugs/1791959
+
+ 15:08 <ubottu> Launchpad bug 1667512 in initramfs-tools (Ubuntu Bionic) "[SRU] update-initramfs should sync only the filesystem containing the initramfs image" [Undecided,Fix committed] https://launchpad.net/bugs/1667512
+
+ 15:08 <tdaitx> - avoid calling depmod if modules directory does not exist (cosmic merge proposed)
+
+ 15:08 <ubottu> Launchpad bug 1793290 in linux-kvm (Ubuntu) "Purging the custom kernel does not remove initramfs" [Undecided,Incomplete] https://launchpad.net/bugs/1793290
+
+ 15:08 <tdaitx> * checked and tested that libjna was working as expected, jenkins package (3rd party) at fault LP: #1662813
+
+ 15:08 <ubottu> Launchpad bug 1662813 in Ubuntu on IBM z Systems "Libjna-jni uses wrong path on package installation on s390x" [High,Invalid] https://launchpad.net/bugs/1662813
+
+ 15:08 <tdaitx> * implemented key export for mokx, pk, kek, db and dbx keys in mokutil together with cyphermox (tks!)
+
+ 15:08 <tdaitx> - pull request at https://github.com/lcp/mokutil/pull/18
+
+ 15:08 <tdaitx> * merge gradle, groovy, gradle-debian-helper, maven-compiler-plugin (LP: #1794122, LP: #1794129, LP: #1794135, LP: #1794132)
+
+ 15:08 <ubottu> Launchpad bug 1794122 in gradle-debian-helper (Ubuntu) "Please merge gradle-debian-helper 2.0.1 from Debian" [Undecided,New] https://launchpad.net/bugs/1794122
+
+ 15:08 <tdaitx> Other:
+
+ 15:08 <ubottu> Launchpad bug 1794129 in gradle (Ubuntu) "Please merge gradle 4.4-2 from Debian" [Undecided,New] https://launchpad.net/bugs/1794129
+
+ 15:08 <ubottu> Launchpad bug 1794135 in groovy (Ubuntu) "Please merge groovy 2.4.15-3 from Debian" [Undecided,New] https://launchpad.net/bugs/1794135
+
+ 15:08 <tdaitx> * (re) learned a bit of git-ubuntu
+
+ 15:08 <ubottu> Launchpad bug 1794132 in maven-compiler-plugin (Ubuntu) "Please merge maven-compiler-plugin 3.8.0-1 from Debian" [Undecided,Fix released] https://launchpad.net/bugs/1794132
+
+ 15:08 <tdaitx> (done)
+
+ 15:08 <infinity> * Working on releasing Cosmic Beta this week
+
+ 15:08 <infinity> * Investigated explosion of the base system, narrowing it down to changes in popcon (fixed) and pygobject (in progress)
+
+ 15:08 <infinity> * Currently poking at a germinate (near) infinite recursion issue
+
+ 15:08 <infinity> * Sprinty Sprint Sprint
+
+ 15:08 <infinity> (done)
+
+ 15:08 <rbalint> (short week)
+
+ 15:08 <rbalint> * generic bzr -> git conversion script to migrate many launchpad repos
+
+ 15:09 <rbalint> * unattended-upgrades fixes waiting to be released
+
+ 15:09 <rbalint> * update-manager fixes
+
+ 15:09 <rbalint> * update gce-compute-image-packages
+
+ 15:09 <rbalint> (done)
+
+ 15:09 <tobikoch_> * Update launchpad-buildd LXD backend to work on Bionic (MP#354331)
+
+ 15:09 <tobikoch_> * Work on the test framework
+
+ 15:09 <tobikoch_> * Cloud stuff
+
+ 15:09 <tobikoch_> (done)
+
+ 15:09 <tobikoch_> xnox:
+
+ 15:09 <xnox> finished up rebuilding things for openssl1.1.1 tls1.3
+
+ 15:09 <xnox> only python2.7 is left... filed upstream issue
+
+ 15:09 <xnox> uploaded systemd with env fixes
+
+ 15:09 <xnox> working with jfh on outstanding zkey things
+
+ 15:09 <xnox> drafting subiquity roadmap for 19.04
+
+ 15:09 <xnox> checked the apt spec
+
+ 15:09 <xnox> done.
+
+ 15:10 <fginther> * Sprint activities
+
+ 15:10 <fginther> * SRU testing for LP: #1792466
+
+ 15:10 <fginther> * Small bits of partner work
+
+ 15:10 <fginther> ✔ done
+
+ 15:10 <ubottu> Launchpad bug 1792466 in gce-compute-image-packages (Ubuntu Bionic) " Update google compute-image-packages to 20180905" [Undecided,Fix committed] https://launchpad.net/bugs/1792466
+
+ 15:10 <cyphermox> - [HIGHLIGHT] netplan 0.40 + SRU to bionic (still in unapproved)
+
+ 15:10 <cyphermox> - reviewed list of merges on MoM for potential merges needed post-ff
+
+ 15:10 <cyphermox> - debugging signed bootloaders for uefi on armhf (LP: #1788940)
+
+ 15:10 <cyphermox> - SRU for grub2 reloc fixes to bionic (LP: #1792575)
+
+ 15:10 <ubottu> Launchpad bug 1788940 in grub2 (Ubuntu) "armhf cloud image fails to boot kernel" [Undecided,Triaged] https://launchpad.net/bugs/1788940
+
+ 15:10 <ubottu> Launchpad bug 1792575 in shim (Ubuntu Bionic) "Boot failure with efi shims from 20180913.0" [Undecided,New] https://launchpad.net/bugs/1792575
+
+ 15:10 <cyphermox> - first MIR team meeting (tuesdays 13:00 UTC)
+
+ 15:10 <cyphermox> - picking up new shim reviews (opsi, DriveLock)
+
+ 15:10 <cyphermox> - discussed EFI GetVariable/SetVariable behavior for platforms with no variable store
+
+ 15:10 <cyphermox> (done)
+
+ 15:10 <Odd_Bloke> * Engineering sprint in Brussels last week
+
+ 15:10 <Odd_Bloke> * Continuing work on reworking our GKE image publication (between catching up on emails, code review and sleep)
+
+ 15:10 <Odd_Bloke> (done)
+
+ 15:10 <Odd_Bloke> vorlangasek:
+
+ 15:12 <Odd_Bloke> slangasek:
+
+ 15:12 <Odd_Bloke> (Fix your highlighting.)
+
+ 15:12 <infinity> slangalon?
+
+ 15:12 <xnox> ivan ivanovich!
+
+ 15:12 <slangasek> * sprint
+
+ 15:12 <slangasek> * swap day
+
+ 15:12 <slangasek> * sprint load
+
+ 15:12 <slangasek> * SecureBoot discussions
+
+ 15:12 <slangasek> * SRU sponsorships
+
+ 15:12 <slangasek> * SRU processing
+
+ 15:12 <slangasek> * beta queue processing
+
+ 15:12 <slangasek> (done)
+
+ 15:12 <doko> - sprint last week
+
+ 15:12 <doko> - Python OpenSSL related updates, 3.6.7 and 3.7.1 release candidates
+
+ 15:12 <doko> - synced some more Java packages
+
+ 15:12 <doko> - general archive work, MIR, ...
+
+ 15:12 <doko> (done)
+
+ 15:13 <doko> ohh, and we now have weekly MIR meetings
+
+ 15:13 <gaughen> vorlangasek
+
+ 15:14 * mdeslaur chuckles
+
+ 15:14 <slangasek> cyphermox: "platforms with no variable store" hnghnhghngh
+
+ 15:15 <cyphermox> slangasek: yes, I know
+
+ 15:15 <cyphermox> it's... complicated
+
+ 15:15 <slangasek> questions on status?
+
+ 15:16 <slangasek> [TOPIC] Bugs
+
+ 15:16 <slangasek> bdmurray:
+
+ 15:17 <bdmurray> jibel reported bug 1793671 the other day
+
+ 15:17 <ubottu> bug 1793671 in ubiquity (Ubuntu) "Proprietary drivers are installed locally and not on the target system" [Undecided,New] https://launchpad.net/bugs/1793671
+
+ 15:17 <bdmurray> I've not yet tested it though
+
+ 15:17 <slangasek> .... huh
+
+ 15:17 <slangasek> bdmurray: taking onto backlog
+
+ 15:19 <bdmurray> then bug 1789028 seems minor but also worth fixing
+
+ 15:19 <ubottu> bug 1789028 in update-manager (Ubuntu) "update-manager install not clickable if there are only packages to remove" [Medium,Triaged] https://launchpad.net/bugs/1789028
+
+ 15:20 <rbalint> i just fixed that
+
+ 15:20 <rbalint> it is a dup
+
+ 15:21 <bdmurray> rbalint: okay, cool
+
+ 15:22 <gaughen> bdmurray, on the ubiquity bug - do we need to fix this before release?
+
+ 15:23 <bdmurray> gaughen: yeah
+
+ 15:23 <gaughen> slangasek, I think we should put it in the prioritized queue then towards the top
+
+ 15:23 <gaughen> so it gets picked up next iteration, unless that's too late
+
+ 15:23 <gaughen> I fear that's too late.
+
+ 15:23 <slangasek> gaughen: yes, moving to prioritized
+
+ 15:24 <gaughen> slangasek, given we're 3 weeks from release, can it wait?
+
+ 15:25 <slangasek> gaughen: if you want to get someone to commit to it right now
+
+ 15:27 <cyphermox> fwiw I think there's a misunderstanding
+
+ 15:27 <cyphermox> prepare runs ubuntu-drivers, but to get a list of stuff to install
+
+ 15:27 <cyphermox> (at least, that's what it was doing last I looked)
+
+ 15:27 <gaughen> bdmurray, infinity either of you have capacity to pick up the ubiquity bug?
+
+ 15:27 <cyphermox> then later it's supposed to queue those to install on the rootfs, once there's one
+
+ 15:28 <infinity> cyphermox: Hrm?
+
+ 15:28 <bdmurray> gaughen: I'm not sure yet, I'll know by the beta stand up
+
+ 15:28 <infinity> cyphermox: I assume jibel knows to wait until it's done to see if it happened. :P
+
+ 15:28 <gaughen> bdmurray, we didn't sign you up for much :-)
+
+ 15:28 <cyphermox> infinity: I know
+
+ 15:28 <cyphermox> infinity: I assume his tests are good too, but I'm surprised
+
+ 15:28 <gaughen> bdmurray, k we'll take the bug to beta standup
+
+ 15:29 <cyphermox> ubuntu-drivers /was/ running at the end of prepare, on purpose.
+
+ 15:30 <slangasek> ok, so we have a plan for that bug
+
+ 15:30 <slangasek> bdmurray: anything else?
+
+ 15:30 <bdmurray> slangasek: nope
+
+ 15:30 <slangasek> [TOPIC] AOB
+
+ 15:30 <slangasek> everyone: anything else?
+
+ 15:31 <infinity> I dreamt of doughnuts and now I want some.
+
+ 15:31 * xnox recalls there were a subtype of plugins to run in the installed system as root... to do things like installing drivers in target. oh well.
+
+ 15:34 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,403 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 25 Aug at 15:00 &mdash; 15:58 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-08-25-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by juliank at 15:00.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-25-august-2022/   (juliank, 15:01)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:09)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:19)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/intel-microcode/3.20220809.0ubuntu1   (slyon, 15:22)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:27.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:27)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:28)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/plzip/+bug/1980663/comments/6   (slyon, 15:38)
+
+=== AOB ===
+
+Discussion started by juliank at 15:50.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (52)
+ * vorlon (48)
+ * slyon (21)
+ * ginggs (14)
+ * ubottu (11)
+ * bdmurray (10)
+ * schopin (4)
+ * enr0n (3)
+ * dbungert (3)
+ * meetingology (2)
+ * mclemenceau (2)
+ * alexghiti (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:15 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <enr0n> o/
+
+ 15:00 <juliank> #topic Lightning Round
+
+ 15:00 <slyon> o/
+
+ 15:01 <ginggs> juliank: i think you mean https://discourse.ubuntu.com/t/foundations-team-updates-thursday-25-august-2022/
+
+ 15:01 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-25-august-2022/
+
+ 15:01 <juliank> yeah
+
+ 15:01 <juliank> let's have ourselves sometime to look at this and ask questions
+
+ 15:04 <bdmurray> I like the first line in dbungert's status
+
+ 15:04 <bdmurray> Maybe the second one too
+
+ 15:04 <juliank> congrats to dbungert
+
+ 15:05 <dbungert> juliank: thanks!
+
+ 15:05 <dbungert> bdmurray: I will be clicking tests for a while to catch up with how many you ran for me
+
+ 15:06 <ginggs> in before bdmurray says you shouldn't be clicking, but rather using retry-autopkgtest-regressions
+
+ 15:07 <bdmurray> ;-)
+
+ 15:09 <juliank> #topic Release incoming bugs
+
+ 15:09 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 15:09 <juliank> bug 1699942 is actually raised by me
+
+ 15:09 <ubottu> Bug 1699942 in network-manager (Ubuntu) "network-manager fails to deprecate addresses" [Undecided, Triaged] https://launchpad.net/bugs/1699942
+
+ 15:10 <juliank> So IPv6 routes get advertised by the router as invalid, but NM does not remove them, it just sets their TTL to 1s
+
+ 15:10 <juliank> s/routes/prefixes/
+
+ 15:10 <juliank> Well the /128 prefix is around all the time
+
+ 15:10 <juliank> I actually lost IRC a couple minutes ago as the route broke :D
+
+ 15:11 <juliank> systemd looks the same
+
+ 15:11 <juliank> I don't know what's actually reading the router advertisements?
+
+ 15:11 <juliank> Not a regression, bug was around in xenial
+
+ 15:13 <juliank> added a linux task, we believe that's what's handling the RAs
+
+ 15:14 <juliank> bug 1981109
+
+ 15:14 <ubottu> Bug 1981109 in modemmanager (Ubuntu) "server image pulls in ModemManager via fwupd, consumes 25MiB RAM in every container" [High, Triaged] https://launchpad.net/bugs/1981109
+
+ 15:14 <bdmurray> IIRC the remaining task is for desktop
+
+ 15:15 <juliank> vorlon: is there anything left?
+
+ 15:16 <vorlon> juliank: livecd-rootfs is being SRUed to jammy, I think the rls-kk-incoming task could be dropped (or the bug could just be targeted to kinetic since livecd-rootfs was uploaded there)
+
+ 15:18 <juliank> ack
+
+ 15:18 <juliank> bug 1097467
+
+ 15:18 <ubottu> Bug 1097467 in bash (Ubuntu) "bash does not fulfill --rcfile option properly" [Undecided, Confirmed] https://launchpad.net/bugs/1097467
+
+ 15:18 <bdmurray> R alpha-1 would be like Raring?
+
+ 15:19 <juliank> further discussion to happen
+
+ 15:19 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:19 <juliank> bug 1986648
+
+ 15:19 <ubottu> Bug 1986648 in rustc (Ubuntu) "rustc 1.61 and cargo 0.62 required by firefox 105" [High, Confirmed] https://launchpad.net/bugs/1986648
+
+ 15:20 <juliank> schopin: ^
+
+ 15:20 <schopin> Yes, this needs carding as I'm guessing it will take a bit of time.
+
+ 15:20 <mclemenceau> on it ;)
+
+ 15:20 <schopin> thanks :)
+
+ 15:21 <juliank> bug 1981721
+
+ 15:21 <ubottu> Bug 1981721 in netplan.io (Ubuntu) "dual port SRIOV NIC with 64 VFs per PF  is not configured with switchdev eswitch mode" [Undecided, New] https://launchpad.net/bugs/1981721
+
+ 15:21 <slyon> let's skip this ^
+
+ 15:21 <slyon> no updates yet
+
+ 15:21 <juliank> bug 1979825
+
+ 15:21 <ubottu> Bug 1979825 in amd64-microcode (Ubuntu) "Please consider shipping April 2022 microcode updates" [Undecided, Confirmed] https://launchpad.net/bugs/1979825
+
+ 15:21 <juliank> probably should jfdi
+
+ 15:21 <ginggs> isn't that done?
+
+ 15:22 <slyon> there was an update recently
+
+ 15:22 <slyon> https://launchpad.net/ubuntu/+source/intel-microcode/3.20220809.0ubuntu1
+
+ 15:22 <ginggs> ah, in kinetic, needs sru
+
+ 15:22 <juliank> amd, not intel
+
+ 15:22 <juliank> ah yes
+
+ 15:22 <juliank> let's card this
+
+ 15:22 <slyon> ahh
+
+ 15:22 <bdmurray> I tagged the bug in part because I think something is missing process wise
+
+ 15:23 <juliank> Revert to 3.20180524.1 version of microcode because of regressions on
+
+ 15:23 <juliank> certain hardware. (LP: #1853614)
+
+ 15:23 <ubottu> Launchpad bug 1853614 in amd64-microcode (Ubuntu) "System stuck in reboot loop on AMD EPYC 7542 32-Core Processor" [Undecided, Fix Released] https://launchpad.net/bugs/1853614
+
+ 15:23 <juliank> is in bioinic
+
+ 15:23 <juliank> probably should be checked if that was fixed
+
+ 15:23 <juliank> someone needs to monitor amd microcode updates, I suppose
+
+ 15:24 <juliank> or at least when merging, SRU it / create a bug?
+
+ 15:24 <bdmurray> I wonder if there is a mailing list or announcement mechanism similar to tzdata
+
+ 15:25 <juliank> linux-firmware@kernel.org
+
+ 15:25 <juliank> no?
+
+ 15:26 <bdmurray> Anyway, lets not hold up the meeting
+
+ 15:26 <juliank> Anyhow should be carded and comment added to investigate how to deal better
+
+ 15:26 <juliank> mclemenceau: are you carding?
+
+ 15:27 <mclemenceau> sure thing
+
+ 15:27 <juliank> #topic Team proposed-migration report
+
+ 15:27 <juliank> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:27 <juliank> um
+
+ 15:28 <juliank> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:28 <juliank> vorlon:
+
+ 15:28 <vorlon> let's see how bad things are on the eve of FF
+
+ 15:28 <vorlon> as I go through these, if it's a merge you've touched recently, please speak up and take the package to follow through on
+
+ 15:28 <juliank> very bad
+
+ 15:29 <vorlon> lintian: still blocked on an ongoing MIR
+
+ 15:29 <vorlon> ginggs: are you still driving this?
+
+ 15:29 <vorlon> ah looks like all the open tasks are assigned elsewhere now, mostly to MIR team members
+
+ 15:29 <ginggs> vorlon: it's now in review by mir team
+
+ 15:29 <slyon> but won't make it before FF
+
+ 15:30 <vorlon> slyon: is the MIR team aiming to approve it after FF?
+
+ 15:30 <slyon> vorlon: yes. we might want to file a FFe for it then
+
+ 15:30 <bdmurray> update-notifier was my upload
+
+ 15:30 <vorlon> mutt is also blocked by MIR, looks like it's had server team review but I'm not sure where in the process this is currently
+
+ 15:31 <ginggs> i offered to file an FFe, but is it required?  lintian was upload before FF
+
+ 15:31 <vorlon> I would say no to an FFe for lintian, which is particularly a developer-oriented tool anyway
+
+ 15:31 <schopin> I thought FFe weren't necessary for MIRs?
+
+ 15:31 <slyon> vorlon: mutt was stuck on security review. but got a recent update, so we might be able to unblock it
+
+ 15:32 <ginggs> vorlon: no as in not needed, or no as in no exception granted?
+
+ 15:32 <vorlon> ginggs: no as in not needed
+
+ 15:32 <ginggs> vorlon: thanks for clarifying
+
+ 15:32 <vorlon> schopin: if the MIR is to enable turning on a new feature that hasn't been turned on yet, it's arguable there should be a FF.  But we also generally for things that have been uploaded to -proposed before FF don't require MIR
+
+ 15:33 <slyon> for mutt, looks like we're ready to promote gsasl & libntlm, but might still need to drop/revert the libgssglue dependency to get it resolved
+
+ 15:33 <vorlon> gcc-12 being built on arm64 is holding a few things up (gcc-12-cross -> gcc-defaults), but the build is in progress, so assuming this will shake out
+
+ 15:34 <vorlon> rustc is just waiting for glibc
+
+ 15:34 <vorlon> libuv1: that was mentioned in the weekly report
+
+ 15:34 <vorlon> enr0n: will you be able to follow through on this?
+
+ 15:35 <enr0n> vorlon: Yes I am working on it today. Bug 1987558 has a patch for siridb-server
+
+ 15:35 <ubottu> Bug 1987558 in siridb-server (Debian) "libuv1 breaks siridb-server autopkgtest: test times out" [Undecided, New] https://launchpad.net/bugs/1987558
+
+ 15:35 <vorlon> libuv1: enr0n:
+
+ 15:35 <vorlon> thanks
+
+ 15:35 <enr0n> no problem
+
+ 15:35 <vorlon> psycopg2: was assigned to bdrung but it appears he went on PTO before getting to it so we need a new volunteer
+
+ 15:36 <vorlon> alexghiti: can you take this?
+
+ 15:36 <alexghiti> Ack
+
+ 15:36 <vorlon> thanks
+
+ 15:37 <vorlon> netkit-telnetd: MIR team seems to be suggestion demotion, which I'm unsure about
+
+ 15:37 <slyon> vorlon: It was not in main before AFAICT
+
+ 15:37 <vorlon> telnet is present as a Recommends: of ubuntu-standard
+
+ 15:37 <slyon> (like before the rename)
+
+ 15:38 <vorlon> and it is a common network debugging tool
+
+ 15:38 <slyon> also IIUC it is about to be dropped from ubuntu-standard (ubuntu-meta)
+
+ 15:38 <vorlon> why do you say that?
+
+ 15:38 <vorlon> dropping it from standard is the sort of thing that should be discussed on ubuntu-devel, I haven't seen discussion there
+
+ 15:38 <slyon> https://bugs.launchpad.net/ubuntu/+source/plzip/+bug/1980663/comments/6
+
+ 15:38 <ubottu> Launchpad bug 1980663 in netkit-telnet (Ubuntu) "[MIR] false-positives, do not promote" [Undecided, Triaged]
+
+ 15:39 <slyon> that's what jbicha suggested
+
+ 15:39 <vorlon> ok I think he meant telnetd
+
+ 15:39 <vorlon> probably correct
+
+ 15:39 <vorlon> I'll take this one to follow through on
+
+ 15:39 <slyon> thanks
+
+ 15:39 <vorlon> lbnss-db, just waiting on glibc
+
+ 15:39 <vorlon> python-secretstorage: juliank can you take this?
+
+ 15:40 <vorlon> git: I merged it, I'll follow through
+
+ 15:40 <juliank> ack
+
+ 15:40 <vorlon> isc-dhcp: waiting for glibc
+
+ 15:40 <vorlon> netplan.io: slyon can you take?
+
+ 15:40 <slyon> yes
+
+ 15:41 <slyon> (already resolved with upstream NM, actually)
+
+ 15:41 <vorlon> perfect, thanks
+
+ 15:42 <vorlon> slyon: so I just looked, and the issue is that the telnet binary has moved from netkit-telnet source to inetutils source
+
+ 15:42 <vorlon> lsb: my merge, I'll take it
+
+ 15:42 <vorlon> openssh: my merge, I'll take that too
+
+ 15:42 <slyon> vorlon: yes, it has been discussed here: https://bugs.launchpad.net/ubuntu/+source/plzip/+bug/1980663/comments/4
+
+ 15:42 <ubottu> Launchpad bug 1980663 in netkit-telnet (Ubuntu) "[MIR] false-positives, do not promote" [Undecided, Triaged]
+
+ 15:43 <slyon> there's some more related comments on that bug report
+
+ 15:45 <vorlon> slyon: right. telnetd should clearly be demoted, netkit-telnet does not satisfy the existing Recommends on telnet, we should reintroduce telnet as a transitional package otherwise users don't get netkit-telnet on upgrade
+
+ 15:45 <vorlon> I'll follow through on that then
+
+ 15:46 <vorlon> update-motd vs update-notifier: dbungert ?
+
+ 15:46 <dbungert> vorlon: ack
+
+ 15:47 <vorlon> glibc: I continue playing whack-a-mole with autopkgtest false positives, and I believe mwhudson and schopin are still on top of the true positives
+
+ 15:47 * schopin nods
+
+ 15:47 <vorlon> cross-toolchain-base vs kmod: ginggs ?
+
+ 15:47 <ginggs> vorlon: ack
+
+ 15:47 <vorlon> diffutils just waiting for autopkgtest results
+
+ 15:48 <ginggs> and it's my merge
+
+ 15:48 <ginggs> err, sync
+
+ 15:48 <ginggs> but i'll keep an eye on diffutils
+
+ 15:48 <vorlon> ginggs: actually there are a number of kmod-related autopkgtest failures, can you take the lot please?
+
+ 15:49 <ginggs> vorlon: sure
+
+ 15:49 <vorlon> ginggs: and cross-toolchain-base is also blocking procps, so if you could look at that at the same time?
+
+ 15:49 <slyon> there's an update excuse bug about kmod: LP: #1987620 (it was my merge)
+
+ 15:49 <ubottu> Launchpad bug 1987620 in kmod (Ubuntu) "kmod v30 missing new modules.builtin.modinfo file" [Undecided, Confirmed] https://launchpad.net/bugs/1987620
+
+ 15:49 <vorlon> likely a common failure cause
+
+ 15:50 <ginggs> vorlon: yes, i'll take procps as well
+
+ 15:50 <vorlon> and livecd-rootfs is an unrelated blocker for procps; bdmurray can you look at this?
+
+ 15:50 <vorlon> and then that's the list for today
+
+ 15:50 <juliank> #topic AOB
+
+ 15:53 <bdmurray> I'm out tomorrow
+
+ 15:54 <juliank> Anyone else out?
+
+ 15:56 <juliank> Most already are :)
+
+ 15:58 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

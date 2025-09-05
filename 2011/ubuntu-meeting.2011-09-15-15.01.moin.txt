@@ -1,0 +1,838 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by NCommander at 15:01:04 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-09-15-15.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/ARM/Meeting/2011/20110915   (NCommander, 15:01:39)
+ *Action Item Review
+
+ *ogra to find out whats wrong with the tracker
+
+ *Standing Items
+
+ *http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-2.html   (NCommander, 15:03:19)
+''LINK:'' https://wiki.ubuntu.com/ARM/PBlueprintIdeas   (GrueMaster, 15:07:52)
+''LINK:'' https://wiki.ubuntu.com/ARM/PBlueprintIdeas#preview   (NCommander, 15:07:53)
+
+ *ARM Server Status (NCommander, Daviey)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *ARM Porting/FTBFS status (NCommander, janimo)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *QA Status (GrueMaster, mahmoh)
+
+ *Linaro Updates (rsalveti)
+
+ *AOB
+
+
+
+Meeting ended at 16:14:16 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (163)
+ * GrueMaster (58)
+ * NCommander (44)
+ * janimo (39)
+ * rsalveti (24)
+ * ppisati (23)
+ * rbasak (8)
+ * mahmoh (7)
+ * davidm_ (6)
+ * meetingology (3)
+ * ubottu (2)
+ * Ursinha (2)
+ * Daviey (1)
+
+
+
+== Full Log ==
+
+
+ 15:01:04 <NCommander> #startmeeting
+
+ 15:01:04 <meetingology> Meeting started Thu Sep 15 15:01:04 2011 UTC.  The chair is NCommander. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:01:04 <meetingology> 
+
+ 15:01:04 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01:07 <ogra_> fnop
+
+ 15:01:14 <ppisati> fput()
+
+ 15:01:19 <ogra_> :)
+
+ 15:01:20 * davidm_ waves
+
+ 15:01:39 <NCommander> #link https://wiki.ubuntu.com/ARM/Meeting/2011/20110915
+
+ 15:01:49 <NCommander> [topic] Action Item Review
+
+ 15:01:58 <NCommander> [topic] ogra to find out whats wrong with the tracker
+
+ 15:02:12 <ogra_> thats moot
+
+ 15:02:19 <ogra_> we had the wrong url
+
+ 15:02:34 <NCommander> ah, so a PEBKAC problem
+
+ 15:02:48 * NCommander can't spell this mornming
+
+ 15:02:51 <ogra_> heh
+
+ 15:03:00 <NCommander> [topic] Standing Items
+
+ 15:03:08 <NCommander> [topic] http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html
+
+ 15:03:19 <NCommander> [link] http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-2.html
+
+ 15:03:58 <janimo> hello
+
+ 15:04:25 * ogra_ has a question for one of his items ...
+
+ 15:04:38 <ogra_> do we actually want to do the ext4 switch right now ?
+
+ 15:05:02 <ogra_> it seriously seems a bit late to me for such a change
+
+ 15:05:04 <NCommander> for preinstalls?
+
+ 15:05:07 <ogra_> yes
+
+ 15:05:16 <ogra_> live-build only recently got support for ext4
+
+ 15:05:25 <janimo> ogra_, would be good imo, does live-build have the patch already? (In Ubuntu I mean)
+
+ 15:05:29 <ogra_> so we could theoretically still do the switch
+
+ 15:05:32 <GrueMaster> Should have been done for A2/A3.  Little late now.
+
+ 15:05:37 <ogra_> but that also means lots of fallount i think
+
+ 15:05:46 <NCommander> Best to stay with ext3 for now, and change it for A1 in P cycle
+
+ 15:05:53 <ogra_> janimo, no idea, but we could pull it in
+
+ 15:06:04 <ogra_> but i'm more in a tendency to postpone it
+
+ 15:06:29 <janimo> ogra_, not a very important thing, just a would be nice to align with ubuntu x86 and linaro
+
+ 15:06:36 <ogra_> yeah
+
+ 15:06:38 <ogra_> i agree
+
+ 15:06:48 <NCommander> definately something for next cycle
+
+ 15:06:52 <ogra_> but beta freeze is tomorrow and the images still have tons of bugs
+
+ 15:06:55 <janimo> with linaro's monthly schedule we will always have stale images featurewise for a few months
+
+ 15:06:57 * NCommander adds it to the blueprint list
+
+ 15:06:59 <janimo> sure
+
+ 15:07:28 <janimo> NCommander, blueprint wiki link please?
+
+ 15:07:35 <GrueMaster> Beta freeze is today.
+
+ 15:07:51 <janimo> So it is not a real freeze, just a beta one
+
+ 15:07:52 <GrueMaster> [link]https://wiki.ubuntu.com/ARM/PBlueprintIdeas
+
+ 15:07:53 <NCommander> https://wiki.ubuntu.com/ARM/PBlueprintIdeas#preview
+
+ 15:08:15 <NCommander> drat, GrueMaster was faster
+
+ 15:08:20 <ogra_> GrueMaster, well, past midnight for me ;)
+
+ 15:08:31 <ogra_> NCommander, GrueMaster was cleaner :P
+
+ 15:09:12 <NCommander> [topic] ARM Server Status (NCommander, Daviey)
+
+ 15:10:30 <NCommander> server itself looks like its in good shape for A2, though we have some outstanding OMAP issues which I'll bring up during porting
+
+ 15:10:54 <NCommander> anyone got anything else?
+
+ 15:12:00 <janimo> is mx5 related to server in any way?
+
+ 15:12:17 <ogra_> no
+
+ 15:12:24 <ogra_> we dont roll server for it
+
+ 15:13:34 <NCommander> Guess there's nothing else
+
+ 15:13:45 <NCommander> [topic] Kernel Status (cooloney, ppisati)
+
+ 15:13:54 <ppisati> it's me, Paolo! :)
+
+ 15:14:00 <ogra_> yay
+
+ 15:14:07 <ppisati> there;s a new omap4 kernel
+
+ 15:14:39 <ppisati> and this new kernel fixes some outstanding issues: framebuffer coloring, audio, and a couple of warnings on boot
+
+ 15:14:53 <janimo> there's a new ac100 kernel upload preparing to fix the USB speed issue and to enable DRM but nothing else
+
+ 15:15:04 <ogra_> framebuffer coloring ? are you serious ?!?
+
+ 15:15:08 <ppisati> unfortunately the new kernel breaks the pvr driver, but that should be fixed in an upcoming release
+
+ 15:15:12 <ppisati> yep
+
+ 15:15:12 <ppisati> :)
+
+ 15:15:18 * ogra_ got used to the blue after all these releases
+
+ 15:15:22 <ppisati> no more "smurf-colored" console
+
+ 15:15:23 <ppisati> :)
+
+ 15:15:26 <mahmoh> the USB speed issue is fixed already in the omap4 kernel?
+
+ 15:15:30 <ppisati> oh yes
+
+ 15:15:30 <ogra_> yes
+
+ 15:15:31 <ppisati> sorry
+
+ 15:15:37 <ppisati> i forgot about the important stuff
+
+ 15:15:51 <NCommander> I thought purple in d-i was intentional
+
+ 15:15:52 <ppisati> yes, Ming's ehci fix is in there too
+
+ 15:16:03 <ppisati> so, good usb i/o too
+
+ 15:16:17 <ogra_> NCommander, but blue text in black tty console wasnt ;)
+
+ 15:16:30 <ppisati> now we "only" need to fix pm and pvr driver and that will be the best omap release so far :)
+
+ 15:16:43 <ppisati> oh yes, and kexec too...
+
+ 15:16:45 <ogra_> wohoo
+
+ 15:17:09 <ogra_> on the ac100 front, janimo takles over the ac100 kernel now
+
+ 15:17:26 <ogra_> so we will finally get a git tree i guess :)
+
+ 15:17:34 * ppisati didn't mention the usual round of kernel updates for all the other arm flavours since we are getting one of this every week
+
+ 15:17:43 <ppisati> cool
+
+ 15:17:51 <NCommander> yay git
+
+ 15:17:58 <ogra_> pfft git
+
+ 15:18:01 <Ursinha> lol
+
+ 15:18:13 * Ursinha grabs the popcorn and watches
+
+ 15:18:19 <ogra_> lol
+
+ 15:18:30 <ppisati> and it seems cooloney is back
+
+ 15:18:48 <ogra_> oh, nice, will he come back and attend then ?
+
+ 15:18:52 <janimo> yay git
+
+ 15:18:53 <janimo> 2:1
+
+ 15:19:01 <ppisati> ah, dunno
+
+ 15:19:08 <Daviey> rbasak: Around?
+
+ 15:19:19 <ppisati> perhaps he will move to West Europe/US? :)
+
+ 15:20:09 <rbasak> Daviey: yes!
+
+ 15:20:13 <NCommander> anytihng else or should move on?
+
+ 15:20:22 <ppisati> move
+
+ 15:20:31 <ogra_> go
+
+ 15:20:42 <NCommander> [topic] ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:20:49 <ogra_> horrid !
+
+ 15:20:54 <ogra_> wrt universe
+
+ 15:21:03 <janimo> given back a few packages
+
+ 15:21:05 <ogra_> main looks okayish
+
+ 15:21:17 <ogra_> i went through all ftbfs logs the last days
+
+ 15:21:20 <janimo> nothing actually changed/fixed but that
+
+ 15:21:35 <ogra_> 70-80% of the arm ftbfs are GLES stuff
+
+ 15:21:45 <NCommander> On the OMAP3 side, netboot remains broken, fix there should be forthcoming today
+
+ 15:21:46 <ogra_> some libavcodec
+
+ 15:21:47 <janimo> we probably get to fix pgsql unless upstream is on it
+
+ 15:22:03 <ogra_> and a bunch of qreal
+
+ 15:22:26 <janimo> ogasawara, 70-80? I doubt it is that much. I would have thought it is around 30%
+
+ 15:22:29 <janimo> needs to be counted :)
+
+ 15:22:32 <ogra_> rsalveti, do you have any std reciepe for GLES issues ?
+
+ 15:22:50 * rsalveti reading
+
+ 15:22:55 <GrueMaster> Guys, check your name tab completion.
+
+ 15:22:56 <ogra_> the ftbfs wikipage could need some code examples etc
+
+ 15:22:56 <janimo> ogra_, I think those apps need porting to GLES or have that code disabled.
+
+ 15:23:10 <rsalveti> ogra_: not for now, planned to discuss at UDS
+
+ 15:23:16 <janimo> it is very app specific
+
+ 15:23:20 <rsalveti> because the apps need porting
+
+ 15:23:24 <ogra_> janimo, well, if its just: change dep, switch configure options and build ...
+
+ 15:23:38 <ogra_> some apps have gles support
+
+ 15:23:46 <ogra_> but haent got it enabled
+
+ 15:23:51 <NCommander> on OMAP4, I've been grinding away at updating partman-uboot/partman-reciepes for the last week and some before I went for vacation
+
+ 15:23:54 * ogra_ resarched some of them
+
+ 15:24:13 <NCommander> Its 95% working but still has some odds and ends. I've talked to skaet about it, and I'm expecting it to land tonight/tomorrow
+
+ 15:25:24 <janimo> ogra_, the Qt ones cannot work as they use GLES and OPENGL in the same time
+
+ 15:25:28 <janimo> and those are quite a few
+
+ 15:25:34 <ogra_> right
+
+ 15:25:52 <ogra_> i mean the ones that are ported upstream but where the build behaves like on x86
+
+ 15:26:11 <rsalveti> don't believe we have much of those still
+
+ 15:26:18 <ogra_> not many, but a few
+
+ 15:26:24 <rsalveti> most of the issues are from the qt gl x gles issue
+
+ 15:26:59 <ogra_> stellarium is a prominent one
+
+ 15:27:06 <ogra_> and there are a few others
+
+ 15:27:25 <ogra_> anyway, i dont want to slow the meeting
+
+ 15:27:37 <ogra_> NCommander, move :)
+
+ 15:28:04 <NCommander> [topic] ARM Image Status (ogra, NCommander)
+
+ 15:28:27 <ogra_> so so ...
+
+ 15:28:48 <ogra_> we had some issues with the build system that hopefully shoudl be resolved
+
+ 15:29:30 <ogra_> lamont, replaced something on annonaceae since then omap and mx5 builds seem to hang
+
+ 15:29:48 <ogra_> i pinged him but he doesnt seem to be around, i'll hunt down someone else from IS later
+
+ 15:30:06 <ogra_> ac100 images build and install fine, mx5 should be building fine too now
+
+ 15:30:23 <janimo> ogra_, so the lack of today's images is due to above breakage?
+
+ 15:30:32 <ogra_> oh and archive skew costed us three days of images this week
+
+ 15:30:33 <janimo> indeed ac100 is working fine
+
+ 15:30:47 <janimo> nice, less than it costs on average :)
+
+ 15:30:56 * NCommander whacks janimo
+
+ 15:31:02 <ogra_> janimo, yes, annonaceae doesnt build anything apparently, i suspect an ssh key was replaced or so
+
+ 15:31:46 <ogra_> NCommander, anything to add for the server or netinst images
+
+ 15:31:50 <ogra_> ?
+
+ 15:32:08 <NCommander> just the previous methoned partman-uboot hacking for OMAP3/4, and the f-k fix
+
+ 15:33:08 <ogra_> move then :)
+
+ 15:33:28 <NCommander> [topic] QA Status (GrueMaster, mahmoh)
+
+ 15:33:54 <GrueMaster> All kernel SRU testing for systems on life support completed this week.
+
+ 15:33:54 <GrueMaster> Most of the testing for server is no finished, at least for a once over.
+
+ 15:34:46 <GrueMaster> My only beagleXM has an odd issue with the latest x-loader/u-boot where it will no longer connect to the network.  Driver loads, but it will not show a link.
+
+ 15:34:54 <GrueMaster> Using the Natty versions works fine.
+
+ 15:35:09 <rsalveti> GrueMaster: were you able to test with linaro's kernel?
+
+ 15:35:33 <ppisati> my xm rev a1 works ok with O u-boot
+
+ 15:35:42 <GrueMaster> not yet.  Had to reimage (I was running a cryptfs and linaro doesn't support that).
+
+ 15:36:04 <GrueMaster> Will test linaro kernel today.
+
+ 15:36:20 <ogra_> MMlosh in #ubuntu-arm reported the same NIC issue
+
+ 15:36:31 <GrueMaster> Also plan on doing some deep desktop image testing for the rest of the week, as I have done little on that this cycle.
+
+ 15:36:31 <ogra_> but he is on natty and just using the oneiric kernel
+
+ 15:36:51 <GrueMaster> interesting.
+
+ 15:36:55 <ogra_> so i'm not sure it isnt userspace
+
+ 15:37:07 <ogra_> but indeed intresting that you see the same
+
+ 15:38:08 <GrueMaster> mahmoh: anything to add?
+
+ 15:38:26 <mahmoh> GrueMaster: nothing except that you're doing a bang up job
+
+ 15:38:33 <ogra_> ++
+
+ 15:38:48 <ogra_> and he is also our best supporter in #ubuntu-arm
+
+ 15:38:52 <NCommander> [topic] Linaro Updates (rsalveti)
+
+ 15:38:58 * rsalveti waves
+
+ 15:39:27 <rsalveti> well, not much that touches oneiric
+
+ 15:39:33 <rsalveti> first version of gcc-linaro packages
+
+ 15:39:39 <rsalveti> to be available at the toolchain backports PPA
+
+ 15:39:51 <rsalveti> to help testing toolchain issues and validating the gcc-linaro later on
+
+ 15:40:08 <rsalveti> on-going debugging on LTTng 2.x
+
+ 15:40:15 <rsalveti> first time we're trying to make it work with ARM
+
+ 15:40:27 <rsalveti> good thing is that we don't have a lot of kernel dependencies as before
+
+ 15:40:35 <rsalveti> hope to make it work properly this time
+
+ 15:41:09 <GrueMaster> Is there a plan to integrate x-loader with u-boot for omap next cycle?  Also, PXE would be nice, since the code is there.
+
+ 15:41:09 <rsalveti> looking to try to get bug 669641 fixed at the linaro-kernels atm
+
+ 15:41:10 <ubottu> Launchpad bug 669641 in linux (Ubuntu) "systemtap fails to discover installed debug modules" [Undecided,Triaged] https://launchpad.net/bugs/669641
+
+ 15:41:25 <rsalveti> then push it to ubuntu-kernel once the fix is available and working
+
+ 15:41:30 <janimo> nice
+
+ 15:41:39 <rsalveti> GrueMaster: yup, in theory SPL already works for OMAP
+
+ 15:41:48 <rsalveti> we'll validate it for this cycle, so for P it should work the same way
+
+ 15:41:59 <janimo> bye bye xloader
+
+ 15:42:04 <ogra_> yeah
+
+ 15:42:11 <ogra_> well, not completely
+
+ 15:42:16 <ogra_> yet
+
+ 15:42:43 <rsalveti> but at least for next cycle for sure :-)
+
+ 15:42:53 <NCommander> anything else?
+
+ 15:43:01 <rsalveti> and on-going multi-arch fixes in place to get firefox cross buildable
+
+ 15:43:02 <ogra_> well you still keep MLO
+
+ 15:43:23 <rsalveti> sure, but the main issue was how x-loader was maintained
+
+ 15:43:30 <rsalveti> that's the next step
+
+ 15:43:32 <ogra_> indeed
+
+ 15:43:33 <janimo> ogra_, yes, but no more extra packages that we need to keep remembering the names of
+
+ 15:43:41 <ogra_> NCommander, nothing from me
+
+ 15:43:44 <rsalveti> that's most from my side
+
+ 15:44:09 <janimo> thanks rsalveti
+
+ 15:44:18 <NCommander> [topic] AOB
+
+ 15:44:27 <ogra_> erm
+
+ 15:44:48 <ogra_> what about blueprints ?? werent we supposed to have a topic for that today ?
+
+ 15:44:51 <GrueMaster> erm?
+
+ 15:45:04 * ogra_ thought davidm wanted to discuss them today
+
+ 15:45:09 <davidm_> Yes, I did want to see a review of bp
+
+ 15:45:23 <davidm_> I'm on a call that I can 't break from
+
+ 15:45:41 <ogra_> davidm, lets do it on the call then
+
+ 15:45:55 <ogra_> for the community: https://wiki.ubuntu.com/ARM/PBlueprintIdeas oin case you have ideas to add for us :)
+
+ 15:46:05 <davidm_> But I would like to see the team review the BP page https://wiki.ubuntu.com/ARM/PBlueprintIdeas
+
+ 15:46:21 <ogra_> lets go over them then
+
+ 15:46:28 <davidm_> The page is scheduled to lock soonish
+
+ 15:46:50 <ogra_> say 19th at the top schedule :)
+
+ 15:46:55 <ogra_> *says
+
+ 15:47:18 <ogra_> ah, no, even 3rd
+
+ 15:47:25 <GrueMaster> Actually, I think it is the 3rd that it locks.
+
+ 15:47:29 <ogra_> yeah
+
+ 15:47:41 <ogra_> i slipped a row
+
+ 15:47:52 <ogra_> forst one is "Implement an ARM Server Kernel for Server Hardware"
+
+ 15:48:07 <GrueMaster> At any rate.  Shall I list them and we can beat^h^H^Hdiscuss them?
+
+ 15:48:10 <rbasak> Is that a kernel flavour, like server and virtual?
+
+ 15:48:31 <GrueMaster> Server kernel makes sense once we have a server platform.
+
+ 15:49:15 <mahmoh> will this have to be per platform?
+
+ 15:49:18 <ogra_> i guess that actually depends on having server hardware :)
+
+ 15:49:18 <ogra_> GrueMaster, oh, feel free
+
+ 15:49:18 * ogra_ steps back
+
+ 15:49:20 <ogra_> rbasak, yes, the -server kernel uses a few different config options
+
+ 15:49:35 <ogra_> mahmoh, well, it hads to be for the "server platform"
+
+ 15:49:55 <ogra_> it doesnt make sense to put a fulltime person on a server kernel without having server HW
+
+ 15:50:06 <mahmoh> and arm should have its own configs on top of that
+
+ 15:50:10 <ogra_> and i guess it will be a good part of a fulltime job
+
+ 15:50:37 <ogra_> (split across kernel and QA)
+
+ 15:51:02 <GrueMaster> Arm Server kernel build configuration and tuning -- Should combine with previous.
+
+ 15:51:09 <ogra_> i think we all agree that we want such a kernel but we need HW first
+
+ 15:51:22 <ogra_> else it is a waste of efforts
+
+ 15:51:32 <ogra_> GrueMaster, ++
+
+ 15:51:49 <GrueMaster> Unified OMAP3/OMAP4 install images
+
+ 15:51:50 <ogra_> though we should probably have a general kernel configuration session
+
+ 15:52:33 <ogra_> (covering the config handling for arm in general)
+
+ 15:52:48 <GrueMaster> How would this work?  Same kernel/u-boot?  Is it possible?
+
+ 15:52:51 <ogra_> unified images can only work if we have unified MLO and u-boot
+
+ 15:53:00 <GrueMaster> And kernel.
+
+ 15:53:06 <ogra_> kernel should already be possible i think
+
+ 15:53:23 <ogra_> but indeed not if we go on with the TI patches which we have to
+
+ 15:53:29 <GrueMaster> * All ARM headless images are based on Ubuntu Core,
+
+ 15:53:38 * ogra_ just nods
+
+ 15:53:39 <janimo> GrueMaster, kernel is unified in linaro
+
+ 15:53:41 <ogra_> move :P
+
+ 15:53:51 <janimo> uboot to be explored, part of the purpose of the BP
+
+ 15:54:03 <GrueMaster> oops, missed the wrap.
+
+ 15:54:05 <ogra_> we dont have headless atm ... if it comes back it will be based on core ... done
+
+ 15:54:12 <GrueMaster> All ARM headless images are based on Ubuntu Core,
+
+ 15:54:12 <GrueMaster> except for specific ARM Server Images
+
+ 15:54:25 <ogra_> not really a spec
+
+ 15:54:38 <ogra_> rather a "this is what we will use if it comes back"
+
+ 15:54:38 <GrueMaster> * Explore Codezero Embedded Hypervisor Virtulazation on A9 http://www.l4dev.org/
+
+ 15:54:47 <GrueMaster> ok
+
+ 15:55:08 <GrueMaster> This could be fun.
+
+ 15:55:13 <ogra_> yeah
+
+ 15:55:29 <GrueMaster> * Server Performance Testing incl Storage
+
+ 15:55:48 <ogra_> well, thats just a carry over of the server QA from O
+
+ 15:55:51 <ogra_> or not ?
+
+ 15:56:00 <ogra_> or an extention to it
+
+ 15:56:07 <mahmoh> I think storage should be broken out, otherwise this will get big
+
+ 15:56:08 <GrueMaster> Need more detail.  mahmoh has already been running the phoronix test suite to shake out issues there.
+
+ 15:56:46 <GrueMaster> Storage will get tested properly once we have hw that has better support.
+
+ 15:56:55 * ogra_ is sad that there are so many server specs but not many tech improvements or community/desktop specs ...
+
+ 15:57:12 <GrueMaster> * ARM Hard float
+
+ 15:57:21 <ogra_> is that a spec ?
+
+ 15:57:24 <NCommander> We're about to runout of time sadly
+
+ 15:57:33 <GrueMaster> It's because we have already rocked the desktop.
+
+ 15:57:34 <ogra_> we surely need discussion about it
+
+ 15:57:48 <janimo> move to ubuntu-arm ?
+
+ 15:57:52 <ogra_> GrueMaster, well, enough ? is the question
+
+ 15:58:03 <ogra_> well, is there a meeting after us ?
+
+ 15:58:16 <ogra_> but yeah, else move to -arm and finish that
+
+ 15:58:17 <NCommander> I'm not sure
+
+ 15:58:27 <GrueMaster> * Orchestra/Ensemble on ARM
+
+ 15:58:42 * ogra_ wonders whats arm specific there
+
+ 15:59:12 <GrueMaster> deployment issues apparently.
+
+ 15:59:14 <mahmoh> * Orchestra/Juju on ARM
+
+ 15:59:15 <ogra_> but then i dont know enough about it ... though i thought its a management tool
+
+ 15:59:19 <NCommander> noone elseis here (and actually, the frdge event for the meeting still says Mobile and Tuesday)
+
+ 15:59:27 <ogra_> lol
+
+ 15:59:32 <GrueMaster> * Linaro ARM Boot
+
+ 15:59:40 <ogra_> whats that ?
+
+ 15:59:58 <GrueMaster> BTHOOM
+
+ 16:00:00 <ogra_> there are a bunch of boot related things in our build system i would like to change
+
+ 16:00:08 <GrueMaster> (beats the hell out of me)
+
+ 16:00:27 <janimo> boot speed maybe?
+
+ 16:00:30 <ogra_> so having some info what "linaro boot" means would be nice
+
+ 16:00:33 <GrueMaster> * KVM on ARM
+
+ 16:00:35 * GrueMaster cringes
+
+ 16:00:39 <ogra_> hehe
+
+ 16:00:44 <ogra_> you asked for it :P
+
+ 16:01:07 <ogra_> we could also add "libvirt on arm" :)
+
+ 16:01:18 <GrueMaster> No, I didn't.  I asked for tests to be written for bare metal, then adapted for kvm, not vice versa.
+
+ 16:01:22 <davidm_> we should add libvirt
+
+ 16:01:34 <ogra_> argh, that was a joke !
+
+ 16:01:43 <NCommander> heh
+
+ 16:01:49 * ogra_ looks for duct tape for his nasty mouth
+
+ 16:01:50 <GrueMaster> * Server System management on ARM - IPMI
+
+ 16:01:50 <rbasak> It needs to happen eventually!
+
+ 16:02:05 <ogra_> how is that different to the juju spec ??
+
+ 16:02:24 <GrueMaster> rbasak: So does a solution for bug 1
+
+ 16:02:27 <ubottu> Launchpad bug 1 in Ubuntu "Microsoft has a majority market share" [Critical,In progress] https://launchpad.net/bugs/1
+
+ 16:02:28 <ogra_> does it make sense to have two of them ?
+
+ 16:02:33 <rbasak> :-)
+
+ 16:02:37 <ogra_> i think we could merge them in one
+
+ 16:02:44 <ogra_> same for kvm/libvirt
+
+ 16:03:26 <GrueMaster> * QA Develop automation tests that can run without kvm support (i.e. on raw hardware).
+
+ 16:03:44 <GrueMaster> har!
+
+ 16:03:47 <ogra_> hehe, attacking the kvm spec :)
+
+ 16:04:09 <NCommander> spec to spec combat!
+
+ 16:04:30 <rbasak> There is a plan to help with that I think
+
+ 16:04:38 <GrueMaster> I think this is beneficial, because I am always finding bugs on raw hw that don't manifest on kvm.
+
+ 16:04:45 <rbasak> Get nova to be able to launch metal instances from a pool of available metal
+
+ 16:04:46 <ogra_> yeah
+
+ 16:04:59 <rbasak> (maybe via LXC)
+
+ 16:05:00 <ogra_> sounds trivial
+
+ 16:05:26 <GrueMaster> * Revisit Server QA tests from Oneiric, enhance and update as needed.
+
+ 16:05:28 <ogra_> given that we already implemented that :)
+
+ 16:05:35 <ogra_> (as the panda cluster)
+
+ 16:05:50 <rbasak> does that use nova?
+
+ 16:06:00 <ogra_> never heard of nova
+
+ 16:06:01 <GrueMaster> A lot of the tests this round were random (and some have no tests in any arch).
+
+ 16:06:35 <ogra_> well, iirc in budapest is was said that this cycle was to determine a better set of tests
+
+ 16:06:50 <ogra_> so thats an expected follwoup i guess
+
+ 16:07:36 <GrueMaster> * Compare kernel configs with x86/amd64 configs for for module differences (NFS, VFAT, etc)
+
+ 16:07:51 <ogra_> shoudl become a general kernel config spec
+
+ 16:08:01 <ogra_> for arm indeed :)
+
+ 16:08:17 <GrueMaster> I ran into a lot of qa kernel SRU tests that fail simply because some modules are compiled =Y as opposed to =m.
+
+ 16:08:43 <GrueMaster> And I also had to postpone some tests because of missing modules.
+
+ 16:08:49 <ogra_> yeah
+
+ 16:09:03 <ogra_> and we have a good bunch of differences to x86 as well
+
+ 16:09:20 <ogra_> so we should do a general review
+
+ 16:09:42 <GrueMaster> * One consumer device per cycle programme
+
+ 16:09:48 <ogra_> yay
+
+ 16:10:00 <ogra_> so my idea is that we enable one enduser device per cycle
+
+ 16:10:12 <ogra_> preferably one that is close to images we already have indeed
+
+ 16:10:23 <ogra_> and that the community can chose which device that is
+
+ 16:10:28 <janimo> GrueMaster, would be good to have a list of features failing unless modules
+
+ 16:10:32 <GrueMaster> I disagree on this, only because we got bogged down on 1 and played hot potato with the other.
+
+ 16:10:40 <janimo> I was thinking of trying to build in as many as possible for bootup speed
+
+ 16:10:48 <ogra_> GrueMaster, bogged down ?
+
+ 16:10:57 <janimo> but if it some do not work it'd be good to know ahead
+
+ 16:11:05 <ogra_> we have ac100 images now ... and we could have nook ones if you had had the time
+
+ 16:11:08 <GrueMaster> How long have you been working on ac100?
+
+ 16:11:25 <ogra_> the plan is to deeply involve the community here
+
+ 16:11:26 <janimo> we could have 5 images per cycle if we had better build tools honestly
+
+ 16:11:30 <ogra_> ac100 isnt comparable
+
+ 16:11:42 <ogra_> i had to invent a totally new image type for it
+
+ 16:11:46 <janimo> the time spent is not as much coding but debugging the innards of the build system
+
+ 16:11:46 <GrueMaster> Problem with nook images is lack of touch screen keyboard in ubiquity.
+
+ 16:11:58 <ogra_> eaily solved :)
+
+ 16:12:05 <ogra_> *easily
+
+ 16:12:09 <ogra_> you didnt tell me
+
+ 16:12:20 <mahmoh> the idea is a good one, maybe choose a family of similar products and then a target to work from
+
+ 16:12:26 <GrueMaster> I was just saying once we get the tools shacken out, we shouldn't limit it to one.
+
+ 16:12:33 <janimo> ogra_, I doubt the community has better chances of getting something up with cdimage/debian-cd as they are used now
+
+ 16:12:36 <ogra_> anyway, we can discuss that later, thats my spec proposal and the masterplan is actually to grow community
+
+ 16:12:44 <NCommander> +1
+
+ 16:12:45 <janimo> but we need the community for upstream work (kernel etc) and testing
+
+ 16:12:48 <GrueMaster> Sounds good.
+
+ 16:12:56 <ogra_> janimo, thats the part we should be offering
+
+ 16:13:08 <ogra_> debian-cd/cdimage stuff
+
+ 16:13:23 <janimo> as they are now they are... juju
+
+ 16:13:26 <ogra_> the community still needs to supply the external bits
+
+ 16:13:55 <ogra_> anyway, lets do details later and let NCommander close the meeting :)
+
+ 16:14:07 <NCommander> closing in 3
+
+ 16:14:09 <NCommander> 2
+
+ 16:14:13 <NCommander> 1
+
+ 16:14:16 <NCommander> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

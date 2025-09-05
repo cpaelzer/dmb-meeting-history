@@ -1,0 +1,299 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 16 May at 14:30 &mdash; 14:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-05-16-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/transmission/+changelog  -- this one looksl ike the tip of the iceberg for new work, heh  (sarnold, 14:35)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:36.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:36)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/dhcpcd5/+bug/2019191   (cpaelzer, 14:36)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:39.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:39)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:39)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:40)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:40)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:43.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (79)
+ * sarnold (21)
+ * slyon (8)
+ * dviererbe (3)
+ * meetingology (2)
+ * jamespage (1)
+ * jbicha (1)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:27 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:30 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:30 <sarnold> good morning
+
+ 14:30 <jamespage> o/
+
+ 14:31 <slyon> o/
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:31 <cpaelzer> nothing new in non-proposed
+
+ 14:32 <cpaelzer> hmm
+
+ 14:32 <slyon> geoip looks new
+
+ 14:32 <slyon> is the server team tracking that?
+
+ 14:32 <cpaelzer> nginx -> geoip sounds familiar
+
+ 14:32 <cpaelzer> I think we changed to geoip2 two cycles back
+
+ 14:32 <cpaelzer> I'll take care to check what is going on
+
+ 14:32 <cpaelzer> I see that openstack started on jaraco
+
+ 14:33 <cpaelzer> and then there is transmission
+
+ 14:33 <cpaelzer> Desktop package
+
+ 14:33 <sarnold> mantic-proposed has a 'drop geoip' in the changelog https://launchpad.net/ubuntu/+source/nginx/+changelog -- it might solve itself in a few days? :)
+
+ 14:34 <cpaelzer> didrocks isn't here today to use his Desktop connections, seb128 isn#t her eeither
+
+ 14:34 <cpaelzer> pinging jbicha if there is any known context on transmission
+
+ 14:34 <sarnold> * Switch back to gtk4, now that the previous upload migrated.
+
+ 14:34 <sarnold> the MIR of gtkmm4.0 is planned.
+
+ 14:34 <jbicha> it's still on my todo list to file the MIRs for gtkmm4.0 (& related pkgs)
+
+ 14:34 <cpaelzer> ok, we are happy to wait
+
+ 14:35 <sarnold> https://launchpad.net/ubuntu/+source/transmission/+changelog  -- this one looksl ike the tip of the iceberg for new work, heh
+
+ 14:35 <cpaelzer> sarnold: on geoip - the changelog has this under dropped changes
+
+ 14:35 <cpaelzer> sarnold: "[No longer required due to Debian packaging split]"
+
+ 14:35 <sarnold> cpaelzer: oh!
+
+ 14:35 <cpaelzer> sarnold: but it seems that didn't fully work, chances are something is now split and meant to migrate to universe
+
+ 14:35 <cpaelzer> I'll talk with bryce
+
+ 14:36 <cpaelzer> ok
+
+ 14:36 <cpaelzer> that means we are ok with all findings in mismatches today
+
+ 14:36 <cpaelzer> #topic New MIRs
+
+ 14:36 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:36 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:36 <cpaelzer> one new
+
+ 14:36 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/dhcpcd5/+bug/2019191
+
+ 14:37 <slyon> this will be the (future) replacement for isc-dhcp-client
+
+ 14:37 <cpaelzer> Anyone able to do the review and not having Thu (and probably Fri) off due to public holiday in a lot of central europe?
+
+ 14:38 * slyon abstains, due to it being a Foundations package
+
+ 14:38 <cpaelzer> yeah, I guess I can take one - but due to said public holiday it will be somewhen next week
+
+ 14:38 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:38 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:39 <cpaelzer> some updates on duktape, but not yet ready to be acted on
+
+ 14:39 <cpaelzer> nothing else in this list yet
+
+ 14:39 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:39 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:39 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:39 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:40 <cpaelzer> just my re-review topic which we can handle in AOB
+
+ 14:40 <cpaelzer> nothing else in those lists
+
+ 14:40 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:40 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:40 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:40 <cpaelzer> Internal link
+
+ 14:40 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:40 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:40 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:40 <cpaelzer> sarnold: this is the time to make progress on those items not being pressing issues
+
+ 14:40 <cpaelzer> sarnold: because in a month or two the list will be dominated by "I NEED THIS" items
+
+ 14:41 <cpaelzer> sarnold: so how is current velocity on reviews looking?
+
+ 14:42 * cpaelzer checks #security channel for distractions of sarnold ...
+
+ 14:42 <sarnold> cpaelzer: heh, no progress lately; there has been some ongoing work on the tooling to try to improve the tooling. one current hurdle is that our coverity license has expired, and re-signing that contract is stuck somewhere; people are poking and prodding even while on vacation :/
+
+ 14:43 <cpaelzer> oh
+
+ 14:43 <sarnold> there's enough folks on post-sprint recovery and lss and so on that we're not yet at full force
+
+ 14:43 <cpaelzer> so without this license, is review fully blocked ?
+
+ 14:43 <cpaelzer> or just "less good"
+
+ 14:43 <sarnold> not completely, but it is enough of a hurdle to be obnoxious
+
+ 14:43 <cpaelzer> ok, thanks for the FYI
+
+ 14:43 <cpaelzer> #topic Any other business?
+
+ 14:44 <cpaelzer> as last week - just https://github.com/canonical/ubuntu-mir/pull/17
+
+ 14:44 <cpaelzer> thanks for your feedback so far
+
+ 14:44 <cpaelzer> I know I need to create a good way to find those old bugs
+
+ 14:44 <cpaelzer> but other than that everyone seems happy so far
+
+ 14:45 <cpaelzer> any other feedback or request for change that didn#t make it into thr github PR?
+
+ 14:45 <sarnold> I think I forgot to mention a pal's spell checking action https://www.check-spelling.dev/
+
+ 14:45 <sarnold> if we wanted to keep the spelling in good order, this might be worth dropping in
+
+ 14:46 <sarnold> but if we make so few changes and spelling doesn't *really* matter, it's just nice to have, it might not be worth the ongoing cost
+
+ 14:46 <cpaelzer> is that free to activate without pain?
+
+ 14:46 <dviererbe> *creating a bookmark*
+
+ 14:46 <sarnold> I think so, but I'm not actually well-versed in github actions; I think it's 'just' a matter of cloning the repo, dropping a .github/ directory thingy in place, pushing it, and letting the bot do the rest
+
+ 14:47 <cpaelzer> I'll have a look
+
+ 14:47 <cpaelzer> thanks
+
+ 14:47 <dviererbe> I can investigate this. I have some experience with github actions
+
+ 14:47 <slyon> here's a template: https://github.com/check-spelling/spell-check-this
+
+ 14:48 <cpaelzer> thanks dviererbe for the volunteering
+
+ 14:48 <cpaelzer> I guess you can fork and experiment there, and once you know how open a PR and/or contact me to get things done in the main repo?
+
+ 14:49 <dviererbe> I'll do that
+
+ 14:49 <sarnold> woot, thanks :)
+
+ 14:49 <cpaelzer> I'll take the todo that slyon gave me to add the "old MIR bug" query
+
+ 14:49 <cpaelzer> and thereby, the agenda of today is at the end
+
+ 14:49 <cpaelzer> anything else?
+
+ 14:49 <sarnold> nothing from me
+
+ 14:49 <sarnold> except a gigantic curiosity how that 'old mir bug' query will work
+
+ 14:50 <slyon> nothing, thanks!
+
+ 14:50 <cpaelzer> sarnold: magic :-)
+
+ 14:50 <sarnold> I don't have a clue how I'd even start tackling it, if it were my todo :)
+
+ 14:50 <sarnold> :D
+
+ 14:50 <slyon> (it's not just "old MIR bug", there might be packages without any bug
+
+ 14:50 <sarnold> probably about a thousand of them..
+
+ 14:50 <cpaelzer> hehe
+
+ 14:50 <cpaelzer> the API isn't too bad
+
+ 14:50 <cpaelzer> of LP I mean
+
+ 14:51 <sarnold> I wasn't there, but my guess is the starting point was "what's installed on every one of elmo's computers" :)
+
+ 14:51 <cpaelzer> It is most likely not a query, but a python program
+
+ 14:51 <cpaelzer> sarnold: that might have been true :-)
+
+ 14:51 <cpaelzer> but for today, let us close the meeting here
+
+ 14:51 <cpaelzer> have fun everyone!
+
+ 14:51 <sarnold> thanks cpaelzer, all; enjoy the long weekens, those who have them :)
+
+ 14:51 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

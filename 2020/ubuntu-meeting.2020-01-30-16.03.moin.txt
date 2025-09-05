@@ -1,0 +1,574 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 30 Jan at 16:03 &mdash; 16:54 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-01-30-16.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 16:03.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 16:10.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html 
+  * ''LINK:'' https://ezix.org/src/ycheng/lshw/commit/82393aa9b59307a443677df7340a1dd38847a5ef.patch 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 16:28.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/focal/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:45.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (60)
+ * vorlon (58)
+ * juliank (32)
+ * xnox (30)
+ * doko (22)
+ * ubottu (22)
+ * sil2100 (11)
+ * tdaitx (9)
+ * waveform (5)
+ * meetingology (3)
+ * Laney (2)
+ * Odd_Bloke (1)
+
+
+
+== Full Log ==
+
+
+ 16:03 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:03 <meetingology> Meeting started Thu Jan 30 16:03:05 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:03 <meetingology> 
+
+ 16:03 <meetingology> Available commands: action commands idea info link nick
+
+ 16:03 <bdmurray> #topic Lightning rounds
+
+ 16:03 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform)
+
+ 16:03 <bdmurray> tdaitx sil2100 waveform infinity doko bdmurray vorlon mwhudson rbalint juliank xnox
+
+ 16:03 * xnox win
+
+ 16:04 <bdmurray> tdaitx:
+
+ 16:04 <tdaitx> Short week: out last week
+
+ 16:04 <tdaitx> * openjdk-8
+
+ 16:04 <tdaitx> - investigated os::commit_memory errors on armhf
+
+ 16:04 <tdaitx> - no proper reproducer (yet), happens intermittently, more so with some particular tests, will contact upstream with more data
+
+ 16:04 <tdaitx> - updated test scripts to copy & keep hs_err log files; need to copy this functionality to the other openjdk packages
+
+ 16:04 <tdaitx> * setting up test comparison for jck-11
+
+ 16:04 <tdaitx> * various openjdk blacklists and hinting
+
+ 16:04 <tdaitx> (done)
+
+ 16:04 <bdmurray> sil2100:
+
+ 16:05 <tdaitx> ops, I meant arm64, not armhf, typo! =)
+
+ 16:05 <bdmurray> waveform:
+
+ 16:05 <waveform> * Back-ported LP: #1311056 to xenial, bionic, eoan
+
+ 16:05 <waveform> * Fixed and LP: #1861292 and back-ported to bionic
+
+ 16:05 <waveform> * Lots of work on getting core18 to boot (nothing yet, but some interesting notes from the kernel team on possible incorrect dtb being loaded by the bootloader)
+
+ 16:05 <waveform> * More testing on focal and bionic .4 classic images; no issues (other than the flash-kernel one above)
+
+ 16:05 <waveform> (done)
+
+ 16:05 <ubottu> Launchpad bug 1311056 in python-apt (Ubuntu Eoan) "[SRU] apt-add-repository adds duplicate commented/disabled source lines" [Undecided,New] https://launchpad.net/bugs/1311056
+
+ 16:05 <ubottu> Launchpad bug 1861292 in flash-kernel (Ubuntu Bionic) "flash-kernel failure during kernel upgrade" [Critical,Fix committed] https://launchpad.net/bugs/1861292
+
+ 16:05 <sil2100> Crap
+
+ 16:06 * sil2100 not ready anwyway
+
+ 16:06 <bdmurray> doko:
+
+ 16:06 <doko> - finished unversioned python removal, python-defaults migrated
+
+ 16:06 <doko> - started python3.8 defaults transition
+
+ 16:06 <doko> - gcc-10 update
+
+ 16:06 <doko> - binutils & gdb updates
+
+ 16:06 <doko> - more unrelated transition work
+
+ 16:06 <doko> (done)
+
+ 16:06 <bdmurray> bdmurray: its a me!
+
+ 16:06 <bdmurray> updated meta-release files for 19.04 End of Life
+
+ 16:06 <bdmurray> updated daisy code base for 19.04 End of Life
+
+ 16:06 <bdmurray> learned how to use autodeploy with the Error Tracker
+
+ 16:06 <bdmurray> researched retracing queues growing huge
+
+ 16:07 <bdmurray> discovered issue with retracer configuration and ddebs key
+
+ 16:07 <bdmurray> emailed ubuntu-devel regarding retracing backlog
+
+ 16:07 <bdmurray> tested a distribution upgrade from X to B w/ -proposed
+
+ 16:07 <bdmurray> uploaded walinuxagent to F and SRUs (LP: #1851064)
+
+ 16:07 <ubottu> Launchpad bug 1851064 in walinuxagent (Ubuntu Eoan) "[SRU] Update WALinuxAgent to 2.2.45" [High,In progress] https://launchpad.net/bugs/1851064
+
+ 16:07 <sil2100> I can go now
+
+ 16:07 <bdmurray> SRU verification of LP: #1856684
+
+ 16:07 <bdmurray> attended Cape Town sprint
+
+ 16:07 <ubottu> Launchpad bug 1856684 in livecd-rootfs (Ubuntu) "Populate .disk/info in ubuntu-image built images" [Medium,In progress] https://launchpad.net/bugs/1856684
+
+ 16:07 <bdmurray> ✔ done
+
+ 16:07 <vorlon> * short week, out most of Thursday and Friday afternoon
+
+ 16:07 <vorlon> * proposed-migration: worked on libffi transition, miscellaneous others
+
+ 16:07 <vorlon> * disco EOL: running 'swift delete' in a loop for the past 3 days to get rid of the autopkgtest usage
+
+ 16:07 <vorlon> (done)
+
+ 16:07 <sil2100> I'll go now o/
+
+ 16:07 <sil2100> - SRU reviews and releases
+
+ 16:07 <sil2100> - 18.04.4 - stuff, lots of stuff, busy busy, no panic yet tho
+
+ 16:07 <sil2100> (done)
+
+ 16:08 <sil2100> (didn't have time to write up anything better)
+
+ 16:08 <bdmurray> rbalint is still out
+
+ 16:08 <bdmurray> juliank:
+
+ 16:08 <juliank> * Sponsored flash-kernel uploads for waveform
+
+ 16:08 <juliank> * dug a bit further into openblas / hypre (LP: #1860601), and other autopkgtest regressions and migrations
+
+ 16:08 <ubottu> Launchpad bug 1860601 in openblas (Ubuntu) "openblas: causes autopkgtest failure in hypre armhf" [Undecided,New] https://launchpad.net/bugs/1860601
+
+ 16:08 <juliank> * could not investigate apport regression as apt just segfaulted in autopkgtest image :/
+
+ 16:08 <juliank> * apt 1.9.8, fixing crash in apt 1.9.7, slightly improving performance, and changing disco mentions to focal
+
+ 16:08 <juliank> * update-notifier pep8 -> pycodestyle change
+
+ 16:08 <juliank> * synced python-apt 1.9.5
+
+ 16:08 <juliank> * merged autopkgtest 5.11
+
+ 16:08 <juliank> * merged irssi 1.2.2
+
+ 16:09 <juliank> * re-added the pep8 binary package to pep8 to ease the python-defaults transition
+
+ 16:09 <juliank> * work on powerpc-utils, reviewing patches
+
+ 16:09 <xnox> doko:  are you planning to do gcc-9 and gcc-8 uploads to focal? i.e. with just newer stuff from branches that are available? cause there are s390x fixes.....
+
+ 16:09 <juliank> * reviewing specs
+
+ 16:09 <juliank> * in the progress of reimplementing kernel autoremoval for apt
+
+ 16:09 <juliank> (done)
+
+ 16:09 <doko> xnox: at some point, yes
+
+ 16:09 <bdmurray> xnox: your turn
+
+ 16:09 <xnox> Back from Cape Town Sprint
+
+ 16:09 <xnox> Off to Brussels for FOSDEM / escaping Brexit tomorrow
+
+ 16:09 <xnox> Updated s390-tools LP: #1860574 LP: #1860531 LP: #1859018 LP: #1853308
+
+ 16:09 <xnox> TODO: AA to approve s390-tools upload https://launchpad.net/ubuntu/focal/+queue?queue_state=1&queue_text=s390-tools
+
+ 16:09 <ubottu> Launchpad bug 1860574 in Ubuntu on IBM z Systems "[UBUNTU 20.04] zkey: Fix display of clear key size for XTS keys" [High,In progress] https://launchpad.net/bugs/1860574
+
+ 16:09 <xnox> Uploaded livecd-rootfs changes to enable SSH access on s390x
+
+ 16:09 <ubottu> Launchpad bug 1860531 in Ubuntu on IBM z Systems "IPL on z15 always performed regardless of the secure-boot related settings" [High,In progress] https://launchpad.net/bugs/1860531
+
+ 16:09 <xnox> Uploaded livecd-rootfs to use the right oem-20.04 flavour, which actually is just oem flavour, with matching ubuntu-cdimage changes, reviewed by Laney
+
+ 16:09 <ubottu> Launchpad bug 1859018 in Ubuntu on IBM z Systems "[UBUNTU] zkey: Fix listing of keys on file systems reporting DT_UNKNOWN." [High,In progress] https://launchpad.net/bugs/1859018
+
+ 16:09 <xnox> Filed bug report that cloud-init crashes with static network configuration
+
+ 16:09 <ubottu> Error: Could not gather data from Launchpad for bug #1853308 (https://launchpad.net/bugs/1853308). The error has been logged
+
+ 16:09 <xnox> Started mailing list discussion with server team that cloud-init does not harvest netplan.yaml that our initrd generates
+
+ 16:09 <xnox> Rebasing numpy-less boost on i386 onto boost1.71 builds, in preparation for ABI transition
+
+ 16:09 <xnox> Uploaded new qclib LP: #1852718
+
+ 16:09 <ubottu> Launchpad bug 1852718 in Ubuntu on IBM z Systems "[20.04 FEAT] Upgrade qclib 2.0.1" [High,Fix released] https://launchpad.net/bugs/1852718
+
+ 16:09 <xnox> Uploaded casper with finalrd dep into bionic for point release LP: #1840122
+
+ 16:09 <ubottu> Launchpad bug 1840122 in linux (Ubuntu Eoan) "System fails to reboot from live session or ubiquity-dm - squashfs_read_data failed to read block" [High,Confirmed] https://launchpad.net/bugs/1840122
+
+ 16:10 <xnox> Working with frank / ryan / mwhudson on debugging s390x curtin / subiquity / multipath failing to complete the install
+
+ 16:10 <xnox> Uploaded xdmf to unbreak really bad py3.8/cmake packaging
+
+ 16:10 <xnox> done
+
+ 16:10 <bdmurray> #topic Release incoming bugs
+
+ 16:10 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 16:11 <bdmurray> there seem to be quite a few here
+
+ 16:11 <bdmurray> bug 1860531 is targetted and tagged (lame)
+
+ 16:11 <ubottu> bug 1860531 in Ubuntu on IBM z Systems "IPL on z15 always performed regardless of the secure-boot related settings" [High,In progress] https://launchpad.net/bugs/1860531
+
+ 16:12 <xnox> that's in progress
+
+ 16:12 <xnox> needs AA to approve mu upload, as mentioned in my status with TODO
+
+ 16:12 <bdmurray> bug 1860432
+
+ 16:12 <ubottu> bug 1860432 in systemd (Ubuntu) "juju agent fails to start on focal " [Undecided,Confirmed] https://launchpad.net/bugs/1860432
+
+ 16:12 <vorlon> µ
+
+ 16:13 <xnox> so needs forwarding bug report to upstream systemd based on comment #1
+
+ 16:13 <xnox> i guess rbalint or I can take it
+
+ 16:14 <xnox> it's not critical to fix though
+
+ 16:14 <bdmurray> so let's card that
+
+ 16:14 <xnox> because with juju team we did a bit of a "but why are you doing this?!"
+
+ 16:14 <xnox> and they are changing code to be more normal.
+
+ 16:14 <bdmurray> bug 1861353
+
+ 16:14 <ubottu> bug 1861353 in glibc (Ubuntu) "libc6-dev:amd64 is not co-installable with libc6-dev:s390x" [Undecided,New] https://launchpad.net/bugs/1861353
+
+ 16:14 <vorlon> xnox: but the juju part is fixed, so is this critical for anything to change on the systemd side?
+
+ 16:14 <xnox> vorlon:  correct juju is going to stop using subdirectories, but it is a potential upstream regression nonetheless
+
+ 16:15 <xnox> (worth flagging it up to systemd people, even if they simply release note it)
+
+ 16:15 <vorlon> ok; so we can take it for further investigation but we might decline to change the behavior, sure
+
+ 16:16 <bdmurray> lets go ahead and target and card this one
+
+ 16:16 * vorlon nods
+
+ 16:16 <bdmurray> bug 1859858
+
+ 16:16 <ubottu> bug 1859858 in systemd (Ubuntu Focal) "udev has truncated ID_SERIAL value for scsi disk" [Undecided,New] https://launchpad.net/bugs/1859858
+
+ 16:18 <bdmurray> This one is already targetted so I'll card it.
+
+ 16:19 <bdmurray> bug 1860957
+
+ 16:19 <ubottu> bug 1860957 in ubiquity (Ubuntu) "ZFS installation crash when ESP already exists" [High,Confirmed] https://launchpad.net/bugs/1860957
+
+ 16:20 <bdmurray> That should go to the desktop team.
+
+ 16:21 <bdmurray> bug 1843063
+
+ 16:21 <ubottu> bug 1843063 in lshw (Ubuntu) "lshw -json output invalid in Eoan" [High,Confirmed] https://launchpad.net/bugs/1843063
+
+ 16:22 <bdmurray> Let's land their patch, so I'll target and card it.
+
+ 16:23 <xnox> https://ezix.org/src/ycheng/lshw/commit/82393aa9b59307a443677df7340a1dd38847a5ef.patch
+
+ 16:23 <bdmurray> Also bug 1860406 is new / undecided
+
+ 16:23 <ubottu> Error: Launchpad bug 1860406 could not be found
+
+ 16:23 <bdmurray> bug 1850406
+
+ 16:23 <ubottu> bug 1850406 in ubuntu-release-upgrader (Ubuntu) "python3-distupgrade small misprint bug" [Undecided,New] https://launchpad.net/bugs/1850406
+
+ 16:24 <bdmurray> that's the one I meant
+
+ 16:24 <bdmurray> I've an upload of u-r-u to do anyway so I'll take that and queue jump with it
+
+ 16:24 <bdmurray> nothing new in rls-ee-
+
+ 16:25 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html
+
+ 16:26 <sil2100> BB IS CLOSED
+
+ 16:26 <bdmurray> bug 1854839 still has work for me
+
+ 16:26 <ubottu> bug 1854839 in debian-installer (Ubuntu) "Fresh Bionic install hangs forever at 66% waiting for os-prober" [Undecided,Confirmed] https://launchpad.net/bugs/1854839
+
+ 16:26 <sil2100> STOOP
+
+ 16:26 <sil2100> (just kidding)
+
+ 16:27 <bdmurray> bug 1856560
+
+ 16:27 <ubottu> bug 1856560 in util-linux (Ubuntu) "ds-identify - stuck in uninterruptible sleep state" [Undecided,New] https://launchpad.net/bugs/1856560
+
+ 16:27 <bdmurray> We seem to have talked about this before.
+
+ 16:28 <bdmurray> okay, xnox will look at the comments
+
+ 16:28 <bdmurray> #topic Team proposed-migration report
+
+ 16:29 <bdmurray> vorlon: can you help here?
+
+ 16:29 <vorlon> ack
+
+ 16:30 <vorlon> python3.7, python3.8 are entangled in the libffi transition which I'm working through (libffi itself got its migratability reset by a ruby2.7 autopkgtest regression, which I've hinted away again; we're only about 2 packages away from this getting through)
+
+ 16:30 <vorlon> libtimedate-perl causing libsoap-wsdl-perl regression, who wants this?
+
+ 16:30 <vorlon> [LINK] https://people.canonical.com/~ubuntu-archive/proposed-migration/focal/update_excuses_by_team.html#foundations-bugs
+
+ 16:30 <vorlon> btw
+
+ 16:31 <vorlon> xnox: ^^ libtimedate-perl?
+
+ 16:32 <vorlon> bdmurray: can you take libcgi-pm-perl?
+
+ 16:32 <vorlon> libuv1 is figuring out whether to fix or hint i386, so I'll take that unless someone else is keen
+
+ 16:32 <vorlon> libffi, glib2.0 are all part of the same deal
+
+ 16:32 <juliank> aptdaemon: should force-badtest aptdaemon/all/arm64 IMO
+
+ 16:33 <vorlon> juliank: ok, I'll assign that to you to follow through on
+
+ 16:33 <xnox> vorlon:  are you assigning that to me? ok....
+
+ 16:33 <bdmurray> vorlon: okay
+
+ 16:33 <vorlon> libgpg-error is another i386 one, would anybody else like to take one of these?
+
+ 16:34 <vorlon> crickets
+
+ 16:34 <vorlon> fine, I'll take libgpg-error and libjsoncpp too
+
+ 16:36 <doko> open-iscsi and python-dateutil are in the works
+
+ 16:37 <vorlon> unattended-upgrades needs an assignee.  doko?
+
+ 16:37 <doko> where do you see this?
+
+ 16:38 <vorlon> doko: the list that we're going through right now
+
+ 16:38 <juliank> No
+
+ 16:38 <vorlon> can you follow up on unattended-upgrades?
+
+ 16:38 <juliank> unattended-upgrades we know why it's failing
+
+ 16:38 <juliank> It's going to be fixed in a new apt release
+
+ 16:38 <vorlon> ok, that sounds like juliank is claiming it then
+
+ 16:38 <juliank> yes
+
+ 16:38 <vorlon> ok
+
+ 16:38 <juliank> Just finalizing the fixes
+
+ 16:38 <vorlon> libcap-ng is tied to python3-defaults, which we know the status of
+
+ 16:39 <vorlon> doko: who is working on open-iscsi and python-dateutil?
+
+ 16:39 <vorlon> (you said "in the works" but not by who)
+
+ 16:39 <doko> nobody, they are waiting for the tests to finish
+
+ 16:39 <vorlon> doko: does that mean you retriggered tests?  since the tests shouldn't have taken 5 days
+
+ 16:40 <doko> yes
+
+ 16:40 <vorlon> if so, I'll consider these yours :)
+
+ 16:40 <vorlon> python3-defaults, doko is obviously working on, if other people have time to pitch in as well that would be good (I'll be helping with it but only after I finish libffi)
+
+ 16:40 <juliank> wooohoo, CI for APT fix just passed
+
+ 16:40 <doko> yes, please.
+
+ 16:40 <doko> update-manager?
+
+ 16:41 <vorlon> update-manager is part of the python3-defaults transition, does it need particular attention?
+
+ 16:41 <doko> can we ignore all the tryton stuff?
+
+ 16:41 <doko> scheduled for removal in Debian anyway
+
+ 16:41 <vorlon> ignore, no. remove, yes
+
+ 16:41 <xnox> we should kill tryton stuff
+
+ 16:41 <xnox> and odoo / openerp / tinyerp too
+
+ 16:41 <xnox> Odd_Bloke:  and xnox no longer care about it =)
+
+ 16:42 <vorlon> we can follow up on that on #ubuntu-release
+
+ 16:42 <vorlon> gdb vs python?
+
+ 16:42 <doko> retried
+
+ 16:42 <Odd_Bloke> xnox: :D
+
+ 16:42 <vorlon> doko: ok
+
+ 16:42 <vorlon> sl-modem is more i386, so
+
+ 16:42 <bdmurray> what was retried?
+
+ 16:42 <vorlon> bdmurray: the python autopkgtest failures with new gdb
+
+ 16:43 <bdmurray> okay so update-manager still needs looking at?
+
+ 16:43 <vorlon> and then p11-kit and talloc are part of the aforementioned transitions
+
+ 16:43 <vorlon> certainly looks like update-manager needs fixing for python3.8
+
+ 16:44 <vorlon> so it's worth someone taking that one specifically
+
+ 16:44 <vorlon> bdmurray: ?
+
+ 16:44 <bdmurray> I can have a look
+
+ 16:44 <vorlon> thanks
+
+ 16:44 <vorlon> and that's all
+
+ 16:44 * juliank just used the big hammer and retried all python-apt triggered-tests that failed
+
+ 16:44 <doko> one more, libreoffice/amd64 ftbfs with out-of-dis-space
+
+ 16:45 <bdmurray> #topic AOB
+
+ 16:45 <doko> ore here: one more, libreoffice/amd64 ftbfs with out-of-disk-space
+
+ 16:45 <bdmurray> I'm probably gonna end up taking a half day to aid my recovery
+
+ 16:45 <doko> desktop is aware
+
+ 16:45 <bdmurray> I'm also taking a swap day on Monday
+
+ 16:45 <vorlon> ah I am also off tomorrow
+
+ 16:46 <doko> and one more: https://bugs.launchpad.net/auto-package-testing/+bug/1860763
+
+ 16:46 <ubottu> Launchpad bug 1860763 in Auto Package Testing "the image for the autopkg tests has a big python3 stack installed" [Undecided,New]
+
+ 16:46 <vorlon> I know Laney has commented on the bug
+
+ 16:46 <doko> please can we fix that, especially now with all the python3 stuff going on?
+
+ 16:47 <juliank> yes
+
+ 16:47 <juliank> essentially mark everything auto
+
+ 16:47 <vorlon> pointing out that you'll never have a guarantee that there are no extra packages installed in the test bed
+
+ 16:47 <doko> vorlon: there's no comment
+
+ 16:47 <juliank> mark ubuntu-minimal and whitelisted packages manual
+
+ 16:47 <juliank> then run autoremove
+
+ 16:47 <vorlon> oh, it wasn't on the bug
+
+ 16:47 <vorlon> I saw a reply from him somewher
+
+ 16:47 <juliank> I think we can do that
+
+ 16:47 <Laney> IRC
+
+ 16:47 <vorlon> right
+
+ 16:47 <juliank> I think my idea should work, just need to figure out the whitelist
+
+ 16:48 <Laney> No problem with attempting to minimise the testbed, but the point still stands and it could be another package down the line
+
+ 16:48 <vorlon> it is a reasonable improvement to try to minimize the contents of the testbed image, if for no other reason than it speeds up upgrades
+
+ 16:48 <juliank> sure
+
+ 16:48 <vorlon> but also what Laney said
+
+ 16:48 <vorlon> package tests shouldn't misbehave in the presence of extra packages and if they do that's a bug
+
+ 16:48 <bdmurray> alright will y'all follow up in the bug?
+
+ 16:49 <juliank> vorlon: I don't think we have test-conflicts yet, might be useful, idk
+
+ 16:50 <vorlon> juliank: that's one way to ensure tests always behave properly, but in the absence of that there's no test that couldn't be fixed (upstream or whatever) to just do what we want in the presence of extra stuff
+
+ 16:50 <juliank> true
+
+ 16:51 <juliank> the reverse is also true
+
+ 16:51 <juliank> tests could be passing that should be failing because they miss a dependency
+
+ 16:51 <vorlon> sure, but in both cases you'd have to first discover the difference between testbed implementations and then change the package
+
+ 16:51 <vorlon> anyway, the bug is valid
+
+ 16:51 <vorlon> but I don't think it's high priority, it's really corner-case
+
+ 16:53 <bdmurray> okay, anything else?
+
+ 16:54 <bdmurray> alrighty then, thanks everybody
+
+ 16:54 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

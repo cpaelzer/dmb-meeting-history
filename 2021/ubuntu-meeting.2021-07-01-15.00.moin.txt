@@ -1,0 +1,389 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 01 Jul at 15:00 &mdash; 15:27 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-07-01-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:00.
+
+ * ''LINK:'' https://github.com/dbungert/subiquity-misc/blob/main/subiquity-curl-client   (dbungert, 15:01)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:09.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:09)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html   (bdmurray, 15:10)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html   (bdmurray, 15:10)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:12.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:13)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:24.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (43)
+ * sil2100 (30)
+ * juliank (19)
+ * ubottu (16)
+ * dbungert (15)
+ * slyon (14)
+ * jawn-smith (14)
+ * waveform (7)
+ * doko (6)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:47 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <sil2100> o/
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert)
+
+ 15:01 <juliank> o/
+
+ 15:01 <bdmurray> mwhudson dbungert slyon sil2100 bdmurray doko juliank jawnsmith vorlon waveform
+
+ 15:01 <dbungert> * Subiquity - with stable release done, move forward 2 PRs in queue, one done
+
+ 15:01 <dbungert> * ubuntu-desktop-installer - write a sample installer client using bash/curl/jq
+
+ 15:01 <dbungert> https://github.com/dbungert/subiquity-misc/blob/main/subiquity-curl-client
+
+ 15:01 <dbungert> This was written to answer questions about what API calls are absolutely
+
+ 15:01 <dbungert> required and to provide a working proof-of-concept.
+
+ 15:01 <dbungert> * LP: #1932564 - the snapcraft for ubuntu-desktop-installer differed in
+
+ 15:01 <dbungert> component versions for probert and curtin.  Adjust u-d-i snapcraft to make
+
+ 15:01 <ubottu> Launchpad bug 1932564 in subiquity (Ubuntu) "FilesystemController has no _start_task" [Undecided, New] https://launchpad.net/bugs/1932564
+
+ 15:01 <dbungert> them match.
+
+ 15:01 <dbungert> * LP: #1933523 - update livecd-rootfs cloud.cfg file to reflect that cloud-init
+
+ 15:01 <dbungert> no longer outputs a password.  (subiquity now provides this, pending a fix
+
+ 15:01 <dbungert> for a related problem that mw_hudson has in flight)
+
+ 15:01 <dbungert> * Subiquity - bitlocker detection - probert is already able to notice this,
+
+ 15:01 <dbungert> so we should update Subiquity/Curtin to be aware of the BitLocker type and
+
+ 15:01 <dbungert> react appropriately.  Spec written, implementation pending.
+
+ 15:01 <dbungert> (done)
+
+ 15:01 <slyon> - Interviews & Take-home tests
+
+ 15:01 <slyon> - Further investigation of IBM systemd/vlan issue, bug #1929657
+
+ 15:01 <slyon> - Fixed systemd armhf-autopkgtest issue in LXD, bug #1931088
+
+ 15:01 <slyon> - Investigated dbus issue (a lot!), bug #1871538
+
+ 15:01 <slyon> * Still no idea what is going on, asked the maintainers for help
+
+ 15:01 <slyon> * https://github.com/systemd/systemd/issues/15316
+
+ 15:01 <slyon> * https://gitlab.freedesktop.org/dbus/dbus/-/issues/337
+
+ 15:01 <ubottu> Bug 1931088 in lxd (Ubuntu Impish) "boot-and-services tests fails in impish on armhf (248.3)" [Undecided, Fix Released] https://launchpad.net/bugs/1931088
+
+ 15:01 <ubottu> Bug 1871538 in dbus (Ubuntu Impish) "dbus timeout-ed during an upgrade, taking services down including gdm" [High, Incomplete] https://launchpad.net/bugs/1871538
+
+ 15:01 <ubottu> Issue 15316 in systemd/systemd "'Unexpected error response from GetNameOwner(): Connection terminated' messages + boot takes a lot of time" [Open]
+
+ 15:01 <slyon> - some proposed-migration
+
+ 15:01 <slyon> === Netplan ===
+
+ 15:01 <slyon> - started reviewing "configure-without-carrier", PR#215
+
+ 15:01 <slyon> (done)
+
+ 15:01 <ubottu> Issue 337 in dbus/dbus "systemd and dbus sometimes disagree about whether the system bus connection has authenticated" [Opened]
+
+ 15:02 <bdmurray> sil2100:
+
+ 15:02 <sil2100> - SRU reviews and releases
+
+ 15:02 <sil2100> - DMB meeting
+
+ 15:02 <sil2100> - ESM britney:
+
+ 15:02 <sil2100> * Testing the staging deployment
+
+ 15:02 <sil2100> * Debugging why SSO is not working on staging (at all) - fw rules updated, fixed
+
+ 15:02 <sil2100> * Investigating swift connection issues, root cause: invalidly formatted credentials
+
+ 15:02 <sil2100> * Prepared local britney setup, iterating towards using staging, final steps
+
+ 15:02 <sil2100> - 20.04.3 preparations:
+
+ 15:02 <sil2100> * Set up weekly meetings, first meeting happened on Monday
+
+ 15:02 <sil2100> * Coordination with kernel team regarding unmatched RISCV support - hopefully we'll make it
+
+ 15:02 <sil2100> * Created tracking document, started working on first tasks
+
+ 15:02 <sil2100> - Ubuntu Core discussions
+
+ 15:02 <sil2100> * Some private ones as well regarding customer requests
+
+ 15:02 <sil2100> - DTB UC meeting
+
+ 15:02 <sil2100> - Created refreshed UC20 images, sent for certification testing
+
+ 15:03 <sil2100> - Reviewed MP from Brian for IOTG support in livecd-rootfs
+
+ 15:03 <sil2100> - Candidate interviews and reviews
+
+ 15:03 <sil2100> - Started reviewing netplam Keyfile parser PR
+
+ 15:03 <sil2100> - Writing of the simplestreams ubuntu-cdimage support specification
+
+ 15:03 <sil2100> - Deployed my recently implemented cdimage -> livecd-rootfs mapping on cdimage
+
+ 15:03 <sil2100> * Fixed a small typo bug to get all the images working
+
+ 15:03 <sil2100> * Merged the enabling of generic amd64 and arm64 preinstalled images
+
+ 15:03 <sil2100> - Verified livecd-rootfs focal change for enabling riscv unmatched+unleashed builds
+
+ 15:03 <sil2100> - Poking snapstore team for core18 and core20 acceptance, checking up on changes
+
+ 15:03 <sil2100> - Various planning discussions
+
+ 15:03 <sil2100> (done)
+
+ 15:03 <bdmurray> special SRU reviews shim-signed, ubiquity
+
+ 15:03 <bdmurray> completed a data deletion request from the Error Tracker
+
+ 15:03 <bdmurray> merged changes to livecd-rootfs to create an Intel IOTG image
+
+ 15:04 <bdmurray> uploaded ubuntu-release-upgrader for impish
+
+ 15:04 <bdmurray> worked on a fix for LP: #1924604
+
+ 15:04 <bdmurray> investigation into test failures in u-r-u on Focal
+
+ 15:04 <bdmurray> short week due to a holiday
+
+ 15:04 <ubottu> Launchpad bug 1924604 in ubuntu-release-upgrader (Ubuntu Focal) "do-release-upgrade crashed with KeyError in __getitem__(): 'The cache has no package named 'python-is-python2''" [Undecided, In Progress] https://launchpad.net/bugs/1924604
+
+ 15:04 <bdmurray> ✔ done
+
+ 15:04 <bdmurray> doko:
+
+ 15:04 <juliank> no doko?
+
+ 15:04 <doko> - openjdk-17 requires jtreg6, started packaging jtreg6, not yet successful
+
+ 15:04 <doko> - follow-up on the pkcs11 header license issues in OpenJDK
+
+ 15:04 <doko> - Python 3.8 SRUs for groovy and hirsute release, continuing with new SRUs for the next security release.
+
+ 15:04 <doko> - write down a plan for LibreOffice debugging
+
+ 15:05 <doko> - gdb snapshot build
+
+ 15:05 <doko> (done)
+
+ 15:05 <juliank> yes doko :)
+
+ 15:05 <juliank> * apt-y stuff
+
+ 15:05 <juliank> - uploaded autopkgtest SRUs for all releases to make it work correctly with hirsute-proposed APT and phasing (LP: #1934100)
+
+ 15:05 <ubottu> Launchpad bug 1934100 in autopkgtest (Ubuntu Hirsute) "Setup Always-Include-Phased-Updates (for hirsute+)" [High, Fix Committed] https://launchpad.net/bugs/1934100
+
+ 15:05 <juliank> - fixed a minor crash in apt install <deb file> if a sources.list file is unreadable
+
+ 15:05 <juliank> - prepared fix for servers that send `Content-Length: 0` (https://bugs.debian.org/990281; merge: https://deb.li/0OLU)
+
+ 15:05 <ubottu> Debian bug 990281 in apt "APT make duplicate HTTP requests with mirrorbits" [Important, Open]
+
+ 15:05 <juliank> - answered a bunch of questions and bug reports upstream :/
+
+ 15:05 <juliank> * boot stuff
+
+ 15:05 <juliank> - sponsored fwupd 1.5.11 for impish; hirsute and focal in progress (LP: #1934209)
+
+ 15:05 <ubottu> Launchpad bug 1934209 in OEM Priority Project "Dell dock USB4 module need fwupd 1.5.11" [Critical, In Progress] https://launchpad.net/bugs/1934209
+
+ 15:05 <juliank> - verified shim 15.4-0ubuntu5 uploads in xenial and hirsute
+
+ 15:05 <juliank> - uploaded shim 15.4-0ubuntu6~uefi1 to PPA for testing.
+
+ 15:05 <juliank> - trying to get VMWare license to validate https://github.com/rhboot/shim/pull/387 so we can include that in final 15.4-0ubuntu6
+
+ 15:05 <ubottu> Pull 387 in rhboot/shim "mok: delete the existing RT variables only when only_first=TRUE" [Open]
+
+ 15:05 <juliank> => that's the release targetting focal point release
+
+ 15:05 <juliank> (done)
+
+ 15:05 <jawn-smith> * Re-write ubuntu-image in go:
+
+ 15:05 <jawn-smith> * state machine logic implemented!
+
+ 15:05 <jawn-smith> * Working on test coverage for last few lines of code, will be pushed soon when 100% test coverage is reached
+
+ 15:05 <jawn-smith> * RISC-V
+
+ 15:05 <jawn-smith> * u-boot MP created for focal
+
+ 15:05 <jawn-smith> * u-boot-menu debdiff posted to LP: #1923162
+
+ 15:05 <ubottu> Launchpad bug 1923162 in u-boot (Ubuntu Focal) "riscv64 images fail to boot in qemu" [Undecided, New] https://launchpad.net/bugs/1923162
+
+ 15:06 <jawn-smith> * LP: 1912371 uploaded diff to enable the flashrom plugin in fwupd (also submitted upstream)
+
+ 15:06 <ubottu> Launchpad bug 1912371 in libftdi1 (Ubuntu) "[MIR] flashrom + libftdi" [Undecided, In Progress] https://launchpad.net/bugs/1912371
+
+ 15:06 <jawn-smith> * Plus-one maintenance
+
+ 15:06 <jawn-smith> * LP: *1933678 fix FTBFS golang-github-aws-aws-sdk-go with go 1.16
+
+ 15:06 <jawn-smith> * submitting to Debian all golang FTBFS issues that I addressed this shift
+
+ 15:06 <jawn-smith> * proposed-migration: unblocked mtools which was blocked by ubuntu-image (flakey tests)
+
+ 15:06 <jawn-smith> * Thanks bdmurray for having the fastest retry button in the west
+
+ 15:06 <jawn-smith> * proposed-migration: python3-lxc blocking gnupg2: thanks mwhudson and laney for adding hints
+
+ 15:06 <jawn-smith> [done]
+
+ 15:07 <bdmurray> waveform:
+
+ 15:07 <waveform> * Reviewing u-boot SRU for risc-v unmatched (LP: #1923162)
+
+ 15:07 <waveform> * Worked on Sense HAT packages for debian-python (matlab/octave scripts no longer require root)
+
+ 15:07 <waveform> * Attempting to replicate VGA->HDMI video sync issue on pi desktop (LP: #1933758)
+
+ 15:07 <waveform> * Investigating audio issue on Pi desktop after upgrade from groovy
+
+ 15:07 <waveform> * Still verifying kernel fix for USB storage issues on Pi (LP: #1930629)
+
+ 15:07 <ubottu> Launchpad bug 1923162 in u-boot (Ubuntu Focal) "riscv64 images fail to boot in qemu" [Undecided, New] https://launchpad.net/bugs/1923162
+
+ 15:07 <waveform> * Interviews
+
+ 15:07 <ubottu> Launchpad bug 1933758 in Ubuntu "Display resolution not properly identifying in Ubuntu 21.04" [Undecided, New] https://launchpad.net/bugs/1933758
+
+ 15:07 <ubottu> Launchpad bug 1930629 in linux-raspi (Ubuntu Focal) "Raspberry pi 4 USB controller randomly crashes" [Undecided, Confirmed] https://launchpad.net/bugs/1930629
+
+ 15:07 <waveform> (done)
+
+ 15:08 <bdmurray> any questions on status?
+
+ 15:09 <bdmurray> #topic Release Incoming Bugs
+
+ 15:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:09 <bdmurray> bug 1931701
+
+ 15:09 <ubottu> Bug 1931701 in libreoffice (Ubuntu Impish) "autopkgtests failures on armhf of 7.1.4" [High, New] https://launchpad.net/bugs/1931701
+
+ 15:10 <bdmurray> we've talked about this and it's already targetted so removing the tag
+
+ 15:10 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html
+
+ 15:10 <bdmurray> that is empty for us
+
+ 15:10 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:10 <bdmurray> also empty for us
+
+ 15:11 <juliank> seems broken html
+
+ 15:11 <bdmurray> what?
+
+ 15:11 <slyon> broken for me as well
+
+ 15:12 <bdmurray> they all work me
+
+ 15:12 <slyon> seems they work on http:// but my browser redirected me to https://
+
+ 15:12 <juliank> chrome redirected me to https://reports.../ which failed to load JS from people.canonical.com over http://
+
+ 15:12 <bdmurray> ah, okay
+
+ 15:12 <bdmurray> #topic Team proposed-migration report
+
+ 15:13 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:17 <bdmurray> so glibc and breezy was with doko last week
+
+ 15:17 <bdmurray> mwhudson and I were both thinking about just bad testing breezy but apparently neither of us did
+
+ 15:20 <bdmurray> doko will keep looking at this
+
+ 15:20 <bdmurray> then everything else old is blocked by openldap
+
+ 15:20 <bdmurray> Did we talk about that last week?
+
+ 15:22 <bdmurray> cpaelzer: Is anybody on the server team looking at the openldap migration?
+
+ 15:23 <bdmurray> Why don't we assign setuptools - anybody interested?
+
+ 15:23 <bdmurray> There's some arm stuff there
+
+ 15:23 <sil2100> o/
+
+ 15:23 <sil2100> I could take it
+
+ 15:24 <bdmurray> okay
+
+ 15:24 <bdmurray> I think that's good then
+
+ 15:24 <bdmurray> #topic AOB
+
+ 15:24 <bdmurray> Next Monday is a US holiday
+
+ 15:24 <slyon> New hires are starting on Monday as well
+
+ 15:25 <juliank> I'm out for 3 hours next friday to get my covid shot
+
+ 15:25 <juliank> maybe 2, idk
+
+ 15:25 <bdmurray> o/
+
+ 15:25 <sil2100> o/
+
+ 15:27 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

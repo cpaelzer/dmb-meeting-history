@@ -1,0 +1,764 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:04:11 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-10-03-15.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html   (slangasek, 15:26:49)
+
+ *AOB
+
+
+
+Meeting ended at 15:55:23 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (67)
+ * ubottu (51)
+ * cjwatson (43)
+ * xnox (42)
+ * stgraber (32)
+ * ogra_ (24)
+ * bdmurray (21)
+ * stokachu (20)
+ * ev (18)
+ * infinity (15)
+ * jodh (9)
+ * barry (6)
+ * meetingology (3)
+ * ScottK (1)
+
+
+
+== Full Log ==
+
+
+ 15:04:11 <slangasek> #startmeeting
+
+ 15:04:11 <meetingology> Meeting started Wed Oct  3 15:04:11 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:04:11 <meetingology> 
+
+ 15:04:11 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:04:23 <slangasek> [TOPIC] lightning round
+
+ 15:04:37 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:04:41 <slangasek> jodh barry ev cjwatson infinity xnox bdmurray slangasek stokachu doko ogra stgraber
+
+ 15:04:56 <jodh> * bugs:
+
+ 15:04:56 <jodh> * bug 1060249: Can now recreate. Trying to get more detailed stack
+
+ 15:04:56 <jodh> trace.
+
+ 15:04:56 <jodh> * bug 1016040: Bit of analysis on this. Still unable to recreate though.
+
+ 15:04:58 <ubottu> Launchpad bug 1060249 in debconf (Ubuntu Quantal) "frontend crashed with signal 5 in g_node_copy_deep()" [High,Confirmed] https://launchpad.net/bugs/1060249
+
+ 15:04:59 <ubottu> Launchpad bug 1016040 in apt (Ubuntu Quantal) "apt_check.py crashed with SIGSEGV in FileName()" [Medium,Confirmed] https://launchpad.net/bugs/1016040
+
+ 15:04:59 <jodh> * bug 1030278: Lots of work on this, but barry beat me to the post :-)
+
+ 15:05:01 <ubottu> Launchpad bug 1030278 in the python apt bindings "Quantal failed to install: ubiquity crashed in apt/progress/text.py in pulse: OverflowError: Python int too large to convert to C long" [Undecided,New] https://launchpad.net/bugs/1030278
+
+ 15:05:03 <jodh> We both added some new tests to python-apt to avoid regressions.
+
+ 15:05:06 <jodh> 𐤋
+
+ 15:05:31 <barry> jodh: just using my western tz to its full advantage :)
+
+ 15:05:34 <barry> handed off most of the remaining work on the gwibber py3 port, though i will still gatekeep merge proposals.  bug 1056820.  bug 1030278.  followed up with the folks doing the twisted py3 port; looks like 13.04 availability is a possibility, but more details have been requested.  uploaded python-mode 6.0.12 to sid.  looked a bit at bug 1031882.  investigated bug 938869, but this isn't a bug in python so it needs to be fixed in the vmware
+
+ 15:05:34 <barry> scripts.  bug 1057886.  started looking at bug 935516 (ongoing).  investigating bug 1060489 (ongoing).  done.
+
+ 15:05:37 <ubottu> Launchpad bug 1056820 in libxml2 (Ubuntu Quantal) "feedparser ftbfs in quantal, test suite failures" [Undecided,New] https://launchpad.net/bugs/1056820
+
+ 15:05:40 <ubottu> Launchpad bug 1031882 in ubuntu-release-upgrader (Ubuntu Quantal) "precise->quantal upgrade fails, with a UnicodeDecodeError" [High,Fix released] https://launchpad.net/bugs/1031882
+
+ 15:05:41 <ubottu> Launchpad bug 938869 in python3.2 (Ubuntu) "lsb_release crashed with SIGABRT in Py_FatalError()" [High,Triaged] https://launchpad.net/bugs/938869
+
+ 15:05:42 <ubottu> Launchpad bug 1057886 in dpkg (Ubuntu Quantal) "dpkg-source regression when a patch removes all files from a directory" [Medium,Fix released] https://launchpad.net/bugs/1057886
+
+ 15:05:43 <ubottu> Launchpad bug 935516 in genshi (Ubuntu Precise) "genshi version 0.6-2 FTBFS on i386 in precise" [High,Triaged] https://launchpad.net/bugs/935516
+
+ 15:05:45 <ubottu> Launchpad bug 1060489 in claws-mail-extra-plugins (Ubuntu) "FTBFS due to build-dep conflicts" [High,In progress] https://launchpad.net/bugs/1060489
+
+ 15:08:14 <ev> at a webops sprint all week
+
+ 15:08:23 <ev> been charming the errors.ubuntu.com infrastructure
+
+ 15:08:31 <ev> and unbreaking the retracers (damn you dpkg -x)
+
+ 15:08:48 <ev> also working on moving daisy.ubuntu.com to backing to S3
+
+ 15:08:50 <ev> instead of NFS
+
+ 15:09:04 <ev> at the request of IS
+
+ 15:09:06 <ev> (done)
+
+ 15:09:16 <slangasek> cjohnston:
+
+ 15:09:18 <slangasek> er
+
+ 15:09:18 <slangasek> cjwatson:
+
+ 15:09:26 <cjwatson> Fixed various cdimage publishing bugs exposed by beta-2.
+
+ 15:09:26 <cjwatson> Lots of rls-q-tracking bug work, too many to list, including finally adding /etc/default/grub.d/, various i18n/l10n bugs, etc.  Still trying to sort out d-i lowmem issues.
+
+ 15:09:30 <cjwatson> Sponsoring various arm64 config.guess/sub fixes from Wookey.  More to come.
+
+ 15:09:32 <slangasek> cjohnston: have you considered a stage name
+
+ 15:09:33 <cjwatson> Progressive rebuild of remaining packages in armel/main for ARMv5t.
+
+ 15:09:35 <cjwatson> +1 maintenance this month.  Mostly working on build fixes.  eclipse-* was a particularly exciting cluster to unstick.
+
+ 15:09:38 <cjwatson> .
+
+ 15:10:18 <ScottK> unstick is a nice euphemism.
+
+ 15:10:18 <cjwatson> barry: I happened to notice that at least some twisted.trial py3 support was upstream now
+
+ 15:10:31 <infinity> * Done this week:
+
+ 15:10:31 <infinity> - Beta 2 released
+
+ 15:10:31 <infinity> - Kernel SRU wrangling
+
+ 15:10:31 <infinity> - Other SRU and AA tasks
+
+ 15:10:31 <infinity> - gtkhtml4.0 transition, linux-armadaxp license review, dpkg bugfix, vmware-view and sbsigntool version bumps, etc
+
+ 15:10:34 <infinity> - working on a new eglibc SRU to replace the one superseded by the last security update
+
+ 15:10:37 <infinity> - (Re-)enable bootstrap archives for Colin's unbreaking of various bits
+
+ 15:10:40 <infinity> ☭
+
+ 15:10:42 <barry> cjwatson: yep, they mentioned that was a blocker for continued work
+
+ 15:10:48 <ogra_> russian !
+
+ 15:10:48 <slangasek> ev: S3> if this is done, does this mean they no longer care how much space it takes p? :)
+
+ 15:10:51 <slangasek> up
+
+ 15:11:05 <ev> slangasek: hahaha
+
+ 15:11:08 <ev> this is for the core files
+
+ 15:11:13 <ev> which at the moment get deleted
+
+ 15:11:24 <ev> though I suspect it'll make the argument for keeping them around easier
+
+ 15:11:55 <slangasek> :)
+
+ 15:12:01 <xnox> slangasek: there is a setting to tab-complete nicknames based on frequency instead of pure alphabetical order.
+
+ 15:12:12 <cjwatson> Oh, I forgot: currently working on some build log analysis for hardening flag regressions.  Not sure how far I'll have time to get.
+
+ 15:12:25 <slangasek> ev: so if that goes smoothly, we may want to talk about whether to do the same for ddebs.u.c
+
+ 15:13:08 <xnox> slangasek: well since servercloud has nice swift mirrors backed by S3 already, it should be doable for a "normal" apt-getable archive.
+
+ 15:13:30 <slangasek> xnox: your turn :)
+
+ 15:13:33 <xnox> * rls-q-tracking:
+
+ 15:13:33 <xnox> - sponsor fix for bug 1056350
+
+ 15:13:33 <xnox> - test and upload mvo's workaround for bug 1015567 and opened bug 1057367 for followup.
+
+ 15:13:33 <xnox> - mark bug 1046627 as invalid, because biggest_free was used instead
+
+ 15:13:33 <xnox> of actually resizing.
+
+ 15:13:34 <xnox> - disable failing svn tests to fix FTBFS bug 1056728 (needs new
+
+ 15:13:36 <xnox> upstream release packaged, to late for quantal). But doko is
+
+ 15:13:38 <xnox> working on a better/proper fix git-svn and re-enable test-suites.
+
+ 15:13:39 <ubottu> Launchpad bug 1056350 in BzrTools "build failure on quantal" [High,Triaged] https://launchpad.net/bugs/1056350
+
+ 15:13:40 <xnox> - Ubiquity: Change calculate_reuse_option logic to allow upgrading development
+
+ 15:13:40 <ubottu> Launchpad bug 1015567 in dpkg (Ubuntu Quantal) "upgrade failed: mixed non-coinstallable and coinstallable package instances present" [Critical,Fix released] https://launchpad.net/bugs/1015567
+
+ 15:13:42 <ubottu> Launchpad bug 1057367 in dpkg (Ubuntu) "please upgrade status database to remove mixed non-coinstallable and coinstallable packages" [Low,Triaged] https://launchpad.net/bugs/1057367
+
+ 15:13:42 <xnox> releases to final/newer. bug 1050562
+
+ 15:13:43 <ubottu> Launchpad bug 1046627 in ubiquity (Ubuntu Quantal) "Install Ubuntu XX.XX alongside SYSTEM YY screen missing" [High,Invalid] https://launchpad.net/bugs/1046627
+
+ 15:13:44 <ubottu> Launchpad bug 1056728 in git (Ubuntu Quantal) "git-svn needs an update for subversion 1.7.x (build-time test suite failure)" [High,Fix released] https://launchpad.net/bugs/1056728
+
+ 15:13:44 <xnox> - partman-crypto: Move unsafe_swap checks from commit.d to check.d bug 1056707
+
+ 15:13:45 <ubottu> Launchpad bug 1050562 in ubiquity (Ubuntu Quantal) "Reuse recipe (in-place upgrade/reinstall) isn't given as an option" [High,Fix released] https://launchpad.net/bugs/1050562
+
+ 15:13:46 <xnox> - Fix reuse options (were not working) in partman-auto bug 1050562
+
+ 15:13:46 <ubottu> Launchpad bug 1056707 in ubiquity (Ubuntu Quantal) ""Unsafe swap space detected" dialog displayed too late if swap is created after an encrypted partition and makes manual partitioner unusable" [High,Fix released] https://launchpad.net/bugs/1056707
+
+ 15:13:48 <xnox> * ubiquity adv-lvm:
+
+ 15:13:50 <xnox> - almost done, going through all the different paths of vg/lv
+
+ 15:13:52 <xnox> manipulation. merge proposal will come soon.
+
+ 15:13:54 <xnox> * blocked on combination of orca / at-spi / gtk / ubiquity-dm being
+
+ 15:13:58 <xnox> broken. See bug 1056300
+
+ 15:14:00 <ubottu> Launchpad bug 1056300 in ubiquity (Ubuntu Quantal) "orca quits reading after the welcome screen in ubiquity" [High,Confirmed] https://launchpad.net/bugs/1056300
+
+ 15:14:00 <xnox> * Off to see my parents Fri-Mon, expecting limited internet
+
+ 15:14:02 <xnox> connectivity. (GMT+2)
+
+ 15:14:14 <xnox> </done>
+
+ 15:14:55 <bdmurray> bug triage of update-manager / ubuntu-release-upgrader bugs
+
+ 15:14:55 <bdmurray> tested bugs 1056895, 1059172, 1058102
+
+ 15:14:55 <bdmurray> ubuntu-release-upgrader upload fixing apport and apt-clone attachments
+
+ 15:14:55 <bdmurray> ubuntu-release-upgrader uploads fixing bugs 1039484, 1045579, 1059403, 1060353
+
+ 15:14:57 <ubottu> Launchpad bug 1058102 in ubuntu-release-upgrader (Ubuntu Quantal) "The strings in "ubuntu-release-upgrader" is not translated in UI" [High,Triaged] https://launchpad.net/bugs/1058102
+
+ 15:14:58 <bdmurray> apport modification to include python env variables
+
+ 15:15:01 <ubottu> Launchpad bug 1059172 in update-manager (Ubuntu) "update-manager crashes when displaying error dialog" [Low,Confirmed] https://launchpad.net/bugs/1059172
+
+ 15:15:02 <ubottu> Launchpad bug 1056895 in apport (Ubuntu Quantal) "ubiquity apport hook crashes" [High,In progress] https://launchpad.net/bugs/1056895
+
+ 15:15:04 <ubottu> Launchpad bug 1039484 in ubuntu-release-upgrader (Ubuntu Quantal) "Accents in sources.list breaks do-release-upgrade" [High,Fix released] https://launchpad.net/bugs/1039484
+
+ 15:15:04 <ubottu> Launchpad bug 1060353 in update-manager (Ubuntu Precise) "DistUpgradeApport.py causes an apport assertion error" [High,Triaged] https://launchpad.net/bugs/1060353
+
+ 15:15:05 <ubottu> Launchpad bug 1045579 in ubuntu-release-upgrader (Ubuntu Precise) "software-properties-gtk makes a change resulting in a conf file prompt on upgrade that's unnecessary" [Medium,Triaged] https://launchpad.net/bugs/1045579
+
+ 15:15:06 <bdmurray> discovered an issue with DistUpgradeApport.py and assertion errors due to / in key names for attachments
+
+ 15:15:07 <ubottu> Launchpad bug 1059403 in ubuntu-release-upgrader (Ubuntu) "dist-upgrade.py returns 1 due to /var/log/dist-upgrade/* not found in P2Q server upgrades" [High,Fix released] https://launchpad.net/bugs/1059403
+
+ 15:15:09 <bdmurray> reported bug 1060353 regarding DistUpgradeApport.py and wrote a testcase for it
+
+ 15:15:12 <bdmurray> tested plymouth bug 1056468
+
+ 15:15:12 <ubottu> Launchpad bug 1056468 in linux (Ubuntu) "monitor inactive during plymouth animation (radeon, fallback to /dev/fb0)" [High,Incomplete] https://launchpad.net/bugs/1056468
+
+ 15:15:23 <bdmurray> ✔ done ✔
+
+ 15:18:44 <slangasek> * pam-xdg-support: landed, has been seeded, ubuntu-meta upload needed
+
+ 15:18:44 <slangasek> * ironed out final details on SB signing
+
+ 15:18:44 <slangasek> * fielded some new bugs after the asynchronous mountall upload
+
+ 15:18:44 <slangasek> * bug #1059471
+
+ 15:18:44 <slangasek> * bug #1060296
+
+ 15:18:46 <ubottu> Launchpad bug 1059471 in mountall (Ubuntu) "2.41 fails to mount root partition" [Undecided,Incomplete] https://launchpad.net/bugs/1059471
+
+ 15:18:46 <slangasek> * SB shim: still in progress, should be uploaded today
+
+ 15:18:47 <ubottu> Launchpad bug 1060296 in mountall (Ubuntu) "'df /' reports Filesystem '-'" [Undecided,Confirmed] https://launchpad.net/bugs/1060296
+
+ 15:18:49 <slangasek> (then it gets submitted to MS for signing)
+
+ 15:19:02 <slangasek> (done)
+
+ 15:19:21 <slangasek> stokachu: your turn
+
+ 15:19:24 <stokachu> bug 977959 - needs sponsor for precise
+
+ 15:19:26 <ubottu> Launchpad bug 977959 in libgnome (Ubuntu Precise) "Please transition libgnome to multi-arch" [High,In progress] https://launchpad.net/bugs/977959
+
+ 15:19:26 <stokachu> bug 1036834 - needs sponsor
+
+ 15:19:27 <ubottu> Launchpad bug 1036834 in gdb (Ubuntu Precise) "gdb should be marked "Multi-arch: allowed"" [High,In progress] https://launchpad.net/bugs/1036834
+
+ 15:19:28 <stokachu> bug 1013211 - needs FFe or needs to be pushed back to updates
+
+ 15:19:29 <ubottu> Launchpad bug 1013211 in libgnomecanvas (Ubuntu Precise) "[FFe] Please transition libgnomecanvas to multi-arch" [High,In progress] https://launchpad.net/bugs/1013211
+
+ 15:19:30 <stokachu> bug 683640 - needs sponsor for precise
+
+ 15:19:32 <stokachu> bug 1053306 - needs sponsor for precise
+
+ 15:19:32 <ubottu> Launchpad bug 683640 in lsb (Ubuntu Precise) "status_of_proc is returning incorrect error code" [High,In progress] https://launchpad.net/bugs/683640
+
+ 15:19:34 <ubottu> Launchpad bug 1053306 in open-iscsi (Ubuntu Precise) "iscsiadm hangs in recvmsg()" [High,Confirmed] https://launchpad.net/bugs/1053306
+
+ 15:19:34 <stokachu> bug 932860 - building and testing as of now
+
+ 15:19:35 <ubottu> Launchpad bug 932860 in appmenu-gtk (Ubuntu Precise) "Broken (or missing) multiarch support" [High,In progress] https://launchpad.net/bugs/932860
+
+ 15:19:39 <cjwatson> slangasek: Do you know how long the signing is expected to take?
+
+ 15:19:52 <slangasek> someone said last week they were going to look at those multiarch sponsorship bugs, was it doko?
+
+ 15:20:18 <stokachu> done
+
+ 15:20:26 <slangasek> (who is not here due to German holiday)
+
+ 15:20:32 <xnox> stokachu: are all of those fix released in quantal?
+
+ 15:20:38 <ogra_> done:
+
+ 15:20:39 <ogra_> * fixed cdrom-detect bug (bug 1028905)
+
+ 15:20:39 <ogra_> * input issues for d-i were fixed (thanks paolo for adding the udeb to omap3)
+
+ 15:20:39 <ogra_> * worked on an nvidia-tegra driver update, sadly the upstream release is broken (no versions in SONAMES), waiting on a fix
+
+ 15:20:39 <ogra_> from nvidia and pondering to upload a driver without GLES support for better SRUability
+
+ 15:20:40 <ogra_> * got dragged into a new internal project, waiting for HW
+
+ 15:20:41 <ubottu> Launchpad bug 1028905 in debian-installer-utils (Ubuntu Quantal) "cdrom-detect in quantal omap4 hangs trying to look for install media on an extended partition" [High,Fix released] https://launchpad.net/bugs/1028905
+
+ 15:20:42 <ogra_> * thanks stgraber for taking over bug 984276
+
+ 15:20:44 <ubottu> Launchpad bug 984276 in casper (Ubuntu Precise) "installing casper on a non live system causes update-initramfs to fail" [High,Confirmed] https://launchpad.net/bugs/984276
+
+ 15:20:46 <ogra_> * fixed upgrade issue with software-properties-gtk
+
+ 15:20:48 <ogra_> todo:
+
+ 15:20:50 <ogra_> * get some ideas for arm specific blueprints
+
+ 15:20:52 <ogra_> * fix flash-kernel ability to manually force a kernel version for manual downgrades (bug 1056206)
+
+ 15:20:53 <ubottu> Launchpad bug 1056206 in flash-kernel (Ubuntu) "3.0~rc.4ubuntu23: cannot flash an old (previous Q) kernel" [Wishlist,Confirmed] https://launchpad.net/bugs/1056206
+
+ 15:20:54 <ogra_> * finish wikipages for the release
+
+ 15:20:56 <ogra_> ..
+
+ 15:21:14 <stokachu> xnox: 977959,683640,1053306 or in qu antal
+
+ 15:21:18 <stokachu> are*
+
+ 15:21:24 <stgraber> - ISO tracker
+
+ 15:21:24 <xnox> stokachu: ok.
+
+ 15:21:24 <stgraber> - Fixed a bug in the time range filter, got IS to deploy in production.
+
+ 15:21:27 <stgraber> - Container
+
+ 15:21:30 <stgraber> - Upstream work, reviewing patches, maintaining staging branch. Starting cherry-pick of fixes for 0.8 upstream release.
+
+ 15:21:33 <stgraber> - Blogged about the new API: http://www.stgraber.org/2012/09/28/introducing-the-python-lxc-api/
+
+ 15:21:36 <stgraber> - Helped utlemming setup a script similar to post-qa but for the cloud images
+
+ 15:21:39 <stgraber> - Release
+
+ 15:21:41 <stgraber> - Some beta 2 work
+
+ 15:21:44 <stgraber> - Quite a bunch of queue reviews
+
+ 15:21:46 <stgraber> - Some FFe/UIFe reviews
+
+ 15:21:49 <stgraber> - Networking
+
+ 15:21:51 <stgraber> - Some more thoughts on getting NM to talk to unbound, looked at the API, may try to write a plugin later.
+
+ 15:21:54 <stgraber> - Fixed madwimax's broken dhclient handling in quantal and precise (was messing with resolvconf)
+
+ 15:21:57 <stgraber> - Installer
+
+ 15:22:00 <stgraber> - UIFe for the slideshow, reviewed the changes, re-generate the templates, imported the new translations and uploaded
+
+ 15:22:03 <stgraber> - Fixed bug 898787
+
+ 15:22:05 <ubottu> Launchpad bug 898787 in ubiquity (Ubuntu) "(k|l|x)ubuntu 11.10 failed to install with error in install_misc.py assert cache._depcache.broken_count == 0" [High,Fix released] https://launchpad.net/bugs/898787
+
+ 15:22:05 <stgraber> - Went through the high priority casper bugs and fixed a bunch of them: bug 946406, bug 984276, bug 423616, bug 476208 and bug 747888
+
+ 15:22:08 <stgraber> - Started preparing the next set of casper fixes, planning another upload later today.
+
+ 15:22:09 <ubottu> Launchpad bug 946406 in casper (Ubuntu Precise) "suspect race condition Keyboard layout, oem-config not set on persistent USB image" [High,Incomplete] https://launchpad.net/bugs/946406
+
+ 15:22:11 <ubottu> Launchpad bug 984276 in casper (Ubuntu Precise) "installing casper on a non live system causes update-initramfs to fail" [High,Confirmed] https://launchpad.net/bugs/984276
+
+ 15:22:11 <stgraber> - Briefly discussed foundations-q-autocreate-preseed with Colin, will try to get some basic implementation during my trip tomorrow
+
+ 15:22:13 <ubottu> Launchpad bug 423616 in casper (Ubuntu) "casper boot doesn't work with some boot options" [Medium,Fix released] https://launchpad.net/bugs/423616
+
+ 15:22:14 <ubottu> Launchpad bug 476208 in casper (Ubuntu) "casper booting from nfsroot doesn't respect nfs filesystem options correctly" [Medium,Fix released] https://launchpad.net/bugs/476208
+
+ 15:22:14 <stgraber> 
+
+ 15:22:15 <ubottu> Launchpad bug 747888 in casper (Ubuntu) "casper script 25configure_init clobbers 22serialtty, serial console nearly unusable" [Medium,Fix released] https://launchpad.net/bugs/747888
+
+ 15:22:17 <stgraber> - Travel/Schedule
+
+ 15:22:19 <stgraber> - I'll be at the LTSP hackfest tomorrow and Friday, available on IRC when not traveling.
+
+ 15:22:22 <stgraber> - Monday is a bank holiday.
+
+ 15:22:25 <stgraber> - I'll be off Thursday and Friday next week, traveling to Europe, will then work on European timezone until UDS.
+
+ 15:22:28 <stgraber> (DONE)
+
+ 15:22:31 <ogra_> stgraber, hug everyone from me
+
+ 15:22:39 <stgraber> ogra_: will do
+
+ 15:22:52 <ogra_> and send greetings to speedbump
+
+ 15:22:55 <ogra_> :)
+
+ 15:23:02 <slangasek> ogra_: when is your hw for the "internal project" due to arrive?
+
+ 15:23:11 <cjwatson> stgraber: Are you fixing bug 1058179 in addition to having diagnosed it, or should I follow up on that?
+
+ 15:23:13 <ubottu> Launchpad bug 1058179 in ubuntu-defaults-zh-cn (Ubuntu Quantal) "Incomplete language install (language-pack-zh-hans: 1:12.10+20120920)" [Undecided,New] https://launchpad.net/bugs/1058179
+
+ 15:23:18 <ogra_> slangasek, it said 3-5 workdays
+
+ 15:23:25 <slangasek> phooey, that's a long time
+
+ 15:23:34 <xnox> stokachu: make sure ubuntu-sponsors are subscribed, those three 977959,683640,1053306 don't and hence are not in the http://reports.qa.ubuntu.com/reports/sponsoring/ and hence fell out of my radar of "easy sponsorship tasks" I try to do in evenings =)
+
+ 15:23:35 <ogra_> slangasek, though its not clear yet that i ordered the right thing :P
+
+ 15:23:52 <ogra_> seemingly there is some confusion ... i might end up with both :)
+
+ 15:23:53 <slangasek> you didn't request the SCHNELL SCHNELL shipping option?
+
+ 15:24:00 <ogra_> lol
+
+ 15:24:04 <ev> slangasek: random stats: we're currently using 1.2 TB with 2.2 TB free. We're effectively doubling that (going from three nodes in Cassandra to six).
+
+ 15:24:05 <stgraber> cjwatson: I'll see how fixable it's, but I'm expecting a similar mess as 12.04.1 where the image gets really big really quickly
+
+ 15:24:11 <ogra_> no offer for that
+
+ 15:24:22 <stokachu> xnox: ? ive been assigning ubuntu-sru
+
+ 15:24:30 <slangasek> ev: that's apropos the crash pruning?
+
+ 15:24:31 <stokachu> they are notified of all changes is that not correct?
+
+ 15:24:36 <stgraber> cjwatson: I assigned it to me now so I don't forget
+
+ 15:24:53 <infinity> stokachu: ubuntu-sru doesn't sponsor things, just review/accept uploads.
+
+ 15:25:03 <infinity> stokachu: (Well, we *can* sponsor things, but that's not the point of the group)
+
+ 15:25:08 <stokachu> ah
+
+ 15:25:09 <ev> slangasek: that's the amount of space in use on each node
+
+ 15:25:13 <ev> (we have replication set to 3)
+
+ 15:25:16 <stokachu> lol so what group should I be adding?
+
+ 15:25:19 <stokachu> just ubuntu-sponsors?
+
+ 15:25:25 <ev> we don't save the core files right now
+
+ 15:25:29 <ev> once they're retraced, they're deleted
+
+ 15:25:30 <cjwatson> stgraber: I was hoping that size would be less of an issue now
+
+ 15:25:41 <slangasek> ev: ok - so how fast are we burning through the space at this point? :) Does it grow linearly?
+
+ 15:25:48 <cjwatson> stgraber: But we should certainly establish that the things QA is testing for agree with what the owners of this image think they want to offer :-)
+
+ 15:26:10 <cjwatson> stokachu: Just ubuntu-sponsors, yes
+
+ 15:26:25 <stokachu> ahhh no wonder
+
+ 15:26:26 <infinity> stokachu: ubuntu-sponsors, if you need a sponsor, ubuntu-sru as well, if it's an SRU bug, though the latter often happens automagically when we run tools to accept things from the queue anyway.
+
+ 15:26:35 <slangasek> [TOPIC] Bugs
+
+ 15:26:49 <slangasek> [LINK] http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html
+
+ 15:26:53 <cjwatson> stokachu: Right, it doesn't hurt to subscribe ubuntu-sru as well but it basically doesn't help
+
+ 15:26:53 <xnox> stokachu: you need both for SRU: debdiff -> unapproved queue -> accepted in -proposed. Sponsors for the first hop, SRU team for the second hop.
+
+ 15:26:54 <stokachu> ah ok awesome, makes sense now
+
+ 15:26:58 <ev> slangasek: doubling every six months
+
+ 15:26:59 <stgraber> cjwatson: well, IIRC if we actually include everything, we're talking about almost 100MB (all chinese langpacks + dictionaries + ibus tables + the same for english)
+
+ 15:27:16 <stokachu> excellent, makes sense now thanks
+
+ 15:27:25 <slangasek> ev: ew?
+
+ 15:27:26 <stokachu> ill get them assigned to the sponsors queue
+
+ 15:27:41 <bdmurray> subscribed not assigned
+
+ 15:27:46 <stgraber> cjwatson: anyway, I'll take a look after the meeting, will fix the package and see how big the difference will be
+
+ 15:27:56 <slangasek> I thought I was being conservative with the suggestion of linear growth :P
+
+ 15:28:01 <xnox> stokachu: can't we afford that in chinese-quantal image at the expense of non-chinese langpacks?
+
+ 15:28:18 <cjwatson> You mean stgraber not stokachu
+
+ 15:28:27 <xnox> yes.
+
+ 15:28:41 <slangasek> so our targeted bug count is certainly looking better this week
+
+ 15:28:47 <cjwatson> And I don't think langpacks come close to offsetting additional language *support*
+
+ 15:28:49 <slangasek> but as cjwatson pointed out, it's still high
+
+ 15:28:54 <xnox> stgraber: can't we afford that in chinese-quantal image at the expense of non-chinese langpacks?
+
+ 15:29:01 <slangasek> looks like we're down from ~60 to 41
+
+ 15:29:09 <cjwatson> 20 priority High
+
+ 15:29:29 <cjwatson> Anyone know what's happening with these apt gpg bugs?
+
+ 15:29:34 <stgraber> xnox: there's no easy way to remove langpacks as the image is built with ubuntu-defaults-builder, not our usual tools and ultimately the problem is that we can't remove the english langpack as various bits depend on en_US.UTF-8 being around (instead of just using C.UTF-8)
+
+ 15:29:47 <slangasek> cjwatson: I've seen activity on them from mvo
+
+ 15:30:00 <cjwatson> Can we assign him to them?
+
+ 15:30:09 * xnox wants to target some bugs to r-series, and if fixed in r, sru into quantal.
+
+ 15:30:13 <xnox> (the acient onces)
+
+ 15:30:37 <stokachu> xnox: how often does this report get generated
+
+ 15:30:40 <ev> slangasek: :) iz webops problem
+
+ 15:30:42 <infinity> slangasek: The eglibc one's being done today.
+
+ 15:30:50 <xnox> cjwatson: about apt-gpg bugs, it wasn't clear to me if it's all fix-released or partitially solved. since there were security uploads done.
+
+ 15:31:09 <bdmurray> stokachu: the rls-q-tracking one is hourly
+
+ 15:31:10 <slangasek> cjwatson: bug #1016643 has had SRUs for software-properties in friends; maybe the apt task is no longer relevant?
+
+ 15:31:11 <cjwatson> xnox: If you're planning on SRUing things into quantal post-release, please set the milestone to quantal-updates so that that's immediately clear from the report
+
+ 15:31:11 <xnox> stokachu: Last updated at: Wed, 03 Oct 2012 15:09:36 -0000. My guess is every hour?
+
+ 15:31:13 <ubottu> Launchpad bug 1016643 in apt (Ubuntu Quantal) "add-apt-repository downloads gpg key in an insecure fashion" [High,Triaged] https://launchpad.net/bugs/1016643
+
+ 15:31:19 <cjwatson> slangasek: Indeed, I don't know
+
+ 15:31:24 <stokachu> ok cool thanks
+
+ 15:31:31 <cjwatson> And bug 1013681 has been stagnant for a while
+
+ 15:31:33 <ubottu> Launchpad bug 1013681 in apt (Ubuntu Quantal) "make apt-key net-update secure" [High,Triaged] https://launchpad.net/bugs/1013681
+
+ 15:31:37 <slangasek> bdmurray: hmm, why did we agree to be responsible for fontconfig? :)
+
+ 15:31:53 <xnox> slangasek: I heard Laney likes fontconfig a lot =)
+
+ 15:32:06 <slangasek> cjwatson: so 1013681 doesn't seem tied to the release, I'm going to -notfixing it
+
+ 15:32:14 <bdmurray> slangasek: having it appear in the spreadsheet doesn't mean agree ;-)
+
+ 15:32:23 <infinity> slangasek: but #1008777 may or may not be a bug/misfeature, but it almost certainly doesn't need to be targetted and tracked as special.
+
+ 15:32:24 <cjwatson> slangasek: sounds good to me
+
+ 15:33:16 <cjwatson> I would love the report to notice that bug 1053770 is assigned to James Page and maybe that ought to override its own idea of which team it belongs to
+
+ 15:33:18 <ubottu> Launchpad bug 1053770 in ubuntu-meta (Ubuntu Quantal) "ubuntu-server install takes up too much space" [High,Confirmed] https://launchpad.net/bugs/1053770
+
+ 15:33:46 <slangasek> bdmurray: can you bump that over to desktop in the spreadsheet?
+
+ 15:33:59 <bdmurray> slangasek: sure
+
+ 15:34:07 <bdmurray> cjwatson: noted regarding the report
+
+ 15:34:33 <cjwatson> Of course, you win some you lose some, since we'd gain at least one bug from elsewhere that way
+
+ 15:34:40 <slangasek> infinity: 1008777> undecided+incomplete, that's not really one we're worrying about as-is (it was clearly targeted by the community, not through the rls-q-incoming queue)
+
+ 15:35:29 <bdmurray> slangasek: it was targetted by vanhoof
+
+ 15:35:44 <cjwatson> Yeah, I'm basically ignoring stuff from Medium on down for the purposes of worrying about the count
+
+ 15:36:08 <slangasek> bug #1026778 filled me with maintainer-script-induced rage; I think we should untarget it
+
+ 15:36:10 <ubottu> Launchpad bug 1026778 in dictionaries-common (Ubuntu Quantal) "Package does not upgrade cleanly from precise" [High,Incomplete] https://launchpad.net/bugs/1026778
+
+ 15:36:13 <cjwatson> So as far as I'm concerned the current report says we have 20 RC bugs
+
+ 15:36:22 <slangasek> bdmurray: right, but I don't think he was meaning to ask us to fix it
+
+ 15:36:59 <cjwatson> slangasek: Agreed, at least pending the information requested some weeks ago
+
+ 15:37:07 <bdmurray> slangasek: oh, so if he was doing it right he would have tagged it?
+
+ 15:37:17 <slangasek> bdmurray: yeah
+
+ 15:37:31 <slangasek> I think he was targeting it for his /own/ team to work on :)
+
+ 15:37:46 <xnox> jodh: bug 740390 is interesting, but to be solved not in upstart package?! But still interesting bug.
+
+ 15:37:48 <ubottu> Launchpad bug 740390 in dbus (Ubuntu Quantal) "libdbus-1-3 upgrade does not respawn init, resulting in unclean shutdown" [High,Confirmed] https://launchpad.net/bugs/740390
+
+ 15:38:12 <cjwatson> xnox: Yes, until stateful-reexec lands, the handful of libraries that upstart itself uses need to do this
+
+ 15:38:13 <slangasek> untargeting 1017001; still a problem, but only a trickle of bug reports and there's no reason to expect problems here for precise->quantal
+
+ 15:38:46 <xnox> cjwatson: ok. so I got it right that stateful reexec solves this generically.
+
+ 15:38:47 <cjwatson> jodh: libnih* has the same problem, FWIW
+
+ 15:39:25 <slangasek> cjwatson: last comment on 1013681 has you mentioning sudo access on pepo, which we have back now... should we take the server side of that on, or leave it to webops?
+
+ 15:39:48 <jodh> cjwatson: ta - I'll take a look.
+
+ 15:40:06 <xnox> cjwatson: 20 - 2 incomplete = 18 ;-)
+
+ 15:40:28 <cjwatson> slangasek: We should probably take it, but I have a vague memory that it required master key access
+
+ 15:40:44 <cjwatson> Which puts it past the 12.10 timeframe anyway
+
+ 15:40:49 <slangasek> ok
+
+ 15:41:33 * jodh wonders if we need a dh_reexecinit ?
+
+ 15:41:38 <slangasek> no
+
+ 15:41:41 <cjwatson> There are only a handful of libraries here
+
+ 15:41:49 <cjwatson> No need to invent new infrastructure for them
+
+ 15:41:55 <slangasek> we need stateful re-exec, and a quick fix for the 4 library packages affected
+
+ 15:42:29 <cjwatson> 3, since libc has handled this for years
+
+ 15:42:53 <slangasek> yep
+
+ 15:43:26 <cjwatson> So one-liner in three postinsts, move on
+
+ 15:43:39 * slangasek nods
+
+ 15:44:02 <stgraber> cjwatson: turns out I forgot to push the changes we SRUed at the last minute for 12.04.1 to quantal, so I'm just going to bring the two ubuntu-defaults-zh-cn back in sync which should fix the bug in the process
+
+ 15:44:12 <cjwatson> stgraber: Ah, OK, great
+
+ 15:44:55 * xnox \0/
+
+ 15:45:05 <slangasek> so, having turfed 1026778 I guess I'll take another one
+
+ 15:45:08 <cjwatson> In fact I see that Marc has done libdbus-1-3 in -proposed
+
+ 15:45:13 <cjwatson> Which I'll copy to quantal nowish
+
+ 15:45:26 <cjwatson> So it's just libnih to fix
+
+ 15:45:26 <slangasek> maybe bug #1051110 unless someone else wants to look at that one
+
+ 15:45:28 <ubottu> Launchpad bug 1051110 in update-manager (Ubuntu Quantal) "ucf debconf prompt lands in hidden terminal instead of using gnome frontend" [High,New] https://launchpad.net/bugs/1051110
+
+ 15:45:56 <bdmurray> slangasek: I'm interested in that one
+
+ 15:46:14 <slangasek> bdmurray: interested in taking it, or in having me resolve it? :)
+
+ 15:46:28 <bdmurray> slangasek: having a go at it ;-)
+
+ 15:47:17 <slangasek> bdmurray: ok, be my guest!
+
+ 15:47:24 <barry> one suggestion, though probably everyone already does this.  if you're looking at a bug, assign it to yourself so we don't step on each others toes.  you can always unassign it if you punt
+
+ 15:47:28 <xnox> slangasek: bdmurray: well I comment on it, with potential duplicates =) it's not new ;-)
+
+ 15:47:57 <slangasek> xnox: it's new behavior here for me
+
+ 15:48:37 <slangasek> xnox: the bug I'm reporting is *not* about the terminal not auto-expanding; it's about the wrong debconf frontend being used here
+
+ 15:48:51 <bdmurray> bug 1052605 will fall off the next time the report is created
+
+ 15:48:52 <ubottu> Launchpad bug 1052605 in update-manager (Ubuntu Quantal) "ERROR:root:getListFromFile: no '/usr/share/update-manager/removal_blacklist.cfg' found: exception during Precise to Quantal upgrade" [High,Fix released] https://launchpad.net/bugs/1052605
+
+ 15:49:32 <cjwatson> Yeah, that was due to collisions in the queue I believe.  Thanks for cleaning that up.
+
+ 15:50:50 <bdmurray> Oh and bug 1058102 will get added
+
+ 15:50:52 <ubottu> Launchpad bug 1058102 in ubuntu-release-upgrader (Ubuntu Quantal) "The strings in "ubuntu-release-upgrader" is not translated in UI" [High,Triaged] https://launchpad.net/bugs/1058102
+
+ 15:50:53 <xnox> slangasek: I see the distinction now. But surely you'd never need terminal to auto-expand if all questions correctly used the GUI debconf frontend.
+
+ 15:51:41 <infinity> xnox: You're assuming all questions are debconf. :P
+
+ 15:51:47 <slangasek> xnox: the auto-expanding is still needed in case of bugs
+
+ 15:51:51 <cjwatson> Indeed.  Consider conffile prompts.
+
+ 15:52:05 <slangasek> conffile prompts are also proxied by update-manager to the gui :)
+
+ 15:52:19 * cjwatson stands corrected
+
+ 15:52:26 <slangasek> anyway, I think we've devoured that bug list adequately for today
+
+ 15:52:29 <slangasek> [TOPIC] AOB
+
+ 15:52:32 <slangasek> Anything else?
+
+ 15:53:04 <barry> monday is a usa holiday but i'll probably swap it and work
+
+ 15:53:19 <infinity> Canadia too, and I think I'll take it. :P
+
+ 15:53:27 <ogra_> pfft
+
+ 15:53:28 <bdmurray> I'm swapping it also
+
+ 15:53:29 <ogra_> holidays
+
+ 15:53:57 * xnox booked a holiday
+
+ 15:54:17 <xnox> I can see how monday will not go wrong.
+
+ 15:55:05 <slangasek> I'll be off Monday
+
+ 15:55:08 <slangasek> so enjoy :)
+
+ 15:55:23 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

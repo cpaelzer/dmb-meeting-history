@@ -1,0 +1,356 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 31 Aug at 15:02 &mdash; 15:59 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-08-31-15.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 15:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-31-aug-2023/   (juliank, 15:03)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 15:16.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:16)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs is empty  (juliank, 15:39)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 15:39)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs only has the same livepatch issue we discussed already  (juliank, 15:41)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 15:41.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 15:41)
+
+=== AOB ===
+
+Discussion started by juliank at 15:52.
+
+ * ''LINK:'' https://bugs.launchpad.net/subiquity/+bug/2029479 was tagged by fheimes but since it's on subiquity it never made it into the report.  (schopin, 15:52)
+
+
+
+== People present (lines said) ==
+
+ * juliank (74)
+ * vorlon (49)
+ * schopin (6)
+ * cjwatson (4)
+ * bdrung (3)
+ * meetingology (2)
+ * mclemenceau_ (2)
+ * dbungert (2)
+ * xypron (1)
+ * enr0n (1)
+ * waveform (1)
+ * adrien (1)
+ * liushuyu (1)
+
+
+
+== Full log ==
+
+
+ 15:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:02 <meetingology> Meeting started at 15:02:52 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:02 <juliank> #topic Lightning rounds
+
+ 15:03 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-31-aug-2023/
+
+ 15:03 <juliank> I realize I didn't actually write anything yet, /o\
+
+ 15:03 <mclemenceau_> o/
+
+ 15:05 <vorlon> 'mermaid' what a weird name for a daemon
+
+ 15:05 <xypron> o/
+
+ 15:16 <juliank> o
+
+ 15:16 <juliank> I got a bit distracted sorry
+
+ 15:16 <juliank> #topic Release incoming bugs
+
+ 15:16 <juliank> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:16 <juliank> 5 bugs!
+
+ 15:17 <juliank> bug 2033129
+
+ 15:18 <juliank> hplip was dropped to universe as part of cups snap change
+
+ 15:18 <juliank> I'm not sure what should be done here
+
+ 15:19 <juliank> should we leave that with desktop? but they asked for help
+
+ 15:19 <vorlon> this was originally a foundations MIR
+
+ 15:19 <vorlon> I was going to ask slyon but I think he's not around at the moment
+
+ 15:20 <vorlon> LP: #2028054
+
+ 15:20 <juliank> I think we're not sure we need that package in main anymore?
+
+ 15:21 <juliank> Should we mark it Incomplete and ask for more information?
+
+ 15:21 <vorlon> the comment history in that bug is misleading and appears to be based on an analysis when the plan was to demote this in favor of the snap stack
+
+ 15:21 <vorlon> we need someone to actually drive this MIR
+
+ 15:21 <juliank> OK, I don't know what the current plan is wrt cups
+
+ 15:21 <vorlon> there is no GUI for it - we are shipping the debs for mantic
+
+ 15:22 <vorlon> that's why this is back in component-mismatches
+
+ 15:22 <vorlon> I had to force-demote hplip because of the universe dep causing image build failures
+
+ 15:22 <vorlon> this needs to be re-repromoted before beta, or users are going to get wrong installs at beta time because hplip is a recommends
+
+ 15:22 <juliank> Why does it need an MIR process if it was in main and wrongly demoted?
+
+ 15:23 <vorlon> (unsatisfied recommends of ubuntu-desktop on the image -> nothing will pull it in later when hplip is promoted to main)
+
+ 15:23 <vorlon> juliank: *hplip* was in main.  python-rlpycairo was a new dep of python-reportlab, this is why this MIR was opened
+
+ 15:23 <juliank> oh
+
+ 15:23 <vorlon> when hplip was demoted, python-reportlab was also demoted, so the new version snuck into the release pocket
+
+ 15:23 <juliank> Now I understand
+
+ 15:24 <vorlon> I can demote it to proposed, but there are a bunch of other packages that also depend on new python-reportlab so it's a fairly complicated surgery
+
+ 15:24 <vorlon> or I can pre-promote the packages to main while the MIR is still open
+
+ 15:24 <vorlon> but any which way, the MIR needs followed through on
+
+ 15:25 <juliank> My preference would be to demote to python-reportlab depends to suggests and making sure the eroror handling is reasonable
+
+ 15:25 <vorlon> it's not
+
+ 15:25 <vorlon> I already talked to Till about this
+
+ 15:25 <juliank> anyhow how to proceed?
+
+ 15:26 <vorlon> (in private messages, so of course none of it is in the bug log)
+
+ 15:26 <juliank> leave the bug
+
+ 15:26 <juliank> sigh
+
+ 15:26 <juliank> leave the bug as is?
+
+ 15:26 <vorlon> yes, someone needs to drive the MIR :)
+
+ 15:26 <vorlon> and it's a foundations-owned package
+
+ 15:27 <vorlon> if I demote packages to -proposed, it's still an open MIR
+
+ 15:27 <vorlon> if I pre-promote packages to main before the MIR is done, it's still an open MIR
+
+ 15:27 <juliank> We are going a bit in circles here
+
+ 15:27 <vorlon> so foundations needs to pick this MIR up and drive it to completion (even if "completion" means "find a way to drop the dep")
+
+ 15:28 <vorlon> I don't see why it's a circle, we've identified work that needs to happen and we should just commit to doing it
+
+ 15:28 <vorlon> and assign it, and not discuss it further in a plenary meeting :)
+
+ 15:28 <juliank> So we should remove the tag, mark it invalid, and mark the mir as foundations-todo
+
+ 15:29 <vorlon> sounds good
+
+ 15:30 <juliank> bug 2030788
+
+ 15:30 <juliank> enr0n is already assigned
+
+ 15:30 <juliank> but it's still incoming, not todo
+
+ 15:31 <enr0n> juliank: vorlon tagged it though, I think I had assigned it to myself to keep track of it
+
+ 15:31 <juliank> is there anything to do right now?
+
+ 15:31 <juliank> I think the bug is fixed in cloud-init?
+
+ 15:31 <juliank> Certainly dropping the tag seems right
+
+ 15:31 <waveform> correct, cloud-init is now fixed
+
+ 15:31 <adrien> ah, that seems to explain my layout issues :P
+
+ 15:32 <juliank> I don't think this is foundations-todo right now
+
+ 15:33 <juliank> vorlon: do you have another opinion?
+
+ 15:33 <vorlon> if cloud-init has succeeded in working around it, then I'm ok with us working around it; the need here was to support cloud-init
+
+ 15:33 <juliank> CPC wants to talk further if they think they need more
+
+ 15:33 <juliank> ok
+
+ 15:33 <juliank> let's keep it open though in case
+
+ 15:34 <juliank> because they want to to talk about it more and quoted "'fix'" :D
+
+ 15:34 <vorlon> (I am looking askance at Debian for having mangled the systemd interface in this way, but that doesn't per se make it a priority for us)
+
+ 15:34 <juliank> bug 2033112
+
+ 15:34 <juliank> let's just tag that
+
+ 15:35 <juliank> bug 2017401 - we had our meeting but didn't update the bug with the summary
+
+ 15:36 <juliank> vorlon: do you have meeting notes or a better memory than me and can update the bug with the outcomes?
+
+ 15:36 <vorlon> right - conclusion was that we're deferring this for now in favor of improved information from canonical-livepatch in the nn cycle
+
+ 15:36 <vorlon> I'll update the bug
+
+ 15:36 <juliank> and then tag it incoming-nn I guess
+
+ 15:36 <juliank> bug 2029148
+
+ 15:37 <juliank> the cups snap is still in main though, this is still fix released
+
+ 15:37 <juliank> and we have enough bugs to track the MIR
+
+ 15:37 <juliank> let's mark it back as Fix Released
+
+ 15:38 <vorlon> what do you mean, the snap is in main :)
+
+ 15:38 <juliank> The cups deb
+
+ 15:38 <vorlon> ok
+
+ 15:39 <juliank> https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs is empty
+
+ 15:39 <juliank> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:39 <juliank> bug 1990798
+
+ 15:40 <juliank> pro team is engaging with that and it's incomplete right now, so let's give a bit more time I guess
+
+ 15:41 <juliank> https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs only has the same livepatch issue we discussed already
+
+ 15:41 <juliank> #topic Team proposed-migration report
+
+ 15:41 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:41 <juliank> vorlon:
+
+ 15:41 <juliank> Can we remove the time-daemon package again?
+
+ 15:41 <vorlon> yes
+
+ 15:42 <vorlon> has the germinate change landed? :)
+
+ 15:42 <juliank> Not yet, cjwatson hasn't gotten around to reviewing it yet
+
+ 15:42 <juliank> But we also don't need to wait for the server side as the syntax is ignored by older germinate
+
+ 15:42 <juliank> We could just update the deb
+
+ 15:43 <juliank> Either way, the package being present is confusing people as I've seen earlier today
+
+ 15:43 <vorlon> juliank: last week you had forgotten to start working on tzdata, is it on your radar now?
+
+ 15:43 <juliank> sadly not
+
+ 15:43 <bdrung> I'll take care of dask
+
+ 15:43 <juliank> It eluded the pulse
+
+ 15:44 <cjwatson> I'm reviewing the germinate change at the moment, amid the other N things
+
+ 15:44 <bdrung> then only gnustep-base remains blocking tzdata
+
+ 15:44 <cjwatson> vorlon: you currently have a Needs Fixing vote on that germinate MP - could you look at it again?
+
+ 15:44 <vorlon> juliank: so will you put it in the pulse?  these are supposed to be committed on a weekly basis
+
+ 15:44 <juliank> when I find it
+
+ 15:45 <vorlon> cjwatson: I was just asking for a test case, which I'm not going to second-guess - marked approved now
+
+ 15:45 <juliank> I think the problem is its not in the pulse view because it's not triaged
+
+ 15:45 <juliank> Hmm it is triaged, but it simply doesn't pop up in JIRA backlog view
+
+ 15:45 <vorlon> ubiquity - I said this was back with mwhudson but he's quite busy with work on newer installers
+
+ 15:45 <vorlon> bdrung: any chance you want to follow up on ubiquity?
+
+ 15:46 <cjwatson> vorlon: yeah, that's fine, I just didn't want to merge it over your head
+
+ 15:46 <bdrung> vorlon, it's on my todo list for next week (spending all the time this week for +1)
+
+ 15:46 <vorlon> bdrung: ok thanks
+
+ 15:47 <vorlon> s390-tools is blocked on an MIR which is tagged foundations-todo but not assigned; LP: #2030482.  Do we need to find an owner for this?
+
+ 15:47 <schopin> s390-tools is blocked by an MIR.
+
+ 15:47 <schopin> vorlon: I'm the owner :)
+
+ 15:47 <vorlon> schopin: should I assign the bug to you?
+
+ 15:47 <schopin> I'm just waiting on some details from fheimes.
+
+ 15:47 <schopin> Sure.
+
+ 15:48 <vorlon> and new from last week is tpm2-tss
+
+ 15:48 * vorlon shakes the dice bag
+
+ 15:48 <vorlon> liushuyu: can you take this?
+
+ 15:48 <liushuyu> vorlon: okay
+
+ 15:49 <vorlon> and that's all for now
+
+ 15:49 <cjwatson> juliank: germinate change merged and uploaded to unstable.  feel free to sync it into mantic once Debian publishing and the LP import catch up.  I also updated ubuntu-archive@ubuntu-archive-toolbox.internal's local copy of it for good measure.
+
+ 15:49 <juliank> cjwatson: thanks!
+
+ 15:51 <vorlon> juliank: back to you
+
+ 15:52 <juliank> #topic AOB
+
+ 15:52 <schopin> https://bugs.launchpad.net/subiquity/+bug/2029479 was tagged by fheimes but since it's on subiquity it never made it into the report.
+
+ 15:54 <dbungert> this one is strange, there is a claim that the chirep tool is not being used correctly but it hasn't changed.  at any rate we need to investigate this subiquity side, yes.
+
+ 15:54 <juliank> tagging it foundations-todo
+
+ 15:54 <dbungert> thanks
+
+ 15:54 <juliank> with a typo lol
+
+ 15:56 <juliank> more aob?
+
+ 15:56 <mclemenceau_> Monday is public holiday in the US
+
+ 15:57 <vorlon> I'm out for the Monday holiday, and then again Wed/Thu next week for a medical thing, so not here for the next meeting
+
+ 15:57 <juliank> :(
+
+ 15:58 <schopin> I'm out on a short 1-week vacation starting tonight :)
+
+ 15:59 <juliank> I think that wraps up the IRC meeting! Thanks everyone!
+
+ 15:59 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,415 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 24 Apr at 15:02 &mdash; 15:36 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-04-24-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== lightning round ===
+The discussion about "lightning round" started at 15:02.
+
+
+=== trusty SRUs ===
+The discussion about "trusty SRUs" started at 15:20.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-t-tracking-bug-tasks.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:25.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (42)
+ * xnox (24)
+ * infinity (19)
+ * cjwatson (18)
+ * doko (15)
+ * stgraber (14)
+ * barry (11)
+ * mvo (10)
+ * caribou (9)
+ * jodh (8)
+ * ubottu (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Thu Apr 24 15:02:15 2014 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <slangasek> [TOPIC] lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson xnox caribou infinity mvo)
+
+ 15:02 <slangasek> barry mvo slangasek stgraber xnox jodh bdmurray doko cjwatson infinity caribou
+
+ 15:02 <barry> \o/
+
+ 15:03 <barry> catching up from pycon, keysigning
+
+ 15:03 <barry> touch: updating, fixing, building, testing gallery-app py3 port.  LP: #1310794.  LP: #1222910
+
+ 15:03 <barry> general: reported LP: #1310663 and downgraded to fix.  proposed apt-clone MP to clean up cruft.  LP: #1309447 review.  LP: #1290847 work ongoing.
+
+ 15:03 <barry> done
+
+ 15:03 <ubottu> Error: Could not gather data from Launchpad for bug #1310794 (https://launchpad.net/bugs/1310794). The error has been logged
+
+ 15:03 <barry> mumble seems down too :/
+
+ 15:04 <mvo> Prepared 78 lines report from timelog and decided to be less boring with this one:
+
+ 15:04 <mvo> Bugfixing for trusty/trusty-proposed: apt, aptdaemon, apt-clone, gdebi, apt-ddtp, python-apt, software-center, software-properties, ubuntu-release-upgrader, update-manager
+
+ 15:04 <mvo> apt: work on apt-get intsall foo.dsc, bash completion, ftparchive-srcpkgcache, apt-get update progress estimates
+
+ 15:04 <mvo> Misc:
+
+ 15:04 <mvo> - lp-changelogs-crawler fix hang, add socket timeout to avoid future hangs
+
+ 15:04 <mvo> - sprint, HR
+
+ 15:04 <ubottu> Error: Could not gather data from Launchpad for bug #1222910 (https://launchpad.net/bugs/1222910). The error has been logged
+
+ 15:04 <mvo> EOF
+
+ 15:04 <ubottu> Error: Could not gather data from Launchpad for bug #1310663 (https://launchpad.net/bugs/1310663). The error has been logged
+
+ 15:04 <ubottu> Error: Could not gather data from Launchpad for bug #1309447 (https://launchpad.net/bugs/1309447). The error has been logged
+
+ 15:04 <ubottu> Error: Could not gather data from Launchpad for bug #1290847 (https://launchpad.net/bugs/1290847). The error has been logged
+
+ 15:04 <slangasek> no bot, not like that!
+
+ 15:04 <xnox> slangasek: lp DoS
+
+ 15:04 <mvo> barry: when LP is up again I have a look at the apt-clone
+
+ 15:04 <slangasek> sigh
+
+ 15:05 <barry> mvo: cool, should be simple
+
+ 15:05 <slangasek> xnox: do we know why we're getting these DoSes?
+
+ 15:05 <xnox> slangasek: ... i wonder if the botnet is ubuntu =)
+
+ 15:05 <infinity> slangasek: I assume Dmitry annoyed someone a little too much.
+
+ 15:06 <xnox> slangasek: there is #is-outage in progress / incident
+
+ 15:06 * slangasek wonders why that's a separate channel
+
+ 15:07 <slangasek> * release week
+
+ 15:07 <slangasek> * short week due to vacation
+
+ 15:07 <slangasek> * working on filling the Java role
+
+ 15:07 <slangasek> * working on some reports for a customer
+
+ 15:07 <slangasek> (done)
+
+ 15:07 <barry> it's definitely not utopic
+
+ 15:08 <xnox> slangasek: about Java role, elmo has a few requests if/when that possition is filled. Mostly around packaging java software we use in production - jenkins, elasticsearch, cassandra.
+
+ 15:08 <stgraber> Waited all week for Mark to announce the new name...
+
+ 15:08 <stgraber> More seriously:
+
+ 15:08 <stgraber> - 14.04 release
+
+ 15:08 <stgraber> - LXC upstream work: fixed a bunch of Jenkins problems, bug reports, debugged
+
+ 15:08 <stgraber> some crazy issue on machines with a crazy amount of network namespaces and
+
+ 15:08 <stgraber> routes (kernel network stack falling appart when you have around 500 netns
+
+ 15:08 <stgraber> with over 200 routes each).
+
+ 15:08 <stgraber> - cgmanager/systemd: looked into a couple of bugs
+
+ 15:08 <slangasek> xnox: that's, er, out of scope for the role
+
+ 15:08 <stgraber> - U preparation: setup system-image, cleaned up some stuff there too, setup
+
+ 15:08 <stgraber> the QA tracker, setup extras.ubuntu.com
+
+ 15:08 <stgraber> - Some SRU reviews
+
+ 15:08 <stgraber> 
+
+ 15:08 <stgraber> I'm off tomorrow and Monday.
+
+ 15:08 <stgraber> (DONE)
+
+ 15:09 <doko> xnox, this is not about packaging software in Java
+
+ 15:09 <xnox> slangasek: i know, that's what i said as well... but using 3rd-party binary .debs is also not ideal.
+
+ 15:09 <doko> - PyCon
+
+ 15:09 <doko> - two Easter holidays
+
+ 15:09 <doko> - prepare binutils and GCC for utopic
+
+ 15:09 <doko> (done)
+
+ 15:09 <xnox> do* Release week -> released
+
+ 15:09 <xnox> * Unicorn opening -> did couple minor opening tasks
+
+ 15:09 <xnox> * Worked on pushing deltas to debian where appropriate
+
+ 15:09 <xnox> * Working on better upstart/service/update-rc.d integration
+
+ 15:09 <xnox> ( e.g. such that launching init.d scripts work & we can revert php5
+
+ 15:09 <xnox> job change)
+
+ 15:09 <xnox> * Working with nvme-linux & efibootmgr to add support for generating
+
+ 15:09 <xnox> nvme efi boot entries.
+
+ 15:09 <xnox> * worked on python3-launchpadlib:
+
+ 15:09 <xnox> - merge proposal in progress to fix +access-token in launchpad
+
+ 15:10 <xnox> - merge proposal against requests-oauthlib to support redirects
+
+ 15:10 <xnox> 廌
+
+ 15:10 <slangasek> xnox: not disagreeing, but there's no reason to think that someone maintaining the JVM is also going to be packaging complicated .jar stacks
+
+ 15:10 <jodh> * foundations-1305-upstart-work-items:
+
+ 15:10 <jodh> - cgroup support: Back working on this. Current plan is to couple the
+
+ 15:10 <jodh> cgmanager code (but not the async elements) from the cgroup branch
+
+ 15:10 <barry> xnox: \o/  if you're hunting for reviews, let me know
+
+ 15:10 <jodh> and the async branch which I've been working on for the past couple
+
+ 15:10 <jodh> of days since this provides a much better design.
+
+ 15:10 <jodh> * misc:
+
+ 15:10 <jodh> - short week due to Easter and also out Tuesday.
+
+ 15:10 <jodh> ⁁
+
+ 15:10 <xnox> doko: are we going to switch to 4.9 in utopic, or is that out-of-scope?
+
+ 15:11 <doko> xnox, around the 4.9.1 release
+
+ 15:11 <cjwatson> doko: is there anything else needed in the utopic archive right now for toolchain, or is it good from your point of view (once the autopkgtest issues are fixed)?
+
+ 15:12 <cjwatson> doko: I didn't see a GCC upload to utopic yet
+
+ 15:12 <doko> cjwatson, I don't have any more issues, maybe the dpkg merge, so that fortran packages are built with optimization
+
+ 15:12 <cjwatson> dpkg was merged
+
+ 15:12 <cjwatson> oh, still in unapproved
+
+ 15:12 <doko> didn't subscribe to utopic-hcanges quick enough
+
+ 15:12 <infinity> Yeah.  It's merged, but waiting. :)
+
+ 15:12 <cjwatson> yeah, I'll poke that one
+
+ 15:12 <infinity> It was the second thing uploaded.
+
+ 15:13 <infinity> Also, must have vim, so I stop getting angry red in my changelogs.
+
+ 15:13 <doko> will upload gcc-4.9 and gcc-4.8
+
+ 15:13 <xnox> infinity: i thought vim was done.
+
+ 15:13 <infinity> xnox: Same story.  I did the merge, sitting in the queue. :)
+
+ 15:13 <cjwatson> xnox: also in unapproved
+
+ 15:13 <slangasek> cjwatson: your turn (people going out of order, people on holiday... madness)
+
+ 15:13 <xnox> ah, ok.
+
+ 15:14 <cjwatson> Spent most of the week working on livefs-in-LP.  I have most of the master side done now; just need to write build behaviour tests and add webservice-flavoured methods for retrieving build files.  "bzr damage" => 2175 LoC
+
+ 15:14 <cjwatson> Opening utopic, at last; initial archive publication, seeds, setting up various reports.
+
+ 15:14 <cjwatson> ..
+
+ 15:14 <cjwatson> (accepted dpkg and vim)
+
+ 15:14 <infinity> * released trusty
+
+ 15:14 <infinity> * long weekend
+
+ 15:14 <infinity> * opening utopic
+
+ 15:14 <infinity> * misc
+
+ 15:14 <infinity> ☭
+
+ 15:15 <caribou> * More work on sosreport. Now part of the upstream team
+
+ 15:15 <caribou> * Re-submitted SRU on bug 1293291 to enable BTMP on openssh
+
+ 15:15 <ubottu> Error: Launchpad bug 1293291 could not be found
+
+ 15:15 <caribou> * New makedumpfile upstream version to be packaged
+
+ 15:16 <caribou> will need help from some nice DD as my current DM mentor is nowhere to be seen
+
+ 15:16 <caribou> (done)
+
+ 15:17 <infinity> caribou: I've offered to sponsor you in the past. :)
+
+ 15:17 <caribou> infinity: yeah, I wanted to stay nice to my current sponsor but this will now change
+
+ 15:17 <caribou> infinity: I'll ping you
+
+ 15:17 <xnox> caribou: ditto, i can also sponsor things into debian and/or for you to become DM, DD.
+
+ 15:18 <caribou> xnox has also offered to help with my DM submission
+
+ 15:18 <caribou> xnox: I got my gpg key sorted out now. I was waiting for the release to get out of the way to ping you
+
+ 15:18 <xnox> caribou: sounds good. I'll PM you to see what we need to do next.
+
+ 15:18 <slangasek> anything else re: current status?
+
+ 15:20 <slangasek> [TOPIC] trusty SRUs
+
+ 15:20 <slangasek> as expected, there are still some bugs around in the LTS we've just released
+
+ 15:20 <infinity> Lies.
+
+ 15:20 <barry> features
+
+ 15:20 <slangasek> we haven't spent much meeting time on bug tracking this cycle, we should probably do a bit more
+
+ 15:21 <slangasek> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-t-tracking-bug-tasks.html#foundations-bugs
+
+ 15:22 <slangasek> those are the bugs that are targeted to trusty; could you all help take some time today to clean up that list?  Claiming the ones that are SRUs you think you should be driving, letting me know about ones you think we should drop from the list
+
+ 15:22 <slangasek> and if there are some on there that are assigned to you that you think you aren't going to get to, please let me know that as well
+
+ 15:22 <slangasek> ok?
+
+ 15:23 * mvo nods
+
+ 15:23 <barry> yeppers
+
+ 15:23 * infinity is reminded to review the bash in the queue.
+
+ 15:24 <slangasek> I guess you mean for utopic, not for trusty?
+
+ 15:24 <infinity> No, for trusty.
+
+ 15:25 <slangasek> it shouldn't be in the queue
+
+ 15:25 <infinity> Oh, did someone let that in while I slept?
+
+ 15:25 <slangasek> they did indeed, Rip
+
+ 15:25 <infinity> Shiny.
+
+ 15:25 <slangasek> [TOPIC] AOB
+
+ 15:25 <slangasek> anything else?
+
+ 15:26 <slangasek> formulating a game plan for taking control of the botnet and upgrading it to Ubuntu?
+
+ 15:26 <slangasek> (I assume it's running XP right now)
+
+ 15:26 <cjwatson> has anyone worked out how to get from the airport in Malta to the hotel yet?
+
+ 15:26 <cjwatson> seeing as I'm going to be trying to do it after midnight :-/
+
+ 15:26 <infinity> cjwatson: After midnight, I'd assume taxi.
+
+ 15:27 <doko> slangasek, speaking of elmo's list ... is this is list public?
+
+ 15:27 <cjwatson> (or possibly finding a comfy park bench near the airport and doing it in the morning ...)
+
+ 15:27 <cjwatson> infinity: it's like an hour away AIUI?
+
+ 15:27 <infinity> cjwatson: Eek.  Yeah, I've not looked at any of that yet.  Maybe I should get to caring at some point.
+
+ 15:27 <slangasek> doko: "elmo's list"?  that's the version of craiglist where your transactions are randomly accompanied by bursts of laughter?
+
+ 15:27 <xnox> doko: not sure. but it's combination of "jamespage stopped doing jenkins packaging unwinding" and we run "cassandra, ellasticsearch, jenkins" a lot.
+
+ 15:27 <cjwatson> (but I haven't actually looked properly)
+
+ 15:27 <doko> when you walk, you'll arrive in the morning
+
+ 15:28 <cjwatson> doko: thanks
+
+ 15:28 <slangasek> cjwatson: oh, man - no, haven't looked at this at all
+
+ 15:28 <doko> ;p
+
+ 15:29 <slangasek> doko: do you mean the list of non-Ubuntu .debs IS is running?  I certainly haven't seen a list
+
+ 15:29 <doko> xnox, slangasek: well, I would expect puppet on this list too
+
+ 15:29 <slangasek> doko: you expect IS is not using the puppet in the archive...?
+
+ 15:29 <xnox> doko: i'm only aware of the "elmo's java list", no idea about complete "elmo's list"
+
+ 15:29 <mvo> cjwatson: meh, I arrive at 21:45 so no public transport for me as well I guess
+
+ 15:29 <doko> slangasek, I would like to know what else besides of puppet IS is using
+
+ 15:30 <slangasek> doko: IS is using lots of stuff, but that was a list of things IS is using that aren't from the archive
+
+ 15:31 <slangasek> cjwatson: maps.google.com tells me it's only 13m by car
+
+ 15:31 <cjwatson> ah ok, better than I'd heard
+
+ 15:31 <cjwatson> fine, I'm sure that can be managed somehow then
+
+ 15:32 <doko> slangasek, well I mean the list of things we only have in main because IS needs these
+
+ 15:32 <slangasek> maps.google.com also shows me lots of opaque toponyms
+
+ 15:32 <slangasek> doko: those should be annotated in the seed
+
+ 15:35 <slangasek> cjwatson: it also looks like it would be hard to be more than 30m from the airport, FWIW :)
+
+ 15:35 <infinity> slangasek: Maybe the hotel is on an oil rig?
+
+ 15:36 <slangasek> well, evidently there is a second islandthat could introduce ferry delays
+
+ 15:36 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

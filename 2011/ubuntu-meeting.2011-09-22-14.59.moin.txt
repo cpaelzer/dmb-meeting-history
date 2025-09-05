@@ -1,0 +1,740 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by NCommander at 14:59:22 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-09-22-14.59.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/ARM/Meeting/2011/20110922   (NCommander, 14:59:52)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html   (NCommander, 15:00:35)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-2.html   (NCommander, 15:00:46)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10.html - I typed the wrong page in my browser  (NCommander, 15:02:56)
+ *ARM Server Status (NCommander, Daviey)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *ARM Porting/FTBFS status (NCommander, janimo)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *QA Status (GrueMaster, mahmoh)
+
+ *Linaro Updates (rsalveti)
+
+ *AOB
+
+
+
+Meeting ended at 15:57:28 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (106)
+ * rsalveti (51)
+ * janimo (47)
+ * infinity (39)
+ * NCommander (31)
+ * GrueMaster (27)
+ * davidm (20)
+ * ppisati (8)
+ * skaet (3)
+ * meetingology (3)
+ * mahmoh (1)
+
+
+
+== Full Log ==
+
+
+ 14:59:22 <NCommander> #startmeeting
+
+ 14:59:22 <meetingology> Meeting started Thu Sep 22 14:59:22 2011 UTC.  The chair is NCommander. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 14:59:22 <meetingology> 
+
+ 14:59:22 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 14:59:36 <NCommander> hrm, the bot ene upgraded
+
+ 14:59:36 * davidm waves
+
+ 14:59:49 <davidm> seems like
+
+ 14:59:52 <NCommander> https://wiki.ubuntu.com/ARM/Meeting/2011/20110922
+
+ 15:00:18 <NCommander> we have no action items from last meeting so
+
+ 15:00:35 <NCommander> #link http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html
+
+ 15:00:46 <NCommander> #link http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-2.html
+
+ 15:00:47 <janimo> hello
+
+ 15:01:00 <ogra_> i guess we need to start the postponing fun
+
+ 15:02:05 <NCommander> hrm, the tracker is only showing me and infinity
+
+ 15:02:10 <NCommander> ogra_: fix it :-P
+
+ 15:02:20 <ogra_> ??
+
+ 15:02:31 <ogra_> i wonder where you look at
+
+ 15:02:38 <ogra_> i see the whole team
+
+ 15:02:40 <NCommander> oh
+
+ 15:02:43 <NCommander> nm
+
+ 15:02:56 <NCommander> http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10.html - I typed the wrong page in my browser
+
+ 15:03:16 <ogra_> GrueMaster, your update-initramfs test can be set to done if you made a succwessfull install ;)
+
+ 15:03:39 <NCommander> workitem wise, we're not too bad off. I have a few stranglers which will die soon (and some I should have marked DONE already)
+
+ 15:04:12 <ogra_> infinity, do we plan to still see the apt ship pool whatever changes ?
+
+ 15:04:29 <ogra_> looks to me like thats P material
+
+ 15:04:40 <infinity> ogra_: Yeah, I'd like to land them early next week, I think.
+
+ 15:04:43 <ogra_> (pool works as is)
+
+ 15:04:45 <infinity> But I could defer.
+
+ 15:04:46 <ogra_> hmm
+
+ 15:05:00 <ogra_> its really late and we should all concentrate on bugs from now on
+
+ 15:05:05 <infinity> Pool works, but tasks are broken, which is pretty annoying for server.
+
+ 15:05:09 <ogra_> and given that it works atm ...
+
+ 15:05:12 <davidm> I'd prefer to postpone none critical items until next cycle
+
+ 15:05:17 <ogra_> right
+
+ 15:05:37 <davidm> Lets clean up, get RC solid and be happy
+
+ 15:05:44 <ogra_> right
+
+ 15:05:44 * infinity shrugs.
+
+ 15:05:50 <infinity> Happy to defer, though that is a bug. :P
+
+ 15:06:01 <NCommander> [topic] ARM Server Status (NCommander, Daviey)
+
+ 15:06:09 <davidm> infinity, is it big enough to SRU later?
+
+ 15:06:31 <ogra_> GrueMaster, postzpone the preinstalled stuff for jasper too, unless you want to actually test preinstall commands on kernel cmdline (that works since forever)
+
+ 15:06:41 <infinity> davidm: SRUing it's not really an option, IMO.
+
+ 15:06:46 <NCommander> w.r.t. to omap guided partitioning, I *finally* got partman-uboot ina state where it does what it should. I need to cook off a new partman-reciepes, but that shouldn't be too hard. I'll give GrueMaster a modifiednetinstall to test today or tomorrow.
+
+ 15:07:15 <GrueMaster> ok
+
+ 15:07:26 <ogra_> NCommander, you still have three open items too
+
+ 15:07:48 <ogra_> server kernel is on the schedule for P, i think you can postpone that
+
+ 15:08:08 <ogra_> the other two look pretty well, like paperwork
+
+ 15:08:13 <NCommander> yup, will do.
+
+ 15:08:18 <davidm> infinity, OK then not that critical I suspect
+
+ 15:08:32 <NCommander> paperwork fortunately isn't affected by freezes
+
+ 15:08:37 <ogra_> ppisati, the kernel config WI is also covered by a UDS session
+
+ 15:08:40 <NCommander> i'm unsure if thats a :-) or a :-(
+
+ 15:08:45 <GrueMaster> I'm going to mark iSCSI as done.  The only remaining issue was booting from iSCSI and that is being worked on in the server team.
+
+ 15:08:47 <ogra_> ppisati, so i'd say postpone that
+
+ 15:09:07 <ppisati> ogra_: WI?
+
+ 15:09:10 * ogra_ guesses that were all WIs that were left
+
+ 15:09:28 <ppisati> ah
+
+ 15:09:29 <ogra_> i must say we did pretty well given the sheer amount of crao we had after UDS :)
+
+ 15:09:30 <ppisati> work item
+
+ 15:09:34 <ogra_> right
+
+ 15:09:41 <ogra_> ppisati, see the link above
+
+ 15:09:49 <ogra_> you have one open item that can be postponed
+
+ 15:09:57 <ogra_> NCommander, move ? :)
+
+ 15:10:06 <NCommander> [topic] Kernel Status (cooloney, ppisati)
+
+ 15:10:23 <ppisati> nothing exciting this week
+
+ 15:10:24 * janimo working on getting ac100 new kernel packaged and uploaded
+
+ 15:10:29 <ppisati> on my side
+
+ 15:10:32 <ogra_> woohoo
+
+ 15:10:39 <ppisati> i'm working on the sd removal bug
+
+ 15:10:54 <ppisati> (and i found the problem)
+
+ 15:11:01 <ogra_> wow, that was fast
+
+ 15:11:08 <infinity> janimo: Didn't you have an mx5 kernel incoming for me too?
+
+ 15:11:25 <janimo> infinity, jcrigby is handling that
+
+ 15:11:28 <ppisati> yep, but i don't know yet how to properly fix it (because that would be a layering violation)
+
+ 15:11:31 <infinity> janimo: Shiny.
+
+ 15:11:39 <janimo> his git tree and processes, I had no idea how to make even such a small change
+
+ 15:11:55 <ogra_> yeah, its tricky if you are not used to it
+
+ 15:12:23 <janimo> which is sad. One line change and a bugfix that can be expressed clearly in a single sentence (turn on CONFIG_LDBAF) needs a lot of legwork
+
+ 15:12:35 <ogra_> and even if you know how to do it ... you will fall flat on your face if it doesnt work right :)
+
+ 15:12:53 <ogra_> sincer these scripts are pure mystery
+
+ 15:12:56 <ogra_> *since
+
+ 15:13:13 <janimo> well, some of the docs help, but not everything is documented
+
+ 15:13:18 <ogra_> yeah
+
+ 15:13:23 <janimo> worse there is more than one way to do it
+
+ 15:13:29 <ogra_> hehe
+
+ 15:13:44 <ogra_> linux is all about choice ;)
+
+ 15:13:55 <ogra_> NCommander, ?
+
+ 15:13:56 <janimo> yes, and it is refelcted by the awesome market share
+
+ 15:14:30 <NCommander> ogra_: ?
+
+ 15:14:45 * ogra_ puts NCommander on wheels so he starts moving
+
+ 15:14:47 <ogra_> :)
+
+ 15:15:08 <NCommander> [topic] ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:15:39 <ogra_> gobject-introspection fails :(
+
+ 15:15:42 <infinity> The rebuild test is finally done, we should be combing through the results as quickly as we can.
+
+ 15:15:43 <janimo> I tentatively looked at postgres failing.
+
+ 15:15:55 <ogra_> and postgres might be intresting for the server side
+
+ 15:16:05 <janimo> right
+
+ 15:16:07 <ogra_> (looking at the ftbfs list)
+
+ 15:16:16 <janimo> I'd say it is essential?
+
+ 15:16:25 <ogra_> beyond that, main looks as good as universe looks bad
+
+ 15:17:28 <ogra_> we should all try to paticipate in the 5 a day project cjwatson started ... ate least with one or two packages per week or so
+
+ 15:17:38 <ogra_> _*at
+
+ 15:17:47 <ogra_> more if you can :)
+
+ 15:17:57 <NCommander> [topic] ARM Image Status (ogra, NCommander)
+
+ 15:18:09 <janimo> 2 packages per week is not participation in 5 a day project :)
+
+ 15:18:21 <ogra_> janimo, more than nothing :)
+
+ 15:18:28 <janimo> that is true
+
+ 15:18:28 <ogra_> images look okayish
+
+ 15:18:45 <ogra_> they *should* be better at this point of the release though
+
+ 15:18:53 <ogra_> desktop really fell behind
+
+ 15:19:01 <GrueMaster> Need to reenable swap, at least on omap.
+
+ 15:19:03 <ogra_> but overall they are fine
+
+ 15:19:07 <ogra_> yeah
+
+ 15:19:18 <ogra_> i think infinity committed to fix that properly yesterday
+
+ 15:19:28 <ogra_> mx5 is a bit in a weird state
+
+ 15:19:37 <infinity> GrueMaster: Did I get a bug report?
+
+ 15:19:40 <janimo> needs kernel to test properly
+
+ 15:19:42 <ogra_> we know it works but it didnt survive the switch to ext4
+
+ 15:20:00 <infinity> ogra_: I suspect mx5 will be Just Fine with the new kernel, but hard to tell without.
+
+ 15:20:11 <GrueMaster> infinity: I was asleep when you responded, and still on my first cup of coffee, so...not yet.
+
+ 15:20:15 <ogra_> infinity, i thought janimo did a local ext3 test
+
+ 15:20:19 <infinity> GrueMaster: Kay. :)
+
+ 15:20:46 <janimo> ogra_, GrueMaster did a test, and so did I
+
+ 15:20:52 <ogra_> k
+
+ 15:20:56 <ogra_> that should be enough
+
+ 15:20:57 <janimo> looked reasonable
+
+ 15:21:15 <ogra_> we just need to convince skaet that it is ;)
+
+ 15:22:21 * skaet is a bit worried about mx5 for good reason.... :P
+
+ 15:22:32 <GrueMaster> Any chance of getting a new kernel and a new image today to make release?
+
+ 15:22:45 <ogra_> skaet, its all fine, but we only discovered during milestone testing that ext4 support is missing
+
+ 15:22:58 <ogra_> GrueMaster, no, builds to long
+
+ 15:23:07 <GrueMaster> k
+
+ 15:23:22 <infinity> Broken kernel configs are easy to fix.  I'm not terribly concerned.  Yet. :)
+
+ 15:23:28 <GrueMaster> skaet: The image was fine Monday prior to EXT4 switch (and ubiquity churn).
+
+ 15:23:46 <skaet> thanks GrueMaster.  :)
+
+ 15:23:53 <ogra_> skaet, we will have to skip B2 for it, but from monday lates iot shoudl be fine, its a "community supported" image anyway
+
+ 15:24:03 <ogra_> *latest
+
+ 15:24:16 <janimo> save for archive skew :)
+
+ 15:24:22 <ogra_> hehe
+
+ 15:24:36 <janimo> since the upload floodgates are open again for the desktop team :)
+
+ 15:24:42 * ogra_ has nothing else for images ... if NCommander wants to move ...
+
+ 15:24:59 <NCommander> [topic] QA Status (GrueMaster, mahmoh)
+
+ 15:25:14 * GrueMaster wakes up to respond.
+
+ 15:25:19 * janimo was conned into signing in to iso.qa
+
+ 15:25:35 <GrueMaster> Release testing went...Well it happened.
+
+ 15:26:17 <GrueMaster> I really do not feel as good about this release as I have in prior releases this late in the cycle, due to lack of dep testing.
+
+ 15:26:24 <GrueMaster> *deep
+
+ 15:27:19 <ogra_> agreed
+
+ 15:27:25 <GrueMaster> My focus next week will be dedicated to desktop deep testing to see what I can squeeze out.  We don't have a lot of time left to shake out any bugs, so stay in touch.
+
+ 15:27:25 <ogra_> that needs fixing in P
+
+ 15:28:07 <GrueMaster> Beyond that, I don't have anything else.  mahmoh?
+
+ 15:28:18 <mahmoh> nothing here GrueMaster
+
+ 15:29:11 <GrueMaster> moving on....
+
+ 15:30:31 * GrueMaster listens to the silence.  Somewhere in the distance, a cricket chirps.
+
+ 15:30:38 <NCommander> [topic] Linaro Updates (rsalveti)
+
+ 15:30:43 <rsalveti> hey
+
+ 15:31:23 <rsalveti> first is the request to help sponsoring the libjpeg-turbo package
+
+ 15:31:49 <rsalveti> package at revu already, and skaet agreed that it would be good to publish it at least to universe, if possible
+
+ 15:32:04 <rsalveti> during last week at the release meeting
+
+ 15:32:17 <infinity> What is it, exactly?
+
+ 15:32:20 <NCommander> rsalveti: what is it and why do we want to uploadless than 15 days from release?
+
+ 15:32:21 <rsalveti> if anyone with time to review it, please :-)
+
+ 15:32:59 <infinity> An ABI-compatible accelerated replacement for libjpeg is how I'd read it from just the name.
+
+ 15:33:15 <janimo> rsalveti, speaking of which , there should be an organized linaro sponsoring process. As it is now the requests ar ead-hoc and left to the developers themselves, who often do not dare asking or know where to do it, and are content with the many ppas
+
+ 15:33:16 <rsalveti> libjpeg62 replacement, with simd support
+
+ 15:33:18 <ogra_> NCommander, its universe ... there will likely still be plenty of packages :)
+
+ 15:33:29 <ogra_> s/packages/new packages/
+
+ 15:33:45 <rsalveti> neon and such, for those who want to try at arm devices
+
+ 15:33:46 <davidm> I'd say lets go for it if skaet is OK with it
+
+ 15:33:54 <ogra_> indeed
+
+ 15:33:55 <rsalveti> skaet already gave OK
+
+ 15:33:58 <davidm> simd support is very good
+
+ 15:34:06 <infinity> rsalveti: Too late now, of course, but why aren't the changes in libjpeg itself? :P
+
+ 15:34:07 <rsalveti> was discussed during last release meeting
+
+ 15:34:22 <GrueMaster> I have plenty of jpg images to put it through some paces.
+
+ 15:34:22 <rsalveti> infinity: long history
+
+ 15:34:39 * skaet nods,  its universe, so low risk.
+
+ 15:34:39 <rsalveti> default at firefox, chromium and fedora already
+
+ 15:34:45 <janimo> infinity, this is an upstream fork not a linaro one, linaro contributed though lately
+
+ 15:34:45 <infinity> GrueMaster: Porn is not a test framework.
+
+ 15:34:56 <rsalveti> yup
+
+ 15:35:04 <rsalveti> libjpeg-turbo is quite old already
+
+ 15:35:07 <GrueMaster> aww.
+
+ 15:35:27 <rsalveti> janimo: yeah, planning to discuss that at UDS
+
+ 15:35:37 <janimo> ok
+
+ 15:35:42 <rsalveti> there was some discussion over email already, will see how it goes
+
+ 15:36:13 <rsalveti> also worked to get 4460 working with our images
+
+ 15:36:23 <rsalveti> support is quite broken atm, need kernel and u-boot fixes
+
+ 15:36:30 * ogra_ wishes we could test that already :P
+
+ 15:36:39 <janimo> rsalveti, but no new packages, they still go to omap4 right?
+
+ 15:36:46 <rsalveti> do we want/need to make the support for the release?
+
+ 15:36:54 <rsalveti> janimo: no new package, just bugfixies
+
+ 15:36:57 <janimo> if possible sure
+
+ 15:37:03 <ogra_> rsalveti, depends on the impact
+
+ 15:37:10 <infinity> Want, sure, need, no.
+
+ 15:37:11 <janimo> otherwise the borad will appear and there will be no ubuntu support for them till april
+
+ 15:37:16 <infinity> And yes, depending on impact.
+
+ 15:37:31 <GrueMaster> For 4460?  If we can get it in before release, it would be awesome.
+
+ 15:37:32 <rsalveti> kernel should be fine, as it's specific to a board revision
+
+ 15:37:33 <janimo> is this quad-core or merely dual?
+
+ 15:37:33 <ogra_> below 200 LOC might be ok :)
+
+ 15:37:36 <rsalveti> u-boot should be tricky
+
+ 15:37:45 <davidm> or we can point folks at Linaro bootloads with instructions on how to fix image
+
+ 15:37:54 <ogra_> janimo, still A9
+
+ 15:37:57 <rsalveti> but will get it working here first, and open the bugs for them
+
+ 15:37:59 <janimo> ogra_, even if obfuscated and 80 columns wide ascii art 200 LOC ?
+
+ 15:38:13 <rsalveti> then you can decide based on the amount of required changes
+
+ 15:38:15 <GrueMaster> davidm: That gets ugly.  I am already doing that for Maverick and Natty.
+
+ 15:38:19 <ogra_> janimo, i dont care,i dont have to review it *g*
+
+ 15:38:24 <janimo> we can always point to linaro images, as they are usually more up to date, true
+
+ 15:38:38 <ogra_> janimo, hmm ?
+
+ 15:38:50 <ogra_> how can they be more up to dayte if they are a release behind ?
+
+ 15:39:04 <rsalveti> we're also creating oneiric based images now
+
+ 15:39:10 <rsalveti> and hope to switch to it next month
+
+ 15:39:15 <rsalveti> we'll see how it goes
+
+ 15:39:20 <janimo> they are based on a release behind but ahead with platform support stuff
+
+ 15:39:23 <rsalveti> anyway, that's most of ti
+
+ 15:39:29 <janimo> old evince, new kernel uboot X
+
+ 15:39:32 <rsalveti> we're preparing the release, so everybody is busy atm
+
+ 15:39:45 <janimo> I know I'd pick the second set if only that works on my board :)
+
+ 15:40:02 <ogra_> depends what you want :)
+
+ 15:40:11 <davidm> ogra GrueMaster do you have 4460 boards yet
+
+ 15:40:16 <ogra_> nope
+
+ 15:40:24 <GrueMaster> not yet.
+
+ 15:40:25 <davidm> Yea, thats what I thought
+
+ 15:40:27 <ogra_> nicolas wanted to ask around once again
+
+ 15:40:41 <ogra_> i'll ask him tomorrow again :)
+
+ 15:40:43 <davidm> I got an email asking for shipping addresses which I provided
+
+ 15:40:48 <ogra_> ah
+
+ 15:40:53 <davidm> but nothing so far then
+
+ 15:40:55 <infinity> Ooo, new toys?
+
+ 15:41:05 <ogra_> same toys, new heart :)
+
+ 15:41:06 <davidm> Apparently not ....
+
+ 15:41:10 <rsalveti> infinity: you should join the ti call ;-)
+
+ 15:41:14 <ogra_> yeah
+
+ 15:41:24 <ogra_> if you like to get up in the middle of the night :)
+
+ 15:41:31 <infinity> rsalveti: That would involve one more meeting a week.
+
+ 15:41:37 <infinity> (And that)
+
+ 15:41:40 <rsalveti> first issue is that the led gpio is now connect at the mpu o_O
+
+ 15:41:50 <rsalveti> so once you boot the board, and the led is on, it'll basically turn itself off
+
+ 15:42:02 <ogra_> fun !
+
+ 15:42:12 <rsalveti> fixed already, but was fun :-)
+
+ 15:42:47 <rsalveti> anyway, I'm done
+
+ 15:42:49 <NCommander> sorry about that
+
+ 15:42:57 <NCommander> my laptop suddenly decided that it didn't have a wifi card
+
+ 15:43:07 <ogra_> NCommander, we didnt notice
+
+ 15:43:20 <ogra_> but yuo can move ;)
+
+ 15:43:26 <ogra_> *you even
+
+ 15:44:47 <janimo> rsalveti, do linaro have beagle images too?
+
+ 15:44:56 <janimo> omap3 I mean
+
+ 15:45:00 <davidm> NCommander, moving on
+
+ 15:45:07 <NCommander> [topic] AOB
+
+ 15:45:12 <rsalveti> janimo: yes
+
+ 15:45:23 <rsalveti> janimo: igep, overo, beagle, panda, and so on
+
+ 15:45:39 <janimo> no pandas this cycle for armel builds? We carry the timed out builds to P
+
+ 15:45:52 <ogra_> ??
+
+ 15:46:00 <ogra_> we are already building on pandas
+
+ 15:46:10 <ogra_> partitally at least ... until infinity needs them
+
+ 15:46:14 <rsalveti> one question I had, are we really planning to go just with armhf for next cycle?
+
+ 15:46:17 <rsalveti> half/half?
+
+ 15:46:25 <ogra_> half half
+
+ 15:46:28 <rsalveti> just because it'll be a lts
+
+ 15:46:30 <infinity> janimo: We have a bunch.  Though once armhf toolchain changes land, they'll get repurposed to armhf.
+
+ 15:46:30 <ogra_> was always the plan
+
+ 15:46:43 <rsalveti> but was initially for this cycle
+
+ 15:46:47 <ogra_> we have to pick which one is the default
+
+ 15:46:52 <infinity> rsalveti: "Hope" is a better word than "Plan" with al the delays we've had. :/
+
+ 15:46:53 <rsalveti> and have only armfh for next cycpe
+
+ 15:47:08 <rsalveti> infinity: yeah =\ that's why I'm asking
+
+ 15:47:09 <ogra_> no, you need at least one release where you have them in parallel
+
+ 15:47:16 <GrueMaster> so was getting all the pandas in the build farm online.
+
+ 15:47:17 <rsalveti> infinity: what's the current status on that?
+
+ 15:47:52 <infinity> rsalveti: Need to land a GCC change, test it, re-bootstrap, and go.
+
+ 15:48:03 * janimo wonders if giving back packages that fail after 10 hours hoping they land on a panda this time is a good use of build resources
+
+ 15:48:08 <ogra_> a gcc change after b2 ?
+
+ 15:48:08 <infinity> Well, can probably skip most of re-bootstrapping with a compat symlink for a while.
+
+ 15:48:09 <rsalveti> ok, cool
+
+ 15:48:19 <infinity> ogra_: One that only affects a new architecture.
+
+ 15:48:24 <ogra_> ah, k
+
+ 15:48:46 <infinity> janimo: No.  If you want that to happen, talk to me, and we'll force it.
+
+ 15:49:16 <GrueMaster> Much as I personally hate to say it, I think we will need to make both armel and armhf images for testing next cycle.
+
+ 15:49:28 <ogra_> yes
+
+ 15:49:29 <janimo> infinity, good. Last time you said it is only possible if everythng is on manual, which is a hassle. I'll check the list to see what the latest status is
+
+ 15:49:30 <infinity> We already knew that.
+
+ 15:49:35 <ogra_> but we will only release one of them
+
+ 15:49:42 <infinity> We have to test both until some arbitrary cutoff point where we choose one for release.
+
+ 15:49:45 <janimo> and will only test one of them :D
+
+ 15:49:51 <rsalveti> and are we supporting both as LTS?
+
+ 15:49:52 <ogra_> janimo, nope
+
+ 15:49:57 <rsalveti> or just armel
+
+ 15:50:01 <infinity> janimo: It *is* only possible with everything on manual. :P
+
+ 15:50:05 <ogra_> rsalveti, unlikely that we support both
+
+ 15:50:06 <infinity> janimo: But that's not rocket science either.
+
+ 15:50:17 <rsalveti> guess a good discussion for uds
+
+ 15:50:31 <ogra_> we cant destabilize server
+
+ 15:50:48 <ogra_> so hf needs to be rock solid before we switch
+
+ 15:50:50 <infinity> rsalveti: We won't really know by UDS.  But we'll support the one that doesn't suck.
+
+ 15:50:53 * janimo thinks of the churn in debian packaing to replace/amend armel ifdefs with armhf
+
+ 15:51:12 <rsalveti> hehe
+
+ 15:51:16 <ogra_> janimo, the debian hf port should have a good bunch already
+
+ 15:51:24 <janimo> infinity, what are the suckage risks? Toolchain issues?
+
+ 15:51:44 <infinity> janimo: Honestly, my only concern is having it all built in a couple of months.
+
+ 15:52:08 <infinity> Whenever the armel buildds are idle, I intend to steal most of them for armhf to try to speed that process up.
+
+ 15:52:20 <infinity> We'll see how that works out.
+
+ 15:53:16 <davidm> rsalveti, we'll make at call at freature freeze which will be what we go out with for ARM
+
+ 15:53:21 <janimo> is buying setting up 20 or more boards to help such an obstacle?
+
+ 15:53:34 <davidm> once we choose, we will stop testing images on the other arch
+
+ 15:53:44 <rsalveti> davidm: fair enough
+
+ 15:53:53 <janimo> we seem to spend more in man hours trying to cater for that deficiency
+
+ 15:54:12 <davidm> janimo, getting pandas is VERY hard again
+
+ 15:54:25 <rsalveti> imx53 is a *lot* easier now
+
+ 15:54:25 <GrueMaster> janimo: We have systems that aren't online yet.  It isn't due only to a lack of boards.
+
+ 15:54:29 <rsalveti> and with sata
+
+ 15:54:29 <davidm> I'm hoping something else will pop up soonish
+
+ 15:54:38 <infinity> I'd happily take a bunch of mx53s.
+
+ 15:54:40 <janimo> GrueMaster, hence my 'setting up' in the question
+
+ 15:54:43 <ogra_> rsalveti, well, it hads to proove stable first :)
+
+ 15:54:46 <ogra_> *has
+
+ 15:55:08 <GrueMaster> janimo: Manpower is also a big limiting factor.
+
+ 15:55:11 <janimo> indeed, lots of mx53s are good to, it;s not like we used dual cores so fa
+
+ 15:55:12 <janimo> r
+
+ 15:55:13 <ogra_> with things like ext4 support missing in the kernel i wouldnt go for a buildd on it yet :)
+
+ 15:55:14 <rsalveti> well, at least you'll have support from linaro :-)
+
+ 15:55:21 <infinity> GrueMaster: Other than the master/slave in the DC being fiddled with for the "PPA cluster", we have others not online?
+
+ 15:55:44 <janimo> GrueMaster, right but seems a lot of manpower - albeit that of different men - is wasted to work around such issues, and to twddle thumbs while waiting
+
+ 15:55:52 <GrueMaster> iirc, we have 5 in a sudo state.
+
+ 15:56:05 <GrueMaster> We can discuss offline.
+
+ 15:56:05 <davidm> infinity, GrueMaster  lets take this off-line and talk to the folks that know whats going on
+
+ 15:56:11 * infinity nods.
+
+ 15:56:29 <janimo> GrueMaster, sudo state - the one in which a person gets you a sandwich without opposition?
+
+ 15:56:34 <janimo> like a trance you mean?
+
+ 15:57:12 <GrueMaster> NCommander: Close?
+
+ 15:57:21 <NCommander> closing in 3
+
+ 15:57:23 <NCommander> 2
+
+ 15:57:25 <NCommander> 1
+
+ 15:57:28 <NCommander> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

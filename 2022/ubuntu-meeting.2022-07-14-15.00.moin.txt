@@ -1,0 +1,335 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 14 Jul at 15:00 &mdash; 15:55 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-07-14-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by jawn-smith at 15:00.
+
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:06.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:07)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:20)
+
+=== Team proposed-migration report ===
+
+Discussion started by jawn-smith at 15:37.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:37)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:50.
+
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (78)
+ * slyon (18)
+ * bdmurray (12)
+ * ubottu (12)
+ * enr0n (9)
+ * waveform (3)
+ * ginggs (3)
+ * meetingology (2)
+ * mclemenceau (2)
+ * xypron (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:15 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <enr0n> o/
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <jawn-smith> #topic Lightning Round
+
+ 15:00 <bdmurray> o/
+
+ 15:00 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-14-july-2022/29406/8
+
+ 15:00 <jawn-smith> Let's take a few minutes to read and ask questions
+
+ 15:02 <bdmurray> enr0n: Do you need stuff sponsored from your +1 shift?
+
+ 15:02 <enr0n> bdmurray: jawn-smith is helping with that
+
+ 15:02 <jawn-smith> o/
+
+ 15:03 <bdmurray> jawn-smith: were the autopkgtests you had to retry due to infrastructure or just the tests?
+
+ 15:04 <jawn-smith> Just flaky tests
+
+ 15:04 <bdmurray> waveform: Why will the raspi-config take a *long* time?
+
+ 15:04 <jawn-smith> Curl has loads of reverse dependencies so the volume of tests was pretty huge
+
+ 15:04 <waveform> bdmurray, take a look at the test plan: https://bugs.launchpad.net/ubuntu/+source/raspi-config/+bug/1972982; there's a *looooot* of cases to cover
+
+ 15:04 <ubottu> Launchpad bug 1972982 in raspi-config (Ubuntu Jammy) "[SRU] raspi-config is looking at the wrong directory" [High, Confirmed]
+
+ 15:04 <bdmurray> Yeah, I noticed that jawn-smith
+
+ 15:05 <waveform> bdmurray, some involving "novel" hardware like tracking down a composite-capable display (!)
+
+ 15:06 <jawn-smith> Any other questions?
+
+ 15:06 <bdmurray> I've asked all of mine
+
+ 15:06 <jawn-smith> #topic Release incoming bugs
+
+ 15:07 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 15:07 <jawn-smith> bug 1981071
+
+ 15:07 <ubottu> Bug 1981071 in netplan.io (Ubuntu) "netplan set fails silently with wifi access points" [High, Triaged] https://launchpad.net/bugs/1981071
+
+ 15:07 <slyon> that one was reported by waveform, I reproduced it today
+
+ 15:07 <slyon> I set it to "Importance: Hight", so I think like we should card it
+
+ 15:08 <jawn-smith> Agreed, do you mind creating the card?
+
+ 15:08 <slyon> we did rework the netplan set command substantially, so I might re-test with the new code from netplan upstream..
+
+ 15:08 <slyon> jawn-smith: yes, I can do that.
+
+ 15:08 <jawn-smith> slyon: thanks!
+
+ 15:08 <jawn-smith> bug 1981042
+
+ 15:08 <ubottu> Bug 1981042 in systemd (Ubuntu) "/etc/localtime symlink not correctly handled when using /etc/writable" [Undecided, New] https://launchpad.net/bugs/1981042
+
+ 15:09 <jawn-smith> enr0n: You tagged this. Have you investigated/recreated?
+
+ 15:09 <enr0n> This is a long-standing issue with UC and /etc/writable, so basically yet another patch is needed
+
+ 15:09 <slyon> ugh...
+
+ 15:09 <jawn-smith> Is it something you have time/plans to work on?
+
+ 15:09 <slyon> Didn't they want to prepare an upstream solution?
+
+ 15:10 <enr0n> slyon: I don't think there really is a great upstream solution, unless they want to re-define the /etc/localtime spec
+
+ 15:12 <enr0n> So yes, I think this should be carded as it needs a jammy SRU. And I can work on it in the near future
+
+ 15:12 <slyon> I see. But the current approach (patching systemd) is not really sustainable, so maybe we should check back with them again to see if there are any other possible solutions (at least mid-term)
+
+ 15:13 <enr0n> slyon: totally agree
+
+ 15:13 <jawn-smith> enr0n: do you mind carding it and removing the tag?
+
+ 15:13 <slyon> carded
+
+ 15:13 <jawn-smith> awesome, thanks
+
+ 15:13 <jawn-smith> moving on
+
+ 15:13 <jawn-smith> bug 1981109
+
+ 15:13 <ubottu> Bug 1981109 in ubuntu-meta (Ubuntu) "server image pulls in ModemManager via fwupd, consumes 25MiB RAM in every container" [Undecided, New] https://launchpad.net/bugs/1981109
+
+ 15:14 <jawn-smith> This was tagged by v_orlon who is out, so I think I'll just leave it in the report to discuss next week
+
+ 15:15 <jawn-smith> bug 1980991
+
+ 15:15 <ubottu> Bug 1980991 in powermgmt-base (Ubuntu) "/usr/sbin/on_ac_power incorrectly reporting ac power status" [Undecided, Confirmed] https://launchpad.net/bugs/1980991
+
+ 15:16 <jawn-smith> Yeah that sounds problematic, as so many hardware platforms are moving to USB-C
+
+ 15:17 <jawn-smith> So does anyone have bandwidth to investigate/work on this in the next couple of weeks?
+
+ 15:19 <jawn-smith> bdmurray has volunteered to look into this. Thanks!
+
+ 15:19 <jawn-smith> That's it for rls-kk
+
+ 15:20 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:20 <jawn-smith> first one was already discussed and carded
+
+ 15:21 <jawn-smith> bug 1955114
+
+ 15:21 <ubottu> Bug 1955114 in swtpm (Ubuntu Jammy) "swtpm: upgrade to jammy fails" [Critical, Triaged] https://launchpad.net/bugs/1955114
+
+ 15:21 <xypron> Is LP #1977939 a similar bug for docking stations?
+
+ 15:21 <ubottu> Launchpad bug 1977939 in systemd (Ubuntu) "logind does not recognize ID 17ef:3060 Lenovo ThinkPad Dock" [Undecided, New] https://launchpad.net/bugs/1977939
+
+ 15:22 <jawn-smith> Do we agree with this being marked as critical/(
+
+ 15:22 <bdmurray> Yes‽
+
+ 15:23 <jawn-smith> Okay let's card it then
+
+ 15:23 <jawn-smith> Any volunteers to work it?
+
+ 15:23 <slyon> carded
+
+ 15:24 <jawn-smith> Thanks, I'll follow up and make sure it gets addressed
+
+ 15:24 <jawn-smith> bug 1981431
+
+ 15:24 <ubottu> Bug 1981431 in systemd (Ubuntu) "systemd-resolved: DNSSEC validation failed: incompatible-server" [Undecided, New] https://launchpad.net/bugs/1981431
+
+ 15:24 <jawn-smith> Backing up a bit to the swtpm bug
+
+ 15:25 <bdmurray> xnox seems to have been a bit overzealous with the importance and milestoning it.
+
+ 15:25 <jawn-smith> We had a discussion and determined it is unlikely for people to encounter this bug
+
+ 15:25 <jawn-smith> As it is only triggered by installing non-ubuntu packages
+
+ 15:26 <jawn-smith> So we'll update the LP bug to change the importance
+
+ 15:26 <jawn-smith> back to bug 1981431
+
+ 15:26 <ubottu> Bug 1981431 in systemd (Ubuntu) "systemd-resolved: DNSSEC validation failed: incompatible-server" [Undecided, New] https://launchpad.net/bugs/1981431
+
+ 15:27 <jawn-smith> slyon, enr0n :
+
+ 15:27 <enr0n> I have not had time to reproduce this yet, but it seems worth fixing for LTS, and could be bundled in a jammy SRU.
+
+ 15:27 <enr0n> There is a straight forward patch in upstream systemd >= 250
+
+ 15:27 <jawn-smith> Do you have plans to work on it in the next couple of weeks?
+
+ 15:27 <enr0n> Yes I could include it in the next jammy SRU
+
+ 15:27 <slyon> I agree. the upstream patch seems to be available so this is worth fixing and SRUing
+
+ 15:27 <jawn-smith> Perfect, let's card it and move on to the next one
+
+ 15:28 <slyon> done.
+
+ 15:28 <jawn-smith> bug 1981485
+
+ 15:28 <ubottu> Bug 1981485 in ubuntu-release-upgrader (Ubuntu) "deb2snap.json contains gnome-3-34-1804 in the seeded section" [Undecided, New] https://launchpad.net/bugs/1981485
+
+ 15:29 <jawn-smith> This seems like a trivial change
+
+ 15:29 <jawn-smith> bdmurray has volunteered, so let's card it
+
+ 15:29 <mclemenceau> jawn-smith before you move on from jj, let me know I have a bug that I tag but the report isn't updated
+
+ 15:29 <slyon> carded 1981485
+
+ 15:30 <jawn-smith> bug 1970449
+
+ 15:30 <ubottu> Bug 1970449 in software-properties (Ubuntu) "GPG keys are not shown in Software and Updates" [Undecided, Confirmed] https://launchpad.net/bugs/1970449
+
+ 15:31 <jawn-smith> This was tagged by j_uliank, who is out today
+
+ 15:31 <jawn-smith> Does anybody have any thoughts on the importance?
+
+ 15:32 <jawn-smith> It doesn't seem hugely important to me, so I vote we leave it in the queue to discuss when the person who tagged it is present
+
+ 15:32 <bdmurray> +1
+
+ 15:32 <slyon> seems to be a feature request..?
+
+ 15:32 <slyon> so maybe set it to "wishlist"?
+
+ 15:33 <jawn-smith> Well, it's a "feature" that apparently existed in 20.04 and no longer exists in 21.10+
+
+ 15:33 <jawn-smith> But there are command line ways to view this info so let's move on and discuss it next time
+
+ 15:34 <jawn-smith> mclemenceau: that's it for jj, what's your bug?
+
+ 15:34 <mclemenceau> thanks jawn-smith it was brought to me today: bug 1972029
+
+ 15:34 <ubottu> Bug 1972029 in isc-dhcp (Ubuntu) "dhclient overriding stub-resolv.conf file on Jammy" [Undecided, Confirmed] https://launchpad.net/bugs/1972029
+
+ 15:34 <slyon> this is about the *-gtk (UI) part, so probably more of a desktop issue..
+
+ 15:36 <jawn-smith> slyon has volunteered to work on this, so let's card it
+
+ 15:37 <jawn-smith> rls-ff is mercifully empty
+
+ 15:37 <jawn-smith> #topic Team proposed-migration report
+
+ 15:37 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:38 <jawn-smith> ubuntu-meta is still with desktop
+
+ 15:38 <jawn-smith> python3-stdlib-extensions: doko is this still with you?
+
+ 15:39 <jawn-smith> Let's assume yes
+
+ 15:39 <jawn-smith> usb-creator is still waiting on MIRs AFAICT
+
+ 15:39 <slyon> that's true
+
+ 15:39 <slyon> it's waiting on jigit security-review, which might take a while
+
+ 15:40 <jawn-smith> ginggs: thanks for filling out the MIRs for lintian
+
+ 15:40 <ginggs> np!
+
+ 15:40 <jawn-smith> pygments is waiting on the pytest transition
+
+ 15:41 <ginggs> which just started
+
+ 15:41 <jawn-smith> libxcrypt was with b_drung, who is out
+
+ 15:43 <bdmurray> I'll look into python3-stdlib-extensions as its waiting on an s390x test
+
+ 15:43 <jawn-smith> Those perl regressions should be retried with the latest version of perl
+
+ 15:44 <bdmurray> The arm64 and s390x queues are in bad shape
+
+ 15:44 <jawn-smith> Okay let's avoid retriggering lots of perl tests for now then
+
+ 15:44 <ginggs> python3-stdlib-extensions migreated 4 minutes ago
+
+ 15:44 <jawn-smith> apport vs gnupg2
+
+ 15:45 <jawn-smith> appears to be arm64 and s390x only. I'll retry those
+
+ 15:46 <jawn-smith> restarted the gnupg2 regressions
+
+ 15:47 <jawn-smith> adduser: I'll volunteer for that one
+
+ 15:47 <jawn-smith> liblwp-protocol-https-perl: any volunteers?
+
+ 15:47 <slyon> I can
+
+ 15:48 <jawn-smith> Thanks!
+
+ 15:48 <jawn-smith> I'll go through and retrigger any perl failures that look appropriate
+
+ 15:49 <jawn-smith> mutt is waiting on security team reviews of two MIR packages
+
+ 15:50 <jawn-smith> That's it for proposed migration
+
+ 15:50 <jawn-smith> #topic AOB
+
+ 15:50 <bdmurray> jawn-smith: I'm retrying libcache-cache-perl/1.08-3
+
+ 15:51 <jawn-smith> Thanks bdmurray
+
+ 15:51 <waveform> I may disappear tomorrow/sometime-next-week as covid is wreaking havoc again
+
+ 15:53 <jawn-smith> Lots of people OOO next week between debconf and a roadmap sprint
+
+ 15:55 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

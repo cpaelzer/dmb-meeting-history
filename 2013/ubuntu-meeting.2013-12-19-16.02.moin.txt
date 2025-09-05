@@ -1,0 +1,367 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 19 Dec at 16:02 &mdash; 16:27 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-12-19-16.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:03.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:21.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * xnox (37)
+ * slangasek (33)
+ * stgraber (24)
+ * bdmurray (19)
+ * doko (14)
+ * barry (12)
+ * jodh` (9)
+ * ubottu (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:02 <slangasek> #startmeeting
+
+ 16:02 <meetingology> Meeting started Thu Dec 19 16:02:16 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02 <meetingology> 
+
+ 16:02 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:03 <slangasek> [TOPIC] Lightning round
+
+ 16:03 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson xnox stokachu)
+
+ 16:03 <slangasek> doko stokachu xnox jodh slangasek stgraber barry bdmurray cjwatson
+
+ 16:04 <slangasek> doko: you first :)
+
+ 16:04 <doko> - configury fixes for a bootstrap build
+
+ 16:04 <doko> - openjdk-7 disable hotspot on i386, alignment issue with glibc 2.18.
+
+ 16:04 <doko> - port openjdk zero to ppc64el
+
+ 16:04 <doko> - update llvm to 3.4, mir b-d's, build mesa with 3.4.
+
+ 16:04 <doko> - build fixes for the indicator stack to build update-notifier
+
+ 16:04 <doko> - gcc-snapshot update
+
+ 16:05 <doko> - and fixing hardening-wrapper
+
+ 16:05 <doko> - gdb updated to the trunk
+
+ 16:05 <doko> /done
+
+ 16:05 <slangasek> oh, gdb, great :)
+
+ 16:06 <xnox> i assume stokachu is still out
+
+ 16:06 <slangasek> yes
+
+ 16:06 <xnox> * uploaded initial cmake cross-compilation support (positive response
+
+ 16:06 <xnox> and constructive further plans discussions from that)
+
+ 16:06 <xnox> * fixed-up some of the cross-compilations issues in packages using
+
+ 16:06 <xnox> cmake (e.g. executing compiled binaries, when cross-compiling)
+
+ 16:06 <xnox> * fixed-up broken toolchain-base packages for arm* (due to eglibc 2.17
+
+ 16:06 <xnox> -> 2.18 bump) p*pc* are still to do
+
+ 16:06 <xnox> * uploaded changes to android & autopilot to resolve executing
+
+ 16:06 <xnox> autopilot tests under the emulator. At request from evan, tested
+
+ 16:06 <slangasek> (and he hasn't designated a surrogate, so)
+
+ 16:06 <xnox> that a single host can execute multiple emulators, still need to
+
+ 16:06 <xnox> check if it can also be done in a VM, without proper graphics card.
+
+ 16:06 <xnox> * still to do in the emulator - unlock higher RAM memory, currently
+
+ 16:06 <xnox> capped at 760MB due to memory map issues (kernel panics, segfaults
+
+ 16:06 <xnox> with higher values.)
+
+ 16:06 <xnox> * Running autopilot tests documented in this part of the wiki
+
+ 16:06 <xnox> https://wiki.ubuntu.com/Touch/Emulator#Using_the_emulator
+
+ 16:06 <xnox> * merged boost, and split python-pyste to demote gccxml to universe.
+
+ 16:06 <xnox> * still to do resolve device name of the "generic", for system-image
+
+ 16:06 <xnox> updates in the emulator
+
+ 16:06 <xnox> ..
+
+ 16:07 <jodh`> * upstart: cgroup:
+
+ 16:07 <jodh`> - Continued work on cgroup support. Improved the internal
+
+ 16:07 <jodh`> representation of a cgroup (currently updating tests to reflect
+
+ 16:07 <jodh`> this).
+
+ 16:07 <jodh`> - cgmanager discussions with hallyn+stgraber.
+
+ 16:07 <jodh`> * misc: short week - out yesterday.
+
+ 16:07 <jodh`> ס֙
+
+ 16:07 <slangasek> xnox: emulator \o/  but hmm, I guess the question isn't whether we can run them in a VM, but whether they will perform well enough to be worth anything
+
+ 16:08 <barry> slangasek: seems like boot (maybe disk access?) is quite slow, but cli performance doesn't seem too bad once it's booted
+
+ 16:09 <xnox> slangasek: it's both. using juju / openstack instances is preferred over having a physical bare-metal box contention.
+
+ 16:10 <xnox> slangasek: and performance.... cpu emulation is still slow and there is no obvious way to crank up emulated cpu speed, unless we start using generic-x86 builds with accelerated kvm style emulation.
+
+ 16:10 <xnox> slangasek: which will take us into the nested kvm bugs, once again ;-)
+
+ 16:10 <xnox> jodh`: has nested kvm been resolved at all, in the case of upstart tests?
+
+ 16:10 <slangasek> yes, yes, it would
+
+ 16:10 <slangasek> xnox: not in the least
+
+ 16:11 <slangasek> barry: cli performance is not what we are testing :)
+
+ 16:11 <xnox> slangasek: excellent, the more i do the more there is to do.....
+
+ 16:11 <slangasek> * recruiting for the Foundations Team opening
+
+ 16:11 <slangasek> * bootstrapping/porting work
+
+ 16:11 <slangasek> * release engineering for alpha 1
+
+ 16:11 <slangasek> * fix libfreetype-dev dependencies so things using freetype-config don't FTBFS
+
+ 16:11 <barry> slangasek: yeah, i know
+
+ 16:11 <slangasek> (done)
+
+ 16:12 <stgraber> Done:
+
+ 16:12 <stgraber> - CGroup Manager
+
+ 16:12 <stgraber> - Helped with design work.
+
+ 16:12 <stgraber> - LXC
+
+ 16:12 <stgraber> - Release 1.0~beta1 on Tuesday, updated our packaging and uploaded
+
+ 16:12 <stgraber> - Finished implementing the container autostart specification (patched up for review now)
+
+ 16:12 <slangasek> specifically: we're exercising autopilot tests, which run the gui
+
+ 16:12 <stgraber> - Finished work on the configure-overview branch and landed upstream.
+
+ 16:12 <stgraber> - Tried to debug and ended up working around an issue with clang-3.4 (reverted to 3.2 for now as it looked like a compiler/parser bug).
+
+ 16:12 <stgraber> - The usual set of code reviews
+
+ 16:12 <stgraber> - Ubuntu touch
+
+ 16:12 <stgraber> - Enabled discard use by default (once initamfs-tools-ubuntu-touch manages to build...)
+
+ 16:12 <stgraber> - Fixed a rather critical bug in the upgrader code (factory reset would also wipe the system)
+
+ 16:12 <stgraber> - Other
+
+ 16:12 <stgraber> - SRU and New reviews
+
+ 16:12 <stgraber> - A couple of merges
+
+ 16:12 <stgraber> - TODO tomorrow: OpenVPN packaging fixups, a couple more minor LXC changes to work better with unpriv containers and maybe some networking work if time allows
+
+ 16:12 <stgraber> - Holidays
+
+ 16:12 <stgraber> - I was off on yesterday
+
+ 16:12 <stgraber> - I'll be working tomorrow, then off till the 2nd
+
+ 16:12 <stgraber> (DONE)
+
+ 16:13 <barry> system-image: LP: #1256229, LP: #1260712.  started looking at system-image and autopilot on emulator; filed some emulator and u-d-m bugs with issues found - with those fixed, we're probably not too far off from system-image working in emulator.
+
+ 16:13 <ubottu> Launchpad bug 1256229 in Ubuntu system image ""system-image-cli -i" reports old version" [Undecided,Invalid] https://launchpad.net/bugs/1256229
+
+ 16:13 <ubottu> Launchpad bug 1260712 in system-image (Ubuntu) "Apply update failed: Can't apply the current update (can't contact service)"" [Undecided,Fix released] https://launchpad.net/bugs/1260712
+
+ 16:13 <barry> ubu/deb: genshi 0.7-1 (added py3 support), pytest 2.5.0-1 (blocked on dep), pecan 0.4.2-1 (in progress), debian bug 732038 (singledispatch), twisted-py3 13.2.0-0ubuntu1, alacart 3.10-1-1ubuntu1 (removed b-d and thus main-inclusion on python-support), claws-mail 3.9.3-1ubuntu1, debian bug 714896 (py3 reportbug - in progress).
+
+ 16:13 <ubottu> Debian bug 732038 in wnpp "ITP: singledispatch -- single-dispatch generic functions for Python" [Wishlist,Open] http://bugs.debian.org/732038
+
+ 16:13 <ubottu> Debian bug 714896 in reportbug "reportbug: port to python3" [Wishlist,Open] http://bugs.debian.org/714896
+
+ 16:13 <barry> (done)
+
+ 16:14 <bdmurray> bug triage of dpkg already installed and configured bugs
+
+ 16:14 <bdmurray> investigation into using apt-cdrom ident information to confirm validity of installation media
+
+ 16:14 <bdmurray> uploaded SRUs for usb-creator bug 915626
+
+ 16:14 <ubottu> bug 915626 in usb-creator (Ubuntu Saucy) "usb-creator-gtk crashed with SIGSEGV in _dbus_watch_invalidate" [High,Fix committed] https://launchpad.net/bugs/915626
+
+ 16:14 <bdmurray> SRU verification of bug 1250679, bug 1258639
+
+ 16:14 <ubottu> bug 1250679 in apport (Ubuntu Saucy) "crash files from guest users considered system reports" [Medium,Fix committed] https://launchpad.net/bugs/1250679
+
+ 16:14 <ubottu> bug 1258639 in ubuntu-release-upgrader (Ubuntu Saucy) "need to support upgrades from 12.10 to 13.10" [High,Fix committed] https://launchpad.net/bugs/1258639
+
+ 16:14 <xnox> barry: yeah, IO is horribly, emulated SDCARD speeds. there is even code to emulated / delay it further. i need to make sure it is not delayed. But i think, the IO speed is lightning times faster than the emulated CPU speed, so actually unrealisticly performed IO is emulated for the given CPU, I think =)
+
+ 16:14 <bdmurray> sorted out an issue with the release upgrader tarball building
+
+ 16:14 <bdmurray> resolved an issue with the creation of demoted.cfg files in the ubuntu-release-upgrader dist-upgrade tarball
+
+ 16:14 <bdmurray> uploaded new version of ubuntu-release-upgrader to the saucy proposed queue
+
+ 16:14 <bdmurray> tested whoopsie changes for detecting .crash files and writing to them
+
+ 16:14 <bdmurray> discussed whoopsie permissions issue with slangasek
+
+ 16:14 <bdmurray> tested changes to apport-noui upstart job
+
+ 16:14 <bdmurray> wrote some code to make it easier to associate packages to teams
+
+ 16:14 <bdmurray> subscribed teams to packages
+
+ 16:14 <bdmurray> fixed an issue with team bug notifier
+
+ 16:14 <bdmurray> wrote a tool to make reviewing pending SRUs easier
+
+ 16:14 <xnox> s/performed/performant/
+
+ 16:14 <bdmurray> investigation into retracing issues with daisy and missing oopses
+
+ 16:14 <bdmurray> submitted merge proposal requesting an increase to thrift sizes
+
+ 16:14 <bdmurray> test and modification of back population for counter for release:src_pkg:src_pkg_version
+
+ 16:14 <bdmurray> done
+
+ 16:16 <stgraber> doko: if you're interested by what may be a llvm bug when building LXC under clang I can poke you about it afterwards. (It looks to me like it's wrongly reporting unused functions)
+
+ 16:16 <doko> stgraber, clang is in universe =)
+
+ 16:17 <stgraber> doko: sure and we still use and recommend gcc by default, but I like to have our QA setup build on more than one compiler just to make sure we're not doing anything too gcc-specific in there
+
+ 16:18 <doko> stgraber, yes, but ENOTIME
+
+ 16:18 <slangasek> and no cjwatson today, so that's all of us
+
+ 16:18 <slangasek> any questions?
+
+ 16:18 <xnox> slangasek: when is the next meeting?
+
+ 16:18 <slangasek> xnox: January!
+
+ 16:19 <slangasek> January 8?
+
+ 16:19 <stgraber> doko: ok :) For now I've just hardcoded clang-3.2 in our test suite and that's done the trick, hopefully someone who actually cares enough will debug and fix that problem at some point ;)
+
+ 16:19 <slangasek> no, January 2
+
+ 16:19 <doko> 2015?
+
+ 16:19 <doko> stgraber, did you check 3.4?
+
+ 16:19 <slangasek> doko: I hope you don't count array indices the way you count years ;)
+
+ 16:20 <xnox> slangasek: is there much point in 2nd jan meeting? i guess it will be a rather quick one anyway.
+
+ 16:20 <slangasek> xnox: hmmmm
+
+ 16:20 <bdmurray> doko: could you have a look at bug 1261604?
+
+ 16:20 <ubottu> bug 1261604 in gcc-4.8 (Ubuntu) "static binaries compiled with gccgo can fail to set up their address space" [Undecided,New] https://launchpad.net/bugs/1261604
+
+ 16:20 <slangasek> xnox: good point, we can skip it
+
+ 16:21 <xnox> slangasek: endianess is ok, so it's almost the right count =)
+
+ 16:21 <slangasek> xnox: let's still do the mumble chat though :)
+
+ 16:21 <xnox> ack.
+
+ 16:21 <stgraber> doko: yep, 3.2 and 3.3 work, 3.4 doesn't
+
+ 16:21 <doko> bdmurray, yes, next year
+
+ 16:21 <slangasek> [TOPIC] AOB
+
+ 16:22 <slangasek> anything else?  Christmas shopping recommendations?  Eggnog recipes?
+
+ 16:22 <barry> slangasek: for all the pythonistas out there: http://www.vat19.com/dvds/26-pound-edible-gummy-python-candy.cfm
+
+ 16:23 <slangasek> oh my
+
+ 16:23 <jodh`> love that calorie count!
+
+ 16:23 * barry feels his breathing constricted just thinking about it
+
+ 16:23 <slangasek> it doesn't list calories per serving?
+
+ 16:24 <slangasek> haha, http://images1.vat19.com/party-python/gummy-python-8-feet-long.jpg
+
+ 16:24 <xnox> barry: 7 foot, i would have thought a 3.4 foot long variant is needed
+
+ 16:24 <barry> xnox: metric
+
+ 16:24 <barry> :)
+
+ 16:24 <jodh`> slangasek: only per snake :)
+
+ 16:24 * barry wonders how many pig hooves go into something like that
+
+ 16:25 <xnox> bloke with a steak knife eating it is hallarious pic!
+
+ 16:25 <xnox> "Thankfully, the gigantic gummy Party Python has a shelf life of a year."
+
+ 16:26 <barry> they also have the world largest gummy bears
+
+ 16:26 <barry> and gummy bears on a stick (everything is better when it's on a stick)
+
+ 16:26 <xnox> Question: Don't you think this is a bit absurd for a piece of candy?
+
+ 16:26 <xnox> Answer: You must be new to our website. You need to check out this, this, this, this, this, and this. Oh, and this. While we're at it, check out this. It's not candy, but it is absurdly large.
+
+ 16:26 <xnox> with "this" all URLs =)
+
+ 16:27 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

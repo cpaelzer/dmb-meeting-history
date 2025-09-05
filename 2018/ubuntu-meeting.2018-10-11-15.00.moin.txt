@@ -1,0 +1,432 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 11 Oct at 15:00 &mdash; 15:31 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2018/ubuntu-meeting.2018-10-11-15.00.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:00.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 15:16.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:24.
+
+  * ''LINK:'' https://code.launchpad.net/~brian-murray/apport/contents-mapping/+merge/356447 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (32)
+ * tdaitx (25)
+ * sil2100 (21)
+ * xnox (18)
+ * bdmurray (16)
+ * ubottu (11)
+ * cyphermox (10)
+ * Odd_Bloke (10)
+ * rbalint (8)
+ * fginther (8)
+ * juliank (5)
+ * philroche (5)
+ * aleks_bogdanov (5)
+ * rcj (4)
+ * tobikoch (3)
+ * meetingology (3)
+ * tribaal (1)
+
+
+
+== Full Log ==
+
+
+ 15:00 <vorlon> #startmeeting
+
+ 15:00 <meetingology> Meeting started Thu Oct 11 15:00:46 2018 UTC.  The chair is vorlon. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:00 <meetingology> 
+
+ 15:00 <meetingology> Available commands: action commands idea info link nick
+
+ 15:00 <vorlon> [TOPIC] Lightning round
+
+ 15:00 <vorlon> $ echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson rcj philroche Odd_Bloke fginther juliank platonical tobikoch aleks_bogdanov)
+
+ 15:00 <vorlon> bdmurray rcj tdaitx mwhudson philroche fginther sil2100 tobikoch platonical rbalint cyphermox doko infinity juliank xnox Odd_Bloke aleks_bogdanov vorlon
+
+ 15:01 <vorlon> bdmurray: hullo
+
+ 15:01 <bdmurray> heya
+
+ 15:01 <bdmurray> modified apport to use launchpadlib instead of manual json parsing
+
+ 15:01 <bdmurray> had Launchpad and Error Tracker retracers updated with the above change
+
+ 15:01 <bdmurray> created contents map MP for apport which fixes LP: #1370230
+
+ 15:01 <ubottu> Launchpad bug 1370230 in Apport "apport-retrace has become slower" [High,In progress] https://launchpad.net/bugs/1370230
+
+ 15:01 <bdmurray> fixed apport's package name lookup in Contents.gz (likely not a real issue)
+
+ 15:01 <bdmurray> modified do-release-upgrade to abort if not all updates are installed or system needs rebooting due to a libc6 upgrade
+
+ 15:01 <bdmurray> investigation into how update-notifier, which uses do-release-upgrade, would be affected
+
+ 15:01 <bdmurray> had import of prometheus data of foundations_errors into production influxdb reviewed
+
+ 15:01 <bdmurray> wrote a release note regarding upgrades to 18.10 on i386
+
+ 15:01 <bdmurray> short week as Monday was a holiday
+
+ 15:01 <bdmurray> ✔ done
+
+ 15:01 <bdmurray> rcj:
+
+ 15:02 <rcj> * cloud-image partner work
+
+ 15:02 <rcj> * completed bzr->git migration for cloud image builds
+
+ 15:02 <rcj> (done)
+
+ 15:03 <xnox> rcj, for all releases right? not just like bionic+?
+
+ 15:03 <rcj> xenial, bionic, cosmic
+
+ 15:03 <vorlon> tdaitx:
+
+ 15:03 <xnox> cool
+
+ 15:03 <tdaitx> * openjdk-11 & 8 security update
+
+ 15:03 <tdaitx> - applied patches from 28/Sep
+
+ 15:03 <tdaitx> - compared, reviewed and applied updated patches from 06/Oct
+
+ 15:03 <tdaitx> - complained to the official channels that patches do not apply cleanly to jdk11u-28 but the gods are not listening
+
+ 15:03 <tdaitx> - build openjdk-11 and openjdk-10 with 11.0.1-13 patches
+
+ 15:03 <tdaitx> - build openjdk-8 with 8u191-b12 patches
+
+ 15:03 <tdaitx> - compared and reviewed yet another update from 09/Oct
+
+ 15:03 <tdaitx> - waiting for risk matrix so I can tell which CVEs are being fixed and then have a proper changelog
+
+ 15:03 <tdaitx> * investigated openjdk-11 testsuite to shave some hours out of our build
+
+ 15:03 <tdaitx> - measure build times for the separate hotspot, jdk, and langtools groups/directories
+
+ 15:03 <tdaitx> - compare the upstream build reports to check what they are testing
+
+ 15:03 <tdaitx> - investigated how and what to move to autopkgtest
+
+ 15:03 <tdaitx> * investigate libreoffice & clojure1.8 autopkgtest failures holding openjdk-11 migration
+
+ 15:03 <tdaitx> - libreoffice test expects a class file that is no longer generated with openjdk-11, but even on openjdk-10 this class file is not required, safe to ignore (LP: #1796361)
+
+ 15:03 <ubottu> Launchpad bug 1796361 in libreoffice (Ubuntu) "autopkgtests fail with openjdk 11~28-3ubuntu1 in cosmic-proposed" [Undecided,New] https://launchpad.net/bugs/1796361
+
+ 15:03 <tdaitx> - clojure1.8 fails due to a new overloaded method, fixed (LP: #1796985)
+
+ 15:03 <ubottu> Launchpad bug 1796985 in clojure1.8 (Ubuntu) "clojure autopkgtest fails to run with openjdk-11" [High,Fix committed] https://launchpad.net/bugs/1796985
+
+ 15:03 <tdaitx> * openjdk-11 migration:
+
+ 15:03 <tdaitx> - testing and checking a few ftbfs from the latest rebuild
+
+ 15:03 <tdaitx> - following up on reported bad behavior from openjdk-11 (arm64 floats going bad, conf files for flight recorder missing)
+
+ 15:03 <tdaitx> - updated my todo list of stuff to check before migrating openjdk-11 to bionic
+
+ 15:03 <tdaitx> Other:
+
+ 15:03 <tdaitx> - back home \o/
+
+ 15:04 <tdaitx> - also got a few allergies back, snafu
+
+ 15:04 <tdaitx> (done)
+
+ 15:04 <tdaitx> philroche: go!
+
+ 15:04 <philroche> * Oktoberfest in Munich on Thursday and Friday
+
+ 15:04 <philroche> * Cloud image customisations
+
+ 15:04 <philroche> * Substitute image build system vanguard
+
+ 15:04 <philroche> (done)
+
+ 15:04 <philroche> fginther:
+
+ 15:06 <fginther> * Image updates and testing for a partner cloud
+
+ 15:06 <fginther> * Specification and documentation for image publication to a partner cloud
+
+ 15:06 <fginther> (done)
+
+ 15:06 <fginther> sil2100:
+
+ 15:06 <sil2100> - SRU reviews and releases
+
+ 15:06 <sil2100> - Kernel SRU reviews
+
+ 15:06 <sil2100> - pi3 b+ core16 support:
+
+ 15:06 <sil2100> * Promoted edge pi3 gadget to stable after gathering test feedback
+
+ 15:06 <sil2100> * Built new core16 stable images
+
+ 15:06 <sil2100> * Handed over for testing, support not fully complete, respin might be needed
+
+ 15:06 <sil2100> - core18
+
+ 15:06 <sil2100> * Looked into reported problems with console-conf
+
+ 15:06 <fginther> * Image updates and testing for a partner cloud
+
+ 15:06 <sil2100> * Prepared test images to investigate probert segfault issues on raspi3
+
+ 15:06 <fginther> * Specification and documentation for image publication to a partner cloud
+
+ 15:06 <fginther> (done)
+
+ 15:06 <sil2100> * Issues resolved themselves on the pi3, still happening on dragonboard
+
+ 15:06 <sil2100> * Prepared merges for core18 dailies in livecd-rootfs and cdimage
+
+ 15:06 <sil2100> * Discussed possible ways of triggering core series-based builds
+
+ 15:06 <sil2100> * Checked up on new official model assertions in store
+
+ 15:06 <sil2100> - Coordinating lang-pack base updates
+
+ 15:06 <sil2100> - Fixing partman-partitioning to print warning for missing ESP on EFI always
+
+ 15:07 <sil2100> * Lots of various testing with that
+
+ 15:07 <sil2100> - Updating non-langpack translations in slideshow
+
+ 15:07 <sil2100> - Looked into core image retention
+
+ 15:07 <sil2100> (done)
+
+ 15:07 <sil2100> ;)
+
+ 15:07 <tobikoch> * work on parallelization of cloud image builds (see internal chat).
+
+ 15:07 <tobikoch> (done)
+
+ 15:07 <tobikoch> platonical:
+
+ 15:09 <vorlon> apparently irc problems
+
+ 15:09 <vorlon> rbalint:
+
+ 15:09 <Odd_Bloke> Should have used the forums.
+
+ 15:10 <fginther> to the forums!
+
+ 15:10 <rbalint> (short week)
+
+ 15:10 <rbalint> * fixing my irc accounts
+
+ 15:10 <rbalint> * unattended-upgrades and update-manager SRUs
+
+ 15:10 <rbalint> * further unattended-upgrades fixes
+
+ 15:10 <rbalint> * wireshark security update for all releases
+
+ 15:10 <rbalint> * fix for LP: #1726803
+
+ 15:10 <ubottu> Launchpad bug 1726803 in shim-signed (Ubuntu) "unattended-upgrades + nvidia stack upgrade == dkms fail (package shim-signed 1.32~16.04.1+0.9+1474479173.6c180c6-1ubuntu1 failed to install/upgrade: subprocess installed post-installation script returned error exit status 1)" [High,In progress] https://launchpad.net/bugs/1726803
+
+ 15:10 <rbalint> (done)
+
+ 15:10 <cyphermox> - libdebian-installer, parted: ftbfs fixes
+
+ 15:10 <cyphermox> - started gnulib update for coreutils
+
+ 15:10 <cyphermox> - verifying netplan.io SRU for bionic
+
+ 15:10 <cyphermox> - verifying shim SRU for bionic
+
+ 15:10 <cyphermox> - [HIGHLIGHT] shim/shim-signed 15 released in bionic
+
+ 15:10 <cyphermox> - upstreaming bug with nm openvpn TLS Auth options
+
+ 15:10 <cyphermox> - mokutil update to 0.3.0+1538710437.fb6250f + SRUs
+
+ 15:10 <cyphermox> - reupload grub2 framebuffer fixes from Ivan in bionic-proposed queue
+
+ 15:10 <cyphermox> - fix boot delay due to grub2 timeout code
+
+ 15:10 <cyphermox> (done)
+
+ 15:11 <vorlon> doko is out
+
+ 15:11 <vorlon> infinity not in channel
+
+ 15:11 <vorlon> juliank:
+
+ 15:11 <juliank> * short week - Mon, Tue half days
+
+ 15:11 <juliank> * apt 1.7.0, 1.6.6, 1.2.29 (LP: #1796808)
+
+ 15:11 <ubottu> Launchpad bug 1796808 in apt (Ubuntu Bionic) "frontend locking regression: dpkg::post-invoke scripts can't install packages" [Undecided,Triaged] https://launchpad.net/bugs/1796808
+
+ 15:11 <juliank> * python-apt 1.7.0
+
+ 15:12 <juliank> * analyzed version regressions between releases
+
+ 15:12 <juliank> (done)
+
+ 15:12 <xnox> * Fixed a few FTBFS packages / helped with migrations
+
+ 15:12 <xnox> * friendly-recovery is in
+
+ 15:12 <xnox> * Round of systemd uploads done:
+
+ 15:12 <xnox> - xenial accepted into proposed
+
+ 15:12 <xnox> - bionic in unapproved queue
+
+ 15:12 <xnox> - cosmic accepted into proposed
+
+ 15:12 <xnox> * Started to add foundations bits to
+
+ 15:12 <xnox> https://wiki.ubuntu.com/CosmicCuttlefish/ReleaseNotes
+
+ 15:12 <xnox> * Preparing OpenSSL 1.1.1 for bionic SRU bug + bileto PPA bug #1797386
+
+ 15:12 <ubottu> bug 1797386 in openssl (Ubuntu) "[SRU] OpenSSL 1.1.1 to 18.04 LTS" [Undecided,New] https://launchpad.net/bugs/1797386
+
+ 15:12 <xnox> * Preparing/testing to open Devout Dolphin 🐬 with merged-/usr
+
+ 15:12 <xnox> * Upstreaming a bunch of s390-tools fixes
+
+ 15:12 <xnox> * Reported/Following up OpenSSL 1.1.1 bugs to upstreams (ie. mongo r-curl etc.)
+
+ 15:12 <xnox> * done
+
+ 15:13 <Odd_Bloke> * Fixing xenial cloud images build failures: https://bugs.launchpad.net/bugs/1797170
+
+ 15:13 <ubottu> Launchpad bug 1797170 in livecd-rootfs (Ubuntu) "xenial cloud image builds fail due to /lib/modules being present" [Critical,In progress]
+
+ 15:13 <Odd_Bloke> * Working through issues caused by pre-seeding lxd in all cloud images: https://bugs.launchpad.net/cloud-images/+bug/1796137
+
+ 15:13 <ubottu> Launchpad bug 1796137 in cloud-images "huge and slow image 20181002 due to seeded lxd snap" [High,Confirmed]
+
+ 15:13 <Odd_Bloke> - Some test fixes were required
+
+ 15:13 <Odd_Bloke> - Helping the lxd and snapd teams with debugging the cause of the issue
+
+ 15:13 <Odd_Bloke> - Tabulating the effect on boot speed and disk size to determine the impact
+
+ 15:13 <Odd_Bloke> - Also provided some input on https://bugs.launchpad.net/ubuntu/+source/snapd/+bug/1797218 which is another, distinct boot issue caused by the pre-seeding
+
+ 15:13 <ubottu> Launchpad bug 1797218 in snapd (Ubuntu) "boot hangs in curtin vmtest" [High,Confirmed]
+
+ 15:13 <Odd_Bloke> * Triaging and chasing down the kernel packaging fix for https://bugs.launchpad.net/cloud-images/+bug/1796647
+
+ 15:13 <ubottu> Launchpad bug 1796647 in cloud-images "Shared folders cannot be mounted in ubuntu/cosmic64 due to missing vbox modules" [High,Confirmed]
+
+ 15:13 <Odd_Bloke> aleks_bogdanov:
+
+ 15:13 <aleks_bogdanov> * working on cloud images simplestreams-based KPIs
+
+ 15:13 <aleks_bogdanov> * improvements in azure images publication pipeline
+
+ 15:13 <aleks_bogdanov> * disabling vagrant image console log file, LP#1777827
+
+ 15:13 <aleks_bogdanov> (done)
+
+ 15:13 <aleks_bogdanov> vorlorn:
+
+ 15:14 <vorlon> * short week; was off Thu-Mon
+
+ 15:14 <vorlon> * helping with queue reviews going into final freeze
+
+ 15:14 <vorlon> * misc fixing of stuck packages in -proposed
+
+ 15:14 <vorlon> * sponsorships for openjdk-11
+
+ 15:14 <vorlon> * a little bit of chasing of stuck ppc64el autopkgtest queues, but wgrant & IS fixed the cloud before I got anywhere
+
+ 15:14 <vorlon> (done)
+
+ 15:14 <vorlon> questions over status?
+
+ 15:14 <Odd_Bloke> He's missing his old IRC nick, he's vorlorn.
+
+ 15:15 <rbalint> lorn of the vor
+
+ 15:16 <vorlon> [TOPIC] Bugs
+
+ 15:16 <vorlon> bdmurray:
+
+ 15:16 <sil2100> vorlord sounds better
+
+ 15:16 <xnox> systemd-vorlord
+
+ 15:16 <bdmurray> bug 1796275 came in recently and is tagged iso-testing
+
+ 15:16 <ubottu> bug 1796275 in ubiquity (Ubuntu) "Screen reader is not auto-enabled on first login if enabled when installing" [Undecided,New] https://launchpad.net/bugs/1796275
+
+ 15:17 <tdaitx> vorlon: slangasek: thanks for helping squaring openjdk-11 into the circle
+
+ 15:20 <vorlon> bdmurray: looks like something that we should take
+
+ 15:20 <vorlon> we should coordinate to see if anyone on desktop is looking into it
+
+ 15:21 <xnox> possibly a gdm3 bug too
+
+ 15:22 <xnox> i noticed that enabling screen-reader for user is != as enabling screen-ready a11y in gdm3
+
+ 15:23 <vorlon> bdmurray: I'll put that in trello. anything else?
+
+ 15:23 <bdmurray> vorlon: No, not right now.
+
+ 15:24 <vorlon> [TOPIC] AOB
+
+ 15:24 <vorlon> anything else else?
+
+ 15:24 <bdmurray> I could use a review of an apport merge proposal.
+
+ 15:26 <bdmurray> https://code.launchpad.net/~brian-murray/apport/contents-mapping/+merge/356447
+
+ 15:27 <vorlon> any volunteers? ^^ :)
+
+ 15:29 <vorlon> I think xnox is volunteering
+
+ 15:29 <vorlon> ok xnox is committed to reviewing it
+
+ 15:29 <vorlon> his name is on the MP
+
+ 15:29 <vorlon> anything else else else?
+
+ 15:30 * tribaal says hi to everyone :)
+
+ 15:30 * vorlon waves to tribaal
+
+ 15:31 <vorlon> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

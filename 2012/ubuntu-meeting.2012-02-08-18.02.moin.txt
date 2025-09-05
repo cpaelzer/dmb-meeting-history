@@ -1,0 +1,290 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by bdmurray at 18:02:07 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-02-08-18.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Previous Actions
+''LINK:'' http://pastebin.ubuntu.com/834211/   (bdmurray, 18:03:29)
+''ACTION:'' bdmurray to improve list of dbus error no reply bugs  (bdmurray, 18:10:46)
+
+ *Engineering Team Bug Status
+''LINK:'' https://wiki.ubuntu.com/DebuggingUbiquity   (bdmurray, 18:15:36)
+
+ *Bug Escalations (any High or Critical bugs that community members have seen that need attention)
+
+ *other topics
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/linux/+bug/760744   (Ursinha, 18:25:17)
+
+
+
+Meeting ended at 18:33:45 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * bdmurray to improve list of dbus error no reply bugs
+
+
+
+== Action items, by person ==
+
+ * bdmurray
+ ** bdmurray to improve list of dbus error no reply bugs
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (46)
+ * Ursinha (30)
+ * jsalisbury (10)
+ * yofel (8)
+ * hggdh (8)
+ * ubottu (4)
+ * meetingology (4)
+ * bil21al (2)
+
+
+
+== Full Log ==
+
+
+ 18:02:07 <bdmurray> #startmeeting
+
+ 18:02:07 <meetingology> Meeting started Wed Feb  8 18:02:07 2012 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:02:07 <meetingology> 
+
+ 18:02:07 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:02:29 <bdmurray> #topic Previous Actions
+
+ 18:03:01 <bdmurray> earlier we had talked about compiling a list of DBus.Error.NoReply bug reports and looking at their status, importance and gravity
+
+ 18:03:13 <bdmurray> before deciding how to tackle them
+
+ 18:03:15 <Ursinha> I 'm working on it right now
+
+ 18:03:17 <bdmurray> I've created such a list
+
+ 18:03:27 <Ursinha> cool!
+
+ 18:03:29 <bdmurray> http://pastebin.ubuntu.com/834211/
+
+ 18:04:19 <bdmurray> the search_text parameter for the API wasn't a huge help so I just looked at all the apport crashes
+
+ 18:04:36 <Ursinha> regardless the package?
+
+ 18:04:47 <bdmurray> Ursinha: right ;-)
+
+ 18:05:55 <Ursinha> I thought there would be more of them
+
+ 18:06:11 <bdmurray> well apport did a lot of duplicating on a per package basis
+
+ 18:06:16 <Ursinha> bdmurray, the way you said when we discussed that, I thought there were hundreds
+
+ 18:06:17 <Ursinha> hmm
+
+ 18:06:29 <yofel> o/
+
+ 18:07:01 <Ursinha> bdmurray, how long it takes for that script to run?
+
+ 18:07:06 <bdmurray> bug 437883
+
+ 18:07:07 <ubottu> Launchpad bug 437883 in blueman (Ubuntu Precise) "blueman-applet crashed with DBusException in call_blocking()" [High,Triaged] https://launchpad.net/bugs/437883
+
+ 18:07:19 <Ursinha> can we add titles and such to be easier to have an idea?
+
+ 18:08:07 <bdmurray> actually that one isn't a perfect example but gives you an idea of how apport would mark duplicates about one package
+
+ 18:08:12 <bdmurray> yofel: yes?
+
+ 18:08:18 <bdmurray> Ursinha: sure
+
+ 18:08:27 <yofel> just idling around as I haven't been there for a while
+
+ 18:09:07 <bdmurray> bug 707990 is a better example
+
+ 18:09:09 <ubottu> Launchpad bug 707990 in aptdaemon (Ubuntu) "update-manager crashed with DBusException in _convert_dbus_exception(): org.freedesktop.DBus.Error.NoReply: Did not receive a reply. Possible causes include: the remote application did not send a reply, the message bus security policy blocked the reply, the reply timeout expired, or the network connection was broken." [Medium,Confirmed] https://launchpad.net/bugs/707990
+
+ 18:09:28 <bdmurray> Ursinha: so what would you like to see really?
+
+ 18:09:52 <Ursinha> bdmurray, I don't know, maybe the title/package along with the bug#
+
+ 18:10:15 <bdmurray> okay
+
+ 18:10:46 <bdmurray> #action bdmurray to improve list of dbus error no reply bugs
+
+ 18:10:46 * meetingology bdmurray to improve list of dbus error no reply bugs
+
+ 18:11:05 <bdmurray> #topic Engineering Team Bug Status
+
+ 18:11:13 <bdmurray> Ursinha: do you have anything for us?
+
+ 18:11:45 <Ursinha> nothing specific; I've been working on a bug list sorted by "gravity", will have something to show next meeting
+
+ 18:12:20 <bdmurray> great
+
+ 18:12:29 <bdmurray> jsalisbury: anything on your side?
+
+ 18:12:55 <jsalisbury> bdmurray, nothing specific as well.  I've bee focused on bisecting and building test kernels for precise bugs.
+
+ 18:13:01 <jsalisbury> s/bee/been/
+
+ 18:13:16 <Ursinha> jsalisbury, there is a bug I've been hitting lately, not sure it's something important
+
+ 18:13:26 <Ursinha> (not sure this is the place to discuss as well :))
+
+ 18:13:43 <Ursinha> I have a nfs mount that causes ls to hang
+
+ 18:13:56 <Ursinha> I found a kernel bug today that mentions the problem in natty, and in older kernels
+
+ 18:14:12 <jsalisbury> Ursinha, hmm, interesting.  maybe open a bug and I can take a deeper look.
+
+ 18:14:14 <bdmurray> how about we talk about it towards the end?
+
+ 18:14:20 <Ursinha> sure
+
+ 18:14:51 <bdmurray> I've been lookingat lots of ubiquity bugs the past week
+
+ 18:15:29 <bdmurray> and have come up with a tagging scheme to identify parts of the installer where people saw the bug
+
+ 18:15:36 <bdmurray> https://wiki.ubuntu.com/DebuggingUbiquity
+
+ 18:15:46 <bdmurray> in the notes at the end (rather rough yet)
+
+ 18:16:29 <Ursinha> cool
+
+ 18:16:56 <bdmurray> and as a public service announcement you might encounter a bug when installing from alpha 2 with flashplugin-installer, if you choose the restricted software option
+
+ 18:17:05 <bdmurray> that's being investigated
+
+ 18:17:45 <bdmurray> Lots of bug patterns being merged from Vadim Rutkovsky too
+
+ 18:18:13 <Ursinha> that bug that crashes the installation?
+
+ 18:18:14 <bdmurray> Those have actually brought up some old bugs too which has been helpful
+
+ 18:18:26 <bdmurray> Ursinha: yes
+
+ 18:18:50 <Ursinha> bdmurray, that's an old bug, isn't it? problem with network manager not being able to resolve the names and flash failing to download...
+
+ 18:19:18 <bdmurray> Ursinha: yes, its come back and may have something to do with the new name resolution bits
+
+ 18:19:27 <Ursinha> right
+
+ 18:20:31 <bdmurray> the installer crashing in this case is bug 876298
+
+ 18:20:33 <ubottu> Launchpad bug 876298 in update-manager (Ubuntu) "[MASTER] We need to better handle external payloads (Flash, msttcorefonts) not being available." [High,Triaged] https://launchpad.net/bugs/876298
+
+ 18:20:55 <bdmurray> anyway thats it from me
+
+ 18:21:43 <bdmurray> #topic Bug Escalations (any High or Critical bugs that community members have seen that need attention)
+
+ 18:21:59 <bdmurray> yofel: do you have anything?
+
+ 18:22:13 <yofel> nope
+
+ 18:22:54 <bdmurray> anybody?
+
+ 18:22:56 <bil21al> bdmurray:  for your information from my side all the high and critical bugs of empathy are in progress
+
+ 18:23:09 <bdmurray> bil21al: that's great
+
+ 18:23:19 <bil21al> hm
+
+ 18:24:28 <bdmurray> next topic then
+
+ 18:24:35 <bdmurray> #topci other topics
+
+ 18:24:41 <bdmurray> #topic other topics
+
+ 18:24:48 <bdmurray> is there anything else to discuss?
+
+ 18:25:01 <Ursinha> can I show that bug to jsalisbury? :)
+
+ 18:25:06 <bdmurray> sure!
+
+ 18:25:17 <Ursinha> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/760744
+
+ 18:25:18 <ubottu> Ubuntu bug 760744 in linux (Ubuntu) "NFS mount hangs ls and nautilus" [Undecided,Confirmed]
+
+ 18:25:36 <jsalisbury> Ursinha, looking
+
+ 18:25:55 <yofel> is a symlink in that folder? I've had apps hang on an ioctl() when the nfs mount was hung while looking up the link
+
+ 18:26:08 <Ursinha> jsalisbury, so, I'm not sure what to change in that bug to add that I'm having a problem with 3.0.0 in oneiric
+
+ 18:26:19 <Ursinha> yofel, mine isn't
+
+ 18:27:25 <jsalisbury> Ursinha, you could open a separate bug, we can investigate and mark as a duplicate if it is in fact a duplicate.
+
+ 18:27:35 <Ursinha> sure, thanks jsalisbury
+
+ 18:27:49 <jsalisbury> Ursinha, np.  sometimes this could be an NFS client issue as well.
+
+ 18:28:02 <hggdh> I dimly remember an issue with ' ls --color' and non-accessible mounts
+
+ 18:28:08 <jsalisbury> Ursinha, I recall at one point we changed from NFS3 by default to NFS4.
+
+ 18:28:14 <yofel> hggdh: that's what I was talking about
+
+ 18:28:27 <hggdh> the user should try with 'ls --color=no'
+
+ 18:28:30 <Ursinha> hggdh, hm
+
+ 18:28:52 <hggdh> this is a known issue, but I am not sure it can be solved nicely
+
+ 18:29:02 <hggdh> there are at least one coreutils bug on it
+
+ 18:29:07 <Ursinha> by nicely you mean...
+
+ 18:29:17 <hggdh> programmatically
+
+ 18:29:23 <Ursinha> right
+
+ 18:29:44 <hggdh> yofel: indeed :-), sorry
+
+ 18:29:47 <Ursinha> I'll file the bug and investigate a bit more, will try the no color trick
+
+ 18:29:51 <yofel> heh, np
+
+ 18:30:01 <yofel> you were more accurate
+
+ 18:30:11 <jsalisbury> Ursinha, can you add the kernel-da-key tag?  That will put it on my hot list.
+
+ 18:30:18 <Ursinha> sure jsalisbury
+
+ 18:30:24 <jsalisbury> Ursinha, thanks
+
+ 18:30:55 <bdmurray> any other business?
+
+ 18:31:02 <Ursinha> no, thanks :)
+
+ 18:32:09 <yofel> not from me
+
+ 18:32:43 <hggdh> jsalisbury: I dimlly recollect this being discussed upstream at coreutils -- my recollection is that this would have to be fixed by the kernel, and the kernel folks did not quite agree
+
+ 18:33:31 <jsalisbury> hggdh, thanks for the info.  Was it discussed on LKML?  Or just the coreutils mailing list?
+
+ 18:33:35 <hggdh> Ursinha: there are already some bugs on this
+
+ 18:33:43 <bdmurray> okay thanks everyone
+
+ 18:33:45 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

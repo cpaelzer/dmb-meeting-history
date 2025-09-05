@@ -1,0 +1,371 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 22 Mar at 15:36 &mdash; 16:09 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-03-22-15.36.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by slyon at 15:36.
+
+
+=== current component mismatches ===
+
+Discussion started by slyon at 15:36.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 15:37)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 15:37)
+ * ''LINK:'' https://irclogs.ubuntu.com/2022/03/09/%23ubuntu-desktop.html#t19:23   (sarnold, 15:42)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:49)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:50)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:51)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/glusterfs/+bug/1950321   (cpaelzer, 15:56)
+ * ''LINK:'' https://irclogs.ubuntu.com/2022/03/10/%23ubuntu-desktop.html#t17:46   (sarnold, 16:08)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (80)
+ * sarnold (32)
+ * slyon (29)
+ * didrocks (10)
+ * joalif (7)
+ * meetingology (2)
+ * ubottu (2)
+
+
+
+== Full log ==
+
+
+ 15:36 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:36 <meetingology> Meeting started at 15:36:16 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:36 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:36 <slyon> #topic Review of previous action items
+
+ 15:36 <slyon> IIRC we did not have any previous action items, so let's move on
+
+ 15:36 <slyon> #topic current component mismatches
+
+ 15:37 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:37 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:37 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:37 <slyon> let's start with the -release mismatches
+
+ 15:38 <slyon> the libreoffice->epiphany-browser dependency seems to be pulling in some more stuff. But epiphany-browser was a false positive, so I guess we don't need to care about libsou3 or sysprof either
+
+ 15:38 <sarnold> that epiphany-browser one is ... not great. I understand that's brought in because firefox is going away on some of the architectures we support
+
+ 15:39 <sarnold> how do we convey to our users that that browser isn't going to get the same level of security support as eg firefox on a platform that mozilla cares about?
+
+ 15:39 <slyon> sarnold: do you have any more information about that? (firefox going away on some arches), because I think didrocks said it would be a false positive
+
+ 15:40 <sarnold> slyon: hmm maybe it was only discussed on irc..
+
+ 15:41 <sarnold> I think #ubuntu-desktop Wed 09 19:24:54 < Wimpy> This is because libreoffice-help-en-us Recommends firefox | firefox-esr | epiphany-browser | konqueror | chromium-browser | chromium
+
+ 15:42 <slyon> hm hm. So it might not be a false-positive after all, but be related to firefox dropping some arches.
+
+ 15:42 <sarnold> https://irclogs.ubuntu.com/2022/03/09/%23ubuntu-desktop.html#t19:23
+
+ 15:42 <sarnold> yeah
+
+ 15:42 <cpaelzer> thanks slyon, here only now
+
+ 15:43 <slyon> sarnold: as didrocks doesn't seem to be here, could you try to reach out to him later and try to clarify this, to bring it to the desktop team's attention?
+
+ 15:43 <sarnold> nabend cpaelzer :)
+
+ 15:43 <slyon> o/ cpaelzer – you can take over after the component-mismatches if you want :)
+
+ 15:44 <sarnold> these version numbers aren't super-encouraging, you know? https://launchpad.net/ubuntu/+source/epiphany
+
+ 15:44 <slyon> I agree
+
+ 15:44 <sarnold> a steady stream of 0.7.0 for eight years .. I'd feel *very* awkward about pretending that epiphany is a  supported browser in any way
+
+ 15:44 <cpaelzer> "universe" it is
+
+ 15:45 <slyon> yes, we need a comment from the desktop team about that ^^^ didrocks
+
+ 15:45 <cpaelzer> it is a false positive
+
+ 15:45 <cpaelzer> he told me last time
+
+ 15:45 <sarnold> I know we kicked around the idea of replacing epiphany's dependency with w3m; at least that's already in main :) (I'm not sure how, but..)
+
+ 15:45 <cpaelzer> sorry, i'm still context switching this in
+
+ 15:46 <slyon> yes, but sarnold had some new info about that (firefox not being available on all arches anymore), so it potentially isn't a false positive after all
+
+ 15:46 <cpaelzer> as you already said "firefox | firefox-esr | epiphany-browser | konqueror | chromium-browser | chromium" could be fulfilled
+
+ 15:46 <cpaelzer> so let us go on
+
+ 15:46 <cpaelzer> hmm
+
+ 15:47 <cpaelzer> indeed
+
+ 15:47 <slyon> but let's wait for a comment from the desktop team and move on to -proposed mismatches
+
+ 15:47 <cpaelzer> ok, no I have gotten through all backlog
+
+ 15:47 <cpaelzer> we know tat didrocks has a conflict now
+
+ 15:47 <cpaelzer> he will read the backlog later
+
+ 15:47 <cpaelzer> and be around next week when the DST crazyness has passed
+
+ 15:47 <slyon> in -proposed we have the gdb->source-highlight
+
+ 15:48 <sarnold> the nested dropdown boxes on https://snapcraft.io/firefox say amd64, arm64, armhf
+
+ 15:48 <cpaelzer> firefox | 98.0.1+build2-0ubuntu0.21.10.1 | impish-updates  | source, amd64, arm64, armhf, ppc64el, s390x
+
+ 15:48 <cpaelzer> firefox | 1:1snap1-0ubuntu1              | jammy           | source, amd64, arm64, armhf
+
+ 15:48 <cpaelzer> gdb would be foundations, did you hear about that before slyon?
+
+ 15:48 <slyon> there is an old ACKed mir for source-highlight and it is foundations owned. So I'll investigate what's happening there after the meeting
+
+ 15:48 <slyon> didn't hear anything about it, but I will check.
+
+ 15:49 <slyon> I think all the others are known false-positives
+
+ 15:49 <slyon> (or in progress)
+
+ 15:49 <cpaelzer> I agree
+
+ 15:49 <slyon> cpaelzer: do you want to go on with the new MIRs?
+
+ 15:49 <cpaelzer> sure
+
+ 15:49 <cpaelzer> #topic New MIRs
+
+ 15:49 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:49 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:50 <cpaelzer> <none>
+
+ 15:50 <sarnold> \o/
+
+ 15:50 <cpaelzer> great, we can focus on those we already have
+
+ 15:50 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:50 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:50 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:50 <cpaelzer> rust I had a discussion with schopin, nothing to act on for us atm
+
+ 15:50 <cpaelzer> nftables is still going on
+
+ 15:51 <cpaelzer> but also nothing to act for us atm
+
+ 15:51 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:51 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:51 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:51 <sarnold> though I think sbea ttie wouldn't mind a review on the symbols changes he made to nftables..
+
+ 15:51 <cpaelzer> you think he wants that
+
+ 15:51 <sarnold> lol
+
+ 15:52 <cpaelzer> we usually 80% trust people saying "I have done this" until it is ready to re-check if all is done
+
+ 15:52 <sarnold> well, yes, I think some of the consequences of not getting it quite right might mean a (potentially needless) SO bump in the future, and that sounds like hassle we'd rather avoid
+
+ 15:52 <sarnold> so I do think he'd like feedback before we bake it into an lts
+
+ 15:52 <cpaelzer> ok I can have an extra look tomorrow
+
+ 15:52 <sarnold> thank you :)
+
+ 15:53 <cpaelzer> the security review list is important
+
+ 15:53 <cpaelzer> we have two major ones needed soon
+
+ 15:53 <cpaelzer> swtpm
+
+ 15:53 <cpaelzer> and glusterfs
+
+ 15:53 <cpaelzer> the latter isn't on the list anymore as it is assigned
+
+ 15:53 <sarnold> alas news isn't quite so groovy on the sceurity backlog; swtpm is still in progress, but much of the team is currently off on the "burn your vacation days by the end of march" side quest
+
+ 15:53 <cpaelzer> but those are both important for the Jammy LTS
+
+ 15:53 <cpaelzer> and people (= me and others) get afraid if the review presents a list of things to fix too late we might have issues
+
+ 15:54 <sarnold> aye, just yesterday I ran across a coverity-discovery in swtpm that feels like it deserves an update
+
+ 15:54 <slyon> what's the timeline for swtpm? Steve's out this week, but is tracking this issue as a priority
+
+ 15:54 <slyon> so he should get to it next week I guess (if that's soon enough?)
+
+ 15:54 <cpaelzer> sarnold: I have already an MP up fixing that issue you found and more and improving the apparmor rules
+
+ 15:54 <sarnold> that's a good question :/ with as many people out as there are I'm liable to need to respond to a lot more questions than usual..
+
+ 15:55 <sarnold> cpaelzer: oh sweet :) there's some great upsides to being globally distributed :)
+
+ 15:55 <cpaelzer> hehe
+
+ 15:55 <cpaelzer> sarnold: but really, given that 28th (Monday) is beta freeze we'll actually need glusterfs/swtpm kind of this week'ish
+
+ 15:55 <sarnold> anyway I will work my way through swtpm and really hope to get it done this week
+
+ 15:55 <sarnold> ouch
+
+ 15:55 <cpaelzer> ok I feel you have swtpm under control, close to the deadline but  under control
+
+ 15:56 <cpaelzer> what can we do about glusterfs?
+
+ 15:56 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/glusterfs/+bug/1950321
+
+ 15:56 <ubottu> Launchpad bug 1950321 in glusterfs (Ubuntu) "[MIR] glusterfs" [Critical, Confirmed]
+
+ 15:56 <cpaelzer> sarnold: is s_beattie also eliminating remaining PTO days ?
+
+ 15:57 <sarnold> cpaelzer: yes, exactly; I think he'll be back monday, but I'm not 100% positive on that date
+
+ 15:58 <cpaelzer> hrm, i'm not mad enough trying to get people back from deserved vacation but @sarnold could you ensure that the team and him is aware once back that this is as asap as possible by now?
+
+ 15:59 <sarnold> cpaelzer: yes -- I do wonder when the next kernel usn is due.. those always take an eternity to prepare, and drive a lot of the update machinery around the world :(
+
+ 16:00 <cpaelzer> I do not know either when they spin things again
+
+ 16:00 <cpaelzer> I just want the priorities of these (swtpm/glusterfs) very clear which I think we have by now
+
+ 16:00 <cpaelzer> thanks
+
+ 16:00 <cpaelzer> #topic Any other business?
+
+ 16:00 <slyon> nothing
+
+ 16:01 <cpaelzer> starting next week, less daylight-saving confusion
+
+ 16:01 <sarnold> I saw some discussion in #debian-rust about the debian golang team moving away from built-using:
+
+ 16:01 <joalif> cpaelzer: this bug https://bugs.launchpad.net/ubuntu/+source/gnome-bluetooth3/+bug/1964600
+
+ 16:01 <ubottu> Launchpad bug 1964600 in gnome-bluetooth3 (Ubuntu) "[MIR] gnome-bluetooth3" [Undecided, Confirmed]
+
+ 16:01 <joalif> I have the review almost ready, just polishing it
+
+ 16:01 <cpaelzer> great joalif
+
+ 16:01 <joalif> but it mentions it need to go to main really soon now
+
+ 16:01 <joalif> like in 2 days
+
+ 16:01 <sarnold> they were asking the rust folks if they might change the rust-specific similar field to use a common shared field for both rust and golang
+
+ 16:01 <cpaelzer> joalif: does it look like "should be fine" or is it rather complex and discussion worthy?
+
+ 16:02 <joalif> I just mention it
+
+ 16:02 * didrocks is back
+
+ 16:02 <sarnold> there's probably nothing to do with this field immediately, but it's something to keep an eye on if they actually change it ;)
+
+ 16:02 <cpaelzer> didrocks: welcome, please read the backlog about libreoffice above and tell us the answer
+
+ 16:02 <cpaelzer> sarnold: yes I've heard about it - schopin even pinged us in the rust-rules PR
+
+ 16:02 <sarnold> yay! :D
+
+ 16:03 <cpaelzer> he will track this discussion and let us know if there is an outcome that matters to us
+
+ 16:03 <didrocks> cpaelzer: sarnold: slyon: false positive from what seb told me, but he wanted to check again, I’m going to get the status
+
+ 16:04 <cpaelzer> didrocks: but did you see the point of "since snaps are not on all arch, it might no more be false positive" ?
+
+ 16:04 <slyon> joalif: I think they can request a FFe in parallel to the MIR, so I'm not sure about the March 24 deadline
+
+ 16:05 <joalif> ok
+
+ 16:05 <didrocks> cpaelzer: we will still have the package as a transitional upgrade AFAIK
+
+ 16:05 <didrocks> so for this cycle, things should stay as they are
+
+ 16:05 <didrocks> but I will double check
+
+ 16:05 <cpaelzer> firefox | 1:1snap1-0ubuntu1              | jammy           | source, amd64, arm64, armhf
+
+ 16:06 <didrocks> ah, that changed indeed
+
+ 16:06 <cpaelzer> no ppc/s390x - who would build those now?
+
+ 16:06 <didrocks> ok, I’ll get back to the desktop distro team and check with them
+
+ 16:06 <cpaelzer> yeah and this is
+
+ 16:06 <cpaelzer> Version: 1:1snap1-0ubuntu1
+
+ 16:06 <cpaelzer> Pre-Depends: debconf, snapd
+
+ 16:06 <cpaelzer> Depends: debconf (>= 0.5) | debconf-2.0
+
+ 16:07 <cpaelzer> Breaks: firefox-dbg (<< 1:1snap1), firefox-dev (<< 1:1snap1), firefox-geckodriver (<< 1:1snap1), firefox-mozsymbols (<< 1:1snap1)
+
+ 16:07 <cpaelzer> Replaces: firefox-dbg (<< 1:1snap1), firefox-dev (<< 1:1snap1), firefox-geckodriver (<< 1:1snap1), firefox-mozsymbols (<< 1:1snap1)
+
+ 16:07 <cpaelzer> so I really think this might be a problem now, sarnold suggested to put w3m in there (being in main even) as better dependency
+
+ 16:07 <cpaelzer> after all this is only a recommends from the help-packs
+
+ 16:07 <sarnold> (someone else mentioned it, it just caught my fancy :)
+
+ 16:07 <cpaelzer> nothing really that functional
+
+ 16:07 <cpaelzer> ok sarnold, honor to whoever it was :-)
+
+ 16:07 <cpaelzer> and thanks didrocks for rechecking it with the team
+
+ 16:08 <cpaelzer> and it seems also thanks for doing the precedence case for deb-to-snap arch dependency issues :-/
+
+ 16:08 <didrocks> yw, will keep you posted
+
+ 16:08 <cpaelzer> seems we are done then
+
+ 16:08 <didrocks> yeah :/
+
+ 16:08 <cpaelzer> slyon: you opened, you have to close it
+
+ 16:08 <cpaelzer> thank you all!
+
+ 16:08 <sarnold> https://irclogs.ubuntu.com/2022/03/10/%23ubuntu-desktop.html#t17:46
+
+ 16:08 <didrocks> thanks!
+
+ 16:08 <slyon> thanks!
+
+ 16:08 <sarnold> thanks cpaelzer, slyon, all :)
+
+ 16:09 <joalif> o/
+
+ 16:09 <cpaelzer> #endmeeting
+
+ 16:09 <cpaelzer> as I said, mine has no power
+
+ 16:09 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

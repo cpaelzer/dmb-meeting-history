@@ -1,0 +1,253 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jsalisbury at 17:00:57 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-04-03-17.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/Meeting   (jsalisbury, 17:00:57)
+''LINK:'' https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise   (jsalisbury, 17:00:58)
+ *ARM Status (ppisati)
+
+ *Release Metrics and Incoming Bugs (jsalisbury)
+''LINK:'' http://people.canonical.com/~kernel/reports/kt-meeting.txt   (jsalisbury, 17:02:06)
+
+ *Milestone Targeted Work Items (ogasawara)
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/canonical-kernel-distro-team-ubuntu-12.04.html   (ogasawara, 17:02:19)
+
+ *Blueprint: hardware-p-kernel-power-management (cking)
+
+ *Status: Precise Development Kernel (ogasawara)
+''LINK:'' https://wiki.ubuntu.com/Kernel/Dev/StablePatchFormat   (ogasawara, 17:03:16)
+
+ *Status: CVE's (apw)
+''LINK:'' http://people.canonical.com/~kernel/cve/pkg/ALL-linux.html   (apw, 17:04:12)
+''LINK:'' http://people.canonical.com/~kernel/status/cve-metrics.txt   (apw, 17:04:16)
+''LINK:'' http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt   (apw, 17:04:17)
+
+ *Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ *Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+
+
+Meeting ended at 17:05:40 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jsalisbury (24)
+ * bjf (19)
+ * ogasawara (19)
+ * apw (12)
+ * cking (6)
+ * ppisati (4)
+ * meetingology (3)
+ * sforshee (1)
+ * tgardner (1)
+ * henrix (1)
+
+
+
+== Full Log ==
+
+
+ 17:00:57 <jsalisbury> #startmeeting
+
+ 17:00:57 <meetingology> Meeting started Tue Apr  3 17:00:57 2012 UTC.  The chair is jsalisbury. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 17:00:57 <meetingology> 
+
+ 17:00:57 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 17:00:57 <jsalisbury> ##
+
+ 17:00:57 <jsalisbury> ## This is the Ubuntu Kernel Team weekly status meeting.
+
+ 17:00:57 <jsalisbury> ##
+
+ 17:00:57 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/Meeting
+
+ 17:00:58 <jsalisbury> [LINK] https://wiki.ubuntu.com/KernelTeam/ReleaseStatus/Precise
+
+ 17:01:00 <jsalisbury> # Meeting Etiquette
+
+ 17:01:04 <jsalisbury> #
+
+ 17:01:08 <jsalisbury> # NOTE: '..' indicates that you are finished with your input.
+
+ 17:01:10 <jsalisbury> #       'o/' indicates you have something to add (please wait until you are recognized)
+
+ 17:01:11 <tgardner> o/
+
+ 17:01:12 <jsalisbury> Roll Call for Ubuntu Kernel Weekly Status Meeting
+
+ 17:01:13 <cking> o/
+
+ 17:01:14 <apw> o/
+
+ 17:01:15 <henrix> o/
+
+ 17:01:16 <sforshee> o/
+
+ 17:01:17 <ppisati> o/
+
+ 17:01:20 <ogasawara> o/
+
+ 17:01:35 <jsalisbury> [TOPIC] ARM Status (ppisati)
+
+ 17:01:37 <ppisati> P/omap4: mainly config changes trying to mimic master/generic config as much as possible. The dss/video issue (lp963512) found in the previous rebase is still unresolved (waiting for a new panda board since my own broke down exactly the day after the issue came up) - for the time being (kernel freeze) we are gonna stay with 3.2.0-1411.14 as it is good and no one complained about it, but as soon as i get the new board, it'll be a
+
+ 17:01:44 <ppisati> lp971091 ("Pandaboard ES freezes with the default CPU scaling governor ondemand"): i'm investigating this one with the reporter (sending debug kernels&c).
+
+ 17:01:47 <ppisati> ..
+
+ 17:02:04 <jsalisbury> [TOPIC] Release Metrics and Incoming Bugs (jsalisbury)
+
+ 17:02:05 <jsalisbury> Release metrics and incoming bug data can be reviewed at the following link:
+
+ 17:02:06 <jsalisbury> [LINK] http://people.canonical.com/~kernel/reports/kt-meeting.txt
+
+ 17:02:13 <jsalisbury> ..
+
+ 17:02:16 <jsalisbury> [TOPIC] Milestone Targeted Work Items (ogasawara)
+
+ 17:02:19 <ogasawara> [LINK] http://status.ubuntu.com/ubuntu-precise/canonical-kernel-distro-team-ubuntu-12.04.html
+
+ 17:02:19 <ogasawara> || apw       || hardware-p-kernel-delta-review         || 1 work item  ||
+
+ 17:02:19 <ogasawara> || ogasawara || hardware-p-kernel-config-review        || 1 work item  ||
+
+ 17:02:19 <ogasawara> ||           || hardware-p-kernel-versions-and-flavors || 2 work items ||
+
+ 17:02:19 <ogasawara> apw and I are aware of our work items, we'll get them closed before final.
+
+ 17:02:19 <ogasawara> ..
+
+ 17:02:42 <jsalisbury> [TOPIC] Blueprint: hardware-p-kernel-power-management (cking)
+
+ 17:02:45 <cking> Power management:
+
+ 17:02:46 <cking> * Unity 2D vs 3D on Precise Beta 2 measurements
+
+ 17:02:46 <cking> http://zinc.canonical.com/~cking/power-benchmarking/unity-beta2-results
+
+ 17:02:46 <cking> And that wraps up these Blueprint items for Precise.
+
+ 17:02:46 <cking> ..
+
+ 17:03:10 <jsalisbury> [TOPIC] Status: Precise Development Kernel (ogasawara)
+
+ 17:03:15 <ogasawara> Kernel Freeze is this Thurs Apr 5.  I've already began prepping our
+
+ 17:03:15 <ogasawara> final upload prior to freeze and plan to upload after the meeting.  If
+
+ 17:03:15 <ogasawara> they are any patches which need to land, let us know immediately.  After
+
+ 17:03:15 <ogasawara> Kernel Freeze, all patches are subject to our SRU policy and uploads
+
+ 17:03:15 <ogasawara> will only be granted at the discression of the release team.
+
+ 17:03:16 <ogasawara> https://wiki.ubuntu.com/Kernel/Dev/StablePatchFormat
+
+ 17:03:29 <ogasawara> Important upcoming dates:
+
+ 17:03:29 <ogasawara> * Thurs Apr 5 - Kernel Freeze (~2 days)
+
+ 17:03:29 <ogasawara> * Thurs Apr 12 - Final Freeze (~1 week)
+
+ 17:03:29 <ogasawara> * Thurs Apr 19 - Release Candidate (~2 weeks)
+
+ 17:03:29 <ogasawara> * Thurs Apr 26 - Final Release (~3 weeks)
+
+ 17:03:30 <ogasawara> ..
+
+ 17:04:00 <jsalisbury> [TOPIC] Status: CVE's (apw)
+
+ 17:04:09 <apw> Currently we have 72 CVEs on our radar, with one new CVE added this week.
+
+ 17:04:10 <apw> See the CVE matrix for the current list:
+
+ 17:04:11 <apw> 
+
+ 17:04:12 <apw> [LINK] http://people.canonical.com/~kernel/cve/pkg/ALL-linux.html
+
+ 17:04:13 <apw> 
+
+ 17:04:14 <apw> Overall the backlog has increased by one CVE this week:
+
+ 17:04:15 <apw> 
+
+ 17:04:16 <apw> [LINK] http://people.canonical.com/~kernel/status/cve-metrics.txt
+
+ 17:04:17 <apw> [LINK] http://people.canonical.com/~kernel/cve/pkg/CVE-linux.txt
+
+ 17:04:18 <apw> 
+
+ 17:04:19 <apw> ..
+
+ 17:04:31 <jsalisbury> [TOPIC] Status: Stable, Security, and Bugfix Kernel Updates - Oneiric/Natty/Maverick/Lucid/Hardy (bjf/herton)
+
+ 17:04:35 <bjf> Here is the status for the main kernels, until today (Apr. 03):
+
+ 17:04:35 <bjf> 
+
+ 17:04:36 <bjf> * Hardy    - 2.6.24-31.101 - Nothing this cycle
+
+ 17:04:37 <bjf> * Lucid    - 2.6.32-41.88  - Verification; 52 commits in total.
+
+ 17:04:38 <bjf> * Maverick - 2.6.35-32.68  - Verification; 9 commits in total. NOTE: THIS IS THE LAST MAVERICK KERNEL!
+
+ 17:04:39 <bjf> * Natty    - 2.6.38-14.58  - Verification; 12 commits in total. Mostly eCryptfs and KVM.
+
+ 17:04:40 <bjf> * Oneiric  - 3.0.0-17.30   - Verification; 4 stable upstream releases (194 commits).
+
+ 17:04:41 <bjf> 
+
+ 17:04:42 <bjf> Current opened tracking bugs details:
+
+ 17:04:43 <bjf> * http://people.canonical.com/~kernel/reports/kernel-sru-workflow.html
+
+ 17:04:44 <bjf> 
+
+ 17:04:45 <bjf> For SRUs, SRU report is a good source of information:
+
+ 17:04:46 <bjf> * http://people.canonical.com/~kernel/reports/sru-report.html
+
+ 17:04:47 <bjf> 
+
+ 17:04:48 <bjf> Future stable cadence cycles:
+
+ 17:04:49 <bjf> * https://wiki.ubuntu.com/PrecisePangolin/ReleaseInterlock
+
+ 17:04:50 <bjf> Note: We are seeing some issues being reported for the Oneiric kernel. We
+
+ 17:04:51 <bjf> are hitting these as we become aware of them.
+
+ 17:04:52 <bjf> ..
+
+ 17:05:13 <jsalisbury> [TOPIC] Open Discussion or Questions? Raise your hand to be recognized (o/)
+
+ 17:05:39 <jsalisbury> Thanks everyone
+
+ 17:05:40 <jsalisbury> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

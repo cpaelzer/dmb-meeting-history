@@ -1,0 +1,462 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 28 Feb at 16:01 &mdash; 16:47 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-02-28-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:02.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 16:13.
+
+  * ''LINK:'' [LINK] http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs 
+
+=== proposed-migration ===
+The discussion about "proposed-migration" started at 16:25.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/disco/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:37.
+
+  * ''LINK:'' http://autopkgtest.ubuntu.com/packages/a/acl/disco/amd64 should not be a regression (on all archs)
+  * ''LINK:'' https://bugs.launchpad.net/britney/+bug/1818119 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (74)
+ * juliank (31)
+ * bdmurray (26)
+ * doko (23)
+ * waveform (11)
+ * rbalint (8)
+ * ubottu (8)
+ * cyphermox (8)
+ * meetingology (3)
+ * gaughen (3)
+ * sarnold (1)
+ * xnox (1)
+ * sil2100 (1)
+
+
+
+== Full Log ==
+
+
+ 16:01 <vorlon> #startmeeting
+
+ 16:01 <meetingology> Meeting started Thu Feb 28 16:01:44 2019 UTC.  The chair is vorlon. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:02 <vorlon> [TOPIC] Lightning round
+
+ 16:02 <vorlon> $ echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson juliank waveform)
+
+ 16:02 <vorlon> waveform juliank sil2100 vorlon tdaitx rbalint doko mwhudson bdmurray infinity cyphermox xnox
+
+ 16:02 <vorlon> waveform: hello
+
+ 16:03 <waveform> * stripped suid-root out of wiringpi; ready for submission
+
+ 16:03 <waveform> * finished testing port of pigpio to aarch64; DMA-driven PWM isn't going to work (for now), so leaving daemon out but the client libs can go in at least
+
+ 16:03 <waveform> * added fixes for networkd-wait-online degraded state to livecd-rootfs (worked on Pi3, still need to test on Pi2, Pi3+, and CM3)
+
+ 16:03 <waveform> * working on package(s) of pi-specific permission fixes (for I2C, SPI, and GPIO device nodes)
+
+ 16:03 <waveform> * testing package of bluetooth fixes from Martin Wimpress (pi-bluetooth in ppa:ubuntu-pi-flavour-makers/ppa)
+
+ 16:03 <waveform> * testing kernel fix from an Adam Smith ticket (LP: #1762835)
+
+ 16:03 <ubottu> Launchpad bug 1762835 in linux-raspi2 (Ubuntu) "Conflicting mmc modules built in" [Undecided,New] https://launchpad.net/bugs/1762835
+
+ 16:03 <waveform> (done)
+
+ 16:03 <vorlon> juliank:
+
+ 16:03 <juliank> some highlights from the sprint:
+
+ 16:03 <juliank> * fixed the remaining CI failures for proposed apt changes in git branches
+
+ 16:03 <juliank> * journals for autopkgtest cloud workers have custom journal fields now for filtering
+
+ 16:04 <juliank> apt(-ish):
+
+ 16:04 <juliank> * esm hook i18n, formatting improvements
+
+ 16:04 <juliank> * released 1.8.0~rc4
+
+ 16:04 <juliank> * removed deprecated code
+
+ 16:04 <juliank> * started writing a spec for the apt daemon
+
+ 16:04 <juliank> * some discussions with their respective upstreams about debconf client helpers and dpkg conffile prompts
+
+ 16:04 <juliank> livecd-rootfs:
+
+ 16:04 <juliank> * reviewed some changes for
+
+ 16:04 <juliank> * fixed livecd-rootfs to not mark deps of ubiquity as automatic (bug 1801629)
+
+ 16:04 <ubottu> bug 1801629 in ubiquity (Ubuntu Disco) "direct dependencies of ubiquity should not be autoremovable" [High,Triaged] https://launchpad.net/bugs/1801629
+
+ 16:04 <juliank> misc:
+
+ 16:04 <juliank> * post-sprint expensify
+
+ 16:04 <juliank> * tested a repo
+
+ 16:04 <juliank> (done)
+
+ 16:04 <vorlon> sil2100 not currently here
+
+ 16:05 <vorlon> * last week: Malta!
+
+ 16:05 <vorlon> * was out Monday, Wednesday for swap
+
+ 16:05 <vorlon> * finalizing ubuntu-drivers design for nvidia gpgpu handling
+
+ 16:05 <vorlon> * revving nvidia drivers for gke
+
+ 16:05 <vorlon> * thinking around tpms and FDE
+
+ 16:05 <vorlon> (done)
+
+ 16:05 <vorlon> tdaitx:
+
+ 16:05 <vorlon> tdaitx is out
+
+ 16:05 <vorlon> rbalint:
+
+ 16:06 <rbalint> (short week)
+
+ 16:06 <rbalint> * uploaded libcec 4.0.4+dfsg1-1, libnfs 3.0.0-2
+
+ 16:06 <rbalint> * first upload of waylandpp through Debian (in NEW)
+
+ 16:06 <rbalint> * merged sudo 1.8.27-1
+
+ 16:06 <rbalint> * verified unattended-upgrades SRUs
+
+ 16:06 <rbalint> * partner work
+
+ 16:06 <rbalint> (done)
+
+ 16:07 <bdmurray> sil2100: we skipped you earlier
+
+ 16:07 <sil2100> Thanks, I have no notes prepared anyway, will send them via e-mail
+
+ 16:07 <bdmurray> sil2100: are you prepared?
+
+ 16:07 <vorlon> doko:
+
+ 16:07 <doko> - came back home, had a BC upgrade to Munich ;-P
+
+ 16:07 <doko> - GCC 8.3 release, updated native and cross packages
+
+ 16:07 <doko> - gdb-8.2.90 (8.3)
+
+ 16:07 <doko> - openjdk-11 backporting work (~100 packages done, partially reviewed)
+
+ 16:07 <doko> - some more merges
+
+ 16:07 <doko> - openjdk-11 11.0.3 packaging
+
+ 16:07 <doko> - openjdk-12 packaging, first release tarball
+
+ 16:08 <doko> - finally the bionic test rebuilds for bionic are finished ...
+
+ 16:08 <doko> - preparing cosmic test rebuilds (main only). Updating GCC 8 in bionic requires an update in cosmic as well :-(
+
+ 16:08 <doko> (done)
+
+ 16:09 <vorlon> bdmurray:
+
+ 16:09 <bdmurray> oh, hey!
+
+ 16:09 <bdmurray> investigation into ET mojo spec failing in jenkins (not my fault!)
+
+ 16:09 <bdmurray> investigation into apport-retrace failures w/ disco, due in part to glibc in -proposed
+
+ 16:09 <bdmurray> tested retracing crashes w/o -proposed enabled
+
+ 16:09 <bdmurray> ran apport-retrace w/o -proposed against retrace failures in LP
+
+ 16:09 <bdmurray> submitted MP for lp-retracer-configs not to enable -proposed for disco in sources
+
+ 16:09 <bdmurray> wrote LP API code to request a recipe build of a package
+
+ 16:09 <bdmurray> uploaded distro-info and distro-info-data to Disco fixing (LP: #1814976, #1808038)
+
+ 16:09 <ubottu> Launchpad bug 1814976 in distro-info-data (Ubuntu) "eol-server dates are empty for current LTS releases" [Low,Fix released] https://launchpad.net/bugs/1814976
+
+ 16:09 <ubottu> Launchpad bug 1808038 in distro-info-data (Ubuntu) "ubuntu-distro-info should include information about ESM status" [Medium,Fix released] https://launchpad.net/bugs/1808038
+
+ 16:09 <bdmurray> worked on backlog of Ubuntu 18.04 SRUs
+
+ 16:09 <bdmurray> special SRU review of docker.io for mwh
+
+ 16:09 <bdmurray> tested NUC with Disco iso again after changing SATA mode
+
+ 16:09 <bdmurray> ✔ done
+
+ 16:09 <bdmurray> cyphermox:
+
+ 16:11 <bdmurray> xnox: ?
+
+ 16:11 <cyphermox> I'm here
+
+ 16:11 <cyphermox> sorry
+
+ 16:11 <xnox> away
+
+ 16:11 <cyphermox> - netplan: 0.96; fixing autopkgtests and varia
+
+ 16:11 <cyphermox> - grub merge of doom; mostly done now, testing
+
+ 16:11 <cyphermox> (done)
+
+ 16:11 <vorlon> bdmurray: ET mojo spec> eastern time? extra terrestrial?
+
+ 16:12 <bdmurray> ET is short for Error Tracker
+
+ 16:12 <vorlon> well
+
+ 16:12 <vorlon> error tracker phone home
+
+ 16:12 <bdmurray> at least in my jargon
+
+ 16:12 <vorlon> and xnox is away
+
+ 16:12 <vorlon> any other questions on status?
+
+ 16:13 <vorlon> [TOPIC] Bugs
+
+ 16:13 <vorlon> bdmurray:
+
+ 16:14 <bdmurray> Should we target bug 1814072 for Disco?
+
+ 16:14 <ubottu> bug 1814072 in software-properties (Ubuntu) "software-properties-gtk does not recognize https mirrors under Ubuntu Software" [Undecided,Confirmed] https://launchpad.net/bugs/1814072
+
+ 16:14 <bdmurray> They also mention "deb mirror+" not working and I saw a similar u-r-u bug about that
+
+ 16:16 <vorlon> [LINK][LINK] http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs
+
+ 16:16 <vorlon> [LINK] http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs
+
+ 16:16 <vorlon> LP: #1814072
+
+ 16:16 <vorlon> do we now have official https mirrors?
+
+ 16:16 <ubottu> Launchpad bug 1814072 in software-properties (Ubuntu) "software-properties-gtk does not recognize https mirrors under Ubuntu Software" [Undecided,Confirmed] https://launchpad.net/bugs/1814072
+
+ 16:17 <bdmurray> bug 1813354 is the u-r-u one I was thinking of
+
+ 16:17 <ubottu> bug 1813354 in ubuntu-release-upgrader (Ubuntu) "release-upgrader unable to deal with sources.list entries of "deb mirror://"" [Medium,Confirmed] https://launchpad.net/bugs/1813354
+
+ 16:17 <juliank> That's so true!
+
+ 16:17 <juliank> I use mirror+file:/// and upgrades are odd
+
+ 16:17 <bdmurray> juliank: the deb mirror: part?
+
+ 16:17 <juliank> yeah
+
+ 16:18 <juliank> FWIW, we now have mirror, mirror+http, mirror+https, and mirror+file
+
+ 16:19 <vorlon> ok, but are those something we are directing users to?
+
+ 16:20 <vorlon> I don't think it's a bug to be targeted if it only affects users who are trying to use an apt feature we don't recommend / guide users towards
+
+ 16:20 <bdmurray> vorlon: are you asking if official instructions tell people how to use that?
+
+ 16:20 <vorlon> yes
+
+ 16:20 <bdmurray> okay, that's fair. I'll have a look.
+
+ 16:20 <bdmurray> that's it from me then
+
+ 16:21 <juliank> The mirrors.txt is certainly hosted on mirrors.ubuntu.com
+
+ 16:21 <juliank> But I'm not sure how far it went
+
+ 16:21 <vorlon> well http://mirrors.ubuntu.com/mirrors.txt contains the single line http://archive.ubuntu.com/ubuntu/
+
+ 16:22 <vorlon> :)
+
+ 16:22 <juliank> vorlon: no...
+
+ 16:22 <juliank> vorlon: it depends on where you are accessing it from
+
+ 16:22 <vorlon> are you sure?
+
+ 16:22 <juliank> vorlon: I get 36 mirrors in germany in there
+
+ 16:22 <vorlon> ah
+
+ 16:22 <juliank> And apt can download from them in parallel
+
+ 16:23 <vorlon> ok, so at this point I still don't think that's a bug to be targeted
+
+ 16:23 <sarnold> TIL our mirrors.txt is much more advanced than I expected :)
+
+ 16:23 <vorlon> but seems we should put it on backlog to investigate
+
+ 16:23 <juliank> probably just a missing line in Ubuntu.mirrors in python-apt
+
+ 16:24 <vorlon> (the sheer number of different load balancers that have existed over the years in Debian has been problematic)
+
+ 16:24 <vorlon> bdmurray: other bugs?
+
+ 16:24 <bdmurray> vorlon: not today
+
+ 16:25 <vorlon> [TOPIC] proposed-migration
+
+ 16:25 <vorlon> [LINK] http://people.canonical.com/~ubuntu-archive/proposed-migration/disco/update_excuses_by_team.html#foundations-bugs
+
+ 16:26 <vorlon> pillow, still blocked by an MIR
+
+ 16:26 <vorlon> someone want to investigate curl?
+
+ 16:27 <rbalint> i take it
+
+ 16:27 <vorlon> rbalint: thanks
+
+ 16:27 <cyphermox> I'd like to look at util-linux and keyutils.
+
+ 16:27 <waveform> I'll take sphinx/mu-editor
+
+ 16:28 <vorlon> fwupd-signed, just needs unapproved processing
+
+ 16:28 <cyphermox> yup
+
+ 16:28 <vorlon> (and also an MIR)
+
+ 16:28 <vorlon> cyphermox: I've filed a bug in Debian about keyutils fwiw
+
+ 16:28 <cyphermox> ah ok
+
+ 16:28 <vorlon> elfutils
+
+ 16:28 <vorlon> ?
+
+ 16:29 <doko> cross-toolchain-base-mipsen times out depending on the machine
+
+ 16:29 <doko> so hit retry until it succeeds
+
+ 16:29 <vorlon> "depending on the machine" - all the machines are VMs in the same cloud?
+
+ 16:30 <vorlon> I'll retry those and see where we get to
+
+ 16:30 <doko> or ignore, without version, I don't care. are they?
+
+ 16:30 <vorlon> (so, I'm claiming elfutils)
+
+ 16:30 <vorlon> ignore without version> no, drop your tests if they're broken?
+
+ 16:30 <doko> remember the 12h build in the past?
+
+ 16:30 <doko> you wanted to have a look
+
+ 16:31 <vorlon> I still have a tab open about that
+
+ 16:31 <doko> attr is done
+
+ 16:31 <vorlon> lxml?
+
+ 16:32 <vorlon> juliank: ?
+
+ 16:33 <juliank> those do look interesting
+
+ 16:35 <juliank> python-mechanicalsoup should be easy, tryton-server a bit more difficult, but I can have a look
+
+ 16:35 <vorlon> ok, I think that covers everything (and glibc is infinity+doko)
+
+ 16:35 <waveform> juliank, tryton-server just looks like it's missing a build-dep on libeatmydata, no?
+
+ 16:36 <gaughen> juliank, waveform please create cards if it's not trivial so we don't lose who signed up :-)
+
+ 16:36 <waveform> ah, no - I see it
+
+ 16:36 <juliank> there's some segfault
+
+ 16:36 <waveform> yup
+
+ 16:37 <juliank> but there's also a dependency issue, as the test deps could not be satisfied
+
+ 16:37 <vorlon> ah makedumpfile/i386, failing with some goofiness wrt /tmp being nuked in the test image
+
+ 16:37 <vorlon> well anyway, I'll follow up
+
+ 16:37 <vorlon> [TOPIC] AOB
+
+ 16:37 <vorlon> anything else?
+
+ 16:38 <gaughen> no
+
+ 16:38 <gaughen> although I do want to hear about the point release
+
+ 16:38 <doko> http://autopkgtest.ubuntu.com/packages/a/acl/disco/amd64 should not be a regression (on all archs)
+
+ 16:39 <vorlon> doko: I'll add an override hint, can you also file a bug against https://bugs.launchpad.net/britney ?
+
+ 16:41 <doko> ok
+
+ 16:41 <doko> and any idea about https://launchpadlibrarian.net/413137639/buildlog_ubuntu-disco-amd64.libcolt-free-java_1.2.0+dfsg-6build4_BUILDING.txt.gz ?
+
+ 16:41 <doko> the sed command is failing, some locale issue? cannot yet reproduce it locally
+
+ 16:41 <vorlon> well, the error seems accurate enough, that's not a UTF-8 character
+
+ 16:42 <vorlon> it's iso8859-1 encoded
+
+ 16:42 <doko> yes, and the sed tries to replace it
+
+ 16:42 <vorlon> ah
+
+ 16:43 <vorlon> there's been a new sed since the last time libcolt-free-java built
+
+ 16:43 <vorlon> does this show up in rebuild tests?
+
+ 16:44 <doko> it works locally
+
+ 16:44 <vorlon> failed in the cosmic rebuild with this error but not in the bionic rebuild in July
+
+ 16:45 <doko> https://bugs.launchpad.net/britney/+bug/1818119
+
+ 16:45 <ubottu> Launchpad bug 1818119 in britney "britney handles autopkg transition "neutral" -> "fail" as a regression" [Undecided,New]
+
+ 16:45 <vorlon> perhaps the output of the file command changed
+
+ 16:45 <vorlon> anyway, to answer your actual question: no I don't have any (concrete) ideas
+
+ 16:45 <vorlon> but we can continue poking at it post-meeting
+
+ 16:45 <vorlon> anything else?
+
+ 16:47 <vorlon> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,352 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by pitti at 20:07:53 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-05-13-20.07.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *action review
+''LINK:'' https://wiki.ubuntu.com/TechnicalBoard/TeamReports/April doesn't exist  (pitti, 20:08:50)
+
+ *SRU request for custom unity-greeter indicators
+
+ *openssl as a system library
+
+ *SRU approved without waiting in unapproved
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-May/001615.html   (pitti, 20:26:00)
+''ACTION:'' pitti to start ubuntu-sru delay discussion by email  (pitti, 20:29:16)
+
+ *brain storm review
+''LINK:'' http://netsplit.com/2008/02/28/ubuntu-brainstorm-announced/   (soren, 20:37:18)
+
+ *Scan the mailing list archive for anything we missed
+
+ *community bugs
+
+ *chair for next meeting
+
+ *AOB
+
+
+
+Meeting ended at 20:45:22 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * pitti to start ubuntu-sru delay discussion by email
+
+
+
+== Action items, by person ==
+
+ * pitti
+ ** pitti to start ubuntu-sru delay discussion by email
+
+
+
+== People present (lines said) ==
+
+ * pitti (69)
+ * soren (32)
+ * stgraber (20)
+ * jcastro (10)
+ * meetingology (4)
+ * balloons (4)
+
+
+
+== Full Log ==
+
+
+ 20:07:53 <pitti> #startmeeting
+
+ 20:07:53 <meetingology> Meeting started Mon May 13 20:07:53 2013 UTC.  The chair is pitti. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:07:53 <meetingology> 
+
+ 20:07:53 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 20:08:05 <pitti> #topic action review
+
+ 20:08:28 * pitti looks for "See previous meeting "
+
+ 20:08:50 <pitti> https://wiki.ubuntu.com/TechnicalBoard/TeamReports/April doesn't exist
+
+ 20:09:09 <pitti> nor https://wiki.ubuntu.com/TechnicalBoard/TeamReports/13/April
+
+ 20:09:24 <pitti> assuming "no actions"; stgraber, soren, do you remember any?
+
+ 20:09:50 <soren> I don't even remember whether I was there :-/
+
+ 20:10:02 <pitti> #topic SRU request for custom unity-greeter indicators
+
+ 20:10:10 <pitti> (mopping up mailing list now)
+
+ 20:10:34 <pitti> I already replied on the ML; soren, stgraber, do you have any objections/points to discuss ther?
+
+ 20:10:36 <pitti> e
+
+ 20:10:51 <soren> No, I've got half a reply written up already anyway.
+
+ 20:11:04 <stgraber> pitti: last meeting was 10min long, no action and no agenda
+
+ 20:11:30 <stgraber> pitti: I'm fine with discussing on the mailing-list
+
+ 20:11:55 <pitti> formally, one ack is enough anyway, but more opinions can't hurt
+
+ 20:12:06 <pitti> #topic openssl as a system library
+
+ 20:12:45 <pitti> TBH, I read the mail and half of Colin's reply, but I must say this legal mock attacking is slightly beyond me :/
+
+ 20:13:47 <pitti> I find the Debian stanza way too extreme; I consider this incompatibility a bug, it has obviously not been designed to exclude free software from using each other; but I have no legally sound counterarguments
+
+ 20:15:03 <soren> Fedora considers it a system library, right?
+
+ 20:15:20 <pitti> yes
+
+ 20:15:23 <soren> Or did I misunderstand that somehow?
+
+ 20:15:23 <soren> Ok.
+
+ 20:16:07 <pitti> this is exactly the kind of legal loophole which indicates to me that this whole conflict is just an unintended side effect (aka bug) of the two licenses
+
+ 20:16:19 <soren> I've been inclined to agree, but ISTR Colin having sound arguments against it.
+
+ 20:16:34 <pitti> I'm curious whether there has been any actual uproar from OpenSSL's upstreams about linking with GPL programs
+
+ 20:16:35 <stgraber> pitti: oh actually my statement that the past meeting was 10min long and without action/agenda was wrong, that was the one before last. Last meeting was during the Canonical sprint and did happen, though it looks like Colin didn't get to post the minutes.
+
+ 20:17:02 <soren> Well, the conflict between the licenses it pretty clear.
+
+ 20:17:26 <pitti> I wouldn't like to come to a conclusion about this without cjwatson, so I propose to move that to the next meeting and/or email
+
+ 20:17:42 <soren> GPL clearly says that you can't put forth further restrictions, while the OpenSSL license says that you must include some notice about it being used.
+
+ 20:18:10 <stgraber> so based on what I saw on the mailing-lists and discussed in person with cjwatson last week, it sounds like squid may be a case where it's fine to allow linking with SSL on the basis that upstream is fine with this but can't reach all copyright holders to add the exception
+
+ 20:18:28 <pitti> soren: yes, but the GPL itself enforces the mentioning of the license/copyright of the program, so in practice it's the very same "restriction"
+
+ 20:18:41 <stgraber> for the other one (mongo I believe), IIRC upstream clearly stated in the bug report that they're not willing to change the license and that someone should contact their legal or sales department
+
+ 20:18:58 <stgraber> which makes it sound like this is a case where we really shouldn't let it link against SSL
+
+ 20:19:02 <pitti> so forcing distributors to mention the GPL and copyright while denying it to software using different FOSS licenses doesn't make sense
+
+ 20:19:51 <pitti> stgraber: yes, I know; as I said, I have no firm legal arguments against that, but it still feels just plain stupid and against the spirit of the licenses
+
+ 20:20:05 <pitti> cf. bug in the licenses
+
+ 20:20:08 <soren> pitti: IIRC, GPL doesn't force you to do that. It says "should", doesn't it?
+
+ 20:20:56 <soren> pitti: It doesn't even do that.
+
+ 20:21:18 <pitti> it is a must clause for interactive programs at least
+
+ 20:21:24 <soren> pitti: It says that that's how you apply the license to your program. It's not a requirement of the license itself.
+
+ 20:23:21 <soren> They're instructions for licensors.
+
+ 20:23:22 <stgraber> anyway, I agree with pitti that we definitely want to have cjwatson present before we make a decision on this, so should probably defer to the next meeting (unless we can come to an agreement on the mailing-list)
+
+ 20:23:22 <pitti> well, how is "applying a license to a program" any different than "the license itself"
+
+ 20:23:25 <soren> Not requirements of the licensee.
+
+ 20:24:01 <pitti> ok, so let's carry this to the next meeting then, I'll put it on the agenda
+
+ 20:24:09 <soren> Very well.
+
+ 20:24:26 <pitti> #topic SRU approved without waiting in unapproved
+
+ 20:24:30 <pitti> that was Riddell's request
+
+ 20:24:36 <pitti> I responded by email already
+
+ 20:25:00 <soren> Yo did?
+
+ 20:25:00 <pitti> in short, I'd consider it an invalid workaround for long SRU waiting queues, and replacing one problem with a much worse one
+
+ 20:25:13 <soren> I didn't see a response from you. Not that I recall at least.
+
+ 20:25:20 <soren> Nope.
+
+ 20:25:21 <soren> Nothing.
+
+ 20:25:21 <pitti> oh?
+
+ 20:25:39 <pitti> Date: Fri, 10 May 2013 13:25:48 +0200
+
+ 20:25:41 <pitti> From: Martin Pitt <martin.pitt@ubuntu.com>
+
+ 20:25:42 <stgraber> I see it
+
+ 20:25:48 <soren> orly?
+
+ 20:25:51 <soren> Weird.
+
+ 20:26:00 <pitti> https://lists.ubuntu.com/archives/technical-board/2013-May/001615.html
+
+ 20:26:25 <soren> Never received that. How odd.
+
+ 20:26:39 <stgraber> I agree that we have one problem which is the time it takes for something to hit -proposed but the way to fix that is with more people looking at the queue not by bypassing it
+
+ 20:26:44 <pitti> anyway, if anything I think this should be discussed with the SRU team instead of circumventing peer review
+
+ 20:27:50 <pitti> yeah, the turnaround should not exceed half or perhaps one week
+
+ 20:28:39 <pitti> I'll mail the SRU team and discuss with them, with TB in CC:
+
+ 20:28:59 <stgraber> sounds good
+
+ 20:29:16 <pitti> #action pitti to start ubuntu-sru delay discussion by email
+
+ 20:29:16 * meetingology pitti to start ubuntu-sru delay discussion by email
+
+ 20:29:30 <pitti> #topic brain storm review
+
+ 20:29:33 <pitti> it's May again
+
+ 20:30:01 <pitti> but I think the last round already showed that there is very little interest from developers in this
+
+ 20:31:27 <pitti> we just got some five responses, and none of them resulted in anything actionable AFAIR
+
+ 20:31:36 * pitti tries to check wiki, but it currently times out
+
+ 20:32:48 <pitti> does someone volunteer to do another round? or should we just bin this, as it has by and large been replaced with design driven development anyway these days?
+
+ 20:33:23 <stgraber> I think it's time to bin this
+
+ 20:33:35 <soren> If we do stop doing it, we should probably close brainstorm as well.
+
+ 20:34:06 <soren> Otherwise, it's just going to be where ideas go to die.
+
+ 20:34:15 <soren> Even moreso than it was before.
+
+ 20:34:20 <pitti> comparing the absolute numbers of voters from my december 2012 review to the ones I saw a year or two before that also showed radical decline of users
+
+ 20:34:22 <stgraber> I'd be pretty happy with that considering nobody maintains it anyway and bug reports are piling up (it's on a very old Drupal version, full of bugs and requires quite a lot of work to be ported to something supported)
+
+ 20:34:55 <pitti> ack
+
+ 20:36:01 <pitti> ok, so we agree on that: stop brainstorm reviews and brainstorm itself
+
+ 20:36:12 <stgraber> yep
+
+ 20:36:13 <soren> Can we even make that decision?
+
+ 20:36:19 <soren> (the latter, I mean)
+
+ 20:36:26 <pitti> well, we can at least propose it
+
+ 20:36:34 <pitti> not sure who "owns" that
+
+ 20:36:38 * soren neither
+
+ 20:36:41 <pitti> that = brainstorm.u.c.
+
+ 20:36:48 <soren> probably the CC.
+
+ 20:36:53 <stgraber> well, I'm probably as close to an owner as can be for brainstorm (having started the project and being the only one still vaguely around)
+
+ 20:36:55 <pitti> yeah, good point; I'll mail them
+
+ 20:37:09 <soren> Nope.
+
+ 20:37:15 <soren> Ubuntu QA set it up, apparently.
+
+ 20:37:18 <soren> http://netsplit.com/2008/02/28/ubuntu-brainstorm-announced/
+
+ 20:37:44 <stgraber> soren: correct, brainstorm was initially part of the same service as the QA tracker
+
+ 20:37:54 <pitti> ah, Ubuntu community QA -- ok, I'll forward the proposal to balloons then
+
+ 20:38:06 <pitti> balloons: if you are online, do you have a gut feeling about the fate of brainstorm.u.c.?
+
+ 20:38:29 * balloons floats in
+
+ 20:38:35 <stgraber> anyway, AFAIK I'm the only admin left for brainstorm and the only few times I logged in recently was to purge some data after IS assigned me some tickets
+
+ 20:39:06 <jcastro> I can take the item to close it/sunset it
+
+ 20:39:13 <jcastro> it was assigned to me a while back
+
+ 20:39:31 <jcastro> and everyone who set it up that I used to work with is gone
+
+ 20:40:30 <pitti> jcastro: it seems both developers and most users have lost their interest in it (not that surprising given how the design process of Ubuntu changed over the years)
+
+ 20:40:36 <jcastro> yeah
+
+ 20:40:41 <jcastro> it's always been an odd site
+
+ 20:40:43 <balloons> pitti, jcastro and stgraber are correct.. It's a nest of unmaintainedness
+
+ 20:40:54 * balloons notes that's not a word
+
+ 20:40:57 <jcastro> so how do I go about doing this, propose on -devel and go from there?
+
+ 20:41:02 <stgraber> jcastro: right, I just had a quick look at when the other admin logged in and they clearly don't seem very active ;) nand logged in 28 weeks ago so I'm apparently the most active admin with 3 logins this year ;)
+
+ 20:41:07 <pitti> jcastro, balloons: ok, seems we all agree then; can we hand stgraber or you the task to shut it down?
+
+ 20:41:17 <jcastro> yeah
+
+ 20:41:28 <jcastro> I'll take the task, stgraber has more important things to do. :)
+
+ 20:41:33 <pitti> heh
+
+ 20:41:36 <pitti> thank you
+
+ 20:41:40 <balloons> we'll need to mention the proper avenues to push ideas.. aka, join in UDS, mailing lists, etc
+
+ 20:41:42 * soren hugs jcastro
+
+ 20:41:44 <pitti> #topic Scan the mailing list archive for anything we missed
+
+ 20:41:49 <pitti> did I miss anything?
+
+ 20:41:49 <jcastro> balloons: yeah I'll handle all of that.
+
+ 20:41:55 <stgraber> jcastro: thanks! let me know if you need any detail on how to actually kill that thing (if we need to extract/archive any data from it)
+
+ 20:42:16 <jcastro> stgraber: I'd like to see if we can do a readonly dump of it or something, I'll ask IS
+
+ 20:43:14 <pitti> #topic community bugs
+
+ 20:43:16 <pitti> zarro
+
+ 20:43:21 <pitti> #topic chair for next meeting
+
+ 20:43:28 <pitti> carrying over cjwatson?
+
+ 20:43:40 <pitti> #topic AOB
+
+ 20:43:45 <stgraber> no, he chaired the last meeting
+
+ 20:43:49 <stgraber> (during the sprint)
+
+ 20:43:49 <pitti> oh, ok; kees then
+
+ 20:44:45 <pitti> un
+
+ 20:44:53 <pitti> deux
+
+ 20:45:05 <pitti> trois
+
+ 20:45:17 <pitti> le fin
+
+ 20:45:22 <pitti> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

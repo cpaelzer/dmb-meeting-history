@@ -1,0 +1,853 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 03 Feb at 16:00 &mdash; 16:47 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-02-03-16.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 16:00.
+
+ * ''LINK:'' https://code.launchpad.net/~slyon/ubuntu-seeds/+git/platform/+merge/414794   (slyon, 16:05)
+ * ''LINK:'' https://lists.ubuntu.com/archives/ubuntu-devel/2022-January/041819.html   (slyon, 16:05)
+ * ''LINK:'' https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/412634   (slyon, 16:05)
+ * ''LINK:'' https://github.com/canonical/netplan/pull/258   (slyon, 16:05)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 16:13.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 16:13)
+ * ''LINK:'' https://launchpad.net/ubuntu/+source/llvm-toolchain-12/1:12.0.1-19ubuntu1   (doko, 16:14)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 16:22.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (schopin, 16:23)
+
+=== AOB ===
+
+Discussion started by bdmurray at 16:40.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (66)
+ * jawn-smith (59)
+ * ubottu (50)
+ * schopin (30)
+ * sil2100 (30)
+ * slyon (29)
+ * ahasenack (24)
+ * dbungert (15)
+ * doko (15)
+ * waveform (14)
+ * ogayot (11)
+ * xypron (10)
+ * ginggs (8)
+ * enr0n (7)
+ * sergiodj (7)
+ * juliank (6)
+ * alexghiti (4)
+ * alexghiti5 (4)
+ * meetingology (2)
+ * kanashiro (1)
+
+
+
+== Full log ==
+
+
+ 16:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:00 <meetingology> Meeting started at 16:00:04 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:00 <bdmurray> #topic Lightning Round
+
+ 16:00 * bdmurray does the shuffle
+
+ 16:00 <bdmurray> schopin juliank dbungert jawn-smith bdmurray slyon xypron ginggs mwhudson sil2100 enr0n ogayot vorlon alexghiti waveform doko
+
+ 16:00 <bdmurray> schopin:
+
+ 16:01 <schopin> * netplan:
+
+ 16:01 <schopin> + Partially addressed the first round of review on #254
+
+ 16:01 <schopin> -> PyYAML is too lenient for its own good :-/
+
+ 16:01 <schopin> + Merged PR 202
+
+ 16:01 <schopin> + Fixed a latent bug introduced by 202 in PR 257
+
+ 16:01 <schopin> + Reviewed and merged PR 258 by slyon fixing a `netplan get` regression
+
+ 16:01 <schopin> * openssl:
+
+ 16:01 <schopin> + Patched lua-luaossl (LP: #1959426) and backported a patch for haskell-hsopenssl (LP: #1959572)
+
+ 16:01 <ubottu> Launchpad bug 1959426 in lua-luaossl (Ubuntu) "lua-luaossl: FTBFS against OpenSSL 3.0" [Undecided, Fix Released] https://launchpad.net/bugs/1959426
+
+ 16:01 <schopin> + NBS: sponsored hydra for dbungert
+
+ 16:01 <ubottu> Launchpad bug 1959572 in haskell-hsopenssl (Ubuntu) "glirc: FTBFS against OpenSSL 3.0" [Undecided, Fix Committed] https://launchpad.net/bugs/1959572
+
+ 16:01 <schopin> + NBS: fixed h2o ruby 3.0 compat to get it migrating
+
+ 16:01 <schopin> + NBS: massaged debcargo into the release pocket along with a good chunk of the Rust ecosystem
+
+ 16:01 <schopin> + Asked a RM for tpm2-tss-engine, and looked into tpm2-openssl for potential inclusion in the archive (currently in Debian NEW). Related: LP: #1959414, LP: #1959901, LP: #1958439, https://bugs.debian.org/1004491
+
+ 16:01 <schopin> * rust:
+
+ 16:01 <ubottu> Launchpad bug 1959414 in tpm2-tss-engine (Ubuntu) "Please remove tpm2-tss-engine from Jammy" [Undecided, New] https://launchpad.net/bugs/1959414
+
+ 16:01 <ubottu> Launchpad bug 1959901 in Ubuntu "[needs-packaging] tpm2-openssl" [Undecided, New] https://launchpad.net/bugs/1959901
+
+ 16:01 <schopin> + worked a bit more on the MIR, which just had the first round of review (LP: #1957932)
+
+ 16:01 <ubottu> Launchpad bug 1958439 in tpm2-tools (Ubuntu) "tpm2-tss: builds against OpenSSL 3.0, but fails on execution" [Undecided, New] https://launchpad.net/bugs/1958439
+
+ 16:01 <ubottu> Debian bug 1004491 in wnpp "ITP: tpm2-openssl -- OpenSSL 3 engine for tpm2-tss" [Wishlist, Open]
+
+ 16:01 <schopin> * various:
+
+ 16:01 <ubottu> Launchpad bug 1957932 in rustc (Ubuntu) "[MIR] rustc, cargo" [Critical, Incomplete] https://launchpad.net/bugs/1957932
+
+ 16:01 <schopin> + worked on sponsoring libica for fheimes (still WIP) LP: #1959421
+
+ 16:01 <ubottu> Launchpad bug 1959421 in libica (Ubuntu) "[22.04 FEAT] Upgrade libica to latest version (crypto) (v4.0)" [High, In Progress] https://launchpad.net/bugs/1959421
+
+ 16:01 <schopin> + sponsored aiocoap for xypron (LP: #1959315)
+
+ 16:01 <ubottu> Launchpad bug 1959315 in aiocoap (Ubuntu) "autopackage tests fail" [Undecided, Fix Committed] https://launchpad.net/bugs/1959315
+
+ 16:01 <schopin> + patched bpython for python3.10 compatibility
+
+ 16:01 <schopin> ✓ done
+
+ 16:01 <bdmurray> juliank:
+
+ 16:02 <juliank> * grub2 upstream work
+
+ 16:02 <juliank> * released apt 2.3.15
+
+ 16:02 <juliank> * some discussions about deb822 sources.list by default, Debian docker images
+
+ 16:02 <juliank> * reviewing grub2 riscv64 work from xypron
+
+ 16:02 <juliank> (done ish)
+
+ 16:02 <dbungert> * python3-defaults vs cdist - get commits from upstream LP: #1959330
+
+ 16:02 <dbungert> * python3-defaults vs hy - some work stream for py3.10, but seems to be
+
+ 16:02 <ubottu> Launchpad bug 1959330 in cdist (Debian) "FTBFS against python 3.10" [Unknown, New] https://launchpad.net/bugs/1959330
+
+ 16:02 <dbungert> incomplete.  Investigating.
+
+ 16:02 <dbungert> * subiquity - split out serializer fix from other PR + add test. Merged.
+
+ 16:02 <dbungert> * +1: hydra - fix FTBFS by adjusting include paths.
+
+ 16:02 <dbungert> LP: #1959622, upstream PR merged, forwarded to Debian
+
+ 16:02 <ubottu> Launchpad bug 1959622 in hydra (Debian) "FTBFS against openssl 3.0" [Unknown, New] https://launchpad.net/bugs/1959622
+
+ 16:02 <dbungert> * +1: rebuild requests - facter LP: #1959700 (thanks Simon), rhash LP: #1959840
+
+ 16:02 <dbungert> * +1: opensurgsim - a variety of different build failures, most pressing one
+
+ 16:02 <ubottu> Launchpad bug 1959700 in facter (Ubuntu) "Please upload a rebuild for libssl and libyaml-cpp" [Undecided, Confirmed] https://launchpad.net/bugs/1959700
+
+ 16:02 <dbungert> related to libeigen3 changes.  Working on upstreaming a bug about this, but
+
+ 16:02 <ubottu> Launchpad bug 1959840 in rhash (Ubuntu) "Rebuild for libssl3" [Undecided, Confirmed] https://launchpad.net/bugs/1959840
+
+ 16:02 <dbungert> upstream main branch doesn't build either.  LP: #1959839
+
+ 16:02 <ubottu> Launchpad bug 1959839 in opensurgsim (Ubuntu) "FTBFS on jammy" [Undecided, New] https://launchpad.net/bugs/1959839
+
+ 16:02 <dbungert> * +1: validns - updated test suite for changed openssl3 error strings
+
+ 16:02 <dbungert> LP: #1959855, forwarded to upstream, in sponsor queue.
+
+ 16:02 <ubottu> Launchpad bug 1959855 in validns (Ubuntu) "FTBFS against openssl 3" [Undecided, New] https://launchpad.net/bugs/1959855
+
+ 16:02 <dbungert> (done)
+
+ 16:02 <jawn-smith> * ubuntu-image
+
+ 16:02 <jawn-smith> * Taipei team needs the option to run --snap when using --filesystem with preseeded filesystems
+
+ 16:02 <jawn-smith> * Have local changes to do just that, but need snapd changes PRd as well
+
+ 16:02 <jawn-smith> * Investigating incorrectly patchelf'd binaries, found workaround and reported root cause on LP: #1928209
+
+ 16:02 <ubottu> Launchpad bug 1928209 in snapcraft (Ubuntu) "use of patchelf in classic leads to dri drivers segfaulting" [Undecided, New] https://launchpad.net/bugs/1928209
+
+ 16:02 <jawn-smith> * slog through strace logs to preemptively find any more possible issues with file reads outside of snap confinement
+
+ 16:02 <jawn-smith> * Resulted in https://github.com/snapcore/snapd/pull/11320
+
+ 16:03 <ubottu> Pull 11320 in snapcore/snapd "osutil/mkfs: Expose more fakeroot flags" [Open]
+
+ 16:03 <jawn-smith> * Uploaded Go 1.18 to Debian, needs merge soon.
+
+ 16:03 <jawn-smith> * proposed migration: ansible vs python3.10
+
+ 16:03 <jawn-smith> * current version depends on python3-crypto which has been removed from the archive
+
+ 16:03 <jawn-smith> * newer version available in Debian experimental but tests are still failing
+
+ 16:03 <jawn-smith> * FTBFS: icu
+
+ 16:03 <jawn-smith> * newer version available in Debian experimental but also FTBFS. Still investigating
+
+ 16:03 <jawn-smith> [done]
+
+ 16:03 <ahasenack> I worked a bit on ansible, wrt "<jawn-smith>     * current version depends on python3-crypto which has been removed from the archive" from jawn-smith. Can talk later about it.
+
+ 16:03 <jawn-smith> oh great, thanks!
+
+ 16:03 <ahasenack> have patches for those issues
+
+ 16:04 <ahasenack> but it fails to install due to something else
+
+ 16:04 <sil2100> bdmurray: !
+
+ 16:04 <ahasenack> even current jammy one. There is a broken symlink in the deb
+
+ 16:04 <ahasenack> carry on
+
+ 16:04 <bdmurray> I didn't want to interrupt this valuable conversation
+
+ 16:04 <ahasenack> sorry
+
+ 16:04 <bdmurray> investigated aiofiles test failure and submitted a PR to debian to fix it
+
+ 16:04 <bdmurray> uploade aiofiles to jammy to facilitate the python3.10 transition
+
+ 16:04 <bdmurray> added a release note entry (II, JJ) for the slow boot from optical media bug
+
+ 16:04 <bdmurray> tested software-properties MP regarding ppa.launchpadcontent.net
+
+ 16:04 <bdmurray> updated wiki page for EoL process with information from previous EoLs
+
+ 16:04 <bdmurray> worked on the EoL of 21.04
+
+ 16:04 <bdmurray> reviewed, merged slangasek's changes to u-r-u removing the partner archive
+
+ 16:04 <bdmurray> updated the autopkgtests which broke with the above change
+
+ 16:05 <bdmurray> uploaded bsdmainutils with the Impish release date b/c its in the NewRelease process
+
+ 16:05 <bdmurray> reported ubuntu-release-upgrader bug 1959458
+
+ 16:05 <ubottu> Bug 1959458 in ubuntu-release-upgrader (Ubuntu) "Lock screen disabling needs updating" [High, Confirmed] https://launchpad.net/bugs/1959458
+
+ 16:05 <bdmurray> reported a debian bug re: bsdmainutils and dropping calendar.ubuntu
+
+ 16:05 <bdmurray> reviewed, synced libatomic-ops
+
+ 16:05 <bdmurray> sru-reviews and releases
+
+ 16:05 <bdmurray> administrative work
+
+ 16:05 <bdmurray> preparing for and conducting interviews
+
+ 16:05 <bdmurray> ahasenack: no problem we appreciate it
+
+ 16:05 <bdmurray> mentoring
+
+ 16:05 <bdmurray> ✔ done
+
+ 16:05 <slyon> - proposed-migration: gnome-gmail, wget, ruby-pygments.rb & systemd vs dnsmasq
+
+ 16:05 <slyon> - Sponsorings: logrotate LP: #1958887, acpid LP: #1958897, gitsome LP: #1959377
+
+ 16:05 <slyon> - Sync'ed mtr (dropped my previous Ubuntu delta, that made it upstream)
+
+ 16:05 <slyon> - subiquity review for bug #1953744
+
+ 16:05 <slyon> - rebuilt s390-tools[-signed] for schopin (needs ubuntu-release review)
+
+ 16:05 <slyon> - Enablement of systemd-oomd in desktop-minimal seed & ubuntu-meta package:
+
+ 16:05 <ubottu> Launchpad bug 1958887 in logrotate (Ubuntu) "Please merge logrotate 3.19.0-1 (main) from Debian unstable (main)" [Wishlist, Fix Released] https://launchpad.net/bugs/1958887
+
+ 16:05 <ubottu> Launchpad bug 1958897 in acpid (Ubuntu) "Please merge acpid 2.0.33-1 (main) from Debian unstable (main)" [Wishlist, Fix Released] https://launchpad.net/bugs/1958897
+
+ 16:05 <ubottu> Launchpad bug 1959377 in gitsome (Ubuntu) "Fix test on python 3.10" [Undecided, Fix Released] https://launchpad.net/bugs/1959377
+
+ 16:05 <ubottu> Bug 1953744 in subiquity "Subiquity silent on 'Installing system' view on Jammy" [High, In Progress] https://launchpad.net/bugs/1953744
+
+ 16:05 <slyon> https://code.launchpad.net/~slyon/ubuntu-seeds/+git/platform/+merge/414794
+
+ 16:05 <slyon> https://lists.ubuntu.com/archives/ubuntu-devel/2022-January/041819.html
+
+ 16:05 <slyon> + Also fixes bug #1955997 (needs SRU)
+
+ 16:05 <slyon> + Also fixes bug #1957086
+
+ 16:05 <slyon> - MIR review of v4l2-relayd & some coordination, LP: #1958109
+
+ 16:05 <slyon> - Landing NetworkManager snap improvement (after 2 months!):
+
+ 16:05 <slyon> https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/412634
+
+ 16:05 <slyon> === Netplan ===
+
+ 16:05 <ubottu> Bug 1955997 in OEM Priority Project "The airplane hotkey has no function on a HP platform" [Critical, Triaged] https://launchpad.net/bugs/1955997
+
+ 16:05 <ubottu> Bug 1957086 in dnsmasq (Ubuntu) "Autopkgtest systemd fail against dnsmasq 2.86 (22.04)" [Undecided, New] https://launchpad.net/bugs/1957086
+
+ 16:05 <ubottu> Launchpad bug 1958109 in OEM Priority Project "[MIR] v4l2-relayd" [High, In Progress] https://launchpad.net/bugs/1958109
+
+ 16:05 <slyon> - some release planning
+
+ 16:05 <slyon> - implementation & testing of SmartNIC enablement
+
+ 16:05 <slyon> + got some positive feedback from the openstack team
+
+ 16:05 <slyon> + https://github.com/canonical/netplan/pull/253
+
+ 16:05 <slyon> - Discovered & fixed issue in new 'netplan get':
+
+ 16:05 <ubottu> Pull 253 in canonical/netplan "Enable eswitch mode setting on SmartNICs" [Open]
+
+ 16:05 <slyon> https://github.com/canonical/netplan/pull/258
+
+ 16:05 <slyon> - Reviewed: https://github.com/canonical/netplan/pull/254
+
+ 16:05 <ubottu> Pull 258 in canonical/netplan "util: fix dump_yaml_subtree to not insert NULL at the actual end" [Merged]
+
+ 16:05 <slyon> - Merged https://github.com/canonical/netplan/pull/202 (cc @waveform)
+
+ 16:05 <slyon> (done)
+
+ 16:05 <ubottu> Pull 254 in canonical/netplan "YAML consolidation: `netplan set` (FR-702)" [Open]
+
+ 16:05 <ubottu> Pull 202 in canonical/netplan "Permit multiple patterns for the driver globs in match (LP: #1918421)" [Merged]
+
+ 16:06 <xypron> aiocoap - autopkgtest fixed in proposed LP: #1959315
+
+ 16:06 <xypron> make-dfsg - 4.3-4.1ubuntu2 needs a sponsor: LP #989961
+
+ 16:06 <xypron> mkinitramfs - fix compression time: other packager was faster, need to rebase LP #1958148
+
+ 16:06 <xypron> golang-github-containers-toolbox - 0.0.99.2-2ubuntu1 still has no sponsor LP: #1958132
+
+ 16:06 <xypron> RISC-V support for GRUB was reviewed by juliank. New version provided in git LP: #1876620, #1947046
+
+ 16:06 <ubottu> Launchpad bug 1959315 in aiocoap (Ubuntu) "autopackage tests fail" [Undecided, Fix Committed] https://launchpad.net/bugs/1959315
+
+ 16:06 <xypron> Testing alexghiti 's binaries on VisionFive board.
+
+ 16:06 <xypron> </done>
+
+ 16:06 <ubottu> Launchpad bug 989961 in make-dfsg (Ubuntu) "Provide a gmake symlink" [Wishlist, In Progress] https://launchpad.net/bugs/989961
+
+ 16:06 <ubottu> Launchpad bug 1958148 in initramfs-tools (Ubuntu) "mkinitramfs is too slow" [Medium, In Progress] https://launchpad.net/bugs/1958148
+
+ 16:06 <ubottu> Launchpad bug 1958132 in golang-github-containers-toolbox (Ubuntu) "Build failure on riscv64" [Undecided, New] https://launchpad.net/bugs/1958132
+
+ 16:06 <ubottu> Launchpad bug 1947046 in grub2 (Ubuntu) "EFI stub: ERROR: FIRMWARE BUG: kernel image not aligned on 64k boundary" [Undecided, In Progress] https://launchpad.net/bugs/1947046
+
+ 16:06 <ubottu> Launchpad bug 1876620 in grub2 (Ubuntu) "Enable riscv64 build" [Wishlist, New] https://launchpad.net/bugs/1876620
+
+ 16:07 <bdmurray> ginggs:
+
+ 16:07 <ginggs> * Working on FTBFS and autopkgtest regressions in Python 3.10-as-default transition
+
+ 16:07 <ginggs> * FTBFS reports
+
+ 16:07 <ginggs> * Sponsored some uploads; cdist, smc-tools and unbound
+
+ 16:07 <ginggs> * Got a new 8GB Raspberry Pi and a VisionFive \o/
+
+ 16:07 <ginggs> (done)
+
+ 16:08 <bdmurray> sil2100:
+
+ 16:08 <sil2100> * SRU reviews and releases
+
+ 16:08 <sil2100> * 20.04.4:
+
+ 16:08 <sil2100> - Created public tracking document
+
+ 16:08 <sil2100> - Created Jira Release Team tasks
+
+ 16:08 <sil2100> - Pushed forward with multiple preparation tasks: cdimage, debian-cd, check-ups, isotracker
+
+ 16:08 <sil2100> - Poking around for SRUs for .4: fwupd, grub, linux-firmware-raspi2 etc.
+
+ 16:08 <sil2100> * Addressed WSL notify-isotracker comments, modified approach to a more dynamic one
+
+ 16:08 <sil2100> - Ready for review again
+
+ 16:08 <sil2100> * Xilinx:
+
+ 16:08 <sil2100> - Work on updating Vitis-AI to 2.0
+
+ 16:08 <sil2100> - Fixed compilation errors for above, installation errors, repackaging tarball for compliance
+
+ 16:08 <sil2100> - Filling in bugs and PRs for some of the needed changes
+
+ 16:09 <sil2100> - Prepared experimental xrt rename packages to change versioning scheme (epochs are not wanted)
+
+ 16:09 <sil2100> * Builder summit meeting - starting nice discussion regarding UI's model signing and rootfs reuse
+
+ 16:09 <sil2100> * Merging KDE frontend password-reveal ubiquity UI
+
+ 16:09 <sil2100> * Review of ubiquity MP for Steve for deprecating partner - almost there
+
+ 16:09 <sil2100> * Candidate interview
+
+ 16:09 <sil2100> * More work done on the ubuntu-image classic image build redesign spec
+
+ 16:09 <sil2100> * Investigating some Canonistack issues with accessing my instances
+
+ 16:09 <sil2100> * Debugging security-britney strangeness when trying to access ESM test results - unauthenticated errors
+
+ 16:09 <sil2100> - Added some debugging info but so far just spinning in circles
+
+ 16:09 <sil2100> * Product discussions
+
+ 16:09 <sil2100> * ubuntu-image discussions
+
+ 16:09 <sil2100> (done)
+
+ 16:09 <bdmurray> enr0n:
+
+ 16:09 <enr0n> * General onboarding stuff (autopkgtest, PPA, sbuild, other tooling setup)
+
+ 16:09 <enr0n> * Working ubuntu-release-upgrader bugs with bdmurray (LP #1947581, LP #1901797)
+
+ 16:09 <enr0n> * Looked at autopkgtest failure for python-gmpy2 (python3-defaults trigger). Debian uploaded new version
+
+ 16:09 <enr0n> that fixed the problem.
+
+ 16:09 <ubottu> Launchpad bug 1947581 in ubuntu-release-upgrader (Ubuntu Jammy) "Download times for 1Mbit DSL connection and 56k modem are meaningless" [Undecided, New] https://launchpad.net/bugs/1947581
+
+ 16:09 <ubottu> Launchpad bug 1901797 in ubuntu-release-upgrader (Ubuntu) "The upgrade to 20.10 is not taking place" [Undecided, Invalid] https://launchpad.net/bugs/1901797
+
+ 16:09 <enr0n> (done)
+
+ 16:09 <ogayot> * freezegun autopkgtest: patch submitted in Ubuntu for sponsoring (LP #1959397). Will be superseded by new upstream version in Debian.
+
+ 16:09 <ubottu> Launchpad bug 1959397 in freezegun (Ubuntu) "Autopkgtest failure with Python 3.10" [Undecided, Confirmed] https://launchpad.net/bugs/1959397
+
+ 16:10 <ogayot> * error-reporting: created PPA ppa:~ogayot/error-reporting with whoopsie running in path-based activation mode. whoopsie, apport, whoopsie-preferences & update-notifier affected by the change. Manual tests in progress. (LP #1424768)
+
+ 16:10 <ubottu> Launchpad bug 1424768 in whoopsie (Ubuntu Bionic) "Consider switching to path based activation" [Medium, Confirmed] https://launchpad.net/bugs/1424768
+
+ 16:10 <ogayot> * subiquity:
+
+ 16:10 <ogayot> * exposed API to check UA contract token and list activable services
+
+ 16:10 <ogayot> * third-party drivers: troubleshooting mount failure deep inside the installation overlays. Initial PR (server-only) to be opened once crash is resolved.
+
+ 16:10 <ogayot> * merge of plymouth: working on it. Still a lot to do.
+
+ 16:10 <ogayot> (done)
+
+ 16:10 <alexghiti> Ruby-pygments.rb synced from debian
+
+ 16:10 <alexghiti> Work on kernel 5.17 for RISC-V
+
+ 16:10 <alexghiti> Bring-up VisionFive board (update u-boot-starfive, linux-firmware-starfive in RISC-V ubuntu develop PPA)
+
+ 16:10 <alexghiti> (done)
+
+ 16:11 <bdmurray> waveform:
+
+ 16:11 <waveform> * Rename of linux-firmware-raspi{2,} (LP: #1950632) now landed; x_nox kindly filed removal request for old name in jammy (LP: #1959692)
+
+ 16:11 <waveform> * Working on debhelper restart issue (LP: #1959054)
+
+ 16:11 <waveform> * Packaged rpiboot for inclusion (LP: #1959592)
+
+ 16:11 <waveform> * Investigated uc22 snapd issue
+
+ 16:11 <waveform> * Merged Pi Zero 2 changes (and serial changes) to pi-gadget (https://github.com/snapcore/pi-gadget/pull/82)
+
+ 16:11 <waveform> * Interview
+
+ 16:11 <ubottu> Launchpad bug 1950632 in linux-firmware-raspi2 (Ubuntu) "Rename to linux-firmware-raspi" [Undecided, Fix Committed] https://launchpad.net/bugs/1950632
+
+ 16:11 <waveform> * Pi meetings
+
+ 16:11 <ubottu> Launchpad bug 1959692 in linux-firmware-raspi2 (Ubuntu) "RM linux-firmware-raspi2 from jammy  5-0ubuntu1" [Undecided, Triaged] https://launchpad.net/bugs/1959692
+
+ 16:11 <ubottu> Launchpad bug 1959054 in libvirt (Ubuntu Jammy) "debhelper restarts services marked --no-restart-on-upgrade" [Undecided, Triaged] https://launchpad.net/bugs/1959054
+
+ 16:11 <waveform> * Merge of iniparser (LP: #1959346)
+
+ 16:11 <ubottu> Launchpad bug 1959592 in Ubuntu "[needs-packaging] rpiboot" [Wishlist, New] https://launchpad.net/bugs/1959592
+
+ 16:11 <ubottu> Pull 82 in snapcore/pi-gadget "Add slot for /dev/ttyS0 and add pi0 section to config.txt" [Merged]
+
+ 16:11 <waveform> (done)
+
+ 16:11 <ubottu> Launchpad bug 1959346 in iniparser (Ubuntu) "Please merge iniparser 4.1-6 from Debian unstable" [Wishlist, New] https://launchpad.net/bugs/1959346
+
+ 16:11 <doko> - more binutils issues addressed: xen build issue, armhf cross build issue
+
+ 16:11 <doko> - updated cross-toolchain-base packages, and checked with glibc-2.35
+
+ 16:11 <doko> - mw hudson expects to upload the new glibc before the weekend
+
+ 16:11 <doko> - more ocaml transition cleanup (llvm-toolchain-*)
+
+ 16:11 <doko> - minor archive admin work
+
+ 16:11 <doko> - some more merges
+
+ 16:11 <doko> - still having a cold
+
+ 16:11 <doko> (done)
+
+ 16:11 <bdmurray> Any questions on status?
+
+ 16:12 <jawn-smith> waveform: did you see linux-firmware-raspi is stuck in proposed?
+
+ 16:12 <waveform> jawn-smith, yup -- I need to investigate that
+
+ 16:12 <jawn-smith> cool lmk if I can help at all
+
+ 16:13 <bdmurray> #topic Release Incoming Bugs
+
+ 16:13 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:13 <sergiodj> doko: I'm working on a tentative fix for llvm-toolchain-12
+
+ 16:13 <sergiodj> re. ocaml transition
+
+ 16:13 <sergiodj> I'm running autopkgtests now
+
+ 16:13 <doko> sergiodj, fixing what?
+
+ 16:13 <sergiodj> doko: the llvm-toolchain-12 failure
+
+ 16:13 <doko> it is fixed
+
+ 16:14 <kanashiro> I also did some test retriggers to try to unblock ocaml, it is blocking ruby-defaults right now
+
+ 16:14 <sergiodj> doko: where?
+
+ 16:14 <doko> https://launchpad.net/ubuntu/+source/llvm-toolchain-12/1:12.0.1-19ubuntu1
+
+ 16:14 <sergiodj> doesn't seem to fix the problem: https://autopkgtest.ubuntu.com/packages/l/llvm-toolchain-12/jammy/amd64
+
+ 16:15 <bdmurray> Can the llvm conversation move to #ubuntu-devel? Thanks
+
+ 16:15 <bdmurray> bug 1958720
+
+ 16:15 <ubottu> Bug 1958720 in pyyaml (Ubuntu) "python3-yaml and python3-six are not co-installable with python-is-python2 in jammy" [High, Confirmed] https://launchpad.net/bugs/1958720
+
+ 16:15 <sergiodj> sure
+
+ 16:16 <bdmurray> It looks like the server team will take that
+
+ 16:16 <bdmurray> bug 1959458
+
+ 16:16 <ubottu> Bug 1959458 in ubuntu-release-upgrader (Ubuntu) "Lock screen disabling needs updating" [High, Confirmed] https://launchpad.net/bugs/1959458
+
+ 16:16 <bdmurray> I did an upgrade recently and the screen became locked which isn't supposed to happen
+
+ 16:16 <bdmurray> This might be good for enr0n since they are looking at u-r-u now
+
+ 16:17 <bdmurray> So let's card and tag that
+
+ 16:17 <bdmurray> I mean target not tag
+
+ 16:17 <bdmurray> bug 1959362
+
+ 16:17 <ubottu> Bug 1959362 in ubiquity (Ubuntu) "'Launch using dedicated graphics card' option absent (nvidia, proprietary drivers, on-demand PRIME mode)" [Undecided, New] https://launchpad.net/bugs/1959362
+
+ 16:18 <bdmurray> That's assigned to seb so let's leave it be
+
+ 16:18 <bdmurray> bug 1948714 the reporter got back to me
+
+ 16:19 <ubottu> Bug 1948714 in ubiquity (Ubuntu) "After reboot, the password set at install time doesn't work." [Undecided, Incomplete] https://launchpad.net/bugs/1948714
+
+ 16:19 <bdmurray> and they used a cute password "Thanks#Brian"
+
+ 16:19 <bdmurray> which registed as Thanks/Brian so it does sound like sil2100's bug
+
+ 16:20 <bdmurray> agreed?
+
+ 16:20 <sil2100> Yes, indeed, looks like a duplicate of that
+
+ 16:20 <bdmurray> Okay, I'll mark it as such
+
+ 16:20 <sil2100> Might need to get back to it eventually - at least now they can check the password as a workaround!
+
+ 16:21 <bdmurray> I guess we should release note using the "eye" then
+
+ 16:21 <sil2100> The other bug is carded and 'in progress-ish', so all good
+
+ 16:22 <bdmurray> rls-ii is empty
+
+ 16:22 <bdmurray> and so is rls-ff
+
+ 16:22 <bdmurray> #topic Team proposed-migration report
+
+ 16:22 <jawn-smith> Let's focus on python3-defaults
+
+ 16:23 <schopin> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:23 <ahasenack> I'm working on python-fysom, python-furl
+
+ 16:23 <jawn-smith> aiocoap was xypron, which you said needs sponsoring, correct?
+
+ 16:23 <ahasenack> and possibly other of the same class, which is "cannot import name 'MutableMapping' from 'collections' "
+
+ 16:23 <ahasenack> a change in py3.10
+
+ 16:23 <xypron> jawn-smith: yes
+
+ 16:24 <bdmurray> ahasenack: did you try searching the logs for that error?
+
+ 16:24 <schopin> jawn-smith: aiocoap was sponsored though.
+
+ 16:24 <jawn-smith> excellent. xypron: keras?
+
+ 16:24 <ahasenack> bdmurray: not yet, first two python packages I grabbed had the same, so I'm calling it a class already
+
+ 16:24 <xypron> jawn-smith: aiocoap - autopkgtest fixed in proposed LP: #1959315
+
+ 16:24 <ubottu> Launchpad bug 1959315 in aiocoap (Ubuntu) "autopackage tests fail" [Undecided, Fix Committed] https://launchpad.net/bugs/1959315
+
+ 16:24 <jawn-smith> excellent thanks
+
+ 16:24 <bdmurray> it might just need retrying
+
+ 16:24 <xypron> ok I will look into keras
+
+ 16:24 <ahasenack> bdmurray: my case? It needed a fix from upstream
+
+ 16:25 <jawn-smith> bdmurray: kleborate?
+
+ 16:25 <ginggs> xypron: did you see https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses.html#aiocoap still fails?
+
+ 16:25 <bdmurray> it being aiocoap
+
+ 16:25 <jawn-smith> ansible is me and ahasenack still
+
+ 16:25 <ahasenack> my problem with ansible is this:
+
+ 16:25 <ahasenack> $ sudo py3compile -p ansible
+
+ 16:25 <ahasenack> [Errno 2] No such file or directory: '/usr/lib/python3.10/dist-packages/ansible/module_utils/ansible_release.py'
+
+ 16:26 <ahasenack> any new build produces that broken symlink
+
+ 16:26 <ahasenack> $ dpkg -L ansible|grep ansible_release\\.py
+
+ 16:26 <ahasenack> er
+
+ 16:26 <ahasenack> $ dpkg -L ansible|grep ansible_release\\.py
+
+ 16:26 <jawn-smith> ahasenack: Indeed, I've seen that one too. Let's tag up about it after this meeting
+
+ 16:26 <ahasenack> /usr/lib/python3/dist-packages/ansible/module_utils/ansible_release.py
+
+ 16:26 <ahasenack> /usr/lib/python3.10/dist-packages/ansible/module_utils/ansible_release.py
+
+ 16:26 <ahasenack> the python3.10 symlink is broken
+
+ 16:26 <ahasenack> and is new, the current jammy build has just the python3 one (first line)
+
+ 16:26 <ahasenack> ok
+
+ 16:27 <jawn-smith> booth: sil2100
+
+ 16:27 <jawn-smith> should that stay with you?
+
+ 16:28 <sil2100> Yes, I didn't manage to look yet
+
+ 16:28 <sil2100> Let me actually create a card this time!
+
+ 16:28 <jawn-smith> bpython is schopin
+
+ 16:28 <schopin> just a matter of retrying, in the queue rn.
+
+ 16:28 <jawn-smith> looks like we may have skipped breezy last time. who wants it?
+
+ 16:29 <waveform> ccdproc just needs someone to bash the retry button as 2.30 in proposed fixes the issue (at least on arm64), so I can take another
+
+ 16:29 <schopin> I'll take breezy.
+
+ 16:29 <jawn-smith> waveform: remind me after this meeting to bash that button :)
+
+ 16:30 <jawn-smith> juliank: djangorestframework
+
+ 16:30 * juliank needs to add a reminder
+
+ 16:30 <jawn-smith> freezegun is ogayot
+
+ 16:31 <ogayot> currently, I unsubscribed sponsors because there's a new version in proposed migration that should land soon
+
+ 16:31 <jawn-smith> does it need any test retries or anything?
+
+ 16:31 <ogayot> tests are still in progress, so currently no
+
+ 16:31 <jawn-smith> okay great
+
+ 16:31 <slyon> waveform: jawn-smith: I kicked ccdproc
+
+ 16:31 <jawn-smith> gitsome was alexghiti
+
+ 16:31 <jawn-smith> slyon: thanks!
+
+ 16:32 <alexghiti5> gitsome was uploaded already
+
+ 16:32 <slyon> gitsome was sponsored... probably needs retry vs python3-defaults
+
+ 16:32 <jawn-smith> alright, noted another button to bash
+
+ 16:32 <jawn-smith> schopin: you said you were working on hy?
+
+ 16:33 <schopin> yeah
+
+ 16:33 <jawn-smith> excellent, thanks
+
+ 16:33 <jawn-smith> who doesn't have one?
+
+ 16:33 <dbungert> I need one
+
+ 16:33 <alexghiti5> I don't
+
+ 16:33 <jawn-smith> dbungert: lazygal?
+
+ 16:33 <slyon> alexghiti5: I kicked gitsome
+
+ 16:33 <slyon> jawn-smith: also, I don't have one
+
+ 16:33 <waveform> I don't have one
+
+ 16:33 <dbungert> jawn-smith: ack
+
+ 16:34 <jawn-smith> alexghiti5: libapache2-mod-python?
+
+ 16:34 <alexghiti5> slyon thanks, this is the same error as before my patch so that should be ok
+
+ 16:34 <jawn-smith> slyon: link-grammar?
+
+ 16:34 <slyon> ack
+
+ 16:34 <alexghiti5> jawn-smith: ack
+
+ 16:34 <jawn-smith> waveform: mando?
+
+ 16:34 <waveform> jawn-smith, ack
+
+ 16:34 <jawn-smith> I believe mailman3 is with mwhudson right?
+
+ 16:34 <jawn-smith> that's why I skipped that one
+
+ 16:34 <bdmurray> that's my recollection
+
+ 16:34 <ogayot> I can pick one as well
+
+ 16:34 <jawn-smith> also lefse may just need a test retry as it's only s390x
+
+ 16:34 <jawn-smith> ogayot: mosquitto?
+
+ 16:35 <ogayot> ack
+
+ 16:35 <ginggs> lefse might need a hint
+
+ 16:35 <jawn-smith> I'll check on lefse
+
+ 16:35 <enr0n> I can take one
+
+ 16:35 <jawn-smith> enr0n: nanolyse?
+
+ 16:35 <enr0n> Sure
+
+ 16:35 <jawn-smith> bdmurray: openmotor?
+
+ 16:35 <bdmurray> okay
+
+ 16:35 <jawn-smith> I think that's everyone
+
+ 16:36 <jawn-smith> If you finish yours quickly please feel free to take another :)
+
+ 16:37 <jawn-smith> oh doko: do you have bandwidth to take one?
+
+ 16:38 <doko> sure
+
+ 16:38 <jawn-smith> how about pcapy?
+
+ 16:38 <bdmurray> what happend to onnx
+
+ 16:38 <jawn-smith> reading is hard, that's what happened
+
+ 16:39 <doko> ok
+
+ 16:39 <jawn-smith> doko how about onnx then?
+
+ 16:39 <jawn-smith> up to you
+
+ 16:39 <doko> ok
+
+ 16:39 <slyon> waveform: ccdproc is still failing
+
+ 16:39 <waveform> slyon, okay -- I'll take another look
+
+ 16:39 <jawn-smith> then ginggs can take pcapy?
+
+ 16:40 <ginggs> sure
+
+ 16:40 <jawn-smith> okay now I think that's everyone
+
+ 16:40 <jawn-smith> back to you bdmurray
+
+ 16:40 <bdmurray> okay, thanks jawn-smith
+
+ 16:40 <bdmurray> #topic AOB
+
+ 16:41 <bdmurray> Anything else?
+
+ 16:41 <bdmurray> Remember Feature Freeze is coming
+
+ 16:42 <schopin> Oh I have something
+
+ 16:42 <schopin> src:rustc currently embeds a copy of LLVM.
+
+ 16:42 <ahasenack> wat
+
+ 16:43 <schopin> It is splittable (Debian does it), but rustc will likely be upgraded during the lifetime of our LTS because of Firefox
+
+ 16:44 <schopin> which likely means bumped LLVM requirements.
+
+ 16:45 <schopin> I don't know if adding new versions of LLVM in the archive during its lifetime is feasible? And if so, should we remove the previous extra ones once we introduce new ones?
+
+ 16:45 <bdmurray> Is there a question here?
+
+ 16:45 <doko> talk with mwhudson abour rustc
+
+ 16:45 <bdmurray> +1
+
+ 16:45 <schopin> it's not just about rustc though!
+
+ 16:47 <bdmurray> We'll have this discussion somewhere else.
+
+ 16:47 <bdmurray> Thanks everybody.
+
+ 16:47 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

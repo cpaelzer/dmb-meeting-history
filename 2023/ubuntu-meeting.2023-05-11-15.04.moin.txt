@@ -1,0 +1,272 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by vorlon, 11 May at 15:04 &mdash; 15:44 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-05-11-15.04.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by vorlon at 15:04.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-11-may-2023/35679/6   (vorlon, 15:04)
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-11-may-2023/35679   (vorlon, 15:05)
+
+=== Release incoming bugs ===
+
+Discussion started by vorlon at 15:10.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (vorlon, 15:10)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (vorlon, 15:13)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (vorlon, 15:13)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (vorlon, 15:24)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (vorlon, 15:28)
+
+=== Team proposed-migration report ===
+
+Discussion started by vorlon at 15:32.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 15:33)
+
+=== AOB ===
+
+Discussion started by vorlon at 15:38.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (70)
+ * slyon (8)
+ * bdmurray (7)
+ * xypron (4)
+ * dviererbe (4)
+ * adrien (3)
+ * meetingology (2)
+ * enr0n (2)
+ * ogayot (2)
+ * mateus-morais (1)
+ * juliank (1)
+ * zhsj (1)
+
+
+
+== Full log ==
+
+
+ 15:04 <vorlon> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:04 <meetingology> Meeting started at 15:04:41 UTC.  The chair is vorlon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:04 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:04 <vorlon> #topic Lightning rounds
+
+ 15:04 <vorlon> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-11-may-2023/35679/6
+
+ 15:05 <vorlon> giving everybody some time to read through and ask questions
+
+ 15:05 <vorlon> oops, wrong link
+
+ 15:05 <vorlon> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-11-may-2023/35679
+
+ 15:05 <vorlon> mateus-morais: I think your status went to the last discourse post, not this week's
+
+ 15:06 <xypron> o/
+
+ 15:06 <mateus-morais> Yep, fixed it already :)
+
+ 15:07 <vorlon> aha ok
+
+ 15:07 <bdmurray> "man in hat sits on chair" - lol
+
+ 15:08 <vorlon> haha
+
+ 15:10 <vorlon> everybody had enough time?
+
+ 15:10 <vorlon> #topic Release incoming bugs
+
+ 15:10 <vorlon> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <bdmurray> I made -mm- yesterday
+
+ 15:11 <vorlon> LP: #2012698
+
+ 15:11 <dviererbe> this? https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:12 <bdmurray> indeed
+
+ 15:12 <vorlon> bdmurray: thanks, should I drop -ll- from the script going forward?
+
+ 15:12 <bdmurray> Well we might need to do some SRUs there
+
+ 15:12 <vorlon> ok
+
+ 15:12 <slyon> looks like vanvugt is taking care of that plymouth bug
+
+ 15:12 <vorlon> yeah the above is a class of issue usually handled in the Desktop Team, nothing for us
+
+ 15:13 <vorlon> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:13 <vorlon> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:13 <vorlon> LP: #2016471
+
+ 15:13 <slyon> I created that one..
+
+ 15:14 <slyon> I'd like the toolchain squad to have a look into it. libomp.so is broken when llvm-toolchain is built with LTO
+
+ 15:14 <vorlon> slyon: do you expect the fix to be on the eztrace side? that's the task you have in progress
+
+ 15:14 <vorlon> ah
+
+ 15:14 <slyon> the upstream maintainer of eztrace suggested there might be a workaround possible in the upstream project, but didn't get back to be about it yet
+
+ 15:14 <vorlon> that seems like an appropriate thing for us to take
+
+ 15:14 <vorlon> shall I target it?
+
+ 15:15 <vorlon> (doing)
+
+ 15:15 <slyon> so either reaching out to trahay about a eztrace fix or fixing llvm-toolchain are appropriate
+
+ 15:16 <vorlon> there may be other packages affected by libomp though
+
+ 15:16 <vorlon> (or other third-party projects)
+
+ 15:16 <vorlon> LP: #2018721
+
+ 15:16 <slyon> dviererbe: can you comment on that ^
+
+ 15:17 <dviererbe> Well I put the summary in the LP ticket
+
+ 15:20 <vorlon> my $.02 is that there aren't advantages that are worth the switching costs
+
+ 15:21 <vorlon> dviererbe: are you ok with us declining it on that basis?
+
+ 15:22 <dviererbe> yeah, works for me. I just wanted to have a discussion about investigating this.
+
+ 15:22 <vorlon> ok thanks
+
+ 15:24 <vorlon> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:24 <vorlon> LP: #1999345
+
+ 15:25 <vorlon> there've been discussions about this internally; I'm a strong -1 on us including this in the signed images
+
+ 15:25 <vorlon> because the GRUB LUKS implementation is always trailing the userspace
+
+ 15:26 <vorlon> and currently the gaps are that it doesn't support currently-recommended key derivation
+
+ 15:26 <vorlon> juliank isn't here to argue for it, but I would just decline this one
+
+ 15:26 <vorlon> (and let him reopen it if there are other arguments)
+
+ 15:27 <vorlon> any objections?
+
+ 15:27 <slyon> sounds good. we have been waiting for any action on that one for too long
+
+ 15:28 <juliank> My watch made brr with IRC notification! I'm +1
+
+ 15:28 <vorlon> hah
+
+ 15:28 <vorlon> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:29 <vorlon> LP: #2015355
+
+ 15:29 <vorlon> this was escalated internally to us
+
+ 15:29 <bdmurray> Do we need to keep looking at Focal given Jammy is the latest LTS?
+
+ 15:30 <vorlon> based on support team's input I would say yes it's worth fixing
+
+ 15:30 <vorlon> or do you mean looking at the report in general for FF?
+
+ 15:30 <bdmurray> The report in general but I guess if we didn't we wouldn't have known about this. ;-)
+
+ 15:30 <vorlon> right
+
+ 15:30 <enr0n> I am planning on working that one, bdmurray pinged me about it before the sprint
+
+ 15:31 <vorlon> I mean, we did have the internal discussion, but that's different than ensuring it's tracked
+
+ 15:31 <vorlon> so I'll go ahead and target this one
+
+ 15:32 <vorlon> ok that's it for bugs
+
+ 15:32 <vorlon> let's see if I can speed things up a bit from here :)
+
+ 15:32 <vorlon> #topic Team proposed-migration report
+
+ 15:33 <vorlon> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:33 <vorlon> dviererbe: would you mind looking at git? hopefully just needs a retry of linux-lowlatency/arm64 autopkgtest
+
+ 15:34 <dviererbe> I can do that
+
+ 15:34 <vorlon> argon2 vs cryptsetup: I've looked at this before, argon2 declares versioned breaks: on cryptsetup so this needs solved by a cryptsetup merge.  Any volunteers?
+
+ 15:34 <vorlon> bdrung did the last merge but he's not here today
+
+ 15:35 <vorlon> adrien: maybe you?
+
+ 15:35 <vorlon> if not, I could take it
+
+ 15:35 <vorlon> fakeroot: enr0n?
+
+ 15:35 <enr0n> vorlon: sure
+
+ 15:36 <vorlon> pygments: ogayot?
+
+ 15:36 <ogayot> vorlon: ack
+
+ 15:36 <adrien> vorlon: I can look at that
+
+ 15:36 <vorlon> and then that's it, because 7 was actually 5 because of the double counting of blocked/blocking
+
+ 15:36 <vorlon> adrien: thanks
+
+ 15:36 <vorlon> ah, 4
+
+ 15:37 <vorlon> sbuild also blocking postfix; I'll take that one, it's probably a britney hint issue
+
+ 15:38 <vorlon> yeah turns out that when postfix fails to configure on amd64 due to weird infra, all the autopkgtests of its reverse-dependencies fail
+
+ 15:38 <vorlon> #topic AOB
+
+ 15:38 <vorlon> anything else?
+
+ 15:39 <xypron> vorlon: postfix is what I previously looked at.
+
+ 15:39 * vorlon nods
+
+ 15:39 <xypron> Should I try to create a patch for that one.
+
+ 15:39 <ogayot> I'll be off next Thursday (national holiday) and Friday (swap day)
+
+ 15:39 <slyon> same for me ^
+
+ 15:40 <adrien> oh, already? I'm going to be away for half of the pulse actually
+
+ 15:41 <adrien> I'll be off both thursday and friday
+
+ 15:41 <zhsj> i'll be off next friday (swap day)
+
+ 15:42 <bdmurray> I'm out this afternoon and tomorrow
+
+ 15:43 <vorlon> I have another swap day to take but haven't committed to when
+
+ 15:43 <vorlon> around otherwise!
+
+ 15:43 <xypron> I have only Monday and Tuesday next week to work.
+
+ 15:44 <vorlon> any other other business?
+
+ 15:44 <vorlon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

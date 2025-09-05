@@ -1,0 +1,224 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 12 Oct at 14:30 &mdash; 14:47 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-10-12-14.30.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 14:30.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:34.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:34)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/vulkan-tools/+bug/1946359   (cpaelzer, 14:34)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/opensc/+bug/1892559 seems to be re-started but not yet for us to review  (cpaelzer, 14:38)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:39.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (55)
+ * sarnold (7)
+ * ubottu (6)
+ * slyon (5)
+ * coreycb (4)
+ * didrocks (3)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started at 14:30:09 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:30 <slyon> o/
+
+ 14:30 <cpaelzer> given that it is release week, we'd hope to not have any urgent MIR acticity
+
+ 14:30 <cpaelzer> but the one for next cycle might start :-)
+
+ 14:30 <cpaelzer> #topic Review of previous action items
+
+ 14:31 <cpaelzer> As promised I have started the unification of rules/templates on our wiki
+
+ 14:31 <cpaelzer> a first suggestion is available for your review at https://github.com/cpaelzer/ubuntu-mir/pull/2
+
+ 14:31 <ubottu> Pull 2 in cpaelzer/ubuntu-mir "Unify rules and templates" [Open]
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <didrocks> (hey)
+
+ 14:32 <cpaelzer> jamespage: with cherrypy3->python-cheroot and python-oslo.metrics not being ready they wont make it in 21.10 as it seems
+
+ 14:32 <cpaelzer> is that a problem?
+
+ 14:33 <cpaelzer> Not sure is jamespage is around to see this, as backup pinging coreycb
+
+ 14:34 <cpaelzer> we will go on with our agenda, but if there are answers to the above please chime in and let us knows
+
+ 14:34 <cpaelzer> the rest of the mismatches looks as-usual no new entries AFAICS
+
+ 14:34 <cpaelzer> #topic New MIRs
+
+ 14:34 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:34 <cpaelzer> There is one new entry
+
+ 14:34 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/vulkan-tools/+bug/1946359
+
+ 14:34 <ubottu> Launchpad bug 1946359 in vulkan-tools (Ubuntu) "[MIR] vulkan-tools" [Undecided, New]
+
+ 14:35 <cpaelzer> anyone having the cycles to work on that (I'm on PTO soon, then planning sprint; so not me this time :-/ )
+
+ 14:35 <coreycb> cpaelzer: we need oslo.metrics but we could probably back out to an old oslo.messaging as a last resort. the security team made it through one of the two packages I think.
+
+ 14:35 <slyon> I can take on that.
+
+ 14:35 <cpaelzer> thanks slyon
+
+ 14:36 <cpaelzer> slyon: assigned
+
+ 14:36 <cpaelzer> coreycb: yes .messaging is done
+
+ 14:36 <cpaelzer> coreycb: do you know if secruity aware that the deadline for this is essentially days/hours now?
+
+ 14:36 <cpaelzer> sarnold isn't here today
+
+ 14:36 <cpaelzer> I'd ask you coreycb and jamespage to get in touch with security Team to make sure this is resolved by Impish release
+
+ 14:37 <coreycb> cpaelzer: yes, I chatted with him last week - I don't think there was a guarantee
+
+ 14:37 <coreycb> cpaelzer: ok I'll touch base over there
+
+ 14:37 <cpaelzer> because even if you would "back out to an old oslo.messaging" that would still be uploads and migration - and we are in final freeze
+
+ 14:37 <cpaelzer> thank you coreycb
+
+ 14:37 <cpaelzer> this isn't anything the MIR team can help, but we can push you to help youself :-)
+
+ 14:38 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> Two recent updates
+
+ 14:38 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/opensc/+bug/1892559 seems to be re-started but not yet for us to review
+
+ 14:38 <ubottu> Launchpad bug 1892559 in opensc (Ubuntu) "[MIR] ccid opensc pcsc-lite" [Undecided, Incomplete]
+
+ 14:39 <cpaelzer> And https://bugs.launchpad.net/ubuntu/+source/lua5.4/+bug/1909665 also might be 22.04 or later material (to switch to a newer lua verion some day)
+
+ 14:39 <ubottu> Launchpad bug 1909665 in lua5.4 (Ubuntu) "[MIR] ibus-libpinyin dependencies" [Low, Incomplete]
+
+ 14:39 <cpaelzer> but it doesn't need MIR team attention so far
+
+ 14:39 <cpaelzer> #topic Any other business?
+
+ 14:39 <cpaelzer> nothing from me except asking again for review of the PR that updates the rules in the wiki
+
+ 14:39 <didrocks> yeah, will do :)
+
+ 14:40 <sarnold> good morning, sorry I'm late
+
+ 14:40 <slyon> I will have a look at your PR as well!
+
+ 14:40 <slyon> Nothing else from my side.
+
+ 14:40 <cpaelzer> hi sarnold
+
+ 14:41 <cpaelzer> np to be late, but please see the above question on https://bugs.launchpad.net/ubuntu/+source/python-prometheus-client/+bug/1943143
+
+ 14:41 <ubottu> Launchpad bug 1943143 in python-oslo.metrics (Ubuntu) "[MIR] python-oslo.metrics, python-prometheus-client" [Undecided, In Progress]
+
+ 14:41 <cpaelzer> slyon: AFAICS that needs to happen more or less "now" since the fallback by the OS team also would take some time
+
+ 14:41 <sarnold> cpaelzer: can you repaste the question?
+
+ 14:41 <cpaelzer> sarnold: sure
+
+ 14:41 <sarnold> (it'll be half an hour or something before the logbot gets to it)
+
+ 14:42 <cpaelzer> the package python-prometheus-client still awaits security review
+
+ 14:42 <cpaelzer> for the MIR in https://bugs.launchpad.net/ubuntu/+source/python-prometheus-client/+bug/1943143
+
+ 14:42 <ubottu> Launchpad bug 1943143 in python-oslo.metrics (Ubuntu) "[MIR] python-oslo.metrics, python-prometheus-client" [Undecided, In Progress]
+
+ 14:42 <cpaelzer> This is 21.10 material
+
+ 14:42 <cpaelzer> And release is in two days
+
+ 14:42 <cpaelzer> So the openstack team (jamespage / coreycb) will need to know asap if this will be reviewed (and be ok)
+
+ 14:43 <cpaelzer> or if they need to do last minute changes to fall back to an alternative
+
+ 14:43 <cpaelzer> I guess that summarizes the question
+
+ 14:44 <sarnold> cpaelzer: thanks; prometheus_client looks short enough that I can get through it asap...
+
+ 14:44 <sarnold> I suggest we continue under the assumption it'll be fine
+
+ 14:44 <cpaelzer> coreycb: ^^
+
+ 14:44 <cpaelzer> awesome
+
+ 14:45 <cpaelzer> if the two of you sarnold + coreycb (jamespage) could sort that out today it could then be promoted tonight/tomorrow
+
+ 14:45 <coreycb> sarnold: thanks for looking!
+
+ 14:45 <cpaelzer> ok, I guess that covers the "other topics"
+
+ 14:45 <cpaelzer> I'd close unless there is anything else ???
+
+ 14:45 <sarnold> nothing from me
+
+ 14:46 <slyon> thank you o/
+
+ 14:46 <didrocks> thanks cpaelzer
+
+ 14:46 <cpaelzer> Final FYI next week I'd be on PTO, if someone else could drive this then that would be great.
+
+ 14:46 <sarnold> nice, enjoy :)
+
+ 14:47 <cpaelzer> Or you can all let the archive reopening ruin -proposed and idle a week until things look reasonable :-)
+
+ 14:47 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,484 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:04:15 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-01-18-16.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+
+ *burndown charts
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/canonical-foundations.html   (slangasek, 16:29:03)
+
+ *AOB
+
+
+
+Meeting ended at 16:44:12 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (49)
+ * slangasek (43)
+ * stgraber (36)
+ * cjwatson (21)
+ * bdmurray (17)
+ * barry (17)
+ * ubottu (9)
+ * jodh (7)
+ * doko (5)
+ * meetingology (3)
+ * ScottK (3)
+ * ogra_ (2)
+
+
+
+== Full Log ==
+
+
+ 16:04:15 <slangasek> #startmeeting
+
+ 16:04:15 <meetingology> Meeting started Wed Jan 18 16:04:15 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:04:15 <meetingology> 
+
+ 16:04:15 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:16 <jodh> o/
+
+ 16:04:22 <slangasek> [TOPIC] lightning round
+
+ 16:04:23 <ev> hi
+
+ 16:04:40 <slangasek> $ echo $(shuf -e cjwatson brry doko stgraber jodh ev bdmurray slangasek)
+
+ 16:04:50 <ev> come on, big money big money, no whammy
+
+ 16:04:53 <slangasek> bdmurray cjwatson doko ev jodh slangasek stgraber barry
+
+ 16:04:57 <ev> damn
+
+ 16:05:03 <ogra_> is bby barry with a cold ?
+
+ 16:05:05 <slangasek> hmm, where did barry's a go
+
+ 16:05:19 <ogra_> err brry i meant indeed :)
+
+ 16:05:23 <barry> there's an off-color joke in there somewhere
+
+ 16:05:24 <slangasek> anyway
+
+ 16:05:32 <bdmurray> holiday on Monday
+
+ 16:05:32 <bdmurray> discovered and issue with apport where bugpatterns weren't being checked
+
+ 16:05:32 <bdmurray> updated apport package hook for linux not to ask re kerneloops.org
+
+ 16:05:32 <bdmurray> uploaded an enabled version of kerneloops for precise
+
+ 16:05:43 <bdmurray> bug triage of ubuntu-installer bug reports I got subscribed to
+
+ 16:05:43 <bdmurray> debugged a cbd issue with bjf
+
+ 16:05:43 <bdmurray> reported bug 917903 regarding apport and gz report items
+
+ 16:05:43 <bdmurray> investigation into aptdaemon bug 855394
+
+ 16:05:46 <ubottu> Launchpad bug 917903 in apport (Ubuntu) "ubuntu general hook doesn't know how to read .gz files" [Undecided,Triaged] https://launchpad.net/bugs/917903
+
+ 16:05:47 <ubottu> Launchpad bug 855394 in aptdaemon (Ubuntu Precise) "update-manager crashed with AptDaemonError in _convert_dbus_exception(): org.debian.apt: Could not cancel transaction" [High,Confirmed] https://launchpad.net/bugs/855394
+
+ 16:05:54 <bdmurray> updated update-manager apport hook to include recent Aptdaemon messages from syslog
+
+ 16:05:57 <bdmurray> update firefox-lp-improvements to fix bug 917461
+
+ 16:06:04 <ubottu> Launchpad bug 917461 in Launchpad Greasemonkey Scripts "stock replies do not work in Firefox" [High,Fix released] https://launchpad.net/bugs/917461
+
+ 16:06:50 <bdmurray> done
+
+ 16:08:27 <slangasek> cjwatson:
+
+ 16:08:33 <cjwatson> Added timestamps to live filesystem builds.  Did a bit of hopeful optimisation of update-initramfs calls but it unfortunately didn't save much.
+
+ 16:08:37 <cjwatson> Spruced up ubuntu-archive-tools a bit, applied GPLv3 to unlicensed files, and did some preliminary modernisation in preparation for Python 3.
+
+ 16:08:39 <cjwatson> Ported germinate to Python 3, by way of practice.
+
+ 16:08:42 <cjwatson> Helped out with lazr.uri port to Python 3.  Ported wadllib.
+
+ 16:08:44 <cjwatson> Trying to drain the python-debian Python 3 swamp:
+
+ 16:08:47 <cjwatson> * Packaged six.
+
+ 16:08:49 <cjwatson> * Filed Debian #656288 in python3-apt to deal with non-UTF-8 tag files.
+
+ 16:08:51 <ubottu> Debian bug 656288 in python3-apt "python3-apt: difficulties with non-UTF-8-encoded TagFiles" [Normal,Open] http://bugs.debian.org/656288
+
+ 16:08:52 <cjwatson> * Filed Python #13815 to make it easier to get Unicode data out of tarfile.
+
+ 16:08:54 <slangasek> ev: and you're next since doko is having gateway problems
+
+ 16:08:55 <cjwatson> * Slogged through huge numbers of bytes/str fiddling and general confusion.  Still in progress.
+
+ 16:08:58 <cjwatson> Discussed Ubuntu Studio live DVD structure with Scott.  I think I now have a clear enough idea of what they need to be able to implement it pretty quickly.
+
+ 16:09:01 <cjwatson> ..
+
+ 16:09:27 <ev> - Fighting apport-retrace. Was missing gdb as apport-retrace didn't have a
+
+ 16:09:27 <ev> depencency on it as the traceback is normally extracted client-side
+
+ 16:09:27 <ev> (add_gdb_info). It may still be advantageous to do that work on the client,
+
+ 16:09:28 <ev> but that (10s) plus adding the needed package information (add_package_info)
+
+ 16:09:28 <ev> to the report (30s) takes no small amount of time.
+
+ 16:09:28 <ev> - Updating RT 48667 with the latest requirements and my notes from talking to
+
+ 16:09:28 <ev> James on November 30th.
+
+ 16:09:39 <ev> - Including a SHA-512 hash of the system UUID in uploaded reports and core
+
+ 16:09:40 <ev> dumps.
+
+ 16:09:40 <ev> - Meeting with Gerry to discuss the downloads marketing campaign and the crash
+
+ 16:09:40 <ev> database.
+
+ 16:09:40 <ev> - Privilege dropping in whoopsie.
+
+ 16:09:42 <ev> - Dealing with DBus/ConsoleKit fallout from dropping privileges (at_console is
+
+ 16:09:42 <ev> set for NetworkManager).
+
+ 16:09:47 <ev> - Reply to Christian and Nick on slideshow questions.
+
+ 16:09:47 <ev> - Talked through the crash UI with Matthew
+
+ 16:09:48 <ev> (https://wiki.ubuntu.com/ErrorTracker).
+
+ 16:09:48 <ev> - It looks like we'll need a "ignore future crashes" checkbox, after all.
+
+ 16:09:48 <ev> He's working on the right UI for this now.
+
+ 16:09:57 <ev> - We don't need a confidentiality warning like apport currently has, as
+
+ 16:09:57 <ev> the information collected is not being shared with the general public like
+
+ 16:09:57 <ev> existing reports are.
+
+ 16:09:57 <ev> - Matthew will work on the administrator UI, for disabling crash and metrics
+
+ 16:09:58 <ev> reporting.
+
+ 16:09:58 <ev> - I will run these modifications to apport by pitti, then implement.
+
+ 16:09:58 <ev> - Including the system UUID with the upload of the report and the core dump.
+
+ 16:10:04 <ev> - Figuring out how to handle permissions around /var/crash, now that we drop
+
+ 16:10:04 <ev> privileges.
+
+ 16:10:04 <ev> - Fixed a really nasty memory corruption bug that ate up a few hours.
+
+ 16:10:05 <ev> - Added tests for get_system_uuid and get_crash_db_url
+
+ 16:10:05 <ev> - Worked with pitti to get crash files written with 0640, so that the daemon
+
+ 16:10:05 <ev> can read them as a regular user.
+
+ 16:10:10 <ev> - Added a test for hex_to_char.
+
+ 16:10:10 <ev> - Move to GNetworkMonitor from NetworkManager for the network connectivity
+
+ 16:10:10 <ev> check. This means no more needing a console (NM uses at_console), and
+
+ 16:10:11 <ev> actually having a "can we reach the crash server" condition.
+
+ 16:10:11 <ev> - Ensure that /var/crash is group owned by whoopsie and is chmod g+s.
+
+ 16:10:21 <ev> - Isolate whoopsie into its own mount namespace, RO bind mount / and RW bind
+
+ 16:10:22 <ev> mount /var/crash into /var/tmp/whoopsie. Chroot, then drop all privileges and
+
+ 16:10:22 <ev> capabilities but CAP_FOWNER, so that now we can be a regular user who has
+
+ 16:10:22 <ev> the sole added ability of being able to delete files in /var/crash (which is
+
+ 16:10:22 <ev> +t).
+
+ 16:10:23 <ev> - The rationale for this is that users need to be able to drop 0-byte
+
+ 16:10:23 <ev> .upload files in /var/crash to notify the daemon that they want the crash
+
+ 16:10:23 <ev> uploaded.  The daemon then needs to be able to delete these.
+
+ 16:10:26 <ev> (done)
+
+ 16:10:34 * doko is joining from the ac100
+
+ 16:10:49 <slangasek> doko: you're up then, if you're ready to report :)
+
+ 16:10:50 <jodh> Working on getting lp:upstart building daily. Started to write a python
+
+ 16:10:50 <jodh> script to autogenerate a comprehensive set of test Upstart jobs (and
+
+ 16:10:50 <jodh> hopefully also to autogen a script to check the results). Working to
+
+ 16:10:50 <jodh> resolve failing unit tests for bug 912558.
+
+ 16:10:50 <jodh> ♨
+
+ 16:10:52 <ubottu> Launchpad bug 912558 in upstart (Ubuntu Precise) "log.c Assert failed - err=>number == EIO" [High,Confirmed] https://launchpad.net/bugs/912558
+
+ 16:11:15 <doko> may I skip? no summary on this host
+
+ 16:12:27 <slangasek> doko: yeah - send by email later?
+
+ 16:12:34 <doko> will do
+
+ 16:12:52 <stgraber> jodh: let me know if you need any help with the daily builds, I have that setup for quite a few projects
+
+ 16:13:44 <barry> doko: please take a look at debian bug 655793 (forwarded from #debian-python)
+
+ 16:13:45 <ubottu> Debian bug 655793 in pyzmq "pyzmq: FTBFS: test_queue (zmq.tests.test_monqueue.TestMonitoredQueue) ... Assertion failed: !inpipe && !outpipe (pair.cpp:49)" [Serious,Open] http://bugs.debian.org/655793
+
+ 16:13:46 <jodh> stgraber: thanks!
+
+ 16:14:24 <doko> barry: seen, maybe some issues with the branch version
+
+ 16:14:49 <barry> doko: we thought, maybe some of the compiler flag changes in -3 perhaps?
+
+ 16:15:25 <barry> doko: check with jtaylor
+
+ 16:15:27 <doko> barry, I get same test results with and without lto
+
+ 16:15:36 <slangasek> * management sprint + travel back, Sat-Tue
+
+ 16:15:36 <slangasek> * uploaded command-not-found to fix the 'sudo' group name
+
+ 16:15:36 <slangasek> * helped with the new queue last week, unity 5.0 ftw
+
+ 16:15:36 <slangasek> * uploaded crda, needed some tweaks for multiarch to enable a fixed apt upload
+
+ 16:15:38 <barry> doko: ah
+
+ 16:15:39 <slangasek> * more work on hiring for our openings
+
+ 16:15:41 <slangasek> (done)
+
+ 16:15:59 <stgraber> - Testing tracker
+
+ 16:15:59 <stgraber> - Production instance has been updated
+
+ 16:15:59 <stgraber> - Bugfix: Handle case where we don't have any build in the build list
+
+ 16:15:59 <stgraber> - Add report to look for results for a given bug number
+
+ 16:15:59 <stgraber> - Admin: Add a field to set the comment we'll add to bugs
+
+ 16:16:02 <stgraber> - Add lp-integration script to the branch with needed changes for new tracker + lucid
+
+ 16:16:05 <stgraber> - Networking
+
+ 16:16:07 <stgraber> - dnsmasq and IPv6 privacy extensions are now turned on by default for everyone (thanks to cyphermox!)
+
+ 16:16:10 <stgraber> - Merged ifupdown and went through its buglist which is now a lot shorter
+
+ 16:16:13 <stgraber> - Prepared an SRU for bug 876829 and talked with upstream about fixing ifdown when dealing with labels
+
+ 16:16:15 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,In progress] https://launchpad.net/bugs/876829
+
+ 16:16:16 <stgraber> - Expecting another ifupdown upload this afternoon with the cherry-picked commit and upload of the Oneiric SRU
+
+ 16:16:19 <stgraber> - One more fix to bridge-utils to deal with VLANs
+
+ 16:16:22 <stgraber> - Some discussions on resolvconf and its interaction with NM's dnsmasq and libvirt
+
+ 16:16:25 <stgraber> - ARB
+
+ 16:16:27 <stgraber> - Got unity-lens-askubuntu into Ubuntu 11.10 extras
+
+ 16:16:30 <stgraber> - Did the same with unity-lens-utilities (published on Monday evening)
+
+ 16:16:32 <stgraber> - Did some queue review/cleanup, discussed about improving MyApps and the ARB workflow to deal with the current backlog
+
+ 16:16:35 <stgraber> - Containers
+
+ 16:16:38 <stgraber> - Started working on a fixed util-linux using Serge's patch
+
+ 16:16:40 <stgraber> - TPM
+
+ 16:16:43 <stgraber> - Uploaded current trousers to my experimental PPA (build dependency for current tpm-tools)
+
+ 16:16:46 <stgraber> - Started fighting with a buggy upstream tarball of tpm-tools until they eventually released a working one (a few hours ago)
+
+ 16:16:49 <stgraber> - Got both of them built but still not quite working, now trying to also go with the latest opencryptoki, then rebuild tpm-tools using it.
+
+ 16:16:53 <stgraber> - Other
+
+ 16:16:55 <stgraber> - Uploaded bugfix/translation update of Arkose to Precise and backported in the PPA
+
+ 16:16:58 <stgraber> - TODO
+
+ 16:17:01 <stgraber> - Cherry-pick ifupdown's last label fix to Precise and include in the SRU for Oneiric
+
+ 16:17:04 <stgraber> - Test the new tpm stack from the PPA
+
+ 16:17:06 <stgraber> - Some more bugfixes for the ISO tracker
+
+ 16:17:09 <stgraber> - Continue bug review on vlan, ifenslave-2.6, bridge-utils and resolvconf to see if I missed anything with the recent fixes
+
+ 16:17:12 <stgraber> (and switched from empathy to using bitlbee, now managing everything through irssi in a screen session, no more empathy/telepathy crashes or issues syncing my status across protocols!)
+
+ 16:17:16 <stgraber> (done)
+
+ 16:17:34 <barry> fixed the lintian warnings in dbus-python and got all the binary packages looking good (with help from cjwatson...thanks!).  still waiting in new queue.  build retries a few times to get success on arm* and powerpc, but now all is green.  currently working on feedparser - 5.1 (new upstream) supports it, but we have 5.0.1, upstream tarball is missing some data files and has test failures when python-chardet is installed, so reporting
+
+ 16:17:34 <barry> those upstream and working around them in the packaging; should hopefully be ready later today.  met w/launchpad guys to helped out with general packaging questions.  done.
+
+ 16:19:32 <slangasek> stgraber: how's bitlbee's VoIP integration? ;)
+
+ 16:20:08 <slangasek> any other questions on statuses?
+
+ 16:20:23 <stgraber> slangasek: hehe, that's the only bit where I'm keeping empathy (and it actually works great for that!). I just have my VOIP account, Canonical VC account and the "people nearby" account in empathy now, everything moved to my IRC server
+
+ 16:20:26 <cjwatson> I would look at dbus-python in NEW but the NEW queue has been going in the wrong direction for me all day
+
+ 16:20:52 <stgraber> *everything else
+
+ 16:21:00 <slangasek> [TOPIC] Bugs
+
+ 16:21:12 <slangasek> bdmurray: what's hot in the insect world?
+
+ 16:21:43 <barry> cjwatson: ouch ;}
+
+ 16:22:00 <bdmurray> I've run across a couple of "hot" bugs
+
+ 16:22:22 <bdmurray> bug 916299 seems like it would be important
+
+ 16:22:23 <ubottu> Launchpad bug 916299 in ubiquity (Ubuntu) "Ubiquity uses grub-efi instead of grub-pc on non-GPT disk" [High,New] https://launchpad.net/bugs/916299
+
+ 16:22:39 <bdmurray> additionally does anybody know what this Boot-Info-Script is?
+
+ 16:22:39 <cjwatson> uh
+
+ 16:22:54 <cjwatson> EFI is not intrinsically tied to GPT
+
+ 16:23:06 <cjwatson> I mean not in both directions
+
+ 16:23:26 <cjwatson> bdmurray: http://bootinfoscript.sourceforge.net/
+
+ 16:24:35 * cjwatson marks incomplete
+
+ 16:25:03 <bdmurray> hmm, hadn't seen that before thanks
+
+ 16:25:32 <bdmurray> then bug 916209 regarding recovery mode and wubi
+
+ 16:25:34 <ubottu> Launchpad bug 916209 in lupin (Ubuntu) "Recovery mode incorrect on wubi installs" [High,New] https://launchpad.net/bugs/916209
+
+ 16:25:45 * cjwatson looks, thought I fixed that ...
+
+ 16:26:31 <cjwatson> ah, ok, right, I'll deal with that thanks
+
+ 16:27:48 <bdmurray> that's about it then
+
+ 16:28:48 <slangasek> bdmurray: cool, thanks
+
+ 16:29:00 <slangasek> [TOPIC] burndown charts
+
+ 16:29:03 <slangasek> [LINK] http://status.ubuntu.com/ubuntu-precise/canonical-foundations.html
+
+ 16:29:07 * barry hides
+
+ 16:29:19 <slangasek> there was some very good progress last week during the rally
+
+ 16:29:54 <slangasek> and the workitems are now more accurate, which is a good thing even though it doesn't help move the graph in the right direction ;)
+
+ 16:30:29 <cjwatson> I'm happy to keep helping out with py3, if that's wanted - not much else on my list is desperately urgent
+
+ 16:30:33 <slangasek> and in fact, if we were to discount the workitems on our blueprints belonging to non-foundations people, we'd be below the trendline... so we'll blame them if anyone asks :P
+
+ 16:31:06 <barry> cjwatson: great!
+
+ 16:31:28 <slangasek> all the same, rickspencer3 wants us to be realistic about what work we're going to get done and postpone things we aren't, so that other teams know what they can rely on from us this cycle
+
+ 16:32:00 <slangasek> so if there's anything you think we should postpone, talk to me
+
+ 16:32:10 <slangasek> and if you don't think there's anything you should postpone, I'll talk to you ;D
+
+ 16:33:09 <stgraber> yeah, looking at it, a sixth of my work items are non-Canonical/Foundations stuff (Edubuntu website, ubiquity plugin, ...). Though I actually need to spend a weekend or so going through these :)
+
+ 16:33:51 <slangasek> right, it doesn't help the graph that we have overachievers taking on non-Canonical blueprints :)
+
+ 16:34:43 <barry> slangasek: i want to push on as much as possible this month, and then postpone whatever's left when i switch to stable+1
+
+ 16:35:09 <slangasek> barry: I think that's reasonable, yes
+
+ 16:35:30 <slangasek> particularly since most of those new workitems for python3 should be on the small end
+
+ 16:35:43 <slangasek> and if cjwatson can help with them too, that's all to the good
+
+ 16:36:46 <barry> yep.  of course, the biggest risk is that we don't know what we don't know
+
+ 16:36:53 <slangasek> usually :)
+
+ 16:37:03 <barry> :)
+
+ 16:37:13 <slangasek> [TOPIC] AOB
+
+ 16:37:20 <slangasek> anything else on your minds?
+
+ 16:37:33 <slangasek> reminder that I'm off this Friday, swapping for the bank holiday here
+
+ 16:37:44 <slangasek> barry: did you decide what day you're swapping to?
+
+ 16:37:55 <slangasek> or is that "later" :)
+
+ 16:37:56 <ScottK> python3-defaults is now sync'ed from Debian.
+
+ 16:38:04 <barry> slangasek: not yet
+
+ 16:38:27 <slangasek> ScottK: \o/
+
+ 16:38:54 <barry> ScottK: thanks!
+
+ 16:38:59 <ScottK> It's much easier than with python due to barry's upstream work on various PEP's to improve multi-version support.
+
+ 16:39:50 <slangasek> barry++
+
+ 16:40:41 <ScottK> BTW, just uploaded ipy with python3 support to Debian ... So we're making progress.
+
+ 16:41:06 <slangasek> good to know
+
+ 16:41:13 <cjwatson> I think I'll use it a lot more once we have -debian and -launchpadlib ported.  Pretty much all the archive tools could be python3 then.
+
+ 16:41:19 <barry> nice.  i'll submit feedparser to debian when it's ready
+
+ 16:41:35 <barry> cjwatson: wow, that would be fantastic
+
+ 16:44:12 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

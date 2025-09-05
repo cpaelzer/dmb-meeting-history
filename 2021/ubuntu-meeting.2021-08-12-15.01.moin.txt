@@ -1,0 +1,561 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 12 Aug at 15:01 &mdash; 15:58 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-08-12-15.01.log.html
+
+
+
+== Meeting summary ==
+
+ * ''LINK:'' https://github.com/juju/charm-helpers/pull/627                                                                                                                                                                     created bileto ticket, PPA, uploads for distro-info-data SRU LP: #1939457  (bdmurray, 15:09)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:16.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:16)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:22.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:22)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:34.
+
+ * ''LINK:'' https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=983999   (mclemenceau_, 15:42)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (63)
+ * sil2100 (35)
+ * juliank (19)
+ * dbungert (19)
+ * mclemenceau_ (19)
+ * ubottu (18)
+ * schopin (16)
+ * jawn-smith (16)
+ * doko (16)
+ * ginggs (15)
+ * xypron (8)
+ * cpaelzer (3)
+ * meetingology (2)
+ * ricotz (2)
+ * mclemenceau (1)
+
+
+
+== Full log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started at 15:01:00 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert xypron ginggs schopin)
+
+ 15:01 <juliank> o/
+
+ 15:01 <bdmurray> juliank vorlon schopin dbungert slyon ginggs waveform sil2100 xypron bdmurray jawn-smith doko mwhudson
+
+ 15:01 <mclemenceau> o/
+
+ 15:02 <juliank> I've just been working on submitting and reviewing shims, and a grub update for focal, and some sponsoring for xypron
+
+ 15:02 <juliank> (done)
+
+ 15:02 <bdmurray> schopin:
+
+ 15:03 <schopin> * zlib: ported a patch to speed up crc32 on s390x from the zlib-ng tree. LP #1932010
+
+ 15:03 <schopin> * openssl:
+
+ 15:03 <schopin> + worked on SRU verification for LP #1931994
+
+ 15:03 <schopin> + posted report on OpenSSL3 mass rebuild on ubuntu-devel@l.u.c
+
+ 15:03 <schopin> + merged 1.1.1k from Debian (trivial diff, point release consisting almost
+
+ 15:03 <schopin> entirely of patches we already shipped). LP #1939544
+
+ 15:03 <ubottu> Launchpad bug 1939544 in openssl (Ubuntu) "Merge the 1.1.1k version from Debian" [Undecided, In Progress] https://launchpad.net/bugs/1939544
+
+ 15:03 <schopin> * lksctp-tools: requested sync as our patches are present upstream. LP #1939411
+
+ 15:03 <ubottu> Launchpad bug 1939411 in lksctp-tools (Ubuntu) "Sync lksctp-tools 1.0.19+dfsg-1 (main) from Debian unstable (main)" [Undecided, Fix Released] https://launchpad.net/bugs/1939411
+
+ 15:03 <schopin> * pam: merged 1.4.0 from Debian. LP #1916509
+
+ 15:03 <ubottu> Launchpad bug 1916509 in pam (Ubuntu) "Update PAM and PAM modules" [Undecided, In Progress] https://launchpad.net/bugs/1916509
+
+ 15:03 <schopin> * gnupg2: merged 2.2.27-2. LP #1939567
+
+ 15:03 <ubottu> Launchpad bug 1939567 in gnupg2 (Ubuntu) "Merge 2.2.27-2 from Debian" [Undecided, In Progress] https://launchpad.net/bugs/1939567
+
+ 15:03 <schopin> * libuv1: investigated FTBFS. LP #1939707
+
+ 15:03 <ubottu> Launchpad bug 1939707 in libuv1 (Ubuntu) "FTBFS on impish" [Undecided, In Progress] https://launchpad.net/bugs/1939707
+
+ 15:03 <schopin> (done)
+
+ 15:03 <dbungert> * curtin - update vmtests for Impish.  Found a few that had been dropped
+
+ 15:03 <dbungert> and added them back.  Simplify vmtests managements scripts for next time.
+
+ 15:03 <dbungert> * subiquity/u-d-i/bitlocker - PR merged.  Offered a high-level API to answer
+
+ 15:03 <dbungert> the question 'is bitlocker on system?', which is implemented and merged
+
+ 15:03 <dbungert> * subiquity/u-d-i bug triage.  4 LPs outstanding, 2 could be marked fixed right
+
+ 15:03 <dbungert> away, one more (LP: #1939422) fixed with merge of subiquity to u-d-i,
+
+ 15:03 <ubottu> Launchpad bug 1939422 in subiquity "install failed crashed with CalledProcessError" [Undecided, Fix Released] https://launchpad.net/bugs/1939422
+
+ 15:04 <dbungert> requested more info on another (LP: #1939059)
+
+ 15:04 <dbungert> * subiquity/u-d-i/free software only install - have proof of concept code that
+
+ 15:04 <dbungert> manipulates configured components in sources.list.  Port said code over to
+
+ 15:04 <dbungert> python3-apt.  Working on moving existing curtin code that manipulates
+
+ 15:04 <dbungert> source.list over to using the aptsources.sourceslist module.  python3-apt
+
+ 15:04 <dbungert> SourceEntry only has partial support for options - supports just `arch` and
+
+ 15:04 <dbungert> `trusted`, and anything outside of that gets marked invalid.  Analyzing if
+
+ 15:04 <dbungert> this level of support is enough for Curtin use cases.
+
+ 15:04 <dbungert> * subiquity/u-d-i/geoip - start an API that can pass thru raw geoip results.  I
+
+ 15:04 <dbungert> prefer this over having the client ask geoip directly so that there is one,
+
+ 15:04 <dbungert> consistent, set of geoip results
+
+ 15:04 <dbungert> (done)
+
+ 15:04 <bdmurray> I think I heard slyon is out so ginggs
+
+ 15:04 <ginggs> * merged twisted
+
+ 15:04 <ginggs> * fixed the following FTBFS with new toolchain:
+
+ 15:04 <ginggs> + source-highlight
+
+ 15:04 <ginggs> + libvpd (and lsvpd and ppc64-diag)
+
+ 15:04 <ginggs> + advancecomp
+
+ 15:05 <ginggs> + python-httplib2
+
+ 15:05 <ginggs> + autofs
+
+ 15:05 <ginggs> + debugedit
+
+ 15:05 <ginggs> + strace (work in progress)
+
+ 15:05 <ginggs> (done)
+
+ 15:05 <bdmurray> waveform is out
+
+ 15:05 <bdmurray> sil2100:
+
+ 15:05 <sil2100> * SRU reviews and releases
+
+ 15:05 <sil2100> * 20.04.3:
+
+ 15:05 <sil2100> - Proceeding with the checklist
+
+ 15:05 <sil2100> - Sync-up meetings (twice a week), status updates
+
+ 15:05 <sil2100> - Reviews for .3
+
+ 15:05 <sil2100> - Coordination between teams
+
+ 15:05 <sil2100> - Discussing and announcing the one-week delay due to issues found
+
+ 15:05 <sil2100> - Coming up with a plan for how to deal with the release now
+
+ 15:05 <sil2100> * Migrated settings on the ESM britney instance to the right directories
+
+ 15:05 <sil2100> - Still waiting for the merging and production deployment of private-tests ADT infra
+
+ 15:05 <sil2100> - This needed some downtime of the public security-britney
+
+ 15:05 <sil2100> * Merged console-setup
+
+ 15:05 <sil2100> * ubuntu-image:
+
+ 15:05 <sil2100> - Finished reviewing initial states PR for William - merged
+
+ 15:06 <sil2100> - Started reviewing rootfs-population states PR
+
+ 15:06 <sil2100> - Finished work on the manifest generation states changes, prepared a PR
+
+ 15:06 <sil2100> - Iterated on that per William's review
+
+ 15:06 <sil2100> * Documentation workshops (partially)
+
+ 15:06 <sil2100> * Poked people re: UC22 image build enablement, still waiting there
+
+ 15:06 <sil2100> * Queue reviews
+
+ 15:06 <sil2100> * Helped out with some livecd-rootfs iterations re: intel-iot support, pushed cdimage fixes
+
+ 15:06 <sil2100> - Running an image build now testing the final bits before submitting as an SRU
+
+ 15:06 <sil2100> * Minor Archive Admin work
+
+ 15:06 <sil2100> * Refreshed memory about our KPI gathering code
+
+ 15:06 <sil2100> * Started slowly typing code for simplestreams in cdimage
+
+ 15:06 <sil2100> (done)
+
+ 15:07 <bdmurray> xypron:
+
+ 15:07 <xypron> Work on Debian packages to be migrated:
+
+ 15:07 <xypron> make-dfsg
+
+ 15:07 <xypron> git
+
+ 15:07 <xypron> e2fsprogs (has a problem on big-endian)
+
+ 15:07 <xypron> Looking a problems in booting via UEFI:
+
+ 15:07 <xypron> - missing default command efidebug -> patch send upstream
+
+ 15:08 <xypron> - crash shown in Linux 5.13.5, 5.14-rc5 when booting via UEFI
+
+ 15:08 <xypron> (done)
+
+ 15:08 <bdmurray> merged hints for schopin                                                                                                                                                                                             updated Intel IoT dangerous model w/ storage-safety=prefer-unencrypted
+
+ 15:08 <bdmurray> submitted RT to have the new model signed                                                                                                                                                                            merged meta-release changes for raspi json (made it better) then updated the server
+
+ 15:09 <bdmurray> merged meta-release changes for raspi json (made it better) then updated the server                                                                                                                                  review of a u-r-u MP for Dave (LP: #1936401)
+
+ 15:09 <ubottu> Launchpad bug 1936401 in ubuntu-release-upgrader (Ubuntu Impish) "Migrate Pi users away from u-boot in impish" [Undecided, New] https://launchpad.net/bugs/1936401
+
+ 15:09 <bdmurray> sponsored update-notifier SRU (LP: #1836475) for Dave                                                                                                                                                                reviewed / commented on 20.04.3 delay announcement
+
+ 15:09 <ubottu> Launchpad bug 1836475 in update-notifier (Ubuntu Focal) "[SRU] update-notifier-common weekly cron job runs at the same time for all computers across the globe" [High, Fix Committed] https://launchpad.net/bugs/1836475
+
+ 15:09 <bdmurray> test deploys of the Ubuntu Error Tracker on Bionic in PS5
+
+ 15:09 <bdmurray> well that's terrible
+
+ 15:09 <bdmurray> reported http://launchpad.net/bugs/1939342 re the cassandra charm                                                                                                                                                    submitted another charmhelpers PR re add-apt-repository and proxy environment
+
+ 15:09 <ubottu> Launchpad bug 1939342 in Cassandra Juju Charm "charm fails to install on Ubuntu 18.04" [Undecided, Fix Released]
+
+ 15:09 <bdmurray> https://github.com/juju/charm-helpers/pull/627                                                                                                                                                                     created bileto ticket, PPA, uploads for distro-info-data SRU LP: #1939457
+
+ 15:09 <ubottu> Launchpad bug 1939457 in distro-info-data (Ubuntu Hirsute) "Update EoL dates for 16.04 LTS and 21.04 so they are not on weekends" [Low, Fix Committed] https://launchpad.net/bugs/1939457
+
+ 15:09 <ubottu> Pull 627 in juju/charm-helpers "Set no_proxy in the command environment for add-apt-repository" [Merged]
+
+ 15:09 <bdmurray> reported dist-upgrade in progress bug LP: #1939616
+
+ 15:09 <ubottu> Launchpad bug 1939616 in update-notifier (Ubuntu) "u-r-u should leave a breadcrumb indicating a dist-upgrade is in progress" [Undecided, New] https://launchpad.net/bugs/1939616
+
+ 15:10 <bdmurray> done
+
+ 15:10 <jawn-smith> * Investigating and testing LP: #1934548. New patch put in place by kernel team, waiting for it to build
+
+ 15:10 <jawn-smith> * Re-write ubuntu-image in go
+
+ 15:10 <ubottu> Launchpad bug 1934548 in linux-riscv-5.11 (Ubuntu) "RISC-V: Illegal instruction" [High, Confirmed] https://launchpad.net/bugs/1934548
+
+ 15:10 <jawn-smith> * Now have functionality and 100% test coverage through all states assigned to me \o/
+
+ 15:10 <jawn-smith> * New PR opened for the following states:
+
+ 15:10 <jawn-smith> *populate_rootfs_contents
+
+ 15:10 <jawn-smith> *populate_rootfs_contents_hooks
+
+ 15:10 <jawn-smith> *generate_disk_info
+
+ 15:10 <jawn-smith> *calculate_rootfs_size
+
+ 15:10 <jawn-smith> * Reviewed sil2100 generate_manifests PR. Running some tests now, may need one more test case.
+
+ 15:10 <jawn-smith> * Created https://github.com/snapcore/snapd/pull/10592
+
+ 15:10 <ubottu> Pull 10592 in snapcore/snapd "gadget: Export mkfs functions for use in ubuntu-image" [Open]
+
+ 15:10 <jawn-smith> * Got 3 approvals but waiting on someone to merge
+
+ 15:10 <jawn-smith> [done]
+
+ 15:11 <bdmurray> doko:
+
+ 15:12 <doko> - glibc fixes together with mwhudson
+
+ 15:12 <doko> - investigate armhf hard float issue intriduced with gcc-11
+
+ 15:12 <doko> - look at tsan libsanitizer backport for s390x
+
+ 15:12 <doko> - test rebuild
+
+ 15:12 <doko> - "merge party" on Monday, although my assignment not yet done
+
+ 15:12 <doko> (done)
+
+ 15:13 <bdmurray> are there any questions regarding status?
+
+ 15:13 <bdmurray> schopin: where is this new openssl now?
+
+ 15:13 <schopin> Still in the PPA, cf the announcement on ubuntu-devel
+
+ 15:14 <bdmurray> Okay, I'll read my email!
+
+ 15:14 <schopin> lp:~schopin/openssl3
+
+ 15:14 <bdmurray> any other questions?
+
+ 15:16 <bdmurray> #topic Release Incoming Bugs
+
+ 15:16 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:16 <bdmurray> bug 1939616
+
+ 15:16 <ubottu> Bug 1939616 in update-notifier (Ubuntu) "u-r-u should leave a breadcrumb indicating a dist-upgrade is in progress" [Undecided, New] https://launchpad.net/bugs/1939616
+
+ 15:17 <bdmurray> Does this seem like a *good* idea to anyone else?
+
+ 15:18 <jawn-smith> what other processes might want to know this?
+
+ 15:18 <sil2100> Sounds good to me
+
+ 15:19 <sil2100> Especially that we already see some potential users, like apport or update-notifier
+
+ 15:19 <bdmurray> u-r-u itself fiddles with a bunch of things before the upgrade process e.g. turning off the screen saver
+
+ 15:19 <jawn-smith> Seems like a good idea to me, I was just curious if there was a specific issue people were running into with this.
+
+ 15:19 <juliank> apt tells you that ubuntu-release-upgrader hols the lock which is kind of telling, right?
+
+ 15:20 <juliank> But graphical notification would be nice I guess
+
+ 15:20 <bdmurray> juliank: tells you how?
+
+ 15:20 <juliank> It'd say stuff like Waiting for cache lock: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 2483580 (apt-get)... 2s
+
+ 15:20 <juliank> just with u-r-u in the ()
+
+ 15:21 <juliank> or will it say python3?
+
+ 15:21 * juliank should check
+
+ 15:21 <schopin> it sounds a bit fragile though.
+
+ 15:21 <sil2100> Anyway apt operations are one thing, but this is about the whole upgrade process running
+
+ 15:21 <sil2100> I'd say it's better to have this distinction
+
+ 15:21 <schopin> this ^
+
+ 15:22 <bdmurray> alright so let's target and card that
+
+ 15:22 <bdmurray> rls-hh and -rls-ff incoming are empty
+
+ 15:22 <bdmurray> so
+
+ 15:22 <bdmurray> #topic Team proposed-migration report
+
+ 15:22 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:23 <bdmurray> binutils w/ crash and fpc
+
+ 15:24 <bdmurray> is anybody looking at this?
+
+ 15:25 <bdmurray> doko ?
+
+ 15:26 <bdmurray> juliank: are you looking at apt and auto-apt-proxy?
+
+ 15:26 <doko> that's from last week, who did volunteer for that one? wasn't that a kernel issue?
+
+ 15:26 <juliank> bdmurray: I should be, but no time so far
+
+ 15:27 <bdmurray> re binutils julian made a comment about ddeb retriever
+
+ 15:27 <bdmurray> since its ddebs.u.c I'll have a look
+
+ 15:27 <bdmurray> although doko you also said uninstallability issue
+
+ 15:28 <bdmurray> Does anyone want to have a look at auto-apt-proxy then?
+
+ 15:28 <juliank> I'll actually try to look at it this week
+
+ 15:28 <bdmurray> great
+
+ 15:28 <doko> Building dependency tree...
+
+ 15:28 <doko> Reading state information...
+
+ 15:28 <doko> E: Unable to locate package linux-image-5.11.0-20-generic-dbgsym
+
+ 15:28 <doko> E: Couldn't find any package by glob 'linux-image-5.11.0-20-generic-dbgsym'
+
+ 15:28 <doko> E: Couldn't find any package by regex 'linux-image-5.11.0-20-generic-dbgsym'
+
+ 15:29 <juliank> Yes, this says the ddeb is missing on ddebs.u.c?
+
+ 15:29 <bdmurray> pexpect and dpdk on ppc64el
+
+ 15:29 <bdmurray> does anybody have a ppc64el system setup?
+
+ 15:31 * ginggs retries the fpc autopkgtests, I made them pass in the new upload
+
+ 15:32 <bdmurray> how about ginggs for pexpect
+
+ 15:32 <ginggs> bdmurray: i'll take it
+
+ 15:32 <bdmurray> thanks!
+
+ 15:33 <bdmurray> and let's all take some time to review the perl and make-dfsg regressions but don't everybody click retry!
+
+ 15:34 <bdmurray> #topic AOB
+
+ 15:34 <jawn-smith> I have some merge-o-matic work assigned to me, as well as fixing some packages that are FTBFS with the new golang1.17. Are those types of work subject to the feature freeze?
+
+ 15:35 <bdmurray> merges are subject to feature freeze
+
+ 15:35 <bdmurray> the FTBFS fixes can be done after FF
+
+ 15:37 <bdmurray> so let's talk about FTBFS
+
+ 15:37 <mclemenceau_> Ok so we have a few FTBFS left that need attention
+
+ 15:37 <bdmurray> "a few"
+
+ 15:37 <mclemenceau_> juliank: apt 2.3.6, do you know if this happens with apt 2.3.7?
+
+ 15:38 <juliank> I'm not aware of a FTBFS, I need context
+
+ 15:38 <juliank> There's a dep-wait on i386 in the last gcc11 rebuild report
+
+ 15:38 <cpaelzer> bdmurray: that dpdk pexpect looks like a flaky test
+
+ 15:38 <cpaelzer> bdmurray: I've pinged my dpdk buddy and likelely we will disable it in a later 20.11.x
+
+ 15:38 <bdmurray> This report https://people.canonical.com/~doko/ftbfs-report/test-rebuild-20210805-impish-impish.html
+
+ 15:38 <sil2100> Well, merges are subject to FF if they introduce new features
+
+ 15:38 <cpaelzer> I've already disabled some, if retry does not fix it short term we have to extend the list
+
+ 15:39 <bdmurray> cpaelzer: ack, thanks for the information
+
+ 15:39 <bdmurray> ginggs: ^^
+
+ 15:39 <juliank> So python3-psutil is not built on i386, needs to be added to an allowlsit?
+
+ 15:39 <juliank> I don't know where that dep comes from
+
+ 15:40 <ginggs> ack
+
+ 15:40 <mclemenceau_> next on the list if bonnie++-2.00a
+
+ 15:40 <juliank> It's worth investigating whether that's an issue in the real archive, and what introduced it - 2.3.7 built fine
+
+ 15:41 <bdmurray> I can look at apt
+
+ 15:41 <bdmurray> What about autofs?
+
+ 15:42 <mclemenceau_> there's bug on debian for bonnie #983999
+
+ 15:42 <ginggs> bdmurray: autofs already uploaded
+
+ 15:42 <mclemenceau_> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=983999
+
+ 15:42 <ubottu> Debian bug 983999 in src:bonnie++ "bonnie++: ftbfs with GCC-11" [Normal, Open]
+
+ 15:43 <sil2100> Debian bug #983999
+
+ 15:43 <sil2100> Ok, doesn't work!
+
+ 15:43 <bdmurray> so we could import that bug into LP and tag it ftbfs / update-excuse
+
+ 15:43 <juliank> Debian bug 983999
+
+ 15:43 <ubottu> Debian bug 983999 in src:bonnie++ "bonnie++: ftbfs with GCC-11" [Normal, Open] https://bugs.debian.org/983999
+
+ 15:44 <juliank> # is evil
+
+ 15:44 <mclemenceau_> boost is failing on armhf
+
+ 15:44 <ricotz> so does libreoffice - https://bugs.launchpad.net/ubuntu/+source/gcc-11/+bug/1939379
+
+ 15:44 <ubottu> Launchpad bug 1939379 in gcc-11 (Ubuntu) "ARM kernel builds fail with GCC 11" [Undecided, Confirmed]
+
+ 15:45 <doko> so this should fixed by the gcc-11 currently building
+
+ 15:47 <mclemenceau_> next cross-toolchain-base-53ubuntu4 failing on amd64
+
+ 15:47 <doko> mine
+
+ 15:47 <doko> also gcc*
+
+ 15:47 <ricotz> doko, thanks
+
+ 15:48 <mclemenceau_> devscripts-2.21.3ubuntu1 is next
+
+ 15:48 <mclemenceau_> anyone interested in that one?
+
+ 15:48 <sil2100> I can take it
+
+ 15:48 <mclemenceau_> according to mwhudson this is caused by the version of dpkg in the test rebuild
+
+ 15:48 <mclemenceau_> ok sil2100
+
+ 15:49 <mclemenceau_> diffutils-1:3.7-5ubuntu1 failing across the board
+
+ 15:49 <mclemenceau_> I'll assign to mwhudson as he is looking for a fix already
+
+ 15:49 <doko> right, ignore that one
+
+ 15:51 <mclemenceau_> exuberant-ctags-1:5.9~svn20110310-14build1 is next
+
+ 15:51 <schopin> I'll take this one.
+
+ 15:51 <mclemenceau_> thx schopin !
+
+ 15:52 <mclemenceau_> grep-3.6-1 is nwext
+
+ 15:54 <dbungert> I don't have one yet - shall I take that one?
+
+ 15:54 <mclemenceau_> sure it's yours then dbungert !
+
+ 15:56 <mclemenceau_> there's 7 more that need to be assigned but I got to go, bdmurray can you go through the rest of the list?
+
+ 15:57 <bdmurray> alright!
+
+ 15:57 <mclemenceau_> bye, thx  o/
+
+ 15:57 <bdmurray> we'll finish the rest of the ftbfs off-line
+
+ 15:58 <bdmurray> anything else?
+
+ 15:58 <sil2100> No
+
+ 15:58 <jawn-smith> nothing from me
+
+ 15:58 <ginggs> nope
+
+ 15:58 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

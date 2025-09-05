@@ -1,0 +1,454 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 04 Jul at 14:32 &mdash; 15:14 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-07-04-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:32)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:41.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:41)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:52.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:52)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:52)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:56.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:56)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:56)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:57)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:00.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (123)
+ * seb128 (27)
+ * slyon (20)
+ * eslerm (8)
+ * dviererbe (7)
+ * jamespage (4)
+ * meetingology (2)
+ * joalif (2)
+ * jbicha (2)
+
+
+
+== Full log ==
+
+
+ 14:32 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:06 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:32 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:32 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:32 <cpaelzer> #topic current component mismatches
+
+ 14:32 <slyon> hola o/
+
+ 14:32 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <slyon> rustc on c-m-p looks new (pulling in new dependencies)
+
+ 14:33 <cpaelzer> there is a master bug at the top of the perl tree
+
+ 14:33 <cpaelzer> indeed rustc shows up as well
+
+ 14:34 <cpaelzer> slyon: do you happen to know if this is being worked on already?
+
+ 14:34 <jamespage> o/
+
+ 14:34 <slyon> cpaelzer: I don't know, but I will clarify
+
+ 14:34 <cpaelzer> thanks slyon
+
+ 14:34 <cpaelzer> furthermore this upload was a bit hijacking the process by bundling all the code of the open cargo MIR IIRC
+
+ 14:34 <slyon> interesting ...
+
+ 14:35 <cpaelzer> by that it (all the cargo) would go into main without being fully processed and approved
+
+ 14:35 <cpaelzer> there have been pings flowing around
+
+ 14:35 <slyon> so shall we mark it "block-proposed" for now, until fully approved?
+
+ 14:35 <cpaelzer> but IMHO we should not let the current one pass until this is sorted out
+
+ 14:35 <cpaelzer> yeah
+
+ 14:35 <cpaelzer> that is exactly what I wanted to lead the discussion to
+
+ 14:36 <cpaelzer> I understand that this is the way you (=Foundation) want to go and I'm not even opposed. But all the bits and how they are tested, built, and updated needs to be clear
+
+ 14:37 <cpaelzer> This has come up and seems to have gotten a comment here https://bugs.launchpad.net/ubuntu/+source/cargo/+bug/1993819
+
+ 14:38 <cpaelzer> let me answer there
+
+ 14:38 <slyon> Yes, that'd be best. And I guess we'd also need an additional bug report against rustc (or maybe we add a rustc bugtask to the cargo MIR), to mark it block-proposed.
+
+ 14:40 <cpaelzer> yeah, for now I said I'd want them to hold it back and assume they'll deal with it
+
+ 14:40 <cpaelzer> ok, it seems clear this was a) unintended and b) shouldn't pass
+
+ 14:41 <cpaelzer> from here we can see how this unfolds
+
+ 14:41 <cpaelzer> #topic New MIRs
+
+ 14:41 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:41 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:41 <cpaelzer> hehe, I see why jamespage has said hi today :-)
+
+ 14:41 <eslerm> thanks cpaelzer ^
+
+ 14:41 <cpaelzer> yw
+
+ 14:42 <cpaelzer> two to grab
+
+ 14:42 <cpaelzer> 1. https://bugs.launchpad.net/ubuntu/+source/pydantic/+bug/2001699
+
+ 14:42 <cpaelzer> that is about jaraco which we have seen a while in component mismatches
+
+ 14:42 <jamespage> thats me catching up on things at last
+
+ 14:42 <cpaelzer> thanks
+
+ 14:42 <cpaelzer> so it is two reviews actually
+
+ 14:43 <cpaelzer> pydantic and python-inflect
+
+ 14:43 <cpaelzer> AFAICS
+
+ 14:43 <cpaelzer> and then the third is https://bugs.launchpad.net/ubuntu/+source/libmail-dmarc-perl/+bug/2023971
+
+ 14:43 <cpaelzer> which is - as mentioned above - actually many perl special cases
+
+ 14:43 <cpaelzer> I'd try to do pydantic - that sounds fun
+
+ 14:44 <cpaelzer> volunteers for inflect and one to (get started on) the perl chunk?
+
+ 14:44 <jamespage> inflect was reviewed previous -
+
+ 14:44 <joalif> i can take inflect
+
+ 14:44 <eslerm> shouldn't 2001699 have seperate MIRs for each package?
+
+ 14:44 <cpaelzer> eslerm: no it was always ok to group if none of the cases was too complex
+
+ 14:44 <cpaelzer> IIRC: only later we said we prefer (but not insist) on individual bugs
+
+ 14:44 <slyon> joalif: would you mind me taking inflect, as I did the previous review?
+
+ 14:45 <slyon> you could take pydantic instead
+
+ 14:45 <jamespage> I think pydantic may need security review
+
+ 14:45 <joalif> slyon: ok
+
+ 14:45 <cpaelzer> sorry joalif I didn't get it was reviewed before - just went by the state
+
+ 14:46 <cpaelzer> thanks joalif, assigning
+
+ 14:46 <cpaelzer> but jamespage we need to work out inflect
+
+ 14:46 <cpaelzer> jamespage: it had two todos
+
+ 14:46 <cpaelzer> 1. update (done)
+
+ 14:46 <eslerm> cpaelzer: I don't think complexity is a factor ? https://github.com/canonical/ubuntu-mir/pull/15
+
+ 14:46 <cpaelzer> and 2. automated tests
+
+ 14:47 <cpaelzer> eslerm: as I said "we have changed since" - it was ok in the past
+
+ 14:47 <eslerm> ack, thanks
+
+ 14:48 <slyon> cpaelzer: jamespage: from a brief check it looks like the TODOs are addressed. But I'll do a full check
+
+ 14:48 <cpaelzer> thanks slyon
+
+ 14:49 <cpaelzer> I've assigned the two
+
+ 14:49 <cpaelzer> and I've given bryce a few todos on  libmail-dmarc-perl to split it out properly
+
+ 14:50 <cpaelzer> then we can assign it next time
+
+ 14:50 <slyon> thx!
+
+ 14:50 <cpaelzer> thanks eslerm for reminding me, i've updated a new bug to follow the new rule
+
+ 14:51 <cpaelzer> but do we still need to split 2001699?
+
+ 14:51 <cpaelzer> let me check if one of them has to go through the security queue (and thereby tooling)
+
+ 14:51 <slyon> bug #2001699
+
+ 14:51 <eslerm> for me, it's _fine_ not to split as a one-off
+
+ 14:51 <cpaelzer> ok, inflect does not go to security
+
+ 14:52 <cpaelzer> we'll have to see what the outcome on pydantic is
+
+ 14:52 <cpaelzer> thanks, time flies by - I'll go on to reach the later agenda stages ...
+
+ 14:52 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:52 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:52 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:52 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:53 <cpaelzer> slyon: is https://github.com/canonical/ubuntu-mir/pull/27 good for your questions
+
+ 14:53 <cpaelzer> it still fails the spellchecker ...
+
+ 14:53 * slyon looking..
+
+ 14:54 <seb128> the spellchecker failure is the job having limitations
+
+ 14:54 <cpaelzer> dviererbe: is https://github.com/canonical/ubuntu-mir/pull/23 stuck as WIP (and should we mark it that way) ?
+
+ 14:54 <cpaelzer> dviererbe: or is that ready for re-consideration
+
+ 14:54 <dviererbe> It is ready
+
+ 14:54 <seb128> abi and SOVER are technical acronyms and not wrong english
+
+ 14:54 <slyon> cpaelzer: #27 LGMT, will add a comment
+
+ 14:55 <cpaelzer> thanks slyon
+
+ 14:55 <cpaelzer> seb128: that is correct, but we land changes to the spellchecker along the PRs that break them
+
+ 14:55 <cpaelzer> dviererbe: ok, I'll need to re-review it then ...
+
+ 14:55 <dviererbe> nice, thank you
+
+ 14:56 <cpaelzer> dviererbe: would you want to be a helping hand and provide a spellcheck PR that makes #27 work
+
+ 14:56 <dviererbe> I can do that :)
+
+ 14:56 <cpaelzer> then we could merge #27 and yours
+
+ 14:56 <cpaelzer> awesome
+
+ 14:56 <cpaelzer> let us have a look at security queues
+
+ 14:56 <seb128> thanks!
+
+ 14:56 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:56 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:56 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:56 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:56 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:56 <cpaelzer> Internal link
+
+ 14:56 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:56 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:57 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:57 <dviererbe> On the last note: What is SOVER?
+
+ 14:57 <cpaelzer> version of a shared object
+
+ 14:57 <dviererbe> ah.. ok, thanks!
+
+ 14:57 <slyon> dviererbe: .so ABI version of a shared library
+
+ 14:58 <cpaelzer> in too simplified terms the number at libfoo<number>
+
+ 14:58 <dviererbe> Always funny how many abreviations ubuntu has ^^
+
+ 14:59 <slyon> it is part of SONAME (which we might want to allow-list, too)
+
+ 14:59 <dviererbe> ack
+
+ 14:59 <cpaelzer> sarnold: eslerm: in the past the perl packages that were trivial (just wrappers around the module including tests and all) got a fast pathed by Doko. Did those went through security review, at least when they processed potentially external data?
+
+ 14:59 <cpaelzer> oh this is actually already the next agenda entry
+
+ 14:59 <cpaelzer> the security queue LGTM, so I think we can go on to that
+
+ 15:00 <cpaelzer> #topic Any other business?
+
+ 15:00 <eslerm> I don't believe there is much to update on security's side. Seth is out. Plans to assign cargo may be delayed, dontnet6 conversation is starting, and codecs are being weighed
+
+ 15:00 <eslerm> cpaelzer: I'd wait to ask Seth
+
+ 15:00 <cpaelzer> ack on that
+
+ 15:00 <cpaelzer> oh yeah, you mention dotent6 - I've doen the review and it is massive
+
+ 15:00 <cpaelzer> but for that was actually fine
+
+ 15:00 <seb128> as a FYI the gtkmm stack should be ready now, we added symbols enforcing for a group of selected architectures
+
+ 15:01 <cpaelzer> quite a list of questions and required tasks, but better than I expected \o/
+
+ 15:01 <cpaelzer> thanks seb128, are there cases for us to recheck and ack?
+
+ 15:01 <cpaelzer> if so we haven't seen them today
+
+ 15:01 <eslerm> iiuc, Seth and Ian will sync on dotnet6
+
+ 15:01 <cpaelzer> great eslerm
+
+ 15:01 <cpaelzer> seb128: Maybe they are still in "incomplete" state?
+
+ 15:01 <seb128> cpaelzer, I think they are in the normal process so should be picked up again by the reviewers
+
+ 15:02 <cpaelzer> checking one (as example) - https://bugs.launchpad.net/ubuntu/+source/gtkmm4.0/+bug/2020472
+
+ 15:02 <cpaelzer> there is no "reviewer" anymore
+
+ 15:02 <seb128> I will check with Jeremy
+
+ 15:02 <seb128> jbicha, ^
+
+ 15:02 <cpaelzer> the process hand them back to the reporter - and the expectation is "set incomplete -> new once ready for a look again"
+
+ 15:03 <cpaelzer> that would have been seen in our queue each week
+
+ 15:03 <cpaelzer> and then probably got a quick pass as they indeed LGTM on a glance
+
+ 15:03 <seb128> right, I though Jeremy was going to do that before the meeting but he didn't, they will be back to review by next meeting
+
+ 15:03 <cpaelzer> if you can wait until next week, just fix the state and it will be done
+
+ 15:03 <cpaelzer> if not, fix the state and ping me and I'll check them in between
+
+ 15:03 <seb128> ack, will do, thanks
+
+ 15:03 <seb128> also as a FYI I plan to start a discussion about the current policy of nacking hardware enablement related packages when we don't have access to the hardware
+
+ 15:03 <jbicha> cpaelzer: glibmm2.68 is ready. I will update the others tomorrow
+
+ 15:04 <cpaelzer> puh, only 3 minute over today :-/
+
+ 15:04 <cpaelzer> thank you all
+
+ 15:04 <slyon> haha, those meetings are getting longer these days :)
+
+ 15:04 <seb128> I think that just hurt Ubuntu for no valid reason
+
+ 15:04 <cpaelzer> seb128: which hurts?
+
+ 15:04 <seb128> well not valid ... let's say that the tradeoff is in our disfavor
+
+ 15:04 <jbicha> we can wait on gtkmm4 and friends until next week though
+
+ 15:04 <seb128> cpaelzer, bugs like https://bugs.launchpad.net/ubuntu/+source/libqrtr-glib/+bug/1963707
+
+ 15:05 <seb128> I've some new cases in pipewire
+
+ 15:05 <seb128> an extra library needed to support firewire audio devices
+
+ 15:06 <seb128> but it's going to end up in the same case, our team doesn't own the hardware and doesn't have budget to buy some
+
+ 15:06 <slyon> Maybe we'd need some kind of community testing process? To involve external people that actually have the hardware to run some test plans?
+
+ 15:06 <seb128> meanwhile we fall behind other distros in term of hardware which is working on our platform
+
+ 15:06 <cpaelzer> We had too many cases where people just even bothered to try to test, but this really wasn't meant to block things entirely. We might need to revisit that.
+
+ 15:07 <cpaelzer> It seems Desktop in particular is victim of "special HW" cases
+
+ 15:07 <seb128> slyon, we can try, in practice finding people to verify updates is hard
+
+ 15:07 <seb128> and unreliable
+
+ 15:07 <seb128> they might show and then disappear
+
+ 15:07 <slyon> yes. But might be better than doing no testing at all.
+
+ 15:07 <seb128> anyway, I will open a ticket on github about that
+
+ 15:08 <slyon> thanks, sounds good!
+
+ 15:08 <cpaelzer> I think this is a problem were all of us see both bad outcomes - we neither want to deny or fall behind. But neither do we want to accept untestable things in main, since a fair question is how you'd think you ever support those.
+
+ 15:08 <cpaelzer> It is clearly worth a call up on an Issue and potentially there to a higher place to decide
+
+ 15:09 <seb128> ack
+
+ 15:10 * cpaelzer forecasts that this will need to be converted to a mail to the TB, but please start the discussion as GH issue and we'll work on it together from there
+
+ 15:10 <seb128> will do
+
+ 15:10 <cpaelzer> seb128: if I might suggest, this might be worth a mid-cycle sprint breakout - potentially even including release team / sru team and sabdfl (depending on how ready the state of the discussion is by then)
+
+ 15:11 <cpaelzer> I'll end this meeting here today
+
+ 15:11 <seb128> for the record I don't see why that would need the TB, we used to have more flexibility in our promotion process
+
+ 15:11 <seb128> the recent strictness of the review is coming from this team afaik
+
+ 15:11 <slyon> and maybe include certlab people, too.
+
+ 15:11 <cpaelzer> short summary before I call an end
+
+ 15:11 <cpaelzer> 1. we used to be flexible
+
+ 15:11 <cpaelzer> 2. people have been living in pain to support/test things
+
+ 15:12 <cpaelzer> 3. quality assurance part of the Mir process was upped to avoid that
+
+ 15:12 <cpaelzer> 4. now you rightfully challenge the other side of this decisions consequence
+
+ 15:12 <cpaelzer> Maybe not TB, but as you mentioned it seems to be "do we put it to main (which implies guarantees) without being able to test it"? or "do we allocate budget to be able to test it"
+
+ 15:13 <cpaelzer> the strictness has come from this team for the reason of ensuring quality in Ubuntu
+
+ 15:13 <cpaelzer> but I agree it shouldn't render you unable to do anything
+
+ 15:14 <cpaelzer> hence we might need to bring it up
+
+ 15:14 <seb128> alright, well let's follow the logic steps, I will start with the github ticket
+
+ 15:14 <cpaelzer> thank you
+
+ 15:14 <seb128> thanks!
+
+ 15:14 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

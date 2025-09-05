@@ -1,0 +1,298 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 03 Mar at 16:39 &mdash; 17:14 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-03-03-16.39.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Review of any previous action items ===
+The discussion about "Review of any previous action items" started at 16:40.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:40.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:09.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/tinc.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/argyll.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/libipc-pubsub-perl.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/lcgdm.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/9base.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:10.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (48)
+ * tyhicks (22)
+ * mdeslaur (14)
+ * sbeattie (11)
+ * sarnold (8)
+ * jjohansen (7)
+ * chrisccoulson (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:39 <jdstrand> #startmeeting
+
+ 16:39 <meetingology> Meeting started Mon Mar  3 16:39:58 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:39 <meetingology> 
+
+ 16:39 <meetingology> Available commands: action commands idea info link nick
+
+ 16:40 <jdstrand> The meeting agenda can be found at:
+
+ 16:40 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:40 <jdstrand> [TOPIC] Review of any previous action items
+
+ 16:40 <jdstrand> chrisccoulson send oxide and qtwebkit benchmark results to mailing list
+
+ 16:40 <chrisccoulson> heh, sorry, i still haven't done that yet. i'll do it later :)
+
+ 16:40 <jdstrand> ok thanks
+
+ 16:40 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:41 <jdstrand> I'll go first
+
+ 16:41 <jdstrand> I'm on triage
+
+ 16:41 <jdstrand> I have some updates to get to
+
+ 16:41 <jdstrand> I'd like to do some work on click-apparmor to support the newer frameworks (for the upcoming app showdown)
+
+ 16:42 <jdstrand> I need to look over before and after apparmor denials of running all the apps under qt5.0 and qt5.2 and investigate any new denials in 5.2 in preparation for its landing
+
+ 16:43 <mdeslaur> oh hrm, were there a lot of them?
+
+ 16:43 <jdstrand> (I've been given the denials, just need to look at the reports, etc)
+
+ 16:43 <jdstrand> I'm not sure
+
+ 16:43 <jdstrand> there were a lot of denials in both that I was a little surprised about
+
+ 16:43 <jdstrand> so, need to take a look
+
+ 16:43 <mdeslaur> huh
+
+ 16:43 <jdstrand> apparently the denials are harmless enough, cause there aren't bugs open for what I saw
+
+ 16:44 <mdeslaur> ah, good
+
+ 16:45 <jdstrand> like, permy and network access. I think that might be the qt xml trying to do a name lookup or something (maybe for a dtd?) even though it is given a local url
+
+ 16:45 <jdstrand> ie file://
+
+ 16:45 <mdeslaur> interesting
+
+ 16:45 <jdstrand> and I have slightly more inbox catchup to do-- I did pretty well last week, but have a couple things left
+
+ 16:46 <jdstrand> that's it from me
+
+ 16:46 <jdstrand> mdeslaur: you're up
+
+ 16:46 <mdeslaur> I'm on community this week
+
+ 16:46 <mdeslaur> I'm currently testing python and php5 updates which I'll be releasing today
+
+ 16:46 <mdeslaur> there's a new gnutls issue out that I need to prepare updates for
+
+ 16:47 <mdeslaur> and the list is growing, so I have to catch up
+
+ 16:47 <mdeslaur> friday I'm on patch piloting
+
+ 16:47 <mdeslaur> that's it from me
+
+ 16:47 <mdeslaur> sbeattie: you're up
+
+ 16:47 <sbeattie> I'm focused on apparmor stuff again this week.
+
+ 16:48 <sbeattie> I helped sarnold dig out some of the issues with the 2.9 snapshot we're trying to land, I think the only thing really remaining is the inability of the new utils to parse dbus rules.
+
+ 16:49 <tyhicks> what is the plan there?
+
+ 16:49 <sbeattie> I'll also be focusing on helping jj test the ipc stuff.
+
+ 16:49 <tyhicks> ignore the rules (like the old tools) or actually parse them?
+
+ 16:50 <sbeattie> tyhicks: I'm trying to come up with a quickish patch to make parse them enough to not drop them.
+
+ 16:50 <tyhicks> nice
+
+ 16:50 <sbeattie> s/make/
+
+ 16:50 <sbeattie> anyway, that's the big stuff for me this week.
+
+ 16:50 <sbeattie> tyhicks: you're up
+
+ 16:51 <tyhicks> the kernel keyring work took up a little more of my time last week than expected (but I did get the investigation done and a patch sent out)
+
+ 16:51 <tyhicks> so now I'm addressing the final few comments from the dbus-daemon mediation patches review
+
+ 16:52 <tyhicks> after I get that done and resubmitted, I'll switch to kdbus for a day or two
+
+ 16:52 <tyhicks> and then hopefully I have some time to help out sbeattie and sarnold shake out issues with the pending upload
+
+ 16:52 <tyhicks> but it sounds like they may get it done before I can help
+
+ 16:52 <tyhicks> :/
+
+ 16:53 <tyhicks> I feel bad for leaving some landmines laying around that they've had to deal with
+
+ 16:53 <tyhicks> that's it for me
+
+ 16:53 <tyhicks> jjohansen: you're up
+
+ 16:53 <jdstrand> tyhicks: that keyring patch was for pam?
+
+ 16:53 <tyhicks> jdstrand: it was
+
+ 16:53 * jdstrand nods
+
+ 16:53 <tyhicks> jdstrand: pam_keyinit
+
+ 16:53 <tyhicks> jdstrand: we'
+
+ 16:54 <tyhicks> jdstrand: we've started to partially use it
+
+ 16:54 <jdstrand> neat
+
+ 16:54 <tyhicks> it is neat
+
+ 16:54 <tyhicks> but it breaks some of the ecryptfs-utils tools
+
+ 16:55 <tyhicks> dhowells has already responded to my patch and I'm working on convincing him of my approach to fix it
+
+ 16:55 * jjohansen is working on apparmor again this week. primarily ipc kernel issues, and then maybe cross namespace stacking
+
+ 16:55 * tyhicks is done
+
+ 16:55 <jjohansen> heh, sorry tyhicks /me too the "it is neat" as done
+
+ 16:56 <tyhicks> np :)
+
+ 16:56 <jdstrand> tyhicks: not to worry-- assuming a reactive update or two isn't required first, I know that jjohansen and sbeattie could use some help for the 14.04 deliverables and bug fixes (we always have stuff to do ;)
+
+ 16:56 <jjohansen> oh I suppose I am working with sbeattie on testing the ipc work as well
+
+ 16:58 <jjohansen> yeah jdstrand is right, tyhicks you weren't planning on sleeping this week where you?
+
+ 16:58 <jjohansen> ;)
+
+ 16:58 <tyhicks> heh - it is cold here so long nights indoors won't be too bad
+
+ 16:59 <jjohansen> hehe
+
+ 16:59 <jjohansen> I think that is it for me, sarnold you're up
+
+ 16:59 <jdstrand> it is cold here
+
+ 16:59 <jdstrand> (brrr)
+
+ 17:00 <jdstrand> mdeslaur: I blame you and your Canadian air
+
+ 17:00 <mdeslaur> jdstrand: I blame you for global warming :)
+
+ 17:00 <sarnold> I'm on apparmor packaging again, it feels closer now than before, thanks to some great debugging by jjohansen and sbeattie, I -think- the only remaining problems with the qrt tests are because the new python-based tools fail on the first mention of dbus
+
+ 17:00 * jdstrand likes being warm
+
+ 17:01 <mdeslaur> jdstrand: it'll be nice and warm here once texas is covered in molten lava :)
+
+ 17:01 <sarnold> while this means e.g. aa-disable foo fails :( I still like these packages more than the old perl-based tools
+
+ 17:01 <sarnold> I've also got several MIRs still outstanding: juju-core, schroot, strongswan, glusterfs, thermald
+
+ 17:01 <jdstrand> sarnold: where 'foo' is not the path to the file?
+
+ 17:02 <jdstrand> ie aa-disable foo vs aa-disable /etc/apparmor.d/foo
+
+ 17:02 <jdstrand> I'm sorry, I haven't followed the aa-disable issue closely
+
+ 17:02 <sarnold> the nginx mir made some pretty good leaps forward last week, it's now blocked solely on a nginx module that requires lua 5.1 and would require significant work to work with lua 5.2. I hope someone else will sort that one out, no security impact there anyway..
+
+ 17:02 <sbeattie> jdstrand: no difference, aa-disable (py version) was reading/parsing all the profiles before doing anything.
+
+ 17:02 <sarnold> jdstrand: sorry, 'foo' was just a placeholder, it'll fail completely regardless of how you use it
+
+ 17:03 <sbeattie> sarnold, jdstrand: I committed the fix to aa-disable upstream to not do that.
+
+ 17:03 <sarnold> sbeattie: yay! thanks :)
+
+ 17:03 <sbeattie> (but the rest of the tools still do :( )
+
+ 17:04 <jdstrand> sbeattie: ah, so it ended up being a dbus parsing casualty as a result?
+
+ 17:04 <sbeattie> jdstrand: yes
+
+ 17:04 <jdstrand> I see
+
+ 17:05 <sarnold> oh yes, I've also got an internally-requested php module audit to finish. (quite the jarring experience after the nginx code..)
+
+ 17:05 <sarnold> anyway I think that's me done, chrisccoulson?
+
+ 17:06 <chrisccoulson> i'm finishing work on our user-agent override mechanism this week, which is quite a big chunk of work
+
+ 17:06 <jdstrand> nice!
+
+ 17:07 <chrisccoulson> i also reimplemented the script messaging API on the renderer side last week (the original implementation was rushed to get unit tests working), which fixes some bugs: https://code.launchpad.net/~chrisccoulson/oxide/user-scripts-and-messaging-rework
+
+ 17:08 <chrisccoulson> i guess this week will be more of the same :)
+
+ 17:08 <chrisccoulson> i think that's me done
+
+ 17:08 <mdeslaur> cool
+
+ 17:09 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:09 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:09 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:09 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/tinc.html
+
+ 17:09 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/argyll.html
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/libipc-pubsub-perl.html
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/lcgdm.html
+
+ 17:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/9base.html
+
+ 17:10 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:10 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:14 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold, ChrisCoulson: thanks!
+
+ 17:14 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

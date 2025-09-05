@@ -1,0 +1,258 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 04 Mar at 15:31 &mdash; 15:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-03-04-15.31.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by slyon at 15:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 15:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 15:31)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libpisp/+bug/2093321 is now in c-m. So moving to "Fix Committed"  (slyon, 15:36)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868 is pending sec-review  (slyon, 15:37)
+
+=== New MIRs ===
+
+Discussion started by slyon at 15:38.
+
+ * ''LINK:'' https://warthogs.atlassian.net/browse/SEC-5935   (sarnold, 15:38)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 15:38)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 15:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 15:40)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/rust-gst-plugin-gtk4/+bug/2097804 has some TODOs for jbicha  (slyon, 15:40)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libsass-python/+bug/2095581 is ready, but depends on bug #2095582 (sec-review), as noted before.  (slyon, 15:41)
+
+=== Process/Documentation improvements ===
+
+Discussion started by slyon at 15:41.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (slyon, 15:41)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (slyon, 15:41)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pull/78 is new, thanks pushkarnk  (slyon, 15:42)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 15:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 15:43)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 15:43)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (slyon, 15:43)
+
+=== Any other business? ===
+
+Discussion started by slyon at 15:46.
+
+ * ''LINK:'' https://warthogs.atlassian.net/browse/SEC-5936   (sarnold, 15:46)
+
+
+
+== People present (lines said) ==
+
+ * slyon (58)
+ * sarnold (13)
+ * jbicha (6)
+ * didrocks (6)
+ * pushkarnk (4)
+ * meetingology (2)
+ * jamespage (1)
+ * juliank (1)
+
+
+
+== Full log ==
+
+
+ 15:31 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:31 <meetingology> Meeting started at 15:31:09 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:31 <slyon> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( dviererbe ) pushkarnk
+
+ 15:31 <slyon> #topic current component mismatches
+
+ 15:31 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:31 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:31 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:31 * slyon looking at non-proposed
+
+ 15:31 <jbicha> I plan to handle fonts-inter this week, sorry for delay
+
+ 15:31 <slyon> thanks!
+
+ 15:32 <slyon> kernel seeds usually get sorted by the corresponding team. Ignoring.
+
+ 15:32 <slyon> esmtp and xterm are false positives
+
+ 15:32 * slyon looking at -proposed
+
+ 15:32 <sarnold> good morning
+
+ 15:32 <slyon> tracker-miners (localsearch) is being worked on as a re-review.
+
+ 15:32 <pushkarnk> I am looking into tracker-miners/localsearch with help from slyon
+
+ 15:33 <sarnold> (I thought we had the 'false positive bug' thing to put these items so that they'd stop showing up on our report?)
+
+ 15:33 <slyon> sarnold: they still show up. But once you click it, you'll be directed towards the false-positive bug report giving an explanation
+
+ 15:34 <jamespage> o/ (late sorry)
+
+ 15:34 <slyon> (that's the best we could do without changing the component-mismatch tooling)
+
+ 15:34 <slyon> *sass* is looking mostly good, but still pending sec-review. Thanks jamespage for adding those autopkgtests quickly!
+
+ 15:35 <didrocks> o/ (for once, I am around, no conflicting meetings!)
+
+ 15:35 <sarnold> slyon: aha, that does sound familiar now. thanks.
+
+ 15:35 <slyon> ruby-* is being worked on by the server team.
+
+ 15:35 <slyon> this leaves us with libcamera.
+
+ 15:36 <slyon> https://bugs.launchpad.net/ubuntu/+source/libpisp/+bug/2093321 is now in c-m. So moving to "Fix Committed"
+
+ 15:37 <slyon> https://bugs.launchpad.net/ubuntu/+source/nlohmann-json3/+bug/2093868 is pending sec-review
+
+ 15:37 <slyon> sarnold: can you get this tagged/imported ^ ?
+
+ 15:38 <slyon> #topic New MIRs
+
+ 15:38 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:38 <sarnold> https://warthogs.atlassian.net/browse/SEC-5935
+
+ 15:38 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:38 <slyon> only https://bugs.launchpad.net/ubuntu/+source/nghttp3/+bug/2098797
+
+ 15:39 <didrocks> unsure about the status with what juliank mentioned
+
+ 15:39 <pushkarnk> The concern is about using gnutls for Quic TLS support and Julian prefers to wait for openssl to release QUIC support (possibly version 3.5?).
+
+ 15:39 <pushkarnk> However, it looks like nghttp3 (like nghttp2) will be owned by Server.
+
+ 15:39 <slyon> CC tsimonq2: Foundations already investigated this (thanks pushkarnk & juliank). I'll also bring it to the server team meeting as nghttp2 is currently owned by the server team. But given the OpenSSL concerns Julian lined out, I'm afraid this will most probably slip into next cycle. Thank you very much for your work on this from the community side, though!
+
+ 15:40 <juliank> +1
+
+ 15:40 <slyon> #topic Incomplete bugs / questions
+
+ 15:40 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:40 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:40 <slyon> https://bugs.launchpad.net/ubuntu/+source/rust-gst-plugin-gtk4/+bug/2097804 has some TODOs for jbicha
+
+ 15:41 <slyon> https://bugs.launchpad.net/ubuntu/+source/libsass-python/+bug/2095581 is ready, but depends on bug #2095582 (sec-review), as noted before.
+
+ 15:41 <slyon> nothing else.
+
+ 15:41 <slyon> #topic Process/Documentation improvements
+
+ 15:41 <slyon> Mission: Review pending process/documentation pull-requests or issues
+
+ 15:41 <slyon> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 15:41 <slyon> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 15:42 <slyon> https://github.com/canonical/ubuntu-mir/pull/78 is new, thanks pushkarnk
+
+ 15:42 <pushkarnk> slyon thanks for fixing the spell check :)
+
+ 15:42 <slyon> I fixed the spell-check prior to this meeting, so it should be good to go.
+
+ 15:42 * slyon merging...
+
+ 15:43 <didrocks> \o/
+
+ 15:43 <slyon> the rest is old stuff
+
+ 15:43 <slyon> #topic MIR related Security Review Queue
+
+ 15:43 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 15:43 <slyon> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 15:43 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:43 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:43 <slyon> Internal link
+
+ 15:43 <slyon> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:44 <slyon> how are security-reviews moving forward, sarnold?
+
+ 15:44 <jbicha> could bug 2097800 be added to the security queue?
+
+ 15:44 <sarnold> slyon: we have a new contributor interested in joining in, he'll start working on libsass soon
+
+ 15:44 <slyon> that's good news!
+
+ 15:44 <didrocks> nice!
+
+ 15:45 <sarnold> hrm how did I miss 2097800 :/
+
+ 15:45 <sarnold> .. not even recent. sheesh.
+
+ 15:46 <slyon> I see nlohmann-json3 & libsass are tagged, and sarnold is adding 2097800 – so let's move forward.
+
+ 15:46 <slyon> #topic Any other business?
+
+ 15:46 <jbicha> sorry I didn't notice it was waiting on security until today either
+
+ 15:46 <sarnold> https://warthogs.atlassian.net/browse/SEC-5936
+
+ 15:46 <sarnold> (sheesh, this was *slow*, I wonder if we're self-hosting some part of this api?)
+
+ 15:46 <jbicha> is Papers approved now? bug 2097727
+
+ 15:47 <sarnold> smcv's suggestion in the debian bug feels like a good addition to me
+
+ 15:48 <sarnold> AOB: I'll miss (most of?) next week's meeting because I've got an interview scheduled immediately afterwards
+
+ 15:48 <slyon> jbicha: I see security and MIR ack. But didn't see the package in component-mismatches? Status "In Progress" seems about right. It also has a bug team subscriber. Please add it to the seeds (or add it as a dependency), then ping an AA for promotion.
+
+ 15:49 <jbicha> thanks
+
+ 15:49 <slyon> also consider smcv's suggestion. But I guess that's non-blocking given the existing ACKs
+
+ 15:50 <slyon> Anything else?
+
+ 15:50 <jbicha> nothing else from me for this meeting ☺️
+
+ 15:50 <sarnold> :)
+
+ 15:50 <didrocks> nothing else either
+
+ 15:50 <slyon> Well looks like I don't have an interview conflict, but a team meeting conflict (same as c_paelzer) next week... Not sure how we'll figure this out.
+
+ 15:51 <slyon> but we'll find a way! :)
+
+ 15:51 <slyon> alright then.
+
+ 15:51 <slyon> Thanks all! Finally a MIR meeting on time again :)
+
+ 15:51 <sarnold> \o/
+
+ 15:51 <didrocks> \o/
+
+ 15:51 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,169 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by didrocks999, 27 Jul at 14:47 &mdash; 15:01 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-07-27-14.47.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by didrocks999 at 14:48.
+
+
+=== current component mismatches ===
+
+Discussion started by didrocks999 at 14:48.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (didrocks999, 14:48)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (didrocks999, 14:48)
+
+=== New MIRs ===
+
+Discussion started by didrocks999 at 14:50.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (didrocks999, 14:50)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by didrocks999 at 14:59.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (didrocks999, 14:59)
+
+=== Any other business? ===
+
+Discussion started by didrocks999 at 14:59.
+
+
+
+
+== People present (lines said) ==
+
+ * didrocks999 (39)
+ * sarnold (6)
+ * paride (4)
+ * doko (3)
+ * meetingology (2)
+ * ubottu (2)
+
+
+
+== Full log ==
+
+
+ 14:47 <didrocks999> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:47 <meetingology> Meeting started at 14:47:39 UTC.  The chair is didrocks999.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:47 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:47 <didrocks999> ping ddstreet sarnold doko jamespage
+
+ 14:48 <didrocks999> #topic Review of previous action items
+
+ 14:48 <didrocks999> none if I’m correct
+
+ 14:48 <didrocks999> #topic current component mismatches
+
+ 14:48 <didrocks999> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:48 <didrocks999> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:49 <didrocks999> the nvidia-graphics-drivers-470-server needs some AA love, shouldn’t require a proper MIR
+
+ 14:49 <sarnold> woot
+
+ 14:49 <doko> o/
+
+ 14:49 <didrocks999> I don’t remember if esmtp was a false positive?
+
+ 14:49 <sarnold> it is
+
+ 14:50 <didrocks999> ack, the rest is well known… Moving on
+
+ 14:50 <didrocks999> #topic New MIRs
+
+ 14:50 <didrocks999> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:50 <didrocks999> some new things here
+
+ 14:51 <didrocks999> macontent seems to be mostly a ack, correct?
+
+ 14:51 <sarnold> I think the malcontent one perhaps should have been put into state 'in progress' rather than 'new'
+
+ 14:52 <didrocks999> yeah, looks like the only remaining issue is libflatpak0 MIR dep?
+
+ 14:52 <sarnold> oh, hah, you've reminded me that I went to TB to ask about flatpak issues and they turned around and asked the security team and we stalled on that.
+
+ 14:53 <didrocks999> do you think we can have some security team/TB agreement on flatpak? (not impacting this MIR, it should be in progress IMHO until this is resolved)
+
+ 14:53 <sarnold> yeah, I'll poke us :)
+
+ 14:54 <didrocks999> self-poking \o/ thanks sarnold :)
+
+ 14:54 <didrocks999> next one as perl in the name… https://bugs.launchpad.net/ubuntu/+source/libnet-snmp-perl/+bug/1936970 :)
+
+ 14:54 <ubottu> Launchpad bug 1936970 in libnet-snmp-perl (Ubuntu) "[MIR] libnet-snmp-perl as a dependency of amavisd-new" [Undecided, New]
+
+ 14:54 <didrocks999> I can give it a look on a dark Friday evening then :)
+
+ 14:54 <paride> ^ that
+
+ 14:55 <paride> ^ that's the one I'm driving
+
+ 14:55 <didrocks999> paride: ack, I’ll handle it before next week, anything special we should be aware about?
+
+ 14:55 <paride> didrocks999, not really I think.
+
+ 14:55 <didrocks999> assigned to me
+
+ 14:56 <didrocks999> and now… https://bugs.launchpad.net/ubuntu/+source/adsys/+bug/1936907
+
+ 14:56 <ubottu> Launchpad bug 1936907 in adsys (Ubuntu) "[MIR] ADSys" [Undecided, New]
+
+ 14:56 <paride> thanks!
+
+ 14:56 <didrocks999> as I’m upstream for it, I can’t self-assigned to it
+
+ 14:56 <didrocks999> yw
+
+ 14:56 <didrocks999> I think this will need a security review as well, as a service running as root, using polkit, sockets…
+
+ 14:56 <didrocks999> (the architecture is quite similar to zsys)
+
+ 14:56 <didrocks999> who is available to take it?
+
+ 14:57 <didrocks999> (Golang package, with vendoreded dependencies)
+
+ 14:57 <doko> I assume this will end up with a security review anyway ...
+
+ 14:58 <didrocks999> yeah, for sure
+
+ 14:58 <doko> so, yes, I can give the packaging a review
+
+ 14:59 <didrocks999> Thanks doko!
+
+ 14:59 <didrocks999> and that’s it for the new MIRs
+
+ 14:59 <didrocks999> #topic Incomplete bugs / questions
+
+ 14:59 <didrocks999> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:59 <didrocks999> nothing new from last meeting
+
+ 14:59 <didrocks999> #topic Any other business?
+
+ 14:59 <sarnold> none from me
+
+ 15:00 <didrocks999> nothing from me either
+
+ 15:01 <didrocks999> seems most of us are busy anyway, and we can almost finish the meeting on time despite starting late, so let’s close this for today then :)
+
+ 15:01 <didrocks999> o/
+
+ 15:01 <didrocks999> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

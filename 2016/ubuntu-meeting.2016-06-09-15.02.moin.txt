@@ -1,0 +1,443 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 09 Jun at 15:02 &mdash; 15:27 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-06-09-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+
+=== Sprint prep ===
+The discussion about "Sprint prep" started at 15:20.
+
+  * ''LINK:'' https://docs.google.com/document/d/1rdiLICseBxX6Gml586DR1YDaFmbYuGEUcayFKdYAWRY/edit 
+
+=== AOB ===
+The discussion about "AOB" started at 15:25.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cyphermox (35)
+ * slangasek (34)
+ * sil2100 (20)
+ * robru (18)
+ * pitti (17)
+ * caribou (17)
+ * bdmurray (17)
+ * xnox (13)
+ * ubottu (11)
+ * ogra_ (6)
+ * meetingology (3)
+ * doko (2)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Thu Jun  9 15:02:53 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk)
+
+ 15:03 <slangasek> robru doko sil2100 infinity chiluk slangasek bdmurray xnox caribou pitti tdaitx cyphermox barry
+
+ 15:03 <slangasek> robru: tag
+
+ 15:03 <robru> I win!
+
+ 15:03 <cyphermox> boo, I keep losing
+
+ 15:03 <robru> lp:bileto
+
+ 15:03 <robru> * various iterations & fixes on audit log reporting of new parallel build/diff job
+
+ 15:03 <robru> * various debian/changelog generation fixes
+
+ 15:03 <robru> * resurrect 0replaceme version-munging feature in debian/ dir.
+
+ 15:03 <robru> * move "show/hide audit log" button to a more usable location
+
+ 15:03 <robru> * halve disk space usage by not unpacking DSCs twice while diffing
+
+ 15:03 <robru> * cleanup redundant gpgv noise in build logs
+
+ 15:03 <robru> * prevent old xenial+vivid silos from building (must migrate to trio)
+
+ 15:03 <robru> * implement locking to prevent concurrent job runs
+
+ 15:03 <robru> * notify user when ticket is "queued" for britney but first run hasn't started yet
+
+ 15:03 <robru> * added chronological list of all job logs: https://requests.ci-train.ubuntu.com/log/
+
+ 15:03 <robru> * stop running britney on silos already approved by britney or qa (speeds britney runs from 80 minutes to 20 minutes)
+
+ 15:04 <doko> - last week at PyCon, came back yesterday, catching up with things, and will summarize PyCon later this week
+
+ 15:04 <doko> (done)
+
+ 15:04 <pitti> robru: you aren't using debdiff? or did you optimize that?
+
+ 15:05 <slangasek> sil2100 says he'll be a little late for the meeting
+
+ 15:05 <robru> pitti: yes, what happened is that dget and debdiff both 'dpkg-source -x' the dsc into different places. I suppressed dget's unpacking.
+
+ 15:05 <slangasek> hmm no infinity
+
+ 15:05 <slangasek> chiluk:
+
+ 15:05 <pitti> robru: oh, nice idea, so once britney is content you don't re-run her to have second thoughts? :-)
+
+ 15:06 <robru> pitti: yeah, lots of redundant britney runs on silos already-approved. and bileto is already smart enough to clear all the signoffs when a silo is rebuilt so I think this is a safe change
+
+ 15:07 <pitti> robru: yes, I agree, should be safe (unless the silo actually changes)
+
+ 15:07 <robru> pitti: even a manual upload, while 'Currently building' will clear all the signoffs and force a fresh britney run
+
+ 15:08 <pitti> nice
+
+ 15:09 <slangasek> * working on SRU queue
+
+ 15:09 <slangasek> * continuing to work through the libpoppler transition, which keeps getting bigger each time I look at it; now only 2 blocking packages out of 160
+
+ 15:09 <slangasek> * snapd accepted into Debian unstable
+
+ 15:09 <slangasek> * sprint planning
+
+ 15:09 <slangasek> * taking tomorrow off for travel swap
+
+ 15:09 <slangasek> bdmurray:
+
+ 15:09 <slangasek> (done)
+
+ 15:09 <bdmurray> short week w/ Friday holiday
+
+ 15:09 <bdmurray> discussed retracing arm64 and ppc64el with pitti
+
+ 15:09 <bdmurray> review of the retracer statuses (looks good after 711 roll-out)
+
+ 15:09 <bdmurray> worked w/ webops about RT 91903 (gunicorn timeout) being not resolved
+
+ 15:09 <bdmurray> updated my apport retracer branch w/ upstream changes
+
+ 15:09 <bdmurray> backported gdb version 7.11 for Error Tracker
+
+ 15:09 <bdmurray> added some people to Error Tracker access group
+
+ 15:09 <bdmurray> redeployment of devops / staging Error Tracker setup
+
+ 15:09 <bdmurray> reported bug 1588479 re: dkms kernel check
+
+ 15:09 <bdmurray> submitted MP re sru tools adding release tasks
+
+ 15:09 <ubottu> bug 1588479 in dkms (Ubuntu) "dkms_packages.py supported kernel check seems wrong" [Undecided,New] https://launchpad.net/bugs/1588479
+
+ 15:09 <bdmurray> investigation into trevino being emailed multiple times about regressions
+
+ 15:09 <bdmurray> fixed phased updater issue with unicode and uploader names
+
+ 15:09 <bdmurray> ✔ done
+
+ 15:09 <bdmurray> SRU review of xenial / kpatch for arges
+
+ 15:09 <bdmurray> updated snapd SRU wiki page
+
+ 15:09 <bdmurray> updated teams for rls mgr reports
+
+ 15:10 <cyphermox> am I getting the messages out of order or were they pasted that way?
+
+ 15:10 <cyphermox> (ie. done earlier, etc..)
+
+ 15:10 <caribou> UDP pasting
+
+ 15:10 <xnox> lol
+
+ 15:10 <bdmurray> I was well done, not pre done
+
+ 15:11 <robru> cyphermox: bdmurray I also see three lines after done
+
+ 15:11 <cyphermox> ok :)
+
+ 15:11 <xnox> me?
+
+ 15:11 <xnox> progress on ubuntu advantage
+
+ 15:11 <xnox> progress on test images for L1CC
+
+ 15:11 <xnox> s390-tools fixes with an SRU bug #1567473, bug #1580226, bug #1582728
+
+ 15:11 <xnox> libseccomp merge #1580558 and oprofile merge #1581540
+
+ 15:11 <xnox> debconf & anthens organisation
+
+ 15:11 <xnox> done
+
+ 15:11 <ubottu> bug 1567473 in s390-tools (Ubuntu Xenial) "s390-tools: missing ts-shell" [Medium,In progress] https://launchpad.net/bugs/1567473
+
+ 15:11 <ubottu> bug 1580226 in Ubuntu on IBM z Systems "Please install the iucvtty-login@.service instance service unit" [Medium,Confirmed] https://launchpad.net/bugs/1580226
+
+ 15:11 <ubottu> bug 1582728 in s390-tools (Ubuntu Xenial) "DASDFMT fails with a buffer overflow error" [High,In progress] https://launchpad.net/bugs/1582728
+
+ 15:11 <caribou> Bugfix :
+
+ 15:11 <caribou> - multipathd double-free coredump LP: #1535898
+
+ 15:11 <caribou> Identified missed patch proposed by cyphermox.
+
+ 15:11 <caribou> Testing on system that can easily reproduce the core
+
+ 15:11 <ubottu> Launchpad bug 1535898 in multipath-tools (Ubuntu Precise) "Trusty & Vivid multipath-tools (multipathd) seg-fault core dump" [High,In progress] https://launchpad.net/bugs/1535898
+
+ 15:11 <caribou> Development work:
+
+ 15:11 <caribou> - Various merges :
+
+ 15:11 <caribou> corosync : reviewing upstream changes before syncing
+
+ 15:11 <caribou> kexec-tools
+
+ 15:11 <caribou> clamav
+
+ 15:11 <caribou> - Investigate crashdump charm enablement of remote dumps
+
+ 15:11 <caribou> Misc sponsor : isc-dhcp, swauth, multipath-tools
+
+ 15:11 <caribou> - Interviews
+
+ 15:11 <caribou> ☑ Done
+
+ 15:11 <slangasek> xnox: so you're our designated translator in Athens, right? :)
+
+ 15:12 <slangasek> (you pasted one word in Greek into a team meeting months ago; this makes you an expert)
+
+ 15:12 <caribou> then anyone talking about alpha & beta would become experts
+
+ 15:12 <xnox> slangasek, no thanks.... however do note that intercity bus information for KTEL busses is only provided in Greek, via local greek telephone line, with no bus numbers / route maps / bus stops / or timetables and one should just "hail" it.
+
+ 15:13 <cyphermox> caribou: that's two letters < one word
+
+ 15:13 <pitti> network YAML config:
+
+ 15:13 <pitti> - several looong meetings about the design, bringing snappy into the picture
+
+ 15:13 <pitti> - rewrote spec accordingly, the format starts looking and working well
+
+ 15:13 <pitti> - started implementation of this in https://git.launchpad.net/~pitti/+git/ubuntu-network-config/
+
+ 15:13 <pitti> autopkgtest: Reorganize storage on debci which was utterly slow and getting out of space
+
+ 15:13 <pitti> meeting: upower vs. unity-settings-daemon vs. powerd
+
+ 15:13 <pitti> merges: cdebconf, ifupdown, resolvconf
+
+ 15:13 <pitti> python-dbusmock: Review/land Pete's branch, new upstream release, backport to overlay PPA
+
+ 15:13 <pitti> Revisit what /etc/init.d/ondemand should do, and provide replacement unit (#1579278, #1584124)
+
+ 15:13 <pitti> some more work on dropping initscripts dependencies
+
+ 15:13 <pitti> usual archive admin/proposed-migration/SRU chores
+
+ 15:13 <pitti> (done)
+
+ 15:13 <sil2100> o/
+
+ 15:14 <slangasek> xnox: surely google maps tracks the buses in realtime with or without their cooperation
+
+ 15:14 <slangasek> tdaitx is out this week
+
+ 15:14 <slangasek> sil2100: hi, your turn :)
+
+ 15:14 <sil2100> Oooo
+
+ 15:14 <sil2100> Ok
+
+ 15:14 <sil2100> (sorry for being late)
+
+ 15:14 <sil2100> - Recovering from a laptop hardware failure, trying to retreive all data
+
+ 15:14 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:14 <sil2100> - RTM status meetings
+
+ 15:14 <sil2100> - Xenial touch transition:
+
+ 15:14 <sil2100> * Building initramfs-tools-ubuntu-touch dependencies for arm64
+
+ 15:14 <sil2100> * Working on getting initramfs-tools-ubuntu-touch buildable on arm64
+
+ 15:14 <sil2100> - Adding channels.json re-signing to the re-sign-indexes script on system-image
+
+ 15:14 <sil2100> - Looking into necessary changes to landing-team scripts
+
+ 15:14 <sil2100> - Fixing yakkety touch builds
+
+ 15:14 <sil2100> - Testing and landing the lxc and ltt-control silos for vivid
+
+ 15:14 <sil2100> - DMB meeting
+
+ 15:15 <sil2100> - Flight preparatinon for nearing sprint
+
+ 15:15 <sil2100> (done)
+
+ 15:15 <xnox> slangasek, they were pissed off at one website that did the screen scrapping and they pulled the info off the web and changed the timetables to screw with everybody. So even google maps doesn't know. I might need to try openstreetmap or something.
+
+ 15:15 <cyphermox> precise:
+
+ 15:15 <cyphermox> - debugging sbsigntool cert expiry error (bug LP: #1234649)
+
+ 15:15 <cyphermox> - sbsigntool SRUs
+
+ 15:15 <ubottu> Launchpad bug 1234649 in sbsigntool (Ubuntu Precise) "UEFI shim verification against microsoft-uefica-public.pem fails with 20131003 saucy images" [Medium,Fix committed] https://launchpad.net/bugs/1234649
+
+ 15:15 <cyphermox> xenial:
+
+ 15:15 <cyphermox> - libdebian-installer SRU EFI detection (bug LP: #1582320)
+
+ 15:15 <cyphermox> - upload grub2/shim-signed/dkms SRU for SB
+
+ 15:15 <ubottu> Launchpad bug 1582320 in libdebian-installer (Ubuntu Xenial) "libdebian-installer uses a different detection method for EFI than efivar" [Critical,Fix committed] https://launchpad.net/bugs/1582320
+
+ 15:15 <cyphermox> yakkety:
+
+ 15:15 <cyphermox> - aptdaemon port to packagekit 1.1.1 (bug LP: #1496292)
+
+ 15:15 <cyphermox> - debugging timezone crash in ubiquity (bug LP: #1587555)
+
+ 15:15 <cyphermox> - fix console-setup install in ubiquity (bug LP: #1578285)
+
+ 15:15 <ubottu> Launchpad bug 1496292 in packagekit (Ubuntu) "Needs to be ported to packagekit 1" [High,Confirmed] https://launchpad.net/bugs/1496292
+
+ 15:15 <slangasek> xnox: I assumed google knew by crowdsourcing pictures of buses in the background of photos in realtime
+
+ 15:15 <ubottu> Launchpad bug 1587555 in ubiquity (Ubuntu) "Installer crashed during installation" [High,In progress] https://launchpad.net/bugs/1587555
+
+ 15:15 <ubottu> Launchpad bug 1578285 in ubiquity (Ubuntu) "Ubiquity 16.10.1 fails at keyboard setup page" [Medium,In progress] https://launchpad.net/bugs/1578285
+
+ 15:15 <cyphermox> - fix from Dan Watkins for apt-setup notice for universe packages (bug LP: #1590358)
+
+ 15:15 <ubottu> Launchpad bug 1590358 in apt-setup (Ubuntu Xenial) "universe description incorrectly suggests software may be non-free" [Medium,Fix committed] https://launchpad.net/bugs/1590358
+
+ 15:15 <cyphermox> - + SRU to xenial
+
+ 15:15 <cyphermox> - libdebian-installer efi detection fix (bug LP: #1582320)
+
+ 15:15 <xnox> slangasek, lol
+
+ 15:15 <cyphermox> - shim-signed re-enable and dkms check
+
+ 15:15 <cyphermox> - tracking down missing /etc/default/rcS
+
+ 15:15 <cyphermox> - missing because procps no longer Depends on initscripts; needs fixing in clock-setup/ubiquity to guard against ENOENT
+
+ 15:15 <cyphermox> - ubiquity update (d-i packages) and pyflakes fixes
+
+ 15:15 <cyphermox> - upload shim-signed minor fixes for update-secureboot-policy
+
+ 15:16 <cyphermox> ±other stuff:
+
+ 15:16 <cyphermox> - SecureBoot testing
+
+ 15:16 <cyphermox> - various meetings about networking
+
+ 15:16 <cyphermox> (done ✅)
+
+ 15:16 <cyphermox> want to hear an UDP joke?
+
+ 15:16 <xnox> go on
+
+ 15:16 <cyphermox> you won't get it, and I really don't care.
+
+ 15:17 * xnox LOL
+
+ 15:17 <slangasek> two packets went into a tunnel
+
+ 15:17 <slangasek> and no barry this morning, per his email (status on the list)
+
+ 15:17 <slangasek> any questions?
+
+ 15:17 <robru> heh
+
+ 15:20 <slangasek> [TOPIC] Sprint prep
+
+ 15:20 <slangasek> only two more days, hopefully you all have your tickets booked ;P
+
+ 15:20 <slangasek> https://docs.google.com/document/d/1rdiLICseBxX6Gml586DR1YDaFmbYuGEUcayFKdYAWRY/edit
+
+ 15:20 * ogra_ has :)
+
+ 15:20 <slangasek> get your topics on the agenda, please
+
+ 15:20 <caribou> slangasek: yes, on Air France which will be on strike on sunday :-/
+
+ 15:21 <slangasek> cross-team topics, I'm planning on scheduling on the Client Track calendar
+
+ 15:21 <cyphermox> caribou: you'll be walking?!
+
+ 15:21 <ogra_> there might be ferries too
+
+ 15:21 <caribou> cyphermox: yes, I'm leaving right after the meeting
+
+ 15:21 <cyphermox> caribou: cool ;)
+
+ 15:21 <slangasek> internal topics, I was not planning on scheduling on the calendar; if anyone has a topic that they think needs an explicit meeting scheduled, feel free to put it on the Foundations calendar or just ask me to schedule it
+
+ 15:22 <pitti> cyphermox: aptdaemon port> nice! so aptdaemon is still a thing, even with gnome-software?
+
+ 15:22 <slangasek> ogra_, caribou: yes, I hear a lot of people take the boat to Greece nowadays
+
+ 15:22 <cyphermox> pitti: there are things using it; it seemed less involved / less work to just fix it enough for it to work
+
+ 15:22 <ogra_> ow
+
+ 15:22 <cyphermox> pitti: so; aptdaemon but no pkcompat.
+
+ 15:23 <cyphermox> that means there is still some work necessary to make sure all is well and that packagekit will finally transition.
+
+ 15:23 <sil2100> ogra_: oh my, you'll be on the sprint as well?
+
+ 15:23 <ogra_> sil2100, yeah, there was beer left and they needed someone to drink it all up
+
+ 15:23 <ogra_> so i volunteered
+
+ 15:23 <sil2100> ogra_: like good old times then
+
+ 15:23 <sil2100> ;)
+
+ 15:24 <ogra_> yeah :D
+
+ 15:25 <slangasek> [TOPIC] AOB
+
+ 15:25 <slangasek> anything else today?
+
+ 15:25 <cyphermox> fyi, I'll be out for the afternoon
+
+ 15:27 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

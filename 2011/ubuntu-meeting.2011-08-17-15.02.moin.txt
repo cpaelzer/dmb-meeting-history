@@ -1,0 +1,359 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:03 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-08-17-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *AOB
+
+
+
+Meeting ended at 15:36:04 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (42)
+ * mvo (33)
+ * barry (15)
+ * doko_ (14)
+ * bdmurray (13)
+ * ubottu (10)
+ * ev (10)
+ * cjwatson (9)
+ * meetingology (4)
+ * jhunt (3)
+
+
+
+== Full Log ==
+
+
+ 15:02:03 <slangasek> #startmeeting
+
+ 15:02:03 <meetingology> Meeting started Wed Aug 17 15:02:03 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:02:03 <meetingology> Useful Commands: #topic #action #link #idea #voters #vote #chair #action #agreed #help #info #endmeeting.
+
+ 15:02:10 <slangasek> [TOPIC] lightning round
+
+ 15:02:10 <meetingology> TOPIC: lightning round
+
+ 15:02:20 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt mvo ev bdmurray slangasek)
+
+ 15:02:23 <slangasek> doko barry mvo cjwatson bdmurray jhunt stgraber ev slangasek
+
+ 15:04:22 <slangasek> doko_: what's new in the world of lightning?
+
+ 15:05:13 <doko_> ouch, barry, can you go first?
+
+ 15:05:20 <barry> bug 788514 completed! (dh_python2 transition); investigated bug 816169; fixed bug 826795; fixed bug 824734 (upstream, doko merged); debian bug 633015 (sys.platform == 'linux2'); recovered from fglrx folly; done.
+
+ 15:05:20 <barry> 
+
+ 15:05:27 <ubottu> Launchpad bug 788514 in totem (Debian) "python packages on the CDs not using dh_python2" [Unknown,New] https://launchpad.net/bugs/788514
+
+ 15:05:28 <ubottu> Launchpad bug 816169 in ensemble (Ubuntu) "When using Ensemble, add-apt-repository no longer functions properly" [Critical,Confirmed] https://launchpad.net/bugs/816169
+
+ 15:05:30 <ubottu> Launchpad bug 826795 in mailman (Debian) "Python dependencies are missing" [Unknown,Fix committed] https://launchpad.net/bugs/826795
+
+ 15:05:31 <ubottu> Launchpad bug 824734 in python2.7 (Ubuntu Oneiric) "locale.normalize does not accept unicode: TypeError in normalize(): character mapping must return integer, None or unicode" [High,Fix released] https://launchpad.net/bugs/824734
+
+ 15:05:32 <ubottu> Debian bug 633015 in python2.7 "when built on Linux 3.0, sys.platform = "linux3" causes multiple problems" [Important,Fixed] http://bugs.debian.org/633015
+
+ 15:06:10 <mvo> done?
+
+ 15:06:14 <barry> done!
+
+ 15:06:17 <mvo> apt: work on the automatic tests, review debdelta diff for SoC, add support into auto-upgrade-tester for Apt::Immediate-configure-all=true; run tests against new ordering apt-chris branch and ping-pong problems with him, add the architectures to the mirror method querry string, merge fixes from debian/donkult
+
+ 15:06:17 <mvo> aptdaemon: debug/fix #819328, debug/fix crash #825056
+
+ 15:06:18 <mvo> software-center:  work on lp:~mvo/software-center/sortable-app-tree-view, review lp:~alexeftimie/software-center/packagekit-backend, review/merge review https://code.launchpad.net/~pitti/software-center/gi-fixes, upload new version, fix AUTHORS file merging into about dialog, debug/fix bug in private-dbus test scenario port to gir1.2-gmenu-3.0, debug/fix race in exhibits fetcher, lp:~mvo/software-center/gtk3-install-progress-autotest, fix bu
+
+ 15:06:19 <mvo> g in treeview search , add test for it, debug gtkbuilder issue with spacing all wrong, submit bug #825173 with testcase, fix crash in gtk3 when a transaction finishes
+
+ 15:06:20 <ubottu> Launchpad bug 825173 in gtk+3.0 (Ubuntu) "spacing issues with GtkTable in gtk3" [Undecided,New] https://launchpad.net/bugs/825173
+
+ 15:06:24 <mvo> softare-properties: fix bug in add-apt-repository for PPAs
+
+ 15:06:26 <mvo> apt-ddtp: updated
+
+ 15:06:27 <slangasek> a question came up on IRC the other day about what to do for packages that are still being backported to hardy, where we'll never have dh_python2... heh
+
+ 15:06:28 <mvo> update-manager: review/merge +lp:~brian-murray/update-manager/tag-dist-upgrade,enable multiarch on upgrade, do not try to install reqired foreign arch packages,,  review/merge https://launchpad.net/bugs/824957
+
+ 15:06:30 <ubottu> Ubuntu bug 824957 in update-manager "[gtk3] right-click context menu for links no longer works" [Undecided,New]
+
+ 15:06:31 <mvo> ubuntu-vm-builder: drive-by fixup in the packaging and upload new version
+
+ 15:06:34 <mvo> command-not-found: review/merge lp:~julien-nicoulaud/command-not-found/fix-zsh-hook
+
+ 15:06:35 <mvo> misc: write sqlite3-debversions plugin for a debversion collate function
+
+ 15:06:37 <mvo> EOF
+
+ 15:06:51 <barry> slangasek: heh
+
+ 15:08:28 <doko_> well, at some time you have to make a cut, then these people have to take care about two packaging variants
+
+ 15:09:38 <doko_> - more JamVM updates
+
+ 15:09:38 <doko_> - integrate ARM hard float patches into eglibc, libffi, gcj
+
+ 15:09:38 <doko_> - testing for Linaro GCC 4.5 and 4.6 release; powerpc and ARM
+
+ 15:09:38 <doko_> - adjust linker flags for ghc and ocaml
+
+ 15:09:38 <doko_> - fix some build failures
+
+ 15:09:39 <doko_> - GCC bug triage
+
+ 15:09:41 <doko_> - started test rebuild
+
+ 15:09:44 <doko_> --
+
+ 15:10:58 <cjwatson> Cleaned up highly amusing live filesystem build failures due to livecd-rootfs having been accidentally removed from the build chroots.
+
+ 15:11:01 <cjwatson> Released initial version of syslinux-themes-ubuntu, which is enough to support localised image building.
+
+ 15:11:09 <cjwatson> Working on testing and client-side scripting for new native source sync facility; this is now open to developers and we should be able to announce it soon, modulo a few bugs (mostly presentational issues).  Looking forward to not having to process the sync queue quite so much!
+
+ 15:11:20 <cjwatson> Trying to cut down the NBS queue.  This is taking a while; I've been ending up chasing down the mess that the EFL library stack is in (FFes #828033 and #828004), and also openswan/strongswan and various other bits and pieces.
+
+ 15:11:24 <cjwatson> Fixed up ntfs-3g seeds and dependencies in a few places.
+
+ 15:11:26 <cjwatson> Chased down bug constructing -security entries in sources.list during installation (#820306), requiring SRUs.
+
+ 15:11:29 <cjwatson> Continuing to push various Launchpad changes up the hill.  RT#47132 is involving some back-and-forth.
+
+ 15:11:32 <cjwatson> --
+
+ 15:11:50 <barry> sync'ing \o/
+
+ 15:11:56 <bdmurray> Implemented DuplicateSignature's for apport-package bug reports and a package-conflict tag in apport
+
+ 15:11:59 <bdmurray> apport upload preventing reporting of bugs where the conflicting package is not an Ubuntu one
+
+ 15:12:02 <mvo> \o/
+
+ 15:12:04 <bdmurray> Created duplicate signatures for existing apport-package install failures and marked approximately 200 bug reports as duplicates
+
+ 15:12:07 <bdmurray> Tagged existing package-conflict bug reports in Launchpad
+
+ 15:12:14 <bdmurray> updated ubiquity source package apport hook to detect I/O errors on CD drives
+
+ 15:12:17 <bdmurray> bug triage of ubiquity bug reports (looking for I/O errors on CD drives and testing a duplicate signature using tracebacks in syslog files)
+
+ 15:12:23 <bdmurray> bug pattern writing for bug 825786 and bug 798459
+
+ 15:12:23 <bdmurray> created a packages with recent bugs report - http://reports.qa.ubuntu.com/reports/foundations-bugs/recent-package-bugs.html
+
+ 15:12:25 <ubottu> Launchpad bug 825786 in gst-plugins-bad0.10 (Ubuntu Oneiric) "package gstreamer0.10-camerabin (not installed) failed to install/upgrade: trying to overwrite '/usr/lib/gstreamer-0.10/libgstcamerabin.so', which is also in package gstreamer0.10-plugins-bad 0.10.22-2ubuntu1" [High,Triaged] https://launchpad.net/bugs/825786
+
+ 15:12:26 <ubottu> Launchpad bug 798459 in nspluginwrapper (Ubuntu) "package nspluginwrapper 1.2.2-0ubuntu9 failed to install/upgrade: sub-processo script post-installation instalado retornou estado de saída de erro 134" [High,Confirmed] https://launchpad.net/bugs/798459
+
+ 15:12:59 <bdmurray> done
+
+ 15:13:26 <jhunt> Holiday last week. This week working on Upstart job logging feature.
+
+ 15:13:27 <jhunt> ❄
+
+ 15:13:49 <barry> jhunt: you and your fancy unicodes :)
+
+ 15:14:22 <jhunt> ☺
+
+ 15:14:53 <barry> :) /me goes old skool
+
+ 15:14:57 <ev> - Fighting camerabin move from gstreamer-plugins-bad to gstreamer-plugins-good
+
+ 15:14:57 <ev> - Fixing Wubi disk image first stage bootloader
+
+ 15:14:57 <ev> - Fixing dependency issues and other weirdness around the PyGI ubiquity
+
+ 15:14:57 <ev> - Fixes to webcam and wireless pages
+
+ 15:14:59 <ev> (done)
+
+ 15:16:51 <slangasek> is that fight ongoing?
+
+ 15:17:06 <doko_> still in component mismatches
+
+ 15:18:14 <ev> yep
+
+ 15:18:22 <slangasek> doh
+
+ 15:18:36 <slangasek> ev: is it just a buildsystem wiring problem?
+
+ 15:18:47 <ev> it's just silly copy and paste mistakes on my part
+
+ 15:18:58 <ev> and the insanely long time it takes to build gstreamer on my machine
+
+ 15:19:03 <slangasek> heh
+
+ 15:19:49 <slangasek> * helped a bit with the stragglers on bug #788514
+
+ 15:19:49 <slangasek> * pushed through a set of FFe multiarch library uploads to get flashplugin and skype multiarch-ready for this cycle
+
+ 15:19:51 <ubottu> Launchpad bug 788514 in totem (Debian) "python packages on the CDs not using dh_python2" [Unknown,New] https://launchpad.net/bugs/788514
+
+ 15:19:52 <slangasek> * spent some time vivisecting ia32-libs
+
+ 15:19:54 <slangasek> * vowed to remove ia32-libs from the archive as soon as P opens
+
+ 15:19:57 <slangasek> * got cron rebuilt with a current debhelper, so that it would stop launching in my chroots now that upstart chroot passthrough support works
+
+ 15:20:07 <slangasek> EOF
+
+ 15:20:21 <slangasek> Any questions?
+
+ 15:22:18 <slangasek> bdmurray says no bug updates for this week
+
+ 15:22:20 <slangasek> [TOPIC] AOB
+
+ 15:22:20 <meetingology> TOPIC: AOB
+
+ 15:22:29 <slangasek> anything else you'd like to get off your chest?  Now's the time :-)
+
+ 15:22:54 <mvo> please test software-center-gtk3 if you feel like it and let me know about problems
+
+ 15:22:54 <barry> anybody else seeing higher than normal timeouts from launchpad?
+
+ 15:23:04 <doko_> demotions ... I assume we can demote a whole lot of java packages
+
+ 15:23:06 <mvo> its just part of the normal software-center packages and should just work(tm)
+
+ 15:23:22 <slangasek> I haven't been seeing any timeouts... have they lowered the threshold again?
+
+ 15:23:37 <barry> slangasek: dunno, i'm being ignored on #launchpad-dev :)
+
+ 15:23:54 <barry> slangasek: can you try this one: https://launchpad.net/ubuntu/+search?text=chromium-browser
+
+ 15:23:56 <slangasek> that means they're running around fixing whatever they broke, right? :)
+
+ 15:24:04 <barry> :-D
+
+ 15:24:07 <mvo> I did see some timeouts on LP, but not more than usually
+
+ 15:24:15 <ev> software-center-gtk3> MY EYES
+
+ 15:24:34 <doko_> barry: were some internal tools ported to python3? or should I ask, mvo, ev, pitti, ...
+
+ 15:24:37 <mvo> ev: haha, the yellow in the banner? or the general UI?
+
+ 15:24:46 <barry> my god it's full of stars
+
+ 15:24:53 <bdmurray> barry: it timed out for me
+
+ 15:25:00 <mvo> doko_: I prepared some stuff, but hit various roadblocks (like pygi ;)
+
+ 15:25:01 <barry> bdmurray: thanks
+
+ 15:25:08 <slangasek> barry: confirmed the timeout - that's not something I would normally use though, what does a search in "Ubuntu" return for that?
+
+ 15:25:31 <barry> slangasek: it would return a package containing packages and upstream branches, etc.
+
+ 15:25:34 <slangasek> doko_: did something change in javaland that will let us demote a bunch of packages?
+
+ 15:25:38 <slangasek> barry: ah
+
+ 15:25:43 <ev> I haven't ported anything to python3
+
+ 15:25:43 <mvo> could I get a sync for "python-coverage" using the new LP feature? or is it not quite the right time yet for tihs?
+
+ 15:25:52 <doko_> slangasek, eucalyptus
+
+ 15:26:19 <cjwatson> mvo: not ready for everyone to do it, but I'm sure I could use another beta tester :)  I'll send you instructions by /msg
+
+ 15:26:20 <mvo> I hit the issues that py3 will require the GI dbus and that is not fully done yet last I heared
+
+ 15:26:24 <slangasek> mvo: <span font_desc="bold 34">Title</span> doesn't look quite right :)  (clicking on "Moovida Me...")
+
+ 15:26:31 <mvo> cjwatson: great, thanks!
+
+ 15:26:41 <slangasek> doko_: oh, sure :)
+
+ 15:27:13 <slangasek> mvo: also: consistent misuse of "Its" vs. "It's" in the banners
+
+ 15:27:18 <slangasek> :)
+
+ 15:27:24 <barry> yeah, the python3 porting project didn't get off the ground this cycle as much as i wanted
+
+ 15:27:31 <mvo> slangasek: moovida> oh, I haven't seen this one yet, could you do a screenshot for me
+
+ 15:27:51 <mvo> slangasek: its> don't let germans write text, see e.g. nietsche for how this ends
+
+ 15:27:58 <slangasek> heh
+
+ 15:28:04 <slangasek> yes, will screenshot :)
+
+ 15:28:05 * mvo should actually learn to type too
+
+ 15:28:12 <mvo> anyway
+
+ 15:30:33 <slangasek> mvo: http://people.canonical.com/~vorlon/software-center-gtk-your-markup-is-showing.png
+
+ 15:31:30 <mvo> slangasek: oh, woah. this looks like nothing at all is initialized yet for some reason, that is not intended
+
+ 15:31:57 <mvo> slangasek: anything suspicious in the terminal or ~/.xsession-errors from s-c-gtk3?
+
+ 15:31:57 <bdmurray> the reviews for vlc are taking a very long time to load
+
+ 15:32:12 <slangasek> 2011-08-17 08:23:39,806 - softwarecenter.ui.gtk3.em - INFO - EM's: 17 15 21
+
+ 15:32:15 <slangasek> 2011-08-17 08:23:46,438 - softwarecenter.backend.reviews - WARNING - Could not get usefulness from server, no username in config file
+
+ 15:32:18 <slangasek> 2011-08-17 08:23:57,182 - softwarecenter.ui.gtk3.app - INFO - software-center-agent finished with status 1
+
+ 15:32:21 <slangasek> mvo: ^^ that's it
+
+ 15:32:40 <slangasek> bdmurray: are they video reviews
+
+ 15:32:56 <bdmurray> slangasek: no those are on youtube
+
+ 15:33:24 <mvo> slangasek: thanks, odd that. is it reproducable?
+
+ 15:33:45 <slangasek> mvo: hmm.  no!
+
+ 15:33:46 <mvo> bdmurray: thanks! but they show up eventually ?
+
+ 15:33:52 <slangasek> mvo: restarted, now it renders correctly
+
+ 15:33:56 <mvo> slangasek: the best kind of bugs :/
+
+ 15:34:12 <bdmurray> mvo: no, no reviews have shown up
+
+ 15:34:33 <mvo> thanks a bunch for this, but I don't want to hijack this meeting with this :)
+
+ 15:34:40 <mvo> bdmurray: thanks, I check if I can rperoduce
+
+ 15:34:44 <mvo> reproduce even
+
+ 15:34:56 <slangasek> mvo: enjoy :)
+
+ 15:35:11 <slangasek> I think that's about everything then, yes?
+
+ 15:36:04 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.4 (http://wiki.ubuntu.com/AlanBell/mootbot)

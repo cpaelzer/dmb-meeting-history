@@ -1,0 +1,734 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:12 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-04-03-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Bugs
+''LINK:'' http://launchpad.net/bugs/1150413   (slangasek, 15:40:12)
+
+ *AOB
+
+
+
+Meeting ended at 15:56:41 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (71)
+ * ev (47)
+ * stgraber (40)
+ * cjwatson (37)
+ * stokachu (35)
+ * ubottu (26)
+ * jodh (21)
+ * xnox (20)
+ * ogra_ (17)
+ * barry (13)
+ * doko (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02:12 <slangasek> #startmeeting
+
+ 15:02:12 <meetingology> Meeting started Wed Apr  3 15:02:12 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:12 <meetingology> 
+
+ 15:02:12 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:35 <slangasek> [TOPIC] Lightning round
+
+ 15:02:41 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 15:02:44 <slangasek> bdmurray xnox jodh cjwatson ogra stgraber barry stokachu ev doko slangasek
+
+ 15:02:48 <slangasek> bdmurray is off today, so xnox:
+
+ 15:02:51 * stgraber waves
+
+ 15:03:39 <xnox> yeap.
+
+ 15:03:52 <xnox> * Desktop lvm automatic utah test is merged, not added to jenkins just
+
+ 15:03:52 <xnox> yet.
+
+ 15:03:53 <xnox> * Fixing FTBFS from the recent rebuild (focused on tcltk multiarch
+
+ 15:03:53 <xnox> fallout and canonical-upstream packages)
+
+ 15:03:53 <xnox> * Uploaded partman-auto-lvm sru to precise for bug 1091788
+
+ 15:03:53 <xnox> * Pycurl bug with thin-client-config-agent is in progress bug #1152222
+
+ 15:03:55 <ubottu> bug 1091788 in partman-auto-lvm (Ubuntu Precise) "debian-installer: creation of volume group (LVM) fails if hostname corresponds with an existing device name" [Medium,In progress] https://launchpad.net/bugs/1091788
+
+ 15:03:55 <xnox> * Working on installer bugs for rls-r-tracking.
+
+ 15:03:56 <ubottu> bug 1152222 in thin-client-config-agent (Ubuntu) "thin-client-config-agent fails in pycurl with TypeError: string argument expected, got 'bytes'" [High,Confirmed] https://launchpad.net/bugs/1152222
+
+ 15:03:57 <xnox> * Also TODO review lp:~jamesodhunt/upstart/allow-multiple-cmdline-confdirs
+
+ 15:03:59 <xnox> * Very short week due to Eastern holiday friday-monday, booked travel
+
+ 15:04:01 <xnox> for the client sprint
+
+ 15:04:03 <xnox> ..
+
+ 15:04:27 <jodh> * blueprints:
+
+ 15:04:27 <jodh> - foundations-r-upstart-roadmap: np.
+
+ 15:04:27 <jodh> - foundations-r-upstart-user-session-enhancements:
+
+ 15:04:27 <jodh> - DEP-8 python test harness progress:
+
+ 15:04:30 <jodh> - Now supports testing with PID 1, Session Init, and Session bus
+
+ 15:04:33 <jodh> environments (the latter two both using either a default (XDG)
+
+ 15:04:36 <jodh> session or a "stand-alone" test instance).
+
+ 15:04:39 <jodh> - Currently resolving inotify issue.
+
+ 15:04:43 <jodh> - Modified upstart to allow multiple "--confdir <dir>" options for
+
+ 15:04:46 <jodh> session mode (required for DEP-8, awaiting feedback on MP):
+
+ 15:04:49 <jodh> https://code.launchpad.net/~jamesodhunt/upstart/allow-multiple-cmdline-confdirs/+merge/156512
+
+ 15:04:52 <jodh> - Fixed bug 1161098 upstream.
+
+ 15:04:53 <ubottu> Error: Launchpad bug 1161098 could not be found
+
+ 15:04:55 <jodh> * boot:
+
+ 15:04:59 <jodh> - Progress on bug 1157713.
+
+ 15:05:00 <ubottu> bug 1157713 in upstart "upstart tests which run without inotify fail occasionally" [Undecided,New] https://launchpad.net/bugs/1157713
+
+ 15:05:02 <jodh> - Added mountall to list of projects being checked by Coverity.
+
+ 15:05:05 <jodh> * misc:
+
+ 15:05:08 <jodh> - Testing for bug 1103406.
+
+ 15:05:09 <ubottu> bug 1103406 in linux (Ubuntu) "kernel disabled console output and keyboard lights in early boot" [High,Confirmed] https://launchpad.net/bugs/1103406
+
+ 15:05:11 <jodh> * TODO:
+
+ 15:05:15 <jodh> - Finish draft blog post on Upstart sessions.
+
+ 15:05:15 <jodh> ȡ
+
+ 15:05:35 <cjwatson> Short week (Easter Triduum).
+
+ 15:05:35 <cjwatson> Finished rewriting cdimage in Python.
+
+ 15:05:35 <cjwatson> Had another go at bug 1065281.  Still apparently incomplete.
+
+ 15:05:35 <cjwatson> Fixed ubiquity build failure due to gobject-introspection change.
+
+ 15:05:35 <cjwatson> Fixed deadlock in aptdaemon due to unflushed stdio buffers (bug 1163142, bug 1163163, probably many others).
+
+ 15:05:38 <cjwatson> Pushed the Haskell transition up the hill some more.  The powerpc problems should be mostly sorted.  I found some advice on #ghc so may be able to continue to sort out the armhf problems now.
+
+ 15:05:40 <ubottu> bug 1065281 in OEM Priority Project quantal "Installer crashed when trying to partition 4k/4k sector hard disks" [High,In progress] https://launchpad.net/bugs/1065281
+
+ 15:05:41 <ubottu> bug 1163142 in aptdaemon (Ubuntu) "Hangs when "preconfiguring packages" at the installation of a language" [High,Fix released] https://launchpad.net/bugs/1163142
+
+ 15:05:42 <cjwatson> Helped IS recover royal (powerpc livefs porter), which turned out to be a lurking fstab-related problem that would probably have bitten other livefs builders on their next reboot.
+
+ 15:05:42 <ubottu> bug 1163163 in aptdaemon (Ubuntu Raring) "aptdaemon does not give a terminal/gtk debconf prompt" [High,Fix released] https://launchpad.net/bugs/1163163
+
+ 15:05:46 <cjwatson> ..
+
+ 15:06:08 <ogra_> done:
+
+ 15:06:08 <ogra_> * livecd-rootfs should be able to create cross built android zips for the four supported arches now (still waiting for some RTs to be done to actually test that)
+
+ 15:06:08 <ogra_> * fixed chromium-browser FTBFS on arm (finally its not three versions behind anymore on armhf)
+
+ 15:06:08 <ogra_> * easter vacation ...
+
+ 15:06:08 <ogra_> * power management on Touch discussion ... very early planning, we will have a public hangout going forward with this and go more into details by then
+
+ 15:06:11 <ogra_> * kernel updates of android kernels were researched by ppisati, seems to work fine using abootimg from teh archive, i will soon look into flash-kernel abilities to intergrate
+
+ 15:06:14 <ogra_> 
+
+ 15:06:16 <ogra_> todo:
+
+ 15:06:18 <ogra_> * cdimage implementation of cross building the android zips (once the RT is in)
+
+ 15:06:20 <ogra_> * testing (and possibly fixing, as there seem to be some bugs) of raring armhf images (omap4, ac100, nexus7 desktop)
+
+ 15:06:23 <ogra_> * see if i can get some armhf universe FTBFS fixed before final release
+
+ 15:06:25 <ogra_> ..
+
+ 15:06:41 <stgraber> Feature work:
+
+ 15:06:41 <stgraber> - Container (BLUEPRINT: servercloud-r-lxc)
+
+ 15:06:41 <stgraber> - Spent most of Monday doing code reviews, last minute fixes, a lot of testing and sending the LXC 0.9 final pull request.
+
+ 15:06:44 <stgraber> - Prepared LXC 1.0 roadmap: https://wiki.ubuntu.com/LXC/1.0-roadmap
+
+ 15:06:46 <stgraber> - Updated the Plumbers mini-conference wiki: http://wiki.linuxplumbersconf.org/2013:containers
+
+ 15:06:49 <stgraber> - Looked into an early Go binding for LXC
+
+ 15:06:52 <stgraber> - Fixed bug 1157332 in raring + quantal SRU
+
+ 15:06:54 <ubottu> bug 1157332 in lxc (Ubuntu Quantal) "/etc/dnsmasq.d-available/lxc circular link " [High,In progress] https://launchpad.net/bugs/1157332
+
+ 15:06:54 <stgraber> - Mobile updates (BLUEPRINT: foundations-1303-single-image-update)
+
+ 15:06:57 <stgraber> - Had a few more meetings and discussion on the implementation of image based updates, taking quite a bit of time from actual implementation time :)
+
+ 15:06:59 <stokachu> goWOOT
+
+ 15:07:00 <stgraber> - Updated https://wiki.ubuntu.com/ImageBasedUpgrades/Mobile and https://wiki.ubuntu.com/ImageBasedUpgrades/Mobile/LocalPackages
+
+ 15:07:03 <stgraber> - Worked on prototype of the server side tools, I now have a tool to diff squashfs images, one to generate the zip files and one to scan and generate the needed files.
+
+ 15:07:06 <stgraber> - Mobile networking (BLUEPRINT: client-1303-converged-network-stack)
+
+ 15:07:08 <stgraber> - cyphermox got the code to actually work without segfaulting
+
+ 15:07:11 <stgraber> - caught up with awe on state of the ofono/Android driver
+
+ 15:07:13 <stgraber> - Mobile sync and provisioning (OMA) (BLUEPRINT: client-1303-we-should-create-one)
+
+ 15:07:16 <stgraber> - Went through all the OMA specs, start working on a summary of those
+
+ 15:07:19 <stgraber> - Looked into opensource implementation of syncml and other OMA specs
+
+ 15:07:21 <stgraber> Other work:
+
+ 15:07:24 <stgraber> - A few queue reviews for raring
+
+ 15:07:26 <stgraber> - Killed wubi dailies and QATracker entries
+
+ 15:07:29 <stgraber> - Tracked down and fixed QATracker ACL bug
+
+ 15:07:31 <stgraber> - TB meeting
+
+ 15:07:34 <stgraber> TODO:
+
+ 15:07:36 <stgraber> - Continue spec work for the mobile blueprints and continue image based updates prototype
+
+ 15:07:39 <stgraber> - Come up with the list of Xsession scripts that still need porting to upstart user-sessions (outside of standard desktop install).
+
+ 15:07:40 <xnox> cjwatson: I wonder if that aptdaemon also fixed 1161943 which is reported to work fine with today's images.
+
+ 15:07:42 <stgraber> - ifupdown SRU to quantal and precise
+
+ 15:07:45 <stgraber> Holidays:
+
+ 15:07:48 <stgraber> - I'm off starting on Friday (5th) and back next Thursday (11th).
+
+ 15:07:50 <stgraber> - I'll then be working from Europe on the local timezone.
+
+ 15:07:52 <stgraber> - I'll also be off from Monday 15th and back Thursday 18th.
+
+ 15:07:55 <stgraber> (DONE)
+
+ 15:08:07 <barry> short week due to vacation.  wrote up pycon trip report and general catching up. lpbug 1154599.  lpbug 1163609.  todo: continue to investigate lpbug 1163609.  return to click package spec.  done.
+
+ 15:08:39 <barry> bug 1163609
+
+ 15:08:40 <ubottu> bug 1163609 in pycurl (Ubuntu Raring) "pycurl FTBFS due to segfault in test suite" [High,Triaged] https://launchpad.net/bugs/1163609
+
+ 15:08:43 <barry> bug 1154599
+
+ 15:08:44 <ubottu> bug 1154599 in python2.7 (Ubuntu) "getaddrinfo() returns -11 (EAI_SYSTEM) instead of -2" [Medium,New] https://launchpad.net/bugs/1154599
+
+ 15:08:58 <stokachu> [Current]
+
+ 15:09:00 <stokachu> * LP#1162876 - apt-cacher-ng data corruption with HTTP headers
+
+ 15:09:01 <stokachu> [task] Need Sponsor/SRU
+
+ 15:09:03 <stokachu> * LP#1057358 - isc-dhcp-server-ldap cannot read /etc/ldap/ldap.conf
+
+ 15:09:04 <stokachu> [task] stgraber to please re-review latest debdiff
+
+ 15:09:06 <stokachu> * LP#1013798 - Blink SIP client segfaults with libgcrypt11
+
+ 15:09:07 <stokachu> [task] Needs SRU/Sponsor
+
+ 15:09:09 <stokachu> [Postponed]
+
+ 15:09:10 <stokachu> * LP#857983  - Pointing Devices menu item is missing after upgrading
+
+ 15:09:11 <cjwatson> xnox: It's possible.  I'll mention it
+
+ 15:09:12 <stokachu> [comment] This did not have ubuntu-sru subscribed, so I subscribed
+
+ 15:09:13 <stokachu> [task] Revist next week to check status
+
+ 15:09:15 <stokachu> * LP#1027086 - incorrect schema setting used for authentication-methods in vino
+
+ 15:09:16 <stokachu> [task] Ritesh to properly format SRU in description and follow up with SRU team
+
+ 15:09:18 <stokachu> crap forgot about bug bot
+
+ 15:09:52 <stokachu> bug 1162876, bug 1057358, bug 1013798
+
+ 15:09:55 <ubottu> bug 1162876 in apt-cacher-ng (Ubuntu Precise) "apt-cacher-ng data corruption with HTTP headers" [Medium,In progress] https://launchpad.net/bugs/1162876
+
+ 15:09:56 <ubottu> bug 1057358 in isc-dhcp (Ubuntu Precise) "dhcpd in isc-dhcp-server-ldap cannot read /etc/ldap/ldap.conf due to missing entry in apparmor profile" [Medium,In progress] https://launchpad.net/bugs/1057358
+
+ 15:09:56 <slangasek> jodh: where is the coverity report on (upstart and) mountall?  do I need to get around to creating an account to be able to view those?
+
+ 15:09:57 <ubottu> bug 1013798 in libgcrypt11 (Ubuntu Raring) "Blink SIP client segfaults with libgcrypt11 1.5.0-3ubuntu0.1" [Critical,In progress] https://launchpad.net/bugs/1013798
+
+ 15:09:58 <stgraber> stokachu: isc-dhcp, what's the priority on that? Currently it's on bug to-bundle-with-next-SRU list, should it be bumped to fine-to-upload-on-its-own?
+
+ 15:10:13 <stokachu> stgraber: nah just as long as its on your radar
+
+ 15:10:33 <stgraber> ok, definitely still on my radar. (I go through all netstack bugs weekly)
+
+ 15:10:45 <stokachu> stgraber: cool, thats good enough for me, thanks
+
+ 15:11:47 <jodh> slangasek: http://scan.coverity.com/all-projects.html. You do need an account - I'll create you one...
+
+ 15:11:53 <ev> - Short week; public holiday on Friday and Monday.
+
+ 15:11:54 <ev> - Bug triage.
+
+ 15:11:54 <ev> - Code review for Brian.
+
+ 15:11:54 <ev> - Looked into having different replication factors across DCs. Historically we
+
+ 15:11:54 <ev> thought this was not possible, but it appears we were wrong. Still, after
+
+ 15:12:00 <ev> talking with the Cassandra folks, it sounds like that will lead to
+
+ 15:12:00 <ev> performance problems. It would have let us have a large single-node Cassandra
+
+ 15:12:00 <ev> ring for analytics and backup (in the failover sense of the word), but I
+
+ 15:12:00 <ev> think we're going to have to find the hardware for balanced DCs.  Started a
+
+ 15:12:00 <ev> discussion with Tom and James. Hopefully this will unblock us on upgrading
+
+ 15:12:00 <ev> Cassandra to 1.2 and deploying Hadoop soon.
+
+ 15:12:09 <ev> - Changes to lp:canonical-memento in support of some of our outstanding RTs
+
+ 15:12:09 <ev> (new CFs in the ACL).
+
+ 15:12:09 <ev> - Tried to touch base with the QA team on how we can improve errors.ubuntu.com
+
+ 15:12:09 <ev> for them. No responses yet.
+
+ 15:12:09 <ev> - Implemented a mapping between SHA-1 hashes and the bucket identifiers they
+
+ 15:12:10 <ev> come from, so we can have URLs like:
+
+ 15:12:13 <ev> https://errors.ubuntu.com/problem/e983f374794de9c64e3d1c1de1d490c0756eeeff
+
+ 15:12:14 <ev> Thought about doing sha1(x).hexdigest()[:10], but I'm worried about
+
+ 15:12:14 <ev> collisions.
+
+ 15:12:20 <ev> This fixes a few problems, namely that bucket IDs can be up to 64K long and
+
+ 15:12:21 <ev> URLs start to break past 2K, and that bucket IDs can contain special
+
+ 15:12:21 <ev> characters, which makes embedding them in javascript tricky.
+
+ 15:12:21 <ev> - Fixed bugs in apport to dogfood errors.ubuntu.com, and because xnox found an
+
+ 15:12:21 <ev> interesting one.
+
+ 15:12:25 <ev> - Fixed bugs in oops-repository and daisy. Fixed the retracers crashing and
+
+ 15:12:25 <ev> leaking FDs when processing the failed to retrace queue.
+
+ 15:12:26 <ev> - Prototyped a new method of counting instances of of buckets (with releases,
+
+ 15:12:26 <ev> packages, and package versions) by the hour, which will let us finally solve
+
+ 15:12:31 <ev> the problem that "the past day" is the UTC day, not a rolling one, that "the
+
+ 15:12:31 <ev> past month" is just the current calendar month, and the "the past year" is
+
+ 15:12:31 <ev> just the current calendar year. Initial findings look really promising when
+
+ 15:12:35 <ev> simulating a comparatively large load to what we receive every day, and I
+
+ 15:12:35 <ev> hope to have a branch ready to land on trunk by the end of the week.
+
+ 15:12:35 <ev> - Finally read enough about Three-Phase Uniform Threshold to understand how to
+
+ 15:12:38 <ev> implement it. This will let us more quickly sort across random date ranges,
+
+ 15:12:39 <ev> where we cannot cheat by keeping pre-calculated count-ordered lists
+
+ 15:12:39 <ev> (LP: #1052954).
+
+ 15:12:39 <ev> - Perpetually fighting canonistack (RT 60371).
+
+ 15:12:40 <ubottu> Launchpad bug 1052954 in Daisy "top-k for arbitrary ranges is complex" [High,Triaged] https://launchpad.net/bugs/1052954
+
+ 15:12:41 <ev> (done)
+
+ 15:13:51 <doko> - long weekend (Fri and Mon holidays)
+
+ 15:13:51 <doko> - python 2.7.4 and 3.3.1 release candidates
+
+ 15:13:51 <doko> - toolchain merge
+
+ 15:13:51 <doko> - raring test rebuild
+
+ 15:13:51 <doko> - fixing build failures
+
+ 15:13:52 <doko> - fixing packages for migration
+
+ 15:13:55 <doko> (done)
+
+ 15:16:02 <ev> No more wubi. End of an era.
+
+ 15:16:50 <barry> wu-bye
+
+ 15:16:55 <ev> ha!
+
+ 15:17:01 <ev> I see what you did there
+
+ 15:17:02 <ogra_> ++
+
+ 15:17:03 <slangasek> ev: great news about fixing the "the past day" report :)
+
+ 15:17:23 <slangasek> * short week, with three days of vacation
+
+ 15:17:23 <slangasek> * spent a lot of time hacking bug #763148 in compiz... almost but not quite figured out
+
+ 15:17:24 <ubottu> bug 763148 in compiz (Ubuntu) "Adding/Removing an external monitor causes open windows to move to another workspace" [Medium,Triaged] https://launchpad.net/bugs/763148
+
+ 15:17:26 <slangasek> * meager contribution to raring buildability (Debian bug #704572)
+
+ 15:17:27 <ubottu> Debian bug 704572 in freetds "freetds: Add -lgcrypt to LDFLAGS to fix underlinking" [Important,Fixed] http://bugs.debian.org/704572
+
+ 15:17:29 <slangasek> * this week mostly spent on reviews, due at the end of the week (your peer reviews, too!)
+
+ 15:17:32 <slangasek> (done)
+
+ 15:17:33 <ev> slangasek: yeah, real soon now. Testing the load of it has required me to write much of the code for it.
+
+ 15:17:48 <slangasek> any other comments/questions over status?
+
+ 15:18:07 <ogra_> great work on the image updates stgraber !
+
+ 15:18:19 <barry> slangasek: apparently, i have no peers
+
+ 15:18:19 <ogra_> (just wanted to say that)
+
+ 15:18:43 <stgraber> ogra_: thanks!
+
+ 15:19:33 * slangasek peers at barry
+
+ 15:19:44 <barry> oh, sorry, i meant pears
+
+ 15:19:48 <slangasek> heh
+
+ 15:19:53 <slangasek> [TOPIC] Bugs
+
+ 15:19:57 * ogra_ hands barry some peas
+
+ 15:20:06 <slangasek> bdmurray sent me a list, let's see what we have here
+
+ 15:20:07 * barry nom nom noms
+
+ 15:20:09 <slangasek> bug #947107
+
+ 15:20:11 <ubottu> bug 947107 in ubiquity (Ubuntu Precise) "No partition labels in the resize widgets" [High,Triaged] https://launchpad.net/bugs/947107
+
+ 15:20:19 <slangasek> recently reappeared via iso testing
+
+ 15:21:06 <slangasek> xnox: you commented last on the bug; do you have a handle on fixing it?
+
+ 15:21:12 <xnox> slangasek: it still was not fixed. I had a minimal sample of the gui problem. Do you have anyone in mind who is awesome with Gtk & Cairo?
+
+ 15:21:26 <slangasek> well, not me
+
+ 15:21:33 <slangasek> cjwatson, ev, stgraber?
+
+ 15:21:41 <xnox> slangasek: in essence the label is updated and printed, but it end up being "painted over" with a cairo surface.
+
+ 15:21:49 <xnox> s/end/ends/
+
+ 15:22:01 <slangasek> or if anyone else here wants to give their gtk chops a workout
+
+ 15:22:27 * xnox can try poking it again and pinging #-desktop people about it.
+
+ 15:22:56 <cjwatson> my awesomeness is pretty rusty :)
+
+ 15:22:58 <ev> it's been a long long time. I'm not sure I'd be any more help.
+
+ 15:23:15 <slangasek> xnox: ok, sounds like we'll leave it with you to follow up with the desktop team
+
+ 15:23:20 <slangasek> next
+
+ 15:23:25 <cjwatson> yeah, looking at that I don't think I'd be any faster than somebody coming at it from scratch
+
+ 15:23:28 <slangasek> bug #1078697
+
+ 15:23:30 <ubottu> bug 1078697 in Launchpad itself "Ubuntu archive is missing SHA-1/SHA-256 hashes for some packages" [Low,Triaged] https://launchpad.net/bugs/1078697
+
+ 15:23:30 <stgraber> slangasek: well, I've been fixing that kind of bug in the past but I'm really not efficient at it and I won't be around much in the next 2 weeks or so, so if I work on this, it likely won't make 13.04
+
+ 15:24:08 <xnox> slangasek: mass upload no-change rebuild for packages that are missing those hashes? =)))))
+
+ 15:24:13 <slangasek> bdmurray notes there's a branch from mvo but that the bug report seems to be stalled
+
+ 15:24:39 <xnox> langpacks got fixed so the set should be small now, and they will benefit from new toolchain/debhelper rebuild.
+
+ 15:25:09 <cjwatson> xnox: waste of effort when apt-ftparchive can do it, surely
+
+ 15:25:09 <slangasek> xnox: well, should this be fixed in apt-ftparchive itself like mvo proposes?
+
+ 15:25:39 <slangasek> barry: can I give this to you to follow up on?
+
+ 15:26:07 <barry> slangasek: sure
+
+ 15:26:20 <slangasek> assigned
+
+ 15:26:22 <slangasek> barry: thanks
+
+ 15:26:35 <slangasek> bug #957231
+
+ 15:26:36 <ubottu> bug 957231 in apt (Ubuntu) "update-manager crashed with SIGSEGV in debListParser::LoadReleaseInfo()" [Medium,Confirmed] https://launchpad.net/bugs/957231
+
+ 15:26:48 <xnox> cjwatson: yeah, it's still a fair amount of packages left without those checksums.
+
+ 15:26:50 <slangasek> bdmurray notes that there are new duplicates of this bug happening in raring
+
+ 15:27:51 <cjwatson> barry: note that you need to get a fix into either lucid-cat (via IS) or lucid-updates, and preemptively into precise-cat (via IS) or precise-updates, in order for it to be effective for LP
+
+ 15:28:08 <slangasek> OTOH there are a total of 6 duplicates, so maybe this isn't a high priority bug unless someone sees an obvious quick fix?
+
+ 15:28:53 <barry> cjwatson: i'm not sure what that means, since i have zero context atm, but i'll try to remember your suggestion when i read the whole bug report ;)
+
+ 15:29:16 <cjwatson> slangasek: it's failing on a particular PPA, I notice
+
+ 15:29:23 <cjwatson> buffer = "Origin: LP-PPA-webupd8team-java\n\000\000\000\000\000\000\000\000\244\201", '\000' <repeats 22 times>, "d.\000\000\000\000\000\000\000\020\000\000\000\000\000\000\030\376=\003\000\000\000\000i|cO\000\000\000\000jfd."
+
+ 15:29:50 <slangasek> cjwatson: is that consistent in the duplicates?
+
+ 15:30:33 <cjwatson> One moment ...
+
+ 15:30:44 <slangasek> well, the retracer didn't really leave that info in the duplicate bugs
+
+ 15:31:18 <cjwatson> Yeah, none of them have sufficiently detailed traces
+
+ 15:31:56 <cjwatson> failing loc is
+
+ 15:31:57 <cjwatson> case Origin: FileI->Origin = WriteUniqString(data); break;
+
+ 15:33:18 <slangasek> so nothing suggests to me that this should be moved to the top of the priority list
+
+ 15:33:28 <cjwatson> It's writing into the cache - could be some kind of problem with those ghastly C++ gadgets for doing that (remember quantal?)
+
+ 15:33:35 <cjwatson> Yeah, agreed
+
+ 15:34:13 <slangasek> cjwatson: do you want to take a bit of time with further triage since you're already in it, then kick it back onto the pile assuming you don't see anything that makes it critical?
+
+ 15:34:21 <slangasek> bug #1160346
+
+ 15:34:22 <ubottu> bug 1160346 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade from Ubuntu 12.04 on Pentium-M fails, breaks system without any warning (This kernel does not support a non-PAE CPU)" [High,Triaged] https://launchpad.net/bugs/1160346
+
+ 15:34:56 <cjwatson> slangasek: I've got far enough in triage to know I don't want to touch it further :-), but I'll leave a comment with my findings, at least
+
+ 15:35:02 <slangasek> cjwatson: :)
+
+ 15:36:40 <slangasek> so, bug #1160346 is definitely something we can guard against in the upgrader... users would I'm sure much rather be reminded they can't upgrade their system to later releases before they've downloaded the world and tried to install it
+
+ 15:36:41 <ubottu> bug 1160346 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade from Ubuntu 12.04 on Pentium-M fails, breaks system without any warning (This kernel does not support a non-PAE CPU)" [High,Triaged] https://launchpad.net/bugs/1160346
+
+ 15:36:46 <slangasek> any volunteers for this one?
+
+ 15:37:24 * slangasek decides to take it himself
+
+ 15:37:48 <slangasek> bug #1063350
+
+ 15:37:49 <ubottu> bug 1063350 in software-properties (Ubuntu) "add-apt-repository/apt-add-repository fails with "ValueError: cannot convert float NaN to integer"" [Medium,Triaged] https://launchpad.net/bugs/1063350
+
+ 15:38:34 * barry groans at pycurl again
+
+ 15:38:48 <slangasek> from the backtrace, it looks like that may just be a change in the exception interface that needs to be handled?
+
+ 15:39:03 <barry> slangasek: give it to me and i'll at least take a look
+
+ 15:39:06 <slangasek> hmm, but it's inside python2.7
+
+ 15:39:08 <slangasek> barry: thanks
+
+ 15:40:01 <slangasek> barry: fwiw bdmurray raised this one out of concern that it would affect other apps... so if it's a pycurl bug the answer is probably "yes"
+
+ 15:40:12 <slangasek> http://launchpad.net/bugs/1150413
+
+ 15:40:13 <ubottu> Launchpad bug 1150413 in procps (Ubuntu) "Cannot allocate memory if process owned by user with large number of groups" [High,Triaged]
+
+ 15:40:33 <slangasek> "This bug also has a patch and might be worth fixing for R."
+
+ 15:40:52 <slangasek> oddly, I had the impression that this one /was/ fixed in R
+
+ 15:42:17 <slangasek> anyway, there's a patch but I don't know its upstream status... maybe someone can dig into that and see if this patch is sane to apply?
+
+ 15:42:24 <slangasek> doko: can you take this one?
+
+ 15:42:34 <doko> slangasek, ok
+
+ 15:42:38 <slangasek> doko: cheers
+
+ 15:42:58 <slangasek> and that's all the bugs from bdmurray
+
+ 15:43:10 <stokachu> i got one last bug i forgot to mention
+
+ 15:43:17 * slangasek yields the floor to stgraber
+
+ 15:43:19 <slangasek> er
+
+ 15:43:20 <slangasek> stokachu:
+
+ 15:43:22 <stokachu> bug 1158489, i haven't started work on this yet
+
+ 15:43:23 <ubottu> Error: Launchpad bug 1158489 could not be found
+
+ 15:43:26 <stokachu> err
+
+ 15:43:54 <stokachu> bug 1153717
+
+ 15:43:56 <ubottu> bug 1153717 in debian-installer (Ubuntu Precise) "/usr/sbin/grub-probe: error: no such disk during preseed install" [Medium,Confirmed] https://launchpad.net/bugs/1153717
+
+ 15:44:20 <stokachu> i haven't dug into it yet but curious if cjwatson or anyone has any knowledge of this
+
+ 15:44:31 <stokachu> seems to only affect bare metal
+
+ 15:45:28 <cjwatson> stokachu: already on my list :)
+
+ 15:45:44 <stokachu> cjwatson: ok cool thanks man
+
+ 15:45:45 <cjwatson> I haven't managed to dig into it though, it's dmraid-specific and those are always horrible to debug
+
+ 15:46:03 <stokachu> yea ive got someone who can reproduce it so ill get more debug data if required
+
+ 15:46:27 <cjwatson> I don't think I have more useful debugging to request at this point - I already talked with Leonardo to extract the grub-probe debug output that's attached there
+
+ 15:46:37 <stokachu> ah ok
+
+ 15:46:51 <stgraber> I'm surprised that a Dell PERC triggers dmraid though
+
+ 15:47:08 <stgraber> as those are hardware raid controlers and so should be exporting a fairly standard looking device to the OS
+
+ 15:47:40 <stokachu> i thought perc were more fakeraid/software
+
+ 15:48:15 <stgraber> PERC is usually the brand DELL uses for their hardware raid controler on servers, those are typically standard LSI hardware raid controllers with custom firmware
+
+ 15:48:18 <cjwatson> "<lborda> yeah ... Dell PERC H310 PCIe host-based RAID..."
+
+ 15:48:25 <cjwatson> host-based RAID => fake
+
+ 15:48:35 <stokachu> love those :(
+
+ 15:48:51 <stgraber> ok, congrats to DELL for making everything even more confusing than it was ;)
+
+ 15:49:27 <slangasek> any other bugs?
+
+ 15:49:28 <cjwatson> stokachu: anyway, the first pass in these is always figuring out the grub-probe command that's failing and then getting output of that with -vv, as lborda did - beyond that I promise to keep you updated with how my investigations are going so you have a better chance of working out the next one
+
+ 15:49:51 <cjwatson> stokachu: but at this point it's basically laborious tracing through the code alongside the debug output and waiting for something wrong to jump out
+
+ 15:49:52 <stokachu> cjwatson: cool man ill keep this on my watchlist
+
+ 15:50:06 <cjwatson> which is why I haven't been able to face it yet :-/
+
+ 15:50:07 <stokachu> cjwatson: thanks for looking into it though
+
+ 15:51:14 <slangasek> [TOPIC] AOB
+
+ 15:51:17 <slangasek> anything else?
+
+ 15:51:28 <slangasek> everyone get their fill of Easter candy?
+
+ 15:51:52 <stokachu> mine had liquor in it
+
+ 15:51:54 <stokachu> har har har
+
+ 15:51:56 <barry> no but my peeps did
+
+ 15:52:12 <slangasek> barry: heh
+
+ 15:52:30 <slangasek> so can someone explain to me why the only time Cadbury shows up in the US market is at Easter time?
+
+ 15:53:09 <stokachu> i think the bunny feels he's to important like that matt dude from today show
+
+ 15:53:15 <cjwatson> Because they know that Americans have no taste so they only get to win when the market is flooded?
+
+ 15:53:25 <cjwatson> muttermutterdisgustingherschey :)
+
+ 15:53:39 <slangasek> cjwatson: are you familiar with the Cadbury products that actually get sold here at Easter? :)
+
+ 15:53:40 <ogra_> haha
+
+ 15:53:58 <slangasek> a creme egg is not fine dining
+
+ 15:54:02 <stokachu> hahah
+
+ 15:54:06 <barry> cjwatson: is hersheys even chocolate?
+
+ 15:54:16 <cjwatson> Still nicer than herscheys or however it's spelled :)
+
+ 15:54:22 <cjwatson> We had creme egg ice cream
+
+ 15:54:25 <cjwatson> YUM
+
+ 15:54:45 * slangasek goes into insulin shock vicariously
+
+ 15:55:02 <cjwatson> I actually had to stop eating cake due to sugar overload
+
+ 15:55:02 <ev> Cadbury? You mean Phillip Morris?
+
+ 15:55:11 <cjwatson> I don't know what the world's coming to
+
+ 15:56:05 <slangasek> ev: didn't Phillip Morris rebrand? :)
+
+ 15:56:09 <slangasek> ("Altria")
+
+ 15:56:18 <ev> with lots of warm colours, yeah
+
+ 15:56:37 <slangasek> anyway, clearly we've reached the end of the productive part of this meeting
+
+ 15:56:41 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

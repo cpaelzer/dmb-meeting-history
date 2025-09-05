@@ -1,0 +1,251 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 22 Feb at 15:34 &mdash; 16:00 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-02-22-15.34.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by slyon at 15:34.
+
+
+=== current component mismatches ===
+
+Discussion started by slyon at 15:35.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 15:35)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 15:35)
+
+=== New MIRs ===
+
+Discussion started by slyon at 15:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 15:39)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 15:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 15:47)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 15:52.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 15:52)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/python-cheroot/+bug/1930111   (sarnold, 15:54)
+
+=== Any other business? ===
+
+Discussion started by slyon at 15:58.
+
+
+
+
+== People present (lines said) ==
+
+ * slyon (52)
+ * sarnold (19)
+ * didrocks (10)
+ * ubottu (4)
+ * joalif (4)
+ * meetingology (2)
+ * jamespage (2)
+
+
+
+== Full log ==
+
+
+ 15:34 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:34 <meetingology> Meeting started at 15:34:07 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:34 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:34 <slyon> #topic Review of previous action items
+
+ 15:34 <sarnold> aha :) thanks slyon
+
+ 15:35 <slyon> IIRC we did not have any open action items from last week, other than paelzer wanting to merge the latest github PR into the wiki
+
+ 15:35 <slyon> that's not yet done, but he's off that it's not critical, so let's postpone that
+
+ 15:35 <slyon> #topic current component mismatches
+
+ 15:35 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:35 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:35 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:36 <didrocks> nothing new/unknown from what I see? (libreoffice and others desktopy things -> I repinged to figure out if those are false positives now or not)
+
+ 15:36 <slyon> non-proposed looks pretty much normal to me
+
+ 15:37 <sarnold> libhandy-1 -> glade feels vaguely new to me
+
+ 15:37 <sarnold> but .. no scrollback :(
+
+ 15:37 <didrocks> it’s not, already dealt with last week
+
+ 15:37 <slyon> didrocks: I agree. I think we still need some comment about head->pythonv-vitrageclient->twitter-bootstrap3 from jamespage
+
+ 15:37 <didrocks> apparently fixed, but still on the list
+
+ 15:37 <didrocks> so I reopened and reasked seb128 to have a look if now this is a false positive or not
+
+ 15:37 <sarnold> cool, thanks
+
+ 15:37 <didrocks> context: https://bugs.launchpad.net/ubuntu/+source/glade/+bug/1961023/comments/2
+
+ 15:37 <ubottu> Launchpad bug 1961023 in glade (Ubuntu) "[MIR] glade" [Undecided, Incomplete]
+
+ 15:38 <jamespage> you do - vitrageclient seems to be needed the other is a transient doc dependency AFAICT
+
+ 15:38 <slyon> thanks didrocks!
+
+ 15:39 <slyon> jamespage: what's the plan forward with vitrageclient? could you coordinate with your team to have the MIR created for that?
+
+ 15:39 <jamespage> yep
+
+ 15:39 <slyon> thank you!
+
+ 15:39 <slyon> moving on
+
+ 15:39 <slyon> #topic New MIRs
+
+ 15:39 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:39 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:40 <sarnold> wireguard is recently acked by security team
+
+ 15:41 <sarnold> nftables is recently the start of the mir process by the security team
+
+ 15:41 <slyon> sarnold: alright. should we assign ubuntu-security to the nftables MIR then?
+
+ 15:41 <slyon> i think otherwise the status would be correct
+
+ 15:42 <sarnold> slyon: no, I think it needs MIR team review
+
+ 15:42 <slyon> ah!
+
+ 15:42 <slyon> do we have any volunteers to look into that? bug #1887187
+
+ 15:42 <ubottu> Bug 1887187 in nftables (Ubuntu) "[MIR] nftables" [Critical, New] https://launchpad.net/bugs/1887187
+
+ 15:42 <sarnold> I think the wireguard needs 'fix committed' status, but I'm not sure..
+
+ 15:42 <didrocks> yeah, wireguard should be fix committed to me
+
+ 15:43 <sarnold> done
+
+ 15:43 <didrocks> nftables -> can’t commit this week, next is the sprint one… Afterwards, could be, but might be late?
+
+ 15:44 <slyon> thanks sarnold
+
+ 15:44 <slyon> joalif: would you be interested in the nftables MIR? otherwise I could have a look maybe by the end of this week
+
+ 15:45 <joalif> slyon I'm interested but cannot promise it'll be ready until next meeting
+
+ 15:46 <slyon> joalif: cool! Next meeting is sprint time, so I'm not sure if we'll have a meeting
+
+ 15:46 <joalif> ok I'll take it then
+
+ 15:46 <slyon> joalif: thank you! I can do the double-checking for you again.
+
+ 15:46 <joalif> :)
+
+ 15:47 <sarnold> \o/ thanks joalif, slyon :)
+
+ 15:47 <slyon> #topic Incomplete bugs / questions
+
+ 15:47 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 15:47 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:48 <slyon> libapache2-mod-auth-openidc is back to the reporter
+
+ 15:49 <slyon> rustc was updated by schopin and I think he coordinated with ubuntu-security that review can start in parallel, while he's investigating the armhf failures
+
+ 15:50 <slyon> plocate needs sponsoring, there's a debdiff available. Let me look at that, as nick is a fellow Foundations member
+
+ 15:51 <didrocks> tell me once you need it to be promoted
+
+ 15:51 <slyon> didrocks: thanks, will do!
+
+ 15:51 <slyon> v4l2-relayd: I did some review and comments on that, but the comments are not yet fully resolved. so still waiting on the reporter
+
+ 15:52 <slyon> suitesparse-graphblas is waiting for a response from seb
+
+ 15:52 <slyon> glade is a template bug that needs work from the desktop team
+
+ 15:52 <slyon> so nothing else to do here, I think
+
+ 15:52 <slyon> #topic MIR related Security Review Queue
+
+ 15:52 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 15:52 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:53 <slyon> sarnold: got any good news for us, wrt. the security review backlog?
+
+ 15:54 <sarnold> ahh, I need to keep better notes, don't I .. sorry. we've acked wireguard, I've made pretty good progress on adsys and intend to ack it when finishing up the paperwork on it, I hope an issue I found during review won't be too much hassle to clear up
+
+ 15:54 <sarnold> python-asgiref is done
+
+ 15:54 <sarnold> python-cheroot we asked some questions but they've been left unanswered so far
+
+ 15:54 <sarnold> https://bugs.launchpad.net/ubuntu/+source/python-cheroot/+bug/1930111
+
+ 15:54 <ubottu> Launchpad bug 1930111 in python-cheroot (Ubuntu) "[MIR] new dependencies of cherrypy3: jaraco.collections, jaraco.classes, jaraco.text, python-cheroot, python-jaraco.functools, python-tempora, python-portend, zc.lockfile" [Undecided, In Progress]
+
+ 15:56 <slyon> sarnold: thanks for the update! You've probably been in touch with the release team wrt. adsys, right? AFAIK it was/is needed for 20.04.4
+
+ 15:56 <sarnold> here's python-asgiref https://bugs.launchpad.net/ubuntu/+source/python-asgiref/+bug/1953173
+
+ 15:56 <ubottu> Launchpad bug 1953173 in python-asgiref (Ubuntu) "[MIR] python-asgiref" [Critical, In Progress]
+
+ 15:56 <sarnold> .. probably that bug also needs the status updated
+
+ 15:56 <didrocks> slyon: we discussed with them, it can stay unseeded anyway, so we can still be on time :)
+
+ 15:57 <slyon> nice
+
+ 15:57 <sarnold> slyon: well, I hope so -- sunday night I sent a message to sil2100 about it, but was on holiday yesterday, so I'm not sure if he saw it :)
+
+ 15:57 <slyon> sarnold: yes. he mentioned something about it in our standup
+
+ 15:58 <slyon> so should we update python-cheroot and python-asgiref to "Incomplete"?
+
+ 15:58 <slyon> and back to the reporter?
+
+ 15:58 <slyon> I will do that after the meeting.
+
+ 15:58 <slyon> #topic Any other business?
+
+ 15:59 <slyon> This meeting took longer that usual, sorry for that.
+
+ 15:59 <slyon> do we have anything else?
+
+ 15:59 <didrocks> nothing for me, and thanks slyon for hosting it!
+
+ 15:59 <sarnold> nothing for me, thanks slyon, all :)
+
+ 15:59 <joalif> thanks all o/
+
+ 15:59 <sarnold> python-asgiref may be correct, I don't see anything in the mismatches svg that pulls it into main
+
+ 16:00 <slyon> ack sarnold
+
+ 16:00 <slyon> ok, thank you all! And we're just on time :)
+
+ 16:00 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

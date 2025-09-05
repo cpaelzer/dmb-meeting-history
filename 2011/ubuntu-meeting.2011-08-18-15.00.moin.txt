@@ -1,0 +1,413 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by NCommander at 15:00:34 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-08-18-15.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/ARM/Meeting/2011/20110818   (NCommander, 15:01:11)
+ *Standing Items
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-armel.html   (NCommander, 15:02:07)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-armel-ubuntu-11.10-beta-1.html   (NCommander, 15:02:14)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html   (ogra_, 15:03:18)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-1.html   (ogra_, 15:03:24)
+
+ *ARM Server Status (NCommander, Daviey)
+''ACTION:'' NCommander to review openstack image requirements and report back  (NCommander, 15:05:55)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *ARM Porting/FTBFS status (NCommander, janimo)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *Any Other Business
+
+
+
+Meeting ended at 15:28:59 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * NCommander to review openstack image requirements and report back
+
+
+
+== Action items, by person ==
+
+ * NCommander
+ ** NCommander to review openstack image requirements and report back
+
+
+
+== People present (lines said) ==
+
+ * NCommander (54)
+ * ogra_ (44)
+ * infinity (23)
+ * ppisati (17)
+ * janimo (15)
+ * davidm (9)
+ * meetingology (9)
+
+
+
+== Full Log ==
+
+
+ 15:00:34 <NCommander> #startmeeting
+
+ 15:00:34 <meetingology> Meeting started Thu Aug 18 15:00:34 2011 UTC.  The chair is NCommander. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:00:34 <meetingology> Useful Commands: #topic #action #link #idea #voters #vote #chair #action #agreed #help #info #endmeeting.
+
+ 15:01:11 <NCommander> #link https://wiki.ubuntu.com/ARM/Meeting/2011/20110818
+
+ 15:01:41 <NCommander> hrm, new boot, and it seems to be lagging :-(
+
+ 15:01:57 <NCommander> #topic Standing Items
+
+ 15:01:57 <meetingology> TOPIC: Standing Items
+
+ 15:02:01 <davidm> G'day all
+
+ 15:02:07 <NCommander> #link http://people.canonical.com/~platform/workitems/oneiric/ubuntu-armel.html
+
+ 15:02:14 <NCommander> #link http://people.canonical.com/~platform/workitems/oneiric/ubuntu-armel-ubuntu-11.10-beta-1.html
+
+ 15:02:26 <ogra_> you can use ubuntu-arm now
+
+ 15:02:38 <ogra_> (i fixed that last week)
+
+ 15:02:48 <NCommander> I can't decide if my laptop is completely foobared, or if its theinternet here :-(
+
+ 15:02:57 * NCommander is lagging something feirce
+
+ 15:03:18 <ogra_> http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html
+
+ 15:03:18 <NCommander> regardless the burndown chart doesn't look happy
+
+ 15:03:24 <ogra_> http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-1.html
+
+ 15:03:35 <NCommander> thank you ogra_
+
+ 15:03:36 <ogra_> the beta one looks fine
+
+ 15:03:54 <ogra_> we're a little above trend but not earth shattering
+
+ 15:03:55 <NCommander> ugh, yeah, I'm lagging something hidiously bad
+
+ 15:04:07 <NCommander> so I'll take your word for it (the image won't even load properly on thenew link for me)
+
+ 15:04:14 <ogra_> heh
+
+ 15:04:27 <ogra_> move :)
+
+ 15:04:29 <NCommander> (the trendline for ubuntu-arm shows '12' as the start point so .... yeah)
+
+ 15:04:40 <ogra_> yeah, ignore th etrend lines
+
+ 15:04:42 <NCommander> #topic ARM Server Status (NCommander, Daviey)
+
+ 15:04:42 <meetingology> TOPIC: ARM Server Status (NCommander, Daviey)
+
+ 15:05:03 <NCommander> LXC on ARM should work out of the box once a new meta package to ship 2101 out of the box goes
+
+ 15:05:04 <ogra_> i dont even know if there is a way to adjust it on other than the ubuntu-arm.html page
+
+ 15:05:07 <NCommander> *1201
+
+ 15:05:16 <NCommander> I'm now looking at openstack on ARM
+
+ 15:05:41 <NCommander> and have some concerns since it seems to want an EC2-style image which we don't build for OMAP. Further research required
+
+ 15:05:43 <ogra_> NCommander, is there anything i should change regarding the ac100 kernel ? (the server team uses dynabooks)
+
+ 15:05:55 <NCommander> [action] NCommander to review openstack image requirements and report back
+
+ 15:05:55 * meetingology NCommander to review openstack image requirements and report back
+
+ 15:06:02 <NCommander> oh good, the old alias work
+
+ 15:06:03 <ogra_> wrt LXC i mean
+
+ 15:06:28 <NCommander> ogra_: run lxc-checkconfig. Ignore the namespace error, and make sure you can mount a cgroup with -o clone_children
+
+ 15:06:37 <ogra_> k, thx
+
+ 15:06:39 <NCommander> Ideally, just kick off a LXC instance
+
+ 15:06:40 <ogra_> will test that
+
+ 15:06:59 <NCommander> lxc-create does most of the hard work, poke me on IRC
+
+ 15:07:13 <ogra_> will do, if i dont get along
+
+ 15:07:13 <NCommander> My ac100 is currently dead and running natty so it won't be much help
+
+ 15:07:23 <infinity> ogra_: You could just diff your config with the omap4 one, ignore hardware bits, and make the rest match. :P
+
+ 15:07:26 <ogra_> there should be an oneiric installer soon
+
+ 15:07:29 <NCommander> #topic Kernel Status (cooloney, ppisati)
+
+ 15:07:29 <meetingology> TOPIC: Kernel Status (cooloney, ppisati)
+
+ 15:07:36 * NCommander LAGGGGGGGGGGGGGGGGS
+
+ 15:07:46 <ogra_> infinity, yeahm, thats what i usually try ...
+
+ 15:08:00 <ppisati> omap4 meta has been updated to 1202.6 (latest TI BSP + lxc fixes)
+
+ 15:08:17 <ppisati> on the other end, work continues on the "arm scheduler bug"
+
+ 15:08:18 <NCommander> Sweet. Next daily should then have LXC out of the box
+
+ 15:08:28 <NCommander> (more or less)
+
+ 15:08:34 <ppisati> found (and fixed) an smp clock bug, but didn't help
+
+ 15:08:35 <ogra_> if you get a daily :)
+
+ 15:08:41 * NCommander smacks ogra_
+
+ 15:09:04 <NCommander> that's an unhappy thought, and unhappy thoughts are disallowed while I'm chairing a meeting
+
+ 15:09:21 <ogra_> heh
+
+ 15:09:40 <ppisati> profiling is undergoing, but so far i didn't find the bttleneck yet
+
+ 15:09:46 <NCommander> ppisati: sounds like the SMP issue on panda is proving to be an extremely difficult nut to crack
+
+ 15:10:00 <infinity> s/on panda//
+
+ 15:10:06 <ppisati> NCommander: definitely, but i've started looking at it just yesterday, so...
+
+ 15:10:11 <ppisati> let's see
+
+ 15:10:21 <janimo> ppisati, I think we do not have latencytop enabled in our omap4 kernel
+
+ 15:10:21 <NCommander> infinity: point taken
+
+ 15:10:24 <ppisati> but yes, it's nasty
+
+ 15:10:42 <janimo> I tried to use that to debug the issues two weeks ago, and then found it is ok on nosmp
+
+ 15:10:52 <ppisati> janimo: someone told me that latencytop was broken on arm, but don't remember who
+
+ 15:11:06 <janimo> ppisati, Linaro have it enabled, so can't hurt
+
+ 15:11:10 <ppisati> ah ok
+
+ 15:11:14 <ppisati> i'll try it ou
+
+ 15:11:15 <ppisati> t
+
+ 15:11:16 <janimo> I hear dit was  ok un UP, not too ok on SMP
+
+ 15:11:19 <ppisati> using perf right now
+
+ 15:11:52 <ppisati> ah yes, and the sgw fix from ricardo :)
+
+ 15:12:01 <ppisati> not pulled yet, but will shortly
+
+ 15:12:12 <janimo> ppisati, great :)
+
+ 15:12:27 <ppisati> that's all from my side
+
+ 15:12:36 <ogra_> good to have you back :)
+
+ 15:12:38 <NCommander> ppisati: bestof luck. If you manage to fry your brain on this bug, then you've officially made it as a member of the ARM developer community
+
+ 15:12:47 <ppisati> :)
+
+ 15:12:48 <ogra_> heh
+
+ 15:12:51 <ppisati> i will
+
+ 15:13:06 <NCommander> [topic] ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:13:06 <meetingology> TOPIC: ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:13:39 <NCommander> main is looking happier
+
+ 15:13:44 <infinity> Yup.
+
+ 15:13:56 <infinity> And I have a ton of uploads sitting here to re-transition ocaml today.
+
+ 15:14:02 <NCommander> who fixed ocaml?
+
+ 15:14:04 <NCommander> Ah
+
+ 15:14:17 <infinity> Debian maintainer fixed it, I uploaded said fix.
+
+ 15:14:24 <NCommander> Was it an underlying bug with binutil's handling Cortex A8 errta?
+
+ 15:14:32 <infinity> Not really.
+
+ 15:14:49 <NCommander> nuts
+
+ 15:14:58 <NCommander> that was the train of thought I was working on before life got busy
+
+ 15:15:05 <infinity> More undefined behaviour that required us to jam in an extra section and make everything happy again.
+
+ 15:15:21 <ogra_> omg !
+
+ 15:15:26 <ogra_> libx86 fails
+
+ 15:15:27 <janimo> ocaml using packages still segfault
+
+ 15:15:31 <ogra_> someone fix that !
+
+ 15:15:32 <janimo> I saw a few today
+
+ 15:15:35 <infinity> I mean, one could argue it's binutils' fault, but ocaml was hand-crafting bits in a "workaround the compiler" sort of way, so their own foot they shot.
+
+ 15:15:41 <NCommander> ogra_: $#!@I NFU'ed that package last cycle
+
+ 15:15:50 <infinity> janimo: Yes, see above about re-transitioning.
+
+ 15:15:58 <janimo> infinity, oki
+
+ 15:16:02 <infinity> janimo: Anything build before my last ocaml upload is broken.
+
+ 15:16:19 <infinity> s/build/built/
+
+ 15:16:32 <janimo> infinity, I gave back two packages today and yesterday and they segfaulted
+
+ 15:16:50 <janimo> maybe you uploaded a new ocaml yesterday?
+
+ 15:17:10 <janimo> or they need explicit reupload for transitioning?
+
+ 15:17:50 <infinity> janimo: Which 2?  If they depend on other non-transitioned stuff, they'd still break.
+
+ 15:17:55 <infinity> janimo: There's an order here. :)
+
+ 15:18:40 <ogra_> pfft, orders .... just throw the whole bunch at the buildd until nothing returns :P
+
+ 15:18:41 <janimo> order? In the builds? awesome news :)
+
+ 15:18:47 <janimo> I'll check to see which exactly
+
+ 15:18:48 <infinity> janimo: (But I'd appreciate data points anyway, if it's only half-fixed, I'd like to know... I suspect you're just bouncing packages with broken/un-transitioned build-deps, though)
+
+ 15:18:51 * NCommander beats ogra_ with something heavier
+
+ 15:19:01 <ogra_> *squeek*
+
+ 15:19:08 <NCommander> See? Fun noises.
+
+ 15:19:17 <ogra_> just for you :)
+
+ 15:19:50 <ogra_> move ?
+
+ 15:20:05 <infinity> Anyhow.
+
+ 15:20:06 <NCommander> #topic ARM Image Status (ogra, NCommander)
+
+ 15:20:06 <meetingology> TOPIC: ARM Image Status (ogra, NCommander)
+
+ 15:20:20 <ogra_> desktop is broken thanks to archive skew
+
+ 15:20:38 <infinity> It's broken thanks to archive breakage.
+
+ 15:20:43 <ogra_> on monday sw-center, since tuesday mono joined
+
+ 15:20:45 <infinity> (ie: every arch is broken)
+
+ 15:21:05 <ogra_> sw-center is fine again, that affected all arches
+
+ 15:21:58 <ogra_> beyond that, ac100 image is progressing, my final livefs testbuild should finish any minute
+
+ 15:22:17 <ogra_> server preinstalled are fine, netboot are fine again since the last d-i uplaod
+
+ 15:22:33 <ogra_> janimo, anything about mx5 to report ?
+
+ 15:23:20 <janimo> ogra_, nope, waiting for the kernels to test live image
+
+ 15:23:42 <ogra_> ah, great (i wondered if my mic was muted :) )
+
+ 15:23:52 <ogra_> NCommander, nothing to add from my side
+
+ 15:24:09 <NCommander> ENOTOBIN so skipping QA status
+
+ 15:24:13 <NCommander> #topic Any Other Business
+
+ 15:24:13 <meetingology> TOPIC: Any Other Business
+
+ 15:24:35 <ogra_> well, i noticed this week how much support tobin does all the time ....
+
+ 15:24:49 <janimo> ogra_, nope, I just found an inappropriate moment to switch to xubuntu from unity-2d so sometimes my windows disappear :)
+
+ 15:24:51 <davidm> true enough he is missed
+
+ 15:25:06 <NCommander> On the flip side, the pull of gravity in the house is no longer slated towards his office
+
+ 15:25:09 * NCommander runs away
+
+ 15:25:16 <davidm> ogra_, same can be said about you
+
+ 15:25:27 <infinity> You running from all the things that are now heading your way? :P
+
+ 15:25:32 <ogra_> well, my vacation is done now :)
+
+ 15:25:35 <NCommander> pfft, we should just all go on vacation at the same time
+
+ 15:25:47 <NCommander> No one wouldbe missed if the ARM team disappeared in December
+
+ 15:25:48 <davidm> and I'm very happy it is for sure
+
+ 15:26:06 <ogra_> davidm, which remids me about the missing paperwork *grin*
+
+ 15:26:09 <davidm> OK one item is folks we would like to see at UDS
+
+ 15:26:24 * NCommander will find some names
+
+ 15:26:25 <infinity> David Copperfield?
+
+ 15:26:36 <ogra_> infinity, huh, really ?
+
+ 15:26:38 <davidm> Anyone we really need to sponsor?
+
+ 15:26:50 * ogra_ would prefer claudia schiffer then
+
+ 15:26:51 <infinity> ogra_: It was the first sarcastic answer to pop to mind. :P
+
+ 15:26:58 <infinity> ogra_: But yours is better.
+
+ 15:27:04 <davidm> I've seen David Copperfield he is quite good
+
+ 15:27:21 <infinity> davidm: I assume we have our usual Linaro suspects coming already?
+
+ 15:27:27 <davidm> maybe he can make all ARM bugs go away
+
+ 15:27:32 <ogra_> we dont sponsor linaro :)
+
+ 15:27:42 <infinity> ogra_: I know/figured.
+
+ 15:27:47 <davidm> yes Linaro will be there as their Linaro connect will be at UDS
+
+ 15:28:15 <NCommander> We should probably see if we can get LXC upstream/openstack upstream to attend again
+
+ 15:28:40 * ogra_ has some ideas but will have to talk to people first
+
+ 15:28:42 <NCommander> if nothing else, I'd like to close the meeting out
+
+ 15:28:46 <ogra_> go
+
+ 15:28:59 <NCommander> #endmeeting
+
+
+
+Generated by MeetBot 0.1.4 (http://wiki.ubuntu.com/AlanBell/mootbot)

@@ -1,0 +1,350 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:03:33 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-01-11-16.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 16:24:39 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (35)
+ * ev (35)
+ * stgraber (22)
+ * cjwatson (14)
+ * bdmurray (11)
+ * doko (10)
+ * ubottu (7)
+ * jodh (5)
+ * barry (4)
+ * meetingology (3)
+ * broder (1)
+
+
+
+== Full Log ==
+
+
+ 16:03:33 <slangasek> #startmeeting
+
+ 16:03:33 <meetingology> Meeting started Wed Jan 11 16:03:33 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:03:33 <meetingology> 
+
+ 16:03:33 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:38 <slangasek> [TOPIC] Lightning round
+
+ 16:04:53 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jodh ev bdmurray slangasek)
+
+ 16:04:56 <slangasek> bdmurray doko slangasek barry stgraber jodh cjwatson ev
+
+ 16:04:59 <slangasek> bam
+
+ 16:05:01 <ev> win!
+
+ 16:05:16 <bdmurray> updated update-manager to call ubuntu-bug directly when an error is encountered during a distribution upgrade
+
+ 16:05:19 <bdmurray> setup ubuntu-bugcontrol as the bug supervisor for wubi
+
+ 16:05:22 <bdmurray> worked with defect analysts regarding bug workflow diagram
+
+ 16:05:24 <bdmurray> wrote bug pattern for foreign language versions of bug 545790
+
+ 16:05:24 <bdmurray> reviewed bug pattern from bryce for xorg transitions
+
+ 16:05:26 <ubottu> Launchpad bug 545790 in dpkg (Ubuntu) "package PACKAGE failed to install/upgrade: error writing to '<standard output>': Success" [High,Triaged] https://launchpad.net/bugs/545790
+
+ 16:05:27 <bdmurray> filed bug 914220 regarding blocking some crash reports after discussion with pitti
+
+ 16:05:28 <ubottu> Launchpad bug 914220 in apport (Ubuntu) "crash reports with DBus.Error.NoReply should be blacklisted" [Medium,In progress] https://launchpad.net/bugs/914220
+
+ 16:05:33 <bdmurray> done
+
+ 16:06:08 <slangasek> stgraber sends regrets btw, he has an ARB meeting - will poke him for status afterwards
+
+ 16:06:11 <slangasek> doko:
+
+ 16:06:42 <doko> - python2.7 and python3.2 updates, fixing testsuite failures, enabling lto builds
+
+ 16:06:42 <doko> - first step at packaging python3.3
+
+ 16:06:42 <doko> - eglibc-2.15 update, available in the ubuntu-toolchain-r/glibc ppa
+
+ 16:06:42 <doko> - kubuntu cleanup :-(
+
+ 16:06:42 <doko> - MIR's and syncs
+
+ 16:06:42 <doko> - ralley
+
+ 16:06:45 <doko> done
+
+ 16:07:31 <slangasek> doko: "kubuntu cleanup"?
+
+ 16:07:37 <slangasek> is that about MIRs, or something else?
+
+ 16:07:59 <slangasek> * Fix hdparm policy on battery to ensure we spin the disk down
+
+ 16:07:59 <slangasek> * Track down desktop bugs causing my disk to spin up when on battery
+
+ 16:08:00 <slangasek> * Patch the resolvconf package to better integrate with precise
+
+ 16:08:00 <slangasek> * fix ia32-libs to not pull in daemons and debconf questions on upgrade
+
+ 16:08:00 <slangasek> * testing new apt update to fix bug #850264
+
+ 16:08:02 <slangasek> * drum up volunteers for +1 maint team; two found so far, will continue to hunt people tomorrow here in Budapest
+
+ 16:08:02 <ubottu> Launchpad bug 850264 in apt (Ubuntu Precise) "given a foreign architecture of i386 on amd64 machine, and an outdated libc, apt tries to remove libc-bin" [High,Fix committed] https://launchpad.net/bugs/850264
+
+ 16:08:13 <doko> giving back failed builds with incomplete build dependencies
+
+ 16:08:17 <slangasek> ah
+
+ 16:09:04 <slangasek> barry: you're up
+
+ 16:09:10 <barry> fixed dbus packaging bug that caused dbus-python test suite to sigabort.  updated blueprint with update-manager dependencies for porting to py3.  currently working on feedparser (upstream supports it, needs packaging, but upstream test suite fails under python 2.7, so...).  dbus-python branch reviewed upstream - some changes were made which i need to review, but it should be ready for merging. did some "consulting" with launchpad folks re:
+
+ 16:09:11 <barry> mail archive project. done.
+
+ 16:09:26 <stgraber> - Testing tracker
+
+ 16:09:26 <stgraber> - Finished results API by adding the update() function
+
+ 16:09:26 <stgraber> - Add a new bugs.get_list(milestoneid) call returning a list of bugs for a milestone
+
+ 16:09:29 <stgraber> - Improve the top testers report a bit
+
+ 16:09:31 <stgraber> - Networking
+
+ 16:09:34 <stgraber> - Talked with cyphermox about the right way of dealing with VPN and dnsmasq
+
+ 16:09:37 <stgraber> - Did a few more IPv6 testing for the privacy extension change, cyphermox's patch has now been uploaded in the Ubuntu kernel!
+
+ 16:09:40 <stgraber> - Poked at a fix in network-manager-openvpn to properly deal with reconnects (openvpn doesn't make that easy ...)
+
+ 16:09:43 <stgraber> - Started merging ifupdown from Debian experimental (moving from alpha1 to beta1)
+
+ 16:09:46 <stgraber> - ARB
+
+ 16:09:49 <stgraber> - Mailing-list cleanup
+
+ 16:09:51 <stgraber> - Helped packaging the askubuntu unity lense
+
+ 16:09:54 <stgraber> - Spent time dealing with Myapps/Software-Center for the first extras.u.c upload for 11.10
+
+ 16:09:57 <stgraber> - Containers
+
+ 16:09:59 <stgraber> - Helped moving cgroup-lite to its own source package, uploaded, promoted to main and added as a dependency of libvirt-bin
+
+ 16:10:02 <stgraber> - Started working on a fixed util-linux using Serge's patch
+
+ 16:10:05 <stgraber> - Other
+
+ 16:10:07 <stgraber> - Merged wxwidgets2.8, took quite a while but we're now very very close to Debian again
+
+ 16:10:10 <stgraber> - Added a post-stop script to dbus so the system bus gets restarted when it crashes
+
+ 16:10:13 <stgraber> - Helped with some ubiquity bugs, talked with didrocks about getting oneconf into Ubiquity, might get a prototype later this week
+
+ 16:10:16 <stgraber> (done)
+
+ 16:10:25 <barry> stgraber: wxwidgets \o/
+
+ 16:10:38 <jodh> Finished work on mountall change to not mount already mounted FSs
+
+ 16:10:38 <jodh> with stgraber. Working on bug 566818 and bug 912558 (both still in
+
+ 16:10:38 <jodh> progress).
+
+ 16:10:39 <jodh> ☕
+
+ 16:10:41 <ubottu> Launchpad bug 566818 in plymouth (Ubuntu Maverick) "Cryptsetup passphrase prompt during boot: every character typed repeats the prompt" [Medium,Confirmed] https://launchpad.net/bugs/566818
+
+ 16:10:43 <ubottu> Launchpad bug 912558 in upstart (Ubuntu Precise) "log.c Assert failed - err=>number == EIO" [High,Confirmed] https://launchpad.net/bugs/912558
+
+ 16:11:45 <cjwatson> Sent stgraber a basic libnewt-based UI for friendly-recovery.
+
+ 16:11:45 <cjwatson> Wrote new auto-sync script which doesn't rely on shell access to cocoplum, just in time for DIF.  Cleaned up small amounts of breakage that resulted from a related Launchpad bug.
+
+ 16:11:49 <cjwatson> Added lucid apt/python-apt backports to precise alternate CDs.
+
+ 16:11:52 <cjwatson> Started to convert things to gnutls28, then realised that was a bad idea for precise (see ubuntu-devel@).
+
+ 16:11:55 <cjwatson> Fixed live filesystem build breakage yesterday.
+
+ 16:11:57 <cjwatson> Added lucid installer images with natty and oneiric backported kernels; arranged for these to be available on lucid DVDs.
+
+ 16:12:00 <cjwatson> Cleaned up some easy "send information to people" work items.
+
+ 16:12:03 <cjwatson> Started work on a script to data-mine build times from Launchpad.  Less convenient than expected because the API doesn't expose this yet.
+
+ 16:12:06 <cjwatson> Converted other archive admin processes away from sync-source.py; submitted LP branch to remove the latter, all its works, and all its empty promises.
+
+ 16:12:09 <cjwatson> ..
+
+ 16:12:25 <cjwatson> Oh, and discussed desired new-world-order backport semantics with broder.
+
+ 16:12:36 <slangasek> stgraber: ifupdown> fwiw, Andrew Shadura had pinged me about getting my ifquery patch rebased (Debian bug #568479) - so if and when you get that merge done, let me know
+
+ 16:12:37 <ubottu> Debian bug 568479 in ifupdown "ifupdown: please add an 'ifquery' that can authoritatively parse /etc/network/interfaces" [Wishlist,Open] http://bugs.debian.org/568479
+
+ 16:12:50 <ev> - Short week; holiday through Thursday.
+
+ 16:12:51 <ev> - Getting caught up on a month of emails. Reminding myself what it is I do here :-(
+
+ 16:12:52 <ev> - Packaged and uploaded whoopsie-daisy, the crash reporter and database for
+
+ 16:12:52 <ev> Ubuntu.
+
+ 16:12:52 <ev> - Bug fixes to the crash reporting daemon.
+
+ 16:12:52 <ev> - Fixed build dependencies for whoopsie-daisy.
+
+ 16:12:57 <cjwatson> Can't be that far back, I rebased it for alphawhateveritwas
+
+ 16:12:59 <ev> - Talked to Matthew about the best path forward for recovering from a failed
+
+ 16:12:59 <ev> upgrade. He had continuing the upgrade from ubiquity using apt-clone.  I
+
+ 16:13:00 <ev> suggested this was less than ideal, as it's a fundamentally different
+
+ 16:13:00 <ev> upgrade mechanism from what they started with.  I suggested he talk to
+
+ 16:13:00 <ev> Michael and Robert Ancell (who's doing the better recovery spec) about
+
+ 16:13:01 <ev> looking for a broken dpkg early at boot and running dpkg --configure -a or
+
+ 16:13:01 <ev> what-have-you.
+
+ 16:13:01 <ev> - Added an upstart job to whoopsie.
+
+ 16:13:01 <ev> - Moved to txstatsd for the web frontend metrics submission.
+
+ 16:13:02 <ev> - Moved from mod_python to mod_wsgi.
+
+ 16:13:06 <slangasek> stgraber: util-linux> fixed wrt what?
+
+ 16:13:07 <ev> - Main Inclusion Request for whoopsie-daisy (LP: #913694).
+
+ 16:13:07 <ev> - Put in my request to attend Pycon.
+
+ 16:13:08 <ev> - Added bson insertion and hostname specification support to oops-repository.
+
+ 16:13:08 <ev> - Tried to get oops-repository's test harness working. Ran face first into
+
+ 16:13:08 <ev> http://bugs.python.org/issue7559
+
+ 16:13:08 <ev> - Added core submission support.
+
+ 16:13:13 <ev> - Investigation around the retracer.  Because we need to unbase64, unzip, and
+
+ 16:13:13 <ev> read the architecture out from core dump, it may make more sense to have two
+
+ 16:13:13 <ev> RabbitMQ queues.  The first will process the core files as they've been
+
+ 16:13:14 <ev> recieved by the user (first written to a SAN).  The path to this resulting
+
+ 16:13:14 <ev> unpacked core file will be put on an architecture-specific queue for a
+
+ 16:13:14 <ev> retracer to pick up.
+
+ 16:13:14 <ev> - Added MQ publishing (for the aforementioned core processing) to the core
+
+ 16:13:15 <ev> submission web frontend.
+
+ 16:13:15 <ev> - Added the aforementioned processing of core files.  Still need to retrace
+
+ 16:13:28 <ev> (done)
+
+ 16:14:02 <stgraber> slangasek: getty not working in containers
+
+ 16:14:12 <slangasek> stgraber: ah yes, ack
+
+ 16:16:39 <slangasek> ok
+
+ 16:16:45 <slangasek> any questions on status all around?
+
+ 16:17:21 <slangasek> [TOPIC] Bugs
+
+ 16:17:31 <bdmurray> just one bug today - bug 914794
+
+ 16:17:32 <ubottu> Launchpad bug 914794 in update-manager (Ubuntu) "Gdk-CRITICAL errors output when updating from command line" [Medium,New] https://launchpad.net/bugs/914794
+
+ 16:18:47 <barry> bdmurray: i guess this happens when you start u-m from the cli?  i think i've seen this
+
+ 16:19:05 <slangasek> hrm, lots of fun error messages in there
+
+ 16:19:06 <bdmurray> yes, I saw some of the messages doing it on precise
+
+ 16:19:36 <bdmurray> so this one Gdk-CRITICAL **: gdk_window_get_pointer: assertion `GDK_IS_WINDOW (window)' failed
+
+ 16:21:46 <slangasek> so the gtk warning is weird in its own right, but I don't see any way that it would be a multiarch problem
+
+ 16:21:57 <slangasek> so I think this is probably a bug w/ the desktop stack
+
+ 16:22:13 <bdmurray> okay, I'll follow up with somebody there
+
+ 16:22:13 <slangasek> bdmurray: can we punt that over for the desktop team to look at?
+
+ 16:22:15 <slangasek> thanks
+
+ 16:22:24 <slangasek> [TOPIC] AOB
+
+ 16:22:36 <jodh> evince throws exactly the same msg on the cli fwiw.
+
+ 16:22:46 <slangasek> right - and evince isn't ours :-)
+
+ 16:22:52 <slangasek> anything else today?
+
+ 16:23:04 <ev> still trapped in the UK :-/
+
+ 16:23:04 <broder> i think people developing on gtk are just generally bad about dealing with those messages
+
+ 16:23:18 <slangasek> suggestions for what to include in a hungarian care package to send back to ev?
+
+ 16:23:33 <cjwatson> I hear goulash posts well
+
+ 16:23:34 <slangasek> (paprika and palinka)
+
+ 16:23:46 <doko> tokaij
+
+ 16:23:48 <cjwatson> * may not actually be true
+
+ 16:23:51 <ev> an entire spa would be nice
+
+ 16:24:18 <doko> I have a very quiet non-snoring roomie here =)
+
+ 16:24:20 <slangasek> doko: every time I buy a bottle of tokaji the contents mysteriously drain out
+
+ 16:24:39 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

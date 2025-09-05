@@ -1,0 +1,563 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by Daviey at 16:00:55 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-06-19-16.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Review ACTION points from previous meeting
+
+ *Quantal Development
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/servercloud-q-openstack-charms i haven't seen any WIs come out of this one. is that intentional or did i drop the ball on some BP paperwork ?  (adam_g, 16:27:38)
+
+ *12.04.1 Development (jamespage & smoser)
+''LINK:'' http://people.canonical.com/~jamespage/server-sru/precise-sru.html   (jamespage, 16:31:46)
+
+ *Ubuntu Server Team Events
+
+ *Weekly Updates & Questions for the QA Team (hggdh)
+''LINK:'' https://lists.ubuntu.com/mailman/listinfo/ubuntu-utah-devel   (jamespage, 16:47:40)
+
+ *Weekly Updates & Questions for the Kernel Team (smb)
+
+ *Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ *Welcome jimbaker to Server team (arosales).
+
+ *Open Discussion
+
+ *Announce next meeting date and time
+
+
+
+Meeting ended at 16:59:37 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * Daviey (117)
+ * jamespage (24)
+ * arosales (18)
+ * zul (17)
+ * adam_g (13)
+ * ubottu (13)
+ * smoser (10)
+ * rbasak (8)
+ * smb (7)
+ * hggdh (5)
+ * utlemming (5)
+ * hallyn (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:00:55 <Daviey> #startmeeting
+
+ 16:00:55 <meetingology> Meeting started Tue Jun 19 16:00:55 2012 UTC.  The chair is Daviey. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00:55 <meetingology> 
+
+ 16:00:55 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:12 <utlemming> o/
+
+ 16:01:46 <Daviey> [TOPIC] Review ACTION points from previous meeting
+
+ 16:01:55 <Daviey> arosales to correct "pieces" on ubuntu server blog
+
+ 16:02:01 <Daviey> -- done by rbasak, super!
+
+ 16:02:14 <adam_g> o/
+
+ 16:02:23 * rbasak apologises for the poor kerning
+
+ 16:02:29 <arosales> I think rbasak also filed a ticket to get the blogged moved, correct rbasak ?
+
+ 16:02:40 <rbasak> Yes. That's waiting on IS atm
+
+ 16:02:49 <arosales> rbasak: cool thanks
+
+ 16:03:17 <zul> helo
+
+ 16:03:33 <Daviey> arosales to follow up with rbask on finding the correct home for the Ubuntu Server blog.
+
+ 16:03:59 <arosales> Daviey: waiting on an IS ticket rbasak submitted
+
+ 16:04:21 <Daviey> Yep, i chimed in there aswell. So it's blocked with them.. I think it's making adequate progress to remove from agenda
+
+ 16:04:24 <Daviey> thanks rbasak
+
+ 16:04:32 <Daviey> jamespage, utlemming, and smb to discuss image bloat, in reference to discussion around dropping -virtual kernel; re bug 1009553
+
+ 16:04:33 <ubottu> Launchpad bug 1009553 in ubuntu-meta (Ubuntu Quantal) "jeos install oversized" [Medium,Fix committed] https://launchpad.net/bugs/1009553
+
+ 16:04:38 <Daviey> -- will cover in kernel section
+
+ 16:04:45 <Daviey> jamespage to follow up with hallyn on servercloud-q-server-iso-tests-review
+
+ 16:05:04 <jamespage> c/f
+
+ 16:06:14 <Daviey> jamespage: c/f?
+
+ 16:06:22 <jamespage> carry forwards please
+
+ 16:06:30 <Daviey> oh, ok
+
+ 16:06:40 <Daviey> utlemming to follow up with rbasak on getting armhf images using highbank
+
+ 16:07:13 <utlemming> Daviey: still a todo
+
+ 16:07:31 <Daviey> ok, this week?
+
+ 16:07:44 <Daviey> [TOPIC] Quantal Development
+
+ 16:07:52 <Daviey> Release Bugs - http://reports.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html
+
+ 16:08:26 <Daviey> bug 974584 Semaphores cannot be created in lxc container
+
+ 16:08:28 <ubottu> Launchpad bug 974584 in sysvinit (Ubuntu Quantal) "Semaphores cannot be created in lxc container" [High,Triaged] https://launchpad.net/bugs/974584
+
+ 16:08:31 <Daviey> hallyn: one for you?
+
+ 16:08:38 <hallyn> yes.  i did NOT follow up last week.
+
+ 16:08:58 <hallyn> need to beg someone to analyze/commit my fix
+
+ 16:09:20 <Daviey> hallyn: upstream or distro?
+
+ 16:09:24 <smoser> o/
+
+ 16:09:36 <hallyn> debian and ubuntu
+
+ 16:10:47 <Daviey> hallyn: ok, lets see what we can progress out of meeting
+
+ 16:11:14 <Daviey> thanks
+
+ 16:11:35 <Daviey> bug 920197 zul ?
+
+ 16:11:37 <ubottu> Launchpad bug 920197 in python-webob (Ubuntu Quantal) "[SRU] webob last stable version 1.1.1 response header bug" [High,Triaged] https://launchpad.net/bugs/920197
+
+ 16:11:48 <zul> Daviey: in progress
+
+ 16:12:08 <Daviey> zul: eta?
+
+ 16:12:17 <zul> Daviey: this week
+
+ 16:12:41 <Daviey> roaksoax: bug 1001846 .. he is afk..  will follow up post-meeting
+
+ 16:12:43 <ubottu> Launchpad bug 1001846 in cobbler (Ubuntu) "cobbler fails to install with error code 1" [High,Confirmed] https://launchpad.net/bugs/1001846
+
+ 16:13:28 <Daviey> bug 1008537 , i disucssed with seb (Desktop), as it might e their concern.. Impacting Firefox aswell
+
+ 16:13:29 <ubottu> Launchpad bug 1008537 in sphinx (Ubuntu) "[FTBFS] Segmentation fault during tests" [High,Confirmed] https://launchpad.net/bugs/1008537
+
+ 16:13:31 <Daviey> bug 1009294 smoser / utlemming ?
+
+ 16:13:32 <ubottu> Launchpad bug 1009294 in Ubuntu Precise "Grub update breaks automated dist-upgrade scripts on AMI images" [High,Fix committed] https://launchpad.net/bugs/1009294
+
+ 16:13:37 <Daviey> jamespage: bug 1009579 ?
+
+ 16:13:38 <ubottu> Launchpad bug 1009579 in tomcat7 (Ubuntu) "[MIR] tomcat7 (replaces tomcat6)" [High,In progress] https://launchpad.net/bugs/1009579
+
+ 16:13:58 <jamespage> Pending final ack from SRU team - I'll then make the seed changes required....
+
+ 16:14:10 <jamespage> and transition everything that needs to be (~10 packages)
+
+ 16:15:01 <Daviey> jamespage: Don't you need to unassign yourself, and Mark it back to NEW?
+
+ 16:15:02 <Daviey> (i don't think they will look a it with the current status)
+
+ 16:15:02 <Daviey> bug 993291 , jamespage ?
+
+ 16:15:04 <ubottu> Launchpad bug 993291 in nis (Ubuntu Quantal) "[SRU] package nis 3.17-32ubuntu1.2 failed to install/upgrade: invoke-rc.d: unknown initscript, /etc/init.d/nis not found." [Medium,Triaged] https://launchpad.net/bugs/993291
+
+ 16:15:20 <jamespage> when I get time...
+
+ 16:15:33 <jamespage> still working on a good test case ATM
+
+ 16:16:10 <Daviey> test cases rock my world.
+
+ 16:16:11 <Daviey> super
+
+ 16:16:11 <Daviey> bug 1009553 , smb ?
+
+ 16:16:11 <Daviey> bug 1013860 , zul ()[Dblocking MIR?
+
+ 16:16:12 <ubottu> Launchpad bug 1009553 in ubuntu-meta (Ubuntu Quantal) "jeos install oversized" [Medium,Fix released] https://launchpad.net/bugs/1009553
+
+ 16:16:14 <ubottu> Launchpad bug 1013860 in python-glanceclient (Ubuntu) "should use Architecture: all" [Medium,Triaged] https://launchpad.net/bugs/1013860
+
+ 16:16:36 * smb looks innocent
+
+ 16:16:45 <Daviey> hallyn: one for you? bug 1014005 ?
+
+ 16:16:46 <ubottu> Launchpad bug 1014005 in ipxe (Ubuntu) "Please generate and include ipxe.dsk to the ipxe binary package" [Wishlist,Triaged] https://launchpad.net/bugs/1014005
+
+ 16:16:50 <smb> Its fix realesed...
+
+ 16:17:00 <Daviey> smoser: i see you as assingee	?
+
+ 16:17:00 <Daviey> ah!
+
+ 16:17:03 <Daviey> smb, what is the current size, happen to know?
+
+ 16:17:09 <zul> Daviey: glanceclient will fixed in the next snapshot
+
+ 16:17:15 <smoser> wait. which am i assigee of?
+
+ 16:17:40 <smb> Daviey, No, not sure, has someone created a new image pulling only linux-virtual
+
+ 16:17:45 <zul> wait we still do jeos?
+
+ 16:17:54 <Daviey> smoser: was asking you about 1009294 .. you are not the assignee, but logical peson :)
+
+ 16:18:11 <Daviey> zul: nah, it's a keen abbreviation that someone has used
+
+ 16:18:14 <smoser> ah. Daviey ok. so yeah, that is fix-committed meaning dailies have been released with the fix in them.
+
+ 16:18:19 <smoser> (hte expected fix).
+
+ 16:18:28 <smoser> i can verify that the fix fixes quantal
+
+ 16:18:38 <smoser> and then we hvae to get utlemming to update hte precise images and release new images
+
+ 16:18:45 <hallyn> Daviey: i care more about kvm-ipxe, but sure.  honoring wishlist priority
+
+ 16:18:47 <Daviey> cool
+
+ 16:18:49 <smoser> which i thought was on his list.
+
+ 16:18:54 <utlemming> the images are tested and queued up
+
+ 16:18:55 <Daviey> bug 997782 .. needs an assignee
+
+ 16:18:57 <ubottu> Launchpad bug 997782 in phpbb3 (Ubuntu) "Bug in dbapps-lib when configuring mysql on a remote machine" [Undecided,New] https://launchpad.net/bugs/997782
+
+ 16:19:00 <utlemming> I just have to put the changelog notice out
+
+ 16:19:01 <zul> Daviey: heh pppphppth
+
+ 16:19:15 <utlemming> and since http://changelogs.ubuntu.com is _still_ out, that is busy work
+
+ 16:19:20 <Daviey> hallyn: yeah, i set it to wishlist.. it seem to be a quickish fix we could slip into the next time it's touched
+
+ 16:19:56 <Daviey> u	urgh
+
+ 16:20:01 <jamespage> Daviey, I'll pickup bug 997782 - promised gnuoy I would
+
+ 16:20:03 <ubottu> Launchpad bug 997782 in phpbb3 (Ubuntu) "Bug in dbapps-lib when configuring mysql on a remote machine" [Undecided,New] https://launchpad.net/bugs/997782
+
+ 16:20:10 * jamespage assigns himself...
+
+ 16:20:36 <Daviey> jamespage: \o/
+
+ 16:20:51 <Daviey> That is it for current tracked issues.. Are there more that should be tracked?
+
+ 16:22:08 <Daviey> ok! great, so we are almost ready to release.
+
+ 16:22:15 <Daviey> Okay.. Blueprints!
+
+ 16:22:37 <Daviey> ANyone have any questions about WI/process?
+
+ 16:23:02 <arosales> the trend line was reset so it looks better now, thanks to skaet_
+
+ 16:23:24 <arosales> Anyone have a large amount of work items that _aren't_ documented?
+
+ 16:24:08 <Daviey> o/
+
+ 16:24:20 * Daviey notes that -hardening is covering too much scope atm
+
+ 16:24:38 <Daviey> That topic needs to be reduced.
+
+ 16:25:14 <arosales> Daviey: ok, I"ll work with you on that off-line
+
+ 16:25:34 <arosales> There are some ARM blueprints that may get some additional work items . .
+
+ 16:25:57 <Daviey> I don't think we need to cover every topic right now, i think there is too much.  But generally, anyone have any red flags to raise?
+
+ 16:26:51 <zul> arosales: i usually add when to do openstack snapshots to the bluepritn but didnt this time because i couldnt keep it up to date last cycle
+
+ 16:27:38 <adam_g> https://blueprints.launchpad.net/ubuntu/+spec/servercloud-q-openstack-charms  i haven't seen any WIs come out of this one. is that intentional or did i drop the ball on some BP paperwork ?
+
+ 16:27:52 <arosales> zul: ok, and probably encapsulated in other work items too
+
+ 16:28:08 <zul> arosales: right
+
+ 16:28:45 <Daviey> adam_g: it was missing the series
+
+ 16:28:53 <Daviey> adam_g: should show next refresh, good catch
+
+ 16:29:00 <adam_g> Daviey: ah! okay, thanks
+
+ 16:29:49 <arosales> adam_g: do we know how the charms will work with cloud archive?
+
+ 16:30:11 <arosales> openstack juju charms that is.
+
+ 16:30:33 <Daviey> I'm going to move on, any other concerns.. please raise asap
+
+ 16:30:33 <arosales> perhaps just deploying the latest which should track with the current release?
+
+ 16:30:54 <adam_g> arosales: that hasn't really been discussed to much, but it should be pretty forwarded provided we get determine some way of managing them in the charm store
+
+ 16:31:07 <adam_g> arosales: ping me later and we can chat about it
+
+ 16:31:08 <arosales> adam_g: ok, thanks
+
+ 16:31:27 <Daviey> [TOPIC] 12.04.1 Development (jamespage & smoser)
+
+ 16:31:46 <jamespage> http://people.canonical.com/~jamespage/server-sru/precise-sru.html
+
+ 16:31:48 * smoser missed last weeks meeting
+
+ 16:31:57 <jamespage> your turn next week smoser :-)
+
+ 16:32:11 <jamespage> SRU activity ticking along nicely
+
+ 16:32:18 <Daviey> jamespage: how does the point release currently taste?
+
+ 16:32:27 <zul> i think we are still stuck on nova and dnsmasq
+
+ 16:32:31 <jamespage> good potential
+
+ 16:32:33 <Daviey> Goood progress?  Issues to raise?  Bottlenecks?
+
+ 16:32:38 <jamespage> but some work still to go
+
+ 16:33:00 <zul> dnsmasq and nova :)
+
+ 16:33:03 <jamespage> quite a few SRU's still need verification - any volunteers much appreciated - see the report
+
+ 16:33:14 <jamespage> like zul says ^^
+
+ 16:33:37 <jamespage> Daviey: also we really need to start tracking the 12.04.1 delivery for maas as well
+
+ 16:33:38 <Daviey> maas also needs an SRU
+
+ 16:33:41 <jamespage> snap
+
+ 16:33:44 <Daviey> hah
+
+ 16:34:01 <jamespage> so if we can get the bugs targetted and assigned that would be great
+
+ 16:34:27 <adam_g> what is the status of the stable updates to the openstack components? i see they are still in precise-proposed. are we required to verify all bugs fixed or ?
+
+ 16:35:04 <Daviey> okay., we probably need to start increasing the tracking for .1
+
+ 16:35:05 <Daviey> We need to follow up with the SRU team to try to get nova nto -proposed *today*
+
+ 16:35:09 <zul> adam_g: we are still waiting for nova
+
+ 16:35:39 <adam_g> zul: waiting for exactly?
+
+ 16:35:40 <Daviey> Then we need to really work on -verification.
+
+ 16:35:43 <Daviey> Okay... we have an actin.. super
+
+ 16:35:52 <Daviey> moving on?
+
+ 16:36:06 <zul> Daviey/adam_g: when its all ready ill blog about it and send an email to -server and openstack about it
+
+ 16:36:07 <adam_g> Daviey: actually can we get clarity on the openstack stuff? im still confused
+
+ 16:36:24 <adam_g> zul: telling/asking what? for verification of whats in proposed or an announcement that its been released?
+
+ 16:36:40 <zul> adam_g: both
+
+ 16:37:16 <zul> adam_g: meaning that its available for testing and can you please help test
+
+ 16:37:36 <adam_g> zul: so, we're going to need to go through the standard SRU process for each bug in the changelog, essentially?
+
+ 16:38:11 <adam_g> if so, we need to start compiling test cases now otherwise they're just going to rot in proposed like the first oneiric update
+
+ 16:38:18 <Daviey> ugh... internet problems hjere
+
+ 16:38:22 <Daviey> somewhat, adam
+
+ 16:38:25 <zul> adam_g: i think so, the ones we can test
+
+ 16:38:52 <adam_g> okay, i still have no idea :) we can discuss later.
+
+ 16:38:58 <Daviey> adam_g: We need to consider the regression potential for each bug, so yes.
+
+ 16:39:01 <Daviey> As we've had input into most of the stable changes, that shouldn't be too much of a challenge
+
+ 16:39:04 <Daviey> just a slight pain
+
+ 16:39:14 <Daviey> We also need to have further discussions with the SRU team to make sure they are satisfied
+
+ 16:39:15 <zul> adam_g: indeed :)
+
+ 16:39:56 <Daviey> I suggest that in about 1 hr, we try to grab slangasek.
+
+ 16:40:24 <adam_g> +1
+
+ 16:41:37 <jamespage> OK - I think that covers most things for this slot
+
+ 16:43:06 <smoser> Daviey, moving on?
+
+ 16:43:16 <Daviey> moving on..
+
+ 16:43:51 <Daviey> ugh, sorry.. My net keeps dieing
+
+ 16:43:56 <Daviey> [TOPIC] Ubuntu Server Team Events
+
+ 16:44:00 <arosales> Velocity next week. jcastro and hazmat in attendance there with a charm school.
+
+ 16:44:24 <Daviey> Ooo
+
+ 16:44:43 <Daviey> okay..
+
+ 16:45:09 <Daviey> [TOPIC] Weekly Updates & Questions for the QA Team (hggdh)
+
+ 16:45:52 <Daviey> How is the QA world?
+
+ 16:47:39 <jamespage> Not sure where hggdh is but I would encourage people to sign up to the ubuntu-utah-devel ML
+
+ 16:47:40 <jamespage> https://lists.ubuntu.com/mailman/listinfo/ubuntu-utah-devel
+
+ 16:47:57 * hggdh is in
+
+ 16:47:59 <jamespage> utah is the new automated testing platform QA have been working on
+
+ 16:48:25 <jamespage> all server tests will be transitioned soon I understand - maybe hggdh can tell us when?
+
+ 16:48:34 <Daviey> jamespage: that is worth raising! Thanks.
+
+ 16:48:39 <hggdh> I do stress jamespage's comment -- please do sign up, and suggest/complain as needed
+
+ 16:48:54 <hggdh> yes, all tests will be migrated to UTAH
+
+ 16:48:55 <Daviey> There is also some planned Openstack CI work, but we should discuss that in a breakout.
+
+ 16:49:10 <Daviey> hggdh: been following DEP-8 disucssions?
+
+ 16:49:31 <Daviey> (or anyone else?)
+
+ 16:50:18 <hggdh> Daviey: I have not, been quite busy, unfortunately
+
+ 16:50:55 <Daviey> hggdh: it's something pitti has been seemingly driving in Debian.. But we've not had discussions or involvement with it.
+
+ 16:51:17 <Daviey> I think it will impact us soonly (or at least SHOULD).. so generally, we probably need to join that disucssion
+
+ 16:51:20 <hggdh> Daviey: I will ping pitti on that tomorrow (already gone for the day)
+
+ 16:51:21 <Daviey> moving on?
+
+ 16:51:26 <Daviey> hggdh: Thanks!
+
+ 16:51:36 <Daviey> [TOPIC] Weekly Updates & Questions for the Kernel Team (smb)
+
+ 16:51:39 <smb> Still trying not to go mental while looking for some scheduler bug. Meanwhile did a merge for Xen in Quantal which needs to get some review. (maybe I should not have told zul there are minor faults hidden for him to find... ;) ) Otherwise: questions?
+
+ 16:51:42 <smb> ..
+
+ 16:52:14 <zul> ill have a look at it tomorrow
+
+ 16:52:16 <Daviey> smoser: is there anything we can unblock wyou with?
+
+ 16:52:18 <Daviey> I understood you had some sponsorship issues?
+
+ 16:52:34 <smoser> smoser? or smb?
+
+ 16:52:39 * smb wonders the same
+
+ 16:52:53 <smb> Daviey, Not really blocked on this
+
+ 16:53:15 <Daviey> sorry, i'm trying to type quickly and relying on tab complete as i seem to be suffering some network issue
+
+ 16:53:21 <Daviey> or, i'll blame the Quantal kernel.
+
+ 16:53:28 <Daviey> :)
+
+ 16:53:47 <Daviey> smb: Okay, i'm sorry to rush through this.. But yes, thanks.. Things currently seem good aiui.
+
+ 16:53:56 <Daviey> [TOPIC] Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ 16:53:58 <rbasak> Nothing to report. Work on ARM server continues. Any questions for me?
+
+ 16:54:27 <Daviey> rbasak: How is 12.04.1 and 12.10 images currently looking?
+
+ 16:54:39 <Daviey> I didn't really dig into A1 images.
+
+ 16:54:51 <rbasak> Setting aside MAAS for a moment, 12.10 is essentially ready.
+
+ 16:54:57 <Daviey> (i imagine jamespage and smoser haven't dug specifically into arm issues for the point release.)
+
+ 16:55:09 <Daviey> rbasak: wow, don't say tat too loudly.
+
+ 16:55:25 <rbasak> Well all the ARM server specific parts, anyway
+
+ 16:55:33 <Daviey> right
+
+ 16:55:37 <Daviey> Any arm questions?
+
+ 16:55:46 <rbasak> NCommander is working on the highbank enablement in precise-updates. AIUI, that's about a week away.
+
+ 16:55:54 <Daviey> super!
+
+ 16:55:55 <rbasak> MAAS is the important part though, and work on that continues.
+
+ 16:56:00 * jamespage knows about that ^^
+
+ 16:56:07 <Daviey> yep, fully aware of that little conundrum :)
+
+ 16:56:17 <Daviey> okay..
+
+ 16:56:25 <Daviey> [TOPIC] Welcome jimbaker to Server team (arosales).
+
+ 16:56:29 <arosales> Welcome jimbaker to the server team! We'll be putting jimbaker's juju, python, and java skills for Ubuntu Server :-)
+
+ 16:56:31 <rbasak> Welcome jimbaker!
+
+ 16:56:43 <Daviey> jimbaker: you are focusing on?
+
+ 16:57:39 <Daviey> ok..
+
+ 16:57:47 <Daviey> welcome JIM!
+
+ 16:57:53 <arosales> Perhaps away atm, We'll definately use his phython and java skill in addition to his juju skills.
+
+ 16:57:53 <Daviey> [TOPIC] Open Discussion
+
+ 16:58:14 * arosales apologizes for not sending meeting minutes to the blog or email.
+
+ 16:58:25 <arosales> I got added to the blog, so that should be corrected going forwared.
+
+ 16:58:36 <Daviey> \o/
+
+ 16:58:43 <Daviey> okay, lets wrap up..
+
+ 16:58:47 <Daviey> [TOPIC] Announce next meeting date and time
+
+ 16:58:54 <Daviey> same time, same place
+
+ 16:59:02 <Daviey> 26th June
+
+ 16:59:12 <arosales> thanks Daviey for chairing
+
+ 16:59:34 <Daviey> Thanks all for attending, and apologies for the sporadic nature.. it's been painful.
+
+ 16:59:37 <Daviey> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

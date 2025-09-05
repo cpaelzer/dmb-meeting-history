@@ -1,0 +1,264 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:01:31 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-07-02-18.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:01:38)
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/strongswan.html   (jdstrand, 18:19:10)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/freeciv.html   (jdstrand, 18:19:13)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/qtnx.html   (jdstrand, 18:19:16)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/policycoreutils.html   (jdstrand, 18:19:20)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/maildrop.html   (jdstrand, 18:19:24)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:41:59 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (55)
+ * kees (17)
+ * sbeattie (12)
+ * tyhicks (10)
+ * micahg (4)
+ * meetingology (3)
+ * tumbleweed (2)
+
+
+
+== Full Log ==
+
+
+ 18:01:31 <jdstrand> #startmeeting
+
+ 18:01:31 <meetingology> Meeting started Mon Jul  2 18:01:31 2012 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:01:31 <meetingology> 
+
+ 18:01:31 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:01:32 <kees> \o
+
+ 18:01:37 <jdstrand> The meeting agenda can be found at:
+
+ 18:01:38 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:01:45 <jdstrand> hi kees :)
+
+ 18:01:55 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:02:00 <jdstrand> I'll go first
+
+ 18:02:26 <jdstrand> I'm working on getting oo.o and libreoffice out today
+
+ 18:03:17 <jdstrand> I've also got the apparmor 2.8 upload for quantal, but am trying to work out the python3 packaging as libapparmor isn't importable in python3 due to it going to the wrong place
+
+ 18:03:47 <jdstrand> the ufw python3 port should be done, I'd like to get it packaged for quantal
+
+ 18:04:07 <jdstrand> I plan to continue working on my assigned updates after that
+
+ 18:04:27 <jdstrand> mdeslaur: is off today. he is on triage and I believe has some updates pending
+
+ 18:04:35 <sbeattie> jdstrand: do we expect python-libapparmor to only support python3 from a packaging standpoint?
+
+ 18:04:51 <jdstrand> jjohansen is also off. I'm not sure what he has planned
+
+ 18:05:02 <sbeattie> (hopefully sleep)
+
+ 18:05:30 <jdstrand> sbeattie: that was my starting point, since there are no reverse depends. in thinking about it over the weekend though, I think we may want to also export python2
+
+ 18:05:56 <sbeattie> would we need a separate package for that?
+
+ 18:06:07 <jdstrand> our python tools should be bi-lingual, so it should just be a matter of putting things in the right place
+
+ 18:06:15 <sbeattie> okay
+
+ 18:06:28 <jdstrand> sbeattie: based on my understanding of the Debian/Ubuntu python packaging guidelines, yes
+
+ 18:06:52 <jdstrand> I am going to get some advice on that though
+
+ 18:07:26 <kees> it should be possible to just build the python bindings twice
+
+ 18:07:42 <jdstrand> that is what I was hoping
+
+ 18:08:14 <jdstrand> the recent commits make it so that PYTHON* env variables dtrt
+
+ 18:08:26 <jdstrand> so I just need to work out how to package that bit
+
+ 18:08:56 <kees> yeah. is there a dh_python3, or does dh_python2 handle both?
+
+ 18:09:04 <jdstrand> dh_python3 isn't being super helpful atm-- it is putting things in site-packages instead of dist-packages so python3 script can't find it
+
+ 18:09:43 <jdstrand> kees: both-- I think dh_python2 can be passed --with-python3 and then maybe it will work. I'm kinda in the middle of it, so not sure
+
+ 18:09:48 <kees> cool
+
+ 18:09:50 <micahg> hrm, I thought site-packages was deprecated since python 2.6?
+
+ 18:09:56 <jdstrand> micahg: exactly
+
+ 18:10:20 <micahg> well, that sounds like a bug that should be easily fixed, has anyone talked to doko_ about it?
+
+ 18:10:26 <jdstrand> anyhoo-- we don't need to bikeshed this-- I'm on it and will work it out. if I need help, I'll holler
+
+ 18:10:38 <tumbleweed> jdstrand: site-packages vs dist-packages means you aren't calling setup.py correctly
+
+ 18:11:00 <jdstrand> tumbleweed: heh, thanks. I read something on that and thought that might be the case
+
+ 18:11:08 <tumbleweed> you want --install-layout=deb
+
+ 18:11:12 <jdstrand> but haven't had a chance to try it
+
+ 18:11:30 <jdstrand> tumbleweed: noted. this may go faster than I thought. thanks! :)
+
+ 18:11:55 <jdstrand> sbeattie: you're up
+
+ 18:12:09 <sbeattie> I'm in the happy place this week
+
+ 18:12:54 <sbeattie> I'm testing the openjdk-6/icedtea-web backport/update; hoping to have that out by the end of this week.
+
+ 18:13:08 <sbeattie> I've also got an embargoed issue on my plate
+
+ 18:13:29 <sbeattie> I need to catch up on the open apparmor patches for review.
+
+ 18:13:52 <sbeattie> and that's pretty much it for me; I'll be off the 4th for the US national holiday.
+
+ 18:14:00 <sbeattie> micahg: you're up
+
+ 18:14:41 <micahg> I'll be helping sbeattie test the icedtea backport as it fixes a regression for me, and then working on webkit
+
+ 18:14:49 <micahg> I think that's it
+
+ 18:15:23 <tyhicks> I'm in the community role this week
+
+ 18:15:43 <tyhicks> I'm wrapping up some Mozilla testing as we speak and then my focus will shift to the pidgin update
+
+ 18:16:25 <tyhicks> I didn't get much time to work on it last week since I was catching up on the Mozilla pretesting schedule and working through some issues I ran into while doing that
+
+ 18:16:40 <jdstrand> tyhicks: did you sort out those issues?
+
+ 18:16:57 <tyhicks> I've got a short week. Half a day off tomorrow, the holiday, and then a full day off on Thursday.
+
+ 18:17:19 <tyhicks> jdstrand: Yep - it was a problem with our thunderbird config dir tar that we pull out of QRT. I can fill you in after the meeting.
+
+ 18:17:40 <tyhicks> (the rest was 'fixed' by filing bugs against ff/tbird)
+
+ 18:17:58 <tyhicks> I still haven't gotten to my merges, so any free time will be spent on those.
+
+ 18:18:02 <tyhicks> That's it for me
+
+ 18:18:14 <tyhicks> jdstrand: You're up since jj is away today
+
+ 18:18:53 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:18:57 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:19:02 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:19:10 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/strongswan.html
+
+ 18:19:13 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/freeciv.html
+
+ 18:19:16 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/qtnx.html
+
+ 18:19:20 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/policycoreutils.html
+
+ 18:19:24 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/maildrop.html
+
+ 18:19:48 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:20:00 <jdstrand> There are a lot of merge opportunities for packages listed in http://people.canonical.com/~ubuntu-security/d2u/. Performing these updates is a great way to help Ubuntu and bolster your developer application.
+
+ 18:20:09 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:20:18 <kees> I've got the xorg update for precise tested, can someone publish it?
+
+ 18:20:31 <kees> it's been sitting since UDS :P
+
+ 18:22:25 <jdstrand> kees: remind me-- is that >= 1.10 or > 1.10
+
+ 18:22:57 <tyhicks> That probably falls on my shoulders since I'm on community this week, but I doubt I'll be able to get to it with my short work week
+
+ 18:23:44 <kees> jdstrand: ?
+
+ 18:23:59 <jdstrand> kees: what version of X is affected?
+
+ 18:24:39 <kees> jdstrand: ah! introduced in 1.10 (LP: #996250)
+
+ 18:26:36 <jdstrand> kees: ok, so that means that natty and oneiric are also affected
+
+ 18:26:49 <kees> yeah, I didn't attempt those backports.
+
+ 18:26:53 <jdstrand> sure
+
+ 18:27:11 <jdstrand> we have currently prioritized this as 'low' due to our hardening measures
+
+ 18:27:32 <jdstrand> which is why no one has done anything yet
+
+ 18:27:50 <jdstrand> of course, the patch is sitting there, so someone could try to get that going
+
+ 18:28:11 <jdstrand> kees: do you feel 'low' is not appropriate for Ubuntu?
+
+ 18:30:19 <kees> well...
+
+ 18:30:30 <kees> it's a DoS due to upstart killing the respawn.
+
+ 18:30:50 <kees> and since on restart it aborts during video init, the console is unusable after the 1st restart
+
+ 18:31:26 <kees> so, it's kind of borderline. anyone can ruin your unsaved-work day by sticking in the evil hid thingy
+
+ 18:31:39 <jdstrand> yeah
+
+ 18:31:40 <kees> it's also very unlikely. :P
+
+ 18:31:50 <jdstrand> yes-- requires physical access
+
+ 18:31:53 <sbeattie> ... unless you're in the vicinity of kees
+
+ 18:31:57 <kees> :P
+
+ 18:32:11 <sbeattie> "workaround: avoid kees"
+
+ 18:32:23 <jdstrand> I can much less creatively ruin your work if I have physical access
+
+ 18:32:46 <jdstrand> anyhoo, it sounds like tyhicks will be looking at it
+
+ 18:32:58 <kees> cool, thanks
+
+ 18:33:08 <jdstrand> hopefully a backport will be straightforward and easy to test
+
+ 18:33:28 <jdstrand> anything else to discuss?
+
+ 18:33:30 <kees> I *think* the backport of my patch for 1.11 shouldn't be much worse for 1.10. I already hauled in all the new functions for 1.11
+
+ 18:41:57 <jdstrand> sbeattie, micahg, tyhicks, kees: thanks!
+
+ 18:41:59 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

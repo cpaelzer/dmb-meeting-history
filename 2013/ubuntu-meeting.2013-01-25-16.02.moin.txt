@@ -1,0 +1,696 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by ogra_ at 16:02:49 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-01-25-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+''ACTION:'' jani to mail ubuntu-devel about accelerometer plans  (ogra_, 16:25:02)
+
+
+
+Meeting ended at 17:00:41 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * jani to mail ubuntu-devel about accelerometer plans
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (155)
+ * janimo (59)
+ * seb128 (48)
+ * xnox (12)
+ * kyleN (12)
+ * tjaalton (10)
+ * lool (8)
+ * plars (7)
+ * meetingology (4)
+ * cking (2)
+ * ubottu (2)
+ * stgraber (1)
+ * Aeefire (1)
+
+
+
+== Full Log ==
+
+
+ 16:02:49 <ogra_> #startmeeting
+
+ 16:02:49 <meetingology> Meeting started Fri Jan 25 16:02:49 2013 UTC.  The chair is ogra_. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02:49 <meetingology> 
+
+ 16:02:49 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:03:03 <ogra_> hey everyonw, this is the nexus7 status meeting
+
+ 16:03:10 <kyleN> hi
+
+ 16:03:17 <ogra_> i'll give a quick summary of what happened this week ...
+
+ 16:03:41 <ogra_> so thanks to jani who wrote a prototype in GO, we now have auto-rotation working !
+
+ 16:03:52 <ogra_> as well as the ambient light sensor
+
+ 16:04:10 <ogra_> (i took the prototype and implemented it in shell, as an interim solution)
+
+ 16:04:35 <ogra_> togather with the autorotation, an xorg fix landed that makes touch input in portrait mode work
+
+ 16:04:51 <janimo> if we are to integrate with gnome-system-daemon we need changes to the kernel so we expose an input interface as that daemon expects
+
+ 16:05:05 <janimo> we may get it this cycle or we may just stick with the shell daemon, not sure yet
+
+ 16:05:23 <ogra_> right, the question is if we will keep g-s-d in this form on the later tablet setup
+
+ 16:05:23 <janimo> I have been looking into it the past few days though and I'd like to get it done properly
+
+ 16:05:44 <ogra_> right, the shell daemons are really just interim solutions
+
+ 16:05:53 <janimo> no idea. What is the later tablet setup - related to ubuntu phone?
+
+ 16:05:57 <seb128> g-s-d is being discussed
+
+ 16:05:57 <ogra_> i found it important for testing the features to have it in asap
+
+ 16:06:02 <seb128> we want to reduce its scope for sure
+
+ 16:06:12 <ogra_> so we can see how the UI reacts to rotation etc
+
+ 16:06:15 <seb128> so if it's as easy to implement those feature in other places feel free
+
+ 16:06:37 <janimo> seb128, well it is certainly easier but at the cost of extra footprint that a separate daemon brings
+
+ 16:06:52 <janimo> something we keep ignoring and that got us into this bloated mess in the first place :)
+
+ 16:06:59 <seb128> right
+
+ 16:07:10 <seb128> well, we should perhaps implement those feature in unity itself for example
+
+ 16:07:13 <ogra_> well, i wouldnt mind a small daemon in C
+
+ 16:07:24 <janimo> we were supposed to have a push for reducing memory footprint this cycle, at leats not add extra stuff if we can't make it lower :)
+
+ 16:07:26 <ogra_> depending on the feature though
+
+ 16:07:42 <seb128> the issue is that the higher number of process, the higher cost in context switches, wakeups, memory usage, etc
+
+ 16:07:47 <ogra_> janimo, as long as the new extra stuff is smaller i dont care :)
+
+ 16:08:15 <ogra_> janimo, btw, did tvoss talk to you ?
+
+ 16:08:16 <janimo> this daemon is by far not among the high footprint daemons but everything adds up
+
+ 16:08:20 <janimo> nope
+
+ 16:08:31 <ogra_> he seems to work on an API for sensor stuff
+
+ 16:08:49 <janimo> nice, I'll follow up after the meeting
+
+ 16:08:55 <ogra_> so if there is something in the works we could use, that might help
+
+ 16:09:04 <ogra_> i pointed him to you ... hm
+
+ 16:09:11 <ogra_> (days ago)
+
+ 16:09:27 <janimo> well I discovered g-s-d covers accel and screen rotation, but only with a paritcular type of accelerometer in the kernel
+
+ 16:09:32 <janimo> there's no unifying interface
+
+ 16:09:39 <ogra_> right
+
+ 16:09:50 <seb128> seems better to build on that codebase
+
+ 16:09:53 <ogra_> though the question is, will we stay with g-s-d at all for sensors
+
+ 16:09:54 <seb128> rather than to write a new one
+
+ 16:09:58 <janimo> also discovered by accident while poking in sysfs that my x86 laptop has an accelrometer
+
+ 16:10:05 <janimo> which also does not work with g-s-d
+
+ 16:10:23 <seb128> ogra_, no immediate plan to replace g-s-d, and we can easily move bits of code out of gsd to some other source later if needed
+
+ 16:10:32 <ogra_> ok
+
+ 16:10:32 <seb128> ogra_, it's not like the work would be wasted
+
+ 16:10:40 <seb128> I would improve g-s-d as a start
+
+ 16:10:45 <seb128> seems the less work path
+
+ 16:10:49 <janimo> well sensors are not that separate from settings, it makes sense imo to have light sensor integrated in backlight settings and other screen related stuff
+
+ 16:10:50 <ogra_> right, making g-s-d actually generic deinitely helps
+
+ 16:11:05 <ogra_> definitely
+
+ 16:11:12 <janimo> so from what limited knowledge I have g-s-d seems the place for it - if we plan on keeping g-s-d that is
+
+ 16:11:19 <ogra_> right
+
+ 16:11:30 <seb128> we do plan to keep it in the near futur
+
+ 16:11:37 <ogra_> i'm just careful because i heard we might not ... but what seb128 said, it helps in general
+
+ 16:11:48 <seb128> we might move some bits out to small "on-demand" services
+
+ 16:11:55 <ogra_> ++
+
+ 16:12:04 <ogra_> once upstart can handle it :)
+
+ 16:12:07 <janimo> I hope those are not written in python though
+
+ 16:12:10 <seb128> like if "rotation" can be an upstart daemon we could span the helper from an upstart script
+
+ 16:12:17 <seb128> and take it down again
+
+ 16:12:18 <ogra_> yeah
+
+ 16:12:23 <ogra_> thats what i do atm
+
+ 16:12:30 <seb128> upstart daemon->signal
+
+ 16:12:33 <ogra_> but for the session side it uses Xsession.d
+
+ 16:12:36 <janimo> rotation does not seem like an on-deman thing though, I expect people want it on all the time with a tablet
+
+ 16:12:47 <ogra_> instead of upstart ...
+
+ 16:12:56 <seb128> well, if the rotation triggers an upstart signal we can bind a script to it
+
+ 16:12:59 <ogra_> janimo, in android i dont :)
+
+ 16:13:19 <seb128> that would avoid having the code running all the time to poll for the rotation event
+
+ 16:13:20 <ogra_> if i read a book and lie on the side in bed i dont want it rotating all the time
+
+ 16:13:30 * seb128 always turn off autorotate
+
+ 16:13:35 <seb128> it's more annoying than useful
+
+ 16:13:42 <ogra_> seb128, well, the polling is the biggest issue atm, yeah
+
+ 16:14:05 <ogra_> the daemon is like 20 lines of shell :)
+
+ 16:14:17 <ogra_> wouldnt eat much if it wouldnt have to poll every second
+
+ 16:14:37 <ogra_> in the current state its one of the biggest CPU consumers though
+
+ 16:14:49 <janimo> we could fix that by doing the poll in the kernel and firing off uevents when things change
+
+ 16:14:55 <seb128> can we make xorg/the kernel to send a signal?
+
+ 16:14:56 <ogra_> yeah
+
+ 16:15:00 <janimo> needs some coding but can be done - not sure if it's the right place though
+
+ 16:15:01 <ogra_> kernel
+
+ 16:15:29 <seb128> it might be worth dropping an email on ubuntu-devel list?
+
+ 16:15:31 <lool> Apparently gsd reads an ID_INPUT_ACCELEROMETER_ORIENTATION property via gudev
+
+ 16:15:34 <seb128> to get input from kernel people?
+
+ 16:15:36 <janimo> seb128, but we also need to add code to interpret the raw data and keep track of orientation in the kernel then - moving the shell code to kernel C code
+
+ 16:15:53 <ogra_> lool, rhight, which only very few accelerometers seem to trigger
+
+ 16:16:00 <lool> If I understand what you folks are saying: 1) this doesn't work on N7 2) we would like to change this from poll to event-based
+
+ 16:16:03 <janimo> seems a bit crazy - but this sensor does not have an orientation even itself unless loaded with proprietary firmware which we do not have
+
+ 16:16:23 <lool> so on 1), do we know what to do to set this property right?
+
+ 16:16:34 <ogra_> lool, right, but 0.5) we only have the free part of the driver
+
+ 16:16:34 <janimo> lool, I am looking into this now. The nexus7 sensor is dumb
+
+ 16:16:43 <lool> and 2), do we have a way to trigger something in the active session based on udev events?
+
+ 16:16:45 <janimo> and only provides raw accel data
+
+ 16:16:50 <ogra_> lool, which doesnt give us 100% of the features
+
+ 16:17:03 <lool> I think there's an udev bridge for upstart, can we use it?
+
+ 16:17:09 <janimo> lool, g-s-d listens to udev events from accel devices
+
+ 16:17:22 <ogra_> right, we just need the events
+
+ 16:17:25 <janimo> so that part is covered if we make our kernel side similar to what is already handled
+
+ 16:17:34 <ogra_> yeah
+
+ 16:17:36 <lool> janimo: ah so it's not poll, it's already uevent based
+
+ 16:17:37 <janimo> so an input device with uevents, polling
+
+ 16:17:46 <janimo> lool, right.
+
+ 16:18:07 <ogra_> our current driver doesnt even provide a device
+
+ 16:18:10 <lool> so we only miss a correct kernel path for this
+
+ 16:18:12 <janimo> when the currenlty handled (asus-laptop pega I think) accel fires off an ACPI even saying rotation changed
+
+ 16:18:15 <ogra_> so these bits need adding
+
+ 16:18:17 <janimo> the driver emits an uevent
+
+ 16:18:39 <janimo> a udev helper is called that reads the raw data and calculated orientation - again, as uevents cannot carry metadata
+
+ 16:18:44 <janimo> and exports that as env -var
+
+ 16:18:56 <janimo> udev property I mean
+
+ 16:19:01 <janimo> and g-s-d reads it
+
+ 16:19:13 <ogra_> that sounds like a really slow process
+
+ 16:19:23 <ogra_> compared to what we do atm
+
+ 16:19:41 <janimo> lool, the rewason I am not sure about the kernel part is that there is no standard kernel way of exposing accels, g-s-d uses one of the existing approaches
+
+ 16:19:54 <ogra_> i wonbder if we couldnt have that with less players involved
+
+ 16:20:01 <janimo> but for instance it does not work with my acer accelerometer either, that too does things a bit differently
+
+ 16:20:12 * xnox realises it's meeting time.
+
+ 16:20:38 <janimo> ogra_, well g-s-d as our shell script could just read raw data and handle everything, but would need to have a lot of sensor specific code
+
+ 16:20:43 <janimo> and would need to do detection
+
+ 16:20:51 <janimo> udev handles detection of device at least
+
+ 16:20:51 <ogra_> and would need to poll
+
+ 16:21:23 <ogra_> right, i just wonder if that cant be done more direct ... udev->xorg
+
+ 16:21:38 <janimo> so the g-s-d stuff seems ok to me, just that restrict all sensor to the input subsystem (nexus is on IIO does not even provide an input device)
+
+ 16:21:46 <ogra_> and have g-s-d only intercept if the user actually switches it off
+
+ 16:21:56 <janimo> and a specific devnode with input_struct layout as a joystick (X, Y, X values)
+
+ 16:22:06 <ogra_> yeah
+
+ 16:22:31 <janimo> it is doable, I'll keep at it for a few more days
+
+ 16:22:33 <ogra_> well, lets not go to much into detail
+
+ 16:22:48 <ogra_> we'll see what you come up with ;)
+
+ 16:22:57 <ogra_> xnox, want to give an update ?
+
+ 16:22:59 * xnox also thought that udev is ought to be generating the events from accelorometer and then g-s-d or whatever can piggy back on top. Gives us the most flexibility to consume those events.
+
+ 16:23:08 <janimo> and take into account the galaxy nexus too which has a sensor from the same family but different
+
+ 16:23:21 <ogra_> same but different ... yay
+
+ 16:23:28 <janimo> I'd rather we not have to add code to every sensor if upstream decides they are all going to be IIO and not input devices
+
+ 16:23:29 <xnox> I finished usb-creator support for flashing nexus7 tablets using .img + .bootimg files.
+
+ 16:23:35 <ogra_> wohooo
+
+ 16:23:35 <janimo> so maybe changing g-s-d is better long term
+
+ 16:23:44 <ogra_> janimo, yeah
+
+ 16:23:51 <xnox> Currently it only "recognises" nexus7 ID_VENDOR_ID and ID_MODEL_ID
+
+ 16:24:03 <ogra_> thats enough for a start
+
+ 16:24:12 <ogra_> we can add a big database over time :)
+
+ 16:24:14 <xnox> so if there are other devices please send me their VENDOR_IDs / MODEL_IDs
+
+ 16:24:19 <seb128> janimo, maybe drop a summary email to ubuntu-devel@ about the rotation/g-s-d/kernel topic? might be better for discussion
+
+ 16:24:24 <janimo> xnox, nexus devices you mean?
+
+ 16:24:30 <ogra_> once we switch to nexus4 and nexus10 :)
+
+ 16:24:43 <ogra_> seb128, ++
+
+ 16:24:44 <janimo> seb128, I will follow up to the original thread once I have a bit more info
+
+ 16:24:47 <xnox> janimo: yeah, i do want ids of the nexus range to be in the usb-creator.
+
+ 16:24:53 <xnox> janimo: but I don't have them.
+
+ 16:24:58 <seb128> janimo, thanks
+
+ 16:25:00 <janimo> xnox, so galaxy nexus phone too?
+
+ 16:25:02 <ogra_> [action] jani to mail ubuntu-devel about accelerometer plans
+
+ 16:25:02 * meetingology jani to mail ubuntu-devel about accelerometer plans
+
+ 16:25:20 <xnox> janimo: yes please.
+
+ 16:25:42 <xnox> janimo: we don't have images for those devices yet, but I'd like usb-creator to know about them already.
+
+ 16:26:01 <xnox> (.img + .bootimg style images that is)
+
+ 16:26:03 <janimo> xnox, one thing I remember is that both nexus 7 and galaxy report different USB IDs depending on whether they booted in recovery mode or regular android
+
+ 16:26:14 <ogra_> note though that the phone installation functions differently from our installation procedure
+
+ 16:26:20 <xnox> janimo: currently I trigger on two ID_MODEL_IDs
+
+ 16:26:21 <kyleN> ogra, when appropriate, I have a short topic.
+
+ 16:26:31 <ogra_> (i assume we can adjust that though)
+
+ 16:26:50 <ogra_> kyleN, well, we dont have an agenda atm. feel free to just start when its quiet
+
+ 16:27:21 <ogra_> i.e. now :)
+
+ 16:27:24 <xnox> ogra_: yeah. =/ given enough demand we can add additional types of flashing. the *.bootimg and *.img backend took only have a day to code in the end.
+
+ 16:27:42 <kyleN> Before the holidays there was some discussion of using valgrind to find memory leaks and thereby improve Ubuntu for resource constained devices.
+
+ 16:27:53 <kyleN> I worked on apport-valgrind, which was released into raring as part of apport.
+
+ 16:28:01 <ogra_> nice !
+
+ 16:28:09 <kyleN> This allows you to run valgrind for an executable (to find memory leaks) while first populating a temporary directory with available debug symbols for the executable, which makes the resulting valgrind log file more complete and useful (because more symbols names are filled in, making the stack traces clearer)
+
+ 16:28:25 <kyleN> Alex Chiang submitted a needed patch for this that landed in valgrind.
+
+ 16:28:32 <kyleN> and in Ubuntu/R
+
+ 16:28:42 <kyleN> This is a first step. There are many aspects to this. I started a blog to cover some of this: http://kylenubuntu.blogspot.com/
+
+ 16:28:58 <ogra_> you need to blog about that, that extends far beyond nexus7
+
+ 16:28:58 <kyleN> I expect to add more blog posts soon on this topic.
+
+ 16:29:01 <kyleN> DONE
+
+ 16:29:01 <ogra_> and sounds helpful everywhere
+
+ 16:29:17 <ogra_> time you get onto planet !
+
+ 16:29:23 <seb128> I was going to say
+
+ 16:29:37 <seb128> nobody is going to read those if they are not on planet
+
+ 16:29:37 <kyleN> do I need a rocket ship to get there? ;)
+
+ 16:29:45 <seb128> no offense to your blog popularity ;-)
+
+ 16:29:47 <ogra_> just ubuntu membership
+
+ 16:29:55 <janimo> BTW, nexus 7 testers please http://people.canonical.com/~jani/linux-image-3.1.10-8-nexus7_3.1.10-8.21_armhf.deb
+
+ 16:30:05 <kyleN> ack
+
+ 16:30:11 <ogra_> note that this will break your touchscreen :P
+
+ 16:30:15 <janimo> for me this deb fixes sound on boot without having to do a suspend. I'd like other opinions too
+
+ 16:30:58 <janimo> well log in via ssh and install http://paste.ubuntu.com/1570120/ over /usr/bin/acceld :)
+
+ 16:31:49 <ogra_> janimo, is that need ? i would just drop the "Rotatet "right"" from xorg.conf
+
+ 16:31:51 <ogra_> *Rotate
+
+ 16:32:16 <ogra_> anyway, the current nx7 looks pretty good already ... we have one big showstopper bug left though
+
+ 16:32:38 <ogra_> bug 1068994
+
+ 16:32:40 <ubottu> bug 1068994 in ubuntu-nexus7 "button1 gets stuck after a while" [Critical,Confirmed] https://launchpad.net/bugs/1068994
+
+ 16:32:47 * ogra_ pokes the bot
+
+ 16:33:09 <janimo> ogra_, it needs to correlate xrandr names to xinput rotation matrix. The latter get shifted with the kernel 90 degree rotation
+
+ 16:33:13 <janimo> so it is needed
+
+ 16:33:20 <ogra_> and after the fix for portrait mode i must say that i clearly suspect compiz to be at fault, not xorg
+
+ 16:33:56 <ogra_> if the bug occurs to me, i can still hit the ubuntu key on onboard to switch apps, and i can interact withj the app content
+
+ 16:34:10 <ogra_> what doesnt take any input are window frames, panel and launcher
+
+ 16:34:19 <ogra_> all therr are compiz
+
+ 16:34:22 <ogra_> *three
+
+ 16:34:48 <ogra_> so i start to suspect compiz itself has an issue here
+
+ 16:35:27 <ogra_> what we are also still missing is bluetooth
+
+ 16:35:33 <ogra_> is cyphermox around ?
+
+ 16:36:53 <ogra_> the quantal image has some hacks to push the binary firmware into the driver when BT starts ... we dont have that in raring atm (and i'm not sure we want it)
+
+ 16:37:33 <ogra_> so it would be good to know the plans here, can we get it to work without the binary bits, if not, ho do we integrate them properly
+
+ 16:37:37 <ogra_> *how
+
+ 16:37:54 <ogra_> seb128, could you forward that question ?
+
+ 16:38:08 <seb128> ogra_, sure
+
+ 16:38:10 <ogra_> (probably also better discussed by mail=
+
+ 16:38:24 <seb128> yeah, sounds like something for ubuntu-devel@ as well
+
+ 16:38:32 <ogra_> what else did i miss ?
+
+ 16:38:57 <seb128> is anyone working on collecting the valgrind datas from the community?
+
+ 16:38:58 <ogra_> do we have anyone from QA  around ?
+
+ 16:39:06 <ogra_> plars, ?
+
+ 16:39:06 <seb128> what about optimizing processes running?
+
+ 16:39:17 <ogra_> oh, definitely
+
+ 16:39:27 <seb128> who?
+
+ 16:39:40 <seb128> I want to start organizing those better
+
+ 16:39:49 <seb128> so I want to get everybody in touch
+
+ 16:40:08 <ogra_> how about we make a task table and people can pick from it ...
+
+ 16:40:15 <lool> Gema and Paul Larson both mentioned activities related to collecting smem output in QA labs
+
+ 16:40:25 <seb128> we have started doing a table with lool
+
+ 16:40:25 <ogra_> unclaimed tasks will then be forcefully assigned
+
+ 16:40:28 <seb128> we need to publish it
+
+ 16:40:33 <ogra_> great
+
+ 16:40:35 <seb128> we have also some blueprints
+
+ 16:40:51 <ogra_> lool, yeah, i know plars wroks on nexus stuff
+
+ 16:40:59 <ogra_> (thus the ping)
+
+ 16:41:08 <plars> ogasawara: hi, I'm here
+
+ 16:41:09 <ogra_> i implemented preseeding support for him last week
+
+ 16:41:12 <plars> grr
+
+ 16:41:14 <ogra_> hehe
+
+ 16:41:15 <plars> ogasawara: sorry
+
+ 16:41:27 <plars> ogra_: yes, I'm here, but in about 30 different irc windows at the moment :)
+
+ 16:41:49 <ogra_> plars, so anything you want to tell us about nx7 work ?
+
+ 16:42:15 <ogra_> seb128, for collecting stuff from the community it sounds like balloons might be the right guy
+
+ 16:42:26 <plars> ogra_: just that I got your email about preseeding and I am anxious to try it, but I was off yesterday and haven't gotten to it yet today
+
+ 16:42:58 <plars> ogra_: assuming that works, we should be able to automate installs on the nexus in the lab and have automated tests running pretty soon
+
+ 16:42:59 <ogra_> ok, i'm not sure it works 100% yet, please bug me if there are issues
+
+ 16:43:09 <seb128> ogra_, ok, I think I will try to draft a "status update/summary/how we organize a bit better going forward" email early next week
+
+ 16:43:18 <seb128> ogra_, I will run the draft through you, lool and some others before sending
+
+ 16:43:25 <plars> ogra_: if you have an example preseed or script for munging it into the image already, that would streamline things considerably
+
+ 16:43:30 <ogra_> seb128, great, lets turn that (or parts of it) into our meeting agenda
+
+ 16:44:07 <ogra_> plars, heh, no, i dont, i used to abuse tobin as a preseed stoirage in the past :)
+
+ 16:44:50 <ogra_> oh, btw, do we have anyone from the kernel team here ?
+
+ 16:45:02 <ogra_> cking used to work on power management on the nx7
+
+ 16:45:19 <ogra_> and it got really really bad since we switched to raring
+
+ 16:45:48 <janimo> ogra_, it's the same kernel though right?
+
+ 16:46:11 <ogra_> from battery values <50% on i get a battery popup every second until the device shuts down (3-4h long)+
+
+ 16:46:29 <ogra_> janimo, nope, it was re-based on the later android release
+
+ 16:46:37 <janimo> ah right
+
+ 16:46:50 <ogra_> i got these issues since the first raring kernel landed
+
+ 16:46:59 <janimo> so a quantal kernel has no such issues ?
+
+ 16:47:08 <Aeefire> hey guys.
+
+ 16:47:14 <janimo> could be a raring userland policy bug as well
+
+ 16:47:16 <cking> ogra_, has a bug been filed so we can track that?
+
+ 16:47:24 <ogra_> percentage and time are totally off all the time and i get weird power messages on charging or after a few hours of usage
+
+ 16:47:30 <ogra_> cking, sure
+
+ 16:47:50 <ogra_> janimo, yeah, could be, i also noticed that upower shows an additional usb charger
+
+ 16:47:59 <ogra_> i dont think that was there in quantal
+
+ 16:49:35 <ogra_> cking, bug 1093543
+
+ 16:49:36 <ubottu> bug 1093543 in ubuntu-nexus7 "Battery status behaves erratically" [Medium,Confirmed] https://launchpad.net/bugs/1093543
+
+ 16:49:43 <ogra_> (sorry, tootk a moment to find it)
+
+ 16:50:24 <cking> ogra_, thanks, i'll look at that one
+
+ 16:50:35 <ogra_> great
+
+ 16:50:46 <ogra_> i think we talked about it before btw
+
+ 16:50:56 <ogra_> but didnt find any cause
+
+ 16:51:12 <ogra_> ok ...
+
+ 16:51:23 <ogra_> anyone from the community around with questions etc ?
+
+ 16:51:59 <ogra_> doesnt look like
+
+ 16:52:13 <ogra_> doesn anyone want to bring something up before i close ?
+
+ 16:52:26 <ogra_> going once
+
+ 16:52:26 <seb128> ogra_, do we know if the pointer/grab lock issue is being worked or making any progress?
+
+ 16:52:37 <seb128> it's pretty much a blocker if you want to use the nexus
+
+ 16:52:39 <ogra_> seb128, tjaalton sent it upstream
+
+ 16:52:49 <ogra_> seb128, its not as bad as you think
+
+ 16:52:51 <seb128> is it just sitting there or did somebody pick itup?
+
+ 16:53:12 <ogra_> i use the nx7 all day, if you use it carefully you can get through with only having the issue once a day
+
+ 16:53:17 <seb128> lol
+
+ 16:53:21 <ogra_> i think it rots upstream
+
+ 16:53:22 <seb128> "if you use it carefully"
+
+ 16:53:24 <tjaalton> seb128: upstream knows about it, pinged him earlier this week but no new patches to try
+
+ 16:53:26 <janimo> ogasawara, are you using a mouse?
+
+ 16:53:30 <seb128> like explain to users to not use the indicators? ;-)
+
+ 16:53:33 <ogra_> there was quite some activity in the beginning
+
+ 16:53:37 <ogra_> but that died
+
+ 16:53:44 <ogra_> janimo, indeed not :)
+
+ 16:54:08 <ogra_> tjaalton, did you try with the latest fixes, its really only compiz that freezes
+
+ 16:54:11 <stgraber> "if you make sure not to use the touchscreen on your tablet, you're fine"
+
+ 16:54:19 <tjaalton> ogra_: hm, no
+
+ 16:54:23 <ogra_> tjaalton, i can interact with everything else on the desktop just fine
+
+ 16:54:27 <tjaalton> oh
+
+ 16:54:29 <tjaalton> sweet
+
+ 16:54:44 <ogra_> just not panel, launcher and *window frames*
+
+ 16:54:57 <seb128> lol, because who needs to use a panel or launcher? ;-)
+
+ 16:55:03 <ogra_> but firefox content, terminal, onboard etc work fine
+
+ 16:55:35 <ogra_> seb128, well, if i just read a long article in FF, all i need is the grab'n drag extension to work ;)
+
+ 16:56:01 <ogra_> and switching apps works fine via onboard (_hit the ubuntu key, pick the number of your app)
+
+ 16:56:37 <ogra_> tjaalton, so i think it would be worth taking a second look with focus on compiz
+
+ 16:57:51 <ogra_> 3 min left ... anything else ?
+
+ 16:58:00 <tjaalton> ogra_: update the lp bug and I'll ask peter again where the bug is. the previous logs we had did show that the grab state was fooked, but.. we'll see
+
+ 16:58:25 <ogra_> tjaalton, well, there were a bunch of issues with input fixed in the last xorg upload
+
+ 16:58:48 <ogra_> so i would suspect we might have cleared the xorg side now
+
+ 16:58:52 <tjaalton> oh the patch bryce put back in? yeah sorry about that, it was a bad merge by me :)
+
+ 16:59:14 <tjaalton> mistakenly dropped a patch that fixed the rotation
+
+ 16:59:25 <ogra_> well, i think bryce and danien van vugt added patches
+
+ 16:59:27 <tjaalton> when merging new bugfix release
+
+ 16:59:31 <ogra_> *daniel
+
+ 16:59:43 <tjaalton> xserver only got this one back
+
+ 16:59:50 <tjaalton> also a point release before that
+
+ 16:59:54 <ogra_> well, todays raring  works pretty well for me
+
+ 17:00:03 <ogra_> apart from the compiz hang
+
+ 17:00:21 <ogra_> no other input issues here
+
+ 17:00:27 <ogra_> ok, time is up
+
+ 17:00:33 <ogra_> going once
+
+ 17:00:38 <ogra_> going twice
+
+ 17:00:41 <ogra_> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

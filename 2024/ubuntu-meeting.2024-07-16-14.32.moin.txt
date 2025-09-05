@@ -1,0 +1,345 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 16 Jul at 14:32 &mdash; 14:54 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2024/ubuntu-meeting.2024-07-16-14.32.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:32)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:43)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/highway/+bug/2070807   (cpaelzer, 14:43)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:47.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:47)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libdisplay-info/+bug/2071396   (cpaelzer, 14:47)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:48.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:48)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:48)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:49.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:49)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:49)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:49)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:51.
+
+ * ''LINK:'' https://oeis.org/A017666   (cpaelzer, 14:54)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (106)
+ * sarnold (11)
+ * slyon (9)
+ * didrocks (5)
+ * didrocks999 (3)
+ * meetingology (2)
+ * jamespage (1)
+
+
+
+== Full log ==
+
+
+ 14:32 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:32 <meetingology> Meeting started at 14:32:36 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:32 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:32 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:32 <cpaelzer> #topic current component mismatches
+
+ 14:32 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <cpaelzer> uh
+
+ 14:33 <cpaelzer> a lot today
+
+ 14:34 <cpaelzer> I feel we have talked udisk2 -> exfatprogs last time
+
+ 14:34 <sarnold> "But fakeroot FTBFS on armhf/oracular" .. how..?
+
+ 14:34 <sarnold> exfatprogs feels new to me
+
+ 14:34 <sarnold> I don't see it in /lastlog
+
+ 14:34 <cpaelzer> me neither
+
+ 14:35 <cpaelzer> maybe it was years ago
+
+ 14:35 <sarnold> ah that can happen :)
+
+ 14:35 <didrocks> yeah, sounds new to me too
+
+ 14:35 <cpaelzer> udisk2 is desktop - jbicha or didrocks - can you have a look what you want to do with thta
+
+ 14:35 <cpaelzer> now to the long list in -proposed
+
+ 14:35 <didrocks> I’ll defer to jbicha and track it if it’s not handled
+
+ 14:35 <slyon> no fakeroot is new
+
+ 14:35 <cpaelzer> rust pulls in docs and that pullsin  fonts and JS
+
+ 14:35 <slyon> I marked it as false-positive
+
+ 14:36 <cpaelzer> we asked for an auto-exclude last time, that already existed
+
+ 14:36 <cpaelzer> so it is about demoting the -doc
+
+ 14:36 <cpaelzer> which didn't happen
+
+ 14:36 <cpaelzer> is that otherwise ready to move? checking excuses ...
+
+ 14:36 <slyon> cpaelzer: I did the extra-exclude for rust-docs... but the -doc package needs demotion, so far no AA did it for me, could you?
+
+ 14:36 <cpaelzer> I will slyon
+
+ 14:36 <slyon> thx
+
+ 14:36 <cpaelzer> also  main cannot depend on libstd-rust-1.76-dev in universe
+
+ 14:37 <cpaelzer> which also needs movement
+
+ 14:37 <cpaelzer> but is covered by the former MIRs
+
+ 14:37 <cpaelzer> ...
+
+ 14:37 <cpaelzer> more of the same
+
+ 14:37 <sarnold> i'm surprised that doesn't show up in this report
+
+ 14:37 <cpaelzer> there are also autopkgtest issues, so it won't move even if I fix where they live
+
+ 14:38 <cpaelzer> next is freeradius
+
+ 14:38 <cpaelzer> I'll carry this to the server team
+
+ 14:39 <cpaelzer> libusbmuxd -> libimobildedevuce-glue
+
+ 14:39 <cpaelzer> that is desktop
+
+ 14:39 <cpaelzer> jbicha: didrocks ^^ could you make someone have a look please to file a bug or resolve the reason it is pulled in?
+
+ 14:39 <cpaelzer> next is websockify by openstack
+
+ 14:39 <cpaelzer> jamespage: ^^ is that expected?
+
+ 14:40 <cpaelzer> python-redis sounds intense for something that just websockifies
+
+ 14:40 <didrocks> cpaelzer: ack
+
+ 14:40 <cpaelzer> python-jsonschema also is for openstack jamespage
+
+ 14:40 <cpaelzer> It seems one of you merged a bunch :-)
+
+ 14:41 <jamespage> yep aware
+
+ 14:41 <cpaelzer> thanks jamespage thanks didrocks
+
+ 14:42 <cpaelzer> just a sec
+
+ 14:43 <cpaelzer> all others are known too
+
+ 14:43 <cpaelzer> next agenda item
+
+ 14:43 <cpaelzer> #topic New MIRs
+
+ 14:43 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:43 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:43 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/highway/+bug/2070807
+
+ 14:43 <cpaelzer> it got its tests added a few hours before
+
+ 14:43 <cpaelzer> thereby ready for MIR review
+
+ 14:44 <cpaelzer> The package highway is required in Ubuntu main as a build and runtime dependency of jpeg-xl (LP: #2070882)
+
+ 14:44 <cpaelzer> the related jpeg-xl one is on joalif since two weeks
+
+ 14:45 <cpaelzer> looking for a volunteer to review
+
+ 14:45 <slyon> I can
+
+ 14:45 <cpaelzer> slyon: you or me - should I throw a coin?
+
+ 14:45 <slyon> throw the coin ;-)
+
+ 14:45 <cpaelzer> dice also said it is you 1-3 me 4-6 you - rolled a 6
+
+ 14:45 <didrocks999> if it doesn’t need to be this week, I can maybe handle it next one
+
+ 14:45 <cpaelzer> as managers I have all my old roleplaying dices here at the desk :-)
+
+ 14:45 <slyon> haha, that's fine
+
+ 14:46 <cpaelzer> we will soon enough have somethinf else for you didrocks999
+
+ 14:46 <cpaelzer> f->g
+
+ 14:46 <didrocks999> unsure if I’m relieved or scared :p
+
+ 14:46 <cpaelzer> thank you slyon
+
+ 14:46 <cpaelzer> remind me next time :-)
+
+ 14:47 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:47 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:47 <sarnold> didrocks999: https://paste.debian.net/1323440/
+
+ 14:47 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:47 <cpaelzer> one recent update
+
+ 14:47 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libdisplay-info/+bug/2071396
+
+ 14:48 <cpaelzer> ok
+
+ 14:48 <didrocks999> sarnold: thanks! I won’t have to wait for an hour to have irclogs updated :)
+
+ 14:48 <slyon> I'd still like to see an update to the most recent version
+
+ 14:48 <cpaelzer> the update only is referring to dependencies
+
+ 14:48 <sarnold> :)
+
+ 14:48 <cpaelzer> it is still incomplete
+
+ 14:48 <cpaelzer> I assume jbicha will come back to use once it is ready
+
+ 14:48 <cpaelzer> on him and incomplete - no action to be taken here
+
+ 14:48 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:48 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:48 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:48 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:48 <cpaelzer> nothing new
+
+ 14:49 <cpaelzer> this section is muhc quicker since we did our cleanup
+
+ 14:49 <cpaelzer> thanks!
+
+ 14:49 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:49 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:49 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:49 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:49 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:49 <cpaelzer> Internal link
+
+ 14:49 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:49 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:49 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:49 <cpaelzer> sarnold: you said progress is slow and time is scarce - any improvement?
+
+ 14:50 <sarnold> cpaelzer: a little, I had another conversation with management yesterday, who have promised some movement -- but nothing concrete yet, I think (I haven't checked scrollback yet this morning)
+
+ 14:50 <cpaelzer> I see the backlog growing relative to the things in progress
+
+ 14:50 <cpaelzer> we know two more currently in MIR review that likely will be added
+
+ 14:51 <cpaelzer> there is not much more to be said
+
+ 14:51 <cpaelzer> hoping for you to get people or time and if possible both sarnold
+
+ 14:51 <cpaelzer> #topic Any other business?
+
+ 14:51 <slyon> nothing for me
+
+ 14:51 <sarnold> none here
+
+ 14:51 <cpaelzer> you all please raise awareness in your respective teams of the coming feature freeze in less than a month
+
+ 14:51 <sarnold> *gasp*
+
+ 14:51 <cpaelzer> yes, time flies that fast
+
+ 14:52 <cpaelzer> nothing else from me today
+
+ 14:52 <cpaelzer> didrocks: jamespage: anything you need to raise?
+
+ 14:52 <cpaelzer> or joalif if you read this today?
+
+ 14:52 <didrocks> nothing either. I’ll have some forwarding to do :)
+
+ 14:52 <cpaelzer> ok
+
+ 14:52 <cpaelzer> I'll put my reminder for the AA movements
+
+ 14:52 <cpaelzer> that is all for today then
+
+ 14:52 <sarnold> I misread "do any of you need a raise?" :)
+
+ 14:52 <didrocks> heh
+
+ 14:53 <cpaelzer> sarnold: I can't help with that
+
+ 14:53 <cpaelzer> ok then
+
+ 14:54 <cpaelzer> https://oeis.org/A017666
+
+ 14:54 <cpaelzer> 7
+
+ 14:54 <cpaelzer> 1
+
+ 14:54 <cpaelzer> 5
+
+ 14:54 <cpaelzer> 4
+
+ 14:54 <cpaelzer> 3
+
+ 14:54 <cpaelzer> 2
+
+ 14:54 <cpaelzer> 1
+
+ 14:54 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

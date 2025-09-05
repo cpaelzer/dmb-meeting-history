@@ -1,0 +1,409 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 29 Nov at 15:30 &mdash; 15:52 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-11-29-15.30.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:30.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:30)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.jammy/rdepends/glm/libglm-dev   (cpaelzer, 15:35)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.lunar/all+extra   (cpaelzer, 15:36)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.jammy/rdepends/mir/libmirserver-dev   (cpaelzer, 15:37)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:41.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libcamera/+bug/1997560 and https://bugs.launchpad.net/ubuntu/+source/liblc3/+bug/1997578 are up for grab  (cpaelzer, 15:42)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:43)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:46.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:46)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:46)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:51.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (102)
+ * sarnold (23)
+ * didrocks (18)
+ * slyon (16)
+ * joalif (4)
+ * bittin- (4)
+ * bG9s (3)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:30 <meetingology> Meeting started at 15:30:21 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:30 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:30 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 15:30 <cpaelzer> hello party people
+
+ 15:30 <cpaelzer> I've seen several bug updates by most o fyou
+
+ 15:30 <cpaelzer> so I hope a lot of things have moved forward
+
+ 15:30 <cpaelzer> let us have a look
+
+ 15:30 <cpaelzer> #topic current component mismatches
+
+ 15:30 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:30 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:31 <slyon> o/
+
+ 15:31 <cpaelzer> slyon: added a false positive on the perl case
+
+ 15:31 <slyon> ack
+
+ 15:31 <cpaelzer> postgresql-15 needs to be promoted
+
+ 15:31 <joalif> o/
+
+ 15:31 <didrocks> o/
+
+ 15:32 <cpaelzer> slyon: I've seen you filed a bug for libnvme
+
+ 15:32 <cpaelzer> slyon: is there one coming for libhugetlbfs too?
+
+ 15:32 <cpaelzer> slyon: or will that dependency be cut
+
+ 15:32 <slyon> cpaelzer: I will probably just cut it. It's optional
+
+ 15:32 <slyon> and the other one is a code-split
+
+ 15:32 <cpaelzer> ok, leaving that to foundations then
+
+ 15:32 <slyon> I feel like we can just promote libnvme, can we?
+
+ 15:32 <cpaelzer> glm -> highlight.js
+
+ 15:32 <slyon> as the code as lived in nvme-cli before, which is in main
+
+ 15:32 <cpaelzer> IIRC didrocks wanted to talk/look after that - is that right - if so what is the outcome?
+
+ 15:33 <cpaelzer> slyon: as if you have that reasonably outlined in the case we used to give those cases a fast path
+
+ 15:33 <sarnold> slyon: when I saw some discussion of libnvme split I had a similar thought that we could probably add it without too much trouble; but giving the packaging a glance might still justify the checklist?
+
+ 15:33 <cpaelzer> slyon: is the case ready enough for that?
+
+ 15:33 <slyon> cpaelzer: right, I tried to collect some evidence about that in the corresponding bug report
+
+ 15:33 <slyon> should be
+
+ 15:34 <didrocks> on glm, I got in touche with the Mir team
+
+ 15:34 <didrocks> touch*
+
+ 15:34 <didrocks> so, basically, it seems the best course of action is to drop libglm-doc to universe
+
+ 15:34 <didrocks> I asked a finale ACK from the Mir team on Monday
+
+ 15:34 <cpaelzer> slyon: I'll give it (libnvme) a safety review and if ok promote it
+
+ 15:34 <didrocks> didn’t get any feedback yet before proceeding
+
+ 15:34 <slyon> cpaelzer: thx
+
+ 15:34 <sarnold> re glm -> highlight.js I have to ask if glm should be demoted, instead; I don't see why it's in main
+
+ 15:35 <cpaelzer> I'll also promote postgres-15 on the same term (just new version of the same)
+
+ 15:35 <cpaelzer> didrocks: sarnold: glm reason to be in main ... hmm, who sees it first
+
+ 15:35 <cpaelzer> https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.jammy/rdepends/glm/libglm-dev
+
+ 15:36 <didrocks> yes, so basically build deps from what I saw
+
+ 15:36 <sarnold> $ apt-rdepends -br libdlm-dev
+
+ 15:36 <sarnold> E: Reverse build-dependencies are not supported
+
+ 15:36 <cpaelzer> https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.lunar/all+extra
+
+ 15:36 <didrocks> this probably comes from a time where build-deps were required to be in Main
+
+ 15:36 <cpaelzer> libmirserver-dev
+
+ 15:36 <sarnold> hah you're all about 40 seconds ahead of me today :)
+
+ 15:37 <cpaelzer> https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.jammy/rdepends/mir/libmirserver-dev
+
+ 15:37 <cpaelzer> libmirserver-dev                                            | mir                                            | Rescued from mir
+
+ 15:37 <didrocks> and mirtest-dev is in main withut dep
+
+ 15:37 <cpaelzer> TL;DR it needs an extra exclude
+
+ 15:37 <didrocks> so I can propose them to demote libmirserver-dev
+
+ 15:37 <cpaelzer> yes
+
+ 15:38 <cpaelzer> with an extra exclude it should become a demotion
+
+ 15:38 <cpaelzer> as it isn't dependet, but only rescued
+
+ 15:38 <cpaelzer> once in place, demotion will resolve the current mismatch
+
+ 15:38 <didrocks> will track that
+
+ 15:38 <cpaelzer> awesome
+
+ 15:38 <sarnold> cool, thanks :)
+
+ 15:38 <cpaelzer> policykit -> duktape
+
+ 15:38 <cpaelzer> seems jbicha filed a stub MIR for this
+
+ 15:39 <cpaelzer> has that been looked into in depth yet?
+
+ 15:39 <sarnold> any bets if this will lead to "oh we don't need mirtest-dev anyway, drop it"? :)
+
+ 15:39 <cpaelzer> or can we ignore it until the stub becomes real?
+
+ 15:39 <cpaelzer> sarnold: I'm betting with, but not against that
+
+ 15:39 <didrocks> I propose that we wait for the proper MIR to be filed (or not)
+
+ 15:39 <cpaelzer> WFM
+
+ 15:39 <slyon> ack
+
+ 15:39 <didrocks> so that it’s analyzed properly
+
+ 15:39 <sarnold> there's some conversation on duktape on https://bugs.launchpad.net/ubuntu/+source/policykit-1/+bug/1972654
+
+ 15:40 * bittin- is here now (got a phonecall just before the meeting)
+
+ 15:40 <cpaelzer> interesting
+
+ 15:41 <cpaelzer> but I'd still wait for the owning team to fill all details (and even more important intention) into a the MIR bug
+
+ 15:41 <didrocks> agreed
+
+ 15:41 <cpaelzer> thats it on current mismatches ...
+
+ 15:41 <cpaelzer> next
+
+ 15:41 <sarnold> jbicha: fyi ^^  :)
+
+ 15:41 <cpaelzer> #topic New MIRs
+
+ 15:41 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:41 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:41 <cpaelzer> libnvme we assigned to me above
+
+ 15:41 <cpaelzer> marking it that way ...
+
+ 15:42 <cpaelzer> would others volunteer for the remaining two?
+
+ 15:42 <joalif> i can have one
+
+ 15:42 <slyon> me too
+
+ 15:42 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libcamera/+bug/1997560 and https://bugs.launchpad.net/ubuntu/+source/liblc3/+bug/1997578 are up for grab
+
+ 15:42 <didrocks> I just have 3 remaining work days before my EOY holidays. So, I can take one, but I don’t commit before EOY
+
+ 15:42 <slyon> i take libcamera
+
+ 15:42 <cpaelzer> ok
+
+ 15:42 <sarnold> didrocks: nice :)
+
+ 15:43 <bittin-> liblc3 for joalif or didrocks then? :p
+
+ 15:43 <cpaelzer> both assigned
+
+ 15:43 <joalif> i'll take the other
+
+ 15:43 <didrocks> \o/ thanks joalif
+
+ 15:43 <cpaelzer> didrocks: enjoy the free time
+
+ 15:43 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:43 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:43 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:43 <didrocks> "free" as an entire month to get into 3 days is "fun" :p
+
+ 15:43 <cpaelzer> hehe
+
+ 15:44 <cpaelzer> didrocks: will deliver the mythical man month
+
+ 15:44 <sarnold> :(
+
+ 15:44 <didrocks> ofc, so easy :p
+
+ 15:44 <cpaelzer> a bunch of PCS related updates
+
+ 15:44 <cpaelzer> we subscribed to all packages
+
+ 15:44 <cpaelzer> and we have resolved all open issues
+
+ 15:44 <sarnold> nice
+
+ 15:45 <cpaelzer> so we "only" wait for security review on a bunch of them now
+
+ 15:45 <cpaelzer> looking to sarnold for an ETA statement in the latter section
+
+ 15:45 <cpaelzer> kanashiro[m]: and I will double check if all former required todo's are resolved - but it looked good so far
+
+ 15:45 <cpaelzer> all other updates are older than a week
+
+ 15:46 <cpaelzer> going on to the security status ...
+
+ 15:46 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:46 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:46 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:46 <cpaelzer> Internal link
+
+ 15:46 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:46 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:46 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:46 <cpaelzer> sarnold: I've bumped the priority onth e PCS cases up - as others might need time after promotion
+
+ 15:47 <sarnold> unfortunately I'm still just a blur on where we're at -- I don't believe anything was done while I was out, and since we've all got end of year vacation to use, light availability
+
+ 15:47 <cpaelzer> the question for this and other things in the queue is - will this work out
+
+ 15:47 <cpaelzer> or do you need me to escalate things again?
+
+ 15:48 <sarnold> cpaelzer: thanks for bumping the priorities as needed; I don't think we need to panic yet, we'll be back to full in january, assuming we can remember our passwords :)
+
+ 15:48 <cpaelzer> sarnold: the jira list seems incomplete
+
+ 15:48 <cpaelzer> sarnold: for example https://bugs.launchpad.net/ubuntu/+source/mosh/+bug/1997106 is missing
+
+ 15:48 <slyon> I just finished this earlier today.
+
+ 15:48 <slyon> not sure if the jira list is automatic?
+
+ 15:48 <cpaelzer> oh so it might be in his inbox
+
+ 15:48 <sarnold> it is not :(
+
+ 15:49 <cpaelzer> but TL;DR just let us be clear there are 17 review waiting
+
+ 15:49 <cpaelzer> and feature freeze is mid february
+
+ 15:49 <cpaelzer> assuming EOY will not work out
+
+ 15:49 <cpaelzer> that means 6 weeks 17 cases
+
+ 15:49 <cpaelzer> that is 3 per week
+
+ 15:49 <cpaelzer> just to put expectations on load in the right perspective
+
+ 15:49 <sarnold> zounds
+
+ 15:50 <cpaelzer> which is why I brought it up
+
+ 15:50 <cpaelzer> I'm happy to rely on you sarnold, but you should not need to rely on yourself alone
+
+ 15:50 <cpaelzer> sarnold: so please reach out to have a few review buddies once 2023 starts
+
+ 15:50 <cpaelzer> ok?
+
+ 15:50 <sarnold> cpaelzer: thanks :)
+
+ 15:50 <sarnold> february feels *so* close..
+
+ 15:50 <cpaelzer> yep
+
+ 15:51 <bG9s> in particular that's when the snow might hit more
+
+ 15:51 <cpaelzer> hence I provide pressure now to feel less like a late surprise
+
+ 15:51 <bG9s> exciting
+
+ 15:51 <cpaelzer> hehe
+
+ 15:51 <cpaelzer> ok, going on
+
+ 15:51 <sarnold> brr :)
+
+ 15:51 <cpaelzer> #topic Any other business?
+
+ 15:51 <cpaelzer> nothing special from me
+
+ 15:51 <bittin-> February is when first real life FOSDEM is in years :)
+
+ 15:51 <bittin-> nothing from me
+
+ 15:51 <slyon> noting
+
+ 15:51 <joalif> nothing
+
+ 15:51 <bG9s> ehm, nothing
+
+ 15:52 <sarnold> just a heads up that I've only got ~two weeks or somethingt before eoy holidays, hehe
+
+ 15:52 <sarnold> that's it from me
+
+ 15:52 <cpaelzer> sarnold: ok enough for 6 reviews at the expected rate then
+
+ 15:52 <cpaelzer> \o/
+
+ 15:52 <sarnold> :D
+
+ 15:52 <cpaelzer> closing it fast calling that a committment
+
+ 15:52 <cpaelzer> ok then, I call it done for today
+
+ 15:52 <cpaelzer> thank you all
+
+ 15:52 <sarnold> thanks cpaelzer, all :)
+
+ 15:52 <slyon> thanks cpaelzer, all!
+
+ 15:52 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

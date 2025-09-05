@@ -1,0 +1,471 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 16:02:07 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-11-21-16.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' http://paste.ubuntu.com/1374772/   (xnox, 16:09:58)
+
+ *bugs
+
+
+
+Meeting ended at 16:32:14 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (37)
+ * ogra_ (30)
+ * stgraber (28)
+ * ev (28)
+ * xnox (25)
+ * ubottu (18)
+ * doko (13)
+ * jodh (12)
+ * stokachu (12)
+ * meetingology (3)
+ * barry (2)
+
+
+
+== Full Log ==
+
+
+ 16:02:07 <cjwatson> #startmeeting
+
+ 16:02:07 <meetingology> Meeting started Wed Nov 21 16:02:07 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02:07 <meetingology> 
+
+ 16:02:07 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:02:14 <cjwatson> #topic lightning round
+
+ 16:02:17 <cjwatson> $ echo $(shuf -e barry cjwatson ev doko ogra_ jodh stgraber xnox stokachu)
+
+ 16:02:20 <cjwatson> stgraber ev barry stokachu jodh cjwatson xnox ogra_ doko
+
+ 16:03:08 <stgraber> - Upstart
+
+ 16:03:08 <stgraber> - Spent some time talking with James and Dmitrijs talking about the plan for the Session Init work
+
+ 16:03:11 <stgraber> - Implemented a basic upstart-dconf-bridge at: lp:~stgraber/upstart/upstart-dconf-bridge
+
+ 16:03:14 <stgraber> - Container
+
+ 16:03:16 <stgraber> - Reviewed a bunch of merge proposals and patches on the upstream mailing-list.
+
+ 16:03:20 <stgraber> - Had a look at the early implementation of the syslog namespace by Serge.
+
+ 16:03:22 <stgraber> - Wrote a script to run Steam under LXC: http://www.stgraber.org/2012/11/16/running-steam-in-a-lxc-container/
+
+ 16:03:25 <stgraber> - QA Tracker
+
+ 16:03:28 <stgraber> - Did a bunch of optimization work on how the tracker loads its various plugins.
+
+ 16:03:31 <stgraber> - Redesigned landing page (milestones list) to be filtered by javascript and show milestones grouped by series.
+
+ 16:03:34 <stgraber> - Added a new testsuites list per balloons' request
+
+ 16:03:36 <stgraber> - Fixed a bunch more php errors, now replaced by nice 404s :)
+
+ 16:03:39 <stgraber> - Other
+
+ 16:03:42 <stgraber> - Helped the security team by extracting all my SecureBoot keys out of my system (ended up being much more tricky than expected).
+
+ 16:03:44 <stgraber> - sssd was broken by a new ldb upload, breaking authentication on most of my systems.
+
+ 16:03:47 <stgraber> - The new linux-libc-dev broke libnl breaking the sssd rebuild I had to do.
+
+ 16:03:50 <stgraber> - Had to patch libnl to cope with some defines rename in the 3.7 kernel, then managed to rebuild sssd and login on my systems again.
+
+ 16:03:54 <stgraber> - Uploaded the new sudo upstream release including sssd support.
+
+ 16:03:56 <stgraber> - Installer
+
+ 16:03:59 <stgraber> - Fixed casper which was trying to boot an ltsp chroot instead of a the livefs on Edubuntu.
+
+ 16:04:02 <stgraber> - Investigated bug 1079266 and bug 1077598. Was suspecting a Wubi 10.04 to Wubi 12.04 upgrade issue but that's not the case.
+
+ 16:04:05 <stgraber> Tried to reproduce with identical package list, still without any luck. Will have to ask for more information...
+
+ 16:04:06 <ubottu> Launchpad bug 1077598 in casper (Ubuntu) "duplicate for #1079266 package plymouth 0.8.2-2ubuntu30 failed to install/upgrade: dependency problems - leaving unconfigured" [Undecided,Confirmed] https://launchpad.net/bugs/1077598
+
+ 16:04:07 <ubottu> Launchpad bug 1077598 in casper (Ubuntu) "package plymouth 0.8.2-2ubuntu30 failed to install/upgrade: dependency problems - leaving unconfigured" [Undecided,Confirmed] https://launchpad.net/bugs/1077598
+
+ 16:04:07 <stgraber> - Release
+
+ 16:04:10 <stgraber> - Filed RT ticket to get scripting access to https://help.ubuntu.com/community/UbuntuHashes from nusakan.
+
+ 16:04:13 <stgraber> - TODO
+
+ 16:04:16 <stgraber> - Look at jodh's upstart specs.
+
+ 16:04:18 <stgraber> (DONE)
+
+ 16:04:27 <ev> - Short week. I took holiday on Monday to move into my new house. \o/
+
+ 16:04:28 <ev> - Removed the dependency on archive.admin.canonical.com so hazmat can
+
+ 16:04:28 <ev> debug the juju issue in the daisy and rabbitmq charms.
+
+ 16:04:28 <ev> - Attended an Acunu webinar on Hailo's use of Cassandra, specifically
+
+ 16:04:28 <ev> Analytics. Lots of really good points on how to best decide when to NIH a
+
+ 16:04:28 <ev> tool or pick up a product.
+
+ 16:04:34 <ev> - Uploaded fixed activity-log-manager to quantal and precise (LP: #993056).
+
+ 16:04:35 <ev> - Fixed up my branch to add openid authentication to
+
+ 16:04:35 <ev> http://errors.ubuntu.com/oops-local and submitted it to webops.
+
+ 16:04:35 <ev> - Finally finished verifying the USB disk for the shop.
+
+ 16:04:35 <ev> - Picked back up my compiz branch for spawning apport when applications hang.
+
+ 16:04:39 <ubottu> Launchpad bug 993056 in activity-log-manager (Ubuntu Quantal) ""Privacy" > "Diagnostics" > "Send error reports" can't be turned on or off" [High,Fix committed] https://launchpad.net/bugs/993056
+
+ 16:04:41 <ev> - Started looking at package installation failures as an error type again.
+
+ 16:04:41 <ev> We're collecting these right now (5883 total reports on 09/11/12), and we are
+
+ 16:04:41 <ev> in fact bucketing them: http://tinyurl.com/blsqa3a
+
+ 16:04:41 <ev> - Mail to Steve and Matthew on conffile prompts as errors.
+
+ 16:04:49 <ev> - Fix to apport for fsync'ing upstart reports, per our email discussion:
+
+ 16:04:50 <ev> https://code.launchpad.net/~ev/apport/fsync-upstart-crashes/+merge/135134
+
+ 16:04:50 <ev> - UDS survey.
+
+ 16:04:50 <ev> - Teaching daisy retracer code to use a squid cache, rather than locally
+
+ 16:04:50 <ev> caching the debs. The previous behavior was a significant part of the
+
+ 16:04:55 <ev> retracer disk space growth. With this change, the webops team should be
+
+ 16:04:55 <ev> getting fewer weekend pages to clear the caches.
+
+ 16:04:55 <ev> - Attempting to fix having separate application thread crash dialogs:
+
+ 16:04:55 <ev> https://bugs.launchpad.net/ubuntu/+source/apport/+bug/1033902
+
+ 16:04:55 <ev> The simple approach is to see if the pid is still around by the time
+
+ 16:04:55 <ev> apport-gtk gets the error report, but I want to make sure that's not racey.
+
+ 16:04:58 <ev> (done)
+
+ 16:05:00 <ubottu> Launchpad bug 1033902 in apport (Ubuntu) "Application thread crash shows application crash error alert" [Undecided,Confirmed]
+
+ 16:05:09 <barry> tox packaging for debian (in the new queue now, will be synced to ubuntu when that lands). worked on virtualenv 1.8.2, but that isn't compatible with python 3.3, so worked with upstream to get a 1.8.3 which is Python 3.3 compatible (might even land today).  distribute 0.6.30, for Python 3.3 compatibility.  python-oauthlib 0.3.4.  python bug 16514 (sys.path import regression in Python 3.3).  more investigation on bug #1061149.  merge
+
+ 16:05:09 <barry> proposal for bug #1077083 (piston-mini-client -> oauthlib).  preliminary review of pykde4 plugin system for porting to py3.  dmb meeting.  upgraded main dev box to raring.  off this thu and fri for usa thanksgiving holiday.  done.
+
+ 16:05:13 <ubottu> Launchpad bug 16514 in hfsutils (Ubuntu) "hfsutils: new changes from Debian require merging" [Medium,Fix released] https://launchpad.net/bugs/16514
+
+ 16:05:14 <ubottu> Launchpad bug 1061149 in linux (Ubuntu) "boot occasionally hangs while "Checking battery state..."" [Medium,Confirmed] https://launchpad.net/bugs/1061149
+
+ 16:05:15 <ubottu> Launchpad bug 1077083 in piston-mini-client "Switch from python-oauth to python-oauthlib" [High,In progress] https://launchpad.net/bugs/1077083
+
+ 16:05:32 <stokachu> bug 932860 needs sru review
+
+ 16:05:33 <stokachu> bug 1077095 needs sru review
+
+ 16:05:33 <stokachu> bug 967091 needs sru review
+
+ 16:05:33 <stokachu> (done)
+
+ 16:05:35 <ubottu> Launchpad bug 932860 in appmenu-gtk (Ubuntu Quantal) "Broken (or missing) multiarch support" [High,In progress] https://launchpad.net/bugs/932860
+
+ 16:05:37 <ubottu> Launchpad bug 1077095 in appmenu-gtk (Ubuntu Quantal) "Please blacklist "IBM Notes"" [Low,In progress] https://launchpad.net/bugs/1077095
+
+ 16:05:38 <ubottu> Launchpad bug 967091 in libvdpau (Ubuntu Precise) "Wrong tint in flash when it uses video acceleration" [Undecided,Confirmed] https://launchpad.net/bugs/967091
+
+ 16:06:43 <jodh> * upstart:
+
+ 16:06:43 <jodh> - fixed bug 1079710.
+
+ 16:06:43 <jodh> - fixed bug 1079715 and raised MP.
+
+ 16:06:43 <jodh> - completed work on SRU bug 980917 and uploaded to precise-proposed.
+
+ 16:06:46 <jodh> - spec wrangling with stgraber + xnox (and a loooong meeting ;-):
+
+ 16:06:47 <ubottu> Launchpad bug 1079710 in upstart "Chroot jobs which produce output get logged to /var/log/upstart *outside* the chroot" [Medium,Fix committed] https://launchpad.net/bugs/1079710
+
+ 16:06:48 <ubottu> Launchpad bug 1079715 in upstart "'telinit u' run from within a chroot causes a crash" [High,New] https://launchpad.net/bugs/1079715
+
+ 16:06:50 <ubottu> Launchpad bug 980917 in upstart (Ubuntu Precise) "Failed to create pty - disabling logging for job [SRU]" [Medium,Fix committed] https://launchpad.net/bugs/980917
+
+ 16:06:54 <cjwatson> stgraber: SB keys> Have you been able to use this to get anywhere with debugging shim?
+
+ 16:06:59 <jodh> https://wiki.ubuntu.com/FoundationsTeam/Specs/RaringUpstartUserSessions
+
+ 16:06:59 <jodh> * TODO:
+
+ 16:06:59 <jodh> - rework branch and discuss dbus_connection_open_from_fd() with D-Bus upstream.
+
+ 16:06:59 <jodh> - resolve Upstart namespacing design (as currently being discussed on
+
+ 16:07:06 <jodh> the mailing lists).
+
+ 16:07:06 <jodh> - start work on implementing spec above with stgraber + xnox.
+
+ 16:07:08 <jodh> ⍾
+
+ 16:07:17 <stokachu> lol mario bros?
+
+ 16:08:17 <cjwatson> ev: congrats on the new house
+
+ 16:08:33 <cjwatson> Still working on Secure Boot backports to 12.04.2.  debian-installer mostly done (in ppa:cjwatson/ppa), but GRUB is reporting spurious out-of-memory errors, so I've had to sidetrack into investigating that.
+
+ 16:08:38 <cjwatson> Worked on cross-autobuilder.
+
+ 16:08:40 <cjwatson> * Mainly involved teaching myself lots about juju.
+
+ 16:08:42 <cjwatson> * This now works and, with four sbuild units attached, can build - or fail to build - quantal+raring main for armhf in around a day.
+
+ 16:08:43 <stgraber> cjwatson: not yet, but now that I have a working efivars filesystem, I should be able to add entries to the db while in setup mode, which should let me do local builds of the shim and use that for testing. Will add that to my todo, can hopefully spend some time on it this week
+
+ 16:08:45 <cjwatson> * About 27% of quantal main cross-builds; raring has regressed slightly, at 26.7%.
+
+ 16:08:49 <cjwatson> * Next step is to arrange to publish the results.
+
+ 16:08:51 <cjwatson> Patch pilot half-day on Friday.
+
+ 16:08:54 <cjwatson> Detailed discussion with Martin and Jean-Baptiste of plans for proposed-migration/autopkgtest integration.
+
+ 16:08:57 <cjwatson> Fixed various build failures: debian-installer, mpdris2, prelude-manager.
+
+ 16:08:59 <cjwatson> Fixed most of python-apt's autopkgtest failures.  Martin fixed the last bits.
+
+ 16:09:03 <cjwatson> Fixed a mismerge of a cross-build-dependency handling patch in apt.
+
+ 16:09:05 <cjwatson> Marked gnome-desktop3-data Multi-Arch: foreign, spotted in cross-autobuilder results.
+
+ 16:09:08 <cjwatson> Rearranged cdimage to make it safe to build for multiple series in parallel (rather belatedly).  Spent some of today tracking down a consequential failure.
+
+ 16:09:11 <cjwatson> ..
+
+ 16:09:57 <xnox> * investigating bug 988055
+
+ 16:09:57 <xnox> reproduced on lucid and got valgrind output with debug symbols
+
+ 16:09:58 <xnox> http://paste.ubuntu.com/1374772/
+
+ 16:09:58 <xnox> Reading that I am a bit lost between rpcsecgss, libgluegss & krb5.
+
+ 16:09:58 <xnox> Each layer seems to allocate memory on initial connection and I am
+
+ 16:09:58 <xnox> failing to trace where it is not freed.
+
+ 16:09:59 <ubottu> Launchpad bug 988055 in nfs-utils (Ubuntu Lucid) "rpc.gssd memory leak" [High,Triaged] https://launchpad.net/bugs/988055
+
+ 16:10:00 <xnox> * Devices FS: flashbench is now in raring & profiled my sd-cards/memory sticks.
+
+ 16:10:03 <xnox> got back f2fs i386/amd64 from ogasawara, the arm builds failed.
+
+ 16:10:04 <xnox> TODO benchmark aligned f2fs on i386/amd64 & investigate arm FTBFS
+
+ 16:10:08 <xnox> * ongoing upstart user sessions discussions
+
+ 16:10:10 <xnox> * finished clucene transition (3 packages) britney output should be
+
+ 16:10:12 <xnox> smaller now
+
+ 16:10:14 <xnox> * bug 837064 / rt 55554 is in progress of being deployed. A deployment
+
+ 16:10:15 <ubottu> Error: Launchpad bug 837064 could not be found
+
+ 16:10:17 <xnox> was attempted on the lucid-based host, which failed because my patch
+
+ 16:10:18 <xnox> was targeting quantal's psycopg2. Now fixed & pending redeployment.
+
+ 16:10:20 <stokachu> xnox: join the clue on that rpc mess
+
+ 16:10:21 <xnox> * mdadm merge is in progress.
+
+ 16:10:22 <xnox> * plymouth needs a rebuild against (now in raring)
+
+ 16:10:24 <xnox> libdrm_nouveau2. But it FTBFS bug 1081613.
+
+ 16:10:25 <ubottu> Launchpad bug 1081613 in plymouth (Ubuntu Raring) "FTBFS in raring-proposed (libdrm_nouveau 2)" [Medium,Confirmed] https://launchpad.net/bugs/1081613
+
+ 16:10:26 <xnox> ..
+
+ 16:10:45 <stokachu> club*
+
+ 16:10:54 <xnox> stokachu: i have a rabit hole diagram in my notepad. I am suspecting it will be rpcsecgss in the end.
+
+ 16:11:37 <ogra_> done:
+
+ 16:11:37 <ogra_> * nexus7 images are available under http://cdimage.ubuntu.com/daily-preinstalled/current/ (still a bit buggy but soon to be fully usable)
+
+ 16:11:37 <ogra_> * various ac100-tarball-installer fixes (need to drop the arch name soon and make it more generic)
+
+ 16:11:37 <ogra_> * started working on an ubuntu-default-settings-nexus7 package
+
+ 16:11:37 <ogra_> * more plymouth debugging
+
+ 16:11:39 <ogra_> todo:
+
+ 16:11:40 <stokachu> xnox: if i get some free time ill keep looking into it as well
+
+ 16:11:41 <ogra_> * set up a regular meeting for discussing the remaining WIs of https://blueprints.launchpad.net/ubuntu/+spec/desktop-r-reduced-power-ram
+
+ 16:11:46 <ogra_> * flash-kernel fixes
+
+ 16:11:48 <ogra_> ..
+
+ 16:13:04 <ev> cjwatson: thanks!
+
+ 16:13:41 <doko> - mostly a GCC week
+
+ 16:13:41 <doko> - getting the target specific bits into upstream, only outstanding are alpha, ia
+
+ 16:13:41 <doko> 64, m68k
+
+ 16:13:41 <doko> - packaged gcc-4.8, updated all local patches, new runtime libraries libatomic a
+
+ 16:13:41 <doko> nd libasan
+
+ 16:13:41 <stokachu> cjwatson: i really need to get the appmenu-gtk m-a sru'd as soon as possible if anyone could help me out
+
+ 16:13:43 <doko> - found out the 4.8 build is broken when making -Wformat-security the default
+
+ 16:13:45 <doko> - found out the 4.8 build is broken with -fstack-protector on armhf and powerpc
+
+ 16:13:47 <doko> (PR53475)
+
+ 16:13:49 <doko> - prepared backports of the multiarch patches for upstream inclusion
+
+ 16:13:51 <doko> - llvm-3.2 in raring, fixed clang ftbfs
+
+ 16:13:53 <doko> - binutils update
+
+ 16:13:53 <stokachu> the other 2 are not so important
+
+ 16:13:55 <doko> (done)
+
+ 16:14:03 <cjwatson> stokachu: fair enough, I'll take another look
+
+ 16:14:12 <stokachu> thanks :D
+
+ 16:14:42 <doko> s/bits/multiarch bits/
+
+ 16:14:49 <cjwatson> will have to refresh my memory of the previous go-around
+
+ 16:15:05 <cjwatson> #topic bugs
+
+ 16:15:18 <cjwatson> Brian's not here, but anything else people want to particularly raise?  Otherwise we can finish early :-)
+
+ 16:15:20 <stokachu> cjwatson: i basically used your suggestion but did it in a way that conf files were not conflicting during parallel installs
+
+ 16:17:35 <cjwatson> ok, I'll take a look
+
+ 16:17:41 * ogra_ has bug 1080747
+
+ 16:17:42 <ubottu> Launchpad bug 1080747 in livecd-rootfs (Ubuntu) "Set a build stamp for pre-installed images" [Medium,New] https://launchpad.net/bugs/1080747
+
+ 16:18:09 <ogra_> i'm not really sure what to do with it, the livefs builder doesnt know anything about the build name when rolling the rootfs
+
+ 16:18:50 <cjwatson> You'll need a .disk directory somewhere or similar
+
+ 16:18:52 <ogra_> i could just randomly dump a unix timestamp into some file i guess but that seems ugly
+
+ 16:18:56 <cjwatson> It doesn't and can't belong in the livefs
+
+ 16:19:07 <ogra_> well, i have nothing processing that
+
+ 16:19:25 <ogra_> its either rootfs or initrd i can put stuff in
+
+ 16:19:38 <ogra_> and by design they come finished out of live-build
+
+ 16:19:44 <cjwatson> well in that case I guess the livefs builder may have to invent its own build ids ...
+
+ 16:19:50 <ogra_> thats my prob with this bug :)
+
+ 16:20:06 <ogra_> so unix timestamp into some fiel then, ok
+
+ 16:20:09 <ogra_> *file
+
+ 16:20:11 <ogra_> thx
+
+ 16:20:22 <cjwatson> unix timestamp is a bit unfriendly.  I'd use YYYYMMDD HH:MM:SS or some such
+
+ 16:20:27 <ogra_> k
+
+ 16:20:37 <cjwatson> that way it at least stands a chance of corresponding approximately to something on cdimage
+
+ 16:20:47 <ogra_> heh, yeah
+
+ 16:21:07 <cjwatson> try to make it look as much like other media-info files as you can, if possible
+
+ 16:21:24 <ogra_> tehoretically cdimage should know what it will become in the end, no ?
+
+ 16:21:43 <ogra_> we coudl look it up in advance and hand it to the live builder as BuildLiveCD arg
+
+ 16:21:57 <ogra_> (not for now, but as a general fix)
+
+ 16:22:46 <xnox> ... as long as ubuntu-bug ubiquity works and hands over a sensible id that we can identify all is fine.
+
+ 16:23:09 <ogra_> i'll use the std apport path /var/log/installer/media-info
+
+ 16:23:11 <cjwatson> not with the way buildlive is currently (mis)designed
+
+ 16:23:17 <ogra_> so apport will even pick it up
+
+ 16:23:25 <cjwatson> it runs before cdimage has picked a build id
+
+ 16:23:44 <ogra_> cjwatson, well, good for the next redesign then :)  i didnt mean we need it now, a hack will do for me
+
+ 16:27:03 <cjwatson> anything else?
+
+ 16:27:15 <ogra_> not here
+
+ 16:27:36 <xnox> bug 1081613 that I mentioned, but it's not urgent.
+
+ 16:27:37 <ubottu> Launchpad bug 1081613 in plymouth (Ubuntu Raring) "FTBFS in raring-proposed (libdrm_nouveau 2)" [Medium,Confirmed] https://launchpad.net/bugs/1081613
+
+ 16:27:50 <cjwatson> yeah, I was hoping to constructively ignore that until Steve is back ;-)
+
+ 16:27:54 <xnox> simply britney prints 8000 package uninstallable because of libdrm
+
+ 16:28:12 <ogra_> we need to update plymouth to 0.8.5 anyway
+
+ 16:28:28 <xnox> so if anyone wants short britney output.... feel free to update plymouth =)
+
+ 16:28:40 <ogra_> slangasek said it wouldnt be an easy merge though, seems we package our own upstream
+
+ 16:29:07 <xnox> there was a proposal with 0.8.6.1 but it's not a clean debdiff.
+
+ 16:32:13 <cjwatson> OK, sounds like that's everything for now, thanks all
+
+ 16:32:14 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,321 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 23 Nov at 16:00 &mdash; 16:52 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-11-23-16.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:01.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-23-november-2023/40502   (juliank, 16:01)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:10.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:10)
+ * ''LINK:'' https://reports.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:28)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:35.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:35)
+
+=== AOB ===
+
+Discussion started by juliank at 16:48.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (86)
+ * bdrung (10)
+ * slyon (8)
+ * adrien (8)
+ * waveform (3)
+ * mkukri (3)
+ * meetingology (2)
+ * mateus-morais (2)
+ * upils (2)
+ * ogayot (1)
+ * Skia (1)
+ * ravikant_ (1)
+ * danilogondolfo (1)
+ * pushkarnk (1)
+ * zhsj (1)
+
+
+
+== Full log ==
+
+
+ 16:00 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:00 <meetingology> Meeting started at 16:00:44 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:00 <ogayot> o/
+
+ 16:01 <juliank> #topic Lightning rounds
+
+ 16:01 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-23-november-2023/40502
+
+ 16:01 <bdrung> \o
+
+ 16:02 <mateus-morais> o/
+
+ 16:02 <Skia> o/
+
+ 16:02 <upils> o/
+
+ 16:02 <ravikant_> o/
+
+ 16:04 <slyon> waveform: I just sponsored your xfsprogs sync
+
+ 16:04 <waveform> thanks!
+
+ 16:04 <bdrung> adrien, did you document the armhf issues caused by -fstack-clash-protection in a launchpad bug?
+
+ 16:06 * juliank saw it documented in Debian :D
+
+ 16:06 <bdrung> If not, please open a launchpad bug and link the Debian bugs to it
+
+ 16:07 <mkukri> i believe he did: https://code.launchpad.net/~adrien-n/ubuntu/+source/dpkg/+git/dpkg/+merge/456181
+
+ 16:07 <mkukri> and steve uploaded dpkg with the change now
+
+ 16:09 <juliank> I guess final answer will have to be done out-of-meeting
+
+ 16:09 <adrien> bdrung: no
+
+ 16:10 <juliank> #topic Release incoming bugs
+
+ 16:10 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 16:10 <juliank> bug 2037004 I'm inclined is actually an ubuntu-drivers-common issue
+
+ 16:10 <adrien> I didn't have that much time to do but also, I wasn't exactly sure how to write it down in an LP bug (well, I can describe it but it seemed highly unnatural)
+
+ 16:10 <bdrung> adrien, next time you could open a dummy bug report that you reference in d/changelog. The bug description can be extended even after the upload.
+
+ 16:11 <adrien> that's a very compelling point
+
+ 16:11 <juliank> Reassigned the bug to ubuntu-drivers-common
+
+ 16:11 <juliank> Now it's desktop's issue :D
+
+ 16:11 <juliank> bug 1616262
+
+ 16:12 <bdrung> adrien, it will be easier for someone in the future to get to the launchpad bug from the changelog entry to get the reasoning for this change.
+
+ 16:12 <juliank> Well this is invalid
+
+ 16:13 <juliank> bdrung: This should be Won't Fix; /boot is required to have space for 3 kernels
+
+ 16:13 <bdrung> we could implement https://bugs.launchpad.net/ubuntu/+source/initramfs-tools/+bug/1616262/comments/6
+
+ 16:13 <juliank> Or at the very least not incoming
+
+ 16:13 <juliank> This is not a system configuration we are looking to support
+
+ 16:13 <juliank> The workaround proposed is non-atomic meaning you can end up without a kernel
+
+ 16:14 <waveform> precisely
+
+ 16:15 <juliank> I'll wontfix with comment
+
+ 16:15 <juliank> bug 1969394
+
+ 16:16 <juliank> I think this is a desktop thing since it involes design stuff
+
+ 16:17 <juliank> bug 2026310 is an annoying thing for mkukri to figure out
+
+ 16:19 <juliank> So I tagged this foundations-todo
+
+ 16:19 <juliank> bug 2041491
+
+ 16:20 <slyon> This is a controversal issue. We should probably first find consensus within the Netplan sync.
+
+ 16:20 * slyon removing the tag
+
+ 16:20 <juliank> thanks slyon
+
+ 16:20 <juliank> bug 2042100
+
+ 16:20 <slyon> This one is already assigned (during proposed-migration). I've removed the tag, too
+
+ 16:21 <juliank> thanks again
+
+ 16:21 <juliank> 2042790
+
+ 16:21 <juliank> bug 2042790
+
+ 16:22 <juliank> I think we will look at this later again there are things inflight
+
+ 16:23 <juliank> bug 2043713
+
+ 16:23 <juliank> bdrung: ^
+
+ 16:24 <adrien> that actually looks like our -fstack-clash-protection issue
+
+ 16:24 <juliank> possibly
+
+ 16:24 <juliank> adrien: Can you leave something on the bug to that effect?
+
+ 16:24 <bdrung> then let's check if is will be fixed by disabling -fstack-clash-protection
+
+ 16:24 <adrien> sudden and unexplained tons of "Invalid size of write 4"
+
+ 16:24 <adrien> juliank: sure
+
+ 16:25 <mkukri> it definitely is the same thing
+
+ 16:25 <juliank> thanks
+
+ 16:25 <juliank> bug 2015538
+
+ 16:25 <juliank> Nothing new there I suppose
+
+ 16:25 <slyon> nothing new.
+
+ 16:25 <slyon> The system squad could re-consider comment #3
+
+ 16:25 <slyon> and maybe cycle it back to the desktop team
+
+ 16:25 <juliank> bug 2017401
+
+ 16:26 <juliank> I think we'll get back to this later because I don't know what we decided
+
+ 16:27 <juliank> We had meetings about it, but we didn't record the conclusion in the bug .(
+
+ 16:27 <juliank> bug 2036604
+
+ 16:27 <juliank> I'll tag this todo
+
+ 16:28 <juliank> #link https://reports.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 16:28 <juliank> bug 2041518
+
+ 16:29 <bdrung> this is for the desktop team for gtk+-3.0
+
+ 16:29 <juliank> bug 2041831
+
+ 16:31 <juliank> I don't see anytzhing actionaable right now
+
+ 16:32 <juliank> bug 2041833
+
+ 16:33 <juliank> I assigned this to enr0n for further investigation
+
+ 16:33 <juliank> bug 2041834
+
+ 16:33 <juliank> I guess I'll also assign this to Nick for further investigation
+
+ 16:34 <juliank> The stack trace doesn't look unreasonable
+
+ 16:34 <juliank> OK
+
+ 16:34 <juliank> so ll is empty
+
+ 16:35 <juliank> jj is empty
+
+ 16:35 <juliank> and ff is empty
+
+ 16:35 <juliank> That's it for bugs
+
+ 16:35 <juliank> #topic Team proposed-migration report
+
+ 16:35 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:36 <bdrung> i'll take distro-info
+
+ 16:37 <waveform> I've still got libauthen-sasl-perl
+
+ 16:37 <juliank> libauthen-sasl-perl is with waveform
+
+ 16:37 <juliank> libio-prompter-perl  is with danilogondolfo
+
+ 16:37 <danilogondolfo> libio-prompter-perl is with me, I still need to investigate it. It's actually an mir
+
+ 16:37 <juliank> libuv1 is with ginggs
+
+ 16:37 <juliank> man-db is with dbungert
+
+ 16:38 <juliank> nvme-stas is with ogayot
+
+ 16:38 <juliank> distro-info: bdrung
+
+ 16:38 <juliank> lazy-object-proxy slyon?
+
+ 16:39 <slyon> ok
+
+ 16:39 <juliank> numpy mkukri?
+
+ 16:39 <juliank> python-apt is done actually
+
+ 16:40 <adrien> no migration for me please, my plate is full and I've been kept busy by a bunch of them this week :)
+
+ 16:40 <juliank> python-launchpadlib mateus-morais
+
+ 16:40 <juliank> adrien: you are still assigned to liblog-any-perl in jira though
+
+ 16:40 <juliank> maybe it got resolved, idk
+
+ 16:40 <mateus-morais> juliank: ack
+
+ 16:41 <juliank> python-ldap upils ?
+
+ 16:41 <bdrung> cracklib2 looks simple to fix
+
+ 16:41 <adrien> juliank: yaeh, which I plan to do in > 10 days and actually I hope it's resolved in debian by the time I get to it because I find these migrations (related to liblicense-perl) pretty weird every time
+
+ 16:41 <upils> juliank: ack
+
+ 16:42 <juliank> python-werkzeug pushkarnk?
+
+ 16:42 <pushkarnk> ack
+
+ 16:42 <juliank> abydos zhsj?
+
+ 16:43 <zhsj> ack
+
+ 16:43 <juliank> advocate would be the next one
+
+ 16:44 <juliank> advocate: cpete?
+
+ 16:44 <juliank> aioquic: dviererbe
+
+ 16:45 <juliank> aiosmtplib liushuyu
+
+ 16:45 <juliank> asgi-lifespan: sil2100
+
+ 16:45 <juliank> atropos: vpa1977
+
+ 16:46 <juliank> autoflake xypron
+
+ 16:46 <juliank> bidict enr0n
+
+ 16:47 <juliank> bmtk: juliank
+
+ 16:47 <juliank> anyone else want one?
+
+ 16:47 <juliank> Anyone wants to create an epic and copy the old ones over?
+
+ 16:48 <juliank> We need to move this to an pre-generated epic
+
+ 16:48 <juliank> #topic AOB
+
+ 16:52 <juliank> Well then let me end the IRC side
+
+ 16:52 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

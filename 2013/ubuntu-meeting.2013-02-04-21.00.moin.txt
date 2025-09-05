@@ -1,0 +1,321 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 21:00:05 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-02-04-21.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Action review
+''LINK:'' https://lists.ubuntu.com/archives/ubuntu-devel-announce/2013-January/001007.html   (cjwatson, 21:02:10)
+
+ *MAAS SRU
+
+ *AOB
+''ACTION:'' cjwatson to amend SRU/MRE documentation to reflect slangasek's comments about bundling  (cjwatson, 21:33:38)
+
+
+
+Meeting ended at 21:35:44 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * cjwatson to amend SRU/MRE documentation to reflect slangasek's comments about bundling
+
+
+
+== Action items, by person ==
+
+ * cjwatson
+ ** cjwatson to amend SRU/MRE documentation to reflect slangasek's comments about bundling
+ * slangasek
+ ** cjwatson to amend SRU/MRE documentation to reflect slangasek's comments about bundling
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (53)
+ * pitti (20)
+ * smoser (19)
+ * stgraber (14)
+ * slangasek (5)
+ * kees (5)
+ * ScottK (5)
+ * meetingology (4)
+ * ubottu (3)
+
+
+
+== Full Log ==
+
+
+ 21:00:05 <cjwatson> #startmeeting
+
+ 21:00:05 <meetingology> Meeting started Mon Feb  4 21:00:05 2013 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 21:00:05 <meetingology> 
+
+ 21:00:05 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 21:00:13 <stgraber> yeah, he then forwarded the e-mail with the right address
+
+ 21:00:21 <cjwatson> Agenda: https://wiki.ubuntu.com/TechnicalBoardAgenda
+
+ 21:00:26 <cjwatson> Who's here?
+
+ 21:00:28 <kees> \o
+
+ 21:00:36 <stgraber> o/
+
+ 21:00:38 <smoser> o/
+
+ 21:00:41 <pitti> me too
+
+ 21:00:48 * smoser is standing in for roaksoax
+
+ 21:01:07 <cjwatson> Thanks.  Will just wait a minute for any latecomers ...
+
+ 21:01:26 <pitti> I met mdz at FOSDEM yesterday, he's presumably still travelling
+
+ 21:01:42 <cjwatson> Ah, yes, that would make sense
+
+ 21:02:01 <cjwatson> #topic Action review
+
+ 21:02:06 <cjwatson> None that I can see from the last minutes
+
+ 21:02:10 <cjwatson> https://lists.ubuntu.com/archives/ubuntu-devel-announce/2013-January/001007.html
+
+ 21:02:27 <cjwatson> #topic MAAS SRU
+
+ 21:02:43 <cjwatson> I followed up by mail a few minutes ago
+
+ 21:02:52 <pitti> FWIW, I found slangasek's reply quite on-the-spot
+
+ 21:03:02 <cjwatson> Me too.  I understand that Steve's recommendations are already being implemented?
+
+ 21:03:25 <cjwatson> (In fact, perhaps we should record the general principles he outlined somewhere more permanent)
+
+ 21:03:25 <smoser> cjwatson, hm... could you forward me your response? archive is not udpated, an di'm not subscribed.
+
+ 21:03:26 <pitti> I agree with bundling newer versions and new packages into the new maas
+
+ 21:03:30 * kees nods
+
+ 21:03:39 <cjwatson> smoser: It wasn't anything interesting, just concurrence with Steve and otherwise general approval
+
+ 21:03:51 <smoser> yeah, we're perfectly fine to package the bits inside maas.
+
+ 21:03:56 <pitti> the three django fixes should be properly SRUed, though (at least at first look)
+
+ 21:04:37 <smoser> pitti, we're open to that.
+
+ 21:06:23 <cjwatson> I notice that ScottK has rejected bug 1081391 and bug 1081388 from the SRU queue
+
+ 21:06:26 <ubottu> bug 1081391 in python-django (Ubuntu) "[SRU] Backport GenericIPAddressfield from 1.4" [Undecided,Fix released] https://launchpad.net/bugs/1081391
+
+ 21:06:27 <ubottu> bug 1081388 in python-django (Ubuntu) "[SRU] Backport prefetch_related from 1.4" [Undecided,Fix released] https://launchpad.net/bugs/1081388
+
+ 21:06:28 <smoser> ScottK raised concern with some of the django changes, suggesting that furthre review (done here) was necessary. so surely he'd be OK  with that.
+
+ 21:06:30 <stgraber> I'm also happy with the proposal with slangasek's proposed changes. Personally I'd tend to prefer having yui3 and python-tx-tftp as new sources rather than bundled in, but I'm not an SRU team member and I can live with those sources being bundled.
+
+ 21:07:12 <stgraber> (I have a vague interest in that new tftp module for python which I may want to use for some projects I'm involved with, and having it in the archive for 12.04 would be convenient. I don't care much about yui3 though.)
+
+ 21:07:13 <cjwatson> I find it difficult to disagree with his review on the face of it.  Is it possible to work around the django problems in maas?
+
+ 21:07:22 <pitti> bundling them exposes them less to other "unintended"/unsupported usage, though
+
+ 21:07:52 <cjwatson> (And it is *definitely* true that the test cases in those bugs were incomplete.)
+
+ 21:08:16 <cjwatson> At the very least they'd need much more regression testing.
+
+ 21:08:19 <stgraber> pitti: right, the main advantage of just bundling them is that they will be able to push newer features or API changes to those in future SRUs. Which we wouldn't allow if those were individual sources.
+
+ 21:08:43 <stgraber> pitti: but if it's not likely to happen with those packages (and it doesn't appear it's), I'd prefer to have separate sources.
+
+ 21:09:12 <smoser> stgraber, i think i personally prefer slangasek's suggestion of bundling them in.
+
+ 21:09:26 <cjwatson> I'm not sure I know enough about django to be able to offer a confident review.  It would be nice if somebody non-maas-related who knew django well could investigate.
+
+ 21:09:35 <pitti> stgraber: I'd rather minimize the exposure of new packages, but I don't have a solid objection against introducing them as NEW ones, so I'm fine with letting the server team decide about that
+
+ 21:09:55 * kees agrees with pitti
+
+ 21:09:58 <cjwatson> If they really are non-invasive then it probably isn't worth the hassle of trying to move the fix around; but I would like to have an unbiased assessment of that.
+
+ 21:10:08 <cjwatson> stgraber: I'd rather bundle too.
+
+ 21:10:12 <smoser> cjwatson, i'd have to look further to see which of the django changes are required.
+
+ 21:10:14 <stgraber> ok ;) As I said, I don't mind very much, I just have a vague interest in the tftp bit and it'd have the nice advantage of saving me an upload to my PPA, but that's about the extent of how much I care ;)
+
+ 21:10:23 <slangasek> the maas package currently in precise depends on the external python-django package; so switching it to bundle now would seem to be a bit of a regression on that score
+
+ 21:10:42 <cjwatson> Yes, I'm not currently offering an opinion on bundling or otherwise of django
+
+ 21:11:04 <cjwatson> I'd like to have the smallest change with lowest risk; it's not clear at this point where that lives
+
+ 21:11:22 <slangasek> while the python-django changes don't meet the letter of the SRU policy as ScottK says, it's not a wholesale backport or anything... I think the django SRU approach makes sense
+
+ 21:12:09 <cjwatson> And for the record I think the "my way or the highway" approach evidenced in bug 1081392 is entirely inappropriate for a technical discussion in a bug report.
+
+ 21:12:11 <ubottu> bug 1081392 in python-django (Ubuntu Precise) "[SRU] Include upstream fix for bug 15496" [High,New] https://launchpad.net/bugs/1081392
+
+ 21:12:19 <cjwatson> (from the maas team)
+
+ 21:13:30 <smoser> clearly that could have gone better. i dont think anyone would disagree.
+
+ 21:13:54 <cjwatson> It may be the right thing to do, but let's try reasoning rather than assertion :-)
+
+ 21:14:24 <slangasek> if the TB generally feels it's warranted to override the SRU policy here, I'm happy to dig into the details of the python-django SRU and assess it (as I have some familiarity with django)
+
+ 21:15:05 <smoser> i can make sure the maas team offers help / guidance to slangasek there.
+
+ 21:15:22 <pitti> my gut feeling is that these sound small enough to warrant an SRU exception, but it hasn't been made clear how these can be regression-tested
+
+ 21:15:26 <cjwatson> I would like to have some notion of how we can regression-test this for other django users
+
+ 21:15:36 <pitti> i. e. with prominent python-django rdepends
+
+ 21:16:10 <kees> agreed. I only know the simplest of django uses, and I don't think that's sufficient.
+
+ 21:16:11 <pitti> and it would be great if these two SRU bugs could get patches attached for review
+
+ 21:16:13 <slangasek> pitti: I believe, but have not yet verified, that the new features don't change the behavior of existing code
+
+ 21:16:24 <pitti> it's always easier to judge regression potential by looking at what actually changd
+
+ 21:16:33 <slangasek> thats my recollection of the previous discussion around that SRU
+
+ 21:17:21 <pitti> e. g. if that just adds a new function to the API, it'd be harmless
+
+ 21:17:27 <pitti> which may very well be the case here
+
+ 21:17:30 <stgraber> At least the addition of GenericIPAddressfield sounds to me like it could be done in the maas code without requiring shipping a whole copy of django, so maybe that's another way to get the feature without having to SRU new features into a stable release?
+
+ 21:17:36 <cjwatson> Has GenericIPAddressField been security-reviewed (this is on a security boundary, right?)?  Does it handle database migration?
+
+ 21:18:24 <stgraber> I'm not terribly familiar with Django, but it sounds like this is just a convenience type which ends up being mapped to an int in the DB, so surely this can be done without patching the core?
+
+ 21:18:24 * ScottK mostly felt django was a TB decision, not just ubuntu-sru.
+
+ 21:18:29 <ScottK> If you're happy, I'm happy.
+
+ 21:18:43 <cjwatson> I could see prefetch being suitable - it would improve perf for other users, presumably - but it's a fairly complex change I can't review
+
+ 21:18:59 <smoser> stgraber, you're probably correct. i'm sure we can find some way to get the same functionality inside of maas.
+
+ 21:18:59 * pitti feels he has too little data to decide whether he should be scared or happy
+
+ 21:19:20 <cjwatson> If it's had qualified code review and has some kind of plan for regression-testing then I'd be OK with the prefetch change
+
+ 21:19:21 <smoser> the ipv6 code there, just ends up taking the same path as other suggested chaanges.
+
+ 21:19:40 <smoser> as to whether it should be shoved inside maas (and not available to others) or incorporated into sru for others to benefit.
+
+ 21:19:43 <cjwatson> I guess I'm more or less agnostic about GenericIPAddressField
+
+ 21:19:58 <cjwatson> "not available to others" shouldn't be a consideration we apply in SRUs, though
+
+ 21:20:08 <cjwatson> Least-risk is pretty much an overriding criterion
+
+ 21:20:10 <smoser> fair
+
+ 21:20:19 <cjwatson> Same logic as yui3/raphael
+
+ 21:20:27 <stgraber> right, prefetch seems way harder to keep inside maas, so I think this one may be fine for an exception provided sufficient testing and guarantee it won't affect existing code (that it's just an addition that only maas will use as far as packaged software goes)
+
+ 21:20:29 <smoser> right. which is what i was trying to say.
+
+ 21:22:47 <cjwatson> Any more comments?  I'd be happy to hand off detailed review to slangasek's judgement
+
+ 21:23:17 <smoser> only comment is that everyone involved is aware that this is not "traditional SRU"
+
+ 21:23:40 <smoser> the overriding interst is in getting something useful to ubuntu users to live on 12.04.
+
+ 21:24:04 <cjwatson> ScottK: FWIW (re 1081392) if you *wanted* to push for a wholesale update of owncloud on the basis that the old version is completely useless, I don't know that I'd be completely opposed; I actually wondered why nobody was doing that
+
+ 21:24:26 <ScottK> It would have required backporting a bunch of other packages.
+
+ 21:24:36 <kees> apologies, I have to run away early...
+
+ 21:24:48 <ScottK> If it was just owncloud, that's the direction we'd have gone.
+
+ 21:25:12 <cjwatson> maas was pretty immature in precise, which was a problem in itself at the time.  Indeed, it's not a traditional SRU; but I can see the value in it.
+
+ 21:25:20 <cjwatson> ScottK: Ah, fair enough
+
+ 21:25:20 <stgraber> ScottK: and I assume those are big/complex enough that you couldn't get away with the same bundling game as MAAS?
+
+ 21:25:21 <cjwatson> kees: thanks
+
+ 21:26:54 <smoser> the maas and ubuntu server teams will do whatever is necessary to do this right.
+
+ 21:26:55 <stgraber> anyway, for the actual discussion topic, I'm happy having this be a one-off thing for MAAS and I trust ~ubuntu-sru to enforce the rigorous testing this will require (especially for the django bits), so I'm happy having slangasek and the ubuntu-sru team do the review and have this move along
+
+ 21:27:39 <pitti> yeah, I agree for MAAS itself; that's sufficiently a "leaf" package, and the rationale makes sense to me for an LTS
+
+ 21:27:46 <cjwatson> Yep.  Do we need a vote (is there any dissent), or shall we carry this by acclamation?
+
+ 21:28:15 <cjwatson> kees sounded in general agreement
+
+ 21:28:33 <pitti> to me it seems we by and large agree; we all want to see a regression test plan for django and maas itself, and bundle the others
+
+ 21:28:36 <stgraber> I don't think I heard anyone being explicitly against it, we're really just discussing some of the implementation details which I'm sure the SRU team can take care of ;)
+
+ 21:28:56 <cjwatson> OK, let's move on then; I'll distil this into the minutes
+
+ 21:29:04 <smoser> thanks all.
+
+ 21:29:06 <pitti> ScottK: I want to say thanks for following the proper process here
+
+ 21:29:26 <ScottK> pitti: Thanks.
+
+ 21:29:35 <cjwatson> I see nothing new on the list
+
+ 21:29:46 <cjwatson> And no open bugs
+
+ 21:29:49 <cjwatson> #topic AOB
+
+ 21:31:23 <pitti> a quick FYI, no further responses to the brainstorm reviews
+
+ 21:32:44 <cjwatson> Oh, hell, I haven't done mine yet
+
+ 21:32:50 * cjwatson sticks that on kanban in an attempt to remember
+
+ 21:33:12 <pitti> I'll send a followup reminder email
+
+ 21:33:16 <cjwatson> also:
+
+ 21:33:38 <cjwatson> #action cjwatson to amend SRU/MRE documentation to reflect slangasek's comments about bundling
+
+ 21:33:38 * meetingology cjwatson to amend SRU/MRE documentation to reflect slangasek's comments about bundling
+
+ 21:33:43 <cjwatson> if that's OK with everyone
+
+ 21:33:52 <pitti> oh, thanks
+
+ 21:33:59 <stgraber> yep, thanks
+
+ 21:34:35 <cjwatson> going once
+
+ 21:34:50 <cjwatson> going twice
+
+ 21:35:42 <cjwatson> sold to the developer in the orange hat
+
+ 21:35:44 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

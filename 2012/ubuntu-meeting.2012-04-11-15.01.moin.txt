@@ -1,0 +1,730 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:01:20 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-04-11-15.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Bugs
+
+ *Patch Piloting
+
+ *AOB
+
+
+
+Meeting ended at 16:00:02 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (68)
+ * ev (53)
+ * cjwatson (52)
+ * ogra_ (32)
+ * bdmurray (26)
+ * ubottu (25)
+ * jodh (19)
+ * stgraber (19)
+ * infinity (15)
+ * doko (10)
+ * mvo (5)
+ * barry (5)
+ * meetingology (3)
+ * phillw (1)
+ * dholbach (1)
+
+
+
+== Full Log ==
+
+
+ 15:01:20 <slangasek> #startmeeting
+
+ 15:01:20 <meetingology> Meeting started Wed Apr 11 15:01:20 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01:20 <meetingology> 
+
+ 15:01:20 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01:23 <ogra_> moo
+
+ 15:03:09 <slangasek> [TOPIC] Lightning round
+
+ 15:06:37 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson)
+
+ 15:06:40 <slangasek> infinity bdmurray cjwatson stgraber doko barry ev ogra slangasek jodh
+
+ 15:06:59 <infinity> - Was at Collab Summit last week, then a 4-day long weekend
+
+ 15:06:59 <infinity> - Collab involved lots of interesting sessions, however the
+
+ 15:06:59 <infinity> most interesting were beer-fuelled discussions involving
+
+ 15:06:59 <infinity> EFI and pecoff signing, as well as (e)glibc conversations.
+
+ 15:06:59 <infinity> - Dealing (again) with ARMhf linker location, as this seems
+
+ 15:07:01 <infinity> to have gone back to public bikeshedding mode when we
+
+ 15:07:03 <infinity> tried to push GCC patches upstream. :/
+
+ 15:07:06 <infinity> - Worked on Tuesday on the above, and on a new eglibc upload.
+
+ 15:07:09 <infinity> ...
+
+ 15:07:33 <bdmurray> bug triage of update-manager bug reports
+
+ 15:07:33 <bdmurray> bug triage of initramfs-tools bug reports which received a spike in bug reporting
+
+ 15:07:36 <bdmurray> merge proposal for upstream apport for bug 972933 regarding /tmp free space
+
+ 15:07:38 <ubottu> Launchpad bug 972933 in apport (Ubuntu) "package initramfs-tools 0.99ubuntu12 failed to install/upgrade: subprocess installed post-installation script returned error exit status 1" [High,Fix released] https://launchpad.net/bugs/972933
+
+ 15:07:39 <bdmurray> wrote some code comparing the package to team mapping data to packages we are subscribed to
+
+ 15:07:42 <bdmurray> created a bug bot function for commenting on no package confirmed bug reports
+
+ 15:07:45 <bdmurray> merged evfool's bug patterns
+
+ 15:07:51 <bdmurray> tried to recreate bug 918701 regarding ubiquity and orca
+
+ 15:07:51 <bdmurray> tried to recreate bug 500175
+
+ 15:07:51 <bdmurray> tested and fixed issues with collect-bug-data's caching of bug tasks
+
+ 15:07:51 <bdmurray> merged arsenal branch from chris arges
+
+ 15:07:51 <bdmurray> uploaded update-manager to oneiric-proposed (some changes in propsoed were lost due to a security upload)
+
+ 15:07:52 <ubottu> Launchpad bug 918701 in ubiquity (Ubuntu) "Ubiquity crash if screen reader is running" [Medium,Fix released] https://launchpad.net/bugs/918701
+
+ 15:07:54 <ubottu> Launchpad bug 500175 in aptdaemon (Ubuntu) "Canceling an installation in Software Center crashes debconf with "Use of uninitialized value $reply in scalar chomp at /usr/share/perl5/Debconf/FrontEnd/Passthrough.pm line 66,"" [Low,Confirmed] https://launchpad.net/bugs/500175
+
+ 15:08:05 <bdmurray> tried to debug a failing update-manager test
+
+ 15:08:07 <bdmurray> holiday on the 6th
+
+ 15:08:17 <bdmurray> done‽
+
+ 15:08:26 <cjwatson> Short week due to Easter holidays.
+
+ 15:08:26 <cjwatson> Basic installation-guide update.
+
+ 15:08:26 <cjwatson> Reviewed/applied Andy's vt.handoff=7 tweak to grub2.
+
+ 15:08:26 <cjwatson> Fixed LP bug preventing publications from -proposed pre-release.
+
+ 15:08:26 <cjwatson> Gained direct LP landing privileges (though still subject to review, of course).
+
+ 15:08:30 <cjwatson> Some more multiarch cross-building fixes.
+
+ 15:08:32 <cjwatson> Fixed proxy handling bug 977812 in update-notifier.
+
+ 15:08:35 <cjwatson> Fixed some autopkgtest bugs in ubiquity.  Almost there.
+
+ 15:08:37 <ubottu> Launchpad bug 977812 in update-notifier (Ubuntu Precise) "package downloader doesn't follow redirects" [High,Fix released] https://launchpad.net/bugs/977812
+
+ 15:08:37 <cjwatson> Merged openssl for a VPAES fix.
+
+ 15:08:40 <cjwatson> Lots of installer translation updates.
+
+ 15:08:42 <cjwatson> Fixed EFI System Partition autodetection on GPT (bug 972122).
+
+ 15:08:45 <cjwatson> ..
+
+ 15:08:45 <ubottu> Launchpad bug 972122 in partman-efi (Ubuntu) "Ubiquity pops out a warning message from partman-partitioning on UEFI BIOS when there is a EFI system partition existed." [Medium,Triaged] https://launchpad.net/bugs/972122
+
+ 15:08:51 <stgraber> Very short week, was off on Friday and Monday
+
+ 15:08:51 <stgraber> - Installer
+
+ 15:08:51 <stgraber> - Fixed bug 772470 and added support for Windows 8
+
+ 15:08:51 <stgraber> - ISO tracker
+
+ 15:08:51 <stgraber> - Finished python module, wrote basic API doc/example
+
+ 15:08:54 <stgraber> - New bugfix release of ISO tracker now in production
+
+ 15:08:55 <ubottu> Launchpad bug 772470 in ubiquity (Ubuntu Precise) "os-prober doesn't detect Windows partition but the recovery partition instead" [High,Fix released] https://launchpad.net/bugs/772470
+
+ 15:08:56 <stgraber> - Containers
+
+ 15:08:59 <stgraber> - Minor LXC fixes
+
+ 15:09:01 <stgraber> - Networking
+
+ 15:09:04 <stgraber> - Uploaded fix for isc-dhcp bug 974284
+
+ 15:09:05 <ubottu> Launchpad bug 974284 in isc-dhcp (Ubuntu) "invoking dhclient3 with -1 causes issue if no dhcp server available" [High,Fix released] https://launchpad.net/bugs/974284
+
+ 15:09:06 <stgraber> - Gstreamer
+
+ 15:09:09 <stgraber> - Fixed bug 964926
+
+ 15:09:10 <ubottu> Launchpad bug 964926 in cheese (Ubuntu) "Cheese can't find vp8enc" [Undecided,Fix released] https://launchpad.net/bugs/964926
+
+ 15:09:11 <stgraber> - Working on bug 966294, bisecting gstreamer to figure out what broke it
+
+ 15:09:13 <ubottu> Launchpad bug 966294 in ubiquity (Ubuntu Precise) "Ubiquity loops forever from ubiquity_webcam_play" [High,In progress] https://launchpad.net/bugs/966294
+
+ 15:09:14 <stgraber> - TODO this week (today/tomorrow)
+
+ 15:09:17 <stgraber> - Hopefully find the source of bug 966294 and fix it
+
+ 15:09:19 <stgraber> - Look at bug 873468
+
+ 15:09:21 <ubottu> Launchpad bug 873468 in update-manager (Ubuntu Precise) "Update to latest Release failed for overloaded mirrors with no descriptive error message" [Critical,Triaged] https://launchpad.net/bugs/873468
+
+ 15:09:22 <stgraber> - Spend any remaining time on installer bugs.
+
+ 15:09:24 <stgraber> I'll be off Friday, Monday and Tuesday, back on Wednesday.
+
+ 15:09:27 <stgraber> (DONE)
+
+ 15:10:00 <doko> - short week (two bank holidays)
+
+ 15:10:00 <doko> - final python 2.7.3 upload
+
+ 15:10:00 <doko> - icedtea-web fixes and upload, and bug triage
+
+ 15:10:00 <doko> - openjdk-6 update (currently in unapproved)
+
+ 15:10:00 <doko> - openjdk-7 update with the ARM assembler interpreter (built)
+
+ 15:10:01 <doko> - buildd watching, armhf will the first arch to finish the test rebuild
+
+ 15:10:03 <doko> (done)
+
+ 15:10:15 <barry> short week due to vacation last week; upstream python 2.6.8 final release; python 3 transition blueprint work, almost done with first pass through http://tinyurl.com/73tl8ca but please don't edit it yet!  i'll look again at bug 848915.  done.
+
+ 15:10:18 <ubottu> Launchpad bug 848915 in update-manager (Ubuntu Precise) "Partial upgrade results in cryptic traceback because $DISPLAY is not set" [High,Triaged] https://launchpad.net/bugs/848915
+
+ 15:10:24 <doko> ohh, and started on a Linaro gcc merge
+
+ 15:10:57 <ev> - Short week; holiday on Friday and Monday.
+
+ 15:10:57 <ev> - Work on implementing Matthew's mockup of the crash database statistics site
+
+ 15:10:59 <ev> (to become http://daisy-stats.ubuntu.com):
+
+ 15:11:00 <ev> - http://people.canonical.com/~evand/tmp/error-reports.jpg
+
+ 15:11:02 <ev> - http://people.canonical.com/~evand/tmp/most-common-problems.png (ignore
+
+ 15:11:03 <ev> the first seen field - that's now a version number).
+
+ 15:11:03 <ev> - Filed RT 51954.
+
+ 15:11:12 <ev> - Built on top of Django, as this will be far more involved than the WSGI
+
+ 15:11:12 <ev> services that handle crash and core file submission.
+
+ 15:11:14 <ev> - Build out a set of Cassandra functions to retrieve needed information. To
+
+ 15:11:15 <ev> be folded back into oops-repository soon.
+
+ 15:11:17 <ev> - Create a 'most common problems' page based on Matthew's design.
+
+ 15:11:18 <ev> - Use AJAX to get bug numbers for listed crashes.
+
+ 15:11:19 <ev> - Use YUI3's datatable to provide sorting of columns and cell formatting.
+
+ 15:11:20 <ev> - Use the logarithmic scaling from d3.js to help craft the frequency
+
+ 15:11:21 <ev> chart.
+
+ 15:11:26 <ev> - Cowboyed fixes for retracing onto production with help from the webops team.
+
+ 15:11:27 <ev> - Organized going over to Acunu's offices this Friday to chat about their
+
+ 15:11:28 <ev> analytics platform.
+
+ 15:11:29 <ev> - Tackled the problem of slow retraces in production (bug 973494). We're
+
+ 15:11:31 <ev> currently only pushing through about 3 retraces per minute, which is
+
+ 15:11:32 <ev> definitely not going to scale to meet our needs.
+
+ 15:11:34 <ev> - Part of this was dumping the large core dump during apport-retrace, rather
+
+ 15:11:34 <ubottu> Launchpad bug 973494 in whoopsie-daisy (Ubuntu) "Retracing is way too slow" [High,Confirmed] https://launchpad.net/bugs/973494
+
+ 15:11:35 <ev> than persisting it to disk again and carrying it into memory.
+
+ 15:11:38 <ev> - Another part was not building a new apt.Cache and calling update() on it
+
+ 15:11:39 <ev> every time we ran install_packages:
+
+ 15:11:40 <ev> https://code.launchpad.net/~ev/apport/973494/+merge/101353
+
+ 15:11:41 <ev> - Finally, massive improvements were gained by adding a persistent sandbox
+
+ 15:11:42 <ev> for the unpacked debs:
+
+ 15:11:43 <ev> https://code.launchpad.net/~ev/apport/cache_extracted_debs/+merge/101400
+
+ 15:11:51 <ev> - We've since discovered that this last patch will break on packages that
+
+ 15:11:51 <ev> use breaks/replaces to provide an alternative version of a binary, such as
+
+ 15:11:51 <ev> libjpeg-turbo or apache2-mpm (the last installed package always wins).
+
+ 15:11:52 <ev> 
+
+ 15:11:53 <ev> I'm working on a fix that removes any packages that are in breaks/replaces
+
+ 15:11:54 <ev> from the download cache. This will also need to handle virtual packages as
+
+ 15:11:55 <ev> well.
+
+ 15:11:55 <ev> - Fixed cleaning up of old .upload and .uploaded files with help from Marc.
+
+ 15:11:56 <ev> - Shopped around Matthew's mock up to a few engineers. Trying to do this in
+
+ 15:11:57 <ev> small groups so I don't get absolutely buried in feedback. I'll hopefully
+
+ 15:11:58 <ev> send it to private-platfound@ before the end of the day.
+
+ 15:11:59 <ev> - Disabled Wubi from the Windows autorun page.
+
+ 15:12:03 <ev> - Fixed the autorun page not showing because Windows silently fails when a
+
+ 15:12:04 <ev> --option is present in autorun.inf. Yay!
+
+ 15:12:05 <ev> - Patching activity-log-manager's privacy page to run initctl start/stop
+
+ 15:12:07 <ev> whoopsie when enabling/disabling crash reporting, pointing the dbus service
+
+ 15:12:08 <ev> configuration at the right path, and providing a parameter on the end of the
+
+ 15:12:09 <ev> privacy policy (so that we can update that, if need be).
+
+ 15:12:10 * ev breathes (done)
+
+ 15:12:20 <ogra_> you really expect us to read all that ?
+
+ 15:12:22 <ogra_> :)
+
+ 15:12:26 <ogra_> done:
+
+ 15:12:26 <ogra_> * merged compiz GLES patch as well as compiz-plugins-main GLES patch
+
+ 15:12:26 <ogra_> * wasted hours on getting the above right in the bzr branches (compiz has 77
+
+ 15:12:26 <ogra_> branches, none but the UDD one carries upstream and packaging in the same
+
+ 15:12:26 <ogra_> branch, updating to a new upstream (as happened today) means to shuffle
+
+ 15:12:27 <ogra_> together branches and bits manually to get a proper diff (yes, i'm a whiner))
+
+ 15:12:29 <ogra_> * uploaded fixed version of the pvr driver which is in multiverse now
+
+ 15:12:31 <ogra_> (should we consider using restricted for it ?)
+
+ 15:12:31 <ev> you damn well better! I wrote it all :-P
+
+ 15:12:33 <ogra_> * jockey support for the OMAP4 pvr driver is in the archive now as well
+
+ 15:12:35 <ogra_> * sadly the branch mess ate a lot of my time so that i have to postpone
+
+ 15:12:37 <ogra_> finishing of partman-uboot to next week
+
+ 15:12:39 <ogra_> * vacation days here on the 6th and 9th so it was a pretty short week
+
+ 15:12:42 <ogra_> todo:
+
+ 15:12:43 <ogra_> * finish peer reviews
+
+ 15:12:45 <ogra_> * finish partman-uboot
+
+ 15:12:47 <ogra_> * finish ubuntu-core wikipage rewrite
+
+ 15:12:51 <ogra_> * look into fsck slowdown
+
+ 15:12:53 <ogra_> UDS:
+
+ 15:12:55 <ogra_> * have a spec about adding subarch support properly to dh_quilt_patch/unpatch
+
+ 15:12:57 <ogra_> (done)
+
+ 15:13:49 <cjwatson> subarch / dh_quilt_*> I think that would be better discussed in a bug report against Debian quilt
+
+ 15:13:59 <cjwatson> that way you're talking with somebody who's actually worked on the code before
+
+ 15:14:22 <ogra_> cjwatson, sure, that should definitely be coordinated work
+
+ 15:14:53 <ogra_> currently you have to hack around in debian/rules with overrides ... i would like to get rid of that
+
+ 15:14:55 <infinity> ogra_: I don't see it as a spec discussion at all.
+
+ 15:14:56 <cjwatson> well, I mean unless Raphael's there I don't think it's even worth discussing it at UDS, because we'll just all be sitting around making stuff up :)
+
+ 15:15:07 <ogra_> ah, k
+
+ 15:15:18 <cjwatson> the implementation's confined to one package, so it'd be better just as a bug report
+
+ 15:15:19 <ogra_> then lets call it a bug :)
+
+ 15:15:26 <infinity> ogra_: It's a flat out wishlist bug to JFDI, I see no downsides, and hence no need to bikeshed for an hour.
+
+ 15:15:42 <ogra_> yeah, right you are
+
+ 15:15:53 <slangasek> bdmurray: was 972933 the cause for the spike in initramfs-tools reports, then?
+
+ 15:16:01 <slangasek> doko: Linaro gcc merge> targeted for q, I hope?
+
+ 15:16:32 <doko> slangasek, yeah, and preparing one for -proposed to fix two ICEs
+
+ 15:16:43 <slangasek> doko: ok
+
+ 15:17:19 <bdmurray> slangasek: no there was only one where /tmp was full, some of the others are where /cdrom is full on a persistent media.  I'll have a change for apport to stop reporting those this week
+
+ 15:17:53 <infinity> doko: I may need to take your -proposed one and mangle it for -release if we have a 0-hour armhf ld.so change.  I don't want to ship a compiler that generates the wrong PI headers.
+
+ 15:18:03 <slangasek> bdmurray: ok.  that doesn't seem like something that's changed recently to cause a bug reporting spike, though?
+
+ 15:19:08 <bdmurray> slangasek: right, I think the spike was just due to more people using precise with beta 2 being out
+
+ 15:19:49 <doko> infinity, sure, if you get the rm approval, you know I'm not that trust worthy ;)
+
+ 15:20:02 <infinity> I happen to know a few RMs.
+
+ 15:20:05 <slangasek> * swatted the last obsolete conffiles in the core; after eglibc gets uploaded, server should have a clean bill of health from jenkins
+
+ 15:20:08 <slangasek> * followed through on
+
+ 15:20:10 <slangasek> * fixed plymouth to switch back to vt1 when it exits, instead of leaving server users on VT7 (bug #913731)
+
+ 15:20:12 <ubottu> Launchpad bug 913731 in plymouth (Ubuntu) "non-X installs still have vt.handoff=7" [High,Fix released] https://launchpad.net/bugs/913731
+
+ 15:20:13 <slangasek> * follow through on the new update-notifier interface, cleaning up a few small bugs that have been reported (bug #977178, #975426)
+
+ 15:20:15 <ubottu> Launchpad bug 977178 in flashplugin-nonfree (Ubuntu) "After upgrading to 12.04, flash doesn't seem to be installed to Firefox even though the package is." [High,In progress] https://launchpad.net/bugs/977178
+
+ 15:20:16 <slangasek> * fix an upgrade issue with nfs-utils (bug #954619)
+
+ 15:20:17 <ubottu> Launchpad bug 975426 in flashplugin-nonfree (Ubuntu) "flashplugin-installer failed to install during system installation: no alternatives for mozilla-flashplugin." [High,Fix released] https://launchpad.net/bugs/975426
+
+ 15:20:18 <ubottu> Launchpad bug 954619 in nfs-utils (Ubuntu) "package nfs-common 1:1.2.5-3ubuntu1 failed to install/upgrade: ErrorMessage: subprocess installed post-installation script returned error exit status 1" [High,Fix released] https://launchpad.net/bugs/954619
+
+ 15:20:19 <slangasek> * improved cross-build support in apt, and made the libs multiarch-capable again
+
+ 15:20:22 <slangasek> * Upcoming: cross-distro call to try to finalize an armhf linker path
+
+ 15:20:37 <slangasek> ogra_: multiverse> I could've sworn I put pvr-omap4 to restricted... but the binaries went elsewhere.  Let me fix that.
+
+ 15:20:54 <ogra_> thx
+
+ 15:20:57 <infinity> The number of times I've used "finalize" in relation to that topic...
+
+ 15:21:36 <cjwatson> slangasek: the apt cross bug where it fails to resolve [] limitations with respect to the correct architecture is still outstanding, isn't it?
+
+ 15:21:44 <slangasek> cjwatson: yes, it is
+
+ 15:21:47 <cjwatson> right
+
+ 15:22:15 <jodh> slangasek: done?
+
+ 15:22:23 <slangasek> jodh: yes, sorry
+
+ 15:22:27 <jodh> * [misc]:
+
+ 15:22:27 <jodh> - Off Friday+Monday due to Easter.
+
+ 15:22:27 <jodh> - In London tomorrow.
+
+ 15:22:30 <jodh> * [boot]:
+
+ 15:22:30 <jodh> - upstart: Fixed bug 974147.
+
+ 15:22:33 <jodh> - plymouth: working on bug 553745.
+
+ 15:22:35 <ubottu> Launchpad bug 974147 in upstart (Ubuntu) "/lib/init/upstart-job should not start/restart a job which is disabled." [Medium,In progress] https://launchpad.net/bugs/974147
+
+ 15:22:36 <jodh> * [planning]:
+
+ 15:22:37 <ubottu> Launchpad bug 553745 in plymouth (Ubuntu Maverick) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Triaged] https://launchpad.net/bugs/553745
+
+ 15:22:40 <jodh> - uds: Wrote blueprint
+
+ 15:22:43 <jodh> https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-dpkg-pristine-conffiles
+
+ 15:22:46 <jodh> - upstart:
+
+ 15:22:49 <jodh> - exploring service readiness problem.
+
+ 15:22:52 <jodh> - discussions and investigations on session management + multiseat.
+
+ 15:22:54 <jodh> ⟃
+
+ 15:22:58 <jodh> 
+
+ 15:24:21 <slangasek> any other questions?
+
+ 15:25:00 <ev> jodh: you're coming to Millbank tomorrow?
+
+ 15:25:05 <jodh> ev: yo!
+
+ 15:25:11 <slangasek> speaking of blueprints... UDS is less than a month away now.  As you think of things that we should be discussing for next cycle, get blueprints created and targeted to uds-q
+
+ 15:25:23 <ev> jodh: wor
+
+ 15:25:25 <ev> word
+
+ 15:25:54 <slangasek> jodh: thanks for tweaking the restart behavior for 974147; I'll pick that back up again for merge review today
+
+ 15:26:14 <jodh> slangasek: np - thanks!
+
+ 15:26:43 <slangasek> [TOPIC] Bugs
+
+ 15:26:56 <slangasek> ideally - none :)
+
+ 15:27:03 <slangasek> but there's always something...
+
+ 15:27:23 <bdmurray> I was thinking of bug 942539 and was wondering if we should implement a hack for that
+
+ 15:27:24 <ubottu> Launchpad bug 942539 in nautilus (Ubuntu) "Ubiquity desktop icon text looks messy" [Medium,Triaged] https://launchpad.net/bugs/942539
+
+ 15:27:30 <cjwatson> I'm working on bug 941676, albeit in spare time as it's powerpc
+
+ 15:27:31 <ubottu> Launchpad bug 941676 in ppl (Ubuntu Precise) "ppl ftbfs in precise on powerpc" [Medium,Confirmed] https://launchpad.net/bugs/941676
+
+ 15:27:43 <cjwatson> the hacks for that aren't translation-safe, AFAIK
+
+ 15:28:01 <barry> slangasek: i just set you as approver of https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-python-versions
+
+ 15:28:21 <slangasek> cjwatson: could we not batch-update the translations when making the change?
+
+ 15:28:24 <cjwatson> can't we sit on the desktop team to get that fixed properly? :)
+
+ 15:28:24 <slangasek> barry: ack
+
+ 15:28:47 <cjwatson> slangasek: I mean intrinsically unsafe since we need to determine experimentally how each individual translation wraps, including for each different flavour
+
+ 15:29:19 <slangasek> oh
+
+ 15:29:47 <slangasek> bdmurray: can you revisit that with seb128?
+
+ 15:30:01 <bdmurray> sure
+
+ 15:30:14 <cjwatson> the only hack we could do that I think is safe would be to remove the version altogether
+
+ 15:30:15 <slangasek> and if he's not going to have time (which is likely), maybe ask pitti if someone else on the team can take it
+
+ 15:30:25 <cjwatson> but UI freeze ...
+
+ 15:30:52 <slangasek> cjwatson: well, my assumption had been that if we replace the period with one nautilus handles word breaks for correctly, we could do that in both the English and in translations
+
+ 15:31:36 <cjwatson> oh, well that one is substituted dynamically anyway
+
+ 15:31:58 <slangasek> ok
+
+ 15:32:06 <slangasek> so wouldn't that be translation-safe after all?
+
+ 15:32:35 <slangasek> the bug is simply that nautilus is word-breaking wrong on '.'; we don't really want to micromanage the word-wrapping in general
+
+ 15:32:41 <cjwatson> yeah, that hack probably would be.  Is there a Unicode character with identical appearance to "." which isn't actually U+002E?
+
+ 15:32:54 <cjwatson> I was referring to things like the \n hack
+
+ 15:33:12 <slangasek> ah yes
+
+ 15:33:28 <slangasek> jodh suggested middle-dot, which isn't perfect
+
+ 15:33:41 <slangasek> we could render the whole version number in double-width chars :P
+
+ 15:34:15 <slangasek> well, getting nautilus fixed is obviously still preferred
+
+ 15:34:49 <cjwatson> I really think it should be identical in appearance
+
+ 15:34:57 <slangasek> yep
+
+ 15:34:59 <cjwatson> at least in the default font
+
+ 15:35:19 <slangasek> I'll take a sweep through Unicode; but we should try to just get nautilus fixed
+
+ 15:35:56 <slangasek> oh here we go, U+2493 :P
+
+ 15:36:12 <bdmurray> heh
+
+ 15:36:14 <slangasek> bdmurray: anything else?
+
+ 15:36:19 <phillw> cjwatson: is http://www.fileformat.info/info/unicode/char/ff0e/index.htm any use?
+
+ 15:36:32 <bdmurray> bug 838091
+
+ 15:36:34 <ubottu> Launchpad bug 838091 in ntfs-3g (Ubuntu Precise) "should link fsck.ntfs -> ntfsfix/ntfsck" [Undecided,Confirmed] https://launchpad.net/bugs/838091
+
+ 15:36:46 <cjwatson> there's U+FE52, which seems to have some odd width properties
+
+ 15:37:03 <cjwatson> phillw: fullwidth is problematic
+
+ 15:37:41 <jodh> I like the idea of putting the ubuntu logo glyph (U+E0FF) in the middle :)
+
+ 15:37:56 <jodh> a tad big, but memorable! :)
+
+ 15:38:43 <slangasek> anyone know how safe ntfsfix is? :P
+
+ 15:39:10 <slangasek> bug log says it's not really
+
+ 15:39:14 <cjwatson> I'm not sure, but I guess I can look at that bug
+
+ 15:39:27 <cjwatson> a link may not be the right approach; we may just need to silence the warning some other way
+
+ 15:39:28 <slangasek> so I think linking fsck.ntfs is probably the wrong answer
+
+ 15:39:42 <slangasek> mountall honors the 'check' field in /etc/fstab, right?
+
+ 15:40:00 <slangasek> er, the 'pass' field I mean
+
+ 15:40:08 <cjwatson> I thought we zeroed that for ntfs, but I'll need to check
+
+ 15:40:12 <slangasek> ok
+
+ 15:40:24 <bdmurray> ntfs-3g was updated in precise - bug 920545
+
+ 15:40:26 <ubottu> Launchpad bug 920545 in ntfs-3g (Ubuntu) "[update request] NTFS-3G, new STABLE Version 2012.1.15 [Precise]" [Wishlist,Fix released] https://launchpad.net/bugs/920545
+
+ 15:40:44 <cjwatson> yes, that was a fairly routine merge
+
+ 15:41:11 <cjwatson> it didn't add a fsck.ntfs link
+
+ 15:41:50 <slangasek> or an implementation that would be worth linking to, presumably
+
+ 15:42:15 <cjwatson> I'm not comfortable enough with my NTFS knowledge to make that decision independently of the Debian maintainer
+
+ 15:42:21 <cjwatson> for precise, I'd rather just shut up the warning
+
+ 15:42:34 <cjwatson> we seem to set pass=0 for ntfs, so I guess I can look into it some more
+
+ 15:42:48 <slangasek> cjwatson: mountall respects the pass field
+
+ 15:42:53 <cjwatson> it mightn't be unreasonable to special-case ntfs in mountall, so that even if pass is non-zero it won't complain if fsck.* is missing
+
+ 15:42:57 <slangasek> so that points to the installer
+
+ 15:43:08 <slangasek> or to user error when adding the fstab entry
+
+ 15:43:29 <cjwatson> partman-basicfilesystems (63ubuntu2) karmic; urgency=low
+
+ 15:43:29 <cjwatson> * Don't check NTFS at boot, since we have no fsck.ntfs right now
+
+ 15:43:29 <cjwatson> (LP: #441242).
+
+ 15:43:29 <cjwatson> -- Colin Watson <cjwatson@ubuntu.com>  Tue, 06 Oct 2009 22:44:55 +0100
+
+ 15:43:36 <slangasek> hmm
+
+ 15:43:39 <cjwatson> we have no upgrade handling for that
+
+ 15:44:09 <slangasek> tjaalton also reported that this didn't happen in 11.04, strangely
+
+ 15:44:14 <cjwatson> and I'd be more comfortable with a mountall hack than trying to rewrite fstab on upgrade
+
+ 15:44:28 <slangasek> fair enough
+
+ 15:44:40 <cjwatson> maybe something in the mountall stack got stricter
+
+ 15:44:52 <cjwatson> I'm happy to look into this; assigned the bug to myself
+
+ 15:45:04 <bdmurray> okay, thanks
+
+ 15:45:39 <bdmurray> Does anybody, mvo, know if the apt tasks in bug 659438 are necessary?
+
+ 15:45:41 <ubottu> Launchpad bug 659438 in apt (Ubuntu) "Installation/Removal fails because of package which could not be located (failure in apt.Cache.required_download)" [High,Triaged] https://launchpad.net/bugs/659438
+
+ 15:46:05 <bdmurray> it's our hottest bug and the aptdaemon task was recently fixed so it'd be nice to get it off the list
+
+ 15:46:20 * mvo looks
+
+ 15:47:26 <mvo> bdmurray: I can't mark it invalid myself, apt times out, but I do believe that the aptdaemon fix is sufficient
+
+ 15:47:51 <bdmurray> mvo: okay, I can take care of closing it then
+
+ 15:47:55 <slangasek> \o/
+
+ 15:48:17 <slangasek> mvo: while you're here... bug #938116 is assigned to you
+
+ 15:48:19 <ubottu> Launchpad bug 938116 in apt (Ubuntu Precise) "update-manager crashed with SIGSEGV in DescriptionList()" [High,Confirmed] https://launchpad.net/bugs/938116
+
+ 15:48:50 <slangasek> mvo: seb128 did it, not me ;)  Are you going to get to that bug for 12.04, or should we have someone else take a look?
+
+ 15:50:49 <mvo> hm, I have a vague idea what might be causing this, but it requires some serious effort to look deeper, one simple workaround would be to always refresh the cache when software-properties was run and returns a exit-state that indicates that something changes
+
+ 15:51:01 <cjwatson> oh, hey, looking at bug 441242 I see that mvo added support to update-manager to convert people's fstabs
+
+ 15:51:04 <ubottu> Launchpad bug 441242 in update-manager (Ubuntu) "Ubiquity generates bad fstab with NTFS partitions" [Undecided,Fix released] https://launchpad.net/bugs/441242
+
+ 15:51:07 <cjwatson> so apparently some deeper issue here
+
+ 15:51:39 <mvo> I did? excellent!
+
+ 15:52:51 <mvo> maybe there is a bug in that code then? (also it looks like it has a proper test)
+
+ 15:53:17 <cjwatson> I suspect it's something entirely different
+
+ 15:53:21 <cjwatson> will need to reproduce or something
+
+ 15:55:13 <slangasek> bdmurray: any other bugs?
+
+ 15:55:23 <bdmurray> slangasek: not today
+
+ 15:55:37 <slangasek> mvo: can you stash that workaround suggestion on the bug, and we can run with it?
+
+ 15:55:48 <slangasek> [TOPIC] Patch Piloting
+
+ 15:56:11 <slangasek> so our hit rate of patch piloting was much better for March than for February
+
+ 15:56:15 <slangasek> but not perfect :-P
+
+ 15:56:23 * ogra_ is up tomorrow ...
+
+ 15:56:57 * barry is up next tuesday
+
+ 15:57:09 <slangasek> so dholbach is threatening to withhold alcohol from me at UDS if we don't shape up
+
+ 15:57:18 <ogra_> lol
+
+ 15:57:30 * ogra_ would like to see him manage that
+
+ 15:57:52 <slangasek> if something comes up that you can't do your scheduled day, you can always reschedule.. but please reschedule, don't just let it pass
+
+ 15:58:09 <barry> slangasek: should we fear sober managers?
+
+ 15:58:13 <infinity> I'm piloting today...
+
+ 15:58:16 <slangasek> barry: I would!
+
+ 15:58:20 <barry> :)
+
+ 15:58:28 <slangasek> [TOPIC] AOB
+
+ 15:58:30 <slangasek> anything else?
+
+ 15:58:38 * dholbach hugs slangasek
+
+ 16:00:02 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

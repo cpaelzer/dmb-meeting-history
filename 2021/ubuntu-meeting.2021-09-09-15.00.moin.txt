@@ -1,0 +1,645 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 09 Sep at 15:00 &mdash; 15:52 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-09-09-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:00.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:09.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html   (bdmurray, 15:09)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html   (bdmurray, 15:31)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html   (bdmurray, 15:32)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:38.
+
+ * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:38)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:46.
+
+ * ''LINK:'' https://people.canonical.com/~doko/ftbfs-report/test-rebuild-20210805-impish-impish.html#foundations-bugs   (doko, 15:46)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (62)
+ * dbungert (32)
+ * vorlon (31)
+ * ubottu (28)
+ * juliank (28)
+ * slyon (24)
+ * sil2100 (22)
+ * jawn-smith (14)
+ * schopin (13)
+ * waveform (8)
+ * ginggs (8)
+ * doko (8)
+ * xypron (6)
+ * alexghiti (4)
+ * meetingology (2)
+ * mclemenceau (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:21 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <waveform> o/
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:00 <mclemenceau> o/
+
+ 15:00 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert xypron ginggs schopin alexghiti)
+
+ 15:00 <bdmurray> waveform jawn-smith ginggs bdmurray mwhudson sil2100 alexghiti vorlon juliank doko dbungert slyon schopin xypron
+
+ 15:01 <waveform> * Investigated (with sil2100's assistance) image build failure for Pi impish images
+
+ 15:01 <waveform> * Added fix to pi-gadget (classic branch) for impish images, cherry-picked to desktop, and 22-arm{hf,64} branches
+
+ 15:01 <waveform> * Working on ISO testing generator for pi test cases
+
+ 15:01 <waveform> * Uploaded rtimulib, python-sense-hat, sense-hat packages to deb mentors
+
+ 15:01 <waveform> * Finished updating sense-emu package
+
+ 15:01 <waveform> * Pi meetings
+
+ 15:01 <waveform> (done)
+
+ 15:01 <jawn-smith> * glib2.0 proposed migration
+
+ 15:01 <jawn-smith> * pango proposed migration
+
+ 15:01 <jawn-smith> * Investigate FTBFS failures (segmentation faults) on golang packages on ppc64el
+
+ 15:01 <jawn-smith> * Known upstream issue, resolved by golang 1.16.7 in -release
+
+ 15:01 <jawn-smith> * While it's resolved for built packages, this is likely to cause headaches with packages built before kernel 5.13 trying to run on kernel 5.13. This includes snaps.
+
+ 15:01 <jawn-smith> * openssh proposed-migration
+
+ 15:01 <jawn-smith> * I've now ruled out the cgroups hybrid vs unified issue, and am chasing down a theory about security.nesting in the lxc
+
+ 15:01 <jawn-smith> * This is also blocked by snapd issues                                                                            * More field engineer support for image customization process
+
+ 15:01 <jawn-smith> * Applied for core-dev, but the DMB wasn't able to vote due to the holiday. Trying again 9/20.
+
+ 15:01 <jawn-smith> [done]
+
+ 15:02 <bdmurray> ginggs:
+
+ 15:02 <ginggs> * finished +1 Maintenance and wrote report
+
+ 15:02 <ginggs> - 2 items still oustanding for an archive admin to look at: LP: #1937070 and LP: #1942607
+
+ 15:02 <ginggs> * looking at mdadm 4.2(~rc?) for focal, found LP: #1890248 and fixed tag
+
+ 15:02 <ginggs> * fuse3 for s390-tools LP: #1935666, need to update the PR
+
+ 15:02 <ginggs> * sponsoring LP: #1938582 and LP: #1940453 for xypron
+
+ 15:02 <ubottu> Launchpad bug 1937070 in stylish-haskell (Ubuntu) "please RM stylish-haskell binaries on riscv64 and s390x" [Undecided, New] https://launchpad.net/bugs/1937070
+
+ 15:02 <ubottu> Launchpad bug 1942607 in unifont (Ubuntu) "unifont-bin not installable on i386" [Undecided, New] https://launchpad.net/bugs/1942607
+
+ 15:02 <ubottu> Launchpad bug 1890248 in mdadm (Ubuntu) "update mdadm for focal" [Undecided, Confirmed] https://launchpad.net/bugs/1890248
+
+ 15:02 <ubottu> Launchpad bug 1935666 in Ubuntu on IBM z Systems "s390-tools FTBFS when built with libfuse3-dev" [High, New] https://launchpad.net/bugs/1935666
+
+ 15:02 <ubottu> Launchpad bug 1938582 in efitools (Ubuntu) "efitools does not build on RISC-V" [Wishlist, In Progress] https://launchpad.net/bugs/1938582
+
+ 15:02 <ubottu> Launchpad bug 1940453 in libguestfs (Ubuntu) "libguestfs: virt-make-fs fails on RISC-V" [Low, Fix Committed] https://launchpad.net/bugs/1940453
+
+ 15:02 <ginggs> (done)
+
+ 15:02 <bdmurray> submit firewall change for access to the Error Tracker in PS5
+
+ 15:02 <bdmurray> debugging vip-manager autopkgtests w/ dbungert
+
+ 15:02 <bdmurray> sponsored vip-manager for dbungert with an autopkgtest fix
+
+ 15:02 <bdmurray> fixed a crash in sru-report, cowboyed the change on snakefruit
+
+ 15:02 <bdmurray> uploaded python-apt, ubuntu-release-upgrader for bionic point release
+
+ 15:02 <bdmurray> uploaded impish bug fix for LP: #1938043 and a Focal SRU for it
+
+ 15:02 <bdmurray> wrote an SRU test case for LP: #1938043
+
+ 15:02 <bdmurray> helped with glibc migration
+
+ 15:02 <ubottu> Launchpad bug 1938043 in update-manager (Ubuntu Focal) "ubuntu-security-status" [Undecided, Triaged] https://launchpad.net/bugs/1938043
+
+ 15:03 <bdmurray> SRU reviews
+
+ 15:03 <bdmurray> testing of Error Tracker in PS5
+
+ 15:03 <bdmurray> 360 work
+
+ 15:03 <bdmurray> ✔ done
+
+ 15:03 <bdmurray> sil2100:
+
+ 15:03 <sil2100> * SRU reviews and releases
+
+ 15:03 <sil2100> * Ubuntu Core discussions
+
+ 15:03 <sil2100> * 18.04.6:
+
+ 15:03 <sil2100> - Prepared tracking document, started working on prep tasks
+
+ 15:03 <sil2100> - Prepared base-files, debian-installer, ubiquity
+
+ 15:03 <sil2100> - Reviewed other packages that Brian prepared
+
+ 15:03 <sil2100> - Coordination with the kernel team
+
+ 15:03 <sil2100> - A few roundtrips to the snapd team to get it releasable for bionic
+
+ 15:03 <sil2100> - Re-enabling bionic daily builds, cdimage changes
+
+ 15:03 <sil2100> * Work on cdimage bits:
+
+ 15:03 <sil2100> - Simplestreams
+
+ 15:03 <sil2100> - Looking into if we can easily enable Ubuntu Core isotracker rebuilds
+
+ 15:03 <sil2100> * Sent out info about ESM britney in production, work on documentation
+
+ 15:03 <sil2100> * Mentoring here and there
+
+ 15:03 <sil2100> * 360
+
+ 15:04 <sil2100> * Started looking into make_disk for ubuntu-image
+
+ 15:04 <sil2100> * Looking into failing image builds for impish raspi
+
+ 15:04 <sil2100> * Gathering some feedback for a meeting with LP about core bootstrapping
+
+ 15:04 <sil2100> * Additional NEW reviews for xilinx
+
+ 15:04 <sil2100> * Thinking and discussing propositions for better coordination in the release team
+
+ 15:04 <sil2100> (done)
+
+ 15:04 <alexghiti> * Still onboarding
+
+ 15:04 <alexghiti> * Sort/fix packages that fail to build on riscv64
+
+ 15:04 <alexghiti> * Sort/fix packages that fail to install on riscv64
+
+ 15:04 <alexghiti> (done)
+
+ 15:04 <bdmurray> vorlon:
+
+ 15:05 <vorlon> * short week, Monday was a US holiday
+
+ 15:05 <vorlon> * finding a workaround for my longstanding laptop stability issue (LP: #1939349)
+
+ 15:05 <ubottu> Launchpad bug 1939349 in linux (Ubuntu) "frequent hangs with latest hirsute kernel (nvidia graphics)" [Undecided, Confirmed] https://launchpad.net/bugs/1939349
+
+ 15:05 <vorlon> * discussions around proposed-migration for ESM
+
+ 15:05 <vorlon> * NEW reviews
+
+ 15:05 <vorlon> * 360 reviews
+
+ 15:05 <vorlon> (done)
+
+ 15:05 <sil2100> vorlon: oh, proposed migration for ESM? Using the security-britney infrastructure?
+
+ 15:06 <juliank> * apt:
+
+ 15:06 <juliank> - reviewed merge requests 183, 184; merged former
+
+ 15:06 <juliank> - changed error handling for failed delay item restart
+
+ 15:06 <juliank> - released 2.3.9
+
+ 15:06 <juliank> * sponsored libuv1 for schopin
+
+ 15:06 <juliank> * uploaded shim 15.4-0ubuntu9 SRU to bionic
+
+ 15:06 <juliank> * was out Wednesday
+
+ 15:06 <juliank> * 360 WIP
+
+ 15:06 <juliank> (done)
+
+ 15:06 <doko> - python3.10 rc2
+
+ 15:06 <doko> - GCC 11, GCC 10, GCC 9 updates
+
+ 15:06 <doko> - 360
+
+ 15:06 <doko> (DONE)
+
+ 15:06 <dbungert> 4 day week
+
+ 15:06 <dbungert> * curl vs vip-manager LP: #1942375 - hint declined.  Did test PRs with
+
+ 15:06 <dbungert> a PPA to get more data on test environment, added patch to address
+
+ 15:06 <ubottu> Launchpad bug 1942375 in vip-manager (Ubuntu) "test failure with some network configurations" [Low, Fix Released] https://launchpad.net/bugs/1942375
+
+ 15:06 <dbungert> what was found.  Patch uploaded (thanks bdmurray) and sent upstream
+
+ 15:06 <dbungert> (vip-manager PR #76) and to debian (debbugs: #993620).  With this,
+
+ 15:06 <ubottu> Bug 76 in Baz (deprecated) "PANIC 'exiting on botched invarient' in status" [Medium, Fix Released] https://launchpad.net/bugs/76
+
+ 15:06 <dbungert> curl finally migrated.
+
+ 15:06 <dbungert> * curtin - change jenkins config so that I get build failure
+
+ 15:06 <dbungert> notifications, submit and get merged a MP to fix build failures
+
+ 15:06 <dbungert> * subiquity - get a pubsub PR unstuck and merged
+
+ 15:06 <dbungert> * subiquity / u-d-i - test autoinstall against the desktop image.  It
+
+ 15:06 <dbungert> does work there, but the UI doesn't know anything about it.  After
+
+ 15:06 <dbungert> discussion, plan for now is to disable autoinstall on the Desktop
+
+ 15:06 <dbungert> image until u-d-i is ready to handle that.
+
+ 15:06 <dbungert> * snapd vs several things - there appear to be 3 distinct problems:
+
+ 15:06 <dbungert> 1) failure to compile golang during test - presumed fixed by the
+
+ 15:06 <dbungert> latest stable go snap
+
+ 15:06 <dbungert> 2) mksquashfs failures during test - snapd was reliant upon loading
+
+ 15:06 <dbungert> libgcc_s from the host for this.  I tracked this down (LP: 1943077),
+
+ 15:06 <ubottu> Launchpad bug 1943077 in openssh (Ubuntu) "snapd fails to autopkgtest on mksquashfs, which is looking for libgcc_s" [Undecided, New] https://launchpad.net/bugs/1943077
+
+ 15:06 <dbungert> mwhudson fixed it, PR merged on snapd snap, retested edge snap and
+
+ 15:06 <dbungert> this is working.
+
+ 15:06 <dbungert> 3) confinement failures - current snapd will not consider cgroups v2
+
+ 15:07 <dbungert> to meet the criteria for strict confinement.   This may continue to
+
+ 15:07 <dbungert> be a blocking issue for systemd > 248.3-1ubuntu3.
+
+ 15:07 <dbungert> Conclusion - once we have the snapd snap with the mksquashfs on
+
+ 15:07 <dbungert> the snapd stable channel, or can 'trigger' with that snap, retests
+
+ 15:07 <dbungert> that DON'T trigger with systemd 248.3-1ubuntu7 should work.
+
+ 15:07 <dbungert> (done)
+
+ 15:07 <slyon> - short week
+
+ 15:07 <slyon> - working through vacation backlog
+
+ 15:07 <slyon> - interviews & take-home tests
+
+ 15:07 <slyon> - 360s
+
+ 15:07 <slyon> - cleaning up unfinished/broken wlroots transition (sway vs phoc)
+
+ 15:07 <slyon> - systemd proposed-migration: retries, hint, lxc investigation, bug #1943121
+
+ 15:07 <slyon> - reviewing & sponsoring s390-tools[-signed] for fheimes, bug #1938947
+
+ 15:07 <ubottu> Bug 1943121 in bilibop (Ubuntu) "bilibop 0.6.3 autopkgtest regressed in release" [Undecided, New] https://launchpad.net/bugs/1943121
+
+ 15:07 <slyon> needs queue review for signing: https://launchpad.net/ubuntu/impish/+queue?queue_state=1
+
+ 15:07 <slyon> - Fixing a dbus dependency deadlock during loop, bug #1936948
+
+ 15:07 <slyon> - discussions around MIR team
+
+ 15:07 <slyon> === Netplan ===
+
+ 15:07 <slyon> - triaged some bugs, LP: #1942930, LP: #1943110
+
+ 15:07 <slyon> - netplan SRUs for Hirsute/Focal/Bionic, bug #1938920, bug #1926442
+
+ 15:07 <ubottu> Bug 1936948 in dbus (Ubuntu Impish) "Dependency loop via sockets.target" [Undecided, Confirmed] https://launchpad.net/bugs/1936948
+
+ 15:07 <slyon> - reviewed many PRs on Github and merged some
+
+ 15:07 <slyon> (done)
+
+ 15:07 <ubottu> Launchpad bug 1942930 in netplan "Unset a subtree crashes" [Undecided, Triaged] https://launchpad.net/bugs/1942930
+
+ 15:07 <ubottu> Launchpad bug 1943110 in netplan "netplan crashes on 'netplan set' when /tmp is a tmpfs" [Undecided, Fix Committed] https://launchpad.net/bugs/1943110
+
+ 15:07 <ubottu> Bug 1938920 in netplan.io (Ubuntu Hirsute) "[SRU] Update to netplan.io 0.103" [Undecided, New] https://launchpad.net/bugs/1938920
+
+ 15:07 <ubottu> Bug 1926442 in Snappy "[SRU] cannot execute 'netplan generate' from within a snap" [Medium, Confirmed] https://launchpad.net/bugs/1926442
+
+ 15:07 <schopin> * localechooser: investigate FTBFS, which turned out in the end to be a simple infrastructure
+
+ 15:07 <schopin> failure to understand noudeb profiles.
+
+ 15:07 <schopin> * Brushed up on my TLS/SSL knowledge in preparation of working on openssl 1.1.1l merge
+
+ 15:07 <schopin> * scilab: worked on LP: #1870813 and investigating a mesa-related failure once it's fixed
+
+ 15:07 <ubottu> Launchpad bug 1870813 in scilab (Ubuntu Focal) "Scilab does not start on bionic and focal" [High, Confirmed] https://launchpad.net/bugs/1870813
+
+ 15:07 <schopin> (done)
+
+ 15:08 <bdmurray> xypron:
+
+ 15:08 <xypron> Rebased my golang work on current Impish I was overtaken (LP #1936664)
+
+ 15:08 <xypron> Adjusted build dpendencies for ubuntu-report (LP #1943146)
+
+ 15:08 <xypron> Some shim patches needed on the road to RISC-V support were accepted upstream https://github.com/rhboot/shim/commits?author=xypron
+
+ 15:08 <xypron> Resubmitted U-Boot patches upstream needed for powering off HiFive Unmatched via SBI.
+
+ 15:08 <xypron> I am currently looking into what is missing in upstream oprofile.
+
+ 15:08 <ubottu> Launchpad bug 1936664 in golang-1.16 (Ubuntu) "buildmode=c-shared not supported on linux/risc-v" [Wishlist, New] https://launchpad.net/bugs/1936664
+
+ 15:08 <xypron> <done>
+
+ 15:08 <ubottu> Launchpad bug 1943146 in ubuntu-report (Ubuntu) "ubuntu-report does not build on RISC-V" [Undecided, New] https://launchpad.net/bugs/1943146
+
+ 15:08 <bdmurray> are there any questions on status?
+
+ 15:09 <bdmurray> okay moving on then
+
+ 15:09 <bdmurray> #topic Release Incoming Bugs
+
+ 15:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html
+
+ 15:10 <bdmurray> bug 1871538 seems familiar
+
+ 15:10 <ubottu> Bug 1871538 in dbus (Ubuntu Impish) "dbus timeout-ed during an upgrade, taking services down including gdm" [High, Incomplete] https://launchpad.net/bugs/1871538
+
+ 15:10 <slyon> it's already carded
+
+ 15:11 <bdmurray> since it already has a card there's not much for us to do here
+
+ 15:12 <bdmurray> but we may want to move it up in the backlog or to selected for development
+
+ 15:12 <bdmurray> bug 1942603
+
+ 15:13 <schopin> "ubiquity - manual partitioning; edit partition & cannot select/do anything"
+
+ 15:13 <ubottu> Bug 1942603 in ubiquity (Ubuntu) "ubiquity - manual partitioning; edit partition & cannot select/do anything" [Undecided, New] https://launchpad.net/bugs/1942603
+
+ 15:14 <bdmurray> this seems worth confirming
+
+ 15:15 <bdmurray> so let's target and card it
+
+ 15:15 <bdmurray> bug 1943049
+
+ 15:15 <ubottu> Bug 1943049 in cloud-images "Docker ubuntu:impish: Problem executing scripts DPkg::Post-Invoke 'rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true'" [Undecided, Confirmed] https://launchpad.net/bugs/1943049
+
+ 15:16 <bdmurray> juliank: can you give us the tldr on this?
+
+ 15:16 <juliank> same as last time
+
+ 15:16 <juliank> docker seccomp filter somehow still defaults to EPERM instead of ENOSYS for unknown syscalls
+
+ 15:17 <juliank> There's a workaround for docker
+
+ 15:17 <juliank> And like the upstream patch which explicitly marks clone3 as ENOSYS
+
+ 15:17 <juliank> We had the same issue last glibc release, it was supposed to be fixed now
+
+ 15:17 <bdmurray> In terms of Foundations there is nothing for us to do though?
+
+ 15:18 <juliank> We could revert the use of clone3() in glibc to avoid triggering the issue while container runtimes are being fixed
+
+ 15:18 <juliank> it's like 10 lines to ifdef out
+
+ 15:19 <juliank> Then remove that at start of 22.04 cycle
+
+ 15:19 <bdmurray> You said same as last time earlier do you recall what we did last time?
+
+ 15:20 <juliank> I don't have links
+
+ 15:21 <juliank> glibc 2.33 needed similar container fixes
+
+ 15:21 <bdmurray> okay, let's target and card it
+
+ 15:21 <bdmurray> bug 1943109
+
+ 15:21 <ubottu> Bug 1943109 in openssl (Ubuntu) "Merge 1.1.1l-1 version from Debian" [Undecided, New] https://launchpad.net/bugs/1943109
+
+ 15:22 <bdmurray> schopin: is there already a card for this?
+
+ 15:22 <juliank> happy to sponsor
+
+ 15:22 <juliank> :D
+
+ 15:22 <schopin> No, not yet
+
+ 15:22 <bdmurray> is it worth carding or can y'all just do it?
+
+ 15:23 <juliank> MoM seems to do it itself
+
+ 15:23 <bdmurray> bug 1925314
+
+ 15:23 <ubottu> Bug 1925314 in casper (Ubuntu) "no eject media message after install xubuntu" [Undecided, Confirmed] https://launchpad.net/bugs/1925314
+
+ 15:24 <schopin> juliank: are you volunteering for the FFe filing as well? :D
+
+ 15:24 <bdmurray> schopin: you said it was just a bug fix!
+
+ 15:24 <juliank> schopin: none needed, just bug fixes :)
+
+ 15:24 <bdmurray> ;-)
+
+ 15:25 <bdmurray> it looks like the casper bug is affecting xubuntu and lubuntu
+
+ 15:25 <schopin> OK so basically I can upload (well, convince y'all to upload) whatever as long as I say it's bugfixes?
+
+ 15:25 <bdmurray> I'll ask about ubuntu
+
+ 15:26 <bdmurray> Well they are watching us
+
+ 15:26 <juliank> schopin: if you can convince us it's bugfixes yes :)
+
+ 15:26 <bdmurray> bug 1940635
+
+ 15:26 <ubottu> Bug 1940635 in systemd (Ubuntu) "systemd-networkd failing to acquire a DHCP6 lease from dnsmasq on armhf" [Undecided, Fix Committed] https://launchpad.net/bugs/1940635
+
+ 15:26 <slyon> there is a fix pending for this in systemd in -proposed
+
+ 15:26 <schopin> hasn't this been fixed?
+
+ 15:26 <bdmurray> okay then let's remove the tag
+
+ 15:26 <slyon> I just marked the glibc package as invalid
+
+ 15:27 <dbungert> will that systemd be able to migrate though before cgroupsv2 / snapd is resolved?
+
+ 15:27 <slyon> I don't think so
+
+ 15:27 <slyon> unless we do some hinting..
+
+ 15:28 <slyon> there is currently another lxc failure blocking systemd that I'm investigating. If that one is resolved we might convince the release team to hint the snapd test.
+
+ 15:31 <bdmurray> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html
+
+ 15:32 <bdmurray> no bugs!
+
+ 15:32 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:33 <bdmurray> bug 1942648
+
+ 15:33 <ubottu> Bug 1942648 in ubiquity (Ubuntu) "restart button remains visible in the advanced partitioner after the bitlocker page is shown" [Undecided, New] https://launchpad.net/bugs/1942648
+
+ 15:33 <bdmurray> This has a patch and I'd imagine it also affects Impish
+
+ 15:35 <bdmurray> let's go ahead and target and card it
+
+ 15:35 <bdmurray> bug 1939986
+
+ 15:35 <ubottu> Bug 1939986 in linux-firmware (Ubuntu) "Missing firmware files, in Ubuntu 20.04 LTS, for initramfs, when it loads i915" [Undecided, Confirmed] https://launchpad.net/bugs/1939986
+
+ 15:37 <bdmurray> that looks more like something for the kernel team
+
+ 15:38 <bdmurray> #topic Team proposed-migration report
+
+ 15:38 <bdmurray> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:38 <bdmurray> vorlon:
+
+ 15:39 <vorlon> boost1.74 - there was a comment in the notes last week that I was looking at this, but I wasn't, I was only looking at boost1.71 (which is now resolved, and as of today, removed from impish).  Who wants to look at boost1.74?
+
+ 15:39 <vorlon> ginggs: you did the latest autopkgtest retry, do you want to dig into this?
+
+ 15:39 <ginggs> vorlon: ok
+
+ 15:39 <vorlon> thanks
+
+ 15:39 <ginggs> for my sins
+
+ 15:40 <vorlon> apt vs devscripts - logs say juliank was on this. juliank do you want to keep it?
+
+ 15:40 <juliank> vorlon: yeah, well, will disappear anyway with 2.3.9 for a bit
+
+ 15:40 * juliank goes sync that
+
+ 15:40 <vorlon> juliank: ok
+
+ 15:41 <vorlon> squashfs-tools, dbungert has been working on it and has posted some analysis; one thing I notice is that the autopkgtest failure only happens on ppc64el, which is also the arch where vdso changes have (temporarily?) broken golang.  But since this involves libgcc_s it looks like that's just coincidence
+
+ 15:41 <vorlon> dbungert: are you ok to drive squashfs-tools?
+
+ 15:42 <dbungert> vorlon: I think it makes sense.  I think squashfs-tools is a bystander here and that we understand the underlying bugs.
+
+ 15:42 <vorlon> (it might just be we have to hint it since the fix is in snapd)
+
+ 15:42 <vorlon> right
+
+ 15:43 <vorlon> openssh has snapd test failures on more architectures, and also its own autopkgtest failing on armhf
+
+ 15:43 <vorlon> who can take this?
+
+ 15:43 <dbungert> I suspect it's related to the above
+
+ 15:43 <vorlon> jawn-smith: you merged it, is this yours?
+
+ 15:43 <jawn-smith> I'm working openssh
+
+ 15:43 <vorlon> ok
+
+ 15:43 <jawn-smith> the snapd failures are indeed the same as dbungert mentioned
+
+ 15:44 <jawn-smith> the openssh armhf failure is... weird
+
+ 15:44 <slyon> jawn-smith: you should try/trigger openssh vs snapd without systemd from -proposed, that will avoid the confinement failure
+
+ 15:44 <vorlon> systemd: this is blocked until snapd supports cgroupsv2 AIUI
+
+ 15:44 <slyon> yes. I'm working on those failures
+
+ 15:44 <slyon> lxc/bilibop
+
+ 15:45 <jawn-smith> slyon: thanks, I'll do that
+
+ 15:45 <vorlon> got it, systemd --> slyon
+
+ 15:45 <vorlon> and then grub2 is hanging out in -proposed, anyone know why it's not migrating? (juliank)
+
+ 15:45 <juliank> vorlon: I uploaded grub2-signed wrong, I'll go fix
+
+ 15:45 <vorlon> ok
+
+ 15:46 <vorlon> then that's the list
+
+ 15:46 <vorlon> thanks
+
+ 15:46 <vorlon> bdmurray:
+
+ 15:46 <bdmurray> #topic AOB
+
+ 15:46 <doko> https://people.canonical.com/~doko/ftbfs-report/test-rebuild-20210805-impish-impish.html#foundations-bugs
+
+ 15:46 <doko> still six ftbfs
+
+ 15:47 <dbungert> grep - I need a new sponsor.  I spoke to my sponsor today and I think they are a bit swamped.
+
+ 15:47 <vorlon> I'll look at sponsoring it today
+
+ 15:47 <dbungert> vorlon: thanks!
+
+ 15:47 <schopin> localechooser isn't related to GCC11, it's a false negative
+
+ 15:47 <schopin> libuv1 has been sponsored earlier this week
+
+ 15:47 <vorlon> localechooser is also "failed to build, no regression"?
+
+ 15:48 <doko> right
+
+ 15:48 <schopin> m4 is just waiting for a sponsor.
+
+ 15:48 <vorlon> doko: right, so libuv1 is fixed in release, is it worth regenerating the report?
+
+ 15:49 <bdmurray> I can look at m4
+
+ 15:49 <doko> yes, currently running
+
+ 15:50 <vorlon> and then openssh is in -proposed
+
+ 15:50 <vorlon> so looks like we're covered
+
+ 15:50 * juliank waits for anonster to work again: while ! test -e grub2-signed_1.173_source.ubuntu.upload; do timeout 30s dput grub2-signed_1.173_source.changes ; sleep 30; done
+
+ 15:51 <bdmurray> anything else?
+
+ 15:52 <bdmurray> thanks everybody
+
+ 15:52 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

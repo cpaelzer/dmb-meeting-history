@@ -1,0 +1,200 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by mmrazik at 14:30:39 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-03-27-14.30.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *unit and integration testing for the utouch-stack
+
+
+
+Meeting ended at 15:00:40 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * tvoss (45)
+ * mmrazik (19)
+ * cnd (5)
+ * MrChrisDruif (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 14:30:39 <mmrazik> #startmeeting
+
+ 14:30:39 <meetingology> Meeting started Tue Mar 27 14:30:39 2012 UTC.  The chair is mmrazik. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:30:39 <meetingology> 
+
+ 14:30:39 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 14:31:00 <tvoss> hi
+
+ 14:31:08 <mmrazik> We are here to have a public meeting on QA stuff we do in Product Strategy
+
+ 14:31:34 <mmrazik> today we would like to share some details on what we do with utouch in terms of quality
+
+ 14:31:44 <mmrazik> [TOPIC] unit and integration testing for the utouch-stack
+
+ 14:31:52 <mmrazik> tvoss: its yours :)
+
+ 14:32:06 <tvoss> mmrazik, thanks :)
+
+ 14:32:23 <tvoss> Hi all, my name is Thomas and I'm working as a quality engineer in the utouch team
+
+ 14:32:54 <tvoss> let me present the "architecture" of utouch briefly
+
+ 14:33:12 <tvoss> the stack mainly consists of 3 (4) components
+
+ 14:33:46 <tvoss> utouch-frame is an abstraction layer that takes care of device, window and touch event handling
+
+ 14:34:07 <tvoss> and it abstracts away from "platform specifics" regarding touches
+
+ 14:34:31 <tvoss> utouch-grail sits on top of utouch-frame and provides gesture recognition capablities
+
+ 14:35:01 <tvoss> utouch-geis integrates both utouch-frame and grail to provide gesture recognition services to applications via different interfaces
+
+ 14:35:05 <tvoss> for example: DBus
+
+ 14:35:46 <tvoss> finally, we have utouch-evemu optionally below frame
+
+ 14:36:25 <tvoss> obviously, a stack like utouch requires both unit-testing and integration-testing
+
+ 14:37:23 <tvoss> for both purposes, we rely on utouch-evemu to inject "fake" input events to the system
+
+ 14:37:44 <tvoss> and this testing/injection layer allows us to record and replay corner/test cases
+
+ 14:38:45 <tvoss> we use google test and its extension xorg-gtest to implement both our unit _and_ our integration testing
+
+ 14:38:50 <mmrazik> tvoss: so evemu exists just for testing purposes? Or is it needed in production environment as well.
+
+ 14:39:14 <tvoss> mmrazik, evemu is mainly used for testing purposes
+
+ 14:39:47 <tvoss> it relies on a kernel interface (uinput) to inject input events even below X
+
+ 14:39:56 <mmrazik> ok. I was just curious
+
+ 14:39:58 <cnd> (it used to be a runtime dependency in the old utouch stack, but isn't anymore)
+
+ 14:40:18 <tvoss> as X and XI 2.2 are parts of our stack as well
+
+ 14:40:34 <tvoss> any other questions so far?
+
+ 14:41:17 * MrChrisDruif waits for the full "presentation"
+
+ 14:41:50 <tvoss> a quick side note on xorg-gtest: it's a google test fixture/testing environment that takes care of starting/stopping a dummy x server environment
+
+ 14:43:06 <tvoss> in our integration testing scenarios, we rely on xorg-gtest to start up a dummy server, insert fake events via evemu, and let them pass through the X server to utouch-frame
+
+ 14:43:24 <tvoss> and to utouch-grail subsequently
+
+ 14:44:13 <tvoss> with this chain in place, we are able to test both touch handling and gesture recognition with the help of pre-recorded touch sequences
+
+ 14:45:06 <tvoss> so far for the actual testing setup. are there any questions? If not, I would go on with our continouos integration architecutre
+
+ 14:45:26 <mmrazik> just curious -- how many tests do we have in place right now?
+
+ 14:45:29 <mmrazik> for the integration part
+
+ 14:45:56 <tvoss> mmrazik, all together, I would estimate like 20 overall cases
+
+ 14:46:13 <tvoss> where each case might contain different types of gestures to be recognized etc
+
+ 14:46:30 <cnd> grail has 18, frame has 2 or 3
+
+ 14:46:33 <tvoss> some of them are regression tests
+
+ 14:46:39 <tvoss> cnd, thanks
+
+ 14:46:40 <cnd> geis has maybe 5?
+
+ 14:47:06 <mmrazik> thx
+
+ 14:47:36 <tvoss> okay :)
+
+ 14:48:00 <tvoss> we use jenkins for continouos integration purposes
+
+ 14:48:49 <tvoss> and we recently started working on a virtualization setup that allows us to build _and_ test frame, grail and geis in a vm
+
+ 14:49:17 <tvoss> this allows us to do ci both for different releases/versions of ubuntu and for different platforms
+
+ 14:49:37 <tvoss> currently, we run our builds and tests for precise on both i386 and amd64
+
+ 14:50:20 <tvoss> but we are planning to extend this to further versions and platforms in the future
+
+ 14:50:50 <MrChrisDruif> I'd highly suggest ARM
+
+ 14:51:06 <tvoss> MrChrisDruif, yeah, we are working on that
+
+ 14:51:36 <MrChrisDruif> Seeing most tablets and smartphones are ARM, I wonder why that wasn't the first one
+
+ 14:52:29 <tvoss> MrChrisDruif, well, problem here is the availability of vm's
+
+ 14:53:00 <tvoss> only qemu supports arm at the present moment (at least, for alien host architectures)
+
+ 14:53:06 <cnd> MrChrisDruif, also, the code is platform agnostic
+
+ 14:53:23 <cnd> the tests will likely catch trivial bugs like variable size differences
+
+ 14:53:36 <mmrazik> MrChrisDruif: and HW in general. While our lab is  "full" of x86* HW  we don't have ARM ATM.
+
+ 14:53:48 <mmrazik> but as tvoss said. It is on our radar and we are actively working on this
+
+ 14:54:05 <mmrazik> the current plan is to have a functional setup for ARM testing for the 12.10 development cycle
+
+ 14:54:10 <mmrazik> which starts in few months
+
+ 14:54:20 <mmrazik> actually its more like a month
+
+ 14:54:28 <tvoss> mmrazik, indeed :)
+
+ 14:55:43 <tvoss> okay, putting all of the parts together, we are currently running builds and all of the tests for every merge to the trunk's projects
+
+ 14:56:05 <MrChrisDruif> Great, thanks (had to check what agnostic code meant)
+
+ 14:56:31 <tvoss> developers are provided with the unit test results/build logs and code coverage analysis results
+
+ 14:56:43 <MrChrisDruif> (P.s.: 12.04 is in 30 days, so less then a month)
+
+ 14:57:03 <tvoss> for the latter, we rely on instrumented code and gcov/lcov/gcovr to extract the results
+
+ 14:57:10 <mmrazik> MrChrisDruif: ack
+
+ 14:57:15 <tvoss> MrChrisDruif, thanks
+
+ 14:57:57 <tvoss> any other questions?
+
+ 15:00:01 <tvoss> well, thanks for reading then :)
+
+ 15:00:06 <mmrazik> tvoss: thanks for the presentation
+
+ 15:00:16 <tvoss> mmrazik, yw :)
+
+ 15:00:36 <mmrazik> thanks everybody for participating and see you next month
+
+ 15:00:40 <mmrazik> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

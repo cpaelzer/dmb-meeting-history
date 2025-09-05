@@ -1,0 +1,647 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 29 Oct at 15:00 &mdash; 16:01 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-10-29-15.00.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+The discussion about "Lightning Round" started at 15:00.
+
+
+=== Release Incoming Bugs ===
+The discussion about "Release Incoming Bugs" started at 15:09.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:58.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (86)
+ * vorlon (41)
+ * ubottu (37)
+ * xnox (27)
+ * rbalint (18)
+ * juliank (17)
+ * tdaitx (17)
+ * sil2100 (17)
+ * slyon (14)
+ * waveform (9)
+ * mclemenceau (7)
+ * meetingology (3)
+ * doko (1)
+
+
+
+== Full Log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started Thu Oct 29 15:00:35 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:00 <meetingology> 
+
+ 15:00 <meetingology> Available commands: action commands idea info link nick
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:00 <rbalint> o/
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint mwhudson juliank waveform slyon)
+
+ 15:01 <bdmurray> juliank rbalint mwhudson vorlon tdaitx sil2100 xnox doko slyon bdmurray waveform
+
+ 15:01 <xnox> hola
+
+ 15:01 <juliank> * python-apt:
+
+ 15:01 <juliank> - Rely on distro-info to expand templates for concrete releases instead of copy and pasting them (LP: #1727470) - https://salsa.debian.org/apt-team/python-apt/-/merge_requests/52
+
+ 15:01 <ubottu> Launchpad bug 1727470 in Ubuntu Translations "[RFE] Automatically update the Ubuntu version strings in python-apt" [Medium,Triaged] https://launchpad.net/bugs/1727470
+
+ 15:01 <juliank> - Rename Cdrom and Disc to (installation) medium (LP: #1849406); only committed so far
+
+ 15:01 <ubottu> Launchpad bug 1849406 in python-apt (Ubuntu) "Ubuntu 19.10: "Cdrom" to "Physical media"" [Undecided,Fix committed] https://launchpad.net/bugs/1849406
+
+ 15:01 <juliank> * oh no, an apt installation ordering issue (debian bug 973305). making some bits configure less immediate, but turning on immediate configuration makes it work; odd, eh?
+
+ 15:01 <ubottu> Debian bug 973305 in apt "apt-get throws error when run with --simulate and APT::Immediate-Configure set to "false"" [Important,Open] http://bugs.debian.org/973305
+
+ 15:01 <juliank> * +1 maintenance
+
+ 15:02 <juliank> (done or do people want +1 details here too?)
+
+ 15:02 <rbalint> (short week due to holidays)
+
+ 15:02 <rbalint> * partner work
+
+ 15:02 <rbalint> * systemd reviews
+
+ 15:02 <rbalint> * +1 maintenance
+
+ 15:02 <rbalint> * proposed a more complete fix for LP: #1891686
+
+ 15:02 <ubottu> Launchpad bug 1891686 in dpkg (Ubuntu) "Please default to nocheck on riscv64" [Undecided,New] https://launchpad.net/bugs/1891686
+
+ 15:02 <rbalint> * updated strace to new upstream
+
+ 15:02 <rbalint> * sponsored logrotate via Debian before merging it in Ubuntu to fix FTBFS
+
+ 15:02 <rbalint> * merged logrotate
+
+ 15:02 <rbalint> * preparing systemd 246.6-2ubuntu1 for hirsute
+
+ 15:02 <rbalint> * preparing glibc 2.32-0ubuntu4 for hirsute, landing today night/tomorrow morning
+
+ 15:02 <rbalint> * britney hints bzr->git migration
+
+ 15:02 <rbalint> (done)
+
+ 15:03 <bdmurray> vorlon: ?
+
+ 15:03 <bdmurray> How about tdaitx?
+
+ 15:03 <tdaitx> * openjdk security updated
+
+ 15:03 <tdaitx> - openjdk-8 updated to 8u272-b10, aarch32 hotspot (armhf) repo was not up-to-date and was patched
+
+ 15:03 <tdaitx> - openjdk-11 updated to 11.0.9-11
+
+ 15:03 <tdaitx> - rebased openjdk-lts on top of debian's openjdk-11 just before push
+
+ 15:03 <vorlon> oops - I'll go after tdaitx
+
+ 15:03 <tdaitx> - 3 retries for openjdk-11 armhf to pass with gcc-10
+
+ 15:04 <tdaitx> - now tracking errors.u.c and lp for any bug reports
+
+ 15:04 <tdaitx> * proposed fix for update-notifier (bug 1821412) (approved, now needs merge, upload, srus...)
+
+ 15:04 <ubottu> bug 1821412 in update-notifier (Ubuntu) ""System program problem" report button does nothing" [High,Confirmed] https://launchpad.net/bugs/1821412
+
+ 15:04 <tdaitx> * jck
+
+ 15:04 <tdaitx> - working around jenkins/snap restrictions for accounts outside /home
+
+ 15:04 <tdaitx> - working around proxy limitations/bugs in snap/lxd/snacraft/multipass
+
+ 15:04 <tdaitx> - working around lack of shitfs
+
+ 15:04 <tdaitx> - working around other workarounds
+
+ 15:04 <tdaitx> Other:
+
+ 15:04 <tdaitx> - hatting the guts of jenkaas sso integration and its short lived cookies
+
+ 15:04 <tdaitx> (done)
+
+ 15:04 <bdmurray> sil2100:
+
+ 15:04 <sil2100> - 20.10 release last week!
+
+ 15:04 <sil2100> - SRU reviews and releases
+
+ 15:04 <sil2100> - Archive opening
+
+ 15:04 <sil2100> - Adding notes about ubuntu-image specific hacks in the manpage
+
+ 15:04 <sil2100> - Experimented with and prepared a new google-cloud-sdk for xenial partner-proposed
+
+ 15:04 <xnox> * shiftfs
+
+ 15:04 <sil2100> - Looked into the raspi-config project and uploaded it into NEW
+
+ 15:04 <sil2100> - Promoted new core18 to stable
+
+ 15:04 <sil2100> - Forward-ported changes for making the core20 version number date-based as for core18
+
+ 15:04 <sil2100> - Reviewed Lukas's netplan fix for systemd-networkd misconfiguration
+
+ 15:04 <sil2100> - Interviews
+
+ 15:05 <sil2100> - Some bileto tweaks
+
+ 15:05 <sil2100> - Familiarized with ubiquity code, worked on providing user feedback of ubuntu-drivers running - almost there
+
+ 15:05 <vorlon> ok or not ;)
+
+ 15:05 <sil2100> (done)
+
+ 15:05 <vorlon> * release opening checklist
+
+ 15:05 <vorlon> * doing my merges for te beginning of cycle
+
+ 15:05 <vorlon> * cloud image discussions
+
+ 15:05 <vorlon> (done)
+
+ 15:05 <xnox> 29th October
+
+ 15:05 <xnox> fixing bootloader installation in livecd-rootfs
+
+ 15:05 <xnox> fixing hyperv gallery image in livecd-rootfs
+
+ 15:05 <xnox> testing riscv64 lxd builder to build livecd-rootfs images (cpc & buildd)
+
+ 15:05 <xnox> uploaded mdadm to fix degraded/dirty assembly to hirsuite, todo SRUs
+
+ 15:05 <xnox> grub2 sru to bionic accepted; need validation
+
+ 15:05 <xnox> submitted patch to snapcraft to build build-base core22 snaps
+
+ 15:05 <xnox> done
+
+ 15:06 <bdmurray> doko:
+
+ 15:06 <bdmurray> slyon:
+
+ 15:06 <slyon> - ISO testing
+
+ 15:06 <slyon> * Found problem with ZFS installation, LP: #1900859
+
+ 15:06 <slyon> - Improved cloud-init MAAS/OVS fix, PR#608
+
+ 15:06 <slyon> - klibc merge 2.0.8 via git-ubuntu, LP: #1900124
+
+ 15:06 <slyon> - Working on MOTU application
+
+ 15:06 <slyon> === Netplan ===
+
+ 15:06 <ubottu> Launchpad bug 1900859 in ubiquity (Ubuntu) "ZFS installation crashes while loading modules" [Undecided,New] https://launchpad.net/bugs/1900859
+
+ 15:06 <ubottu> Launchpad bug 1900124 in klibc (Ubuntu) "Please merge klibc 2.0.8-1 (main) from Debian unstable (main)" [Undecided,In progress] https://launchpad.net/bugs/1900124
+
+ 15:07 <slyon> - IRC/AskUbuntu support
+
+ 15:07 <slyon> - MAAS/OVS SRU + verification, LP: #1898997
+
+ 15:07 <slyon> - Updated gateway documentation & prepared LP: #1901836
+
+ 15:07 <slyon> - Fixed regression upstream, LP: #1888726
+
+ 15:07 <slyon> - Improved Github CI, using GH Actions + Codecov
+
+ 15:07 <slyon> - Working on 'netplan try' DBus commands, PR#134
+
+ 15:07 <slyon> (done)
+
+ 15:07 <ubottu> Launchpad bug 1898997 in cloud-init "MAAS cannot deploy/boot if OVS bridge is configured on a single PXE NIC" [Undecided,Confirmed] https://launchpad.net/bugs/1898997
+
+ 15:07 <ubottu> Launchpad bug 1901836 in netplan "netplan should warn/fail if multiple default gateways are defined" [Undecided,New] https://launchpad.net/bugs/1901836
+
+ 15:07 <ubottu> Launchpad bug 1888726 in netplan.io (Ubuntu Focal) "systemd-udevd regression: some renamed network interfaces stuck in "pending" state" [Undecided,New] https://launchpad.net/bugs/1888726
+
+ 15:07 <bdmurray> modified snap remove code to print the date for IS
+
+ 15:07 <bdmurray> sponsored waveform's fix for LP: #1836475 (twice!)
+
+ 15:07 <bdmurray> uploaded tzdata 2020b for Groovy LP: #1900436 (more than twice)
+
+ 15:07 <bdmurray> uploaded tzdata 2020d SRUs for P, T, X, B, F, G
+
+ 15:07 <ubottu> Launchpad bug 1836475 in ubuntu-release-upgrader (Ubuntu Groovy) "update-notifier-common weekly cron job runs at the same time for all computers across the globe" [Undecided,Confirmed] https://launchpad.net/bugs/1836475
+
+ 15:07 <ubottu> Launchpad bug 1900436 in tzdata (Ubuntu) "new upstream release 2020b" [Undecided,Fix released] https://launchpad.net/bugs/1900436
+
+ 15:07 <bdmurray> created a test case for verifying icu-data updates
+
+ 15:07 <bdmurray> SRU verification of tzdata uploads
+
+ 15:07 <bdmurray> research into LP: #1872106
+
+ 15:07 <bdmurray> updated ubuntu-manpages-repository: -Eoan +Groovy +Hirsute
+
+ 15:07 <bdmurray> submitted RT to have it done on the server
+
+ 15:07 <ubottu> Launchpad bug 1872106 in isc-dhcp (Ubuntu Focal) "isc-dhcp-server crashing constantly [Ubuntu 20.04]" [Undecided,Confirmed] https://launchpad.net/bugs/1872106
+
+ 15:07 <bdmurray> reported slideshow bug LP: #1900756
+
+ 15:07 <bdmurray> uploaded u-r-u for 21.04
+
+ 15:07 <bdmurray> updated meta-release for hirsute
+
+ 15:07 <bdmurray> worked with sil2100 on distro-info-data
+
+ 15:07 <bdmurray> groovy release stuff
+
+ 15:07 <ubottu> Launchpad bug 1900756 in ubiquity-slideshow-ubuntu (Ubuntu) "ubuntu-kylin slideshow still contains information about 5.4 kernel" [Undecided,Fix released] https://launchpad.net/bugs/1900756
+
+ 15:07 <bdmurray> ✔ done
+
+ 15:07 <bdmurray> waveform:
+
+ 15:08 <waveform> * Still using the pi desktop image :)
+
+ 15:08 <waveform> * Answering lots of questions from the community about the new destkop image (mostly USB boot related)!
+
+ 15:08 <waveform> * Worked on userland MIR (lower priority post-release) (LP: #1895137)
+
+ 15:08 <waveform> * Investigated dual monitor issue on pi desktop (appears to be hi-res only)
+
+ 15:08 <ubottu> Launchpad bug 1895137 in rpi-eeprom (Ubuntu) "[MIR] rpi-eeprom; raspberrypi-userland" [Undecided,In progress] https://launchpad.net/bugs/1895137
+
+ 15:08 <waveform> * Investigating bluetooth reboot issue; can't reliably reproduce at the moment (LP: #1901272)
+
+ 15:08 <ubottu> Launchpad bug 1901272 in pi-bluetooth (Ubuntu) "Can't connect Bluetooth devices after reboot - Ubuntu 20.10 on Raspberry Pi 4" [Undecided,Confirmed] https://launchpad.net/bugs/1901272
+
+ 15:08 <waveform> * Updated pi-gadget to fix stored MAC address in Core 18 bootloader (LP: #1900879)
+
+ 15:08 <ubottu> Launchpad bug 1900879 in snap-core18 "MAC addresses hard-coded in bootloader" [Critical,Confirmed] https://launchpad.net/bugs/1900879
+
+ 15:08 <waveform> * Worked on Core 20 d-t boot issues
+
+ 15:08 <waveform> * ... more work on Core 20 d-t boot issues after realizing first solution can't work
+
+ 15:08 <waveform> (done)
+
+ 15:08 <bdmurray> doko: ?
+
+ 15:09 <bdmurray> #topic Release Incoming Bugs
+
+ 15:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs
+
+ 15:10 <bdmurray> bug 1902025
+
+ 15:10 <ubottu> bug 1902025 in update-manager (Ubuntu) "hwe kernel not scoped under "Ubuntu Base"" [Undecided,New] https://launchpad.net/bugs/1902025
+
+ 15:10 <bdmurray> I've sorted by number and descending
+
+ 15:11 <bdmurray> This doesn't seem terribly important
+
+ 15:12 <bdmurray> So let's sit on it
+
+ 15:12 <sil2100> +1
+
+ 15:12 <bdmurray> bug 1901723
+
+ 15:12 <ubottu> bug 1901723 in openssl (Ubuntu) "backport Refactor BN_R_NO_INVERSE logic in internal functions" [Undecided,Confirmed] https://launchpad.net/bugs/1901723
+
+ 15:12 <bdmurray> What is the motivation for doing this?
+
+ 15:13 <rbalint> +1
+
+ 15:13 <bdmurray> Okay, let's card that.
+
+ 15:14 <bdmurray> mclemenceau: ^
+
+ 15:14 <mclemenceau> you got it
+
+ 15:14 <bdmurray> bug 1901137
+
+ 15:14 <ubottu> bug 1901137 in ubiquity (Ubuntu) "UEFI on Legacy - grub-install fails due to no space left on ESP" [Critical,Triaged] https://launchpad.net/bugs/1901137
+
+ 15:15 <bdmurray> Is this really Critical?
+
+ 15:15 <vorlon> I'd say no
+
+ 15:16 <bdmurray> But still worth sorting out
+
+ 15:16 <rbalint> this can break upgrades
+
+ 15:16 <vorlon> but we do need to decide what to do regarding the various edge cases of ESP when installer is booted under BIOS, yes
+
+ 15:17 <bdmurray> okay, let's card that
+
+ 15:17 <mclemenceau> ack
+
+ 15:17 <bdmurray> bug 1901043
+
+ 15:17 <ubottu> bug 1901043 in ubiquity (Ubuntu) "No sound in ubiquity-dm with nomodeset" [Undecided,New] https://launchpad.net/bugs/1901043
+
+ 15:19 <bdmurray> Let's call that medium
+
+ 15:19 <vorlon> is this really a ubiquity bug or is it a kernel bug?
+
+ 15:19 <xnox> to be determined.
+
+ 15:19 <bdmurray> and pass on it for now
+
+ 15:19 <vorlon> ok
+
+ 15:20 <bdmurray> bug 1900925
+
+ 15:20 <ubottu> bug 1900925 in ubiquity (Ubuntu) "Advanced features dialog w/ screen reader" [Undecided,New] https://launchpad.net/bugs/1900925
+
+ 15:20 <bdmurray> I noticed this when doing iso testing.
+
+ 15:21 <bdmurray> I'm not certian how important it is
+
+ 15:21 <sil2100> hm, I would take it
+
+ 15:22 <bdmurray> Could it be a larger problem than just the ubiquity dialog?
+
+ 15:22 <bdmurray> Like something in the screen reading stack.
+
+ 15:22 <xnox> we could dynamically remove/add label, but then it would make the popup resize which is a UX no-no.
+
+ 15:22 <sil2100> I doubt it, I think it's probably something we should do better in ubiquity
+
+ 15:23 <bdmurray> okay, lets take a card for that
+
+ 15:23 <mclemenceau> ok
+
+ 15:23 <bdmurray> bug 1898778
+
+ 15:23 <ubottu> bug 1898778 in nfs-utils (Ubuntu) "RPCNFSDARGS missing from /etc/default/nfs-kernel-server" [Medium,Triaged] https://launchpad.net/bugs/1898778
+
+ 15:25 <bdmurray> let's take that then
+
+ 15:25 <bdmurray> bug 1897929
+
+ 15:25 <ubottu> bug 1897929 in ubiquity (Ubuntu) "secure boot password "password" is reported to be 'good'" [Undecided,New] https://launchpad.net/bugs/1897929
+
+ 15:26 <vorlon> we shouldn't be doing password quality checks at all on the mok password
+
+ 15:26 <vorlon> so that's the thing to fix here
+
+ 15:26 <bdmurray> can you comment to that affect on the bug?
+
+ 15:26 <vorlon> but I don't think it's all that high priority, unless there are circumstances in which we're telling users their mok password is bad
+
+ 15:26 <vorlon> yes
+
+ 15:27 <vorlon> commented
+
+ 15:27 <bdmurray> bug 1894919
+
+ 15:27 <ubottu> bug 1894919 in ubuntu-release-upgrader (Ubuntu Focal) "gnome-software-plugin-snap consider an unwanted removal for 20.04 ubuntu-desktop" [Medium,Triaged] https://launchpad.net/bugs/1894919
+
+ 15:28 <bdmurray> We should still sort out what is considered and unwanted removal.
+
+ 15:28 <vorlon> if this is already triaged for focal, shouldn't we automatically take it for devel?
+
+ 15:32 <bdmurray> bug 1893964
+
+ 15:32 <ubottu> bug 1893964 in ubiquity (Ubuntu) "Installation of Ubuntu Groovy with manual partitioning without an EFI System Partition fails on 'grub-install /dev/sda' even on non-UEFI systems" [Undecided,Confirmed] https://launchpad.net/bugs/1893964
+
+ 15:32 <vorlon> this sounds like it's a duplicate of the other bug we discussed?
+
+ 15:32 <xnox> kind of, but slightly different reproducer
+
+ 15:32 <xnox> (manual rather than any of the automatic recipes)
+
+ 15:33 <xnox> should we allow installations without ESP?
+
+ 15:33 <juliank> maybe
+
+ 15:33 <rbalint> i think so
+
+ 15:33 <xnox> explicit and warn? or even no warning?
+
+ 15:33 <vorlon> well, rule 1, we shouldn't allow the user to leave the partitioner with a config that will lead to an install failure later
+
+ 15:33 <juliank> what about legacy systems where there is no space for ESP
+
+ 15:33 <xnox> in subiquity we create esp whenver we can, and it's just there.
+
+ 15:33 <xnox> juliank:  what about no space for grub-pc?
+
+ 15:33 <vorlon> rule 2, if the user can't have an ESP for whatever reason, we should let the install proceed without setting up grub-efi*
+
+ 15:34 <rbalint> there are quite usable non-UEFI systems
+
+ 15:34 <xnox> ack
+
+ 15:34 <xnox> take the bug then.
+
+ 15:34 <juliank> xnox: no space for grub-pc, if booting on uefi, should warn, but not fail
+
+ 15:34 <doko> sorry, fooled by the DST change
+
+ 15:34 <vorlon> taken
+
+ 15:34 <xnox> doko:  yeap, we guessed.
+
+ 15:35 <sil2100> Is it carded?
+
+ 15:36 <slyon> bug 1891721
+
+ 15:36 <ubottu> bug 1891721 in grub2 (Ubuntu) "grub-multi-install attempts to mount a non-existing device after migrating to another system" [Undecided,Confirmed] https://launchpad.net/bugs/1891721
+
+ 15:36 <xnox> this one is fun.
+
+ 15:36 <xnox> we somehow notice and install on usb-stick's ESP
+
+ 15:36 <xnox> and then break when it is unplugged.
+
+ 15:37 <vorlon> usb stick with the installer? or something else?
+
+ 15:37 <juliank> I saw that before
+
+ 15:37 <xnox> i wonder if grub-multi-install should ignore removable media; which is not rootfs?
+
+ 15:37 <xnox> usb stick with something else.
+
+ 15:37 <juliank> xnox: not really
+
+ 15:37 <vorlon> neato
+
+ 15:37 <vorlon> we should take it
+
+ 15:37 <juliank> xnox: So you might want to have ESP on USB stick
+
+ 15:37 <juliank> and take it with you
+
+ 15:38 <mclemenceau> ok vorlon: carded
+
+ 15:38 <bdmurray> bug 1884248 then
+
+ 15:38 <ubottu> bug 1884248 in networkd-dispatcher (Ubuntu) "networkd-dispatcher gives corrupted information" [Undecided,Confirmed] https://launchpad.net/bugs/1884248
+
+ 15:39 <bdmurray> juliank you tagged this bug do you have anything to add?
+
+ 15:39 <juliank> I haven't reproduced it, but I guess it needs fixing
+
+ 15:40 <juliank> Also new upstream releases to upload exist I think
+
+ 15:40 <bdmurray> okay
+
+ 15:41 <xnox> it is valid json.... bu thte keys and valu es l ook malforme d.
+
+ 15:43 <bdmurray> bug 1878601 we sort of talked about already
+
+ 15:43 <ubottu> bug 1878601 in nfs-utils (Ubuntu) "nfs-utils in Debian and Ubuntu is *very* old" [Low,Triaged] https://launchpad.net/bugs/1878601
+
+ 15:43 <mclemenceau> ok carded
+
+ 15:43 <bdmurray> so card that
+
+ 15:44 <bdmurray> bug 1874287
+
+ 15:44 <ubottu> bug 1874287 in ubiquity (Ubuntu Focal) "ubiquity must allow debconf database access when ubuntu-drivers executes apt-get install" [Undecided,New] https://launchpad.net/bugs/1874287
+
+ 15:44 <bdmurray> that already has a card
+
+ 15:44 <bdmurray> then our dbus time out friend
+
+ 15:44 <bdmurray> bug 1424768
+
+ 15:45 <ubottu> bug 1424768 in whoopsie (Ubuntu Bionic) "Consider switching to path based activation" [Medium,Confirmed] https://launchpad.net/bugs/1424768
+
+ 15:45 <vorlon> EBUGTOOOLD
+
+ 15:45 <vorlon> this has a card already
+
+ 15:45 <bdmurray> that already also has a card
+
+ 15:45 <bdmurray> here's an old bug
+
+ 15:45 <bdmurray> bug 764414
+
+ 15:45 <ubottu> bug 764414 in apport (Ubuntu) "private master bugs are confusing and lead to more duplicate filings" [Wishlist,Triaged] https://launchpad.net/bugs/764414
+
+ 15:47 <vorlon> not sure what we even could do with that
+
+ 15:47 <bdmurray> Colin indicated there was a Launchpad question about this as somebody encountered a master crash which was private
+
+ 15:47 <vorlon> ah, Robert had a suggestion
+
+ 15:48 <vorlon> but I think 'wishlist' is accurate and don't think we should commit to this
+
+ 15:48 <bdmurray> yeah, it hasn't seen much activity recently
+
+ 15:48 <bdmurray> we could be better about making private crashes public
+
+ 15:49 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs
+
+ 15:49 <bdmurray> bug 1890435
+
+ 15:49 <ubottu> bug 1890435 in gcc-10 (Ubuntu) "gcc-10 breaks on armhf (flaky): internal compiler error: Segmentation fault" [Critical,Confirmed] https://launchpad.net/bugs/1890435
+
+ 15:51 <bdmurray> okay we are still waiting on upstream
+
+ 15:51 <bdmurray> bug 1900774
+
+ 15:51 <ubottu> bug 1900774 in grub2 (Ubuntu Groovy) "[arm64] EFI stub: ERROR: FIRMWARE BUG: efi_loaded_image_t::image_base has bogus value" [Undecided,New] https://launchpad.net/bugs/1900774
+
+ 15:52 <bdmurray> let's take that
+
+ 15:53 <mclemenceau> ok
+
+ 15:53 <bdmurray> bug 1901000
+
+ 15:53 <ubottu> bug 1901000 in OEM Priority Project "dmesg need permission after kernel 5.8" [Critical,Confirmed] https://launchpad.net/bugs/1901000
+
+ 15:54 <bdmurray> well we are about out of time
+
+ 15:55 <bdmurray> however, I wanted to raise bug 1901725
+
+ 15:55 <ubottu> bug 1901725 in ubuntu-release-upgrader (Ubuntu Bionic) "check-new-release-gtk tells i386 users Ubuntu 20.04.1 is available" [Medium,Triaged] https://launchpad.net/bugs/1901725
+
+ 15:55 <vorlon> didn't we have a bug about that previously?
+
+ 15:55 <bdmurray> Right we fixed it so the upgrade doesn't happen
+
+ 15:56 <bdmurray> We just didn't fix the checker
+
+ 15:56 <tdaitx> regarding bug 764414 this feels that bugs being all-or-nothing private/public is at the bottom of the problem? would being able to set some items (attachments/comments) as private in a public bug a possible solution? not sure how that would be implemented, just asking
+
+ 15:56 <ubottu> bug 764414 in apport (Ubuntu) "private master bugs are confusing and lead to more duplicate filings" [Wishlist,Triaged] https://launchpad.net/bugs/764414
+
+ 15:56 <vorlon> right - we had talked about this previously though, and I thought there was previously a bug opened
+
+ 15:57 <vorlon> tdaitx: well, if you want to go propose patches to launchpad I guess :)
+
+ 15:57 <bdmurray> I didn't find it easily as searching for i386 wasn't helpful.
+
+ 15:57 <vorlon> fair enough
+
+ 15:57 <vorlon> anyway, we should take
+
+ 15:58 <bdmurray> and put it at the top for the next sprint probably
+
+ 15:58 <vorlon> (card, since it's already targeted)
+
+ 15:58 <mclemenceau> ok
+
+ 15:58 <bdmurray> #topic AOB
+
+ 15:58 <juliank> I'm out next week!
+
+ 15:59 <tdaitx> vorlon: if the idea I proposed makes any sense, we could have at least a whishlist bug open against launchpad for that, unless there is already one
+
+ 15:59 <vorlon> skipping proposed-migration on the agenda because everything is blocked by autopkgtests
+
+ 15:59 <vorlon> (queue is 9,000 deep on amd64)
+
+ 15:59 <rbalint> i'm out tomorow
+
+ 15:59 <vorlon> tdaitx: sure
+
+ 15:59 <vorlon> I'm out from next Tuesday to the following Wednesday
+
+ 16:00 <vorlon> (i.e. back the following Wednesday)
+
+ 16:00 <juliank> am I supposed to send out a +1 report?
+
+ 16:00 <vorlon> yes but I haven't sent my last 3
+
+ 16:00 <vorlon> so
+
+ 16:01 <bdmurray> alright, thanks everybody
+
+ 16:01 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

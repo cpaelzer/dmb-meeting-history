@@ -1,0 +1,367 @@
+== Meeting information ==
+ * #ubuntu-meeting: DMB, 18 Dec at 15:01 &mdash; 15:55 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2017/ubuntu-meeting.2017-12-18-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+The discussion about "Review of previous action items" started at 15:03.
+
+
+=== Package Set/Per Package Uploader Applications ===
+The discussion about "Package Set/Per Package Uploader Applications" started at 15:04.
+
+ * '''Andreas Hasenack''' (15:04)
+  * ''LINK:'' https://wiki.ubuntu.com/AndreasHasenack/UbuntuServerDevApplication <- application
+  * ''LINK:'' http://ubuntu-dev.alioth.debian.org/cgi-bin/ubuntu-sponsorships.cgi?render=html&sponsor=&sponsor_search=name&sponsoree=Andreas+Hasenack&sponsoree_search=name <- uploads
+  * ''Vote:'' Grant ahasenack ubuntu-server-dev upload rights (Carried)
+
+=== AOB ===
+The discussion about "AOB" started at 15:54.
+
+
+
+
+== Vote results ==
+
+ * [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2017/ubuntu-meeting.2017-12-18-15.01.log.html#102 Grant ahasenack ubuntu-server-dev upload rights]]
+  * Motion carried (For/Against/Abstained 5/0/0)
+   *  Voters rbasak, jbicha, sil2100, BenC, cyphermox
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ahasenack (62)
+ * sil2100 (40)
+ * rbasak (17)
+ * meetingology (14)
+ * jbicha (11)
+ * BenC (3)
+ * cyphermox (3)
+ * slashd (1)
+ * cpaelzer (1)
+ * dpb1 (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <sil2100> #startmeeting DMB
+
+ 15:01 <meetingology> Meeting started Mon Dec 18 15:01:50 2017 UTC.  The chair is sil2100. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <rbasak> But I'll +1 to get a quorate vote as needed (I'm already +1 as I endorsed him).
+
+ 15:02 <sil2100> rbasak: I would say it's not relevant that much, if you have are able to endorse someone as per his experience, I'm fine with counting your vote
+
+ 15:02 <sil2100> Bias can appear everywhere
+
+ 15:03 <sil2100> #topic Review of previous action items
+
+ 15:03 <sil2100> handsome_feng's two action items are done, right?
+
+ 15:04 <sil2100> I think it's all done indeed
+
+ 15:04 <rbasak> Yes
+
+ 15:04 <sil2100> #topic Package Set/Per Package Uploader Applications
+
+ 15:04 <sil2100> #subtopic Andreas Hasenack
+
+ 15:04 <ahasenack> hello
+
+ 15:05 <sil2100> ahasenack: hello o/ Could you please introduce yourself?
+
+ 15:05 <ahasenack> sure
+
+ 15:05 <sil2100> https://wiki.ubuntu.com/AndreasHasenack/UbuntuServerDevApplication <- application
+
+ 15:05 <sil2100> http://ubuntu-dev.alioth.debian.org/cgi-bin/ubuntu-sponsorships.cgi?render=html&sponsor=&sponsor_search=name&sponsoree=Andreas+Hasenack&sponsoree_search=name <- uploads
+
+ 15:05 <ahasenack> I started working on Ubuntu when I joined Canonical, many years ago (~2008)
+
+ 15:05 <ahasenack> working on landscape as a QA engineer
+
+ 15:05 <ahasenack> this year I switched to the ubuntu-server team
+
+ 15:06 <ahasenack> and as can be seen in my uploads list, they ramped up
+
+ 15:06 <ahasenack> I come from a server background, where I worked mainly with authentication/authorization packages
+
+ 15:07 <ahasenack> and sometimes the email stack
+
+ 15:07 <ahasenack> I think I can contribute to Ubuntu with that work on ubuntu server
+
+ 15:07 <ahasenack> and the server package set seems a good fit
+
+ 15:08 <ahasenack> I think that's it for a short summary
+
+ 15:08 <sil2100> Ok, thanks - let's move on to questions
+
+ 15:10 <sil2100> ahasenack: easy one first - if you have a version number like this 1:9.10.3.dfsg.P4-10.1ubuntu5.3, what is the first number before the : and what is it used for?
+
+ 15:10 <ahasenack> it's an epoch
+
+ 15:10 <ahasenack> used to fix mistakes in previous version numbers
+
+ 15:10 <ahasenack> the epoch trumps the version comparison and wins
+
+ 15:11 <sil2100> Ok
+
+ 15:11 <ahasenack> although I've seen some tricks with the word "really" in package versions
+
+ 15:12 <ahasenack> so it's used sparingly
+
+ 15:12 <ahasenack> because it's really the last resort
+
+ 15:16 <jbicha> let's say you uploaded a package to bionic last week and it's still only in bionic-proposed now, how would you find out why?
+
+ 15:16 <ahasenack> I go to the excuses page
+
+ 15:16 <ahasenack> wouldn't wait a week, though
+
+ 15:16 <ahasenack> it could be help because its dep8 tests failed,
+
+ 15:17 <ahasenack> or because dep8 tests in dependent packages failed
+
+ 15:17 <ahasenack> there could also be a large queue due to some big migration that is triggering a lot of test runs
+
+ 15:17 <ahasenack> s/help/held/
+
+ 15:17 <ahasenack> then I check the failed tests, if any, see if they are really failures in the package, or flaky tests
+
+ 15:17 <ahasenack> I can check the history of that test in any architecture
+
+ 15:18 <ahasenack> if I think it's a flaky test, I check if there is a bug about it. If not, I file one
+
+ 15:18 <ahasenack> if it's an infrastructure problem, I ping someone to click the retry button for me, and present my evidence
+
+ 15:18 <ahasenack> I have such a case with samba, which triggers gvfs2 tests and there is one test in particular that is flaky, I filed a bug about it
+
+ 15:19 <ahasenack> and it's on my list to check in more detail and try to fix
+
+ 15:19 <jbicha> ahasenack: have you ever seen "unsatisfiable Depends" on excuses for a package that does look like it is present in Ubuntu? do you know what that tends to mean?
+
+ 15:19 <ahasenack> I haven't seen that, I would have to look it up
+
+ 15:19 <ahasenack> I suppose it means that a new depends was introduced
+
+ 15:19 <ahasenack> and that is not available in the archive
+
+ 15:20 <ahasenack> if that's the case, it sounds like a silly mistake,
+
+ 15:20 <ahasenack> because we are expected to test-build things before uploading
+
+ 15:20 <sil2100> ahasenack: somewhat related to jbicha's question - let's say you uploaded a package to bionic, you check the excuses page and see that all tests have passed, no visible errors seen but the package is still marked as 'Not considered'
+
+ 15:20 <ahasenack> maybe it could be because the package is in main and has a depends on universe
+
+ 15:20 <ahasenack> so a ppa test build wouldn't catch that
+
+ 15:20 <sil2100> ahasenack: how would you investigate further what's wrong?
+
+ 15:20 <sil2100> Where would you look for clues?
+
+ 15:21 <ahasenack> you say tests have passed
+
+ 15:21 <ahasenack> so a) it built
+
+ 15:21 <ahasenack> b) its own tests passed
+
+ 15:21 <jbicha> ahasenack: "unsatisfiable depends" is often because a main package depends on something in universe, good work on figuring that out as a possible reason :)
+
+ 15:21 <ahasenack> c) tests in dependent packages passed
+
+ 15:21 <ahasenack> sil2100: those 3 assumptions are correct?
+
+ 15:22 <ahasenack> sil2100: there is usually a hint somewhere
+
+ 15:22 <ahasenack> like it could be blocked due to a release (freeze)
+
+ 15:22 <sil2100> ahasenack: yeah, let's say all 3 assumptions are correct and there is no freeze
+
+ 15:22 <ahasenack> when we are in that final week
+
+ 15:22 <ahasenack> then migrations are manual
+
+ 15:22 <ahasenack> ok
+
+ 15:23 <ahasenack> I don't know then, barring it having been flagged for manual migration for some reason
+
+ 15:23 <ahasenack> or I didn't refresh the excuses page
+
+ 15:23 <sil2100> ahasenack: did you have any experience in proposed-migration update_output.txt parsing?
+
+ 15:23 <ahasenack> no, but I remember it being mentioned to me now
+
+ 15:24 <ahasenack> but I haven't had the need to parse it yet
+
+ 15:24 <sil2100> If not, it's a good thing to note and be mindful of when your package is stuck in -proposed and excuses doesn't give any useful info
+
+ 15:24 <sil2100> ;)
+
+ 15:24 <ahasenack> I would certainly ask around if I saw that situation
+
+ 15:24 <jbicha> following up, how do you get a universe package to main?
+
+ 15:24 <ahasenack> through a MIR (Main Inclusion Request)
+
+ 15:25 <jbicha> have you ever done one of those before?
+
+ 15:25 <ahasenack> no, just followed up on the progress of some done by others
+
+ 15:25 <jbicha> ok, that's fine
+
+ 15:25 <ahasenack> I'm aware (without looking) of some of its requirements
+
+ 15:25 <ahasenack> secteam review,
+
+ 15:25 <ahasenack> history of cves
+
+ 15:25 <ahasenack> it needs to have an owner
+
+ 15:25 <ahasenack> dependencies must be in main as well
+
+ 15:25 <jbicha> thanks
+
+ 15:25 <ahasenack> build-depends are a bit more relaxed
+
+ 15:25 <ahasenack> since x I think
+
+ 15:28 <sil2100> Thanks
+
+ 15:28 <sil2100> Any other questions?
+
+ 15:29 <jbicha> not from me :)
+
+ 15:30 <rbasak> No questions from em.
+
+ 15:30 <rbasak> me
+
+ 15:30 <sil2100> rbasak, BenC, micahg: all good?
+
+ 15:30 <BenC> Yep
+
+ 15:30 <sil2100> Let's start the vote then
+
+ 15:31 <sil2100> #vote Grant ahasenack ubuntu-server-dev upload rights
+
+ 15:31 <meetingology> Please vote on: Grant ahasenack ubuntu-server-dev upload rights
+
+ 15:31 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (for private voting, private message me with 'vote +1/-1/+0 #channelname)
+
+ 15:31 <rbasak> +0 abstaining as he's on my team and I endorsed him, and we appear to be quorate without me.
+
+ 15:31 <meetingology> +0 abstaining as he's on my team and I endorsed him, and we appear to be quorate without me. received from rbasak
+
+ 15:31 <BenC> +1
+
+ 15:31 <meetingology> +1 received from BenC
+
+ 15:31 <sil2100> +1
+
+ 15:31 <meetingology> +1 received from sil2100
+
+ 15:31 <jbicha> +1
+
+ 15:31 <meetingology> +1 received from jbicha
+
+ 15:32 <sil2100> micahg said he might be in and out of the meeting
+
+ 15:32 <sil2100> So we might need to wait a moment for his vote
+
+ 15:32 <sil2100> (just hope he didn't go 'out' completely!)
+
+ 15:33 <BenC> Do we have enough votes if he doesn’t?
+
+ 15:33 <rbasak> Not without mine currently.
+
+ 15:33 <rbasak> Over my time on the DMB I've come up with my own personal rules on how to remain objective.
+
+ 15:34 <rbasak> For people on my team, I've decided to always abstain (rather than +1) if I've endorsed, with the exception that I'll +1 if we don't get quorum.
+
+ 15:34 <rbasak> So if micahg is unable to vote, I'll +1.
+
+ 15:34 <rbasak> If he does vote, I won't vote regardless of which way micahg votes.
+
+ 15:34 <sil2100> Makes sense
+
+ 15:35 <sil2100> I guess it might be nice to have such an official policy for votes, since I know I didn't follow anything like this
+
+ 15:36 <rbasak> I'm fine with not requiring this upon anyone lse.
+
+ 15:36 <rbasak> else
+
+ 15:36 <rbasak> Inevitably there will be other exceptional circumstances when any such policy will need to be broken.
+
+ 15:37 <rbasak> And I trust everyone so am fine with people deciding this kind of thing for themselves.
+
+ 15:40 <sil2100> Let's wait 5 more minutes and then I guess we'd have to assume we don't have quorum without your vote rbasak
+
+ 15:40 <rbasak> OK
+
+ 15:42 * jbicha plays a few minutes of background holiday music while we wait
+
+ 15:44 <dpb1> ... "girl from impanema" muzak?
+
+ 15:44 <cpaelzer> jbicha: you could play chord names through IRC so we have our share
+
+ 15:45 <jbicha> cpaelzer: that sounds like too much work. Just imagine Bing Crosby's White Christmas or something :)
+
+ 15:45 <rbasak> +1 breaking abstention in order to reach quorum
+
+ 15:45 <meetingology> +1 breaking abstention in order to reach quorum received from rbasak
+
+ 15:48 <rbasak> sil2100: ^
+
+ 15:49 <cyphermox> what?
+
+ 15:49 <cyphermox> +1
+
+ 15:49 <meetingology> +1 received from cyphermox
+
+ 15:51 <cyphermox> sil2100:
+
+ 15:53 <sil2100> \o/
+
+ 15:53 <sil2100> #endvote
+
+ 15:53 <meetingology> Voting ended on: Grant ahasenack ubuntu-server-dev upload rights
+
+ 15:53 <meetingology> Votes for:5 Votes against:0 Abstentions:0
+
+ 15:53 <meetingology> Motion carried
+
+ 15:53 <sil2100> ahasenack: congratulations!
+
+ 15:53 <ahasenack> thanks!
+
+ 15:54 <slashd> congrats ahasenack
+
+ 15:54 <sil2100> #topic AOB
+
+ 15:54 <sil2100> Any other business?
+
+ 15:55 <sil2100> I guess next meeting next year, so - happy new year o/
+
+ 15:55 <ahasenack> happy new year, happy holidays, enjoy the rest
+
+ 15:55 <sil2100> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

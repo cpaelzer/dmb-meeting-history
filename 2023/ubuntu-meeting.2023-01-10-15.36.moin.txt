@@ -1,0 +1,351 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 10 Jan at 15:36 &mdash; 15:59 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-01-10-15.36.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:36.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:36)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:36)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:39)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:46.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:46)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 15:49.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 15:49)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 15:49)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:58.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (96)
+ * sarnold (17)
+ * didrocks (17)
+ * slyon (8)
+ * jamespage (3)
+ * meetingology (2)
+ * jbicha (1)
+ * schopin (1)
+
+
+
+== Full log ==
+
+
+ 15:36 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:36 <meetingology> Meeting started at 15:36:19 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:36 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:36 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 15:36 <cpaelzer> #topic current component mismatches
+
+ 15:36 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:36 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:36 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:36 <cpaelzer> nothing totally new in non-proposed
+
+ 15:36 <jamespage> o/
+
+ 15:36 <cpaelzer> licensecheck -> perl things - didn#t we ahve thta int he past?
+
+ 15:37 <slyon> licensecheck is new in -proposed
+
+ 15:37 <slyon> seems they've switched build-depends again
+
+ 15:37 <cpaelzer> non-yay
+
+ 15:37 <slyon> I need to investigate the reasoning
+
+ 15:37 <sarnold> cpaelzer: that might have been lintian -> perl things
+
+ 15:37 <cpaelzer> slyon: but still that seems like a foundations tackle
+
+ 15:37 <slyon> ack
+
+ 15:37 <cpaelzer> sarnold: it is a reoccuring pattern for both
+
+ 15:37 <cpaelzer> other news here is OVS -> xdp-tools
+
+ 15:37 <cpaelzer> fnordahl: has already filed a MIR
+
+ 15:37 <sarnold> ack
+
+ 15:37 <cpaelzer> I have reviewed it this morning
+
+ 15:38 <cpaelzer> it LGTM, but needs security
+
+ 15:38 <cpaelzer> so one more for your queue
+
+ 15:38 <cpaelzer> jamespage: while we have you here, jaraco.text is on openstack i guess
+
+ 15:38 <cpaelzer> and this week i see MIRs linked
+
+ 15:38 <cpaelzer> so that processing seems to be started
+
+ 15:38 <cpaelzer> *reading*
+
+ 15:38 <jamespage> yeah I raised those as corey was busy on some other stuff
+
+ 15:39 <cpaelzer> ok so these will look for reviewers in the next section
+
+ 15:39 <cpaelzer> nothing else in mismatches AFAICS
+
+ 15:39 <jamespage> great
+
+ 15:39 <cpaelzer> #topic New MIRs
+
+ 15:39 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:39 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:39 <cpaelzer> duktape (still/again ?)
+
+ 15:39 <cpaelzer> and the two python bits for jaraco
+
+ 15:39 <cpaelzer> I can do one of the pythons tomorrow morning I guess
+
+ 15:40 <cpaelzer> taking autocommand
+
+ 15:40 <cpaelzer> what has changed on duktape ... ?
+
+ 15:40 <cpaelzer> didrocks: marked it as new
+
+ 15:40 <slyon> I can take the other python thingy
+
+ 15:40 <cpaelzer> maybe the prep is complete and the decision was they need it
+
+ 15:40 <cpaelzer> ok slyon, done
+
+ 15:41 <cpaelzer> so this one is still looking for a reviewer https://bugs.launchpad.net/ubuntu/+source/duktape/+bug/1997417
+
+ 15:41 <didrocks> IMHO, there are some parts that are missing still
+
+ 15:41 <didrocks> like no tests
+
+ 15:41 <cpaelzer> joalif: didrocks: jamespage: ^^ who could have a look ?
+
+ 15:41 <didrocks> (and I don’t think the reporters should skip section or have TODO before filing the MIR)
+
+ 15:41 <didrocks> should we start doing an entire review or just mention from the get go "this section is missing, please file it?"
+
+ 15:42 <cpaelzer> didrocks: depends on the todo, if it is like "we already know but will do FOO before it is complete" fine, but if it is "this is all bad and we know it, have fun" then no
+
+ 15:42 <cpaelzer> didrocks: in incompletely filed MIRs I have in the past done partial reviews just pointing out the obvious
+
+ 15:42 <didrocks> I’m telling that because I have the same issue with gnome-sushi, I did the entire review, but there is no tests, it was TODO to write a manual test plan and nothing since it was opened a month ago
+
+ 15:42 <cpaelzer> didrocks: and saying they should ping me again once they think it is actually ready
+
+ 15:43 <cpaelzer> didrocks: then gnome-sushi goes to incomplete and will starve there until provided
+
+ 15:43 <didrocks> right, but I feel that sometimes, we are doing the reporter part compliance check because the reporter hasn’t
+
+ 15:43 <cpaelzer> that and similar things do not block the review entirely though
+
+ 15:43 <didrocks> like dependencies on universe and so on
+
+ 15:43 <cpaelzer> yes, if the reporter seems lazy just ask them to do it
+
+ 15:43 <didrocks> so basically, they are relying on the MIR team to do the work
+
+ 15:43 <didrocks> ack then
+
+ 15:43 <cpaelzer> but if they have done their due diligence and just want the review to know if there is more to resovle -> that seems fine
+
+ 15:44 <cpaelzer> I'm ok to make this a case-by-case call
+
+ 15:44 <didrocks> I will not shy away for postponing the reviews if some obvious sections are missing then
+
+ 15:44 <cpaelzer> as it is hard to formalize a perfect rule for it
+
+ 15:44 <didrocks> yeah
+
+ 15:44 <cpaelzer> didrocks: yeah, but let them know why you postpone
+
+ 15:44 <cpaelzer> so do a bug update to tell them why
+
+ 15:44 <cpaelzer> from that moment on, it can be incomplete until provided
+
+ 15:44 <didrocks> ack then
+
+ 15:45 <cpaelzer> didrocks: would you be able to look at duktape thne?
+
+ 15:45 <didrocks> I’ll take ducktape
+
+ 15:45 <didrocks> without a c :)
+
+ 15:45 <cpaelzer> didrocks: or was this another of the "known incomplete" cases?
+
+ 15:45 <didrocks> but is is known incomplete
+
+ 15:45 <didrocks> the test section is entirely skipped
+
+ 15:45 <cpaelzer> ok, then feel free to point that out OR do a full review which includes pointint ig out - up to you
+
+ 15:45 <cpaelzer> s/pointint ig/pointing it/
+
+ 15:46 <cpaelzer> thanks, assigned
+
+ 15:46 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:46 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 15:46 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:46 <jbicha> yes, bandali hadn't finished preparing the duktape MIR but was planning to this week
+
+ 15:46 <cpaelzer> ok jbicha, thanks for the FYI
+
+ 15:46 <cpaelzer> we consider it incomplete and not yet assign eit then
+
+ 15:46 <cpaelzer> *unassignign didrocks*
+
+ 15:47 <cpaelzer> duktape and sishi was discussed already
+
+ 15:47 <cpaelzer> the most recent other update is cpdb-libs
+
+ 15:47 <cpaelzer> reading ...
+
+ 15:47 <cpaelzer> 4 years old for printing ... ?
+
+ 15:48 <cpaelzer> ok, just an update about the Debian side of it
+
+ 15:49 <cpaelzer> no action (by us) needed as of now
+
+ 15:49 <cpaelzer> #topic MIR related Security Review Queue
+
+ 15:49 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 15:49 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:49 <cpaelzer> Internal link
+
+ 15:49 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 15:49 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 15:49 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 15:49 <cpaelzer> as expected the queue grows sarnold
+
+ 15:49 <cpaelzer> sarnold: how is the planned increase in workforce to review going?
+
+ 15:51 <cpaelzer> on ruby-rack and ruby-sinatra - did you (and eslerm) come to conclusion with Kanashiro how we proceed?
+
+ 15:51 <sarnold> cpaelzer: it's going well, mark has been working on several MIRs so far, and sbeattie and aburrage and I had a discussion yesterday; we'll distribute tasks to team members soon, and would like to remind stakeholders to ensure the prioritizations in jira match their needs
+
+ 15:51 <cpaelzer> AFAIK the intend was to approve it but require to move to the new major before 24.04 - that would work
+
+ 15:51 <cpaelzer> sarnold: to match our need, what would you like most to reflect "has to go in 23.04" ?
+
+ 15:52 <cpaelzer> sarnold: flags, deadlines, due dates, comments, ... ?
+
+ 15:52 <sarnold> yes; it'd also be nice to have a stronger 'backup plan' idea in place should our strong commitment fade
+
+ 15:52 <cpaelzer> The backup plan is complain a lot and then crawl begging for forgiveness at anyone we committed our items to
+
+ 15:52 <sarnold> :)
+
+ 15:53 <sarnold> cpaelzer: I think the little prioritization chevrons, straight lines, etc, in jira is the way to reflect the priorities
+
+ 15:53 <sarnold> though text descriptions of *why* might be very nice
+
+ 15:54 <sarnold> something else we discussed yesterday is libssh2, the last MIR didn't go great.. and we were wondering, if cargo-in-main is intended for our building needs, do we *need* remote access stuff in this cargo?
+
+ 15:55 <cpaelzer> that is for schopin to answer I guess
+
+ 15:55 <sarnold> or, is our cargo packaging expected to be useful outside of our builders? breaking it doesn't seem great, but distro-packaged language-specific tooling always feels like it's missing functionality vs upstream stuff that changes every two or three months
+
+ 15:56 <sarnold> it doesn't have to be figured out today :)
+
+ 15:56 <cpaelzer> ok
+
+ 15:57 <cpaelzer> I've done a few prio updates to reflect the current state
+
+ 15:57 <sarnold> we're also looking at moving our meetings around to better match the pulses
+
+ 15:57 <cpaelzer> back to hoping you get enough workforce
+
+ 15:57 <sarnold> both the internal task distribution meeting and the office hours meeting
+
+ 15:57 <schopin> sarnold: we use cargo to do the vendoring, which usually will do some networking stuff.
+
+ 15:57 <cpaelzer> one day *dream* those reviews will happen early in the cycle and findings not need to be adressed last minute :-)
+
+ 15:57 <sarnold> schopin: ack, makes perfect sense. thanks
+
+ 15:57 <cpaelzer> going on then ...
+
+ 15:58 <cpaelzer> #topic Any other business?
+
+ 15:58 <sarnold> nothing from me
+
+ 15:58 <slyon> there's bug #1973033 (and possibly some other hidden, related MIR updates for jammy) – not actionable for us right now. Just a reminder for everybody to resolve/review their assigned, "hidden" Jammy MIRs from last year.
+
+ 15:58 <slyon> nothing else from me
+
+ 15:58 <cpaelzer> as a heads up for sarnold mostly, alex has been aware since prague - but isc-kea will also enter the 23.04 deadline security review queue soon
+
+ 15:58 <cpaelzer> we have been working on tests for a while (to prevent the case didrocks mentioned to be incomplete)
+
+ 15:58 <sarnold> cpaelzer: oh nice! is that packaged in debian yet? I thought it was entirely unpackaged :(
+
+ 15:58 <cpaelzer> but given the time of the cycle we will enter it to the queue this week
+
+ 15:59 <cpaelzer> sarnold: we have updated it for several cycles by now
+
+ 15:59 <slyon> sarnold: we'll most probably also have netplan related MIRs for python-rich + dependencies for 23.04 (but not sure if they need sec-review)
+
+ 15:59 <cpaelzer> paride in particular
+
+ 15:59 <sarnold> aha, very glad to hear it
+
+ 15:59 <didrocks> nice!
+
+ 15:59 <cpaelzer> I mostly mention so you know for capacity expectations for you sarnold
+
+ 15:59 <cpaelzer> ok, time is up
+
+ 15:59 <cpaelzer> thank you all
+
+ 15:59 <cpaelzer> !
+
+ 15:59 <cpaelzer> rushing to the next meeting ...
+
+ 15:59 <sarnold> thanks cpaelzer, all :)
+
+ 15:59 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

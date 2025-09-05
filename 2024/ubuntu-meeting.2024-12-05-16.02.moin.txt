@@ -1,0 +1,248 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 05 Dec at 16:02 &mdash; 17:13 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2024/ubuntu-meeting.2024-12-05-16.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2024-12-05/50606   (juliank, 16:02)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:16.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-pp-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:17)
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-oo-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:29)
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:40)
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:56)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:58.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:58)
+
+=== AOB ===
+
+Discussion started by juliank at 17:12.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (56)
+ * waveform (14)
+ * adrien (5)
+ * mkukri (3)
+ * meetingology (2)
+ * mateus-morais (2)
+ * dviererbe (2)
+ * bdrung (2)
+ * liushuyu (2)
+ * r41k0u (1)
+ * andersson123 (1)
+ * levihackerman_ (1)
+ * xypron (1)
+ * Skia (1)
+
+
+
+== Full log ==
+
+
+ 16:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:02 <meetingology> Meeting started at 16:02:29 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:02 <r41k0u> o/
+
+ 16:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:02 <juliank> #topic Lightning rounds
+
+ 16:02 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2024-12-05/50606
+
+ 16:02 <andersson123> o/
+
+ 16:03 <mateus-morais> o/
+
+ 16:03 <levihackerman_> o/
+
+ 16:04 <dviererbe> o/
+
+ 16:05 <adrien> I think I was waiting for a sponsor to pick up a changer I never sent...
+
+ 16:06 <mateus-morais> dviererbe I wouldn't know how to say that one time slowly
+
+ 16:06 <dviererbe> :D
+
+ 16:10 <xypron> o/
+
+ 16:16 <juliank> #topic Release incoming bugs
+
+ 16:17 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-pp-incoming-bug-tasks.html#foundations-bugs
+
+ 16:17 <juliank> bug 2089151
+
+ 16:17 <juliank> This is true and we don't have a clear way to solve this
+
+ 16:18 <juliank> We could run every 5 minutes I guess
+
+ 16:19 <juliank> I'm not sure we should be fetching a lot of data and decompress them using all your CPU cores and whatnot on battery
+
+ 16:19 <adrien> I think it's a pretty common situation in other operating systems: at some point there is an expectation that your machine/device is in a state where background updates can happen
+
+ 16:20 <juliank> If we design a nice daemon we could have it e.g. download 1 package and upgrade that and it rate limits itself when on battery
+
+ 16:20 <bdrung> how about having these services ignore the ConditionACPower=true in case their update was $x days ago and the system is not low on power?
+
+ 16:20 <adrien> but what may want is something that _wait_ for the conditions rather than checks them every n minutes
+
+ 16:20 <juliank> See, ConditionACPower just skips, it doesn't wait
+
+ 16:20 <waveform> indeed, some condition that can check AC or battery >=75% (insert arbitrary level here) rather than straight AC
+
+ 16:21 <juliank> And then we need to stop unattended-upgrades once power level goes low
+
+ 16:21 <juliank> But also we disable suspend
+
+ 16:21 <juliank> In  any case this can't be solved at a bug level, it needs a complete epic and stories
+
+ 16:21 <waveform> true
+
+ 16:22 <adrien> +1
+
+ 16:23 <juliank> tagging it
+
+ 16:25 <juliank> bug 2089690
+
+ 16:25 <juliank> We are writing a spec for it and then we'll do the MIR
+
+ 16:29 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-oo-incoming-bug-tasks.html#foundations-bugs
+
+ 16:30 <juliank> bug 2085713
+
+ 16:31 <mkukri> this is weird
+
+ 16:31 <mkukri> what's taking the md5sum of a tmpfile
+
+ 16:35 <juliank> I think that's a debconf bug
+
+ 16:35 <juliank> env $ucf_env ucf --three-way --debconf-ok --sum-file=/usr/share/grub/default/grub.md5sum "$tmp_default_grub" /etc/default/grub
+
+ 16:39 <juliank> set to incomplete
+
+ 16:40 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 16:40 <juliank> bug 1888347
+
+ 16:43 <juliank> There does not seem to be a consensus
+
+ 16:44 <juliank> Tagged incomplete
+
+ 16:44 <juliank> 2090972
+
+ 16:44 <juliank> bug 2090972
+
+ 16:45 <juliank> This is SRU sponsoring request afaict
+
+ 16:47 <juliank> bug 2088268
+
+ 16:48 <juliank> security is looking more let's revisit next week
+
+ 16:48 <juliank> Skipping the apport bug that is a gtk bug
+
+ 16:48 <juliank> bug 2083993
+
+ 16:49 <juliank> Skia: what's special about it for tagging?
+
+ 16:51 <Skia> juliank: that's u-r-u, so on us, and this is an `apport-bug` that has a lot of attachements, so we might be able to investigate at least a bit if this was a kinda of regular use, or if that was a completely broken system...
+
+ 16:51 <mkukri> sorry have to drop, but please assign me proposed migration when the meeting gets there
+
+ 16:51 <juliank> Skia: Yes but we  triage those out of band
+
+ 16:53 <liushuyu> also can we assign bug 2041518 to the desktop team so they will see that from their list?
+
+ 16:54 <juliank> bug 2055825
+
+ 16:54 <juliank> liushuyu: they also have an incoming list they see it on
+
+ 16:56 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 16:56 <juliank> bug 2056291
+
+ 16:57 <juliank> Ugh
+
+ 16:57 <juliank> So kind of the process writing it should take a lock probably
+
+ 16:58 <juliank> Because you need to figure out if the process owning the temporary file is dead before you write to it
+
+ 16:58 <liushuyu> juliank: I see
+
+ 16:58 <juliank> Tagging it todo
+
+ 16:58 <juliank> That said, this happens in unclean shutdowns
+
+ 16:58 <juliank> #topic Team proposed-migration report
+
+ 16:58 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 17:00 <bdrung> apport vs iputils is still with schopin and me (pending new apport release)
+
+ 17:03 <waveform> python-attrs still with levihackerman
+
+ 17:03 <waveform> gdb's still with doko
+
+ 17:03 <waveform> boost1.83's still with vpa1977
+
+ 17:03 <waveform> libgit2 with liushuyu
+
+ 17:05 <waveform> twisted for sespiros
+
+ 17:06 <waveform> dnspython for adrianoco
+
+ 17:07 <waveform> okay, ignore dnspython as that's part of python3-defaults
+
+ 17:08 <waveform> right, talloc for adrianoco
+
+ 17:08 <waveform> dracut for bdrung
+
+ 17:09 <waveform> openssl is already with adrien
+
+ 17:10 <waveform> debootstrap for chrisccoulson
+
+ 17:10 <adrien> also, openssl has tests failing with python 3.12 and I'm not sure how to handle them since there is python3.13 too: should I just ignore them and wait for python3.13 to be ready?
+
+ 17:11 <waveform> pyopenssl vs freedombox for mkukri
+
+ 17:12 <juliank> I think it's back to me
+
+ 17:12 <juliank> #topic AOB
+
+ 17:13 <juliank> Send a . if you have some now
+
+ 17:13 <juliank> 5
+
+ 17:13 <juliank> 4
+
+ 17:13 <juliank> 3
+
+ 17:13 <juliank> 2
+
+ 17:13 <juliank> 1!
+
+ 17:13 <juliank> 0!
+
+ 17:13 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

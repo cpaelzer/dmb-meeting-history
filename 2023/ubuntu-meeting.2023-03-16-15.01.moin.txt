@@ -1,0 +1,259 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 16 Mar at 15:01 &mdash; 15:38 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-03-16-15.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:09)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:17)
+
+=== proposed-migration ===
+
+Discussion started by jawn-smith at 15:18.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:18)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:30.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (36)
+ * jawn-smith (26)
+ * ginggs (9)
+ * slyon (7)
+ * bdrung (6)
+ * dviererbe (3)
+ * schopin (3)
+ * zhsj (3)
+ * juliank (3)
+ * meetingology (2)
+ * ogayot (2)
+ * doko (2)
+ * dbungert (1)
+
+
+
+== Full log ==
+
+
+ 15:01 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started at 15:01:03 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <dviererbe> o/
+
+ 15:02 <jawn-smith> The weekly status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-16-march-2023/34547
+
+ 15:02 <jawn-smith> let's all take our usual time to read and ask questions
+
+ 15:03 <slyon> vorlon: rendering of https://ubuntu-archive-team.ubuntu.com/component-mismatches-proposed.svg seems to be broken. I assume that might be related to the server migration you mentioned in your report?
+
+ 15:03 <jawn-smith> schopin: lol, just saw the glibc issue
+
+ 15:03 <vorlon> slyon: I'm seeing a truncated SVG, are you seeing the same?
+
+ 15:04 <slyon> ye
+
+ 15:04 <slyon> yes
+
+ 15:04 <vorlon> slyon: it *might* be related.  I'll dig into it today
+
+ 15:04 <slyon> thanks!
+
+ 15:05 <schopin> jawn-smith: I was inspired by Steve naming it "best bug report ever" ;)
+
+ 15:05 <vorlon> it's not bad timing of the rsync from the backend to the frontend, the truncation is present on the backend
+
+ 15:07 <bdrung> The best bug report ever is still "OpenOffice.org does not print on Tuesdays" for me (LP #248619)
+
+ 15:08 <schopin> Ooooh that one is really good, yes!
+
+ 15:08 <vorlon> yes, my bug is best on a different axis
+
+ 15:08 <vorlon> "how to do maximally unsafe safe string handling"
+
+ 15:09 <schopin> "but at least you're not using sprintf"
+
+ 15:09 <jawn-smith> #topic Release incoming bugs
+
+ 15:09 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:09 <vorlon> dviererbe: you talk about doing alternatives for ping. why is this necessary or desirable?
+
+ 15:10 <jawn-smith> I'll wait for bugs until that's answered
+
+ 15:11 <dviererbe> the autopackagetests of inetutils fail because inetutils tries to install inetutils-ping and that tries to uninstall iputils-ping which tries to uninstall ubuntu-minimal
+
+ 15:11 <slyon> vorlon: https://autopkgtest.ubuntu.com/packages/inetutils is failing all autopkgtests due to ping install conflict
+
+ 15:11 <slyon> iputils-ping (main) vs inetuils-ping (universe)
+
+ 15:11 <vorlon> dviererbe, slyon: ok I think introducing alternatives and adding runtime complexity across packages is a bad solution to this, I'd frankly just remove the autopkgtest and/or stop building inetutils-ping
+
+ 15:14 <zhsj> vorlon: this option was on the table. the disadvantage is we'll carry the delta with debian. (but i vote for it)
+
+ 15:15 <jawn-smith> bug 1999062
+
+ 15:15 <jawn-smith> I believe that we've discussed this one before
+
+ 15:15 <zhsj> jawn-smith: isn' desktop
+
+ 15:16 <zhsj> isn't this under desktop-packages
+
+ 15:16 <jawn-smith> oh wow I totally typed in from the wrong list
+
+ 15:16 <jawn-smith> There actually aren't any foundations bugs ll
+
+ 15:16 <jawn-smith> Good job
+
+ 15:16 <jawn-smith> none in kk either
+
+ 15:17 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:17 <jawn-smith> there's one!
+
+ 15:17 <jawn-smith> bug 1999345
+
+ 15:17 <jawn-smith> no updates from security team since january
+
+ 15:17 <jawn-smith> So juliank: anything for us to do?
+
+ 15:17 <juliank> no
+
+ 15:17 <jawn-smith> Awesome, let's move on then
+
+ 15:18 <jawn-smith> #topic proposed-migration
+
+ 15:18 <vorlon> things looking much healthier!
+
+ 15:18 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:18 <jawn-smith> vorlon:
+
+ 15:18 <vorlon> waveform: are you still taking care of sbuild?
+
+ 15:19 <vorlon> shim-signed: nothing to do, still waiting for kernel updates
+
+ 15:20 <vorlon> ogayot: is systemd vs xz-utils on you?
+
+ 15:21 <ogayot> xz-utils is still with me. systemd came up as a new regression. I'll have a look. But don't restrain from assigning me an additional proposed-migration
+
+ 15:21 <vorlon> waveform is out, but this is still with him
+
+ 15:21 <vorlon> ack
+
+ 15:22 <slyon> ogayot: I think systemd vs xzutils actually passed on my last retry
+
+ 15:22 <vorlon> python3-stdlib-extensions breaks python3.10; I think this is going to shake out via removal of python3.10 which is supposed to happen after nvidia-cuda-toolkit update
+
+ 15:22 <vorlon> ginggs: will you follow through on this?
+
+ 15:22 <ginggs> python3.10 already removed
+
+ 15:22 <vorlon> ok then perhaps just a bit of hinting
+
+ 15:22 <ginggs> python3.11, stdlib-extensions and python3-defaults
+
+ 15:22 <dviererbe> I have noticed that the pycurl regression I was assigned to is gone https://autopkgtest.ubuntu.com/packages/pycurl
+
+ 15:23 <ginggs> should migrate soon
+
+ 15:23 <vorlon> ginggs: you'll follow through if not?
+
+ 15:23 <ginggs> sure
+
+ 15:23 <vorlon> jawn-smith: you still working e2fsprogs?
+
+ 15:23 <ogayot> vorlon: indeed, it passed, thanks
+
+ 15:23 <jawn-smith> Yes
+
+ 15:23 <vorlon> ginggs: tangentially, does new nvidia-cuda-toolkit fix python3-pycuda uninstallability (due to conflicts)?
+
+ 15:23 <jawn-smith> It's a non-trivial regression, just been focused on getting a few ubuntu-image PRs open before I do a deep dive
+
+ 15:23 <bdrung> can we build pycurl for i386 as well (to get rid of the devscripts diff)?
+
+ 15:24 <vorlon> I don't know, ask on #ubuntu-release after :)
+
+ 15:24 <ginggs> vorlon: yes, it looks like pycuda migrated earlier
+
+ 15:24 <vorlon> ginggs: great!
+
+ 15:24 <ginggs> i think there's a bug in the nvidia drivers though
+
+ 15:25 <ginggs> packages shouldn't be getting a dependency on the particular version of the driver they were built against
+
+ 15:25 <ginggs> this used to work, but seems something has gone wrong
+
+ 15:26 <vorlon> juliank: grub2 has uninstallable binaries which is surprising, can you follow up on this?
+
+ 15:26 <juliank> Not entirely surprising the grub2-unsigned upload isn't ready yet
+
+ 15:26 <juliank> Will resolve
+
+ 15:26 <vorlon> ah
+
+ 15:27 <vorlon> adrien: you uploaded openssl, will you follow through on the blocking regressions?
+
+ 15:27 <vorlon> oops adrien is out; well, I'll assume this is with him
+
+ 15:28 <vorlon> openssl: adrien
+
+ 15:29 <vorlon> bdrung: can you take libzstd?
+
+ 15:29 <vorlon> and then curl is just waiting for libreoffice tests - so that's it
+
+ 15:29 <bdrung> devscripts would probably suite me better
+
+ 15:29 <vorlon> if anyone is keen to help and didn't get an assignment, since adrien is out today/tomorrow you could prod openssl along
+
+ 15:29 <vorlon> bdrung: ok you can have devscripts
+
+ 15:30 <vorlon> dbungert: can you take libzstd?
+
+ 15:30 <dbungert> vorlon: ack
+
+ 15:30 <vorlon> thanks
+
+ 15:30 <vorlon> that's everything
+
+ 15:30 <vorlon> jawn-smith: back to you
+
+ 15:30 <ginggs> i'll prod openssl
+
+ 15:30 <jawn-smith> #topic AOB
+
+ 15:30 <bdrung> tzdata says: old binaries left on amd64: tzdata-right
+
+ 15:30 <bdrung> Do I need to request the removal?
+
+ 15:31 <vorlon> bdrung: you just did
+
+ 15:31 <bdrung> thanks vorlon
+
+ 15:32 <doko> is something known with the state of the buildds? I have a 60+h build which always finishes without logs
+
+ 15:32 <doko> llvm-16
+
+ 15:33 <vorlon> not that I've heard
+
+ 15:38 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

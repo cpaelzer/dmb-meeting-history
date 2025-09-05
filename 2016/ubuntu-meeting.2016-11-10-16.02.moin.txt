@@ -1,0 +1,675 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 10 Nov at 16:02 &mdash; 16:53 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-11-10-16.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:02.
+
+
+=== Sprint travel ===
+The discussion about "Sprint travel" started at 16:17.
+
+
+=== UOS ===
+The discussion about "UOS" started at 16:20.
+
+  * ''LINK:'' http://summit.ubuntu.com/uos-1611/meeting/22714/architecture-discussions/ 
+  * ''LINK:'' http://summit.ubuntu.com/uos-1611/meeting/22710/git-based-merge-workflow/ 
+
+=== AOB ===
+The discussion about "AOB" started at 16:32.
+
+  * ''LINK:'' https://errors.ubuntu.com/oops/17e726c4-a6af-11e6-a2de-fa163e192766 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (62)
+ * pitti (41)
+ * bdmurray (31)
+ * infinity (25)
+ * xnox (23)
+ * barry (20)
+ * robru (18)
+ * ubottu (17)
+ * caribou (16)
+ * sil2100 (14)
+ * doko (12)
+ * tdaitx (12)
+ * cyphermox (11)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:02 <slangasek> #startmeeting
+
+ 16:02 <meetingology> Meeting started Thu Nov 10 16:02:31 2016 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02 <meetingology> 
+
+ 16:02 <meetingology> Available commands: action commands idea info link nick
+
+ 16:02 <slangasek> [TOPIC] Lightning round
+
+ 16:03 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk mwhudson)
+
+ 16:03 <slangasek> bdmurray mwhudson sil2100 pitti xnox infinity chiluk barry caribou cyphermox doko robru slangasek tdaitx
+
+ 16:03 <bdmurray> setup daisy to only accept vivid armhf crashes
+
+ 16:03 <bdmurray> updated errors code to display 17.04 / zesty
+
+ 16:03 <bdmurray> confirmed retracers are not still OOM'ing on _search_contents
+
+ 16:03 <bdmurray> discovered we are receiving a lot more core files so asked for more retracers
+
+ 16:03 <bdmurray> submitted apport merge proposal regarding zgrep fallback
+
+ 16:03 <bdmurray> research into apport memory utilization
+
+ 16:03 <bdmurray> investigated and uploaded fixes for X,Y,Z for unattended-upgrades bug 1590321
+
+ 16:03 <ubottu> bug 1590321 in unattended-upgrades (Ubuntu Yakkety) "/usr/bin/unattended-upgrade:FileNotFoundError:/usr/bin/unattended-upgrade@1468:main:get_dpkg_log_content" [Undecided,Fix committed] https://launchpad.net/bugs/1590321
+
+ 16:03 <bdmurray> submitted PR for unattended-upgrades bug 1590321, 1624641
+
+ 16:03 <ubottu> bug 1624641 in unattended-upgrades (Ubuntu Yakkety) "security updates with a new dependency don't get installed" [High,Fix committed] https://launchpad.net/bugs/1624641
+
+ 16:03 <bdmurray> discovered, researched and fixed unattended-upgrades bug 1639977
+
+ 16:03 <bdmurray> investigation into u-r-u bug LP: #1633545
+
+ 16:03 <bdmurray> investigation into LP: #1604160
+
+ 16:03 <ubottu> bug 1639977 in unattended-upgrades (Ubuntu Yakkety) "/usr/bin/unattended-upgrade:FileNotFoundError:/usr/bin/unattended-upgrade@1468:main:write_stamp_file" [High,Fix committed] https://launchpad.net/bugs/1639977
+
+ 16:03 <ubottu> Launchpad bug 1633545 in ubuntu-release-upgrader (Ubuntu) "PermissionError on upgrading from 16.04 to 16.10" [Critical,Confirmed] https://launchpad.net/bugs/1633545
+
+ 16:04 <ubottu> Launchpad bug 1614576 in ubuntu-release-upgrader (Ubuntu Xenial) "duplicate for #1604160 Upgrade from xenial to yakkety fails due to a UnicodeDecodeError" [High,Fix committed] https://launchpad.net/bugs/1614576
+
+ 16:04 <bdmurray> created a test case for T -> X version of LP: #1614576
+
+ 16:04 <bdmurray> investigation into update-notifier bug LP: 1640318
+
+ 16:04 <bdmurray> out tomorrow for a US Holiday
+
+ 16:04 <ubottu> Launchpad bug 1614576 in ubuntu-release-upgrader (Ubuntu Xenial) "Upgrade from xenial to yakkety fails due to a UnicodeDecodeError" [High,Fix committed] https://launchpad.net/bugs/1614576
+
+ 16:04 <ubottu> Launchpad bug 1640318 in update-notifier (Ubuntu) "/usr/lib/update-notifier/package-data-downloader:OSError:process_download_requests:/usr/lib/update-notifier/package-data-downloader@305:process_download_requests:print_exc:print_exception" [Undecided,New] https://launchpad.net/bugs/1640318
+
+ 16:04 <bdmurray> ✔ done
+
+ 16:04 <slangasek> no sil2100?
+
+ 16:05 <slangasek> pitti:
+
+ 16:05 <pitti> autopkgtest:
+
+ 16:05 <pitti> - Fix github retry script to work for automatic build-git detection (for snapcraft)
+
+ 16:05 <pitti> - Figure out and document how to mass-retry tests more efficiently
+
+ 16:05 <pitti> - Fix ENOSPC on armhf slaves, file lxd bug (#1640128)
+
+ 16:05 <pitti> - Make request.cgi session cookie permanent, to avoid having to re-login to SSO after every browser restart
+
+ 16:05 <pitti> netplan:
+
+ 16:06 <pitti> - Make networkd and NM route metrics compatible (#1639754)
+
+ 16:06 <pitti> - Fix race condition in integration tests
+
+ 16:06 <pitti> - New release and SRU to xenial
+
+ 16:06 <pitti> - Some documentation fixes
+
+ 16:06 <pitti> systemd:
+
+ 16:06 <pitti> - Backport graphical session units for snappy (#1640293)
+
+ 16:06 <pitti> - Fix nspawn regression of exit code (Debian #843509)
+
+ 16:06 <pitti> - Fix tests to work on merged /usr testbed
+
+ 16:06 <pitti> - Write generic autopkgtest for CLI binaries (--help, --version, invalid option)
+
+ 16:06 <ubottu> Debian bug 843509 in systemd "systemd 232 breaks docker with "no subsystem for mount" error" [Important,Fixed] http://bugs.debian.org/843509
+
+ 16:06 <pitti> - Investigate/fix systemd logind test regression
+
+ 16:06 <pitti> misc:
+
+ 16:06 <pitti> - Prepare trusty SRUs for init-system-helpers and systemd for introducing "systemd deputy init" for snapd (#1616422)
+
+ 16:06 <pitti> - Backport "indefinite number of loop devices" support to trusty for snappy (ongoing) (#1640823)
+
+ 16:06 <pitti> - umockdev: Fix test regression, do new upstream release 0.8.12, package for D/U
+
+ 16:06 <pitti> - Help mvo with setting up snapd GitHub PR autopkgtests
+
+ 16:06 <pitti> - Prepare UOS netplan talk (ongoing)
+
+ 16:06 <pitti> - Review https://code.launchpad.net/~brian-murray/apport/zgrep-fallback/+merge/310218
+
+ 16:06 <pitti> - Review https://code.launchpad.net/~smoser/cloud-init/+git/cloud-init/+merge/310386
+
+ 16:06 <pitti> EOF
+
+ 16:06 <xnox> Removing /boot partition from LVM installs, in progress.
+
+ 16:06 <xnox> Removing swap partitions / lowering swap usage, in progress.
+
+ 16:06 <xnox> boost1.62 transition - almost done (just individual packages remaining)
+
+ 16:06 <xnox> ssl unmigration - sticking to 1.0 for now
+
+ 16:06 <xnox> migration away from 1k keys, in progress.
+
+ 16:06 <xnox> zua testing
+
+ 16:06 <xnox> EOF
+
+ 16:07 <infinity> Short week due to illness:
+
+ 16:07 <infinity> - Working on ubuntu-image/cdimage integration
+
+ 16:07 <infinity> - Updating tzdata
+
+ 16:07 <infinity> - Generic SRU/AA stuff
+
+ 16:07 <infinity> - Signed up to help build a wall to keep out American refugees
+
+ 16:07 <infinity> Off tomorrow for Remembrance Day
+
+ 16:07 <infinity> NO CARRIER
+
+ 16:07 <slangasek> chiluk: hi, anything for this week?
+
+ 16:09 <slangasek> barry:
+
+ 16:09 <barry> ubuntu-image: various triaging, cleanups, discussions, reviews, etc.; LP: #1621445; LP: #1617421; ongoing fixes to autopkgtest/gh-ci setups; releases: 0.11 & SRUs
+
+ 16:09 <ubottu> Launchpad bug 1621445 in Ubuntu Image "Suppress the traceback unless --debug is given" [High,Fix released] https://launchpad.net/bugs/1621445
+
+ 16:09 <ubottu> Launchpad bug 1617421 in Ubuntu Image "human-readable error messages on parser failures, not python stacktraces" [High,Fix committed] https://launchpad.net/bugs/1617421
+
+ 16:09 <barry> debuntu: claws-mail 3.14.1-1 syncpackage dropping ubuntu delta, testing (need to debug python plugin failures)
+
+ 16:09 <barry> other: upgrade laptop to zesty - filed several regression bugs ;)
+
+ 16:09 <barry> swapping tomorrow for 25-nov
+
+ 16:09 <barry> --done--
+
+ 16:09 <caribou> Bugfix:
+
+ 16:09 <caribou> Slow SSH login
+
+ 16:09 <caribou> - Still under investigation with LP: #1591411
+
+ 16:09 <caribou> - No more problem with failing server. Will test sil2100's fix if it restarts
+
+ 16:09 <ubottu> Launchpad bug 1591411 in dbus (Ubuntu Yakkety) "systemd-logind must be restarted every ~1000 SSH logins to prevent a ~25 second delay" [Medium,Confirmed] https://launchpad.net/bugs/1591411
+
+ 16:09 <caribou> Samba libnss-winbind / libpam-winbind static build (LP: #1584485)
+
+ 16:09 <caribou> - Uploaded to Z, SRUed to T, X & Y. Now in -proposed
+
+ 16:09 <ubottu> Launchpad bug 1584485 in samba (Debian) "Upgrading samba to latest security fixes together with winbind in nsswitch.conf can harm entire OS" [Unknown,New] https://launchpad.net/bugs/1584485
+
+ 16:09 <caribou> tftp-hpa does not start on reboot (LP: #1342580)
+
+ 16:09 <caribou> - Waiting for Debian decision to backport their fix
+
+ 16:09 <ubottu> Launchpad bug 1342580 in tftp-hpa (Ubuntu) "tftpd-hpa doesn't start on boot" [High,Expired] https://launchpad.net/bugs/1342580
+
+ 16:09 <caribou> Development:
+
+ 16:10 <caribou> makedumpfile not working on kernel 4.8 (LP: #1626269)
+
+ 16:10 <caribou> - Fixed in Debian. Synced to Zesty
+
+ 16:10 <caribou> - Preparing SRU for T, X & Y
+
+ 16:10 <ubottu> Error: Could not gather data from Launchpad for bug #1626269 (https://launchpad.net/bugs/1626269). The error has been logged
+
+ 16:10 <caribou> Misc SRU sponsoring : multipath-tools, python-pip, python-os-brick
+
+ 16:10 <caribou> Off tomorrow and sprinting next week in Malta
+
+ 16:10 <caribou> ☑ Done
+
+ 16:10 <cyphermox> - was at Plumbers last week,
+
+ 16:10 <cyphermox> - SRUs for shim to P, T, X, Y.
+
+ 16:10 <cyphermox> - testing shim updates via PPA.
+
+ 16:10 <cyphermox> - discussed SMT on ppc64el w/ infinity, smoser.
+
+ 16:10 <cyphermox> - more coordination for the IPv6 remote-root stuff, open-iscsi is now in proposed, still left with isc-dhcp and initramfs-tools.
+
+ 16:10 <cyphermox> - investigated JFS install failure on ppc64el some more, looks like a kernel issue.
+
+ 16:11 <cyphermox> - preparing wpa merge after a week testing at Plumbers.
+
+ 16:11 <cyphermox> (done)
+
+ 16:11 <slangasek> doko:
+
+ 16:12 <robru> no doko?
+
+ 16:12 <slangasek> sil2100: hi, would you like to go next?
+
+ 16:13 <sil2100> Uh oh! Please wait for me
+
+ 16:13 <slangasek> ok
+
+ 16:13 <sil2100> I just entered my apartment, need to prep a quick list
+
+ 16:13 <slangasek> robru:
+
+ 16:13 <robru> lp:bileto
+
+ 16:13 <robru> * db schema / json api cleanup
+
+ 16:13 <robru> * first snap iteration
+
+ 16:13 <robru> * UI redesign, better mobile support
+
+ 16:13 <robru> * FINALLY got creds in place for Ubuntu System Tests
+
+ 16:13 <robru> * Split qa_signoff into bileto-controlled qa and user-controlled qa_signoff fields.
+
+ 16:13 <robru> * Update to qakit r202.
+
+ 16:13 <robru> * Email ppa upload failures to bileto user.
+
+ 16:13 <robru> * Fix search by hitting enter.
+
+ 16:13 <robru> * Fix race condition when creating db tables.
+
+ 16:13 <robru> * Fix nagios check for new v2 api.
+
+ 16:13 <robru> * Handle Ctrl+Enter saving ticket fields
+
+ 16:13 <robru> lp:britney
+
+ 16:13 <robru> * a few more iterations towards source ppa grouping.
+
+ 16:13 <robru> lp:qakit, lp:queuebot, lp:phablet-tools, lp:ubuntu-silo-installer
+
+ 16:13 <robru> * Update for latest bileto json api changes
+
+ 16:13 <robru> (done)
+
+ 16:13 <tdaitx> sil2100, I'm last, you can go after me ;-)
+
+ 16:14 <slangasek> * Cloud sprint last week
+
+ 16:14 <slangasek> * SRU reviews
+
+ 16:14 <slangasek> * discussion around how to accurately map USNs to packages for Landscape
+
+ 16:14 <slangasek> * swap day yesterday for travel
+
+ 16:14 <slangasek> * US holiday tomorrow
+
+ 16:14 <slangasek> tdaitx:
+
+ 16:14 <slangasek> (done)
+
+ 16:14 <tdaitx> = OpenJDK Updates
+
+ 16:14 <tdaitx> * Fixed one security backport
+
+ 16:14 <tdaitx> * Provided OpenJDK 7 packages for the security team
+
+ 16:14 <tdaitx> * Split changes to OpenJDK 8 into a few git branches, in particular:
+
+ 16:14 <tdaitx> - aarch32 support, jtreg improvements, new buildwatch, use autoconf-2.68 on Precise, jvm cfg generation, -O3 strip fix
+
+ 16:14 <tdaitx> - official repo is in bazaar, but each change requires a separated bzr repo (and a single one already takes ages to upload)
+
+ 16:14 <tdaitx> * Investigated multiple gcc's "-O3" and "-O0" optimization flags on OpenJDK 8 for  PPC64LE during jdk's fdlibm builds; turns out debian/rules is only stripping -O2 but PPC64LE has "-O3" by default
+
+ 16:14 <tdaitx> * Investigated Debian #843784 as a possible regression due to the OpenJDK 7 update; for now it seems like an icedtea-web update is required (ongoing)
+
+ 16:14 <ubottu> Debian bug 843784 in openjdk-7-jre "openjdk-7-jre: After last security update, icedtea-plugin fails all applets" [Normal,Open] http://bugs.debian.org/843784
+
+ 16:14 <tdaitx> * Investigating possible regression on the new OpenJDK 8 package; new test failures are due to the jtreg run mode; trying to force failed tests to run on othervm mode (ongoing)
+
+ 16:14 <tdaitx> * Review and clean-up of OpenJDK 7 patches while doing some MUT tests on the weekend, submitted a few upstream
+
+ 16:14 <tdaitx> (done)
+
+ 16:15 <slangasek> sil2100: ok, your turn :)
+
+ 16:15 <sil2100> Ok, a quick one
+
+ 16:15 <sil2100> - Work on ubuntu-image bugs (thanks barry for the reviews!)
+
+ 16:15 <sil2100> - Work on preparing OTA-14 images
+
+ 16:15 <sil2100> - Discussions on image building and the release process
+
+ 16:15 <sil2100> - Help with landings and the usual trainguard stuff
+
+ 16:15 <slangasek> sil2100: (done)?
+
+ 16:15 <sil2100> Ah! (done)
+
+ 16:15 <slangasek> ok :)
+
+ 16:15 <slangasek> any questions on status?
+
+ 16:15 <sil2100> Oh, and tomorrow is a national holiday
+
+ 16:15 <barry> sil2100: \o/
+
+ 16:16 <slangasek> sil2100: what holiday is it there? :)
+
+ 16:16 <sil2100> (possibly why the traffic was so terrible on my way back from my parents place)
+
+ 16:16 <slangasek> so far we have Armistice Day, Veterans Day, Remembrance Day
+
+ 16:16 <sil2100> Liberation Day
+
+ 16:16 <sil2100> Or Independence Day
+
+ 16:16 <sil2100> Something like that
+
+ 16:16 <sil2100> ;)
+
+ 16:17 <slangasek> nice
+
+ 16:17 <slangasek> [TOPIC] Sprint travel
+
+ 16:18 <slangasek> by this point everyone should already have booked their travel and gotten their travel details on the spreadsheet
+
+ 16:18 <slangasek> if you haven't, you're late :P
+
+ 16:18 <slangasek> and I will pester you all day until you get it in
+
+ 16:18 <slangasek> I haven't looked yet to see who is or isn't on the spreadsheet, so you have roughly an hour to get your request in before the nagging begins
+
+ 16:18 <slangasek> any questions? :)
+
+ 16:19 <bdmurray> If I'm going to be pestered I don't need to bother double checking right?
+
+ 16:19 <pitti> well played wrt. "optimizing your organization workflow"!
+
+ 16:19 <slangasek> heh
+
+ 16:20 <slangasek> [TOPIC] UOS
+
+ 16:20 <slangasek> UOS is next week
+
+ 16:20 <slangasek> pitti mentioned he's preparing a session to talk about netplan
+
+ 16:20 <pitti> I am yes
+
+ 16:20 <barry> there is a git workflow session in community on tuesday
+
+ 16:21 <slangasek> what else should we be talking about there?
+
+ 16:21 <pitti> some intro, and then some "what are the next steps/cloud-init integration" discussion
+
+ 16:21 <slangasek> infinity: do you think there should be a session for powerpc outreach?
+
+ 16:21 <xnox> slangasek, there is architecture session for both powerpc & i386 schedule already
+
+ 16:21 <xnox> please attend =)
+
+ 16:21 <slangasek> oh is there?
+
+ 16:22 <slangasek> that's new since when I looked at the schedule last
+
+ 16:22 <xnox> Removing /boot partition from LVM installs, in progress.
+
+ 16:22 <xnox> Removing swap partitions / lowering swap usage, in progress.
+
+ 16:22 <xnox> boost1.62 transition - almost done (just individual packages remaining)
+
+ 16:22 <xnox> ssl unmigration - sticking to 1.0 for now
+
+ 16:22 <xnox> migration away from 1k keys, in progress.
+
+ 16:22 <xnox> zua testing
+
+ 16:22 <xnox> EOF
+
+ 16:22 <xnox> bah
+
+ 16:22 <xnox> http://summit.ubuntu.com/uos-1611/meeting/22714/architecture-discussions/
+
+ 16:22 <infinity> Wrong buffer. :P
+
+ 16:22 <xnox> infinity, i hate middle mouse stuff
+
+ 16:22 <xnox> "There have been discussions about flavors dropping either building CDs of: powerpc i386"
+
+ 16:22 <xnox> Let's get an update or let some more discussions happen live.
+
+ 16:23 <infinity> slangasek: I'm still sorting the private outreach.  I'm not sure that a UOS session would help.
+
+ 16:23 <slangasek> xnox: is it on the schedule, or yet-to-be-scheduled?
+
+ 16:23 <pitti> yes, Tuesday last sesion
+
+ 16:23 <xnox> it's on the shedule.... i think
+
+ 16:23 <pitti> 1900 UTC
+
+ 16:23 <infinity> But yes, the ISO disucssion is worth having.
+
+ 16:23 <slangasek> infinity: well, it seems there's a session on the calendar for it, so it doesn't hurt to include outreach in it if it's going to happen.  If nothing else, if you can get a mailing list set up before then you have somewhere to point people
+
+ 16:24 <infinity> I'd love to see us drop all 32-bit ISOs ASAP, personally, regardless of what long-term plans we have for the archive.
+
+ 16:25 <slangasek> sounds like Tuesday should be a good discussion, then :)
+
+ 16:25 <slangasek> what else for UOS?
+
+ 16:26 <barry> xnox: i'd like to try to figure out if the boost transition is what's breaking claws' python plugin.
+
+ 16:26 <slangasek> there's also a session about git-based package merge workflow, should be good
+
+ 16:26 <barry> yes
+
+ 16:26 <barry> 1600utc tuesday
+
+ 16:27 <caribou> slangasek: been using that workflow for the last two cycles
+
+ 16:27 <xnox> barry, i believe it is.
+
+ 16:28 <slangasek> http://summit.ubuntu.com/uos-1611/meeting/22710/git-based-merge-workflow/
+
+ 16:28 <slangasek> that's the git
+
+ 16:28 <barry> xnox: clearly a rebuild alone doesn't fix it
+
+ 16:28 <slangasek> any other ideas for UOS sessions?
+
+ 16:28 <barry> caribou: i've used it for merges and it's miles better than the old way
+
+ 16:28 <cyphermox> do we have anything EFI-related to discuss?
+
+ 16:29 <slangasek> I'm not sure there's anything that needs broader discussion re EFI
+
+ 16:29 <cyphermox> just checking, I don't think so.
+
+ 16:29 <cyphermox> people tend to know to find us.
+
+ 16:31 <slangasek> ok, so if no other UOS proposals...
+
+ 16:32 <slangasek> [TOPIC] AOB
+
+ 16:32 <slangasek> anything else for the meeting?
+
+ 16:32 <bdmurray> Anybody have an idea about bug 1640318?
+
+ 16:32 <ubottu> bug 1640318 in update-notifier (Ubuntu) "/usr/lib/update-notifier/package-data-downloader:OSError:process_download_requests:/usr/lib/update-notifier/package-data-downloader@305:process_download_requests:print_exc:print_exception" [Undecided,New] https://launchpad.net/bugs/1640318
+
+ 16:33 <bdmurray> print is failing w/o an Input/output error
+
+ 16:33 <bdmurray> Should I just put it in a try / except and not worry about an SRU test case?
+
+ 16:34 <pitti> oh, running in an env where the parent process closed fd 1?
+
+ 16:34 <bdmurray> There are hundreds to look at in the Error Tracker
+
+ 16:34 <barry> yeah, why would fd1 get closed?
+
+ 16:35 <barry> but stderr isn't?
+
+ 16:35 <pitti> package-data-downloader sounds like something that would get spawned in the background, not on the CLI
+
+ 16:35 <pitti> barry: how do you know that stderr isn't?
+
+ 16:35 <barry> pitti: oh, i guess that traceback is getting printed to a file
+
+ 16:36 <bdmurray> pitti: right, its run via cron
+
+ 16:36 <pitti> barry: no, via apport handler I figure
+
+ 16:36 <bdmurray> cron.daily/update-notifier-common
+
+ 16:37 <pitti> bdmurray: hm, cron should have stdout and err (to a pipe)
+
+ 16:37 <barry> bdmurray: it would probably make more sense not to print status information if there's no stdout
+
+ 16:37 <infinity> print not flipping out if there's no stdout might also make sense. :P
+
+ 16:37 <pitti> bdmurray: but ignoring IOError on print seems fine to me, there's not really anything you can do about it
+
+ 16:37 <barry> which i guess a try/except (or contextlib.suppress) is a brute force way of doing that
+
+ 16:37 <infinity> A user of a high-level scripting language probably shouldn't have to care.
+
+ 16:38 <infinity> But I'd also kinda like to know the exact context in which that script doesn't have stdout.
+
+ 16:38 <infinity> Seems fishy.
+
+ 16:38 <barry> it kind of doesn't make sense for print to not flip out of there's no stdout.  although, you *could* give it an explicit file= arg and use stdout if available or os.devnull if not
+
+ 16:38 <infinity> cron should, apt should.
+
+ 16:39 <pitti> if cron dies, I'd expect a SIGPIPE, but that could just represent itself as an IOError
+
+ 16:39 <pitti> maybe your /dev/null is full
+
+ 16:39 <slangasek> A cron job certainly should have stdout, so it's a strange failure
+
+ 16:39 <barry> hmm
+
+ 16:40 <bdmurray> Oh, that reminds me of bug 1618900
+
+ 16:40 <ubottu> bug 1618900 in unattended-upgrades (Ubuntu) "[Xenial/0.90] Systemd dependencies issues when used in "Shutdown mode"" [Medium,Confirmed] https://launchpad.net/bugs/1618900
+
+ 16:40 <infinity> Do we know for sure this is happening under cron, or is that wild guessing?
+
+ 16:40 <infinity> package-data-downloader is triggered from other places too.
+
+ 16:41 <bdmurray> infinity: I don't think we know its being called from cron, is there anything in the crash report that might give it away?
+
+ 16:41 <bdmurray> https://errors.ubuntu.com/oops/17e726c4-a6af-11e6-a2de-fa163e192766
+
+ 16:41 <infinity> Pid: 5464
+
+ 16:41 <infinity> PPid: 1
+
+ 16:41 <infinity> Its parent is init.
+
+ 16:41 <infinity> That's not what I'd expect a cron job to look like.
+
+ 16:42 <bdmurray> There's another with Pid: 9666
+
+ 16:42 <bdmurray> PPid: 9665
+
+ 16:42 <bdmurray> though
+
+ 16:43 <pitti> TERM=xterm-256color
+
+ 16:43 <pitti> that's also not something which I'd expect from a system job/cron job
+
+ 16:44 <bdmurray> Okay, so the decision maybe we shouldn't put the print in a try except and dig a bit deeper?
+
+ 16:44 <pitti> infinity: double-fork/detach?
+
+ 16:45 <infinity> pitti: Yeah, but why and where? :P
+
+ 16:45 <slangasek> infinity: what else besides cron and apt is triggering package-data-downloader?
+
+ 16:46 <infinity> slangasek: I would think only those two.  Well, I would hope.
+
+ 16:46 <infinity> Also, I need to run to the little developers' room.
+
+ 16:47 <slangasek> bdmurray: I think it's reasonable to put it in try/except because we should be resilient in the face of fd issues, but I think we also want to dig deeper
+
+ 16:47 * doko reads backlog, sorry for being late
+
+ 16:48 <barry> bdmurray: yeah, i think dig a little deeper, but worse comes to worse, the try/except or contextlib.suppress is a terrible, but useful hammer
+
+ 16:48 <slangasek> doko: hi, want to give a quick status?
+
+ 16:48 <bdmurray> wrt digging deeper is there anything to query the crashdb for?
+
+ 16:49 <doko> - prepare and test gcc-5 update for xenial (ppc64el only)
+
+ 16:49 <doko> - tracking down ld.gold arm64 ICE, ftbfs in gitit
+
+ 16:49 <doko> - track down and fix gcc-6 Linaro regression
+
+ 16:49 <doko> - merge GCC 6
+
+ 16:49 <doko> - prepare and upload binutils trunk builds
+
+ 16:49 <doko> - merged tdaitx's openjdk-8 changes
+
+ 16:49 <doko> - python3.6 beta3 release
+
+ 16:49 <doko> - openjdk-9 update
+
+ 16:49 <doko> - first GCC 7 packages
+
+ 16:49 <doko> - merges, syncs ...
+
+ 16:49 <doko> (done)
+
+ 16:49 <slangasek> bdmurray: I guess you could look for similar IOErrors
+
+ 16:49 <slangasek> doko: thanks
+
+ 16:50 <slangasek> bdmurray: if there's not an obvious way forward then it's not worth spinning wheels on, in any case
+
+ 16:51 <slangasek> just something to keep in the back pocket, as "hey we noticed this weird thing where a script that was supposed to be running from a cronjob had no stdout, that's never supposed to happen"
+
+ 16:51 <bdmurray> roger
+
+ 16:52 <slangasek> ok, anything else?
+
+ 16:53 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

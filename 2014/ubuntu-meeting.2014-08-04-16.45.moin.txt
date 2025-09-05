@@ -1,0 +1,251 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 04 Aug at 16:45 &mdash; 17:17 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-08-04-16.45.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Announcements ===
+The discussion about "Announcements" started at 16:45.
+
+
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:46.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 17:11.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/fwsnort.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/php-sabredav.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/bip.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/gamera.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-net-ldap.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:12.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (41)
+ * mdeslaur (12)
+ * chrisccoulson (10)
+ * jjohansen (9)
+ * tyhicks (9)
+ * sarnold (5)
+ * tangim (3)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 16:45 <jdstrand> #startmeeting
+
+ 16:45 <meetingology> Meeting started Mon Aug  4 16:45:21 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:45 <meetingology> 
+
+ 16:45 <meetingology> Available commands: action commands idea info link nick
+
+ 16:45 <jdstrand> The meeting agenda can be found at:
+
+ 16:45 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:45 <jdstrand> [TOPIC] Announcements
+
+ 16:45 <jdstrand> Thanks to the following people for their help on security updates for these community supported packages last week:
+
+ 16:45 <jdstrand> Mike Heald (jedimike) provided a debdiff for precise for nss-pam-ldapd (LP: #1347614)
+
+ 16:45 <ubottu> Launchpad bug 1347614 in nss-pam-ldapd (Ubuntu) "Fix for CVE-2013-0288 in precise package" [Undecided,Fix released] https://launchpad.net/bugs/1347614
+
+ 16:45 <jdstrand> Julian Taylor (jtaylor) provided a debdiff for precise for ipython (LP: #1344854)
+
+ 16:45 <ubottu> Launchpad bug 1344854 in ipython (Ubuntu Precise) "CVE-2014-3429: remote execution via cross origin websocket" [Undecided,Fix released] https://launchpad.net/bugs/1344854
+
+ 16:45 <jdstrand> Stefan Bader (smb) provided a precise package for xen
+
+ 16:46 <jdstrand> Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)
+
+ 16:46 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:46 <jdstrand> I'll go first
+
+ 16:47 <jdstrand> this morning I finally managed to have no open items in the hr system (ie, perf reviews are done)
+
+ 16:47 <jdstrand> so this week I'll help with apparmor testing and landing
+
+ 16:47 <jdstrand> I'm on triage
+
+ 16:47 <jdstrand> and I have a bunch of pending updates (openjdk, openstack)
+
+ 16:48 <jdstrand> mdeslaur: you're up
+
+ 16:48 <mdeslaur> I'm currently publishing some updates
+
+ 16:48 <mdeslaur> and have more pending
+
+ 16:48 <mdeslaur> and will be going down the list some more...I want to clear out the list as much as possible before I go on vacation on the 20th
+
+ 16:48 <mdeslaur> I'm on community this week
+
+ 16:49 <mdeslaur> am currently sponsoring an update for Riddell
+
+ 16:49 <mdeslaur> that's about it
+
+ 16:49 <mdeslaur> sbeattie isn't here...who's after him? tyhicks?
+
+ 16:49 <tyhicks> I think so
+
+ 16:49 <jdstrand> yes
+
+ 16:49 <tyhicks> I'm still plugging away at the versioned parser patches
+
+ 16:50 <tyhicks> after thinking about what will be needed to do it from kernel postinst, I realized that I need to make some changes
+
+ 16:50 <tyhicks> however, I'm about to put that aside and do a few updates to the apparmor Ubuntu package in prep for landing the abstract socket changes
+
+ 16:50 <mdeslaur> \o/
+
+ 16:50 <tyhicks> (we've gathered a few small changes, in addition to abstract socket mediation, that we wanted to lump into the same update)
+
+ 16:51 <tyhicks> if I have any extra time, there have been a few ecryptfs-utils bugs that should get some attention
+
+ 16:51 * jdstrand wouldn't count on extra time this particular week
+
+ 16:51 <jdstrand> :)
+
+ 16:52 <tyhicks> agreed :)
+
+ 16:52 <jdstrand> maybe friday :)
+
+ 16:52 <tyhicks> that's it for me
+
+ 16:52 <tyhicks> jjohansen: you're up
+
+ 16:53 <jjohansen> I will be pulling my hair out,^W^W^W^W err working on apparmor abstract socket mediation this week
+
+ 16:53 <jjohansen> the latest iteration of the kernel is in the usual place, http://people.canonical.com/~jj/linux-image-3.15.0-6-generic_3.15.0-6.95+jj_amd64.deb
+
+ 16:54 <jjohansen> and another iteration is building
+
+ 16:54 <jjohansen> I still have a few changes to the parser to finish up to match the latest kernel as out of band transitions will not land with this
+
+ 16:55 <jjohansen> I expect to be iterating, this stuff and testing and helping with policy until we land this mess
+
+ 16:56 * jjohansen is in the process of getting the kernel patch together for sarnold, and anyone else who wants to gouge their eyes out
+
+ 16:57 <jjohansen> and the parser patches will follow later today
+
+ 16:58 * sarnold passes around the mellon ballers
+
+ 16:59 <jjohansen> that is it for me, sarnold your up
+
+ 17:00 <sarnold> I'm in the happy place this week, I've got some outstanding MIR reviews and another merge from tvoss for trust store to review -- presumably some apparmor patches to review too :) I suspect the apparmor patches alone would be enough to fill the week
+
+ 17:01 <jjohansen> sarnold: I'm glab you can call this your happy place ;)
+
+ 17:01 <sarnold> jjohansen: heh, compared to 70-odd CVEs to triage, it feels pretty happy :)
+
+ 17:02 <sarnold> tvoss's C++ is like reading urdu poetry -- I know it's beautiful but I just can't understand the language :D
+
+ 17:02 <sarnold> anyway, that's me, chrisccoulson?
+
+ 17:02 <jdstrand> sarnold: hehe
+
+ 17:03 <chrisccoulson> so, good news! I tested chromium 36 this morning
+
+ 17:03 <chrisccoulson> the bad news is that it crashes at startup on precise
+
+ 17:04 <mdeslaur> \o/...oh wait, /o\
+
+ 17:04 <chrisccoulson> so, at some point, that will be going out (once chad has fixed it)
+
+ 17:04 <chrisccoulson> I've also got some reviews to do for oxide
+
+ 17:05 <chrisccoulson> other than that, I'll be working through my RTM bugs
+
+ 17:05 <chrisccoulson> that's me done :)
+
+ 17:05 <mdeslaur> chrisccoulson: anything big for rtm?
+
+ 17:06 <jdstrand> re 36> \o/
+
+ 17:06 <jdstrand> :P
+
+ 17:07 <chrisccoulson> mdeslaur, https://bugs.launchpad.net/oxide/+bugs?field.searchtext=&orderby=-importance&search=Search&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&field.status%3Alist=TRIAGED&field.status%3Alist=INPROGRESS&field.status%3Alist=FIXCOMMITTED&field.tag=rtm14
+
+ 17:07 <chrisccoulson> some of those need dropping off there actually
+
+ 17:08 <mdeslaur> ah, so just a couple of minor things I see :)
+
+ 17:08 <mdeslaur> </j>
+
+ 17:09 <jdstrand> chrisccoulson: feel free to remove the rtm14 tag from the medium ones
+
+ 17:09 <chrisccoulson> sure, will do
+
+ 17:10 <jdstrand> chrisccoulson: the way that critical and high are being handled is critical means we can't ship without it, high is we really want to ship with it but can provide an ota update
+
+ 17:10 <chrisccoulson> yeah, that makes sense
+
+ 17:10 <jdstrand> not sure the current priorities match that. might be worth discussing in the next oxide meeting
+
+ 17:11 <jdstrand> [TOPIC] Highlighted packages
+
+ 17:11 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 17:12 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:12 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/fwsnort.html
+
+ 17:12 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/php-sabredav.html
+
+ 17:12 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/bip.html
+
+ 17:12 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/gamera.html
+
+ 17:12 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-net-ldap.html
+
+ 17:12 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:12 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:12 <tangim> is there any kdeconnect allernative for unity??
+
+ 17:13 <jdstrand> tangim: I think you might want #ubuntu-user
+
+ 17:14 <tangim> umm...i don't know diffrence between ubuntu-meeting, ubuntu-on-air and ubuntu-user :(
+
+ 17:14 <jdstrand> tangim: see the /topic for each. this is a place where teams have meetings, not a general support forum
+
+ 17:15 <tangim> oh...thanks :)
+
+ 17:17 <jdstrand> np
+
+ 17:17 <jdstrand> mdeslaur, tyhicks, jjohansen, sarnold, chrisccoulson: thanks!
+
+ 17:17 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

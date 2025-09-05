@@ -1,0 +1,578 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 23 Jul at 15:01 &mdash; 15:51 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-07-23-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:01.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:11.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:29.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:48.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (52)
+ * vorlon (45)
+ * sil2100 (27)
+ * juliank (23)
+ * waveform (19)
+ * slyon (18)
+ * ubottu (17)
+ * xnox (15)
+ * doko (15)
+ * rbalint (11)
+ * tdaitx (8)
+ * mclemenceau (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started Thu Jul 23 15:01:23 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:01 <bdmurray> #topic Lightning rounds
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform slyon)
+
+ 15:01 <rbalint> o/
+
+ 15:01 <bdmurray> juliank tdaitx slyon sil2100 infinity xnox vorlon bdmurray mwhudson doko rbalint waveform
+
+ 15:02 <bdmurray> juliank: ?
+
+ 15:02 <juliank> I did grub and os-prober stuff
+
+ 15:02 <juliank> sponsored rpi-eeprom
+
+ 15:02 <juliank> and I think that's it
+
+ 15:02 <tdaitx> * openjdk-11 and openjdk-8 security updates
+
+ 15:02 <tdaitx> - packaged & uploaded openjdk-11 and openjdk-8 to the security team
+
+ 15:02 <tdaitx> - openjdk-8 has a regression, investigated, rebuilding with new patch
+
+ 15:02 <tdaitx> * defining static baseline for jck
+
+ 15:02 <tdaitx> (done)
+
+ 15:03 <slyon> - I will be out tomorrow
+
+ 15:03 <slyon> - Resolved libzstd migration
+
+ 15:03 <slyon> * Removed badger/armhf from the archive, 32bit broken upstream, bug #1884753
+
+ 15:03 <slyon> * Re-triggerd badger tests on 64bit architectures
+
+ 15:03 <slyon> * Re-triggerd rsync tests with newer 3.2.1 version
+
+ 15:03 <slyon> - SRU verification for ubuntu-release-upgrader
+
+ 15:03 <slyon> * re python-is-python2, bug #1875523
+
+ 15:03 <ubottu> bug 1884753 in badger (Ubuntu) "Please remove badger/armhf binaries" [Undecided,Fix released] https://launchpad.net/bugs/1884753
+
+ 15:03 <ubottu> bug 1875523 in ubuntu-release-upgrader (Ubuntu Focal) "I can't upgrade the ubuntu to 20.04 by terminal. Everytime I do it, a message appear saying that it is not possible do the upgrade." [Undecided,Fix committed] https://launchpad.net/bugs/1875523
+
+ 15:03 <slyon> === Netplan ===
+
+ 15:03 <slyon> - Merged final feature PR#153 for cleanup of OVS interfaces
+
+ 15:03 <slyon> - Continued working on Wireguard PR#113
+
+ 15:03 <slyon> * Formatting, Refactoring, NM support
+
+ 15:03 <slyon> - Reviewed community PR#89, adding support for IP interface labels
+
+ 15:03 <slyon> - Discussions around NetworkManager plugin
+
+ 15:03 <slyon> (done)
+
+ 15:03 <sil2100> - SRU reviews and releases
+
+ 15:03 <sil2100> - 20.04.1 and 18.04.5:
+
+ 15:03 <sil2100> * Release related meetings
+
+ 15:03 <sil2100> * Staged base-files
+
+ 15:03 <sil2100> * Sponsored required linux-firmware-raspi2 packages
+
+ 15:03 <sil2100> * Tweaked and discussed rpi-eeprom inclusion
+
+ 15:03 <sil2100> * Released focal langpack updates
+
+ 15:03 <sil2100> * Accepted many OEM meta packages, promoted them to main
+
+ 15:03 <sil2100> * Selectively accepting SRUs for .1 to be copied into -updates
+
+ 15:03 <sil2100> * Created .1 milestone
+
+ 15:03 <sil2100> * Other stuff
+
+ 15:03 <bdmurray> slyon: I forget did you test an upgrade with nothing special?
+
+ 15:03 <sil2100> - netplan:
+
+ 15:03 <sil2100> * Reviewed latest OVS configuration cleanup branch, +1'ed, merged
+
+ 15:03 <sil2100> * Fixed failing unit tests on LP builders
+
+ 15:03 <sil2100> * Discussed ways to approach the non-tagged OVS config cleanup
+
+ 15:03 <sil2100> * Refreshed OVS test packages for James, sent e-mail
+
+ 15:03 <sil2100> * Addressed SR-IOV improvement changes, merged, tested on hardware
+
+ 15:03 <sil2100> * Working on prepping a PR for the OVS stuff
+
+ 15:03 <sil2100> - Verified livecd-rootfs changes for dangerous-<channel> UC20 image builds
+
+ 15:04 <sil2100> - Appliance images:
+
+ 15:04 <sil2100> * Pushed and deployed appliance related ubuntu-cdimage changes
+
+ 15:04 <sil2100> * Did a few test builds, noticed issues, prepared fixes
+
+ 15:04 <sil2100> * Built first batch of cdimage-built appliance images
+
+ 15:04 <sil2100> - AA related package removals
+
+ 15:04 <sil2100> (done)
+
+ 15:04 <xnox> sil2100:  when do you think we will have 20.04.1 candidatees?
+
+ 15:04 <bdmurray> xnox:
+
+ 15:05 <xnox> working on snap-preseed in livecd-rootfs
+
+ 15:05 <xnox> working on next stable release of core18
+
+ 15:05 <sil2100> xnox: I wanted to do first test candidates today
+
+ 15:05 <xnox> working on grub updates
+
+ 15:05 <xnox> ghc migrated - hooray
+
+ 15:05 <xnox> started new ghc transition - boooooo
+
+ 15:05 <xnox> hopefully that one will migrate soon.
+
+ 15:05 <xnox> done
+
+ 15:05 <xnox> sil2100:  awesome
+
+ 15:05 <sil2100> Still pushing pushing stufffff
+
+ 15:05 <bdmurray> vorlon:
+
+ 15:05 <slyon> bdmurray: I will test with a plain bionic multipass container and comment on the LP bug.
+
+ 15:06 <vorlon> bdmurray: skip me for now?
+
+ 15:06 <bdmurray> well then its me!
+
+ 15:06 <bdmurray> many special SRU review requests
+
+ 15:06 <bdmurray> updated daisy code for 19.10 EoL, deployed code to production Error Tracker
+
+ 15:06 <bdmurray> updated meta-release files for 19.10 EoL
+
+ 15:06 <bdmurray> discovered / documented a test case for LP: #1884480
+
+ 15:06 <bdmurray> wrote a test case for LP: #1882069, uploaded Focal SRU for it
+
+ 15:06 <bdmurray> merged and uploaded slyon's fix to Focal and Groovy for LP: #1875523
+
+ 15:06 <ubottu> Launchpad bug 1884480 in ubuntu-release-upgrader (Ubuntu) "No GUI error message when upgrade to 20.04 does not work due to outdated packages" [High,Triaged] https://launchpad.net/bugs/1884480
+
+ 15:06 <bdmurray> uploaded a fix for LP: #1875107, verified that the SRU works
+
+ 15:06 <bdmurray> SRU verified the fix for LP: #1882069
+
+ 15:06 <bdmurray> investigation into proposed-migration metric being 0 submitted britney1 MP fixing it
+
+ 15:06 <ubottu> Launchpad bug 1882069 in ubuntu-release-upgrader (Ubuntu Focal) "DistUpgradeController.py key 'devRelease' not set correctly" [High,Fix committed] https://launchpad.net/bugs/1882069
+
+ 15:06 <ubottu> Launchpad bug 1875523 in ubuntu-release-upgrader (Ubuntu Focal) "I can't upgrade the ubuntu to 20.04 by terminal. Everytime I do it, a message appear saying that it is not possible do the upgrade." [Undecided,Fix committed] https://launchpad.net/bugs/1875523
+
+ 15:06 <ubottu> Launchpad bug 1875107 in ubuntu-release-upgrader (Ubuntu Focal) "unable to upgrade with lubuntu-desktop and ubuntu-desktop installed due to xscreensaver" [Medium,Fix committed] https://launchpad.net/bugs/1875107
+
+ 15:07 <bdmurray> updated proposed migration data KPI to have a dry-run option
+
+ 15:07 <bdmurray> finished ESM for Apps apt hook PR for ua client (it was merged)
+
+ 15:07 <bdmurray> ✔ done
+
+ 15:07 <bdmurray> doko:
+
+ 15:07 <doko> - GCC 10.2 release
+
+ 15:07 <doko> - python 3.9 fixes
+
+ 15:07 <doko> - built SRU candidates for gcc-9, waiting until test rebuilds are possible again
+
+ 15:07 <doko> - openjdk -13, -14, -15 uploads, -13 and 14 SRUs for focal
+
+ 15:07 <doko> - jtharness update, jtreg PPA backport, should be SRUed as well
+
+ 15:07 <doko> - elfutils, packaged new upstream
+
+ 15:07 <doko> - regular MIR and AA work
+
+ 15:08 <doko> (done)
+
+ 15:08 <bdmurray> vorlon: ready?
+
+ 15:08 <vorlon> yah
+
+ 15:08 <vorlon> * short week, was out Tuesday
+
+ 15:08 <vorlon> * grub work
+
+ 15:08 <vorlon> * netplan schema reviews
+
+ 15:08 <vorlon> * +1 maintenance yesterday/today (more ghc, always more ghc)
+
+ 15:08 <vorlon> (done)
+
+ 15:08 <rbalint> * +1 maintenance
+
+ 15:08 <rbalint> * reviewed raspberrypi-userland for sponsoring but had a few observations to fix
+
+ 15:08 <rbalint> * uploads via Debian: unattended-upgrades 2.5
+
+ 15:08 <rbalint> * prepared unattended-upgrades SRU for focal fixing LP: #1877769 and LP: #1883082
+
+ 15:08 <ubottu> Launchpad bug 1877769 in unattended-upgrades (Ubuntu Focal) "[SRU] Rewinding cache triggers obsolete adjustments consuming a lot of CPU" [Undecided,Fix committed] https://launchpad.net/bugs/1877769
+
+ 15:08 <ubottu> Launchpad bug 1883082 in unattended-upgrades (Ubuntu Focal) "Crash when using Package-Whitelist-Strict" [Undecided,Fix committed] https://launchpad.net/bugs/1883082
+
+ 15:08 <rbalint> * some additional unattended-upgrades bug gardening
+
+ 15:08 <rbalint> * partner work
+
+ 15:08 <rbalint> (done)
+
+ 15:09 <bdmurray> waveform:
+
+ 15:09 <waveform> * Fixed issue in pending raspberrypi-userland (inclusion of EGL/GL headers clashing with libegl-dev) (LP: #1883111)
+
+ 15:09 <waveform> * Still working on excising the EGL/GL headers completely / d/copyright issues
+
+ 15:09 <waveform> * Addressed review of rpi-eeprom (LP: #1884748), but ...
+
+ 15:09 <waveform> * Pending issue with dependency on raspberrypi-userland (vcgencmd for extracting current boot configuration from firmware)
+
+ 15:09 <waveform> * Bumped firmware in linux-firmware-raspi2 for 4B rev 1.4 (LP: #1886581)
+
+ 15:09 <waveform> * Bumped wifi and bluetooth firmwares in linux-firmware-raspi2 to latest versions (LP: #1888211), and converted package to use multi-upstream tarballs instead of base64 patch blobs
+
+ 15:09 <waveform> * Tested linux-firmware-raspi2 in all configurations on focal release
+
+ 15:09 <waveform> * Testing linux-firmware-raspi2 on bionic for point release & core18
+
+ 15:09 <ubottu> Launchpad bug 1883111 in Ubuntu "[needs-packaging] raspberrypi-userland" [Wishlist,New] https://launchpad.net/bugs/1883111
+
+ 15:09 <waveform> * Worked on removal of u-boot from classic (postinst transition in flash-kernel and adjustment of custom "pi" method in flash-kernel to avoid u-boot tools)
+
+ 15:09 <ubottu> Launchpad bug 1884748 in Ubuntu "[needs-packaging] rpi-eeprom" [Wishlist,Confirmed] https://launchpad.net/bugs/1884748
+
+ 15:09 <waveform> * Testing release upgrade from bionic to focal on pi
+
+ 15:09 <ubottu> Launchpad bug 1886581 in linux-firmware-raspi2 (Ubuntu Bionic) "Ubuntu 18.04 64-bit RasPi 3 and 4 image fails to boot on RasPi 4B" [Undecided,Fix committed] https://launchpad.net/bugs/1886581
+
+ 15:09 <waveform> * Worked on "new stuff"
+
+ 15:09 <ubottu> Launchpad bug 1888211 in linux-firmware-raspi2 (Ubuntu Focal) "Merge BCM43430 rev 94 and BCM43456 wifi firmware from raspbian, update to latest firmware" [Undecided,Fix committed] https://launchpad.net/bugs/1888211
+
+ 15:09 <waveform> (done)
+
+ 15:10 <bdmurray> any more questions on status?
+
+ 15:11 <xnox> all good.
+
+ 15:11 <bdmurray> #topic Release incoming bugs
+
+ 15:12 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-gg-incoming-bug-tasks.html#foundations-bugs
+
+ 15:12 <bdmurray> bug 1884480
+
+ 15:13 <ubottu> bug 1884480 in ubuntu-release-upgrader (Ubuntu) "No GUI error message when upgrade to 20.04 does not work due to outdated packages" [High,Triaged] https://launchpad.net/bugs/1884480
+
+ 15:13 <bdmurray> So the description is pretty accurate
+
+ 15:13 <bdmurray> This has been around for quite some time but seems like it would be worth fixing
+
+ 15:14 <bdmurray> I guess the message wouldn't be translated though.
+
+ 15:15 <bdmurray> vorlon: Do you have an opinion on carding / priority of this?
+
+ 15:15 <vorlon> bdmurray: I think we have a full plate and I wouldn't want to commit to it for groovy
+
+ 15:17 <bdmurray> bug 1888352
+
+ 15:17 <ubottu> bug 1888352 in OEM Priority Project "use builtin dump_acpi_tables.py in hookutils" [High,Confirmed] https://launchpad.net/bugs/1888352
+
+ 15:18 <bdmurray> lets just card it and merge it
+
+ 15:18 <mclemenceau> Ok!
+
+ 15:19 <bdmurray> bug 1887664
+
+ 15:19 <ubottu> bug 1887664 in python-sqlalchemy-utils (Ubuntu) "python_dateutil get_zonefile_instance functionality is broken without upstream tarball" [Medium,Triaged] https://launchpad.net/bugs/1887664
+
+ 15:20 <bdmurray> Is anybody familiar with python-dateutil?
+
+ 15:20 <waveform> vaguely
+
+ 15:20 <waveform> (I use it in a few projects)
+
+ 15:21 <waveform> yeah, I can take a look at that one
+
+ 15:21 <bdmurray> Okay, I don't think its a huge priority but seems rather easy to sort
+
+ 15:21 <mclemenceau> bdmurray: want me to card this?
+
+ 15:22 <bdmurray> mclemenceau: please
+
+ 15:22 <mclemenceau> k
+
+ 15:22 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:22 <bdmurray> bug 1870813
+
+ 15:22 <ubottu> bug 1870813 in scilab (Ubuntu) "Scilab does not start on focal" [Undecided,Confirmed] https://launchpad.net/bugs/1870813
+
+ 15:23 <bdmurray> timo targetted this to focal already
+
+ 15:23 <bdmurray> maybe we should see if that means he is planning to SRU it
+
+ 15:26 <tdaitx> I can take a look at it next week
+
+ 15:27 <bdmurray> tdaitx: okay, lets card it then
+
+ 15:27 <mclemenceau> done
+
+ 15:27 <tdaitx> thanks
+
+ 15:28 <bdmurray> that's all the new stuff
+
+ 15:29 <bdmurray> #topic Team proposed-migration report
+
+ 15:29 <vorlon> [LINK] https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:30 <juliank> I forgot to look at xz-utils
+
+ 15:31 <vorlon> vim is still at the top, is still assigned to me; it's a bug that requires a lot of effort to reproduce on riscv64
+
+ 15:31 <vorlon> if anyone wanted to steal this one from me, that might not be a bad idea
+
+ 15:32 <vorlon> if no one's volunteering, I'll keep it
+
+ 15:32 <vorlon> juliank: are you good to take xz-utils this week?
+
+ 15:32 <juliank> It's only one day left, not sure
+
+ 15:32 <juliank> (I'm out next week)
+
+ 15:32 <juliank> If not, I can handover tomorrow
+
+ 15:32 <vorlon> ok
+
+ 15:33 <vorlon> libzstd is a candidate and looks to me like it actually just migrated
+
+ 15:33 <slyon> I fixed that today
+
+ 15:33 <vorlon> build-essential is down to two packages with blocking autopkgtests... I was working on this last week, I'll follow through
+
+ 15:34 <vorlon> waveform: python-tz was assigned to you last week, are you going to have time for it this week?
+
+ 15:35 <vorlon> (python-oops binary removal)
+
+ 15:35 <waveform> vorlon, was fairly sure I did a patch for that ... just checking ...
+
+ 15:35 <bdmurray> mpfr4 / python-gmpy2 is an upstream test failure
+
+ 15:35 <vorlon> libsereal-decoder-perl we punted last week to see if Debian would fix it, it's still broken, someone should take this now
+
+ 15:36 <waveform> vorlon, yup - bug 1887828 just needs sponsorship
+
+ 15:36 <ubottu> bug 1887828 in oops (Ubuntu) "Drop Python 2 support" [Undecided,New] https://launchpad.net/bugs/1887828
+
+ 15:36 <vorlon> waveform: ok, your responsibility to secure a sponsor then, don't just wait for the ubuntu-sponsors queue :)
+
+ 15:36 <waveform> vorlon, ok
+
+ 15:36 <vorlon> rbalint: can you take libsereal-decoder-perl and friends?
+
+ 15:36 <rbalint> vorlon,sure
+
+ 15:36 <vorlon> thanks
+
+ 15:37 <rbalint> vorlon, which friends :-)
+
+ 15:37 <doko> python-gmpy2 is scheduled for removal in Debian, so better remove it
+
+ 15:37 <vorlon> doko: do you want to take this one and follow through then?
+
+ 15:37 <doko> vorlon: ok
+
+ 15:38 <bdmurray> doko: why is that?
+
+ 15:38 <vorlon> then there's a stack of new perl packages that seem to all be triggering lintian regressions, libtext-levenshteinxs-perl libtext-xslate-perl libtime-moment-perl; these should be taken as a group
+
+ 15:38 <vorlon> tdaitx: could you look at these?
+
+ 15:38 <vorlon> python-werkzeug
+
+ 15:39 <vorlon> xnox: ^^ can you take python-werkzeug?
+
+ 15:39 <xnox> bdmurray:  https://tracker.debian.org/pkg/python-gmpy2 top of the page -> Marked for autoremoval on 27 August: #965001 -> strange version 2.1.0 beta4 fails tests with mpfr4 4.1.0
+
+ 15:39 <xnox> vorlon:  yes.
+
+ 15:39 <tdaitx> vorlon: yes
+
+ 15:39 <xnox> bdmurray:  so ftbfs bug in debian, that doko filed ;-)
+
+ 15:40 <vorlon> libsemanage is a missing build on i386, I'll take
+
+ 15:40 <doko> no, lintian got new deps, I just promoted all the new deps, and subscribed foundations. better to re-run all the stuff with new lintian
+
+ 15:40 <vorlon> logilab-common requires an MIR
+
+ 15:40 <doko> juliank: https://objectstorage.prodstack4-5.canonical.com/v1/AUTH_77e2ada1e7a84929a74ba3b87153c0ac/autopkgtest-groovy/groovy/amd64/a/aptdaemon/20200722_110947_0c111@/log.gz
+
+ 15:41 <vorlon> bdmurray: would you care to MIR logilab-common?
+
+ 15:41 <vorlon> oh or maybe slyon
+
+ 15:41 <slyon> I can do it!
+
+ 15:41 <vorlon> thanks
+
+ 15:41 <doko> write a MIR ...
+
+ 15:41 <vorlon> I'll also take the libselinux stuff in connection with libsemanage
+
+ 15:41 <juliank> doko: ignore and move on
+
+ 15:42 <juliank> doko: or retry
+
+ 15:42 <rbalint> i'm on glibc but i'm merging it, too
+
+ 15:42 <xnox> Odd_Bloke:  i think to fix werkzeug I need to fix things in oddoo which now fails to start in groovy.
+
+ 15:42 <doko> juliank: please convince the release team, not me
+
+ 15:42 <juliank> doko: it's a 50/50 chance it passes
+
+ 15:42 <juliank> I think I did
+
+ 15:42 <vorlon> aptdaemon/dbus-python/pygobject - who has capacity for this?
+
+ 15:42 <juliank> but maybe it got reverted again?
+
+ 15:43 <juliank> aptdaemon/armhf should still be force-badtest
+
+ 15:43 <juliank> It times out 50% of the time, it's not useful to block on
+
+ 15:43 <vorlon> ok then I'll take care of hinting that
+
+ 15:43 <juliank> I've said that the past few times, and I'm pretty sure we had badtested it?
+
+ 15:44 <vorlon> I don't see such a hint for armhf currently
+
+ 15:44 <vorlon> pygments vs mercurial - bdmurray?
+
+ 15:44 <juliank> Oh doko one was amd64
+
+ 15:44 <juliank> amd64 passes much more reliably and should be retriggered
+
+ 15:44 <juliank> (2 fails and too many to count passes)
+
+ 15:45 <juliank> I retriggered that one
+
+ 15:45 <bdmurray> vorlon: sure
+
+ 15:45 <vorlon> pyasn1 vs fdroidserver - doko?
+
+ 15:45 <vorlon> gpgme1.0 vs libpod - waveform ?
+
+ 15:45 <bdmurray> ubuntu-release-upgrader is a really a pycodestyle issue and I'll take that
+
+ 15:46 <waveform> vorlon, ok
+
+ 15:46 <vorlon> re2 is a library transition, I'll dig into this
+
+ 15:46 <vorlon> autodep8 - xnox?
+
+ 15:47 <vorlon> and bdmurray took u-r-u, so that's the list
+
+ 15:47 <doko> I'll look at pyasn
+
+ 15:47 <vorlon> thanks
+
+ 15:48 <xnox> vorlon:  sure.
+
+ 15:48 <vorlon> ah and re2 is going to be stalled behind a nodejs transition, yummy
+
+ 15:48 <vorlon> bdmurray: that's the list, back over to you
+
+ 15:48 <bdmurray> #topic AOB
+
+ 15:48 <bdmurray> I heard juliank is going to be out next week
+
+ 15:48 <juliank> I am!
+
+ 15:48 <slyon> I am out tomorrow.
+
+ 15:49 <juliank> also my phone discharged, I thought I had it plugged into the charger, but it was loose :/
+
+ 15:51 <juliank> I guess we can endmeetign here
+
+ 15:51 * juliank has other irc tabs to watch
+
+ 15:51 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

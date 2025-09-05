@@ -1,0 +1,555 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 15:07:19 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-05-16-15.07.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+
+ *Bugs
+''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/520386 - has a MIR(?) Assigned to it with serge hallyn as the owner  (stokachu, 15:25:59)
+
+ *AOB
+
+
+
+Meeting ended at 15:38:30 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (58)
+ * ev (36)
+ * stgraber (26)
+ * bdmurray (23)
+ * ubottu (22)
+ * xnox (21)
+ * infinity (18)
+ * stokachu (14)
+ * ogra_ (13)
+ * barry (7)
+ * jodh (5)
+ * meetingology (3)
+ * Laney (2)
+
+
+
+== Full Log ==
+
+
+ 15:07:19 <cjwatson> #startmeeting
+
+ 15:07:19 <meetingology> Meeting started Wed May 16 15:07:19 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:07:19 <meetingology> 
+
+ 15:07:19 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:07:25 <cjwatson> #topic Lightning round
+
+ 15:07:29 <cjwatson> $ echo $(shuf -e barry bdmurray cjwatson doko ev infinity jodh ogra stgraber stokachu xnox)
+
+ 15:07:32 <cjwatson> ogra stgraber doko barry infinity bdmurray xnox jodh stokachu ev cjwatson
+
+ 15:07:35 <cjwatson> (not fixed, honest)
+
+ 15:07:41 <ogra_> whee ! me first !
+
+ 15:07:51 <ogra_> done:
+
+ 15:07:51 <ogra_> * been sick since UDS (pneumonia apparently), first day completely without fever is today it seems.
+
+ 15:07:51 <ogra_> todo:
+
+ 15:07:51 <ogra_> * tomorrow is ascension day in germany which is a public holiday so i wont be around
+
+ 15:07:51 <ogra_> * finishing https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-embedded-rootfs to be in proper shape for acceptance
+
+ 15:07:53 <ogra_> * finishing https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-hwpack-integration to be in proper shape for acceptance
+
+ 15:07:56 <ogra_> * happy to take WIs from "event based initrd" and the "full image upgrades" specs
+
+ 15:07:58 <ogra_> * still not done all merges
+
+ 15:08:00 <ogra_> * promised doko to look into the gcc-4.7 FTBFS issues in debian and file debdiffs for failing packages
+
+ 15:08:13 <ogra_> ..
+
+ 15:08:27 <stgraber> Mix of things done pre and post UDS:
+
+ 15:08:27 <stgraber> - Networking
+
+ 15:08:27 <stgraber> - Tracked down race condition between NM and presence of loopback, will be in next NM SRU
+
+ 15:08:30 <stgraber> - Tracked down source of network disconnect on wifi with IPv6 + RDNSS, currently testing a patch, should be in next NM SRU
+
+ 15:08:33 <stgraber> - Merged ifupdown from Debian, got upstream to fix some bugs found by Quantal testers
+
+ 15:08:36 <stgraber> - Got dual-stack IPv4/IPv6 connectivty working over 3G with the Orange Poland experimental network.
+
+ 15:08:39 <stgraber> Currently doing that from the command line with a Nokia E51 using multiple PDP contexts for the 2 APNs. (need to blog about it)
+
+ 15:08:42 <stgraber> - Poked some upstream kernel developers to try and get bug 936714 fixed upstream (so we have it for 12.10 and in 12.04 with the backport kernel)
+
+ 15:08:43 <ubottu> Launchpad bug 936714 in linux (Ubuntu) "IPv6 DNS search list (DNSSL) isn't passed to userspace by the kernel" [Undecided,Confirmed] https://launchpad.net/bugs/936714
+
+ 15:08:45 <stgraber> - Other
+
+ 15:08:47 <stgraber> - Updated python-apt and lxc for quantal
+
+ 15:08:50 <stgraber> - First pass through my list of merges/syncs
+
+ 15:08:52 <stgraber> - Moved all non-english langpacks from Edubuntu's livefs to /pool and updated language-selector to deal properly with gcompris' langpacks. This should save > 30min of install time.
+
+ 15:08:56 <stgraber> - SRU
+
+ 15:08:59 <stgraber> - Pushed ldm SRU to precise (bug 991745)
+
+ 15:09:00 <ubottu> Launchpad bug 991745 in LTSP "ldminfod doesn't seem to understand hidden=true in .desktop files" [Undecided,Fix committed] https://launchpad.net/bugs/991745
+
+ 15:09:01 <stgraber> - Pushed lxc SRU to precise (bug 999187)
+
+ 15:09:03 <ubottu> Launchpad bug 999187 in lxc (Ubuntu Precise) "lxc-create for armhf fails with error "failed to execute template 'ubuntu'"" [High,Fix committed] https://launchpad.net/bugs/999187
+
+ 15:09:04 <stgraber> - Helped with the resolvconf SRU, took a few times to get it right, but the one currently in -proposed should be good (bug 994539, bug 989585)
+
+ 15:09:05 <ubottu> Launchpad bug 994539 in resolvconf (Ubuntu Precise) "resolvconf 1.63ubuntu12 failed to install/upgrade -- "lsattr: Inappropriate ioctl for device While reading flags on /etc/resolv.conf"" [High,Fix committed] https://launchpad.net/bugs/994539
+
+ 15:09:07 <ubottu> Launchpad bug 989585 in resolvconf (Ubuntu Precise) "resolvconf failed to install/upgrade because /etc/resolv.conf immutable" [High,Fix committed] https://launchpad.net/bugs/989585
+
+ 15:09:07 <stgraber> - Pushed nagios-nrpe SRU to hardy, lucid, natty, oneiric and precise. Needs help validating as initial reporter doesn't seem active anymore.
+
+ 15:09:10 <stgraber> - ISO tracker
+
+ 15:09:12 <stgraber> - Fixed bug 994816
+
+ 15:09:13 <ubottu> Launchpad bug 994816 in Ubuntu QA Website "Buttons for adding bugs found in previous builds of a product" [Wishlist,Fix committed] https://launchpad.net/bugs/994816
+
+ 15:09:15 <stgraber> - Implemented new DB schema for qa-q-isotracker-testcases and migration code
+
+ 15:09:18 <stgraber> - Updated most of the UI to work with the new DB schema
+
+ 15:09:20 <stgraber> - TODO this week
+
+ 15:09:23 <stgraber> - Try and get the rest of qa-q-isotracker-testcases implemented, then push to http://iso.qa.dev.stgraber.org
+
+ 15:09:26 <stgraber> - Go through all the UDS notes to extract the work items and update LP
+
+ 15:09:28 <stgraber> (DONE)
+
+ 15:10:11 <ev> infinity: of course I am. I sometimes read his specs to myself as bedtime stories.
+
+ 15:10:42 <ogra_> thats passion !
+
+ 15:10:48 <ev> xnox: https://wiki.ubuntu.com/SoftwareCenter https://wiki.ubuntu.com/ErrorTracker https://docs.google.com/a/canonical.com/Doc?docid=0AU5sFuLRpCpBZGZra2pqY2pfMTAxZ25rcnBnNXY&hl=en
+
+ 15:10:57 <ev> xnox: but as cjwatson says, generally overkill
+
+ 15:11:21 <infinity> barry: ?
+
+ 15:11:27 <barry> updated blueprint work items from session notes. merged twisted-{core,bin} from debian; need to merge twisted-{conch,mail,lore,names,news,runner,web,words} dependencies.  gathered some stats for twisted buildbot for python 3. todo: port the launchpadlib stack, follow up on aptdaemon emails.  done.
+
+ 15:12:49 <ev> boo twisted
+
+ 15:12:54 <barry> ;)
+
+ 15:12:54 <ev> ;)
+
+ 15:13:01 <infinity> Agreed.
+
+ 15:13:12 <infinity> Who wants to rewrite lp-buildd in !twisted?
+
+ 15:13:20 * ev hides, cowers
+
+ 15:13:26 <infinity> (If I do it, it'll be perl)
+
+ 15:13:34 <ogra_> make it shell !
+
+ 15:13:35 <infinity> last week:
+
+ 15:13:36 <infinity> - UDS
+
+ 15:13:36 <infinity> - Sick Monday and Tuesday
+
+ 15:13:36 <infinity> upcoming:
+
+ 15:13:36 <infinity> - Drafting specs
+
+ 15:13:38 <infinity> - Figuring out armel/armhf toolchain issues
+
+ 15:13:40 <ev> hahahaha, I'll have to make more use of that threat
+
+ 15:13:40 <infinity> - Pushing some partner stuff out
+
+ 15:13:43 <infinity> - eglibc SRU
+
+ 15:13:45 <infinity> - Drugs and naps
+
+ 15:13:47 <stgraber> infinity: let's port it to Go, I hear it's great for that kind of things ;)
+
+ 15:13:48 <infinity> ...
+
+ 15:14:03 <infinity> stgraber: Alright, *stavo.
+
+ 15:14:10 <bdmurray> aught up on email from UDS
+
+ 15:14:11 <bdmurray> review of boot-repair's /etc/default/grub modification code
+
+ 15:14:11 <bdmurray> research into and won't fixing of update-manager bug 997846
+
+ 15:14:11 <bdmurray> reported whoopsie bug regarding collecting LiveMediaBuild
+
+ 15:14:11 <bdmurray> reported bug 993407 regarding install-info and /etc/environment
+
+ 15:14:13 <ubottu> Launchpad bug 997846 in update-manager (Ubuntu) "update-manager in ubuntu 11.10 not showing 12.04 LTS upgrade" [Low,Won't fix] https://launchpad.net/bugs/997846
+
+ 15:14:14 <ubottu> Launchpad bug 993407 in texinfo (Ubuntu) "install-info can fail to install due to syntax errors in /etc/environment" [Undecided,Confirmed] https://launchpad.net/bugs/993407
+
+ 15:14:26 <bdmurray> investigation into update-manager reporting dependency problems - leaving unconfigured bug reports
+
+ 15:14:29 <bdmurray> reported update-manager bug 999890
+
+ 15:14:30 <ubottu> Launchpad bug 999890 in update-manager (Ubuntu) "does not block follow up errors from earlier reports" [High,Triaged] https://launchpad.net/bugs/999890
+
+ 15:14:31 <bdmurray> rewrote harvest-maintainer-script.py to use the launchpad API
+
+ 15:14:34 <bdmurray> modifications to collect-bug-data (part of arsenal) to support ordering and limiting
+
+ 15:14:37 <bdmurray> wrote a bug pattern for texinfo bug 993047
+
+ 15:14:38 <ubottu> Launchpad bug 993047 in rhythmbox (Ubuntu) "Arrêt soudain de la lecture aléatoire de Rhythmbox" [Undecided,Confirmed] https://launchpad.net/bugs/993047
+
+ 15:14:39 <bdmurray> wrote a bug pattern for resolvconf bug 989585
+
+ 15:14:40 <ubottu> Launchpad bug 989585 in resolvconf (Ubuntu Precise) "resolvconf failed to install/upgrade because /etc/resolv.conf immutable" [High,Fix committed] https://launchpad.net/bugs/989585
+
+ 15:14:42 <bdmurray> wrote a bug pattern for bug 523896
+
+ 15:14:43 <bdmurray> .done.
+
+ 15:14:43 <ubottu> Launchpad bug 523896 in shadow (Ubuntu Quantal) "useradd: cannot lock /etc/passwd; try again later." [High,Triaged] https://launchpad.net/bugs/523896
+
+ 15:15:13 <xnox> * uds / specs
+
+ 15:15:13 <xnox> - started factoring out work items (in progress)
+
+ 15:15:14 <xnox> * updated `sudo' merge based on slangasek's comments (in progress https://code.launchpad.net/~dmitrij.ledkov/ubuntu/quantal/sudo/merge/+merge/104420)
+
+ 15:15:14 <xnox> * grub2 sru/bugfix (bug #978464, quantal released, sru pending)
+
+ 15:15:15 <xnox> * mdadm bugfix / packaging (bug #942106, cannot reproduce in a VM need
+
+ 15:15:15 <xnox> more realistic hardware)
+
+ 15:15:16 <xnox> * mdadm missing utilities (bug #957494, needs liaising with SpamapS)
+
+ 15:15:16 <ubottu> Launchpad bug 978464 in grub2 (Ubuntu Precise) "After LTS->LTS (lucid2precise) upgrade, upon reboot drops into grub recovery shell" [Critical,Triaged] https://launchpad.net/bugs/978464
+
+ 15:15:16 <xnox> * got in touch with mdadm debian maintainers (one of them is russian
+
+ 15:15:17 <xnox> as well) to understand why udev incremental mdadm assembly was patched
+
+ 15:15:17 <xnox> out. Needs re-enabling in ubuntu.
+
+ 15:15:18 <ubottu> Launchpad bug 942106 in mdadm (Ubuntu) "software raid doesn't assemble before mount on boot" [High,Confirmed] https://launchpad.net/bugs/942106
+
+ 15:15:18 <xnox> * usb-creator wipe all partitions bug (merged a fix, testing with
+
+ 15:15:18 <xnox> sticks locally, bug #484252)
+
+ 15:15:19 <xnox> * arrived from uds on monday, and had monday booked as swap day
+
+ 15:15:19 <ubottu> Launchpad bug 957494 in mdadm (Ubuntu) "Missing added utility 'mdmon'" [Medium,In progress] https://launchpad.net/bugs/957494
+
+ 15:15:19 <xnox> TODO:
+
+ 15:15:20 <xnox> * specs / work items
+
+ 15:15:20 <xnox> * ubiquity planning with cjwatson cryptsetup/raid/lvm
+
+ 15:15:20 <ubottu> Launchpad bug 484252 in usb-creator (Ubuntu) "Format action wipes all partitions" [High,Triaged] https://launchpad.net/bugs/484252
+
+ 15:15:29 <xnox> .done.
+
+ 15:16:41 <jodh> * first day back after UDS (so recovering from ubuflu).
+
+ 15:16:42 <jodh> * catching up on mail.
+
+ 15:16:42 <jodh> * starting blueprint/etherpad trawl to generate workitems.
+
+ 15:16:42 <jodh> * annual review.
+
+ 15:16:45 <jodh> ⑁
+
+ 15:17:24 <cjwatson> stokachu: Anything you'd like to note for this week?  Sorry, kind of sprung this on you :)
+
+ 15:17:49 <stokachu> cjwatson: Probably have some SRU's to post next week (i just created a couple yesterday)
+
+ 15:19:38 <cjwatson> OK - you can keep an eye on how other people are doing status dumps here and work out your own style from that :)
+
+ 15:19:39 <stokachu> I do have a merge proposal that was reviewed by bdmurray https://code.launchpad.net/~adam-stokes/ubuntu/quantal/libgcrypt11/libgcrypt-fix-423252/+merge/105863 that i'd like to get done before i leave on vacation this friday
+
+ 15:20:19 <stokachu> cool yea, seems like everyone is just pasting from a text file?
+
+ 15:20:26 <cjwatson> anyone want to take that?  looks fairly short
+
+ 15:20:26 * xnox nods.
+
+ 15:20:31 <cjwatson> stokachu: yep
+
+ 15:20:35 <stokachu> ok cool
+
+ 15:20:39 <cjwatson> "here's one I made earlier"
+
+ 15:21:12 <stokachu> if i can get the merge proposal finished I can create SRU's for review next week
+
+ 15:22:00 <cjwatson> I'll have a look after the meeting, then
+
+ 15:22:04 <cjwatson> ev:
+
+ 15:22:07 <infinity> I've got it.
+
+ 15:22:07 <ev> hi, sorry
+
+ 15:22:14 <infinity> Or, rather, I'm already looking.
+
+ 15:22:17 <cjwatson> infinity: oh good, thanks
+
+ 15:22:22 <stokachu> cool thanks
+
+ 15:22:22 <ev> - Short week; UDS through Friday and travel on Sunday/Monday.
+
+ 15:22:22 <ev> - Got all the work items in for all the crash database specs. Still need to
+
+ 15:22:24 <ev> write additional wiki page specifications where necessary.
+
+ 15:22:25 <ev> - Built a Tarmac bot in the Canonistack (to eventually be replaced with
+
+ 15:22:26 <ev> james_w's juju charm) for running the whoopsie test suite on approved merge
+
+ 15:22:27 <ev> proposals and landing the branches.
+
+ 15:22:29 <ev> 
+
+ 15:22:30 <ev> I'll also set this up for daisy and errors once I set up a more permanent
+
+ 15:22:33 <ev> Cassandra instance in the Canonistack, or create some magic around juju
+
+ 15:22:35 <ev> relations as part of the test suite (verify_command =
+
+ 15:22:36 <ev> CASSANDRA_IP=$(relation-get addr) make check)
+
+ 15:22:37 <ev> - Modified whoopsie to fall back to SHA-512 hashing the MAC address of the
+
+ 15:22:38 <ev> first non-loopback device when a system UUID is not present.
+
+ 15:22:38 <ev> - Finished charming (ugh) daisy, the backend service to the Ubuntu error
+
+ 15:22:39 <ev> tracker:
+
+ 15:22:40 <ev> http://code.launchpad.net/~ev/charms/precise/daisy/trunk
+
+ 15:22:41 <ev> - Started charming (ugh) the retracers. Still need to charm errors.ubuntu.com.
+
+ 15:22:43 <ev> - Created a branch out of my existing Debian packaging and set up a source
+
+ 15:22:44 <ev> package recipe. This resolves issues I was having in being able to provide
+
+ 15:22:45 <ev> packages for multiple releases (most of the infrastructure is lucid, but the
+
+ 15:22:47 <ev> retracers run on precise).
+
+ 15:22:48 <ev> - Started reworking the mean time between failures backend code into a simpler
+
+ 15:22:49 <ev> "total crashes for the day / total users for the day" chart. Filed an RT for
+
+ 15:22:50 <ev> the initial deployment.
+
+ 15:22:51 <ev> (done)
+
+ 15:23:35 <cjwatson> Short week: UDS then swapped bank holiday.
+
+ 15:23:35 <cjwatson> Pushed pykde4 the rest of the way up the hill for Python 3: yofel uploaded it.  Uploaded pyicu Python 3 port.  ubiquity will be uploaded shortly once I've had a chance to do a final build test.
+
+ 15:23:40 <cjwatson> Transferring work items into LP and other writeup-related work.
+
+ 15:23:42 <cjwatson> Attempted to get a working setup of the Debian testing migration code for quantal-proposed => quantal.  Somewhat harder than expected so will take a while longer.
+
+ 15:23:45 <cjwatson> Finished off LP branch for per-packageset build scoring (https://code.launchpad.net/~cjwatson/launchpad/packageset-score/+merge/105915).  Awaiting completion of review.
+
+ 15:23:48 <cjwatson> Working on per-pocket upload permissions.
+
+ 15:23:51 <cjwatson> Switched to new self-service interface for backporters and decommissioned the code supporting the old archive-admin-only interface.
+
+ 15:23:54 <cjwatson> Caught up on miscellaneous archive admin work.
+
+ 15:23:56 <cjwatson> Retesting merges.ubuntu.com to see if it still dies after its firmware upgrade.
+
+ 15:23:59 <cjwatson> To do:
+
+ 15:24:02 <cjwatson> About to dive into aptdaemon bug 926340.
+
+ 15:24:03 <ubottu> Launchpad bug 926340 in aptdaemon (Ubuntu) "aptd crashed with UnicodeDecodeError in _set_error(): 'ascii' codec can't decode byte 0xc3 in position 9: ordinal not in range(128)" [High,In progress] https://launchpad.net/bugs/926340
+
+ 15:24:04 <barry> cjwatson: \o/
+
+ 15:24:04 <cjwatson> Finish deploying new transition tracker.
+
+ 15:24:07 <cjwatson> ..
+
+ 15:24:34 <cjwatson> #topic Bugs
+
+ 15:24:47 <barry> cjwatson: have you seen glatzor's py3 port of aptdaemon?
+
+ 15:25:08 <cjwatson> bdmurray,stokachu: Anything we need to be caring about urgently, either for 12.04.1 or 12.10?  I haven't seen arsenal reports set up yet (which may well be my fault)
+
+ 15:25:08 <xnox> cjwatson: new transition tracker. Yeah!
+
+ 15:25:17 <cjwatson> barry: Yeah, on my to-do somewhere
+
+ 15:25:39 <barry> cjwatson: i have a stack of replies i owe him on it ;)
+
+ 15:25:53 <barry> xnox: py3 transition tracker ready yet? :)
+
+ 15:25:54 <cjwatson> xnox: got it mostly sorted with Laney at UDS, just need to polish
+
+ 15:25:59 <stokachu> https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/520386 - has a MIR(?) Assigned to it with serge hallyn as the owner
+
+ 15:26:01 <ubottu> Launchpad bug 520386 in libvirt (Ubuntu Lucid) "libvirt-bin hypervisor does not support virConnectNumOfInterfaces / unable to create domain with virt-manager using network bridge" [Low,Confirmed]
+
+ 15:26:02 <bdmurray> cjwatson: I'm a bit confused by bug 998492
+
+ 15:26:03 <ubottu> Launchpad bug 998492 in ubiquity (Ubuntu) "Error while copying OS files" [Undecided,New] https://launchpad.net/bugs/998492
+
+ 15:26:37 <xnox> barry: need to identify a few missing packages. then it can go onto new transition tracker ;-)
+
+ 15:26:51 <cjwatson> bdmurray: so am I :)
+
+ 15:26:52 <barry> xnox: awesome, thanks!
+
+ 15:26:53 <bdmurray> I'd thought the work in 922949 was supposed to help with some of this
+
+ 15:26:58 <cjwatson> as you say
+
+ 15:27:05 <stokachu> Here is the MIR for netcf https://bugs.launchpad.net/ubuntu/+source/netcf/+bug/904014
+
+ 15:27:06 <ubottu> Launchpad bug 904014 in netcf (Ubuntu) "[MIR] netcf" [Undecided,In progress]
+
+ 15:27:11 <cjwatson> which I *think* leaves the possibility that something ate it between that check and dpkg looking at it
+
+ 15:27:16 <xnox> bug 922949
+
+ 15:27:17 <ubottu> Launchpad bug 922949 in apt (Ubuntu Precise) "installation process can crash due to an issue with one package when choosing "install updates" as part of the install" [High,Triaged] https://launchpad.net/bugs/922949
+
+ 15:27:37 <cjwatson> oh, no
+
+ 15:27:38 <cjwatson> May 12 16:49:13 ubuntu plugininstall.py: Failed to find package object for /target/var/cache/apt/archives/libreoffice-core_1%3a3.5.3-0ubuntu1_i386.deb: "The cache has no package named 'libreoffice-core:i386'"
+
+ 15:27:49 <cjwatson> So the check got confused and was ineffective ...
+
+ 15:27:57 <cjwatson> doh
+
+ 15:28:28 <cjwatson> bdmurray: I'll take this one for 12.04.1/12.10, it's clearly my fault anyway
+
+ 15:28:42 <bdmurray> okay, thanks
+
+ 15:28:55 * infinity knee-jerks every time he sees bzip2 fail to unzip something...
+
+ 15:28:58 <cjwatson> stokachu: https://launchpad.net/~ubuntu-mir/+members is the set of people empowered to move that forward
+
+ 15:29:16 <cjwatson> ah, maybe not, since they kicked it back to Serge for some work
+
+ 15:29:29 <stokachu> yea netcf seems to be giving him a lot of trouble
+
+ 15:29:44 <cjwatson> sounds like if you want to start sending patches that'd be welcome
+
+ 15:30:17 <stokachu> cjwatson: ok I was gonna start working on it when my load lightens a bit
+
+ 15:30:26 <stokachu> i was forced to do the windows port at the "other" company
+
+ 15:30:27 <stokachu> :X
+
+ 15:30:47 <cjwatson> I remember doing some libnl3 porting on some packages, though I don't remember whether netcf was one of them
+
+ 15:31:00 <cjwatson> if it was a hacky "build on Ubuntu damnit" patch it might have been me ;-)
+
+ 15:31:15 <stokachu> lol
+
+ 15:31:40 <stokachu> other than that I dont have any major bugs that haven't got attention yet
+
+ 15:32:02 <cjwatson> alrighty
+
+ 15:32:04 <cjwatson> #topic AOB
+
+ 15:32:10 <bdmurray> then I also had a question about bug 999890 - we inadvertenly let a bunch of bugs be reported that we did not want.
+
+ 15:32:12 <ubottu> Launchpad bug 999890 in update-manager (Ubuntu) "does not block follow up errors from earlier reports" [High,Triaged] https://launchpad.net/bugs/999890
+
+ 15:32:15 <cjwatson> ah, too quick
+
+ 15:32:31 <bdmurray> either section is fine ;-)
+
+ 15:32:48 <bdmurray> so the question is what to do about the existing reports that got through
+
+ 15:33:00 <bdmurray> just auto-close them or let them be?
+
+ 15:33:24 <cjwatson> will they always have been accompanied by some other real report?
+
+ 15:33:37 <Laney> ben> we might want to merge with upstream: notably it has support for matching on Suggests/Recomemnds/Enhances/Replaces now, which might be useful. It does IIRC have a new dependency though.
+
+ 15:33:48 <bdmurray> yes, there will be one initial failure and then multiple follow on reports
+
+ 15:34:16 <cjwatson> if so we could close them with an apology for the runaround, a note that the initial failure is the real bug, and saying they can reopen if we got it wrong
+
+ 15:34:33 <bdmurray> I could search for the initial failure and mark the follow ons as dupes but they seems rather complicated.
+
+ 15:34:37 <cjwatson> Laney: let me know in advance of the new dep if possible, since I'll need to run that through RT
+
+ 15:34:48 <Laney> yeah
+
+ 15:35:14 <bdmurray> cjwatson: okay sounds good
+
+ 15:35:44 <cjwatson> maybe link to their +reportedbugs or something
+
+ 15:36:08 <cjwatson> in fact you could point them at https://bugs.launchpad.net/~/+reportedbugs
+
+ 15:36:25 <cjwatson> save looking up their id
+
+ 15:36:48 <cjwatson> anything else?
+
+ 15:37:43 <cjwatson> Bueller?
+
+ 15:37:54 <ev> as mentioned I'll set up tarmac
+
+ 15:37:59 <ev> team-wide
+
+ 15:38:12 * cjwatson looks forward to fighting with it ;)
+
+ 15:38:18 <cjwatson> cool
+
+ 15:38:22 <ev> :)
+
+ 15:38:29 <cjwatson> ok, thanks all
+
+ 15:38:30 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

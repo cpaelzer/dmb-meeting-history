@@ -1,0 +1,455 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by slyon, 30 Aug at 14:31 &mdash; 15:22 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-08-30-14.31.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by slyon at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (slyon, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (slyon, 14:31)
+
+=== New MIRs ===
+
+Discussion started by slyon at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (slyon, 14:38)
+ * joalif to review tuna  (luna__, 14:45)
+ * tuned to be assigned next week  (luna__, 14:46)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by slyon at 14:46.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (slyon, 14:46)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by slyon at 15:03.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (slyon, 15:03)
+
+=== Any other business? ===
+
+Discussion started by slyon at 15:07.
+
+ * ''LINK:'' https://wiki.canonical.com/PES/Infrastructure/TestFlingerDevices  ? :)  (sarnold, 15:20)
+
+
+
+== People present (lines said) ==
+
+ * slyon (75)
+ * didrocks (38)
+ * sarnold (24)
+ * seb128 (23)
+ * luna__ (17)
+ * ubottu (9)
+ * joalif (8)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:31 <slyon> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:31 <meetingology> Meeting started at 14:31:17 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:31 <slyon> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 14:31 <slyon> c_paelzer is on vacation AFAIK
+
+ 14:31 <slyon> #topic current component mismatches
+
+ 14:31 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <slyon> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <slyon> c-m looking as usual (except for network-manager -> iwd, which is also in c-m-proposed)
+
+ 14:32 <slyon> c-m-proposed:
+
+ 14:32 <didrocks> hey o/
+
+ 14:33 <slyon> I was able to get a few things moving, namely systemd -> systemd-hwe and mutt -> gsasl
+
+ 14:33 <sarnold> \o/
+
+ 14:33 <slyon> looks like network-manager -> iwd -> ell also resolved the leaf level
+
+ 14:33 <slyon> and the lintian dependencies are making some progress \o/
+
+ 14:34 <slyon> I see nothing else noteworthy in there..
+
+ 14:35 <sarnold> should we point out to the kernel team that their linux-raspi-unstable appears to be in universe?
+
+ 14:35 <sarnold> I don't know how their packages are arranged, it probably doesn't really matter one way or another
+
+ 14:36 <slyon> oh right that seed change!
+
+ 14:36 <slyon> who could we ping about that?
+
+ 14:38 <sarnold> good question; on the one hand, I think apw is an archive admin and would know how to sort it out quick, but pinging one person in a big team isn't great; maybe just drop it in ~Kernel and see if it falls off the list next week? :)
+
+ 14:38 <slyon> sarnold: sounds like a plan! Would you mind doing that?
+
+ 14:38 <sarnold> sure thing!
+
+ 14:38 <slyon> thanks
+
+ 14:38 <slyon> #topic New MIRs
+
+ 14:38 <slyon> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:38 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:39 <luna__> tuna and tuned
+
+ 14:39 <slyon> We have two new cases ^ bug #1988066
+
+ 14:39 <ubottu> Bug 1988066 in tuned (Ubuntu Jammy) "[MIR] tuned" [High, New] https://launchpad.net/bugs/1988066
+
+ 14:40 <didrocks> it doesn’t seem that it’s following the template, like elements about tests have been removed for instance
+
+ 14:40 <didrocks> well. actually, it’s modified from the template and written with:
+
+ 14:40 <didrocks> * No Test Suite shipped with the package
+
+ 14:41 <didrocks> so could still be reviewed
+
+ 14:41 <didrocks> (I have been p-uzzled by the Overview section)
+
+ 14:41 <slyon> seems like this will be maintained by the kernel team.
+
+ 14:41 <joalif> and i dont understand if it's 2 source packages or 1
+
+ 14:41 <sarnold> hmm; we have tlp and gamemode in main already
+
+ 14:42 <slyon> do we have any volunteers to have a look at that?
+
+ 14:42 <slyon> joalif: it's two source packages, src:tuna and src: tuned
+
+ 14:42 <luna__> seems to be two according to launchpad
+
+ 14:42 <didrocks> TBH, not sure I can commit this week. I finished yesterday the 2 on -perl and spent some times on it
+
+ 14:42 <didrocks> so if it can be only handled next week (after next meeting), I can take one
+
+ 14:42 <slyon> I cannot commit to anything this week either, as I'll be out on vacation in 2 days
+
+ 14:43 <slyon> joalif: are you interested (and have capacity) to take one of them? I think you still have the other 2 -perl reviews on the list, though
+
+ 14:43 <joalif> yes
+
+ 14:44 <joalif> I've done the other 2
+
+ 14:44 <joalif> a couple of hours earlier
+
+ 14:44 <slyon> joalif: thanks! So feel free to pick one (or both, if you're feeling lucky ;-) ) and assign your name to in on launchpad
+
+ 14:44 <joalif> they are on security now
+
+ 14:44 <joalif> i'll take one
+
+ 14:44 <slyon> joalif: ah perfect, thanks a lot. I didn't see that yet
+
+ 14:45 <joalif> @slyon I took tuna
+
+ 14:45 <didrocks> I’ll probably wait on next week before grabbing it, in case someone beats me to it :)
+
+ 14:45 <luna__> #Info joalif to review tuna
+
+ 14:45 <slyon> okay. so we'll leave tuned untouched for now, to be assigned next week
+
+ 14:46 <luna__> #info tuned to be assigned next week
+
+ 14:46 <slyon> #topic Incomplete bugs / questions
+
+ 14:46 <slyon> Mission: Identify required actions and spread the load among the teams
+
+ 14:46 <slyon> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:47 <slyon> bug #1963707
+
+ 14:47 <ubottu> Bug 1963707 in libqrtr-glib (Ubuntu) "[MIR] libqrtr-glib" [Low, Incomplete] https://launchpad.net/bugs/1963707
+
+ 14:47 <slyon> seb asked a question about hardware availability...
+
+ 14:48 <slyon> didrocks: do you know if we had similar cases in the past? where MIR team is requiring that the hardware is available for testing?
+
+ 14:48 <slyon> I think it makes sense to have that requirement, otherwise the manual test plan is useless (unless testing is done by the community..)
+
+ 14:49 <didrocks> slyon: the hardware/fallback to manual test is quite recent actually (like a year ago?) when we started to make tests a requirement
+
+ 14:49 <slyon> but the team committed to do the manual testing, which doesn't work without hardware
+
+ 14:49 <didrocks> which is a good thing I think, but we don’t have precedence
+
+ 14:49 <didrocks> most of stuff comes with tests. desktop components don’t often unfortunately :/
+
+ 14:49 <didrocks> so yeah, we are quite in a blocking situation here
+
+ 14:50 <didrocks> I don’t feel it’s good to continue delivering things without testing (automatically or at least manually)
+
+ 14:50 <slyon> I agree, we should stick to the testing requirement
+
+ 14:50 <luna__> didrocks: +1 not that i have much to say as i don't work at Canonical, but is that modem avalible in cheaper usb devices?
+
+ 14:50 <didrocks> I guess the fact that he is upset is about the ACK, then NACK
+
+ 14:50 <luna__> just a random tough
+
+ 14:51 <slyon> yes, that ACK->NACK was a bit unfortunate.
+
+ 14:52 <slyon> luna__: didrocks: I'll add a comment, that we want to stick to that requirement
+
+ 14:52 <didrocks> TBH, if they haven’t told us they didn’t have the hw, we wouldn’t know
+
+ 14:52 <didrocks> so I think that no proof of automated tests, for all new components, is maybe the wrong path
+
+ 14:52 <didrocks> (even if it’s a simple test)
+
+ 14:52 <didrocks> and I don’t feel that every upload will follow the testplan
+
+ 14:53 <didrocks> so… on that topic
+
+ 14:53 <didrocks> we should make our QA team entering the discussion
+
+ 14:53 <didrocks> as in the end, they will be the one owning the testing story
+
+ 14:53 <didrocks> and they should be the ones deciding if the component is enough testing or not, and how
+
+ 14:53 <luna__> +1
+
+ 14:53 <didrocks> rather then the MIR team
+
+ 14:53 <sarnold> oh, do we have a qa team that's staffed enough to do those things?
+
+ 14:53 <didrocks> unsure about the staffed enough part :p
+
+ 14:53 <didrocks> but bdmurray is leading it AFAIK?
+
+ 14:54 <didrocks> something to discuss at next IRL sprint?
+
+ 14:54 <slyon> cc bdmurray: ^ (we'd be interested in the QA teams opinion on the "manual testing" story for packages in the main component)
+
+ 14:54 <slyon> yes, that might be a good topic for the next IRL sprint
+
+ 14:57 <slyon> OK, i added a comment. moving on
+
+ 14:57 <slyon> bug #1986591
+
+ 14:57 <ubottu> Bug 1986591 in fstrm (Ubuntu) "[MIR] fstrm" [Undecided, Incomplete] https://launchpad.net/bugs/1986591
+
+ 14:57 <slyon> tracking update
+
+ 14:58 <slyon> vpnc-scripts: tracking update & seems to be still actively worked on, bug #1987571
+
+ 14:58 <ubottu> Bug 1987571 in vpnc-scripts (Ubuntu) "[MIR] vpnc-scripts" [Undecided, Incomplete] https://launchpad.net/bugs/1987571
+
+ 14:59 <slyon> bug #1987447 is still searching for an owning team
+
+ 14:59 <ubottu> Bug 1987447 in python-mechanize (Ubuntu) "[MIR] python-mechanize" [Undecided, Incomplete] https://launchpad.net/bugs/1987447
+
+ 15:00 <slyon> same story with #1987448
+
+ 15:00 <slyon> bug #1987448
+
+ 15:00 <ubottu> Bug 1987448 in stoken (Ubuntu) "[MIR] stoken" [Undecided, Incomplete] https://launchpad.net/bugs/1987448
+
+ 15:00 <didrocks> yeah, we should probably something in the MIR template
+
+ 15:00 <slyon> same, bug #1987446
+
+ 15:00 <ubottu> Bug 1987446 in openconnect (Ubuntu) "[MIR] openconnect" [Undecided, Incomplete] https://launchpad.net/bugs/1987446
+
+ 15:00 <didrocks> that first, agree with the owning team that they will own it
+
+ 15:01 <slyon> same bug #1987446
+
+ 15:01 <slyon> didrocks: that sounds like a very useful addition. Would you mind creating a PR to update the template accordingly, so it can be discussed next week?
+
+ 15:01 <sarnold> sigh. I thought I was clear to luis that he needs to find someone to own these packages.
+
+ 15:02 <didrocks> slyon: will do!
+
+ 15:02 <slyon> thanks!
+
+ 15:02 <slyon> bug #1980662 (lintian vs *-perl) needs some work on two packages and sec-review on the other two, thanks joalif and didrocks for the reviews!
+
+ 15:02 <ubottu> Bug 1980662 in lintian (Ubuntu) "[MIR] lib*-perl for lintian 2.115" [Undecided, Confirmed] https://launchpad.net/bugs/1980662
+
+ 15:02 <slyon> nothing to do for us on those.
+
+ 15:03 <slyon> #topic MIR related Security Review Queue
+
+ 15:03 <slyon> Mission: Check on progress, do deadlines seem doable?
+
+ 15:03 <slyon> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 15:03 <slyon> sarnold:
+
+ 15:03 <sarnold> the good news is that we worked through far more of our backlog than I thought possible, thanks to the team for pitching in!
+
+ 15:04 <sarnold> the bad news is that the rest of the team has some very high priority work that cannot be delayed further, so it'll return to just me for a bit, and I'm not yet over covid, so might not be as productive as usual (heh)
+
+ 15:04 <didrocks> good luck :/
+
+ 15:04 <sarnold> mdevctl is in progress, nullboot is a hot potato, and these new lib perl packages don't feel like the usual lintian "oh yeah that's fine" faire :(
+
+ 15:05 <sarnold> I'll see what I can do to keep making progress ;) but it won't be like the last two weeks, that's for sure
+
+ 15:06 <slyon> yes I saw a lot of security review in the last weeks, which is very nice. But I'm aware of (some of) the current "hot" security topics, which of course need to take priority
+
+ 15:07 <slyon> #topic Any other business?
+
+ 15:07 <sarnold> yes
+
+ 15:07 <didrocks> nothing from me
+
+ 15:07 <sarnold> ddstreet has found greener pastures; do we need to find someone to replace his inputs?
+
+ 15:07 <luna__> not from me
+
+ 15:07 <slyon> luna__: thanks for your interest and contribution to the MIR process
+
+ 15:07 <luna__> no problem, had some spare time today
+
+ 15:07 <slyon> sarnold: joalif was ddstreet's replacement, AFAIK
+
+ 15:08 <sarnold> slyon: aha!
+
+ 15:08 * sarnold falls over
+
+ 15:08 <joalif> yup
+
+ 15:08 <seb128> I've read the backlog and I think the libqrtr-glib requirement is a bit unfortunate. If we don't have the hardware nor budget to buy some it means we can't enable support for our users
+
+ 15:08 <seb128> it's lucky that the kernel doesn't go through MIR review with the current rules
+
+ 15:08 <sarnold> NAK NAK NAK NAK
+
+ 15:08 <seb128> we would have lot of hardware support missing in Ubuntu :p
+
+ 15:08 <luna__> :D
+
+ 15:08 <sarnold> "please come back with a more secure kernel kthxbye"
+
+ 15:09 <seb128> joke aside, I don't really know how to resolve it at this point, I can ask to expense so laptop for testing but I've an idea how that's going to end up
+
+ 15:09 <sarnold> seb128: the test plan really could have been "I have a buddy with a laptop who promised to test every single update when we need it", I think
+
+ 15:10 <sarnold> .. assuming your buddy is that willing?
+
+ 15:10 <seb128> I didn't find anyone owning that hardware though
+
+ 15:10 <slyon> The kernel is a special case, indeed. but we try to apply the new and improved rules as strictly as possible, at least for any new promotions
+
+ 15:10 <seb128> just a few random users who complain about Ubuntu not supporting things that works in fedora
+
+ 15:10 <seb128> it's frustrating to not be able to have an answer :/
+
+ 15:11 <seb128> slyon, I think hardware is sort of a special case
+
+ 15:11 <seb128> how not supporting the hardware at all is a win for anyone?
+
+ 15:11 <luna__> its not
+
+ 15:11 <slyon> if we don't do any testing, we might end up with a broken system, which might be worse than a known missing hardware support
+
+ 15:11 <seb128> which is also true for the kernel...
+
+ 15:12 <seb128> it's an inconsistent policy
+
+ 15:13 <slyon> I agree there's an inconsistency and we should bring it up for discussion, maybe during the next engineering sprint
+
+ 15:13 <seb128> slyon, I think it's inconsistent also with the initial position we took for Ubuntu
+
+ 15:13 <seb128> we always said hardware support was important and we wanted to enable as much hardware as possible, at the extend to allowing binary drivers
+
+ 15:14 <seb128> anyway, I made my point, I don't feel like I will have more traction on the topic unless I decide to escalade to the TB?
+
+ 15:14 * luna__ agress with seb128
+
+ 15:14 <sarnold> nvidia is also a problem :( https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1853977
+
+ 15:14 <ubottu> Launchpad bug 1853977 in nvidia-graphics-drivers-340 (Ubuntu) "nvidia-340 dpkg: error: version '-' has bad syntax: revision number is empty" [Undecided, Confirmed]
+
+ 15:14 <slyon> yes. I can see both sides of this. But I don't feel senior enough to make a call about this right now...
+
+ 15:14 <seb128> I'm not asking for a call to be made today
+
+ 15:15 <slyon> maybe before escalating it to the TB, we might loop in c_paelzer into the discussion, once he returns from vacation (next week AFAIK)
+
+ 15:15 <seb128> k, I will wait for him to be back before raising to TB
+
+ 15:15 <seb128> thanks
+
+ 15:15 <slyon> thanks!
+
+ 15:15 <didrocks> the more I think about it, the more I think the QA team should be owner of this testing requirements
+
+ 15:15 <didrocks> they are the one identifying gaps, and ultimately, being reponsible of the distro
+
+ 15:16 <sarnold> if we have one, I agree :)
+
+ 15:16 <seb128> didrocks, it's easier for software than for hardware where budget is often a blocker as you know :/
+
+ 15:16 <slyon> so we should also loop in bdmurray and paride
+
+ 15:16 <seb128> but yes, included QA makes sense
+
+ 15:16 <didrocks> seb128: oh yeah, I know… remember on pitti’s day and how he tried to mock edge packages? but for that, we need staffing…
+
+ 15:17 <seb128> I've also tried to reach to oem but they aren't enabling models with that hardware atm
+
+ 15:17 <didrocks> maybe we should restrict the hw requirements on certified hw?
+
+ 15:17 <didrocks> this is another opportunity
+
+ 15:17 <luna__> didrocks: seb128 +1
+
+ 15:17 <didrocks> and then, it’s up to have a testsuite running in the oem lab
+
+ 15:18 <seb128> didrocks, slyon, so the decision is that I should rollback the modemmanager depends to unblock proposed at this point I guess?
+
+ 15:18 <slyon> but how do we know which hardware is available in the cert lab? And what if that set of hardware changes?
+
+ 15:19 <luna__> Wiki page, Libreoffice Spreadsheet? :D
+
+ 15:20 <slyon> seb128: If you want it now, then that's unfortunately the way to go, I guess. If you can wait 1-2 more weeks, we might be able to continue that discussion with more team members and possibly come up with a solution (or exception)
+
+ 15:20 <sarnold> https://wiki.canonical.com/PES/Infrastructure/TestFlingerDevices  ? :)
+
+ 15:20 <slyon> sweet! ^
+
+ 15:20 <sarnold> granted, it isn't at the granularity of "what modems are on these devices"
+
+ 15:20 <luna__> so my Wiki page idea was not all that dumb then
+
+ 15:20 <luna__> lspci, lsusb, lshw on everything ;)
+
+ 15:21 <seb128> slyon, I think we can wrap that topic for today and try again when Christian isback
+
+ 15:22 <seb128> sorry for delaying the end of meeting
+
+ 15:22 <luna__> its all fine
+
+ 15:22 <slyon> seb128: okay. thanks for your input!
+
+ 15:22 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

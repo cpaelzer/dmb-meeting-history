@@ -1,0 +1,528 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:04:08 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-12-07-16.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' http://people.canonical.com/~jhunt/upstart/utils/upstart_menu.png) to  (jodh, 16:06:28)
+
+ *Bugs
+''ACTION:'' cjwatson to look at running britney over $release+$release-updates, to catch inconsistencies caused by incomplete SRU publication  (slangasek, 16:44:49)
+''LINK:'' http://reports.qa.ubuntu.com/reports/kernel-bugs/reports/rls-p-tracking-bugs.html   (slangasek, 16:53:29)
+
+ *AOB
+
+
+
+Meeting ended at 16:58:18 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * cjwatson to look at running britney over $release+$release-updates, to catch inconsistencies caused by incomplete SRU publication
+
+
+
+== Action items, by person ==
+
+ * cjwatson
+ ** cjwatson to look at running britney over $release+$release-updates, to catch inconsistencies caused by incomplete SRU publication
+
+
+
+== People present (lines said) ==
+
+ * slangasek (64)
+ * cjwatson (43)
+ * jodh (26)
+ * bdmurray (25)
+ * stgraber (22)
+ * ubottu (16)
+ * doko (14)
+ * barry (10)
+ * meetingology (4)
+ * ScottK (4)
+ * cyphermox (3)
+
+
+
+== Full Log ==
+
+
+ 16:04:08 <slangasek> #startmeeting
+
+ 16:04:08 <meetingology> Meeting started Wed Dec  7 16:04:08 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:04:08 <meetingology> 
+
+ 16:04:08 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:25 <jodh> o/
+
+ 16:04:57 <slangasek> oh right... you're making me change my shuf command to cope with a new /nick, hmph :)
+
+ 16:05:10 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jodh ev bdmurray slangasek)
+
+ 16:05:12 <jodh> slangasek: soz ;)
+
+ 16:05:13 <slangasek> cjwatson jodh stgraber bdmurray ev slangasek doko barry
+
+ 16:05:19 <slangasek> [TOPIC] lightning round
+
+ 16:05:44 <cjwatson> Fixed d-i explosion due to libselinux change (bug 899049).
+
+ 16:05:46 <ubottu> Launchpad bug 899049 in libselinux (Ubuntu Precise) "d-i based images reboots during installation" [Critical,Fix released] https://launchpad.net/bugs/899049
+
+ 16:06:01 <cjwatson> Spent more or less the entire rest of the week working on germinate 2.0 and corresponding Launchpad changes.  Worked through an extremely detailed review from jtv today (https://code.launchpad.net/~cjwatson/launchpad/refactor-cron-germinate/+merge/84624) and this is now approved and ready to go, which I'm fairly sure will result in 30-minute publisher runs; I just need to continue poking IS until I get some attention ...
+
+ 16:06:07 <cjwatson> ... paid to the relevant ticket.
+
+ 16:06:10 <cjwatson> Little bits of help with armhf.
+
+ 16:06:12 <cjwatson> ..
+
+ 16:06:18 <jodh> New nick (hopefully unique :) Raised MP for lucid for bug 771372.
+
+ 16:06:18 <jodh> Finished Upstart job logging code for system jobs and posted to
+
+ 16:06:18 <jodh> upstart-devel mailing list for review. After meeting with
+
+ 16:06:18 <jodh> slangasek+cjwaton, we have identified the best strategy for logging of
+
+ 16:06:18 <jodh> user job output (in progress). Re-reviewed setuid/setgid Upstart patch
+
+ 16:06:20 <ubottu> Launchpad bug 771372 in procps (Ubuntu Natty) "procps runs too early in the boot process" [Medium,Triaged] https://launchpad.net/bugs/771372
+
+ 16:06:20 <jodh> which should be ready to merge by COB Friday along with the system job
+
+ 16:06:23 <jodh> logging code. Currently re-reviewing "usage" stanza patch. Wrote a menu script
+
+ 16:06:26 <jodh> (http://people.canonical.com/~jhunt/upstart/utils/upstart_menu.sh,
+
+ 16:06:28 <jodh> http://people.canonical.com/~jhunt/upstart/utils/upstart_menu.png) to
+
+ 16:06:31 <jodh> allow selection of particular Upstart binary under test. This speeds up
+
+ 16:06:33 <jodh> my dev process, and could potentially be used by QA (and maybe even
+
+ 16:06:36 <jodh> friendly-recovery). It also shows just how quick Upstart gets from
+
+ 16:06:38 <jodh> "startup" to lightdm" (since by the time the menu is displayed,
+
+ 16:06:41 <jodh> bios+kernel+initramfs is of course already loaded). Upstreamed a couple
+
+ 16:06:43 <jodh> of man page changes that hopefully clarify system behaviour.  Upstart
+
+ 16:06:46 <jodh> cookbook updates. On holiday tomorrow. Plan: Upstart merges, bug 553745.
+
+ 16:06:48 <ubottu> Launchpad bug 553745 in plymouth (Ubuntu Maverick) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Triaged] https://launchpad.net/bugs/553745
+
+ 16:06:48 <jodh> §
+
+ 16:07:24 <stgraber> oh, nice (upstart-menu)
+
+ 16:07:35 <stgraber> - ISO testing
+
+ 16:07:35 <stgraber> - Finishing the API, got results API published yesterday
+
+ 16:07:35 <stgraber> - Most new features turned on (multiple results per user, hardware profile, accessing archived results, viewing removed results/builds, ...)
+
+ 16:07:38 <stgraber> - Still preparing the upgrade of the production server (waiting on IS)
+
+ 16:07:41 <stgraber> - Edubuntu
+
+ 16:07:43 <stgraber> - Going to setup automated upgrade testing outside of Canonical DC for the flavours (spare time activity)
+
+ 16:07:46 <stgraber> - Networking
+
+ 16:07:49 <stgraber> - Going to upload a new ifenslave today, thanks everyone for your feedback on the changes
+
+ 16:07:52 <stgraber> - Then working on bridge-utils and vlan, hopefully also updated this week
+
+ 16:07:55 <stgraber> - After a few weeks, looking at pushing at least the ifenslave change to other supported release
+
+ 16:07:58 <stgraber> - TODO
+
+ 16:08:01 <stgraber> - Look at the new ifupdown in Debian (beta2), isolate the fix for bug 876829 and SRU to Oneiric
+
+ 16:08:02 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Triaged] https://launchpad.net/bugs/876829
+
+ 16:08:04 <stgraber> - Start poking at resolvconf
+
+ 16:08:06 <stgraber> - Talk with cyphermox now that he's out of +1 :) (IPv6, complex networking in NM, dnsmasq, VPN stuff, ...)
+
+ 16:08:09 <stgraber> - Still need to get my iSCSI test setup online again and then look at the merge...
+
+ 16:08:41 <stgraber> ..
+
+ 16:09:00 <cyphermox> on that subject: I've been working on ipv6 privext patches for NM, almost done.
+
+ 16:09:26 <stgraber> cyphermox: cool!
+
+ 16:09:42 <stgraber> cyphermox: did you file a bug for that sysfs weirdness?
+
+ 16:09:49 <cyphermox> (and it turns out somebody else was also working on this for Redhat too)
+
+ 16:10:03 <cyphermox> not a bug, but sent an email to linux-netdev, no response yet
+
+ 16:10:17 <stgraber> cool, thanks!
+
+ 16:10:35 <bdmurray> bug triage of iso-testing bug reports
+
+ 16:10:35 <bdmurray> discussion with mvo regarding changelogs.ubuntu.com and meta release files
+
+ 16:10:38 <bdmurray> modification to cbd (collect bug data)  part of arsenal to check date_last_updated of bug tasks
+
+ 16:10:41 <bdmurray> modification to cbd to use searchTasks's modified_since parameter
+
+ 16:10:43 <bdmurray> wrote release notes regarding bug 891711 (downgrade option in ubiquity)
+
+ 16:10:44 <bdmurray> review of bug bot work
+
+ 16:10:44 <bdmurray> testing d3 graphing tool with recent package bugs
+
+ 16:10:44 <bdmurray> ubiquity bug triage (primarily bugs due to memory issues when installing)
+
+ 16:10:45 <ubottu> Launchpad bug 891711 in ubiquity (Ubuntu Precise) ""Upgrade" from 11.10 to 11.04 results in a unusable system" [High,Triaged] https://launchpad.net/bugs/891711
+
+ 16:10:52 <bdmurray> bug pattern writing for bug 894768, bug 850264 and bug 882147
+
+ 16:10:52 <bdmurray> updated firefox-lp-improvements for precise
+
+ 16:10:55 <ubottu> Launchpad bug 894768 in linux (Ubuntu Precise) "Installation randomly fails with: File "/usr/lib/ubiquity/ubiquity/install_misc.py", line 621, in copy_file targetfh.write(buf) IOError: [Errno 22] Invalid argument " [High,In progress] https://launchpad.net/bugs/894768
+
+ 16:10:56 <ubottu> Launchpad bug 850264 in apt (Ubuntu Precise) "given a foreign architecture of i386 on amd64 machine, and an outdated libc, apt tries to remove libc-bin" [High,Triaged] https://launchpad.net/bugs/850264
+
+ 16:10:57 <ubottu> Launchpad bug 882147 in linux (Ubuntu) "overlayfs does not implement inotify interfaces correctly" [Medium,Triaged] https://launchpad.net/bugs/882147
+
+ 16:11:01 <slangasek> jodh: "just how quick" *does* it get from startup to lightdm?  Do your numbers that way line up with the holistic boot speed tests?
+
+ 16:11:08 <stgraber> (for the record, the bug is that changing something in /proc/sys/net/*/conf/all doesn't apply to all the interfaces, so a bit annoying when we want to change a flag)
+
+ 16:11:28 <bdmurray> jodh: I was looking at bug 849414 for more information yesterday and didn't find any debug log files attached to duplicates
+
+ 16:11:30 <ubottu> Launchpad bug 849414 in plymouth (Ubuntu Precise) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Incomplete] https://launchpad.net/bugs/849414
+
+ 16:11:35 <jodh> slangasek: rough figure is ~2.5 seconds (in a VM admittedly :)
+
+ 16:12:11 <slangasek> not too shabby
+
+ 16:12:19 <jodh> bdmurray: yes, I know. the problem is is seems to be timing related and if you enable debug, you don't see the problem.
+
+ 16:12:38 <jodh> bdmurray: s/is is/is it/
+
+ 16:13:07 <bdmurray> actually when I looked at all plymouth bugs there were only 2 debug log files and they were from you ;-)
+
+ 16:13:31 <jodh> bdmurray: :) they were gleaned through a bit of trickery too :)
+
+ 16:13:44 <slangasek> stgraber: /proc/sys/net/*/conf/all - this has plagued me for years, and causes me to have to manually start radvd on my Debian armel gateway after boot... very annoying :P
+
+ 16:13:54 <slangasek> hmm, no ev on channel
+
+ 16:14:45 <slangasek> guess that means it's my turn
+
+ 16:15:35 <slangasek> jodh, bdmurray: I don't think it's just a timing thing with the debug logs, I think part of it is that the problem is not 100% reproducible to begin with
+
+ 16:15:40 <slangasek> * slogging through email after returning from vacation
+
+ 16:15:41 <slangasek> * helped run an Ubuntu Local Jam here last weekend, tackling multiarch libraries for ia32-libs: http://web.dodds.net/~vorlon/wiki/blog/Making_jam_from_bugs/
+
+ 16:15:43 <slangasek> * shepherded these fixes into precise
+
+ 16:15:46 <slangasek> * merged Ubuntu armhf ld.so support into Debian eglibc
+
+ 16:15:48 <slangasek> * TODO this week:
+
+ 16:15:51 <slangasek> * looking at multiarch for gstreamer
+
+ 16:15:53 <slangasek> * looking at various improvements to resolvconf that are in the wild to get them integrated for precise
+
+ 16:15:56 <slangasek> ..
+
+ 16:16:22 <doko> - a mostly ARM week
+
+ 16:16:22 <doko> - fix packages to build on armhf, that do build on armel
+
+ 16:16:23 <doko> - openjdk updates and running zero and jamvm tests
+
+ 16:16:23 <doko> - fix build failures in main for armhf
+
+ 16:16:23 <doko> - fix build failures in package sets for armhf
+
+ 16:16:23 <doko> - look at libreoffice armhf port, won't continue myself, bug #900636
+
+ 16:16:24 <ubottu> Launchpad bug 900636 in libreoffice (Ubuntu Precise) "libreoffice ftbfs on armhf" [High,Confirmed] https://launchpad.net/bugs/900636
+
+ 16:16:25 <doko> - linaro gcc 4.5 and 4.6 merges
+
+ 16:16:27 <doko> - gcc cross merges from Marcin
+
+ 16:16:29 <doko> - prepare gdc for armhf
+
+ 16:16:31 <doko> - start cross-building gnat for armhf
+
+ 16:16:33 <doko> - llvm-3.0 and dragonegg updates
+
+ 16:16:37 <doko> - MIR's, syncs, merges
+
+ 16:16:39 <doko> - stop looking at eglibc-2.15 for now
+
+ 16:16:41 <doko> ..
+
+ 16:17:16 <barry> more python-dbus porting to python3.  after initial branch discussion with scott mcvittie, and review of https://bugs.freedesktop.org/show_bug.cgi?id=26420&action=View i reworked my port so that object-paths, signatures, etc. are unicodes instead of bytes.  this made it much easier to pass the existing test suite because the callback dispatching code didn't need to be rewritten to handle byte slicing and comparisons.  new branch pushed
+
+ 16:17:16 <barry> to lp and patch submitted to the above tracker issue.  i've already gotten one bug report from arch linux :).  spent some time reporting and debugging https://bugs.freedesktop.org/show_bug.cgi?id=43303 without success.  todo: package this version up into a ppa, advertise it a bit more, and start to port an app (probably c-j).  along the way, i had to fix python issue 11147 http://bugs.python.org/issue11147.  i was patch pilot yesterday.
+
+ 16:17:16 <barry> reviewed a webified version of my dh_python2 tutorial: http://www.rowinggolfer.org/tutorials/packaging/dh_python2_tutorial.html.  also if you're interested, i am writing a chapter on mailman3 for the next edition of the aosa book: http://www.aosabook.org/en/index.html.  done.
+
+ 16:17:20 <ubottu> Freedesktop bug 26420 in python "Patch to make D-Bus Python compile under Python 3" [Normal,Assigned: ]
+
+ 16:17:23 <ubottu> Freedesktop bug 43303 in python "dbus-python test suite failures" [Normal,New: ]
+
+ 16:17:25 <jodh> slangasek: right. I have a script which attempts to force it (http://people.canonical.com/~jhunt/plymouth/test_plymouth.sh), but that's "post boot" of course.
+
+ 16:17:36 <slangasek> and it looks like armhf now has main fully built, aside from libreoffice \o/
+
+ 16:18:19 <cjwatson> oh, well done on python3-dbus
+
+ 16:18:41 <barry> cjwatson: thanks!  hopefully this will pass upstream's muster
+
+ 16:19:11 <barry> lots of great lessons learned to, which i'll blog about soon
+
+ 16:19:18 <barry> s/to/too/
+
+ 16:21:31 <slangasek> thanks all
+
+ 16:21:43 <slangasek> any more questions for each other on this week's activity?
+
+ 16:22:45 <slangasek> [TOPIC] Bugs
+
+ 16:23:11 <slangasek> bdmurray: what bugs do we need to fix?
+
+ 16:23:25 <bdmurray> There have been a few pm-utils assigned to us recently, but you've seen at least one of them
+
+ 16:24:44 <slangasek> I saw three, I've triaged two of them so far
+
+ 16:25:32 <bdmurray> and then in bug 766265 there is some question, from the reporter, as to whether not it should still be fixed
+
+ 16:25:33 <ubottu> Launchpad bug 766265 in ubiquity (Ubuntu Precise) "Ubiquity proceeds to use free space without warning" [High,Confirmed] https://launchpad.net/bugs/766265
+
+ 16:25:41 <slangasek> the third one looks like it's a spelling bug... not going to the top of my urgency list :)
+
+ 16:25:47 <bdmurray> comment #25 and comment #27
+
+ 16:26:33 <bdmurray> slangasek: yes, three is all I see
+
+ 16:27:09 <cjwatson> although I know Erick thinks he wants my input, it seems like a design issue rather than something I can usefully weigh in on
+
+ 16:27:31 <bdmurray> so should mpt be consulted?
+
+ 16:27:50 <cjwatson> wait
+
+ 16:28:00 <cjwatson> is it just a matter of whether the button should change to "Install Now"?
+
+ 16:28:04 <cjwatson> sorry, the bug is kind of long
+
+ 16:28:38 <cjwatson> but looking at comment #15 and wondering if that would be enough
+
+ 16:28:57 <cjwatson> if it's more than that mpt would need to have a look
+
+ 16:29:36 <cjwatson> but if it's just that, I can probably fix it
+
+ 16:30:45 <bdmurray> Okay, I'll follow up with Erick
+
+ 16:31:14 <cjwatson> comment #19 from Erick suggests that
+
+ 16:31:17 <cjwatson> so possibly no need
+
+ 16:31:28 <cjwatson> I just wish this were less verbose :-)
+
+ 16:31:49 <cjwatson> and less raising of side issues mid-bug
+
+ 16:32:18 <bdmurray> having a bug be too verbose is an interesting problem to have
+
+ 16:32:26 <bdmurray> as opposed to "fix it"
+
+ 16:32:34 <barry> bdmurray: +1
+
+ 16:32:36 <bdmurray> or "I don't know"
+
+ 16:33:06 <slangasek> I usually find the too-verbose bugs more frustrating ;)
+
+ 16:33:16 <cjwatson> true, but there's a threshold beyond which I stop being able to focus
+
+ 16:33:42 <bdmurray> okay moving on ;-)  bug 898787
+
+ 16:33:43 <ubottu> Launchpad bug 898787 in ubiquity (Ubuntu Oneiric) "(k|l|x)ubuntu 11.10 failed to install with error in install_misc.py assert cache._depcache.broken_count == 0" [High,Confirmed] https://launchpad.net/bugs/898787
+
+ 16:34:11 <cjwatson> yeah, saw that in my inbox, but haven't dug in yet - see above comments about being in a cave hacking on LP all week :)
+
+ 16:34:36 <cjwatson> in general that sort of vaguely means "the current system is inconsistent, I have no idea what to do"
+
+ 16:35:07 <cjwatson> but no idea how that would happen on install, even if it is over the top of an existing one
+
+ 16:36:06 <cjwatson> I don't suppose somebody else could look at that, since I'm on holiday for the rest of the week?
+
+ 16:36:37 <slangasek> stgraber: ^^ could you look at this?
+
+ 16:37:14 <slangasek> bdmurray: there are 6 duplicates; does that tell us anything about how frequent the problem is?
+
+ 16:37:28 <cjwatson> hmm
+
+ 16:37:31 <bdmurray> slangasek: those were manually marked so it might not
+
+ 16:37:34 <cjwatson> were there any language pack updates recently?
+
+ 16:37:38 <slangasek> ok
+
+ 16:37:44 <stgraber> yep, I can have a look
+
+ 16:37:45 <slangasek> cjwatson: there were, and there was some breakage on the first go
+
+ 16:37:52 <cjwatson> I vaguely recall something about -base not being promoted to -updates
+
+ 16:37:55 <bdmurray> slangasek: I'll look after the meeting
+
+ 16:37:55 <slangasek> yes
+
+ 16:38:07 <cjwatson> that would probably cause this, although it would be nice if that didn't cause stable installs to crash ...
+
+ 16:38:22 <cjwatson> so quite possibly dormant but should be fixed for robustness
+
+ 16:38:42 <ScottK> cjwatson: I hit the regression panic alarm about it a few days ago.
+
+ 16:38:45 <cjwatson> stgraber: thanks
+
+ 16:39:02 <cjwatson> ScottK: I think that's what I saw.  pitti seemed to be on top of it by the time I noticed though.
+
+ 16:39:15 <cjwatson> 2011-12-01, sounds about the right kind of time
+
+ 16:39:16 <ScottK> Yes.  He was.
+
+ 16:39:56 <ScottK> I don't know if anyone did a comprehensive check to see if any others than the one I hit got missed.
+
+ 16:40:33 <slangasek> the latest duplicate is dated 2011-12-05
+
+ 16:40:44 <slangasek> which is certainly after ScottK/pitti worked on it
+
+ 16:41:01 <ScottK> Yep
+
+ 16:41:09 <cjwatson> Unless out of date mirrors were involved
+
+ 16:41:10 <slangasek> otoh, the reports include locale data
+
+ 16:41:21 <cjwatson> (But sure, it could be something else)
+
+ 16:41:24 <slangasek> heh, true
+
+ 16:42:05 <slangasek> language-pack-gnome-sv-base | 1:11.10+20111025 | oneiric-proposed | source, all
+
+ 16:42:08 <slangasek> missing from -updates
+
+ 16:42:12 <slangasek> (bug #900571)
+
+ 16:42:13 <ubottu> Launchpad bug 898787 in ubiquity (Ubuntu Oneiric) "duplicate for #900571 (k|l|x)ubuntu 11.10 failed to install with error in install_misc.py assert cache._depcache.broken_count == 0" [High,Confirmed] https://launchpad.net/bugs/898787
+
+ 16:42:46 <slangasek> cjwatson: so apparently we don't have a systematic check for these; any idea how we can fix that?
+
+ 16:43:15 <cjwatson> it probably ought to be an alarm in the pending SRU report
+
+ 16:43:38 <cjwatson> maybe we can run britney over oneiric-updates too
+
+ 16:43:45 <cjwatson> well, oneiric+oneiric-updates
+
+ 16:43:48 <slangasek> cjwatson: do you want to take the action on that?
+
+ 16:43:55 <cjwatson> yeah, why not
+
+ 16:44:49 <slangasek> [ACTION] cjwatson to look at running britney over $release+$release-updates, to catch inconsistencies caused by incomplete SRU publication
+
+ 16:44:49 * meetingology cjwatson to look at running britney over $release+$release-updates, to catch inconsistencies caused by incomplete SRU publication
+
+ 16:44:52 <slangasek> cjwatson: thanks
+
+ 16:45:28 <bdmurray> that's it from me then
+
+ 16:46:10 <slangasek> ok, thanks
+
+ 16:48:48 <cjwatson> psusi has filed an MP with ureadahead performance improvements - could somebody have a look at it?
+
+ 16:49:07 <cjwatson> (sorry, don't seem to have the URL to hand, but it should be easy to find)
+
+ 16:50:38 <barry> i think this is it: https://code.launchpad.net/~psusi/ubuntu/precise/ureadahead/faster/+merge/84556
+
+ 16:51:04 <cjwatson> ta
+
+ 16:51:04 <barry> looks like luke is looking into it
+
+ 16:51:26 <slangasek> didn't he say on IRC that he was punting on it and wanted someone else to look?
+
+ 16:51:29 <cjwatson> OK, though I don't know if he was just patch-piloting
+
+ 16:51:29 <barry> (or maybe psusi is, the comment is ambiguous ;)
+
+ 16:51:44 <slangasek> he was patch-piloting
+
+ 16:52:18 <slangasek> I would look at the ureadahead branch but can't promise to get to it... so if someone else wants to volunteer... :)
+
+ 16:52:46 <jodh> slangasek: I can have a look. What's the urgency on this?
+
+ 16:52:54 <slangasek> jodh: not particularly high AFAIK
+
+ 16:53:06 <slangasek> jodh: and thanks :)
+
+ 16:53:11 <jodh> slangasek: works for me then :D
+
+ 16:53:20 <slangasek> one other thing on bugs
+
+ 16:53:29 <slangasek> [LINK] http://reports.qa.ubuntu.com/reports/kernel-bugs/reports/rls-p-tracking-bugs.html
+
+ 16:54:01 <slangasek> I challenged you guys a while ago to get this list down by the end of the year
+
+ 16:54:08 <slangasek> well, two bugs have been fixed - good work!
+
+ 16:54:12 <slangasek> and two more have taken their place ;)
+
+ 16:54:39 <slangasek> I think I'm going to start doling out the bugs to assignees so we make some headway
+
+ 16:55:02 <slangasek> so if there's a bug you'd like to work on from that list, go ahead and claim it or you might get assigned another one :-)
+
+ 16:55:02 <cjwatson> yow
+
+ 16:55:40 <cjwatson> guess I'd better start hitting mine in earnest next week
+
+ 16:55:50 <cjwatson> sorry
+
+ 16:55:54 <slangasek> I've taken bug #874774 for myself... which is cheating, a community member has triaged it and provided a patch ;)
+
+ 16:55:56 <ubottu> Launchpad bug 874774 in cryptsetup (Ubuntu Precise) "could not mount /dev/mapper/cryptswap1" [High,Triaged] https://launchpad.net/bugs/874774
+
+ 16:56:26 <slangasek> cjwatson: there are lots of other demands on people's time of course, I just don't want us to lose sight of these bugs
+
+ 16:56:41 <slangasek> which in theory are some of the highest-impact persistent ones
+
+ 16:57:14 <slangasek> [TOPIC] AOB
+
+ 16:57:17 <slangasek> anything else?
+
+ 16:58:16 <slangasek> sounds like a 'no
+
+ 16:58:17 <slangasek> '
+
+ 16:58:18 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

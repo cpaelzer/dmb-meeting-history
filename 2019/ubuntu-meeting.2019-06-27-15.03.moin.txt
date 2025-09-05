@@ -1,0 +1,475 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 27 Jun at 15:03 &mdash; 16:07 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-06-27-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:04.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:12.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:49.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:06.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (48)
+ * sil2100 (44)
+ * rbalint (24)
+ * juliank (22)
+ * ubottu (17)
+ * doko (15)
+ * cyphermox (13)
+ * waveform (8)
+ * gaughen (8)
+ * tdaitx (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:03 <sil2100> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:03 <meetingology> Meeting started Thu Jun 27 15:03:54 2019 UTC.  The chair is sil2100. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:04 <sil2100> #topic Lightning rounds
+
+ 15:04 <sil2100> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson juliank waveform)
+
+ 15:04 <sil2100> juliank infinity tdaitx vorlon sil2100 mwhudson bdmurray cyphermox doko xnox rbalint waveform
+
+ 15:04 * juliank wins
+
+ 15:04 <juliank> * finished the apt 1.9.0 transition
+
+ 15:04 <juliank> * released python-apt 1.9.0; broke image building :/
+
+ 15:04 <juliank> * fixed livecd-rootfs and apt-xapian-index for new python-apt, hopefully fixing image building :)
+
+ 15:04 <juliank> * fixed dependency solving in aptdaemon to behave more normally (and work with apt 1.9)
+
+ 15:04 <juliank> * verified dkms SRU LP: #1827697 across releases (lots of VM to install, gotta simplify that)
+
+ 15:04 <ubottu> Launchpad bug 1827697 in dkms (Ubuntu Eoan) "Enroll key whiptail prompt blocks kernel header package upgrades" [High,Fix released] https://launchpad.net/bugs/1827697
+
+ 15:04 <juliank> * TIL (or TWL):
+
+ 15:04 <juliank> * How to start qemu in secureboot, although a bit hackish, not proper
+
+ 15:04 <juliank> * That cosmic does not render in qemu except with qxl vga device; and then it's still missing cursor!
+
+ 15:04 <juliank> * Things to figure out:
+
+ 15:04 <juliank> * Backporting LP: #1744318 - https for changelogs.u.c to xenial; and what regressions we could get
+
+ 15:04 <ubottu> Launchpad bug 1744318 in update-manager (Ubuntu Xenial) "changelogs.ubuntu.com should be using HTTPS" [Undecided,New] https://launchpad.net/bugs/1744318
+
+ 15:05 <juliank> (done)
+
+ 15:05 <tdaitx> * verified fixes for tomcat8, netbeans, and scilab (LP: #1825604, LP: #1828427, LP: #1825037, LP: #1827090)
+
+ 15:05 <tdaitx> * jck + openjdk-ri packaging (ie. squaring a circle)
+
+ 15:05 <tdaitx> - going through documentation
+
+ 15:05 <tdaitx> - trying to snap it somehow
+
+ 15:05 <tdaitx> (done)
+
+ 15:05 <ubottu> Launchpad bug 1825604 in netbeans (Ubuntu Disco) "[SRU] Netbeans 10 should depend on java11-sdk" [Undecided,Fix committed] https://launchpad.net/bugs/1825604
+
+ 15:05 <ubottu> Launchpad bug 1828427 in netbeans (Debian) "[SRU] Netbeans fails to create a java project with NoSuchMethodError" [Unknown,New] https://launchpad.net/bugs/1828427
+
+ 15:05 <ubottu> Launchpad bug 1825037 in scilab (Ubuntu) "[SRU] scilab-cli and scilab-adv-cli does not start on bionic, cosmic, disco and eoan" [High,Fix released] https://launchpad.net/bugs/1825037
+
+ 15:05 <ubottu> Launchpad bug 1827090 in tomcat8 (Ubuntu Bionic) "[SRU] tomcat8-instance-create fails to update control port" [Undecided,Fix released] https://launchpad.net/bugs/1827090
+
+ 15:06 <sil2100> I guess no vorlon for the meeting this week
+
+ 15:06 <sil2100> Let me go
+
+ 15:06 <sil2100> - Out-of-office Thursday-Friday last week
+
+ 15:06 <sil2100> - SRU reviews and releases
+
+ 15:06 <sil2100> - Kernel SRUs
+
+ 15:06 <sil2100> - Switching-off dry-run mode from britney's SRU ADT regression notification
+
+ 15:06 <sil2100> * Had to tweak the e-mail logic to make it working
+
+ 15:06 <sil2100> * Requesting a bot account for SRU purposes
+
+ 15:06 <sil2100> - Finishing jenkins jobs for new core18 promotion purposes
+
+ 15:06 <sil2100> * Iterating on the merge a bit with a few fixes here and there
+
+ 15:06 <sil2100> * Preparing all credentials, sending them over
+
+ 15:06 <sil2100> - Looking into the snapd issues in powerpc builds, fixed livecd-rootfs, sponsored some cherry-picks for snapd
+
+ 15:06 <sil2100> - Releasing a new core18 into stable, manually phasing the update as per snapstore request
+
+ 15:06 <sil2100> - NEW review of an ubuntustudio package
+
+ 15:06 <sil2100> - Sponsoring + random stuff
+
+ 15:06 <sil2100> (done)
+
+ 15:07 <sil2100> bdmurray: I guess it's your turn
+
+ 15:07 <bdmurray> uploaded u-r-u fix for deb2snap transition for upgrades from 18.04 (LP: #1833753)
+
+ 15:07 <ubottu> Launchpad bug 1833753 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade crashed with AttributeError in _replaceDebsWithSnaps(): 'UbuntuDistroInfo' object has no attribute 'version'" [High,Fix released] https://launchpad.net/bugs/1833753
+
+ 15:07 <bdmurray> resolved issue with DistUpgradeQuirks and deb2snap transition for upgrades from Ubuntu 18.04
+
+ 15:07 <bdmurray> dropped u-r-u's obsolete kernel removal code in Eoan (LP: #1828100)
+
+ 15:07 <ubottu> Launchpad bug 1828100 in ubuntu-release-upgrader (Ubuntu Eoan) "KernelRemoval section of DistUpgrade.cfg shouldn't require manual updating" [High,Fix released] https://launchpad.net/bugs/1828100
+
+ 15:07 <bdmurray> fixed an issue with the foundations team bug bot and lp users that are 410
+
+ 15:07 <bdmurray> tested a minimum / partition install (LP: #1833610)
+
+ 15:07 <ubottu> Launchpad bug 1833610 in ubiquity (Ubuntu Bionic) "minimum disk space recommendation is too small" [High,New] https://launchpad.net/bugs/1833610
+
+ 15:07 <bdmurray> reported apport bug LP: #1833795
+
+ 15:07 <ubottu> Launchpad bug 1833795 in apport (Ubuntu) "unable to report an 18.04 crash from a 19.04 system" [Undecided,New] https://launchpad.net/bugs/1833795
+
+ 15:07 <bdmurray> dropped SystemImageInfo gathering from apport's ubuntu general hook
+
+ 15:07 <bdmurray> converted parts of oops-repository from using pycassa to python-cassandra
+
+ 15:07 <bdmurray> removed SystemImageInfo code from daisy as it is no longer needed there
+
+ 15:07 <bdmurray> ✔ done
+
+ 15:07 <bdmurray> review of rls- tagged bug reports
+
+ 15:08 <bdmurray> cyphermox:
+
+ 15:08 <cyphermox> short week: off Monday, off tomorrow and next monday.
+
+ 15:08 <cyphermox> MIR review
+
+ 15:08 <cyphermox> reviewed more rls-*-incoming bugs w/ Brian
+
+ 15:08 <cyphermox> grub2: merge, grub-reboot, EFI stub loading from 'linux' command
+
+ 15:08 <cyphermox> netplan feature spec flags partly approved now (still needs signoffs from Server / Jay)
+
+ 15:08 <cyphermox> more netplan specs to draft / need review
+
+ 15:08 <cyphermox> packageset update / figuring out exceptions for desktop-common/-core
+
+ 15:08 <cyphermox> partner work
+
+ 15:08 <cyphermox> (done)
+
+ 15:09 <bdmurray> doko:
+
+ 15:09 <doko> - last Thursday bank holiday
+
+ 15:09 <doko> - Merge the riscv64 zero patches for openjdk 11, and up
+
+ 15:09 <doko> - test rebuild give backs, fixing GCC 9 issues, filing GCC upstream issues
+
+ 15:09 <doko> - test rebuild on ppc64el not yet finished ...
+
+ 15:09 <doko> - OpenJDK sync
+
+ 15:09 <doko> (done)
+
+ 15:10 <bdmurray> xnox: is sprinting
+
+ 15:10 <bdmurray> rbalint:
+
+ 15:10 <rbalint> * partner work
+
+ 15:10 <rbalint> * shadow:
+
+ 15:10 <rbalint> - prepared next upstream release in Salsa
+
+ 15:10 <rbalint> - converted to dh from cdbs
+
+ 15:10 <rbalint> - preparation of moving login to util-linux in progress
+
+ 15:11 <rbalint> * unattended-upgrades related reviews
+
+ 15:11 <rbalint> * prepared srus for LP: #1771858 in cluding tracking down regressions and non-regressions
+
+ 15:11 <ubottu> Launchpad bug 1771858 in snapd (Ubuntu) "/snap/bin not in default PATH for units, snapd should ship system-environment-generators to inject /snap/bin into $PATH" [Critical,Confirmed] https://launchpad.net/bugs/1771858
+
+ 15:11 <rbalint> (done)
+
+ 15:11 <waveform> * Pi4 launch week! Posted some hardware off to cwayne (indirectly)
+
+ 15:11 <waveform> * Investigated boot state on pi4: some minor changes (new firmware), some major changes (second stage boot-loader now in EEPROM, no support for netboot and USB yet - forthcoming updates)
+
+ 15:11 <waveform> * Prepped updates to get eoan images booting on pi4; not yet tested, need updates to flash-kernel (see below)
+
+ 15:11 <waveform> * Prepped merged classic & core bootscripts for RPi (adding optional splash support)
+
+ 15:11 <waveform> * Agreed way forward with sil2100: merge updated bootscripts into flash-kernel, SRU bootscript patches (but not version upgrade) to bionic, then PR pi3-gadget to use new bootscripts
+
+ 15:11 <waveform> * Investigating pyparted & fftw3 FTBFS on armhf issues for doko; replicated fftw3 failure (NEON related) but not pyparted so far
+
+ 15:11 <waveform> * Still looking into BT on core
+
+ 15:11 <waveform> (done)
+
+ 15:12 <sil2100> \o/
+
+ 15:12 <sil2100> #topic Release incoming bugs
+
+ 15:12 <sil2100> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-dd-incoming-bug-tasks.html#foundations-bugs
+
+ 15:12 <bdmurray> bug 1832309
+
+ 15:12 <ubottu> bug 1832309 in netplan.io (Ubuntu) "netplan stores wifi-password world-readable" [High,New] https://launchpad.net/bugs/1832309
+
+ 15:12 <bdmurray> cyphermox: can you confirm that?
+
+ 15:13 <cyphermox> yes, that's known
+
+ 15:13 <gaughen> waveform, I tried to buy a pi4!
+
+ 15:13 <bdmurray> cyphermox: seems worth carding then right?
+
+ 15:13 <cyphermox> I mean, it's a textfile you need to write to...
+
+ 15:13 <cyphermox> yeah, there's a PR for part of that too
+
+ 15:13 <bdmurray> okay, so carding
+
+ 15:14 <bdmurray> bug 1834226
+
+ 15:14 <ubottu> bug 1834226 in update-notifier (Ubuntu) "update-notifier doesn't respect "automatically check for updates: Never"" [High,New] https://launchpad.net/bugs/1834226
+
+ 15:16 <bdmurray> while poorly described this seems familiar to me
+
+ 15:17 <bdmurray> I think its really about unattended-upgrades not respecting a setting from software-properties-gtk. Does that sound familiar balint?
+
+ 15:17 <sil2100> rbalint: ^
+
+ 15:18 <rbalint> bdmurray, it is apt that calls u-u
+
+ 15:18 <rbalint> juliank, ^
+
+ 15:18 <rbalint> :-)
+
+ 15:18 <rbalint> (via systemd timers)
+
+ 15:18 <juliank> that's packagekit I assume
+
+ 15:18 <rbalint> :-D
+
+ 15:19 <rbalint> i propose taking the bug :-)
+
+ 15:19 <juliank> PackageKit has its own timer, and it's not configurable
+
+ 15:19 <juliank> Simple fix is to remove the never option
+
+ 15:19 <gaughen> bdmurray, my vote on that netplan card is that we put it on the list to get working on this next iteration
+
+ 15:19 <gaughen> so on the prioritized lane please
+
+ 15:19 <rbalint> juliank, i think it is not really the direction of pleasing users :-)
+
+ 15:20 <juliank> No hang on, I think it's actually gnome-settings-daemon issuing the Refresh call to PackageKit
+
+ 15:20 <bdmurray> gaughen: ack
+
+ 15:21 <juliank> But in any case, we can't be sure what the cause is, we need a ps tree
+
+ 15:21 <sil2100> We don't have to solve it now, but is this something we'd want to get fixed this cycle?
+
+ 15:22 <rbalint> sil2100, yes, imo
+
+ 15:22 <juliank> It's certainly not urgent as its been that way all the time, but yes
+
+ 15:22 <bdmurray> I think finding whatever bug I'm remembering would be good
+
+ 15:22 <bdmurray> That way we have an idea of the number of people who choose "Never"
+
+ 15:23 <sil2100> Let's maybe card it then?
+
+ 15:23 <bdmurray> How about we leave it on the list until the detective work is done.
+
+ 15:24 <rbalint> bdmurray, i think the process is taking it then doing the work
+
+ 15:24 <bdmurray> We are also make a lot of assumptions about what the person is talking about, so asking some follow up questions seems good to me too.
+
+ 15:24 <sil2100> Ok
+
+ 15:25 <bdmurray> bug 1829805 is also high
+
+ 15:25 <ubottu> bug 1829805 in initramfs-tools (Ubuntu) "Lubuntu Eoan Daily Image fails to boot after install on KVM" [High,Incomplete] https://launchpad.net/bugs/1829805
+
+ 15:26 <bdmurray> xnox has asked for some more information though so leaving it seems fine
+
+ 15:26 <sil2100> Yeah, let's wait for the reporter to provide more info
+
+ 15:26 <bdmurray> Lets move on to the Undecided ones next
+
+ 15:26 <bdmurray> bug 1796260
+
+ 15:26 <ubottu> bug 1796260 in ubiquity (Ubuntu) "UEFI install onto an MBR disk, with a pre-existing os/partition, results in a non-bootable ESP on a logical partition" [Undecided,New] https://launchpad.net/bugs/1796260
+
+ 15:27 <gaughen> isn't that one mwhudson is working on
+
+ 15:27 <sil2100> This sounds familiar
+
+ 15:28 <bdmurray> It looks like there is a card for this
+
+ 15:28 <cyphermox> sil2100: because we've discussed this previously
+
+ 15:32 <bdmurray> Let's set the importance of it. What should we do about the rls-ee-incoming tag?
+
+ 15:33 <bdmurray> bug 1833758
+
+ 15:33 <ubottu> bug 1833758 in lvm2 (Ubuntu) "lvm2: vgcfgbackup in postinst takes several minutes" [Undecided,New] https://launchpad.net/bugs/1833758
+
+ 15:34 <bdmurray> Does this only happen w/ schroot?
+
+ 15:35 <sil2100> sbeattie: ^
+
+ 15:37 <bdmurray> sil2100 and I'll have a look at it to see what situations are affected.
+
+ 15:37 <sil2100> I'll try investigating this, seeing what impact it has
+
+ 15:38 <bdmurray> Oh, whoops we missed bug 1832882
+
+ 15:38 <ubottu> bug 1832882 in curl (Ubuntu Disco) "libcurl-gnutls segfaults spotify client" [High,Confirmed] https://launchpad.net/bugs/1832882
+
+ 15:39 <bdmurray> So while the snap works it might be nice to fix this anyway
+
+ 15:39 <bdmurray> It seems like a pretty straightforward SRU
+
+ 15:39 <rbalint> bdmurray, isn't it a 3rd party package?
+
+ 15:40 <juliank> I don't see a patch
+
+ 15:41 <bdmurray> rbalint: Yes
+
+ 15:41 <rbalint> juliank, there is one in the github issue
+
+ 15:42 <rbalint> bdmurray, sry maybe it is valid still for curl
+
+ 15:42 <juliank> rbalint: might not be the same issue
+
+ 15:43 <rbalint> it is worth trying i think
+
+ 15:44 <bdmurray> seb pointed to this https://packages.qa.debian.org/c/curl/news/20190512T204836Z.html
+
+ 15:44 <bdmurray> Does the debian bug have a test case?
+
+ 15:47 <bdmurray> Well let's just take it.
+
+ 15:47 <sil2100> +1
+
+ 15:48 <rbalint> +1
+
+ 15:48 <juliank> meow!
+
+ 15:48 <bdmurray> That is all the High and Undecided bug reports
+
+ 15:48 <gaughen> juliank, is that the new hipper +1?
+
+ 15:49 <juliank> either that or -1
+
+ 15:49 <sil2100> Should we move on?
+
+ 15:49 <sil2100> #topic Team proposed-migration report
+
+ 15:49 <gaughen> sil2100, no too busy thinking about cats
+
+ 15:49 <sil2100> hah!
+
+ 15:49 <sil2100> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:50 <doko> so, adam tells me that glibc and binutils issues are likely caused by a kernel regression
+
+ 15:51 <doko> I'll address the sphinx issue with the python 3.7.4 today or tomorrow
+
+ 15:52 <sil2100> doko: does the kernel team know about the regressions?
+
+ 15:52 <gaughen> doko, wonder if the fix for the regression is coming out this week
+
+ 15:52 <doko> accordng to adam, yes
+
+ 15:52 <gaughen> doko, okay then these should be gone by our next mtg
+
+ 15:52 <rbalint> partman-multipath is waiting for comments from xnox
+
+ 15:53 <doko> that's it. I'd like to continue with https://people.canonical.com/~doko/ftbfs-report/test-rebuild-20190614-eoan.html
+
+ 15:53 <doko> who is owning whoopsie?
+
+ 15:56 <bdmurray> there is card for the ftbfs bugs
+
+ 15:56 <doko> last issues: https://people.canonical.com/~doko/ftbfs-report/test-rebuild-20190614-gcc9-eoan.html
+
+ 15:57 <doko> should I file issues for those as well?
+
+ 15:57 <bdmurray> cards were created for all the ftbfs bugs for foundations packages
+
+ 15:59 <doko> bdmurray: not for the gcc9 issues yet. would you like to care about these?
+
+ 16:00 <bdmurray> I mean that all the ftbfs bugs that were previously filed and tagged rls-ee-incoming were targetted to Eoan and cards were created for them.
+
+ 16:00 <rbalint> doko, i think it is a bit early since Debian's fixes will start flowing in two weeks
+
+ 16:04 <doko> rbalint: yes, but that doesn't mean that GCC 9 is the default in Debian at this time
+
+ 16:06 <sil2100> Ok, guess let me change the topic
+
+ 16:06 <sil2100> #topic AOB
+
+ 16:07 <sil2100> Anything else besides that?
+
+ 16:07 <bdmurray> Next Thursday is a US holiday
+
+ 16:07 <sil2100> Ok, thanks guys! Next chair will be...
+
+ 16:07 <sil2100> waveform: can you chair next time?
+
+ 16:07 <sil2100> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

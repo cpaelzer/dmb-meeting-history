@@ -1,0 +1,489 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 03 Mar at 16:02 &mdash; 16:34 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-03-03-16.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== lightning round ===
+The discussion about "lightning round" started at 16:03.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:14.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (63)
+ * cyphermox (44)
+ * xnox (30)
+ * ubottu (18)
+ * bdmurray (14)
+ * chiluk (11)
+ * caribou (11)
+ * robru (8)
+ * barry (7)
+ * cjwatson (6)
+ * meetingology (3)
+ * ogasawara (2)
+ * tdaitx (1)
+
+
+
+== Full Log ==
+
+
+ 16:02 <pitti> #startmeeting
+
+ 16:02 <meetingology> Meeting started Thu Mar  3 16:02:49 2016 UTC.  The chair is pitti. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02 <meetingology> 
+
+ 16:02 <meetingology> Available commands: action commands idea info link nick
+
+ 16:03 <pitti> #topic lightning round
+
+ 16:03 <pitti> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk)
+
+ 16:03 <pitti> xnox barry pitti doko bdmurray cyphermox chiluk slangasek caribou tdaitx infinity robru sil2100
+
+ 16:03 <xnox> bah
+
+ 16:03 <xnox> i win
+
+ 16:03 <ogasawara> lol
+
+ 16:03 <xnox> Fixing d-i components:
+
+ 16:03 <xnox> - sysconfig, preseed, zipl-installer, rootskel, partman-partitioning, partman-base, debian-installer
+
+ 16:03 <xnox> Fixing bugs:
+
+ 16:03 <xnox> - bsdmainutils, console-setup
+
+ 16:03 <xnox> britney:
+
+ 16:03 <xnox> - pitti merged components-missmatches fix, so things
+
+ 16:03 <xnox> ..
+
+ 16:03 <xnox> barry, there is still outstanding germinate merge?
+
+ 16:03 <xnox> to review....
+
+ 16:03 <xnox> also working a lot on getting curtin to do s390x/kvm stuff.
+
+ 16:03 <barry> xnox: ack, i'll do those today
+
+ 16:04 <xnox> MR in progress, but it's not booting things yet.
+
+ 16:04 * xnox is away during final beta milestone week.
+
+ 16:04 * xnox needs to find people who want to help out with s390x image testing....
+
+ 16:04 <xnox> and done.
+
+ 16:04 <barry> virtualenv 14.0.5+ds-2; python-pip 8.0.3-1; debian bug #815864 for fixing `python3.5 -m venv` (but i will have a refinement hopefully later today); syncpackage nose2 0.6.3-1; syncpackage keyrings.alt 1.1.1-1
+
+ 16:04 <ubottu> Debian bug 815864 in python3.5 "python3-venv: unable to create a virtual environment" [Serious,Open] http://bugs.debian.org/815864
+
+ 16:04 <barry> LP: #1508081; system-image 3.1 boards the train.
+
+ 16:04 <ubottu> Launchpad bug 1508081 in ubuntu-system-settings (Ubuntu) "Fails to receive OTA updates" [High,In progress] https://launchpad.net/bugs/1508081
+
+ 16:04 <barry> deja-dup (LP: #1551989) hold on python2 for the desktop iso should be fixed once it gets promoted.  still left, system-config-printer's transitive dep on samba-libs :(
+
+ 16:04 <ubottu> Launchpad bug 1551989 in deja-dup (Ubuntu) "Demote deja-dup-backend-gvfs and install on demand" [Undecided,New] https://launchpad.net/bugs/1551989
+
+ 16:04 <barry> ahem, performance reviews
+
+ 16:04 <barry> --done--
+
+ 16:05 <pitti> autopkgtest:
+
+ 16:05 <pitti> - Charm up the recently added github test request support
+
+ 16:05 <pitti> - Discuss nesting of QEMU images, which enables things like installer or open-iscsi testing
+
+ 16:05 <pitti> - Fix apparmor profile on s390x
+
+ 16:05 <pitti> - Give ~canonical-kernel-distro-team the ability to (re)start autopkgtests via CGI
+
+ 16:05 <pitti> - Investigate failures of lxc and lxd runners with latest lxc/lxd, fix applied upstream now (#1551960)
+
+ 16:05 <pitti> - Split queues for ubuntu/ppa/upstream tests to avoid one starving the other two
+
+ 16:05 <pitti> - Teach LXC runner about new lxc-copy (lxc-clone and lxc-start-ephemeral are deprecated)
+
+ 16:05 <pitti> - britney: Review/merge xnox' component checking branch; disable component check for PPAs
+
+ 16:05 <pitti> - Fix kernel config/installation on our s390x autopkgtest z/VMs
+
+ 16:05 <pitti> - Set up upstream systemd PR tests on s390x
+
+ 16:05 <pitti> distro:
+
+ 16:05 <pitti> - resolvconf: fix upgrade failure (#1536335)
+
+ 16:05 <pitti> - systemd: More tolerant /etc/adjtime parsing (https://github.com/systemd/systemd/issues/2638)
+
+ 16:05 <pitti> - ubuntukylin-meta: Update from wily to xenial seeds
+
+ 16:05 <pitti> - udev: Migrate broken vmware interface names on upgrade (#1550539)
+
+ 16:05 <pitti> - udisks: bug fixing, new upstream release 2.1.7, package for D/U
+
+ 16:05 <pitti> - upstart: Fix breaks/depends cycle on upgrades (#1541914)
+
+ 16:05 <pitti> - upstart: Fix tests to fix FTBFS
+
+ 16:05 <pitti> - Investigate RTC access error on ppc64el (#1410604)
+
+ 16:05 <pitti> misc:
+
+ 16:05 <pitti> - Debug arm64 initramfs build issue with Oliver
+
+ 16:05 <pitti> END
+
+ 16:05 <pitti> -ENODOKO
+
+ 16:05 <pitti> bdmurray: please go on
+
+ 16:06 <bdmurray> fixed issues with allow_bug_filing and errors_static_url in mojo spec
+
+ 16:06 <bdmurray> testing allow_bug_filing off / on after mojo spec run
+
+ 16:06 <bdmurray> mojo spec work (make e-t-daisy-app wait for e-t-cassandra)
+
+ 16:06 <bdmurray> mojo spec work (fixing cassandra install due to charm changes)
+
+ 16:06 <bdmurray> error tracker sprint preperations
+
+ 16:06 <bdmurray> investigation into grep changes LP: #1547466
+
+ 16:06 <bdmurray> investigation into release upgrader bug LP: #1550741
+
+ 16:06 <bdmurray> uploaded popularity-contest bug fixes (LP: #1545515, LP: #1545517)
+
+ 16:06 <ubottu> Launchpad bug 1547466 in grep (Ubuntu) "grep switches into binary mode while processing a text file" [High,Confirmed] https://launchpad.net/bugs/1547466
+
+ 16:06 <ubottu> Launchpad bug 1550741 in ubuntu-release-upgrader (Ubuntu) "Upgrade failed - unauthenticated package (module-init-tools)" [Undecided,Confirmed] https://launchpad.net/bugs/1550741
+
+ 16:06 <ubottu> Launchpad bug 1545515 in popularity-contest (Ubuntu) "xenial popularity-client submits compressed reports" [Undecided,Fix released] https://launchpad.net/bugs/1545515
+
+ 16:06 <ubottu> Launchpad bug 1545517 in popularity-contest (Ubuntu) "xenial popularity-client regards successful popcon.ubuntu.com submissions as failures" [Undecided,Fix released] https://launchpad.net/bugs/1545517
+
+ 16:06 <bdmurray> reported popularity-contest cron.daily typo to debian
+
+ 16:06 <bdmurray> ✔ done
+
+ 16:06 <cyphermox> MIR:
+
+ 16:06 <cyphermox> - review s390-zfcp (bug LP: #1552218)
+
+ 16:06 <cyphermox> trusty:
+
+ 16:06 <cyphermox> - multipath-tools LVM & NVMe SRUs (bug LP: #1551828)
+
+ 16:06 <ubottu> Launchpad bug 1552218 in s390-zfcp (Ubuntu) "[MIR] s390-zfcp" [Medium,Fix committed] https://launchpad.net/bugs/1552218
+
+ 16:06 <ubottu> Launchpad bug 1551828 in multipath-tools (Ubuntu Trusty) "kpartx causes kernel oops when NVMe devices is not in blacklist" [High,Fix committed] https://launchpad.net/bugs/1551828
+
+ 16:06 <cyphermox> xenial:
+
+ 16:06 <cyphermox> - NM update FFE and testing
+
+ 16:06 <cyphermox> - add mokutil to live seed
+
+ 16:06 <cyphermox> - blacklist NVMe for multipath
+
+ 16:06 <cyphermox> - d-i iscsi initiator name (bug LP: #1540995)
+
+ 16:06 <ubottu> Launchpad bug 1540995 in partman-iscsi (Ubuntu Trusty) "iSCSI volumes are not discovered during ubuntu 14.04.04 installation (Shinner)" [High,Triaged] https://launchpad.net/bugs/1540995
+
+ 16:06 <cyphermox> - debootstrap InRelease file support
+
+ 16:06 <cyphermox> - debootstrap inrelease support (bug LP: #1485511)
+
+ 16:06 <cyphermox> - debug isc-dhcp not renewing leases w/ bind9.10 (bug LP: #1551351)
+
+ 16:06 <cyphermox> - debugging network-manager DNS update
+
+ 16:06 <ubottu> Launchpad bug 1485511 in debootstrap (Ubuntu) "ISST-KVM:CTE:R3-0:raing12: Base system install fails with "Debootstrap Error :Invalid Release signature (key id 40976EAF437D05B5) " using Ubuntu 15.10 latest daily build (20150805)" [Undecided,In progress] https://launchpad.net/bugs/1485511
+
+ 16:06 <ubottu> Launchpad bug 1551351 in isc-dhcp (Ubuntu Xenial) "dhclient does not renew leases" [High,Confirmed] https://launchpad.net/bugs/1551351
+
+ 16:06 <cyphermox> - discussing multipath-tools merge from Debian w/ rharper
+
+ 16:06 <cyphermox> - fix mokutil files disappearing after install
+
+ 16:06 <cyphermox> - fix ubiquity crash when non-free is disabled
+
+ 16:07 <cyphermox> - grub-installer fix for PReP installs on RAID devices (bug LP: #1550448)
+
+ 16:07 <cyphermox> - partman-iscsi intiatorName support
+
+ 16:07 <ubottu> Launchpad bug 1550448 in grub-installer (Ubuntu Trusty) "[PowerVM] Ubuntu 16.04 does not install bootloader on multiple PReP partitions in Software RAID1 configuration" [High,New] https://launchpad.net/bugs/1550448
+
+ 16:07 <cyphermox> - testing LVM on multipath
+
+ 16:07 <cyphermox> - testing LVM preseeding
+
+ 16:07 <cyphermox> ±other stuff:
+
+ 16:07 <cyphermox> - Secure Boot discussion
+
+ 16:07 <cyphermox> - TPM setup
+
+ 16:07 <cyphermox> - a very long but productive DMB meeting
+
+ 16:07 <cyphermox> - packaging tpm2-tools & tpm2-tss
+
+ 16:07 <cyphermox> - unbreaking open-iscsi autopkgtests
+
+ 16:07 <cyphermox> - upstreaming debootstrap inrelease support
+
+ 16:07 <cyphermox> - upstreaming partman-iscsi/open-iscsi initiatorName fixes
+
+ 16:07 <cyphermox> (done!)
+
+ 16:07 <pitti> cyphermox: oh, wer're going to update NM again?
+
+ 16:07 <cyphermox> hopefully.
+
+ 16:07 <pitti> cyphermox: to 1.0.10, or something majojr?
+
+ 16:08 <cyphermox> 1.2, if it lands early enough
+
+ 16:08 <chiluk> my turn?
+
+ 16:08 <pitti> ambitious :)
+
+ 16:08 <pitti> chiluk: please
+
+ 16:08 <chiluk> Bug 1535349. Still needs sponsorship for coreutils.
+
+ 16:08 <chiluk> A user is hitting similar issues to Bug 1012629 with preseeds, and I'm working through it.
+
+ 16:08 <ubottu> bug 1535349 in coreutils (Ubuntu Trusty) "`df /dev/sda1` no longer reports information for /dev/sda1" [Medium,In progress] https://launchpad.net/bugs/1535349
+
+ 16:08 <ubottu> bug 1012629 in grub-installer (Ubuntu Precise) "grub-installer ignores "bootdev" setting in preseed file" [Undecided,Confirmed] https://launchpad.net/bugs/1012629
+
+ 16:08 <chiluk> done
+
+ 16:09 <caribou> no slangasek I suppose
+
+ 16:09 <caribou> Short week due to two swap days
+
+ 16:09 <caribou> Bugfix :
+
+ 16:09 <caribou> - Investigate kernel crash dump on compute node :
+
+ 16:09 <caribou> Most probably caused by conntrack dkms module. Need to identify source
+
+ 16:09 <caribou> in order to rebuild the module.
+
+ 16:09 <caribou> - multipath patch failure on reconnect
+
+ 16:09 <caribou> No config file used & default path_checker may be wrong
+
+ 16:09 <caribou> Development work:
+
+ 16:09 <caribou> - Sponsoring Network-Manager SRU for LP: #1515446 on wily
+
+ 16:09 <ubottu> Launchpad bug 1515446 in network-manager (Ubuntu Wily) "network file systems in FSTAB no longer mount at boot with NetworkManager" [Medium,In progress] https://launchpad.net/bugs/1515446
+
+ 16:09 <caribou> ☑ Done
+
+ 16:09 <cyphermox> chiluk: I can look at your grub-installer and coreutils fixes
+
+ 16:10 <chiluk> cyphermox please look at the coreutils fix first.
+
+ 16:10 <cyphermox> or maybe that has already been done ;)
+
+ 16:10 <chiluk> arges has taken a few stabs at it..
+
+ 16:10 <chiluk> i'm checking to see where the upload is.
+
+ 16:11 <chiluk> cyphermox, yeah coreutils still needs to be uploaded.. and then sru approved.
+
+ 16:11 <cyphermox> ok
+
+ 16:11 <cyphermox> tdaitx: ?
+
+ 16:11 <chiluk> cyphermox fyi... It's essentially a backport of the df from vivid..
+
+ 16:11 <chiluk> since vivid seems to be working a bit more acceptably.
+
+ 16:12 <robru> no tdaitx or infinity?
+
+ 16:13 <pitti> tdaitx just sent his report on teh ML
+
+ 16:13 <pitti> electricity troubles
+
+ 16:13 <robru> lp:bileto
+
+ 16:13 <robru> - fixed bug where new comment text box would clear during Ajax update
+
+ 16:13 <robru> - updated from angular 1.3 to angular 1.5 (brings performance & bug fixes
+
+ 16:13 <robru> Ephemeral PPA work:
+
+ 16:13 <robru> - parallelized bzr branching and merging with asyncio coroutines, resulting in a 2x speedup
+
+ 16:13 <robru> - lots of little fixes and progress, will probably have working builds soon
+
+ 16:13 <robru> (done)
+
+ 16:14 <pitti> no sil2100 either
+
+ 16:14 <pitti> #topic AOB
+
+ 16:14 <chiluk> thanks cyphermox
+
+ 16:14 <pitti> ogasawara: anything from you in particular?
+
+ 16:14 <ogasawara> pitti: nope, thanks
+
+ 16:15 <bdmurray> Is there somebody who could look at bug 1547466?
+
+ 16:15 <ubottu> bug 1547466 in grep (Ubuntu) "grep switches into binary mode while processing a text file" [High,Confirmed] https://launchpad.net/bugs/1547466
+
+ 16:16 <cyphermox> that rings a bell
+
+ 16:16 * tdaitx is having eletricty troubles at home and suffering from really bad wifi outside of it
+
+ 16:17 <pitti> I thought that was an intended change
+
+ 16:18 <bdmurray> Based on upstream it is an intended change but it seems to be affecting a lot of people negatively and some builds.
+
+ 16:18 <pitti> we've been wanting to change our buildds to default to C.UTF-8, maybe that's just the final nail in the coffin
+
+ 16:18 <barry> pitti: +1
+
+ 16:19 <cyphermox> so, notabug, fix the users?
+
+ 16:19 <xnox> pitti, +1
+
+ 16:19 <pitti> well, not sure
+
+ 16:19 <xnox> infinity would be cautious.
+
+ 16:19 <pitti> we could revert the change for xenial
+
+ 16:19 <xnox> it would explode on upgrades, yes.
+
+ 16:19 <cyphermox> well, really "fix the users when they try to output UTF or binary data to a non-UTF terminal"
+
+ 16:19 <pitti> but it's more complicated than just making grep -a the default
+
+ 16:20 <cyphermox> pitti: definitely
+
+ 16:20 <pitti> as grep has had a binary detection mode all the time
+
+ 16:20 <pitti> it just got a bit stricter now apparently
+
+ 16:20 <xnox> cyphermox, we default to UTF terminal, apart from our buildds.
+
+ 16:20 <pitti> cyphermox: s/terminal/locale/
+
+ 16:20 <cyphermox> xnox: yes
+
+ 16:20 <pitti> this affects "grep something > outputfile"
+
+ 16:20 <pitti> (i. e. not strictly bound to terminals)
+
+ 16:20 <cyphermox> bah
+
+ 16:21 <pitti> I suppose grep checks LC_CTYPE, and if it sees an undecodable character it switches to binary mode
+
+ 16:21 <pitti> but no idea what it used before
+
+ 16:22 <bdmurray> pitti: you seem to understand the issue a fair bit, could you look into it more?
+
+ 16:23 <pitti> well, what do we *want* to do about it?
+
+ 16:23 <pitti> finally fix our buildds? revert the change?
+
+ 16:23 <pitti> but if we revert it, we'll be stuck with it for"ever"
+
+ 16:23 <xnox> we do want to fix our buildds regardless.
+
+ 16:23 <cyphermox> fix the buildds, I would think
+
+ 16:23 <xnox> on the off-hand email from steve, he did say given "grep" issue, we should push to change buildds to utf.
+
+ 16:24 <xnox> but e.g. infinity is ill at the moment. So, cjwatson - would you fix our buildds to run with C.UTF-8 by default?
+
+ 16:24 * xnox wonders if we should have done so for the archive rebuild running now - to see how bad the fallout from that is.
+
+ 16:24 <xnox> vs current grep fallout.
+
+ 16:25 <pitti> xnox: zero, I hope -- or our stuff would be broken on UTF-8 locales which are being used on pretty much every real system out there
+
+ 16:26 <cjwatson> Yeah, it sounds like we should perhaps JFDI
+
+ 16:26 <pitti> well, there might be some debian test suites which currently rely on C
+
+ 16:26 <pitti> so "zero" is probably too optimistic
+
+ 16:27 <xnox> pitti, sure, the glibc test-suite will catch or some such.
+
+ 16:28 <xnox> cjwatson, shall i file a bug report against... launchpad? lp-buildd?
+
+ 16:28 * xnox bets there is one already.
+
+ 16:28 <cjwatson> launchpad-buildd.  we have a deployment planned soon anway
+
+ 16:28 <cjwatson> *anyway
+
+ 16:29 <pitti> so until that happens, should we revert the grep behavour in the meantime?
+
+ 16:29 <pitti> that'll probably require some bisecting to find out which particular commit changed it (and how exactly)
+
+ 16:30 <pitti> if we want to do this, I can look into it
+
+ 16:31 <cjwatson> it shouldn't take us long to deploy new buildd code, fwiw
+
+ 16:31 <xnox> please ack/approve https://bugs.launchpad.net/launchpad-buildd/+bug/1552791
+
+ 16:31 <ubottu> Launchpad bug 1552791 in launchpad-buildd "please set default locale to C.UTF-8" [Undecided,Confirmed]
+
+ 16:31 <cjwatson> probably today/tomorrow
+
+ 16:31 <cjwatson> ack/approve> meaningless :)
+
+ 16:31 <cyphermox> do we cyurrently have lots of builds failing because grep?
+
+ 16:31 <pitti> oh, ok -- then let's not bother
+
+ 16:31 <cyphermox> right
+
+ 16:31 <xnox> with like "affects me", "me too" comments, +1, like, heart - etc.
+
+ 16:33 <pitti> ok, anything else?
+
+ 16:33 <bdmurray> Nope
+
+ 16:34 <pitti> then, thanks everyone!
+
+ 16:34 <pitti> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

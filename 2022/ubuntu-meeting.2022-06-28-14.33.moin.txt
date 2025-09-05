@@ -1,0 +1,373 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 28 Jun at 14:33 &mdash; 14:56 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-06-28-14.33.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:33)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/ipmitool/+bug/1978144   (cpaelzer, 14:39)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libisofs/+bug/1977959   (cpaelzer, 14:40)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:43.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:43)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:44)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:46.
+
+ * ''LINK:'' https://github.com/cpaelzer/ubuntu-mir/pull/3/files   (cpaelzer, 14:47)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (89)
+ * slyon (30)
+ * didrocks (15)
+ * sarnold (10)
+ * ubottu (6)
+ * joalif (3)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 14:33 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:33 <meetingology> Meeting started at 14:33:09 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:33 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:33 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage
+
+ 14:33 <cpaelzer> most of you are here already, just me being slightly late due to head to head meetings - sorry :-/
+
+ 14:33 <cpaelzer> #topic current component mismatches
+
+ 14:33 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:33 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:33 <cpaelzer> let us see what this week has new for us
+
+ 14:34 <cpaelzer> nothing in non-proposed
+
+ 14:34 <cpaelzer> but a lintian explosion in -proposed
+
+ 14:34 <slyon> ugh lintian... they're adding new dependencies quicker than we can process them :)
+
+ 14:34 <slyon> lintian got a new maintainer upstream and I think there was a big re-organization of the code
+
+ 14:34 <sarnold> or.... hooray for more automated checking :) (I hope)
+
+ 14:34 <cpaelzer> which is all great, but paingul
+
+ 14:34 <cpaelzer> slyon: a question, is there a strong resaon it needs to be in main
+
+ 14:34 <slyon> I'll check those new dependencies. and assign them out within foundations, as needed
+
+ 14:34 <cpaelzer> slyon: it does not have to be as a build-dependency
+
+ 14:35 <didrocks> perlpainful even :p
+
+ 14:35 <slyon> cpaelzer: yeah.. we had that discussion during the Frankfurt sprint. But there were some strong opinions about keeping it in main
+
+ 14:35 <slyon> I can lookup the details if you want to
+
+ 14:35 <cpaelzer> ok, then you said it right -sort out the MIRs on your end and file them
+
+ 14:35 <cpaelzer> just wanted to ask to be sure
+
+ 14:36 <cpaelzer> the rest are known false positives
+
+ 14:36 <cpaelzer> or cases waiting for review
+
+ 14:36 <sarnold> openwsman?
+
+ 14:36 <cpaelzer> sarnold: that whole maas seed thing is there forver and not changing
+
+ 14:37 <cpaelzer> it is aphilospohopy questions, someone decided to declare a seed as maas uses those, but no one stepped up owning and promoting the packages
+
+ 14:37 <sarnold> aha. it felt vaguely familiar but I didn't see openwsman in /lastlog. this should do for another few months then.. heh
+
+ 14:37 <cpaelzer> it is a very special case of false positives
+
+ 14:37 <cpaelzer> TBH all cases that are up are in the security queue
+
+ 14:37 <cpaelzer> so you can clear this view a lot sarnold :-P
+
+ 14:38 <cpaelzer> #topic New MIRs
+
+ 14:38 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> none
+
+ 14:38 <didrocks> \o/
+
+ 14:38 <cpaelzer> really, I thought I have seen one in my inbox this week
+
+ 14:38 <cpaelzer> let me see if it shows up in incomplete
+
+ 14:38 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:38 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:39 <cpaelzer> a few updates on those
+
+ 14:39 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/ipmitool/+bug/1978144
+
+ 14:39 <ubottu> Launchpad bug 1978144 in ipmitool (Ubuntu) "[MIR] ipmitool" [Undecided, Incomplete]
+
+ 14:39 <cpaelzer> was reviewsed by joalif
+
+ 14:39 <cpaelzer> looks good a few todos for the team, soon to be handled
+
+ 14:39 <cpaelzer> we can assign this to security already IMHO
+
+ 14:39 <cpaelzer> as we usually do
+
+ 14:39 <joalif> so this needs sec review
+
+ 14:40 <cpaelzer> Lena will add the test details while that is hanging in the sec queue
+
+ 14:40 <joalif> but I didn't know if i shoudl assign it to them before the todos are done
+
+ 14:40 <cpaelzer> yes joalif, I assigned security now
+
+ 14:40 <joalif> ah ok
+
+ 14:40 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libisofs/+bug/1977959
+
+ 14:40 <ubottu> Launchpad bug 1977959 in libisofs (Ubuntu) "[MIR] libisoburn, libburn, libisofs" [Undecided, Incomplete]
+
+ 14:40 <cpaelzer> this goes on between slyon and alexghiti
+
+ 14:40 <didrocks> I think slyon kept in sync with his time
+
+ 14:40 <didrocks> team*
+
+ 14:40 <slyon> actually:
+
+ 14:41 <cpaelzer> ?
+
+ 14:41 <slyon> this is a question for didrocks:
+
+ 14:41 <slyon> about the .symbols file
+
+ 14:41 <didrocks> (I agree about the no additional delta if we can’t get it sponsored to debian)
+
+ 14:41 <didrocks> if that was your question :p
+
+ 14:41 <slyon> I think we do not want to block on this here. as they're using the "-V" parameter
+
+ 14:42 <didrocks> yeah, I agree, but can we try to get them in debian still?
+
+ 14:42 <slyon> i.e. dh_makeshlibs -V
+
+ 14:42 <slyon> Yes, I feel like it should be sent to Debian, but no need to inroduce a Ubuntu delta, right?
+
+ 14:42 <cpaelzer> ack
+
+ 14:42 <didrocks> right, this is what I just wrote ^
+
+ 14:42 <slyon> ok, thanks for clarification
+
+ 14:43 <cpaelzer> Then we have https://bugs.launchpad.net/ubuntu/+source/gsasl/+bug/1972866
+
+ 14:43 <slyon> I will talk to Alex, he's out currently, though
+
+ 14:43 <ubottu> Launchpad bug 1972866 in gsasl (Ubuntu) "[MIR] gsasl" [Undecided, Incomplete]
+
+ 14:43 <didrocks> slyon: just to ensure this is done, forwarded, but ack then. I’ll let you finish syncing with your team
+
+ 14:43 <didrocks> good :)
+
+ 14:43 <cpaelzer> this goes on in discussion - so far mostly about nothing yet testing it AFAICS
+
+ 14:43 <cpaelzer> nothing to act for us right now
+
+ 14:43 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:43 <slyon> should this be set to "New"+security?
+
+ 14:43 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:43 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:43 <cpaelzer> Internal link
+
+ 14:44 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:44 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:44 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:44 <slyon> I think foundations' part is done on gsasl
+
+ 14:44 <cpaelzer> yes slyon
+
+ 14:44 <slyon> will do cpaelzer
+
+ 14:44 <cpaelzer> set
+
+ 14:44 <slyon> thx
+
+ 14:44 <cpaelzer> I could ask, but I ask the same thing every week sarnold - so I'm not asking this week
+
+ 14:44 <cpaelzer> but the list is huge again :-/
+
+ 14:45 * cpaelzer hugs sarnold for review-pain
+
+ 14:45 <cpaelzer> Does anyone have other teams inout on the security queue or its handling atm?
+
+ 14:45 <cpaelzer> s/inout/input/
+
+ 14:46 <cpaelzer> I guess that is a "no by timeout"
+
+ 14:46 <sarnold> there was little progress last week due to a security sprint, which was excellent -- and I expect little this week, as most of my colleagues are on vacation this week and much of next week; however, we had good discussions on performing MIRs, the new folks who have taken some are keen, and I'm still feeling happy thoughts :)
+
+ 14:46 <cpaelzer> oh great
+
+ 14:46 <cpaelzer> so it seems we can hope that this isn't just on your shoulds soon then
+
+ 14:46 <sarnold> yes
+
+ 14:46 <cpaelzer> great
+
+ 14:46 <cpaelzer> #topic Any other business?
+
+ 14:47 <sarnold> none here
+
+ 14:47 <cpaelzer> I have a heads up on https://bugs.launchpad.net/ubuntu/+source/mdevctl/+bug/1942394
+
+ 14:47 <ubottu> Launchpad bug 1942394 in mdevctl (Ubuntu) "[MIR] mdevctl 1.0.0 (rust switch)" [Undecided, Incomplete]
+
+ 14:47 <cpaelzer> this ties into the rust rules that we have discussed a while ago
+
+ 14:47 <cpaelzer> https://github.com/cpaelzer/ubuntu-mir/pull/3/files
+
+ 14:47 <ubottu> Pull 3 in cpaelzer/ubuntu-mir "Add rust rules" [Open]
+
+ 14:47 <cpaelzer> I will soon have to rebase and re-propose that to land it
+
+ 14:47 <cpaelzer> because we have it almost ready in the form that was suggested
+
+ 14:47 <cpaelzer> there are things which we need to reconsider
+
+ 14:48 <cpaelzer> for example cargo.lock isn't yet done by the dh_cargo tooling, until it exists one can not provide it
+
+ 14:48 <cpaelzer> there are fallbacks in our proposed ruling which we will use
+
+ 14:48 <cpaelzer> so far just an FYI so you know it comes
+
+ 14:48 <cpaelzer> and sadly the wiki has become immutable again
+
+ 14:48 <slyon> nice, thanks
+
+ 14:48 <cpaelzer> nothing else from my side
+
+ 14:49 <slyon> I have once question wrt my last comment on https://bugs.launchpad.net/ubuntu/+source/lerc/+bug/1977551
+
+ 14:49 <ubottu> Launchpad bug 1977551 in lerc (Ubuntu) "[MIR] lerc" [Undecided, New]
+
+ 14:49 <slyon> do we require the build to fail on .symbols file changes?
+
+ 14:49 <cpaelzer> on breaking symbols change IIRC yes
+
+ 14:49 <slyon> the MIR rules state that symbols tracking needs to be in place
+
+ 14:49 <cpaelzer> not on just adding new symbols
+
+ 14:49 <slyon> lerc is tracking symbols, but ignoring the changes during build
+
+ 14:49 <slyon> (only to be checked manually)
+
+ 14:49 <sarnold> cargo.lock missing from dh_cargo :( -- do we need to ask our rust experts to help push that over the finish line?
+
+ 14:50 * didrocks likes to use level 4 as discussed the other days, but it’s more a personal preference on package I used to maintain directly
+
+ 14:50 <cpaelzer> sarnold: (rust) yes, but I'd decouple the MIR rules and any ongoing package from that. Once it exists it shall be used, but until it does we can't require it
+
+ 14:50 <didrocks> I think though that yeah, only on removing symbols (even if adding symbols can break in C++)
+
+ 14:50 <slyon> didrocks: ACK, thanks for your input on this one! maybe we don't need to be as strict in the generic rules.
+
+ 14:51 <slyon> But I'll ask seb to introduce a delta to make the build fail on symbols changes
+
+ 14:51 <cpaelzer> slyon: it should fail on removing a symbol - if it does that it is ok IMHO
+
+ 14:51 <sarnold> cpaelzer: I'm afraid if we go down that path we'll eventually have a dozen packages in, and no support, and no incentive to get it done..
+
+ 14:51 <cpaelzer> sarnold: and if we don't we can't update more and more waiting on the dh_cargo feature to exist
+
+ 14:51 <slyon> cpaelzer: I agree on this. So we need to patch lerc, as the maintainers do not want this, due to it being too much work for C++ libraries with lots of generated symbols names
+
+ 14:52 <slyon> that might change on toolchain changes
+
+ 14:52 <cpaelzer> slyon: I'm really only having a soft opinion here - I do not maintain much C++
+
+ 14:52 <cpaelzer> it feels odd to add delta just for that
+
+ 14:52 <slyon> hmm
+
+ 14:52 <didrocks> if you want to be scared on how you can break the ABI in C++: https://community.kde.org/Policies/Binary_Compatibility_Issues_With_C%2B%2B
+
+ 14:53 <didrocks> and you see that removing symbols is not the only way to break it :p
+
+ 14:53 <didrocks> (but I think good enough for most of the cases)
+
+ 14:53 <cpaelzer> sarnold: (rust) so yes, let us hard-request that from dh-cargo asap - but allow some way to make progress in between
+
+ 14:54 <sarnold> cpaelzer: (rust) yes, that can make sense -- but I'm really only comfortable allowing the first if we also have a resourced plan to get to a better dh_cargo situation
+
+ 14:54 <slyon> (c++ symbols) IMO it makes sense to rather be on the safe side and check/adopt .symbols after toolchain changes, rather than missing a ABI break
+
+ 14:55 <cpaelzer> ack
+
+ 14:55 <cpaelzer> that is the way to go then slyon
+
+ 14:55 <slyon> thanks. nothing else from my side
+
+ 14:56 <cpaelzer> ok, that sounds like a wrap then
+
+ 14:56 <sarnold> thanks cpaelzer, all :)
+
+ 14:56 <cpaelzer> thank you all
+
+ 14:56 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

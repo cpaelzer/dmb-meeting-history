@@ -1,0 +1,423 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 22 Aug at 14:31 &mdash; 15:01 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-08-22-14.31.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:32)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:35.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:35)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:45.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:45)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:47)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:47)
+ * ''LINK:'' https://grep.app/search?q=%20%20%20%20%20%20uses%3A%20actions/first-interaction%40v1   (dviererbe, 14:50)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/blob/bb1087152706f72aa0c535a20dde5c72a442033b/README.md?plain=1#L1073   (dviererbe, 14:52)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:55.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:55)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:55)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:55)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:57.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (119)
+ * slyon (17)
+ * sarnold (16)
+ * dviererbe (12)
+ * eslerm (6)
+ * joalif (3)
+ * meetingology (2)
+ * bdrung (2)
+ * jbicha (1)
+
+
+
+== Full log ==
+
+
+ 14:31 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:31 <meetingology> Meeting started at 14:31:54 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:31 <eslerm> o/
+
+ 14:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:31 <sarnold> good morning
+
+ 14:32 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:32 <slyon> o/
+
+ 14:32 <cpaelzer> #topic current component mismatches
+
+ 14:32 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <joalif> o/
+
+ 14:32 <cpaelzer> To keep things in consumable chunks the first 6 of the perl deps for spamassassin are now up
+
+ 14:32 <cpaelzer> see the red color
+
+ 14:32 <dviererbe> o/
+
+ 14:32 <cpaelzer> we'll get to that when assigning new MIR cases for review
+
+ 14:32 <cpaelzer> nvmse-stas was considerd ready, but waiting dor dasbus
+
+ 14:33 <cpaelzer> which is on security atm
+
+ 14:33 <cpaelzer> nothing else new here AFAICS
+
+ 14:34 <cpaelzer> even nothing new in proposed
+
+ 14:34 <cpaelzer> which feels right given we are in feature freeze
+
+ 14:34 <slyon> libei is now ready for security, too (but also some TODOs for jbicha)
+
+ 14:34 <cpaelzer> good to know
+
+ 14:34 <sarnold> now I wonder about the flood of FFEs :)
+
+ 14:34 <jbicha> 👍
+
+ 14:34 <cpaelzer> dracut also is ok, will enter security later on (for next cycle)
+
+ 14:35 <cpaelzer> but for now we agreed on a package splitting that allows to pass just a minimal thing without
+
+ 14:35 <slyon> nice!
+
+ 14:35 <cpaelzer> it is back on bdrung to get this in place
+
+ 14:35 <slyon> ACK
+
+ 14:35 <cpaelzer> #topic New MIRs
+
+ 14:35 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:35 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:36 <cpaelzer> uh wow 10
+
+ 14:36 <cpaelzer> so much for "not much because of FF"
+
+ 14:36 <cpaelzer> but as I said
+
+ 14:36 <cpaelzer> 6 of them are meant to be trivial perl cases
+
+ 14:36 <cpaelzer> back in the day they almost got no review, that isn't how we should do it again
+
+ 14:36 <cpaelzer> but really, structurally they are mostly a mechanical repack of the perl modules
+
+ 14:36 <cpaelzer> with auto-autopkgtest and usually good test sets
+
+ 14:37 <cpaelzer> with small and well defined use cases
+
+ 14:37 <sarnold> being on the hotpath for handling email they deserve a reasonable look
+
+ 14:37 <cpaelzer> So I'd wonder if we can distribute those to just one person as they'd all feel very similar
+
+ 14:37 <sarnold> lintian modules are something else
+
+ 14:37 <cpaelzer> indeed
+
+ 14:37 <cpaelzer> I was just going there sarnold
+
+ 14:38 <cpaelzer> It will not be no review, but by structurally sharing that much there likely would be a huge efficiency gain by one doing them all
+
+ 14:38 <cpaelzer> that is what I wanted to say :-)
+
+ 14:38 <sarnold> that makes sense, yes
+
+ 14:38 <cpaelzer> so I'm looking for a volunteer for 6xsupposed-to-be-simple cases
+
+ 14:38 <slyon> I could probably take 2-3 of those for next week, assuming they are small. But probably not all of them
+
+ 14:38 <joalif> I can also take some
+
+ 14:39 <cpaelzer> it is actually 8, so how about 4 each but no complaining stares if not all of them are done next week?
+
+ 14:39 <slyon> +1
+
+ 14:39 <joalif> sure
+
+ 14:40 <cpaelzer> assigned
+
+ 14:41 <bdrung> cpaelzer, I just uploaded dracut 059-4ubuntu2 that splits out dracut-install. Should I assign the ticket back to you?
+
+ 14:41 <cpaelzer> update the bug, set it back to new and unassign yourself
+
+ 14:41 <cpaelzer> bdrung: ^^
+
+ 14:42 <cpaelzer> and I guess make the seed or dependency change that will pull it in
+
+ 14:42 <cpaelzer> once all is in place ping one from the team here to ack for the promotion of dracut-install
+
+ 14:42 <bdrung> thanks. I am working on the initramfs-tools change now.
+
+ 14:42 <cpaelzer> we'll set the state to "in progress" reflecting that
+
+ 14:42 <cpaelzer> Then subscribe ubuntu archive admins to do the promotion
+
+ 14:43 <cpaelzer> ok
+
+ 14:43 <cpaelzer> ok, in terms of reviews two more to g
+
+ 14:43 <cpaelzer> go
+
+ 14:43 <cpaelzer> I'll take gnome-clocks, because why not
+
+ 14:43 <cpaelzer> leaved https://bugs.launchpad.net/ubuntu/+source/pappl-retrofit/+bug/2031814 unassigned
+
+ 14:43 <cpaelzer> missing didier who is out atm
+
+ 14:44 <cpaelzer> we have assigned more than we commted to be able to do each week (due to those perly things)
+
+ 14:44 <cpaelzer> so I think this one has to wait
+
+ 14:44 <cpaelzer> s/commted/committed/
+
+ 14:44 <slyon> I agree
+
+ 14:45 <cpaelzer> and of course this is a late "needs to be in 23.10" *sigh*
+
+ 14:45 <cpaelzer> but still we are humans and have plenty of other tasks
+
+ 14:45 <cpaelzer> I think that is ok, re-eval next week
+
+ 14:45 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:45 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:45 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:45 <cpaelzer> dracut was clarified above
+
+ 14:46 <cpaelzer> s390x-tools and rust has gotten a block-proposed update
+
+ 14:46 <cpaelzer> most recent actual change is https://bugs.launchpad.net/ubuntu/+source/dotnet6/+bug/2023531
+
+ 14:46 <cpaelzer> hmm, that is a response to the review
+
+ 14:46 <cpaelzer> I need to read that with some time
+
+ 14:46 <cpaelzer> since I've done the review
+
+ 14:47 <cpaelzer> opic Process/Documentation improvements
+
+ 14:47 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:47 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:47 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:47 <dviererbe> Greet new contributers on first issue/pr #37 https://github.com/canonical/ubuntu-mir/pull/37
+
+ 14:48 <cpaelzer> that is a nice idea, but also so new the tests didn't run yet right?
+
+ 14:48 <dviererbe> Github queue seems to be long today, the Ci was just not run yet
+
+ 14:49 <cpaelzer> I generally like this idea
+
+ 14:49 <slyon> Maybe s/GMT/UTC/, otherwise lgtm.
+
+ 14:49 <cpaelzer> where you able to pre-test this somehow dviererbe?
+
+ 14:50 <dviererbe> Kind of yes here: https://github.com/canonical/ubuntu-mir/actions/runs/5939665817/job/16106543321 but I oriented myself on the config of other repos that used the action
+
+ 14:50 <cpaelzer> ok, nice
+
+ 14:50 <dviererbe> https://grep.app/search?q=%20%20%20%20%20%20uses%3A%20actions/first-interaction%40v1
+
+ 14:50 <slyon> dviererbe: do we need to install the "secrets.GITHUB_TOKEN" somehow?
+
+ 14:51 <cpaelzer> how about this - fix the GMT/UTC and allow time to pass for any potential further reviewers
+
+ 14:51 <dviererbe> No this is a environment variable that gets injected by the action runner
+
+ 14:51 <cpaelzer> then we can land once tests also have ran e.g. in next weeks meeting
+
+ 14:51 <slyon> ok
+
+ 14:51 <dviererbe> Than I also should replace it in the Readme.md
+
+ 14:51 <dviererbe> Thats where I took it from
+
+ 14:52 <cpaelzer> is that what we have oO
+
+ 14:52 <cpaelzer> let me look at the invite what TZ we have set for real
+
+ 14:52 <slyon> well.. yeah. It's more of a nitpick. We can also keep it as-is.
+
+ 14:52 <cpaelzer> it is actually "4.30pm CET"
+
+ 14:52 <slyon> cpaelzer: I think giving the real TZ make sense, as that would account for time shifts
+
+ 14:52 <cpaelzer> how about chaning .md and this to that value
+
+ 14:52 <dviererbe> https://github.com/canonical/ubuntu-mir/blob/bb1087152706f72aa0c535a20dde5c72a442033b/README.md?plain=1#L1073
+
+ 14:52 <sarnold> hah, it's in there twice
+
+ 14:52 <cpaelzer> so that git matches the calendar
+
+ 14:52 <sarnold> (Tuesdays 15:30-16:00 GMT) near the end
+
+ 14:53 <dviererbe> I change it
+
+ 14:53 <sarnold> 2023-08-22 14:52:58 < sarnold>  (Tuesdays 15:30-16:00 GMT) near the end
+
+ 14:53 <cpaelzer> well and this PR, other than adding the nice welcome
+
+ 14:53 <sarnold> funny enough, that second one is just plain wrong part of the year :)
+
+ 14:53 <cpaelzer> could sync all those mentions with the calendar entry we have
+
+ 14:53 <cpaelzer> dviererbe: ok with that?
+
+ 14:53 <dviererbe> Yes :)
+
+ 14:54 <cpaelzer> next is https://github.com/canonical/ubuntu-mir/pull/36
+
+ 14:54 <sarnold> woot, thanks dviererbe :)
+
+ 14:54 <cpaelzer> which we had some approval when discussing
+
+ 14:54 <cpaelzer> but now have  PR actually writing about it
+
+ 14:54 <cpaelzer> no need to read it now
+
+ 14:54 <cpaelzer> but before next week an ack or feedback would be nice
+
+ 14:54 <cpaelzer> ok?
+
+ 14:54 <sarnold> ack
+
+ 14:54 <cpaelzer> ok, the rest is old/draft
+
+ 14:55 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:55 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:55 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:55 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:55 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:55 <cpaelzer> Internal link
+
+ 14:55 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:55 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:55 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:55 <cpaelzer> never heard of semgrep_rules_manager
+
+ 14:55 <cpaelzer> why is that in this kanban board at all?
+
+ 14:55 <eslerm> I'll add libei to our jira board
+
+ 14:55 <cpaelzer> thanks eslerm
+
+ 14:56 <cpaelzer> about dracut
+
+ 14:56 <cpaelzer> while we split things out and promote a very small subset now
+
+ 14:56 <cpaelzer> this would also want to be added to the security board tracking
+
+ 14:56 <cpaelzer> even not yet being assigned to you on the bug
+
+ 14:56 <cpaelzer> that is https://bugs.launchpad.net/ubuntu/+source/dracut/+bug/2031304
+
+ 14:56 <cpaelzer> would you be able to add that as well?
+
+ 14:56 <eslerm> can do
+
+ 14:56 <cpaelzer> the rest looks kind of "as expected"
+
+ 14:57 <cpaelzer> heif and siblings to fully complete soon or 24.04 the ltest
+
+ 14:57 <cpaelzer> stuff in progress
+
+ 14:57 <cpaelzer> all good AFAICS
+
+ 14:57 <cpaelzer> keeping time in mind let me call for
+
+ 14:57 <cpaelzer> #topic Any other business?
+
+ 14:57 <sarnold> none here
+
+ 14:57 <eslerm> heif had a block last week, let me find it
+
+ 14:57 <slyon> eslerm: I added some update comments to the heif related MIRs
+
+ 14:58 <slyon> pfsmorigo: I was wondering about the state of cargo?
+
+ 14:58 <eslerm> ack, thanks I'll follow up
+
+ 14:58 <cpaelzer> I didn't want to ask about cargo given the time, but you are right to do so ... :-/
+
+ 14:58 <eslerm> Seth, can you answer for Paulo please
+
+ 14:59 <sarnold> slyon: pfsmorigo has written a report on it, and I've not yet had the time to read his report :(
+
+ 14:59 <slyon> sarnold: can we see that report somewhere, or is it still internal?
+
+ 14:59 <sarnold> slyon: yeah I could bounce you a copy
+
+ 14:59 <slyon> that be great, thanks
+
+ 15:00 <slyon> nothing else from my side
+
+ 15:00 <cpaelzer> next meeting is starting and nothing else
+
+ 15:00 <sarnold> eek thanks for the 'next meeting' reminder
+
+ 15:00 <sarnold> I swear if my head weren't bolted on..
+
+ 15:00 <cpaelzer> hehe
+
+ 15:00 <dviererbe> :D
+
+ 15:01 <cpaelzer> thanks
+
+ 15:01 <cpaelzer> see you all
+
+ 15:01 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

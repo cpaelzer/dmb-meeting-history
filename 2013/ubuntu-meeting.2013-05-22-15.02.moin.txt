@@ -1,0 +1,376 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 22 May at 15:02 &mdash; 15:27 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-05-22-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 15:14.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:16.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * stgraber (30)
+ * slangasek (25)
+ * bdmurray (23)
+ * stokachu (13)
+ * jodh (12)
+ * xnox (12)
+ * ubottu (11)
+ * cjwatson (11)
+ * doko (10)
+ * barry (6)
+ * ogra_ (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Wed May 22 15:02:10 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02 <slangasek> [TOPIC] Lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:03 <slangasek> stgraber ev xnox jodh cjwatson doko slangasek barry bdmurray stokachu
+
+ 15:03 <slangasek> NB: ev is off today, so being third doesn't actually give you much breathing room ;)
+
+ 15:03 <stgraber> Monday was a public holiday.
+
+ 15:03 <stgraber> Blueprint-related work:
+
+ 15:03 <stgraber> - Image based updates (BLUEPRINT: foundations-1305-image-based-updates)
+
+ 15:03 <stgraber> - Waiting on review of the GPG implementation plan, need to get the keys generated and signed after that.
+
+ 15:03 <stgraber> - Waiting for IS to setup the image based update server.
+
+ 15:03 <stgraber> - Followed up with Ondrej, making some progress getting tar working in recovery.
+
+ 15:03 <stgraber> - Ported the tarball diffing tool to using python3-tarfile.
+
+ 15:03 <stgraber> Other work:
+
+ 15:03 <stgraber> - vUDS Tuesday to Thursday
+
+ 15:03 <stgraber> - release/cdimage
+
+ 15:03 <stgraber> - Rolled out self-respin feature to the ISO tracker
+
+ 15:03 <stgraber> - Rewrote the qa-product handling of cdimage to use a list of all products and allow reverse lookups
+
+ 15:03 <stgraber> - Started working on integrating the last bits with nusakan (cron to query the list of pending rebuilds, start them and update the status)
+
+ 15:03 <stgraber> - Ubuntu Touch container flip
+
+ 15:03 <stgraber> - Got some help from ogra to get my Nexus 4 to boot straight into Ubuntu (no more Android)
+
+ 15:04 <stgraber> - Wrote some scripts and LXC configuration to start Android in LXC
+
+ 15:04 <stgraber> - Wrote some more integration code to make Ubuntu happy with that and get the shell running.
+
+ 15:04 <stgraber> - Result => I have a nexus4 with the phone shell running directly on Ubuntu with SurfaceFlinger running in an LXC container
+
+ 15:04 <stgraber> - LXC
+
+ 15:04 <stgraber> - Pushed C implementation of get_ips in LXC API, dropped the python implementation and update the bindings
+
+ 15:04 <stgraber> - Conferences
+
+ 15:04 <stgraber> - Booked travel for Debconf2013
+
+ 15:04 <stgraber> - Booked travel for Linux Plumbers 2013 and did some follow-up for the micro-conference we're organizing there (containers)
+
+ 15:04 <stgraber> - Patch pilot on Monday
+
+ 15:04 <stgraber> TODO:
+
+ 15:04 <stgraber> - Finish self-rebuilds feature implementation on nusakan
+
+ 15:04 <stgraber> - Implement some of the remaining bits for the image based update server tools
+
+ 15:04 <stgraber> - Continue helping people with the container flip whenever they're stuck on LXC-related bits
+
+ 15:04 <stgraber> - Process some pending merges
+
+ 15:04 <stgraber> (DONE)
+
+ 15:04 * ogra_ had some help from stgraber to get lxc running on top of a pure booted ubuntu :)
+
+ 15:04 <ogra_> stgraber rocks !
+
+ 15:04 <xnox> * Second day back from holliday.
+
+ 15:04 <xnox> * Catch up on mail/pings/merges/boost1.53/debian
+
+ 15:04 <xnox> * Also overdue patch-piloting for a little yesterday
+
+ 15:05 <xnox> TODO:
+
+ 15:05 <xnox> syncs, merges & outstanding ubiquity overflow from last cycle.
+
+ 15:05 <xnox> .done.
+
+ 15:05 <slangasek> stgraber, ogra_: great work!  When will the container flip reach the daily images?
+
+ 15:05 <jodh> * foundations-1305-upstart-app-launching
+
+ 15:05 <jodh> - libupstart:
+
+ 15:05 <jodh> - Library and abi-compliance-checker integration: DONE
+
+ 15:05 <jodh> - Test: INPROGRESS
+
+ 15:05 <jodh> - Code: lp:~jamesodhunt/upstart/libupstart
+
+ 15:05 <jodh> - bug 1159895: Started work.
+
+ 15:05 <ubottu> bug 1159895 in upstart "Allow for unsetting inherited variables" [Undecided,New] https://launchpad.net/bugs/1159895
+
+ 15:05 <jodh> * misc:
+
+ 15:06 <jodh> - Got a fix for the upstart logger bug stgraber reported. Currently
+
+ 15:06 <jodh> working on a new test for it.
+
+ 15:06 <jodh> * TODO:
+
+ 15:06 <jodh> - Register for DebConf13.
+
+ 15:06 <ogra_> slangasek, once it actually works :P
+
+ 15:06 <jodh> ⳧
+
+ 15:06 <cjwatson> foundations-1305-click-package: Working on a simple hooks implementation.
+
+ 15:06 <cjwatson> Lots of merges, syncs, and generally trying to keep up with Debian.
+
+ 15:06 <cjwatson> - Fixed new scribus build failure on ARM.
+
+ 15:06 <cjwatson> - Fixed git-annex versioning chaos.
+
+ 15:06 <slangasek> ogra_: I thought surfaceflinger is running, sounds like it's working to me :)
+
+ 15:06 <cjwatson> - Pushed Ubuntu changes to mklibs, rootskel (in part), debootstrap, rescue, sweep, and texi2html to Debian.
+
+ 15:06 <cjwatson> - Worked on transitions for libgd3, libsnmp30, vdr-abi-2.0.0-debian, and R 3.0.0.  Several resulting build failures which I've been pushing to Debian as I go.
+
+ 15:06 <ogra_> slangasek, all i manage atm is to get the gui up manually
+
+ 15:06 <cjwatson> Fixed bug 1180880, which broke oem-config's debconf frontend on non-i386.
+
+ 15:06 <ubottu> bug 1180880 in ubiquity (Ubuntu Precise) "Crash when starting oem-config on Ubuntu Server 12.04 amd64." [High,In progress] https://launchpad.net/bugs/1180880
+
+ 15:06 <cjwatson> Heavily revised openssh's packaging, partly to take account of Steve's recent ubuntu-devel posting on Upstart job handling, and partly to dispose of ~8500 lines relating to very old upgrade handling.
+
+ 15:06 <cjwatson> Adjusted binfmt-support in light of new Upstart job handling policy.
+
+ 15:06 <cjwatson> Currently trying to figure out why all our livefs builds have stalled.  Looks like a udev (i.e. now systemd) regression.
+
+ 15:06 <cjwatson> .
+
+ 15:07 <slangasek> ogra_: ah, alright
+
+ 15:08 <doko> - investigated and fixed gcj builds and gcj build faiures on multiarch systems w
+
+ 15:08 <doko> ith glibc-2.17
+
+ 15:08 <doko> - made libstdc++-4.8-dev m-a same again
+
+ 15:08 <doko> - gcc snapshot builds
+
+ 15:08 <doko> - python multiarch fixes
+
+ 15:08 <doko> - proposed java7 for debian
+
+ 15:08 <doko> - started on the aondroid cross toolchain
+
+ 15:08 <doko> and Mon was a bank holiday
+
+ 15:08 <doko> (done)
+
+ 15:09 <slangasek> * missed vUDS last week while on vacation, will catch up on the videos/blueprints later... but if there's anything you think I need to know about, feel free to flag it to me
+
+ 15:09 <slangasek> * uploaded sysvinit and friends to saucy, bringing the Debian and Ubuntu upstart support in line and opening the flood gates for upstart patches into Debian unstable
+
+ 15:09 <slangasek> * work on partner packages
+
+ 15:10 <slangasek> * MP reviews are owed on upstart and update-notifier :/
+
+ 15:10 <slangasek> (done)
+
+ 15:10 <barry> image based updates - completed the http/https refactoring
+
+ 15:10 <barry> vUDS
+
+ 15:10 <barry> lp: #105884 - pyc file corruption; (hopeful) fix landed in saucy.  waiting a few days before starting the sru process for precise & raring
+
+ 15:10 <ubottu> Launchpad bug 105884 in compiz (Ubuntu) "[apport] compiz.real crashed with SIGSEGV in removeScreenAction()" [Medium,Invalid] https://launchpad.net/bugs/105884
+
+ 15:10 <barry> todo: image based updates - implement the gpg keyring regime, logging/debugging, reboot initiation.
+
+ 15:10 <barry> done
+
+ 15:11 <bdmurray> pushed fix for errors bug 1178027 re multiget vs xget
+
+ 15:11 <bdmurray> daisy: tested code to back fill bucketsystems
+
+ 15:11 <bdmurray> errors: set the problem page html title
+
+ 15:11 <bdmurray> reported errors bug 1181329
+
+ 15:11 <bdmurray> modified phased-updater code to keep track of emails sent
+
+ 15:11 <ubottu> bug 1178027 in Errors "cassandra.get_package_new_buckets only gets 100 items from srcversionbuckets_cf" [High,In progress] https://launchpad.net/bugs/1178027
+
+ 15:11 <bdmurray> emailed ubuntu-release regarding phased updates report review
+
+ 15:11 <ubottu> bug 1181329 in Errors "truncated tracebacks" [Low,New] https://launchpad.net/bugs/1181329
+
+ 15:11 <barry> er, lp: #1058884
+
+ 15:11 <ubottu> Launchpad bug 1058884 in python3.3 (Ubuntu Raring) "Race condition in py_compile corrupts pyc files" [Undecided,Confirmed] https://launchpad.net/bugs/1058884
+
+ 15:11 <bdmurray> review of errors in the released SRU report
+
+ 15:11 <bdmurray> reported apport bug 1179979 regarding (add-apt-repository and apt-add-repository)
+
+ 15:11 <ubottu> bug 1179979 in apport (Ubuntu) "symlinks create different python tracebacks" [Low,Fix released] https://launchpad.net/bugs/1179979
+
+ 15:11 <bdmurray> investigation into odd bash error appearing as a regression when it is not
+
+ 15:11 <bdmurray> ubuntu-release-upgrader fix for unicode error (lp: #1177821)
+
+ 15:11 <ubottu> Launchpad bug 1177821 in ubuntu-release-upgrader (Ubuntu) "não atualiza para a versão 13.10" [Undecided,Fix released] https://launchpad.net/bugs/1177821
+
+ 15:11 <bdmurray> bug triage of free space on boot ubuntu-release-upgrader issue (lp: #1173468)
+
+ 15:11 <ubottu> Launchpad bug 1173468 in ubuntu-release-upgrader (Ubuntu) "release upgrade doesn't properly calculate free space needed for /boot" [High,Fix released] https://launchpad.net/bugs/1173468
+
+ 15:11 <bdmurray> uploaded R SRU for bug 1173209 regarding ubuntu-release-upgrader
+
+ 15:11 <ubottu> bug 1173209 in ubuntu-release-upgrader (Ubuntu Raring) "Prompted about New Release for 13.04 again after dist-upgrade and a restart" [Low,In progress] https://launchpad.net/bugs/1173209
+
+ 15:11 <bdmurray> updated meta-release-proposed for raring and bug 1173209
+
+ 15:11 <bdmurray> merge proposal for update-manager phased-update calculation change
+
+ 15:11 <bdmurray> research into bug 1173013 regarding gksu and gdebi
+
+ 15:11 <bdmurray> python compiled corruption issue research
+
+ 15:11 <bdmurray> metarelease file changes for H and O
+
+ 15:11 <ubottu> bug 1173013 in gdebi (Ubuntu) "Administrative Password Not Recognized" [Undecided,Incomplete] https://launchpad.net/bugs/1173013
+
+ 15:11 <bdmurray> creation and testing of "sru-accept2.0" to aid in reviewing and accepting SRUs
+
+ 15:12 <bdmurray> with kees set the bug supervisor for ubuntu to ubuntu-bugcontrol and removed ubuntu-bugcontrol from ubuntu-bugs
+
+ 15:12 <bdmurray> email to bugcontrol regarding team removal
+
+ 15:12 <bdmurray> recording of virtual UDS sessions
+
+ 15:12 <bdmurray> ⌁ done ⌁
+
+ 15:12 <stokachu> nothing on fire this week, spent past two weeks working on internal projects. done.
+
+ 15:12 <slangasek> doko: will the android cross-toolchain still be ready by end of month?
+
+ 15:13 <doko> slangasek, will tell you that next monday
+
+ 15:14 <slangasek> ok
+
+ 15:14 <slangasek> [TOPIC] Bugs
+
+ 15:15 <slangasek> bdmurray: not sure if there's anything to talk about here, or if you've been dishing these out directly by mail?
+
+ 15:15 <bdmurray> slangasek: nothing to talk about here
+
+ 15:15 <stokachu> first rule of fight club?
+
+ 15:16 <slangasek> stokachu: and nothing new on your side either?
+
+ 15:16 <stokachu> slangasek: nothing new this week
+
+ 15:16 <slangasek> ok
+
+ 15:16 <slangasek> [TOPIC] AOB
+
+ 15:16 <slangasek> this could be a short meeting then :)
+
+ 15:16 <slangasek> anything else you guys want to mention?
+
+ 15:17 <stokachu> i need a sponsor for debian
+
+ 15:17 <stokachu> :D
+
+ 15:17 <slangasek> don't look at me, I'm lucky to find time to upload my own packages :/
+
+ 15:17 <xnox> stokachu: did you file RFS on bts? with a dsc on mentors?
+
+ 15:17 <stokachu> lol
+
+ 15:17 <stokachu> xnox: yep
+
+ 15:17 <xnox> stokachu: link?
+
+ 15:18 <stokachu> bugs.debian.org/705192
+
+ 15:19 <xnox> ack.
+
+ 15:20 <stokachu> xnox: there were a few suggestions that i fixed from liang before he uploaded to ftpmaster
+
+ 15:20 <xnox> noted.
+
+ 15:21 <xnox> stokachu: i wonder, it it would be usefult to collect sosreport from apport.
+
+ 15:21 <stokachu> xnox: yea more than likely it would be something like a apport plugin to run sosreport
+
+ 15:21 <stokachu> i just havent found time to see where it fits best
+
+ 15:22 <stokachu> another big push is from the cloud guys wanted to provide this by default on the images
+
+ 15:26 <xnox> uploaded.
+
+ 15:26 <stokachu> xnox: yay! thank you :D:D
+
+ 15:26 * slangasek returns from restarting his desktop session and glares at firefox
+
+ 15:27 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

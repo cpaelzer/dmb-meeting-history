@@ -1,0 +1,215 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by slyon, 09 Mar at 16:05 &mdash; 16:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-03-09-16.05.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by slyon at 16:13.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (slyon, 16:13)
+ * ''LINK:'' https://bugs.launchpad.net/cloud-init/+bug/2008952   (slyon, 16:13)
+ * ''LINK:'' http://launchpad.net/bugs/2009814   (slyon, 16:19)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (slyon, 16:29)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1999345   (slyon, 16:30)
+
+=== proposed-migration ===
+
+Discussion started by slyon at 16:30.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (slyon, 16:30)
+
+=== AOB ===
+
+Discussion started by slyon at 16:48.
+
+
+
+
+== People present (lines said) ==
+
+ * slyon (53)
+ * zhsj (7)
+ * schopin (4)
+ * bdrung (3)
+ * ginggs (3)
+ * meetingology (2)
+ * dviererbe (2)
+ * liushuyu (2)
+ * enr0n (1)
+ * jawn-smith (1)
+ * sil2100 (1)
+ * adrien (1)
+
+
+
+== Full log ==
+
+
+ 16:05 <slyon> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:05 <meetingology> Meeting started at 16:05:35 UTC.  The chair is slyon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:05 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:05 <slyon> The weekly status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-09-march-2023/34405
+
+ 16:06 <slyon> let's all take some time to read the status updates and ask any questions
+
+ 16:07 <bdrung> reading the stati (is that latin plural correct?) reminded me to review https://salsa.debian.org/debian/devscripts/-/merge_requests/336
+
+ 16:13 <slyon> apparently there aren't a lot of questions..
+
+ 16:13 <slyon> #topic Release incoming bugs
+
+ 16:13 <slyon> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 16:13 <slyon> https://bugs.launchpad.net/cloud-init/+bug/2008952
+
+ 16:19 <schopin> cross-component issue, danilogondolfo to investigate
+
+ 16:19 <slyon> we'll be assigning this to danilogondolfo for further investigation from the Netplan side
+
+ 16:19 <slyon> http://launchpad.net/bugs/2009814
+
+ 16:19 <dviererbe> LP#2009814: Inetutils is failing almost all autopkgtests (https://bugs.launchpad.net/ubuntu/+source/inetutils/+bug/2009814)
+
+ 16:22 <zhsj> its test wants to test a package that conflicts with a dependency of ubuntu-minimal. not sure if there are good ways
+
+ 16:23 <slyon> I wonder if we can skip the non-telnet tests from debian/tests/control ?
+
+ 16:23 <slyon> I think there's also a skip-uninstallable Restriction for d/t/control which mightbe useful here.
+
+ 16:24 <zhsj> if we want to carry delta, then probably just drop inetutils-ping test
+
+ 16:26 <schopin> I'd rather just drop the inetutils-ping package entirely if it conflicts with ubuntu-minimal...
+
+ 16:27 <zhsj> ha, yes. you can never possible to install that.
+
+ 16:28 <slyon> we should either do this ^ or make use of update-alternatives to make it installable
+
+ 16:28 <slyon> assigning to dviererbe
+
+ 16:29 <dviererbe> I will investigate to add update-alternatives for inetutils-ping
+
+ 16:29 <slyon> Thanks, I think that's the cleanest solution. And should also be coordinated with Debian
+
+ 16:29 <slyon> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:30 <slyon> https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1999345
+
+ 16:30 <slyon> seems like this is still pending security review. skipping for now
+
+ 16:30 <slyon> #topic proposed-migration
+
+ 16:30 <slyon> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:31 <slyon> licensecheck is with adrien and didrocks (pending MIR review)
+
+ 16:31 <slyon> sbuild is with waveform
+
+ 16:32 <schopin> glibc is still mine
+
+ 16:32 <slyon> thx
+
+ 16:32 <bdrung> tzdata is still mine
+
+ 16:33 <slyon> devscripts is with liushuyu
+
+ 16:33 <liushuyu> libzstd is still mine
+
+ 16:33 <slyon> libsereal-decoder-perl is with juliank (who's out today)
+
+ 16:34 <slyon> xz-utils is with ogayot (who's out today)
+
+ 16:34 <bdrung> devscripts is done from his part, I need to review and merge in Debian and release a new devsripts version
+
+ 16:34 <slyon> ack. so passing devscripts on to bdrung
+
+ 16:35 <slyon> zhsj: you were on python3-stdlib-extensions last week.
+
+ 16:35 <slyon> do you want to carry it over?
+
+ 16:35 <zhsj> i think it's someone else'
+
+ 16:36 <slyon> ah right. It was passed on and is up for grabs
+
+ 16:36 <ginggs> there's not much to do for python3-stdlib-extension
+
+ 16:37 <slyon> ginggs: do you want to check the remaining parts?
+
+ 16:38 <ginggs> astropy will pass when it runs
+
+ 16:38 <ginggs> and then it's just waiting for python3.10 to go
+
+ 16:38 <slyon> ok
+
+ 16:38 <slyon> let's move on to python3-defaults in this case
+
+ 16:38 <enr0n> I am looking into the dbus-python issue
+
+ 16:38 <slyon> dbus-python: enr0n
+
+ 16:38 <slyon> thx
+
+ 16:39 <slyon> most other cases of python3-defaults seem to be only single arch failures
+
+ 16:39 <slyon> ginggs: will take the full batch
+
+ 16:40 <slyon> e2fsprogs: jawn-smith
+
+ 16:40 <jawn-smith> ack
+
+ 16:40 <schopin> s390-tools is mine :)
+
+ 16:40 <slyon> s390-tools: schopin. thx
+
+ 16:41 <slyon> erlang: sil2100
+
+ 16:41 <slyon> cdebconf: adrien
+
+ 16:43 <slyon> automake: adrien, too
+
+ 16:43 <slyon> cryptsetup: danilogondolfo
+
+ 16:43 <zhsj> i can take zip
+
+ 16:43 <slyon> zhsj: zip. thx
+
+ 16:44 <sil2100> slyon: ACK
+
+ 16:44 <zhsj> oh, probably automake too, because it's for zip indeed.
+
+ 16:45 <slyon> procps: slyon
+
+ 16:45 <slyon> pycurl: dviererbe
+
+ 16:46 <slyon> tzdata: bdrung
+
+ 16:46 <slyon> sysvinit: mwhudson
+
+ 16:47 <slyon> rustc: liushuyu
+
+ 16:48 <slyon> curl: vpa1977
+
+ 16:48 <liushuyu> I guess somebody wants to look at the autopkgtest runners, some of the test failures seem to be due to broken testbeds
+
+ 16:48 <slyon> #topic AOB
+
+ 16:49 <slyon> liushuyu: I think the QA is looking into that actively
+
+ 16:49 <slyon> I'll be out friday & monday
+
+ 16:49 <adrien> zhsj: I'll start with cdebconf, let me know if you start on automake while working on zip
+
+ 16:50 <zhsj> adrien: sure, and there's no migration for automake :)
+
+ 16:51 <slyon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

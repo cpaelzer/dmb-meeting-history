@@ -1,0 +1,630 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 16 Jan at 16:01 &mdash; 16:59 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-01-16-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 16:01.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 16:10.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs 
+  * ''LINK:'' http://autopkgtest.ubuntu.com/packages/p/python2.7/focal/arm64 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 16:33.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/license-reconcile/+bug/1859994 
+
+=== AOB ===
+The discussion about "AOB" started at 16:53.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (71)
+ * bdmurray (59)
+ * xnox (31)
+ * sil2100 (23)
+ * doko (21)
+ * juliank (19)
+ * rbalint (17)
+ * tdaitx (15)
+ * ubottu (9)
+ * waveform (8)
+ * seb128 (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started Thu Jan 16 16:01:30 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:01 <bdmurray> #topic Lightning rounds
+
+ 16:02 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform)
+
+ 16:02 <bdmurray> mwhudson sil2100 xnox doko rbalint bdmurray vorlon tdaitx infinity waveform juliank
+
+ 16:02 <bdmurray> sil2100: you win?
+
+ 16:02 <juliank> I lose again :(
+
+ 16:02 <xnox> or do I win?
+
+ 16:02 <sil2100> Can I be skipped for a moment? Not ready!
+
+ 16:02 <xnox> 16th January:
+
+ 16:03 <xnox> Gnutls28 & nss with tlsv1.2 minimum migrated to focal release
+
+ 16:03 <xnox> Openssl is practically ready, only waiting on a few builds to finish building & testing to be fixed (i.e. linux & python2 fallout)
+
+ 16:03 <xnox> Trying to unwind other unrelated fallouts due to year 2020 bugs (openssh / mysql-8.0 / etc)
+
+ 16:03 <xnox> Trying to get cmake/cmake-extras/et.al. to migrate
+
+ 16:03 <xnox> Merging PR for uc20 core20 & pc-gadget. Working at integration with snap-bootstrap managed cryptsetup
+
+ 16:03 <xnox> Prep for cape town sprint next week
+
+ 16:03 <xnox> Off tomorrow, swap day.
+
+ 16:03 <xnox> (done)
+
+ 16:03 <bdmurray> doko:
+
+ 16:03 <doko> python2 removal, fix or remove some 250 packages
+
+ 16:03 <doko> - some -proposed migration work
+
+ 16:03 <doko> - first binutils fix for arm64, but still problems. will likely need some rebuilds
+
+ 16:03 <doko> - looking at armhf bus errors in GCC.
+
+ 16:03 <doko> - reducing GCC ICEs on ppc64el
+
+ 16:03 <doko> (done)
+
+ 16:04 <bdmurray> rbalint:
+
+ 16:04 <rbalint> (short week due to holidays)
+
+ 16:04 <rbalint> * uploads via Debian: shadow 4.8, wireshark 3.2.0
+
+ 16:04 <rbalint> * rebuilt and reuploaded and verified binutils with -security only to SRU it properly for LP: #1843479
+
+ 16:04 <ubottu> Launchpad bug 1843479 in binutils "gzip in Ubuntu Eoan results in Exec format error on WSL1" [Medium,Confirmed] https://launchpad.net/bugs/1843479
+
+ 16:04 <rbalint> * dropped systemd 244.1 from focal-proposed due to regression to be fully triaged later
+
+ 16:04 <rbalint> * fixed flatbuffers FTBFS in Salsa
+
+ 16:04 <rbalint> * partner work
+
+ 16:04 <rbalint> (done)
+
+ 16:04 <bdmurray> its a me!
+
+ 16:05 <bdmurray> investigation into stale package team mapping json file
+
+ 16:05 <bdmurray> looked in to potential automake-1.16 fixes from upstream
+
+ 16:05 <bdmurray> remembering how bileto works
+
+ 16:05 <bdmurray> updated walinux-agent to version 2.2.45
+
+ 16:05 <bdmurray> review of candidate take home tests
+
+ 16:05 <bdmurray> review of launchpad stock replies MP for bryce
+
+ 16:05 <bdmurray> prep for Cape Town sprint
+
+ 16:05 <bdmurray> autopkgtest hint to get binutils to migrate in eoan
+
+ 16:05 <sil2100> I'm ready if anything o/
+
+ 16:05 <bdmurray> done‽
+
+ 16:05 <bdmurray> sil2100:
+
+ 16:05 <sil2100> - Was still off last week
+
+ 16:05 <sil2100> - SRU reviews and releases
+
+ 16:05 <sil2100> - Did the bin-copy dance for gcc-7-cross* packages
+
+ 16:05 <sil2100> - 18.04.4:
+
+ 16:05 <sil2100> * Lot's of coordination between teams
+
+ 16:05 <sil2100> * Prepared release tracking document, keeping it up-to-date
+
+ 16:05 <sil2100> * Kicked off a test build for the pi4
+
+ 16:06 <sil2100> * Prepped livecd-rootfs to pull in the right raspi2 kernel
+
+ 16:06 <sil2100> * Checked if the gadget tree will support the new kernel pull
+
+ 16:06 <sil2100> * Some minor related work
+
+ 16:06 <sil2100> - ubuntu-image:
+
+ 16:06 <sil2100> * Finally prepared PR to not remove /boot/grub contents in u-i image builds
+
+ 16:06 <sil2100> * Reviewed some u-i PR's
+
+ 16:06 <sil2100> * Looked into the u-i issues with uc20 builds, prepared a card for it
+
+ 16:06 <sil2100> - Prepared some missing MRs for the .disk/info bits for ubuntu-image builds
+
+ 16:06 <sil2100> * Had a chat with Colin and found an existing thing we can use
+
+ 16:06 <sil2100> (done)
+
+ 16:06 <bdmurray> vorlon:
+
+ 16:06 <vorlon> * i386:
+
+ 16:06 <vorlon> * the uninstallable count is down to zero \o/
+
+ 16:06 <vorlon> * working on britney patches to reduce the number of mis-triggers (and mis-blocks) of i386 autopkgtests
+
+ 16:06 <vorlon> * still a list of failing autopkgtests of whitelisted i386 packages to analyze
+
+ 16:06 <vorlon> * finalizing plan for /usr/bin/python deprecation
+
+ 16:06 <vorlon> * finalizing spec for openvswitch support in netplan
+
+ 16:06 <vorlon> * 18.04.4 planning discussions
+
+ 16:06 <vorlon> (done)
+
+ 16:06 <tdaitx> - updated snap to include both full and sample testsuite and to fix some snapcraft warnings
+
+ 16:06 <tdaitx> - rerunning with samples and saving generated artifacts, enabled javatest plugin, investigating how to access artifacts from previous run
+
+ 16:06 <tdaitx> * openjdk security updated
+
+ 16:06 <tdaitx> - backported 11.0.6 to bionic, disco, and eoan, checked that 11.0.6 test results are sane
+
+ 16:06 <tdaitx> - building and testing 8u242-b07, applied JDK-8234288 to fix LP: #1859217
+
+ 16:07 <ubottu> Launchpad bug 1859217 in openjdk-8 (Ubuntu) "openjdk8 update 8u232-b09-0ubuntu1~18.04.1 breaks Timestamp values for timezones that change DST observance" [Undecided,Confirmed] https://launchpad.net/bugs/1859217
+
+ 16:07 <tdaitx> - waiting for openjdk 8 GA (b07 is still under test upstream, so a b08 might happen)
+
+ 16:07 <tdaitx> * apport O_PATH fix (LP: #1851806)
+
+ 16:07 <ubottu> Launchpad bug 1851806 in apport (Ubuntu) "'module' object has no attribute 'O_PATH'" [High,In progress] https://launchpad.net/bugs/1851806
+
+ 16:07 <tdaitx> - uploaded changes, autopkgtest is failing
+
+ 16:07 <tdaitx> Other:
+
+ 16:07 <tdaitx> - Out next week (on a 6 days tap workshop), will take my laptop in case openjdk regresses
+
+ 16:07 <tdaitx> (done)
+
+ 16:07 <bdmurray> infinity isn't here, may still be ill
+
+ 16:07 <bdmurray> waveform:
+
+ 16:07 <waveform> * Reviewed sil2100's livecd-rootfs+ubuntu-image patches
+
+ 16:07 <waveform> * Hardware verification of daily-preinstalled image on various pis
+
+ 16:07 <waveform> * Finished uboot script migration for the bionic raspi2 image
+
+ 16:07 <waveform> * Forward porting changes to focal for SRU
+
+ 16:07 <waveform> * Tested script migration on all other variants; finally looks good
+
+ 16:07 <waveform> * Looking at fribidi
+
+ 16:07 <waveform> (done)
+
+ 16:08 <bdmurray> juliank:
+
+ 16:08 <juliank> So
+
+ 16:08 <juliank> - released apt 1.9.6, disables regex/fnmatch parsing of package names on apt(8)
+
+ 16:09 <juliank> - released apt 1.9.7, fixing regression from 1.9.6, and a regression from 1.9.0 - apt-daily services were being restarted again
+
+ 16:09 <juliank> packagekit sync
+
+ 16:09 <juliank> aptdaemon python2 removal fixes
+
+ 16:10 <juliank> (done)
+
+ 16:10 <bdmurray> #topic Release incoming bugs
+
+ 16:10 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 16:11 <bdmurray> bug 1859780
+
+ 16:11 <ubottu> bug 1859780 in netplan.io (Ubuntu) "Tests are failing in focal / with the new n-m version" [High,New] https://launchpad.net/bugs/1859780
+
+ 16:12 <bdmurray> Well that seems worth carding / taking
+
+ 16:14 <bdmurray> so doing so
+
+ 16:14 <bdmurray> bug 1859610
+
+ 16:14 <ubottu> bug 1859610 in libffi (Ubuntu) "python-gi/arm64 segfaults with the focal-proposed libffi version" [High,New] https://launchpad.net/bugs/1859610
+
+ 16:14 <bdmurray> seb128: ^ that's arm64 specific?
+
+ 16:15 <bdmurray> doko: can you look at this?
+
+ 16:16 <xnox> bdmurray:  i thought this is in progress
+
+ 16:16 <bdmurray> xnox: can you cite your source?
+
+ 16:16 <sil2100> quotation needed
+
+ 16:16 <xnox> bdmurray:  alpha standup on monday?
+
+ 16:17 <xnox> http://autopkgtest.ubuntu.com/packages/p/python2.7/focal/arm64
+
+ 16:17 <xnox> ^
+
+ 16:17 <bdmurray> okay, let's card that for further investigation
+
+ 16:17 <doko> bdmurray: yes, I'll have a look
+
+ 16:18 <xnox> autopkgtest for python2.7/2.7.17-1: amd64: Pass, arm64: Regression ♻ , armhf: Pass, i386: Ignored failure, ppc64el: Pass, s390x: Pass
+
+ 16:18 <xnox> under libffi in update_excuses
+
+ 16:18 <seb128> bdmurray, yes it is
+
+ 16:18 <seb128> bdmurray, that's blocking half of the world though, see all the arm64 items on https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html
+
+ 16:19 <seb128> bdmurray, can we get the priority for that one raised? it's really locking lot of things...
+
+ 16:20 <bdmurray> seb128: yes, we'll get a card created and prioritized
+
+ 16:20 <seb128> bdmurray, thx
+
+ 16:20 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html
+
+ 16:20 <bdmurray> bug 1843109
+
+ 16:20 <ubottu> bug 1843109 in update-manager (Ubuntu) "update-manager crashed with AttributeError in checkFreeSpace(): 'MyCache' object has no attribute 'quirks'" [Medium,New] https://launchpad.net/bugs/1843109
+
+ 16:21 <doko> seb128: did you find a test case for that one?
+
+ 16:21 <bdmurray> "extra_snap_space" sil2100 that looks like your code
+
+ 16:21 <seb128> doko, the testcase is in the bug description
+
+ 16:21 <seb128> doko, I could reproduce on a canonistack fresh instance
+
+ 16:22 <bdmurray> sil2100: from the Traceback
+
+ 16:22 <sil2100> Ouchy
+
+ 16:22 <sil2100> I'll take it
+
+ 16:23 <bdmurray> sil2100: okay, thanks
+
+ 16:23 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html
+
+ 16:24 <bdmurray> bug 1858203
+
+ 16:24 <ubottu> bug 1858203 in glibc (Ubuntu) "Patch for glibc Bug 23538 - "Hang in pthread_cond_broadcast" not available on Ubuntu LTS" [Undecided,Confirmed] https://launchpad.net/bugs/1858203
+
+ 16:25 <bdmurray> let's target that and card it
+
+ 16:25 <bdmurray> bug 1854839
+
+ 16:25 <ubottu> bug 1854839 in debian-installer (Ubuntu) "Fresh Bionic install hangs forever at 66% waiting for os-prober" [Undecided,Confirmed] https://launchpad.net/bugs/1854839
+
+ 16:31 * juliank removed os-prober completely because it sort of breaks with lvm snapshots
+
+ 16:31 <xnox> juliank:  indeed.
+
+ 16:31 <xnox> and zfs
+
+ 16:31 <juliank> (sort of because i have a ton of (thin) snapshots and it mounts them each)
+
+ 16:32 * juliank uses snapper for / on XFS on thinpool
+
+ 16:32 <rbalint> bdmurray, this bug has a workaround and does not seem to affect a lot of people
+
+ 16:32 <bdmurray> I'll look around and see if more people are experiencing this.
+
+ 16:32 <rbalint> +1
+
+ 16:32 <bdmurray> that's it for rls bugs
+
+ 16:33 <bdmurray> #topic Team proposed-migration report
+
+ 16:33 <bdmurray> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:33 <bdmurray> vorlon: can you do that thing you do?
+
+ 16:34 <bdmurray> automake-1.16 I'm still working on
+
+ 16:34 <vorlon> yes, doing
+
+ 16:34 <vorlon> fribidi: waveform mentioned he's still working on it
+
+ 16:34 <vorlon> waveform: do you need any help?
+
+ 16:34 <vorlon> bdmurray: do you?
+
+ 16:35 <bdmurray> I was stuck with how to use bileto but sil2100 helped me out
+
+ 16:35 <bdmurray> So not yet
+
+ 16:35 <waveform> vorlon, not yet - only started looking today after finally knocking the u-boot stuff on the head
+
+ 16:35 <vorlon> ok
+
+ 16:36 <vorlon> doko: infinity took licensecheck et al last time but he's out sick right now, do you want to pick it up?
+
+ 16:36 <rbalint> vorlon, i take that one if doko is not interested
+
+ 16:36 <rbalint> (or busy)
+
+ 16:37 <vorlon> rbalint: it can probably be dispatched more quickly by an AA/MIR team member which is why I suggest doko
+
+ 16:37 <rbalint> vorlon, ok
+
+ 16:37 <vorlon> python-setuptools: this is a progression not a regression, I'm retrying the test failure with the new version that's now in release
+
+ 16:38 <doko> ok
+
+ 16:38 <doko> xnox filed a removal bug
+
+ 16:38 <vorlon> doko: for which?
+
+ 16:39 <doko> license*
+
+ 16:39 <vorlon> ...
+
+ 16:39 <doko> cross-toolchain-base
+
+ 16:39 <vorlon> no removal bug listed on https://bugs.launchpad.net/ubuntu/+source/licensecheck
+
+ 16:39 <vorlon> doko: anyway, this is yours to follow up on
+
+ 16:40 <vorlon> elfutils: I'll look at this, the linux autopkgtest failures are to be ignored by release team (all currently broken due to python->python2 transition) but I'll dig into the makedumpfile failure
+
+ 16:40 <vorlon> (makedumpfile was previously broken on ppc64el, looks like it might be flaky now)
+
+ 16:40 <xnox> vorlon:  not licensecheck but license-somethingrather which is blocking licencechk
+
+ 16:40 <vorlon> doko: you said cross-toolchain-base, is that you volunteering to take it?
+
+ 16:41 <vorlon> xnox, doko: ah, ok, I'm removing license-reconcile now
+
+ 16:41 <doko> yes, but with low prio
+
+ 16:41 <xnox> vorlon:  tah
+
+ 16:41 <xnox> https://bugs.launchpad.net/ubuntu/+source/license-reconcile/+bug/1859994
+
+ 16:41 <vorlon> doko: ok
+
+ 16:41 <ubottu> Launchpad bug 1859994 in license-reconcile (Debian) "RM: license-reconcile broken, unmaintained, RC-buggy, removed from testing, clogging up proposed-migration" [Unknown,New]
+
+ 16:41 <vorlon> python-docutils / mercurial
+
+ 16:41 <vorlon> rbalint: ?
+
+ 16:42 <rbalint> vorlon, blind ack :-)
+
+ 16:42 <vorlon> ok
+
+ 16:42 <vorlon> pango1.0 is only blocked by dep on new fribidi, no separate action
+
+ 16:42 <xnox> rbalint:  does blind-ack doubles the options reward? =)
+
+ 16:42 <vorlon> aptdaemon autopkgtest regression blocking lintian
+
+ 16:42 <vorlon> juliank: you want aptdaemon? :-)
+
+ 16:43 <juliank> one sec
+
+ 16:43 <doko> s/?/!/
+
+ 16:43 <juliank> that's done
+
+ 16:43 <juliank> it just needs britney to run again
+
+ 16:43 <vorlon> juliank: ok. then do you want to take the autopkgtest regressions of lintian itself?
+
+ 16:44 <juliank> I can, but it looks like a compiler /toolchain bug
+
+ 16:44 <vorlon> well, you know where to find compiler/toolchain people if you need help :)
+
+ 16:44 <juliank> I think there were fixes, so I guess I'll retry :)
+
+ 16:44 <vorlon> pyyaml
+
+ 16:45 <vorlon> sil2100: would you like pyyaml?
+
+ 16:45 <sil2100> I guess I could try picking it up in-between stuffy
+
+ 16:45 <vorlon> ok
+
+ 16:45 <vorlon> I'll take lxml / nova, I had been poking already at the nova regressions
+
+ 16:46 <vorlon> and paramiko is the same thing, taking
+
+ 16:46 <vorlon> tdaitx: can you look at util-linux / cmake-extras?
+
+ 16:46 <doko> pillow needs removal
+
+ 16:47 <tdaitx> vorlon: yeah, if I can't finish it by tomorrow should I let someone know? I am out next week
+
+ 16:47 <vorlon> tdaitx: yes please
+
+ 16:47 <vorlon> tdaitx: let your manager know :)
+
+ 16:47 <tdaitx> ack
+
+ 16:47 <vorlon> openssh, piuparts
+
+ 16:47 <vorlon> bdmurray: ^^ ?
+
+ 16:48 <xnox> tdaitx:  i think cmake-extras is now all green with all-proposed=1 runs
+
+ 16:48 <xnox> tdaitx:  no idea aobut util-linux
+
+ 16:48 <bdmurray> I can look but I'm not sure how much time I'll have with CPT
+
+ 16:48 <vorlon> fair
+
+ 16:49 <vorlon> who can take glib2.0?  there's a few regressions to dig through
+
+ 16:49 <vorlon> xnox: ?
+
+ 16:49 <vorlon> no, you're traveling
+
+ 16:49 <vorlon> needs to be one of doko, rbalint, or juliank
+
+ 16:49 <xnox> or drumroll vorlon?
+
+ 16:49 <bdmurray> remember mwhudson comes back next week
+
+ 16:49 <rbalint> vorlon, looks like me
+
+ 16:49 <xnox> =)
+
+ 16:49 <xnox> who is not travelling ;-)
+
+ 16:49 <vorlon> no, looking forward I don't have capacity for that one
+
+ 16:50 <tdaitx> xnox: cmake-extras still fails on arm64 and i386 http://autopkgtest.ubuntu.com/packages/c/cmake-extras
+
+ 16:50 <vorlon> ok, glib2.0 to mwhudson
+
+ 16:50 <vorlon> gnutls28 is an i386 autopkgtest, I'll just take that :P
+
+ 16:50 <tdaitx> unless the page is out of date
+
+ 16:50 <doko> did desktop say goodbye to gtk maintenance?
+
+ 16:51 <vorlon> and by extension I'll take the gnutls28 failure that's blocking p11-kit
+
+ 16:51 <rbalint> hopefully not to gtk3
+
+ 16:51 <xnox> tdaitx:  still running. so yeah, need to wait.
+
+ 16:51 <vorlon> rbalint: you can have paste
+
+ 16:51 <vorlon> doko: you can have pillow
+
+ 16:51 <vorlon> juliank: you can have cmake
+
+ 16:52 <rbalint> vorlon, ack: paste
+
+ 16:52 <vorlon> and I think I'll stop there; there's a few more at the bottom of the list and people can pick them up if they have capacity
+
+ 16:52 <doko> vorlon: ftbfs on i386, does it need fixing?
+
+ 16:52 <rbalint> vorlon, paste: copied
+
+ 16:52 <vorlon> but I think people are full
+
+ 16:52 <juliank> ack
+
+ 16:52 <vorlon> doko: pillow?
+
+ 16:52 <juliank> pillow and paste just ftbfs on i386
+
+ 16:52 <vorlon> pillow is in the i386 set
+
+ 16:52 <vorlon> paste is not
+
+ 16:52 <vorlon> so yes, pillow needs fixed on i386 or dereferenced
+
+ 16:52 <xnox> vorlon:  gnutls28 looks like is a very old version. maybe just a retry will fix it.
+
+ 16:52 <doko> ok, then looking at pillow :-/
+
+ 16:52 <vorlon> (pillow is a build-dep of mir)
+
+ 16:53 <juliank> pillow is sbuild-build-depends-pillow-dummy : Depends: python3-cffi but it is not going to be installed
+
+ 16:53 <vorlon> bdmurray: done
+
+ 16:53 <bdmurray> vorlon: thanks!
+
+ 16:53 <juliank> (JFTR)
+
+ 16:53 <bdmurray> #topic AOB
+
+ 16:53 <bdmurray> I'm on a plane starting tomorrow mid-day
+
+ 16:53 <doko> I'm starting the Python 3.8 bump this weekend
+
+ 16:54 <vorlon> doko: can we get libffi cleared out?
+
+ 16:54 <vorlon> first
+
+ 16:55 <bdmurray> and the 20th is a US holiday
+
+ 16:55 <vorlon> yep, I'll be away
+
+ 16:55 <bdmurray> but only for vorlon I guess
+
+ 16:56 <doko> vorlon: connected to openssl, and don't think that's a good idea
+
+ 16:57 <vorlon> doko: well, it blocks pygobject for example
+
+ 16:58 <vorlon> so it looks to me like there would be entanglement
+
+ 16:58 <doko> pygobject doesn't need migrating for the defaults change
+
+ 16:58 <vorlon> (and I don't see the interconnection between libffi and openssl)
+
+ 16:58 <vorlon> alright
+
+ 16:59 <xnox> mclemenceau:  https://wiki.ubuntu.com/ProposedMigration
+
+ 16:59 <xnox> is the documentation
+
+ 16:59 <bdmurray> alright, thanks everybody
+
+ 16:59 <vorlon> thanks!
+
+ 16:59 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

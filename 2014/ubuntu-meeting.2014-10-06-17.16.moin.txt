@@ -1,0 +1,303 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 06 Oct at 17:16 &mdash; 18:05 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-10-06-17.16.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Review of any previous action items ===
+The discussion about "Review of any previous action items" started at 17:17.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 18:03.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/fusionforge.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/iodine.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/pigz.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/cakephp.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ekiga.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 18:03.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (69)
+ * sbeattie (16)
+ * tyhicks (15)
+ * jjohansen (13)
+ * ubottu (4)
+ * sarnold (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 17:16 <jdstrand> #startmeeting
+
+ 17:16 <meetingology> Meeting started Mon Oct  6 17:16:55 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 17:16 <meetingology> 
+
+ 17:16 <meetingology> Available commands: action commands idea info link nick
+
+ 17:16 <jdstrand> The meeting agenda can be found at:
+
+ 17:16 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 17:17 <jdstrand> [TOPIC] Review of any previous action items
+
+ 17:17 <jdstrand> I'll go first
+
+ 17:17 <jdstrand> I'm on community this week
+
+ 17:17 <jdstrand> quite a few apparmor related items have come up that need to land
+
+ 17:18 <jdstrand> there is a click-apparmor update for adjusting CLICK_DIR. it is ready, but it needs testing
+
+ 17:18 <jdstrand> there is apparmor-easyprof-ubuntu for a new template (ubuntu-push-helper)
+
+ 17:19 <jdstrand> and there is apparmor itself, which is mostly in sbeattie's court, but may need a couple of tweaks to the init script and bug #1377338
+
+ 17:19 <jdstrand> that creates click-reviewers-tools changes
+
+ 17:19 <ubottu> bug 1377338 in apparmor (Ubuntu) "apparmor may fail to load some profiles if one is corrupted" [Critical,New] https://launchpad.net/bugs/1377338
+
+ 17:19 <jdstrand> and I still haven't updated UCT for derivative branches
+
+ 17:20 <jdstrand> mdes laur is off today
+
+ 17:20 <jdstrand> sbeattie: you're up
+
+ 17:20 <sbeattie> I'm on apparmor this week
+
+ 17:20 <jdstrand> sbeattie: (also, before you hand off to tyhicks, I'll have some questions)
+
+ 17:20 <sbeattie> jdstrand: okay
+
+ 17:20 <sbeattie> as jdstrand said, I need to poke at 1377338
+
+ 17:21 <sbeattie> and work on the landing of a bugfix update for the apparmor package.
+
+ 17:21 <sbeattie> I have a bit of upstream work I need to do around releases.
+
+ 17:22 <sbeattie> jdstrand: what did you want to ask?
+
+ 17:22 <jdstrand> first (and this may be for tyhicks as well), I was (perhaps mistakenly) thinking that the apparmor upload would fix the testsuite such that it would pass
+
+ 17:23 <jdstrand> which would be part of my justification for uploading it
+
+ 17:23 <tyhicks> there are outstanding kernel bugs
+
+ 17:23 <jdstrand> yes
+
+ 17:24 <jdstrand> but we did decide that the testsuite would be adjusted for the named path getopt (and friends) failures, correct?
+
+ 17:24 <sbeattie> tyhicks: however, the getopt on dgram before there's a bound socket isn't going to get a fix, is it?
+
+ 17:24 <tyhicks> I thought all of the getopt failures were addressed in the test suite
+
+ 17:25 <jdstrand> sbeattie, tyhicks: can you sort that ^ out after the meeting?
+
+ 17:25 <tyhicks> yes
+
+ 17:25 <jdstrand> thanks
+
+ 17:25 <sbeattie> jdstrand: yeah
+
+ 17:25 <sbeattie> jdstrand: any other questions?
+
+ 17:26 <jdstrand> so, I think that means that we should adjust QRT to not fail with the current expected failures (ie, if only those kernel bugs are making the testsuite fail, then we don't fail QRT). when our kernel bugs are fixed, we remove that
+
+ 17:26 <jdstrand> sbeattie: what do you think? QA and kt are not happy with the current state
+
+ 17:27 <jdstrand> (which you can point them to me if they are upset with you)
+
+ 17:27 <jdstrand> (that was a collective you, not sbeattie-specific :)
+
+ 17:27 <sbeattie> jdstrand: yeah, agreed.
+
+ 17:27 <jdstrand> ok
+
+ 17:27 <sbeattie> meh, KT/QA are always upset with me, it's a steady state of affairs.
+
+ 17:28 <jdstrand> heh
+
+ 17:28 <jdstrand> well, for apparmor's qrt, they can blame me
+
+ 17:28 <jdstrand> (should've thought about it before the upload that broke it)
+
+ 17:29 <jdstrand> sbeattie: so, at this point, I'm not sure that the new version of apparmor that you are working on will make it into rtm
+
+ 17:29 <jdstrand> sbeattie: however, 1377338 has to be fixed in rtm
+
+ 17:30 <jdstrand> sbeattie: so, I think priorities should be, get a patch going for 1377338, and I'll prepare an rtm upload for that and whatever else I need to do to the boot scripts
+
+ 17:30 <sbeattie> okay
+
+ 17:30 <jdstrand> sbeattie: then, get that patch into the ppa, after sorting out the testsuite
+
+ 17:30 <jdstrand> sbeattie: then I can get that to utopic
+
+ 17:31 <jdstrand> sbeattie: then someone can work on qrt
+
+ 17:31 <jdstrand> sbeattie: sound like a plan?
+
+ 17:31 <sbeattie> jdstrand: yeah, that works for me.
+
+ 17:32 <jdstrand> sbeattie: we can play the postfix one by ear once jj can comment. maybe it'll be in your upload, maybe not
+
+ 17:32 <jdstrand> sbeattie: cool, thanks
+
+ 17:32 <jdstrand> that's it from me
+
+ 17:32 <sbeattie> alright, thanks. tyhicks?
+
+ 17:32 <jdstrand> sbeattie: oh, also, for it to be in rtm, it needs to land by thursday, which basically means I need a patch by tomorrow
+
+ 17:32 <jdstrand> (bug 1377338)
+
+ 17:33 <sbeattie> jdstrand: gotcha
+
+ 17:33 <ubottu> bug 1377338 in apparmor (Ubuntu) "apparmor may fail to load some profiles if one is corrupted" [Critical,New] https://launchpad.net/bugs/1377338
+
+ 17:33 <jdstrand> cool, thanks
+
+ 17:33 <tyhicks> I'm now looking at the in-tree apparmor regression test suite to make sure it is failing when expected (as discussed above)
+
+ 17:34 <tyhicks> I have a couple more eCryptfs kernel patches to review and test this week before I can send a pull request for the 3.18 merege window
+
+ 17:34 <tyhicks> they're small and shouldn't take long
+
+ 17:34 <sbeattie> tyhicks: note that the paste I sent you elsewhere were results using the apparmor package in the security-proposed ppa, which has everything that's in lp:apparmor.
+
+ 17:34 <tyhicks> I misplaced them during the big apparmor landing push and just rediscovered them :/
+
+ 17:34 <tyhicks> sbeattie: ack
+
+ 17:35 <tyhicks> then I'm switching over to the upstream dbus-daemon apparmor mediation bug feedback
+
+ 17:35 <tyhicks> that's probably all that I should commit to this week
+
+ 17:36 <tyhicks> I spent more time than I expected last week on the apparmor kernel memory bug triage (LP: #1375416) so my planned work for this week looks similar to last week
+
+ 17:36 <tyhicks> that's it for me
+
+ 17:36 <ubottu> Launchpad bug 1375416 in linux (Ubuntu) "AppArmor leaks kernel memory during profile reloads" [Medium,Confirmed] https://launchpad.net/bugs/1375416
+
+ 17:36 <tyhicks> jj isn't here so it is sarnold's turn
+
+ 17:37 <jdstrand> I know the feeling regarding planned work looking similar...
+
+ 17:38 <sarnold> I'm in happy place this week, on MIR duty; I still have ~five outstanding MIRs to work on, one is in progress
+
+ 17:39 <sarnold> I'll try to quick-ack smallish apparmor patches this week, but longer / more involved patches just won't get any attention, sorry
+
+ 17:40 <sarnold> I think that's it for me, chrisccoulson?
+
+ 17:51 <tyhicks> maybe jjohansen should go now that he's here?
+
+ 17:51 <tyhicks> jjohansen: sarnold had passed chrisccoulson the mic just before you joined but we haven't heard from him
+
+ 17:52 <jjohansen> okay
+
+ 17:52 <jjohansen> so I am primary working on apparmor bugs this week
+
+ 17:52 <jjohansen> I need to look into 1373172, 1373174, and 1373176
+
+ 17:53 <jdstrand> the testsuite bugs. cool
+
+ 17:54 <jjohansen> and finish up with 1375417 and maybe poke at 1375416, and 1375410
+
+ 17:54 <jjohansen> jdstrand: yep
+
+ 17:54 <jdstrand> cool
+
+ 17:55 <jjohansen> we also need to decide if we want to push the fix for docker.io LP: #1371310 out to the phone kernels
+
+ 17:55 <ubottu> Launchpad bug 1371310 in linux (Ubuntu) "docker.io doesn't work with apparmor 3.0 RC1 kernel" [High,In progress] https://launchpad.net/bugs/1371310
+
+ 17:55 * jdstrand pauses
+
+ 17:55 <jjohansen> and if so send the pull request
+
+ 17:55 <jdstrand> jjohansen: I wasn't thinking we would. all the phone policy seems fine atm
+
+ 17:56 <jdstrand> jjohansen: I mean, we can for utopic to keep things tidy if people want
+
+ 17:56 <jdstrand> but that bug on rtm kernels or even phablet utopic kernels doesn't bother me
+
+ 17:57 <jjohansen> yeah, I am not bothered by it eiterh
+
+ 17:57 <jdstrand> now, if we have updates for other kernel bugs, sure, we can toss it in there
+
+ 17:58 <jdstrand> alright, let's not worry about it on phablet unless we can roll it in with other bug fixes
+
+ 17:59 <jjohansen> ack
+
+ 17:59 <jdstrand> jjohansen: did you have anything else to report
+
+ 18:00 <jdstrand> ?
+
+ 18:00 <jjohansen> okay, let see I have an embargo issue to look at closer, and some apparmor patches to upstream
+
+ 18:00 <jjohansen> we also have apparmor 2.9 that we need to push out this week if there is going to be any chance of debian picking it up
+
+ 18:00 <jjohansen> that is it for me
+
+ 18:02 <jdstrand> jjohansen: I think sbeattie is close to finalizing that. those testsuite bugs you mentioned and one other bug (1377338) are the only thing holding up 2.9 aiui
+
+ 18:02 <jdstrand> things*
+
+ 18:03 <jdstrand> ok
+
+ 18:03 <jjohansen> that sounds about right
+
+ 18:03 <jdstrand> so, let's move on
+
+ 18:03 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:03 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:03 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:03 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/fusionforge.html
+
+ 18:03 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/iodine.html
+
+ 18:03 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/pigz.html
+
+ 18:03 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/cakephp.html
+
+ 18:03 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ekiga.html
+
+ 18:03 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:04 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:05 <jdstrand> sbeattie, tyhicks, jjohansen, sarnold: thanks!
+
+ 18:05 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

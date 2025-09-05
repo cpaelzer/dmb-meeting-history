@@ -1,0 +1,251 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 07 Jul at 15:00 &mdash; 15:36 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-07-07-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by jawn-smith at 15:00.
+
+ * ''LINK:'' https://git.launchpad.net/~ubuntu-release/autopkgtest-cloud/+git/autopkgtest-package-configs/tree/never_run here is the never_run list  (bdmurray, 15:08)
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:09)
+
+=== Team proposed-migration report ===
+
+Discussion started by jawn-smith at 15:17.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:17)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:31.
+
+ * ''LINK:'' https://tracker.debian.org/pkg/pytest   (ginggs, 15:33)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (29)
+ * jawn-smith (26)
+ * bdmurray (6)
+ * slyon (6)
+ * ginggs (5)
+ * dbungert (5)
+ * bdrung (4)
+ * mclemenceau (3)
+ * ubottu (3)
+ * juliank (3)
+ * doko (3)
+ * meetingology (2)
+ * sil2100 (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:33 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <jawn-smith> #topic Lightning Round
+
+ 15:00 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-07-july-2022/29330/2
+
+ 15:02 <mclemenceau> o/
+
+ 15:04 <bdmurray> bdrung: With apport's autopkgtests they aren't running / skipped for armhf on previous releases. Are the any chances of it being SRU'ed.
+
+ 15:05 <bdmurray> ?
+
+ 15:05 <bdrung> bdmurray, the current uploaded apport SRU fixes several autopkgtest (but not all for armhf). I can include all needed autopkgtest fixes in the next SRUs to let autopkgtest succeed on all archs.
+
+ 15:06 <bdrung> IIRC except for one or two cases, all needed changes were only for the tests itself.
+
+ 15:06 <bdmurray> If it is just test fixes then using block-proposed-$release sounds appropriate. I was asking because if they are fixed then they shouldn't be denylisted any more.
+
+ 15:08 <bdrung> bdmurray, i will take care of removing it from the denylist
+
+ 15:08 <bdmurray> https://git.launchpad.net/~ubuntu-release/autopkgtest-cloud/+git/autopkgtest-package-configs/tree/never_run here is the never_run list
+
+ 15:09 <jawn-smith> #topic Release incoming bugs
+
+ 15:09 <jawn-smith> rls-kk is empty today
+
+ 15:09 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:09 <jawn-smith> bug 1979874
+
+ 15:09 <ubottu> Bug 1979874 in netplan.io (Ubuntu) "Unable to set bridge to lower MTU that interface its attached to" [Medium, Triaged] https://launchpad.net/bugs/1979874
+
+ 15:09 <slyon> I tried to quickly reproduce this one. Results were inconsistent...
+
+ 15:10 <slyon> Not sure if it needs to be carded
+
+ 15:10 <jawn-smith> It's worth investigating. Does that investigation require a card mclemenceau ?
+
+ 15:11 <mclemenceau> maybe we can leave it in LP for a little bit and revisit a little later in the cycle or if there's more impacted user?
+
+ 15:12 <jawn-smith> Sounds good, let's remove the rls-jj tag
+
+ 15:12 <jawn-smith> bug 1980589
+
+ 15:12 <ubottu> Bug 1980589 in update-notifier (Ubuntu) "Reports that there are updates but there are none" [Undecided, New] https://launchpad.net/bugs/1980589
+
+ 15:13 <jawn-smith> Is this really update-notifier?
+
+ 15:13 <bdmurray> I think it does some motd stuff
+
+ 15:13 <jawn-smith> Okay, who tends to work on update-notifier
+
+ 15:13 <jawn-smith> ?
+
+ 15:13 <juliank> sometimes
+
+ 15:14 <jawn-smith> Does anyone have an opinion on the importance of this bug?
+
+ 15:15 <juliank> let's card it that's very confusing
+
+ 15:16 <bdmurray> Medium or Low I'd say
+
+ 15:16 <juliank> especially it says there are security updates so it's scary and confusing if that happens
+
+ 15:16 <jawn-smith> Okay we've agreed to card it
+
+ 15:16 <jawn-smith> mclemenceau: would you do the honors?
+
+ 15:16 <mclemenceau> sure thing
+
+ 15:16 <jawn-smith> Thanks!
+
+ 15:17 <jawn-smith> rls-ii and rls-ff are actually empty
+
+ 15:17 <sil2100> \o/
+
+ 15:17 <jawn-smith> #topic Team proposed-migration report
+
+ 15:17 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:17 <jawn-smith> vorlon:
+
+ 15:18 <vorlon> let's see!
+
+ 15:18 <vorlon> ubuntu-meta: still in Desktop's court
+
+ 15:18 <vorlon> python3-stdlib-extensions: doko, is this still yours?
+
+ 15:19 <doko> yes
+
+ 15:19 <vorlon> ok
+
+ 15:20 <vorlon> usb-creator: as noted in the weekly status, the MIR is moving forward
+
+ 15:20 <vorlon> mutt: gsasl MIR
+
+ 15:20 <jawn-smith> waiting on security team
+
+ 15:21 <vorlon> systemd: was skipped last time, should that just be retried?  (but it's blocking a kernel package and they have their own test matrix that's invisible to us)
+
+ 15:21 <slyon> should be re-tried. systemd 251 already migrated in the meantime
+
+ 15:21 <vorlon> last week we said llvm-toolchain-14 was ftbfs for the same reason as gcc; gcc has been fixed but llvm-toolchain-14 not?
+
+ 15:21 <vorlon> so does someone want to follow through on llvm?
+
+ 15:22 <vorlon> ah it's built now on every arch but riscv64 and that one is building
+
+ 15:22 <vorlon> so probably nothing to do here
+
+ 15:22 <doko> hmm, that was for arm64. I didn't check risc64 yet. it's currently building
+
+ 15:22 <ginggs> it's only waiting on a riscv64 build, that keeps failing without logs
+
+ 15:24 <vorlon> lintian: I saw there was a mention of this in the weekly status; MIR is open, is anyone filling those out?
+
+ 15:24 <slyon> vorlon: no we need somebody to fill those
+
+ 15:24 <slyon> I did some initial investigation and marked some false-positves
+
+ 15:25 <vorlon> ginggs: thanks for volunteering on lintian
+
+ 15:26 <vorlon> with ogayot helping (slyon can help point out which part of the MIR could be split off)
+
+ 15:26 <slyon> ack
+
+ 15:26 <vorlon> curl ftbfs on several archs. dbungert can you take this?
+
+ 15:26 <dbungert> vorlon: ack
+
+ 15:26 <vorlon> it also ftbfs in Debian fwiw
+
+ 15:26 <dbungert> good datapoint
+
+ 15:27 <jawn-smith> oh I had curl last week
+
+ 15:27 <vorlon> oh
+
+ 15:27 <jawn-smith> Didn't get to it with the long weekend and +1 maintenance
+
+ 15:27 <vorlon> sorry I thought we were into the stuff that was too new to have been assigned
+
+ 15:27 <vorlon> ok curl: jawn-smith
+
+ 15:28 <vorlon> pygments: there's an update-excuse bug that points at pytest which needs a merge; dbungert can you take this instead?
+
+ 15:28 <dbungert> vorlon: ack for pygments
+
+ 15:28 <vorlon> gcc-11: also just waiting for a build on riscv64
+
+ 15:29 <vorlon> libxcrypt vs perl: doko does your latest merge fix this?
+
+ 15:29 <doko> I hope so
+
+ 15:30 <vorlon> bdrung: can you follow through to make sure it actually does?
+
+ 15:30 <bdrung> okay
+
+ 15:30 <vorlon> (and also db5.3)
+
+ 15:30 <vorlon> and, apparently, also dpkg :P
+
+ 15:30 <vorlon> a whole lot of perl autopkgtest failures!
+
+ 15:31 <vorlon> casper vs localechooser: I uploaded this, I'll take it
+
+ 15:31 <vorlon> and that's the bottom of the list
+
+ 15:31 <vorlon> jawn-smith:
+
+ 15:31 <jawn-smith> #topic AOB
+
+ 15:32 <dbungert> the pygments update-excuse, LP: #1980296, raises the concern that a merge of pytest-7 would potentially affect 2000 packages, I assume we proceed?  treat it as a transition?
+
+ 15:32 <ubottu> Launchpad bug 1980296 in pytest (Ubuntu) "pygments FTBFS requires pytest >> 7.0" [Medium, New] https://launchpad.net/bugs/1980296
+
+ 15:33 <ginggs> pytest migration is progressing nicely in debian
+
+ 15:33 <ginggs> https://tracker.debian.org/pkg/pytest
+
+ 15:33 <ginggs> only 9 failures left, and they are being worked on
+
+ 15:35 <ginggs> you could start now by checking whether we need a merge or a sync
+
+ 15:35 <dbungert> OK
+
+ 15:36 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

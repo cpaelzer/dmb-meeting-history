@@ -1,0 +1,532 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 05 Mar at 16:00 &mdash; 16:26 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-03-05-16.00.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:00.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:12.
+
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 16:12.
+
+
+=== AOB ===
+The discussion about "AOB" started at 16:13.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (56)
+ * sil2100 (26)
+ * robru (22)
+ * bdmurray (21)
+ * cyphermox (19)
+ * caribou (18)
+ * mvo (16)
+ * stgraber (14)
+ * jodh (13)
+ * ubottu (10)
+ * barry (7)
+ * doko (7)
+ * apw (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:00 <slangasek> #startmeeting
+
+ 16:00 <meetingology> Meeting started Thu Mar  5 16:00:52 2015 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:00 <meetingology> 
+
+ 16:00 <meetingology> Available commands: action commands idea info link nick
+
+ 16:00 <slangasek> [TOPIC] Lightning round
+
+ 16:00 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek caribou infinity mvo sil2100 robru cyphermox)
+
+ 16:01 <slangasek> mvo robru bdmurray caribou slangasek barry cyphermox jodh infinity doko sil2100 stgraber
+
+ 16:01 <slangasek> (base)vorlon@virgil:~/canonical$
+
+ 16:01 <mvo> I win!
+
+ 16:01 <slangasek> mvo: and go!
+
+ 16:01 <mvo> click:
+
+ 16:01 <mvo> - lp:~mvo/click/fix-autopkgtest and new 0.4.38.4 version
+
+ 16:01 <mvo> snappy:
+
+ 16:01 <mvo> - new snappy-go features: login (with 2fa), build
+
+ 16:01 <mvo> - no more dbus in snappy-go
+
+ 16:01 <mvo> - fixes, cleanup
+
+ 16:01 <mvo> - big refactor of ubuntu-core-upgrader, fix hardware.yaml unpack
+
+ 16:01 <mvo> misc:
+
+ 16:01 <mvo> - fix freeradius ftbfs and upstart reload bug
+
+ 16:01 <mvo> (done)
+
+ 16:01 <slangasek> robru:
+
+ 16:02 <robru> * CI Train
+
+ 16:02 <robru> - refactoring continues, increased overall test coverage from 75 to 82%
+
+ 16:02 <robru> - achieved 100% test coverage in merge_clean.py and branchhandling.py
+
+ 16:02 <robru> - merge_clean.py shrank from 246 to 81 lines, without feature regressions.
+
+ 16:02 <robru> - branchhandling.py shrank from 348 to 286 lines, also without feature regressions.
+
+ 16:02 <robru> - fixed a bug affecting -gles packages where both gles and non-gles packages would clobber each other when being pushed to launchpad at publish time.
+
+ 16:02 <robru> - fixed a bug preventing jobs from aborting when users abort jenkins jobs
+
+ 16:02 <robru> - fixed bug in publish job which allowed it to silently succeed even though publication had failed.
+
+ 16:02 <robru> - consolidated various version-mangling functions into shiny new version.py file
+
+ 16:02 <robru> - fixed bug where build job was not timing out while waiting for packages to appear in ppa in certain conditions
+
+ 16:02 <robru> - added 2 hour timeout on depwait packages, meaning there are no longer any conditions in which the build job can sit & spin forever.
+
+ 16:02 <robru> - various and sundry cleanups, readability improvements, etc
+
+ 16:02 <robru> * CI Engine
+
+ 16:02 <robru> - slowly getting up to speed on the ticket system, submitted first branch towards replacing spreadsheet
+
+ 16:02 <slangasek> barry: hi, the order is mvo robru bdmurray caribou slangasek barry cyphermox jodh infinity doko sil2100 stgraber
+
+ 16:02 <caribou> o/
+
+ 16:02 <mvo> robru: it sounds like you have fun!
+
+ 16:02 <mvo> impressive results :)
+
+ 16:02 <robru> mvo: thanks ;-)
+
+ 16:03 <bdmurray> robru: all done?
+
+ 16:03 <robru> bdmurray: yeah
+
+ 16:03 <bdmurray> irc discussion with thedac regarding errors writing cores to swift
+
+ 16:03 <bdmurray> worked with thedac to increase --timeout for gunicorn daisy FEs to avoid OOPSes when writing cores to swift (set to 40s)
+
+ 16:03 <bdmurray> investigation into OOPSes when submitting cores to daisy
+
+ 16:03 <bdmurray> sorted out daisy / gunicorn logging issues
+
+ 16:03 <bdmurray> had daisy updated on staging and production to resolve logging issues
+
+ 16:03 <bdmurray> updated https://wiki.ubuntu.com/ErrorTracker/ServerArchitecture with information about more tables
+
+ 16:03 <bdmurray> updated daisy charm to properly set permissions for daisy app / gunicorn
+
+ 16:03 <bdmurray> investigation into how to discount package-from-proposed crashes in phased-updater regression check
+
+ 16:03 <bdmurray> worked on improving the fix for unattended-upgrades bug 1422345 per stgraber
+
+ 16:03 <ubottu> bug 1422345 in unattended-upgrades (Debian) "stop being nice does not work" [Unknown,New] https://launchpad.net/bugs/1422345
+
+ 16:03 <bdmurray> submitted improved fix for unattended-upgrades bug to mvo on github
+
+ 16:03 <bdmurray> updated bug bot to better process SRU verification removal candidates
+
+ 16:04 <bdmurray> helped Riddell upload ubuntu-release-upgrader for vivid (test failure)
+
+ 16:04 <bdmurray> improved missing ddeb detector code to use a known list of missing ddebs and not notify about those
+
+ 16:04 <bdmurray> fixed error with linux apport hook and BootDmesg
+
+ 16:04 <bdmurray> bug management discussion with cyphermox
+
+ 16:04 <bdmurray> investigation into gvfs halted phased update
+
+ 16:04 <bdmurray> updated phased-updater code to include link to phasing report in email messages
+
+ 16:04 <bdmurray> sponsored patch to T,U fixing bug LP: #1422359
+
+ 16:04 <ubottu> Launchpad bug 1422359 in heimdal (Ubuntu Utopic) "heimdal-kdc: kdc process leaks memory" [High,In progress] https://launchpad.net/bugs/1422359
+
+ 16:04 <mvo> bdmurray: thanks for the unattended-upgrades branch!
+
+ 16:04 <bdmurray> ✔ done
+
+ 16:04 <caribou> Bugfix :
+
+ 16:04 <bdmurray> mvo: is it merged?
+
+ 16:04 <caribou> - Misc SRU follow-up
+
+ 16:04 <mvo> bdmurray: *cough* not yet :(
+
+ 16:04 <caribou> - openstack : instances left dying : trying to reproduce
+
+ 16:05 <caribou> - openafs dkms build : SRU completed (LP: #1423151)
+
+ 16:05 <mvo> bdmurray: but soon!
+
+ 16:05 <caribou> (done)à
+
+ 16:05 <ubottu> Launchpad bug 1423151 in openafs (Ubuntu Trusty) "openafs-modules-dkms 1.6.7-1: openafs kernel module failed to build" [Medium,Fix committed] https://launchpad.net/bugs/1423151
+
+ 16:06 <caribou> slangasek: all yours
+
+ 16:06 * slangasek nods
+
+ 16:06 <slangasek> * snappy alpha-3 milestone released this week
+
+ 16:06 <slangasek> * reviewing
+
+ 16:06 <slangasek> * partner calls regarding new server opportunities
+
+ 16:06 <slangasek> * hiring: going through resumes now for Java engineer role, to schedule
+
+ 16:07 <slangasek> interviews next week
+
+ 16:07 <slangasek> * making progress on the phone channel refactoring proposal, will be
+
+ 16:07 <slangasek> submitted for consideration this week
+
+ 16:07 <slangasek> * systemd freeze exception: possibly flipping the switch today provided a
+
+ 16:07 <slangasek> release FFe review
+
+ 16:07 <slangasek> (done)
+
+ 16:07 <slangasek> ok I have no idea what 'reviewing' in there was, ignore that line ;P
+
+ 16:07 <barry> system-image: refined server merge proposal. LP: #1423622.  si 3.0 betas to PPA
+
+ 16:07 <ubottu> Launchpad bug 1423622 in Ubuntu system image "Please provide machine parsable output" [High,Fix committed] https://launchpad.net/bugs/1423622
+
+ 16:07 <barry> qa sprint: ongoing
+
+ 16:07 <barry> other: LP: #1363642 (debian bug #744145)
+
+ 16:07 <ubottu> Launchpad bug 1363642 in python-pip (Ubuntu) "pip breaks after upgrading python package "requests"" [Undecided,Fix released] https://launchpad.net/bugs/1363642
+
+ 16:07 <ubottu> Debian bug 744145 in python-pip "pip crashes on "import requests"" [Serious,Fixed] http://bugs.debian.org/744145
+
+ 16:07 <barry> --done--
+
+ 16:07 <cyphermox> * console-setup merge for 1.108:
+
+ 16:07 <cyphermox> - finish testing install, upgrade, etc.
+
+ 16:07 <cyphermox> - fixing issue with mangled keyboard/layout names
+
+ 16:08 <cyphermox> - fix typo in config script which broke layout selection skipping.
+
+ 16:08 <cyphermox> - FFe for upload
+
+ 16:08 <cyphermox> * Upload kbd to fix console-setup-mini being uninstallable.
+
+ 16:08 <cyphermox> * Removed console-setup-freebsd from console-setup (uninstallable)
+
+ 16:08 <cyphermox> * update kbd for console-setup-mini's new depends on console-setup-linux.
+
+ 16:08 <cyphermox> * debian-installer, installation-guide:
+
+ 16:08 <cyphermox> - update to use --- instead of -- as a separator
+
+ 16:08 <cyphermox> - this also fixes OEM mode, accessibility not working on server.
+
+ 16:08 <cyphermox> * update debian-cd to use --- as separator on built ISOs.
+
+ 16:08 <cyphermox> * discussed boot parameters for the installer with smoser.
+
+ 16:08 <cyphermox> - bug 1402042, and how it relates to -- vs. ---.
+
+ 16:08 <ubottu> bug 1402042 in MAAS trunk "console= parameters need to be added before -- on kernel cmdline" [High,Triaged] https://launchpad.net/bugs/1402042
+
+ 16:08 <cyphermox> * debugging grub2 bug 1349538
+
+ 16:08 <ubottu> bug 1349538 in Ubuntu "grub-install failure on 2T disk and msdos partition table" [High,Fix released] https://launchpad.net/bugs/1349538
+
+ 16:08 <cyphermox> * walked through/documented steps to test ubiquity changes with robert_ancell.
+
+ 16:08 <cyphermox> * reviewed some merges from Yu Ning for usb-creator.
+
+ 16:08 <cyphermox> * some discussion about BlueZ 5.
+
+ 16:08 <cyphermox> (done)
+
+ 16:09 <slangasek> jodh:
+
+ 16:09 <jodh> * misc:
+
+ 16:09 <jodh> - Appraisal work.
+
+ 16:09 <jodh> * snappy:
+
+ 16:09 <jodh> - logging discussions.
+
+ 16:09 <jodh> - Promotion image testing.
+
+ 16:09 <jodh> - Raised MP for bug 1418966.
+
+ 16:09 <ubottu> bug 1418966 in snappy-ubuntu "setting the hostname is not persistent accross reboots" [Undecided,In progress] https://launchpad.net/bugs/1418966
+
+ 16:09 <jodh> - Fixed bug 1428276.
+
+ 16:09 <ubottu> bug 1428276 in snappy-ubuntu "wrong date formatting in 'snappy go list' output" [Undecided,In progress] https://launchpad.net/bugs/1428276
+
+ 16:09 <jodh> - Reviewed a bunch of branches and raised a few minor MPs.
+
+ 16:09 <jodh> - Finished adding more unit tests and functional tests to
+
+ 16:09 <jodh> ubuntu-core-upgrader (now landed).
+
+ 16:09 <jodh> - First pass at adding locking primitives to snappy
+
+ 16:09 <jodh> (including new test goodness :)
+
+ 16:09 <jodh> 𐄍
+
+ 16:10 <slangasek> infinity sent his regrets for this morning
+
+ 16:10 <slangasek> doko:
+
+ 16:10 <doko> - prepare binutils update for trusty-proposed
+
+ 16:10 <doko> - gcc-4.9 update for vivid
+
+ 16:10 <doko> - GCC 5: updates, reducing and filing upstream issues for ICEs
+
+ 16:10 <doko> - golang, move gofmt to use alternatives
+
+ 16:10 <doko> - handle a bunch of MIR's
+
+ 16:10 <doko> - start fixing GCC 5 issues in packages
+
+ 16:10 <doko> (done)
+
+ 16:11 <slangasek> and sil2100 isn't in here
+
+ 16:11 <slangasek> so stgraber
+
+ 16:12 <slangasek> stgraber: here?
+
+ 16:12 <stgraber> yep
+
+ 16:12 <slangasek> [TOPIC] AOB
+
+ 16:12 <slangasek> oh
+
+ 16:12 <slangasek> [TOPIC] Lightning round
+
+ 16:12 <slangasek> stgraber:
+
+ 16:12 <stgraber> Short week, was off on Tuesday and Wednesday.
+
+ 16:12 <stgraber> 
+
+ 16:12 <stgraber> - LXD
+
+ 16:12 <stgraber> - Released LXD 0.2
+
+ 16:12 <stgraber> - Various feature work for 0.3 (reworked the exec code, fixed testsuite, translation, ...)
+
+ 16:12 <stgraber> - Plenty of code reviews and bug handling
+
+ 16:12 <stgraber> - Preparing for 0.3, due Tuesday
+
+ 16:13 <stgraber> - System image
+
+ 16:13 <stgraber> - Code review and discussion with Barry
+
+ 16:13 <stgraber> - Admin paperwork (HR reviews, expense report, travel plans, ...)
+
+ 16:13 <stgraber> 
+
+ 16:13 <stgraber> (done)
+
+ 16:13 <slangasek> thanks
+
+ 16:13 <slangasek> [TOPIC] AOB
+
+ 16:13 <barry> stgraber: did you look at the updated mp?
+
+ 16:13 <caribou> I have had a request for a MIR for openafs following a dkms breakage with the new Trusty kernel
+
+ 16:13 <stgraber> barry: haven't yet, no
+
+ 16:14 <barry> stgraber: k, no worries
+
+ 16:14 <caribou> the dkms build is not tested, hence a change in the dentry structure broke the openafs module rebuild
+
+ 16:15 <caribou> would such situation be better covered if openAFS would be included in main ?
+
+ 16:15 <slangasek> caribou: how does the package being in main or not relate to the dkms build not being tested?
+
+ 16:15 <slangasek> I think putting it in main is a rather heavyweight solution for addressing the package not being tested on kernel updates
+
+ 16:15 <caribou> slangasek: that's the question I have : having it in main would not give us better result on such cases
+
+ 16:16 <caribou> slangasek: especially since the src pkg build quite a chunk of packages.
+
+ 16:16 <slangasek> because main implies security review and security support, when all it seems you're asking for is to keep the package from regressing
+
+ 16:16 <caribou> apw did sponsor the upload for the SRU so I did talk to him about this
+
+ 16:16 <caribou> slangasek: indeed. Good then, that's the answer I was after, thanks
+
+ 16:16 <slangasek> caribou: so we now have autopkgtest support for SRUs
+
+ 16:17 <slangasek> it would be good to have a dkms build as an autopkgtest in the openafs package (and I would accept an SRU for this)
+
+ 16:17 <caribou> slangasek: ok, I will look into this
+
+ 16:17 <slangasek> then http://people.canonical.com/~ubuntu-archive/pending-sru.html would report the dkms failure ... er I think, unless the kernel packages are handled *too* specially on there
+
+ 16:18 <slangasek> bdmurray: ^^ would we get revdep autopkgtest results displayed for the kernel?
+
+ 16:18 <slangasek> oh, but the other problem is that openafs-modules-dkms doesn't actually depend on a kernel package, because that has side effects
+
+ 16:18 <caribou> slangasek: in that case, it would be the openafs-modules-dkms package that would fail, woudn't it ?
+
+ 16:19 <slangasek> so step 1) openafs should have an autopkgtest to prove the dkms module is buildable
+
+ 16:19 <apw> slangasek, i thought we had automatically implied autopkgtests for dkms things now
+
+ 16:19 <slangasek> apw: oh?  I don't know about this
+
+ 16:19 <apw> what we don't have is implied relationships between the dkms packages and the kernel
+
+ 16:19 <slangasek> caribou: yes, and the test failure of a reverse dependency is treated as a regression in the package that changed
+
+ 16:20 <caribou> slangasek: got it
+
+ 16:20 <slangasek> apw: ok, so is that somewhere in the CI team's backlog? :)
+
+ 16:21 <slangasek> caribou: anyway, hopefully that helps as far as identifying the "right answer"... there are probably still a few pieces to be put in place before it's fully implemented
+
+ 16:21 <sil2100> o/
+
+ 16:21 <apw> slangasek, that i do not know, i know we do have dkms testing, and we have been talking about using the results there to block the kernle via the britney blocks
+
+ 16:21 <sil2100> Sorry guys, my lunch shifted and it happened during the meeting
+
+ 16:21 <slangasek> sil2100: hey there :)
+
+ 16:21 <sil2100> I completely missed it... can I still put my status update?
+
+ 16:21 <sil2100> ;)
+
+ 16:22 <slangasek> apw: yes, exactly - though for SRUs we don't use britney so the blocks don't make a difference AFAIK
+
+ 16:22 <slangasek> apw: on the other hand, you could mark the linux SRU bugs 'verification-failed'...?
+
+ 16:22 <slangasek> apw: (with a bot)
+
+ 16:22 <slangasek> (and a pointer to the test results)
+
+ 16:22 <slangasek> sil2100: yes, go ahead
+
+ 16:22 <sil2100> Ok, a quick one then from my side:
+
+ 16:23 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 16:23 <sil2100> - Documenting the early ww09-2015 milestone on the reports page
+
+ 16:23 <sil2100> - Clean-up in blocker bugs and ubuntu-rtm silos
+
+ 16:23 <sil2100> - Minor spreadsheet script fixes
+
+ 16:23 <sil2100> - Send out request to developers regarding the QA sign-off procedures
+
+ 16:23 <sil2100> * Announcements, annoucements, announcements
+
+ 16:23 <sil2100> - Patch pilot sessions:
+
+ 16:23 <sil2100> * Sponsored trusty upload for virtualbox, prepare bug to include SRU information
+
+ 16:23 <sil2100> * Prepared a package for httptunnel, modified the patch, did a test-build in a PPA
+
+ 16:23 <sil2100> * Looking into cryptkeeper proposed debdiff
+
+ 16:23 <sil2100> - Ubuntu Engineering Live!
+
+ 16:23 <sil2100> - RTM Status meetings
+
+ 16:23 <sil2100> - Resolving a FTBFS for UITK -gles, offering packaging advice
+
+ 16:23 <sil2100> - Prepare custom tarball for ubuntu-rtm mako (updated termminal)
+
+ 16:23 <sil2100> (done)
+
+ 16:23 <sil2100> Never again late lunch
+
+ 16:23 <robru> sil2100: late lunch? or early dinner?
+
+ 16:24 <sil2100> hm, depends, since our lunch is usually the main meal
+
+ 16:24 <robru> interesting
+
+ 16:24 <sil2100> So we usually eat something more like supper in the evening
+
+ 16:25 <robru> sil2100: I didn't know there was a difference between dinner and supper ;-)
+
+ 16:25 <slangasek> the main meal is dinner; the evening meal is supper; the noon meal is lunch
+
+ 16:25 <slangasek> discuss
+
+ 16:25 <robru> T. I. L.
+
+ 16:25 <slangasek> or we could adjourn ;)
+
+ 16:26 <barry> i prefer brinner
+
+ 16:26 <sil2100> hah
+
+ 16:26 <caribou> brunch is good too :)
+
+ 16:26 <robru> I've often enjoyed a good breakfunch ;-)
+
+ 16:26 <sil2100> brlunner
+
+ 16:26 <slangasek> but at all costs you should avoid lekfast
+
+ 16:26 <robru> lol
+
+ 16:26 <sil2100> 3 meals in one
+
+ 16:26 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

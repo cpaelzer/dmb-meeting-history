@@ -1,0 +1,749 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 15:02:51 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-07-18-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *bugs
+
+ *AOB
+
+
+
+Meeting ended at 15:56:20 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * stgraber (65)
+ * cjwatson (63)
+ * infinity (55)
+ * ubottu (52)
+ * ev (32)
+ * ogra_ (27)
+ * bdmurray (16)
+ * jodh (15)
+ * barry (11)
+ * slangasek (4)
+ * ScottK (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:02:51 <cjwatson> #startmeeting
+
+ 15:02:51 <meetingology> Meeting started Wed Jul 18 15:02:51 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:51 <meetingology> 
+
+ 15:02:51 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:56 <ogra_> is that nafallo ?
+
+ 15:03:08 <cjwatson> dunno :)
+
+ 15:03:13 <cjwatson> #topic lightning round
+
+ 15:03:15 <ogra_> :)
+
+ 15:03:16 <cjwatson> $ echo $(shuf -e barry bdmurray cjwatson ev infinity jodh ogra stgraber)
+
+ 15:03:16 <cjwatson> stgraber cjwatson ogra barry jodh bdmurray ev infinity
+
+ 15:03:21 <stgraber> I win!
+
+ 15:03:30 * infinity naps.
+
+ 15:03:31 <stgraber> - Containers
+
+ 15:03:31 <stgraber> - Discussed implementation of set_config_item and clear_config_item in the LXC API.
+
+ 15:03:31 <cjwatson> sorry if I forgot anyone, directory is down for me which of course means I have no idea who's on this team :-P
+
+ 15:03:34 <stgraber> - Update python binding for these two, waiting for get_keys() to then work on the network part of the python module.
+
+ 15:03:37 <stgraber> - Networking
+
+ 15:03:39 <stgraber> - Extended IPv6 testing to include basic NetworkManager testing.
+
+ 15:03:42 <stgraber> - Discovered NetworkManager doesn't support veth devices and so wouldn't run in a container. Wrote a patch, submitted to cyphermox for inclusion.
+
+ 15:03:45 <stgraber> - Installer
+
+ 15:03:47 <stgraber> - Tested open-iscsi, updated partman-iscsi to work with the new open-iscsi.
+
+ 15:03:50 <stgraber> - 12.04.1
+
+ 15:03:53 <stgraber> - 12.04.1 team meeting and minutes
+
+ 15:03:55 <stgraber> - Went through all the targeted/milestoned bugs for 12.04.1, assigned a bunch to ~canonical-foundations, updated the status for some others.
+
+ 15:03:58 <stgraber> - Verified a bunch of SRUs.
+
+ 15:04:01 <stgraber> - Uploaded new ubiquity to precise-proposed.
+
+ 15:04:03 <stgraber> - Updated sru-report to properly deal with verification-done-$release
+
+ 15:04:06 <stgraber> - Other
+
+ 15:04:08 <stgraber> - Reviewed change to re-introduce slapd-smbk5pwd (built from openldap) as heimdal-dev is already a build-dep and that package is important for Zentyal.
+
+ 15:04:11 <stgraber> - Some queuebot work, trying to make the new version more stable (currently running in production) and ready for the new features discussed at UDS
+
+ 15:04:14 <stgraber> - Some ARB app review, the app showdown made the ARB New queue reach 140 packages... Still 50 to review...
+
+ 15:04:17 <stgraber> - TODO this week
+
+ 15:04:20 <stgraber> - Finish reviewing/triaging ppp and libnl-3 bugs, then start looking at SRUs for the network packages.
+
+ 15:04:23 <stgraber> - Go through the pending-sru and help for these that are stuck on verification-needed
+
+ 15:04:26 <stgraber> (DONE)
+
+ 15:04:40 <cjwatson> Holiday on Tuesday.
+
+ 15:04:41 <cjwatson> Launchpad and archive administration:
+
+ 15:04:41 <cjwatson> * Fixed showing failed asynchronous copies in the PPA UI (bug 812869), so it should be possible to make PPA copies asynchronous soon.
+
+ 15:04:43 <ubottu> Launchpad bug 812869 in Launchpad itself "Failed PackageCopyJobs should show up on the PPA page somehow" [Low,Fix released] https://launchpad.net/bugs/812869
+
+ 15:04:44 <cjwatson> * Fixed a couple of bugs in PackageDiff privacy (bug 1023986, bug 1025515).
+
+ 15:04:46 <ubottu> Launchpad bug 1023986 in Launchpad itself ""Available diffs" are not accessible when publishing private packages via copyPackage() " [Low,Fix released] https://launchpad.net/bugs/1023986
+
+ 15:04:47 <cjwatson> * Experimental freeze to battle-test new queue API client.  Failed with a timeout after a couple of days, so we can work on that and try again later.
+
+ 15:04:48 <ubottu> Launchpad bug 1025515 in Launchpad itself "LP diffs are being linked at http://lplibrarian-private-download.internal:8000" [Critical,In progress] https://launchpad.net/bugs/1025515
+
+ 15:04:50 <cjwatson> * Posted branch to remove duplicates from ArchivePermission (bug 1025441).
+
+ 15:04:51 <ubottu> Launchpad bug 1025441 in Launchpad itself "Please clean up the duplicates from archivepermission" [High,In progress] https://launchpad.net/bugs/1025441
+
+ 15:04:53 <cjwatson> * Adjusted sru-report to use a separate launchpadlib cache so that it doesn't break so often.
+
+ 15:04:56 <cjwatson> * Some progress on arranging for per-pocket queue admin permissions, but still incomplete and may need a bit more database schema work.
+
+ 15:04:59 <cjwatson> Installer:
+
+ 15:05:01 <cjwatson> * Fixed bug 1023036, which caused intermittent failures in automatic tests (and took ages to reproduce).
+
+ 15:05:02 <ubottu> Launchpad bug 1023036 in ubiquity (Ubuntu Quantal) "Error on /usr/share/ubiquity/plugininstall.py", line 1687, affecting desktop images (preseeded install)" [Critical,Fix released] https://launchpad.net/bugs/1023036
+
+ 15:05:04 <cjwatson> * Fixed a couple of encrypted swap handling bugs (bug 1024343, bug 989279).
+
+ 15:05:07 <ubottu> Launchpad bug 1024343 in ubiquity (Ubuntu) "Quantal desktop encrypted home unable to install due to ubi-usersetup failing with exit code 1" [Critical,Fix released] https://launchpad.net/bugs/1024343
+
+ 15:05:07 <cjwatson> Other:
+
+ 15:05:09 <ubottu> Launchpad bug 989279 in ubiquity (Ubuntu Precise) "Ubiquity fails to create encrypted home directory when no swap if configured" [High,In progress] https://launchpad.net/bugs/989279
+
+ 15:05:10 <cjwatson> * Various rebuilds for new imagemagick ABI.
+
+ 15:05:12 <cjwatson> * SRU for bug 970638 in psmisc.
+
+ 15:05:13 <ubottu> Launchpad bug 970638 in psmisc (Ubuntu Precise) "killall can't kill processes with names >15 bytes long (Ubuntu 12.04)" [Medium,Fix committed] https://launchpad.net/bugs/970638
+
+ 15:05:15 <cjwatson> * Made various things pass pep8(1).
+
+ 15:05:17 <cjwatson> ..
+
+ 15:05:26 <ogra_> done:
+
+ 15:05:26 <ogra_> * omap4 desktop image fixes (flash-kernel, installer etc)
+
+ 15:05:26 <ogra_> * ac100 desktop image fixes (ac100-tarball-installer, flash-kernel etc)
+
+ 15:05:26 <ogra_> * research why server preinstalled didnt build (thanks to slangasek for helping)
+
+ 15:05:26 <ogra_> * package new nvidia-tegra driver
+
+ 15:05:29 <ogra_> * test new tegra kernel
+
+ 15:05:31 <ogra_> * some work on foundations-q-hwpack-integration
+
+ 15:05:33 <ogra_> * flash-kernel SRUs
+
+ 15:05:35 <ogra_> todo:
+
+ 15:05:37 <ogra_> * more work on foundations-q-hwpack-integration
+
+ 15:05:39 <ogra_> * prepare for QA sprint
+
+ 15:05:41 <ogra_> * switch on server alternate builds for omap4
+
+ 15:05:43 <ogra_> * research netinst omap4 breakage
+
+ 15:05:45 <ogra_> ..
+
+ 15:05:55 <barry> short week due to holiday; continued working on the xapian py3 port using cython, hit some roadblocks so progress has slowed; worked on the py27 for lucid ppa, trying to fix the ctypes crash so the lp folks can start to use it; patch piloted: lengthy review of upmgr branch, investigated and eventually sync'd from unstable, py32.  done.
+
+ 15:06:29 <jodh> * misc: Holiday last week.
+
+ 15:06:29 <jodh> * boot/upstart: Stateful re-exec progress continues:
+
+ 15:06:29 <jodh> - Created D-Bus branch with new public API to recreate a D-Bus
+
+ 15:06:29 <jodh> connection from a file descriptor (required for stateful re-exec):
+
+ 15:06:32 <jodh> lp:~jamesodhunt/dbus/create-connection-from-fd
+
+ 15:06:36 <jodh> Needs testing (once Upstart catches up) and ideally a way to
+
+ 15:06:39 <jodh> query a connections address to make usage easier.
+
+ 15:06:42 <jodh> - Currently working on the JSON-encoding of blocked objects for Upstart.
+
+ 15:06:45 <jodh> ⠗
+
+ 15:06:52 <infinity> Tetris?
+
+ 15:06:59 <jodh> braille
+
+ 15:07:11 <jodh> can't you feel it?
+
+ 15:07:21 <infinity> *groan*
+
+ 15:07:25 <bdmurray> wrote a bug pattern for bug 1023055
+
+ 15:07:25 <bdmurray> uploaded a rebuilt ubuntu-release-upgrader to fix bug 1023055
+
+ 15:07:25 <bdmurray> uploaded of kerneloops to quantal turning it on
+
+ 15:07:25 <bdmurray> apport upload to precise-proposed to collect /etc/default/grub - bug 1006633
+
+ 15:07:27 <barry> owww
+
+ 15:07:27 <ubottu> Launchpad bug 1023055 in ubuntu-release-upgrader (Ubuntu Quantal) "do-release-upgrade crashed with ImportError in /usr/lib/ubuntu-release-upgrader/check-new-release: No module named DistUpgrade.DistUpgradeVersion" [High,Fix released] https://launchpad.net/bugs/1023055
+
+ 15:07:28 <ubottu> Launchpad bug 1006633 in apport (Ubuntu Precise) "should collect /etc/default/grub from package install failures due to update-grub failing" [High,In progress] https://launchpad.net/bugs/1006633
+
+ 15:07:28 <bdmurray> modified search-recent-package-bugs-for-spikes to use urllib and work for any team
+
+ 15:07:38 <bdmurray> added search-recent-package-bugs-for-spikes to ubuntu-reports
+
+ 15:07:38 <bdmurray> arsenal modification to collect-bug-data to filter by days-in-importance
+
+ 15:07:38 <bdmurray> setup of reopened, recent-triaged, recent-confirmed and recently set to high or critical bug tasks reports on cranberry using arsenal
+
+ 15:07:40 <cjwatson> barry: any roadblocks I can assist with beyond the conversation we had the other day?
+
+ 15:07:41 <bdmurray> modified lpltk to deal with bug tasks that don't have date_ for a status
+
+ 15:07:50 <bdmurray> modified lpltk to be able to filter on the date the importance of a bug was set
+
+ 15:07:53 <bdmurray> modified sru-report to sort by days package has been out
+
+ 15:07:55 <bdmurray> sru-report: make bugs golden colored if they have comments since being uploaded
+
+ 15:07:58 <bdmurray> reported launchpad bug 1023592 regarding missing date_ transition data
+
+ 15:08:00 <ubottu> Launchpad bug 1023592 in Launchpad itself "opening a new with a status of In Progess does not set date_in_progress" [High,Triaged] https://launchpad.net/bugs/1023592
+
+ 15:08:01 <bdmurray> done
+
+ 15:08:02 <barry> cjwatson: perhaps we can chat after this meeting
+
+ 15:08:10 <cjwatson> bdmurray: recent sru-report changes are pretty handy, thanks
+
+ 15:08:12 <cjwatson> barry: sure
+
+ 15:08:27 <ev> - Short week; holiday on Monday.
+
+ 15:08:27 <ev> - Implemented the recoverable errors API and Martin uploaded it to Quantal.
+
+ 15:08:27 <ev> Just need to adequately document it now and open up daisy.ubuntu.com to
+
+ 15:08:27 <ev> receive these reports.
+
+ 15:08:36 <ev> - Sat down with Matthew and walked through the http://errors.ubuntu.com UI,
+
+ 15:08:37 <ev> identifying some design problems.
+
+ 15:08:37 <ev> - We now show 6 months worth of data on the average errors per day graph.
+
+ 15:08:37 <ev> The graph itself now lets you zoom in on a particular area and uses the
+
+ 15:08:37 <ev> secondary color scheme design has been working on.
+
+ 15:08:45 <ev> - The erroneous '(not' entries are no longer added to the Last Seen field (I
+
+ 15:08:45 <ev> still need to clear the existing ones).
+
+ 15:08:45 <ev> - The navigation now shares the site navigation from qa.ubuntu.com. I need
+
+ 15:08:45 <ev> to coordinate getting Errors linked to from there as well.
+
+ 15:08:45 <ev> - I've written code to put individual lines for each Ubuntu release on the
+
+ 15:08:45 <ev> average errors per day graph. I have a pending RT for deploying this.
+
+ 15:08:52 <ev> - Per Seb's request, we can now display just Ubuntu sources for the Last
+
+ 15:08:53 <ev> Seen column on the front page. I'm putting together an RT for deploying
+
+ 15:08:53 <ev> this change.
+
+ 15:08:53 <ev> - The individual problem pages have been reworked with clearer titles
+
+ 15:08:57 <ev> and formatting. There's now a graph at the top of the page showing the
+
+ 15:08:57 <ev> frequency over time this issue has been affecting Ubuntu.
+
+ 15:08:57 <ev> - The individual instance pages now use the expanders from Launchpad to
+
+ 15:09:03 <ev> autohide long fields, very much matching the Apport UI. The stack trace is
+
+ 15:09:03 <ev> still shown by default though.
+
+ 15:09:04 <ev> - Started implementing the rest of the compiz changes for error reports from
+
+ 15:09:06 <ev> application hangs. I've also asked the compiz guys to review the proposed
+
+ 15:09:07 <ev> UI, but haven't heard anything back yet.
+
+ 15:09:07 <ev> - Testing what I hope are the final round of USB disks for the shop.
+
+ 15:09:08 <ev> (done)
+
+ 15:09:19 <jodh> ev: so.. Max is back on form eh? :)
+
+ 15:09:42 <infinity> * DebConf (last week)
+
+ 15:09:42 <infinity> - Attended lots of talks, had lots of hallway conversations, etc
+
+ 15:09:42 <infinity> - Worked on a plan for saner (e)glibc maintenance in Debian/Ubuntu
+
+ 15:09:42 <infinity> * Merges, merges, merges
+
+ 15:09:42 <infinity> - A reminder/tip for those of us who are DDs: if we're carrying an
+
+ 15:09:44 <infinity> Ubuntu delta for RC bugs, NMU them into Debian, save yourself some
+
+ 15:09:47 <infinity> pain, and if we're carrying non-RC deltas on orphaned packages, do
+
+ 15:09:49 <infinity> a QA upload, and stop merging the same one-line fix every two weeks
+
+ 15:09:52 <infinity> * Rebootstrapped GHC and gnat-4.6 on armel, and rebuilt a mess of
+
+ 15:09:54 <infinity> stuff to reduce the FTBFS list for armel
+
+ 15:09:57 <infinity> * Fixed firefox and thunderbird compile options on armel and armhf
+
+ 15:09:59 <infinity> * Rebootstrapped sbcl on powerpc
+
+ 15:10:02 <infinity> * Lots of SRU work, including a bunch of kernel SRUS
+
+ 15:10:04 <infinity> * Upcoming: Really working on britney2 this week, no, honest!
+
+ 15:10:07 <infinity> ⡇⠼⠧⠳⠛⠗ ← Looks like Tetris to me.
+
+ 15:10:20 <infinity> Guess that needs some spaces.
+
+ 15:10:24 <infinity> ⡇ ⠼ ⠧ ⠳ ⠛ ⠗
+
+ 15:10:55 <ev> jodh: yup :)
+
+ 15:11:01 <ev> well, for the moment
+
+ 15:11:47 <cjwatson> ah, that's everyone, great
+
+ 15:11:49 <cjwatson> #topic bugs
+
+ 15:11:57 <cjwatson> stgraber said he wanted to talk about .1 bits
+
+ 15:12:00 <stgraber> cjwatson: "import random; team = [person.name for person in lp.people['canonical-foundations'].participants]; random.shuffle(team); print(team)" (sadly accessing the IRC nicks seems a bit broken in the API...)
+
+ 15:12:20 <stgraber> yep, I have a pretty long list of foundation related bugs that are targeted for 12.04.1
+
+ 15:12:42 <stgraber> Full bug list can be found at: https://bugs.launchpad.net/ubuntu/precise/+bugs?field.milestone%3Alist=49926
+
+ 15:12:47 <stgraber> I did a quick pass on things that are either "maintained" by the team or are of interest to the team, the list is pretty long.
+
+ 15:12:53 <stgraber> I excluded any bug that's "fix commited" (in -proposed) or "in progress" (because it's waiting in the queue):
+
+ 15:13:20 <stgraber> Storage related: bug 969384, bug 978012, bug 942106, bug 1012946, bug 957494, bug 968074, bug 1002357, bug 1017407, bug 1022915, bug 1009973
+
+ 15:13:27 <ubottu> Launchpad bug 969384 in mdadm (Ubuntu Precise) "mdadm --detail --scan segfaults during update-initramfs" [Critical,Triaged] https://launchpad.net/bugs/969384
+
+ 15:13:28 <ubottu> Launchpad bug 978012 in e2fsprogs (Ubuntu Precise) "Please SRU micro bug fix release of e2fsprogs 1.42.4-3ubuntu1 (main) from Quantal (main)" [High,Confirmed] https://launchpad.net/bugs/978012
+
+ 15:13:29 <ubottu> Launchpad bug 942106 in mdadm (Ubuntu Precise) "software raid doesn't assemble before mount on boot" [High,Confirmed] https://launchpad.net/bugs/942106
+
+ 15:13:30 <ubottu> Launchpad bug 1012946 in parted (Ubuntu Precise) "dm-part-sync.patch breaks creating multiple partitions on a LVM volume" [High,In progress] https://launchpad.net/bugs/1012946
+
+ 15:13:31 <ubottu> Launchpad bug 957494 in mdadm (Ubuntu Precise) "Missing added utility 'mdmon'" [Medium,Triaged] https://launchpad.net/bugs/957494
+
+ 15:13:45 <stgraber> right, need to split by group of 5, forgot about that...
+
+ 15:13:55 <stgraber> bug 968074, bug 1002357, bug 1017407, bug 1022915, bug 1009973
+
+ 15:14:01 <ubottu> Launchpad bug 968074 in mdadm (Ubuntu Precise) "Partitionable raid ignored by 65-mdadm-blkid.rules" [Medium,Triaged] https://launchpad.net/bugs/968074
+
+ 15:14:02 <ubottu> Launchpad bug 1002357 in mdadm (Ubuntu Precise) "sort out udev rules madness (3 editions installed into 4 files)" [Medium,Triaged] https://launchpad.net/bugs/1002357
+
+ 15:14:03 <ubottu> Launchpad bug 1017407 in mdadm (Ubuntu Precise) "should copy /etc/udev/ rule if available" [Medium,Triaged] https://launchpad.net/bugs/1017407
+
+ 15:14:04 <ubottu> Launchpad bug 1022915 in mdadm (Ubuntu Precise) "mdadm in precise does not allow internal bitmap on version 1.2 arrays" [Medium,Triaged] https://launchpad.net/bugs/1022915
+
+ 15:14:05 <ubottu> Launchpad bug 1009973 in mdadm (Ubuntu Precise) "SRU upstream bugfix micro point release 3.2.5" [Wishlist,Triaged] https://launchpad.net/bugs/1009973
+
+ 15:14:16 <infinity> stgraber: I'm working with xnox to get a sanely-reviewed e2fsprogs update in.
+
+ 15:14:27 <cjwatson> stgraber: person.irc_nicknames[0].nickname works fine except that doko hasn't set one
+
+ 15:14:55 <infinity> stgraber: And mdadm is in the queue, which should address some of those bugs (but not sure how many), and may also need some iterations before it can be accepted.
+
+ 15:15:32 <stgraber> yeah, there's a crazy amount of mdadm bugs targeted to the point release and I know mdadm was already rejected once from the queue
+
+ 15:15:34 <infinity> stgraber: With him frolicking at the Olympics and such, one of us might need to take up the banner there.
+
+ 15:15:51 <bdmurray> s/banner/torch/
+
+ 15:15:51 <ogra_> its only volleyball, no ?
+
+ 15:16:06 * ogra_ doubts that will keep him busy 24/7
+
+ 15:16:13 <infinity> ogra_: He's on vacation. :P
+
+ 15:16:18 <ogra_> oh, k
+
+ 15:16:20 <ogra_> heh
+
+ 15:16:28 <stgraber> at least one of the mdadm bugs is critical so would be good to see at least part of these fixes land soonish
+
+ 15:16:34 <cjwatson> I'm OK to upload the next ubiquity SRU now, aren't I?
+
+ 15:16:48 <stgraber> cjwatson: it's already in the queue
+
+ 15:16:54 <cjwatson> Oh, it's there, yeah
+
+ 15:17:15 <stgraber> Package management related bugs: bug 1017001, bug 831768, bug 936186, bug 924079, bug 1007314
+
+ 15:17:22 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:17:23 <ubottu> Launchpad bug 831768 in aptitude (Ubuntu Precise) "aptitude cannot handle conflicts with multiarch enabled" [High,Triaged] https://launchpad.net/bugs/831768
+
+ 15:17:24 <ubottu> Launchpad bug 936186 in software-properties (Ubuntu Precise) "add-apt-repository crashed with error in get_ppa_info_from_lp(): (23, 'Failed writing body (0 != 1607)')" [High,Triaged] https://launchpad.net/bugs/936186
+
+ 15:17:25 <ubottu> Launchpad bug 924079 in apt (Ubuntu Precise) "do-release-upgrade fails to upgrade from Oneiric to Precise: Couldn't configure pre-depend libtinfo5 for libncurses5, probably a dependency cycle" [High,Triaged] https://launchpad.net/bugs/924079
+
+ 15:17:26 <ubottu> Launchpad bug 1007314 in update-manager (Ubuntu Precise) "trying to upgrade from 11.10 to 12.04: The package 'postgresql-contrib-8.2' is marked for removal but it's in the removal blacklist" [High,Triaged] https://launchpad.net/bugs/1007314
+
+ 15:17:28 <stgraber> bug 946718, bug 226780
+
+ 15:17:30 <ubottu> Launchpad bug 946718 in update-notifier (Ubuntu Precise) "backend_helper.py crashed with RuntimeError in add_signal_receiver(): To make asynchronous calls, receive signals or export objects, D-Bus connections must be attached to a main loop by passing mainloop=... to the constructor or calling dbus.set_default_main_loop(...)" [High,Triaged] https://launchpad.net/bugs/946718
+
+ 15:17:31 <ubottu> Launchpad bug 226780 in apt (Ubuntu Precise) "apt-key net-update does not obey APT::Acquire::http::Proxy" [Medium,Triaged] https://launchpad.net/bugs/226780
+
+ 15:17:35 <cjwatson> 831768 is doomed, it's not going to get any further for .1
+
+ 15:17:45 <cjwatson> needs serious upstream work
+
+ 15:17:56 <stgraber> cjwatson: ok, re-target to precise-updates then?
+
+ 15:18:15 <cjwatson> Yeah, doing
+
+ 15:18:23 <infinity> I'm not sure why 226780 is targetted for .1
+
+ 15:18:38 <infinity> Sure, it should be fixed "some day", but it's always been broken.
+
+ 15:19:09 <infinity> (And we keep turning off apt-key net-update when we find new security flaws in its design anyway :P)
+
+ 15:19:18 <cjwatson> Maybe because we actually need to cycle the key soon
+
+ 15:19:27 <cjwatson> (As soon as I get round to the necessary publisher changes)
+
+ 15:19:48 <cjwatson> But yeah, we probably just need to deliver that in a package, I guess
+
+ 15:19:52 <infinity> cjwatson: Does our key cycling actually rely on net-update?  Cause that's going to end in tears.
+
+ 15:19:53 * slangasek waves from the train
+
+ 15:19:59 <cjwatson> No, it's a backstop measure
+
+ 15:20:08 <cjwatson> Although very handy if we ever have to do an emergency cycling
+
+ 15:20:14 <infinity> cjwatson: I would have assumed it would be delivered in ubuntu-keyring, and there wouldn't be a hard cutover of doom.
+
+ 15:20:22 <cjwatson> There would be if our key were compromised.
+
+ 15:20:41 <cjwatson> Well, possibly.
+
+ 15:20:42 <infinity> cjwatson: Absolutely.  Hence why the bug needs to be fixed.  Just not sure about the sudden .1 urgency.
+
+ 15:20:47 <cjwatson> Yeah.
+
+ 15:20:55 <infinity> (Well, the bugs, plural, net-update is a mess)
+
+ 15:21:45 <stgraber> moved it to -updates too. We don't have a fix in quantal or even the beginning of a fix for it, so unlikely that someone can spend the time for 12.04.1
+
+ 15:21:59 <stgraber> (especially considering the pretty long list of other bugs to fix)
+
+ 15:22:13 <infinity> The tinfo/ncurses thing, I haven't seen before.  But it can't be a hard fix.
+
+ 15:22:43 <infinity> Well, it can't he hard to work around.  Fixing might be a bit much.
+
+ 15:23:02 <stgraber> we really want to get that list to reflect what can be done for 12.04.1, so if you're planning on working on one of these, assign it to yourself, if you know it won't happen, comment and move to another milestone.
+
+ 15:23:12 <stgraber> Installer related bug: bug 966480, bug 484252, bug 1021293, bug 992061
+
+ 15:23:16 <ubottu> Launchpad bug 966480 in casper (Ubuntu Precise) "The prompt asking for media removal is not shown at the end of the installation" [High,Confirmed] https://launchpad.net/bugs/966480
+
+ 15:23:17 <ubottu> Launchpad bug 484252 in usb-creator (Ubuntu Precise) "Format action wipes all partitions" [High,Triaged] https://launchpad.net/bugs/484252
+
+ 15:23:18 <ubottu> Launchpad bug 1021293 in ubiquity (Ubuntu Precise) "Ubuntu 12.04 install stalls when doing apt-get upgrade" [High,Triaged] https://launchpad.net/bugs/1021293
+
+ 15:23:19 <ubottu> Launchpad bug 992061 in usb-creator (Ubuntu Precise) "USB Startup Disk Creator displays one USB device multiple times" [Undecided,New] https://launchpad.net/bugs/992061
+
+ 15:23:49 <cjwatson> I'll see if I can scrape together time for 1021293 from somewhere :-/
+
+ 15:23:52 <stgraber> I'll take the casper one as I've seen it happen a few times and it's really annoying
+
+ 15:24:28 <stgraber> ARM enablement bugs: bug 1004011
+
+ 15:24:31 <ubottu> Launchpad bug 1004011 in flash-kernel (Ubuntu Precise) "Add support for highbank in flash-kernel" [High,Triaged] https://launchpad.net/bugs/1004011
+
+ 15:25:12 <stgraber> Looks like NCommander is taking care of these (he uploaded the d-i bits IIRC)
+
+ 15:25:20 <stgraber> Multi-arch: bug 977947, bug 977952, bug 977964, bug 977940, bug 977959
+
+ 15:25:22 <cjwatson> stgraber: That one has two uploads in the queue, never mind one, I think
+
+ 15:25:24 * ogra_ is happy to help out if needed
+
+ 15:25:26 <ubottu> Launchpad bug 977947 in libbonobo (Ubuntu Precise) "Please transition libbonobo to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977947
+
+ 15:25:27 <ubottu> Launchpad bug 977952 in libbonoboui (Ubuntu Precise) "Please transition libbonoboui to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977952
+
+ 15:25:28 <ubottu> Launchpad bug 977964 in libart-lgpl (Ubuntu Precise) "Please transition libart-lgpl to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977964
+
+ 15:25:30 <ubottu> Launchpad bug 977940 in gnome-vfs (Ubuntu Precise) "Please transition gnome-vfs to multi-arch" [Medium,In progress] https://launchpad.net/bugs/977940
+
+ 15:25:31 <ubottu> Launchpad bug 977959 in libgnome (Ubuntu Precise) "Please transition libgnome to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977959
+
+ 15:25:39 <cjwatson> Bitten by bug 1025515 so it's a little hard to tell
+
+ 15:25:40 <ubottu> Launchpad bug 1025515 in Launchpad itself "LP diffs are being linked at http://lplibrarian-private-download.internal:8000" [Critical,In progress] https://launchpad.net/bugs/1025515
+
+ 15:25:48 <cjwatson> (Sorry about that)
+
+ 15:26:18 <stgraber> stokachu: any progress with the rdepends rebuild test?
+
+ 15:26:45 <stgraber> Grub/boot: bug 975931, bug 942846, bug 980917
+
+ 15:26:50 <ubottu> Launchpad bug 975931 in grub-gfxpayload-lists (Ubuntu Quantal) "purple screen freeze with AMD 6850" [Medium,Triaged] https://launchpad.net/bugs/975931
+
+ 15:26:51 <ubottu> Launchpad bug 942846 in grub-gfxpayload-lists (Ubuntu Precise) "encrypted install fails to boot as long as vt.handoff=7 is used" [Medium,Triaged] https://launchpad.net/bugs/942846
+
+ 15:26:52 <ubottu> Launchpad bug 980917 in upstart (Ubuntu Precise) "Failed to create pty - disabling logging for job" [Medium,Triaged] https://launchpad.net/bugs/980917
+
+ 15:27:03 <cjwatson> grub-gfxpayload-lists is supposed to be essentially owned by desktop.
+
+ 15:27:14 <cjwatson> Or kernel.  Whoever knows what IDs are supposed to be in it.
+
+ 15:27:32 <cjwatson> I started it off but with the aim that we'd no longer have to care.
+
+ 15:27:41 <stgraber> ok, I'll try to get someone to look at these tomorrow in the 12.04.1 meeting then
+
+ 15:28:09 <stgraber> jodh: are we likely to get a fix for bug 980917 in time for 12.04.1?
+
+ 15:28:11 <ubottu> Launchpad bug 980917 in upstart (Ubuntu Precise) "Failed to create pty - disabling logging for job" [Medium,Triaged] https://launchpad.net/bugs/980917
+
+ 15:28:13 <jodh> I've spent a bit of time looking at 980917, but it doesn't appear to be the quick fix we thought.
+
+ 15:28:53 <jodh> I'll take another look at it and see if I can make some further progress....
+
+ 15:29:03 <stgraber> thanks
+
+ 15:29:09 <stgraber> Networking: bug 994575
+
+ 15:29:11 <ubottu> Launchpad bug 994575 in resolvconf (Ubuntu Precise) "/etc/ppp/ip-up.d/000resolvconf should "exit 0" if pppd was run by NM, since NM will register the nameserver addresses itself" [Undecided,Triaged] https://launchpad.net/bugs/994575
+
+ 15:29:21 <infinity> jodh: The mounting and mknod tricks we talked about weren't sufficient? :/
+
+ 15:29:37 <stgraber> that one is fixed in quantal, I'll take care of pushing a batch of network related SRUs based on the fixes that landed in quantal, including that one
+
+ 15:29:54 <jodh> infinity: no - same behaviour as before.
+
+ 15:30:09 <infinity> jodh: Well, that's a lot of suck.
+
+ 15:30:37 <stgraber> Other core packages: bug 974584, bug 979003, bug 1014197
+
+ 15:30:41 <ubottu> Launchpad bug 974584 in sysvinit (Ubuntu Quantal) "Semaphores cannot be created in lxc container" [High,Triaged] https://launchpad.net/bugs/974584
+
+ 15:30:43 <ubottu> Launchpad bug 979003 in eglibc (Ubuntu Precise) "libc incorrectly detects AVX support" [High,In progress] https://launchpad.net/bugs/979003
+
+ 15:30:45 <ubottu> Launchpad bug 1014197 in libxslt (Ubuntu Precise) "package libxslt1-dev 1.1.26-8ubuntu1 failed to install/upgrade: './usr/bin/xslt-config' is different from the same file on the system" [High,Triaged] https://launchpad.net/bugs/1014197
+
+ 15:30:48 <infinity> stgraber: So... One would think that bug 1004011 would be addressed by release-upgrader-apt.  Except that, I'm betting we only backported/used that for lucid.
+
+ 15:30:49 <ubottu> Launchpad bug 1004011 in flash-kernel (Ubuntu Precise) "Add support for highbank in flash-kernel" [High,Triaged] https://launchpad.net/bugs/1004011
+
+ 15:31:02 <infinity> stgraber: Err, wrong number.
+
+ 15:31:10 <infinity> bug 924079
+
+ 15:31:12 <infinity> That one.
+
+ 15:31:12 <ubottu> Launchpad bug 924079 in apt (Ubuntu Precise) "do-release-upgrade fails to upgrade from Oneiric to Precise: Couldn't configure pre-depend libtinfo5 for libncurses5, probably a dependency cycle" [High,Triaged] https://launchpad.net/bugs/924079
+
+ 15:31:31 * stgraber takes bug 1014197
+
+ 15:31:33 <infinity> stgraber: Perhaps just doing the same release-upgrader-apt backport trick for oneiric would magically give us sunshine and kittens.
+
+ 15:32:24 <infinity> stgraber: As for 979003, I'm on it.  When's my deadline for getting that in, again?
+
+ 15:32:33 <infinity> stgraber: I definitely want the fix in the images.
+
+ 15:32:54 <stgraber> infinity: 2nd of August is when we'd like all that stuff to be in -proposed at the very least
+
+ 15:33:13 <infinity> stgraber: Check, I can beat that clock.
+
+ 15:33:23 <infinity> stgraber: It got delayed with a lot of re-writing and re-backporting upstream.
+
+ 15:33:24 <stgraber> bdmurray: are you planning on doing the transitional package for bug 1007314 or should I take care of it?
+
+ 15:33:26 <ubottu> Launchpad bug 1007314 in update-manager (Ubuntu Precise) "trying to upgrade from 11.10 to 12.04: The package 'postgresql-contrib-8.2' is marked for removal but it's in the removal blacklist" [High,Triaged] https://launchpad.net/bugs/1007314
+
+ 15:33:27 <infinity> stgraber: AVX/FMA4 is a mess.
+
+ 15:33:57 <bdmurray> stgraber: no, I'm not planning on it
+
+ 15:34:09 <stgraber> bdmurray: ok, taking it then
+
+ 15:34:59 <stgraber> right, that's it for our 12.04.1 bug list
+
+ 15:35:27 <stgraber> I'll be keeping track of these and will likely poke some of you to get some status update or check whether something should be moved to a later milestone
+
+ 15:35:54 <cjwatson> I've just got http://people.canonical.com/~ubuntu-archive/testing/precise-proposed_probs.html working again, I think - we'll see at the next run
+
+ 15:36:51 <stgraber> I'm also going to take 974584
+
+ 15:37:09 <stgraber> as the server team said they'd prefer to have someone from foundations merge the fix from Debian and SRU it
+
+ 15:37:29 <stgraber> there's also one more fix that we'll need pretty soon which is fixing live-build to only ship one kernel header
+
+ 15:37:35 <stgraber> is someone already looking into that?
+
+ 15:37:51 <infinity> stgraber: I was going to look into that.  Is there a bug for it, or should I JFDI?
+
+ 15:37:53 <stgraber> (images are oversized at the moment, so anything to help get their size down a bit would help)
+
+ 15:38:22 <infinity> stgraber: The quicker and less intrusive fix will probably be to post-process the chroot in livecd-rootfs, not fix it in live-build.
+
+ 15:38:25 <cjwatson> infinity: I had a work item for it from ages back.  I don't think I ever filed a bug.
+
+ 15:38:29 <stgraber> infinity: can't find a bug for it
+
+ 15:38:37 <cjwatson> infinity: It should be a matter of carrying over the code from livecd.sh.
+
+ 15:38:41 <infinity> cjwatson: Alright.  I'm not going to go WI hunting, I'll JFDI.
+
+ 15:38:43 <cjwatson> And figuring out where to plug it in.
+
+ 15:38:51 <infinity> cjwatson: Yeahp, that's where the cargo-culting was going to happen. :P
+
+ 15:38:56 <cjwatson> It's in https://blueprints.launchpad.net/ubuntu/+spec/foundations-o-live-build
+
+ 15:39:23 * infinity replaces live-build with livecd.sh and waits to see who notices.
+
+ 15:39:26 <cjwatson> You can have it, not that I expect anything will notice the assignee change
+
+ 15:40:31 <cjwatson> #topic AOB
+
+ 15:40:32 * ogra_ hugs infinity
+
+ 15:40:43 <ogra_> would be lovely to have it back :)
+
+ 15:42:01 <infinity> In the AOB camp, I'd like to remind people that Debian's all wheezy freezy.  If you have a spare 5 minutes where you're not, like, working on work, or having a life, go be a good citizen and fix an RC bug or two upstream.
+
+ 15:43:04 <cjwatson> In theory I need to see if I can squeeze in python3-debian and GRUB 2.00.  Might be getting decreasingly plausible :(
+
+ 15:43:23 * cjwatson is planning on taking a few days of holiday next week to do housework and work on Debian, since the family's going to be away
+
+ 15:43:33 * cjwatson <- exciting life
+
+ 15:43:39 <infinity> cjwatson: Significantly more plausible than my plan to ship glibc 2.15 a week before release.
+
+ 15:44:11 <barry> or mine to make python3.3 the default and remove python2 entirely? :)
+
+ 15:44:16 * infinity is still miffed he missed the cuttof to just doko that in before freeze.
+
+ 15:44:17 <cjwatson> (There may be some Guitar Hero involved too.)
+
+ 15:44:26 <infinity> Can I use doko as a verb for that?  Seems fair.
+
+ 15:44:27 <ogra_> heh
+
+ 15:45:06 * ogra_ just discovered Xonotic for gaming ... to actually make some use of the shiny new desktop i have
+
+ 15:45:08 <barry> infinity: you've created a new meme
+
+ 15:45:30 <ogra_> "lets doko that in !" ...
+
+ 15:45:36 <ogra_> surely makes a nice t-shirt
+
+ 15:46:30 <ScottK> barry: This isn't arch.
+
+ 15:46:35 <barry> or just a new meaning for the 'd' in jfdi
+
+ 15:46:53 <barry> :)
+
+ 15:47:26 <slangasek> barry: AIUI 3.3 is on track upstream for where we said it needed to be... *are* we going to take it by default in quantal?
+
+ 15:47:38 <infinity> barry: wwdd?
+
+ 15:48:09 <ScottK> FWIW, dh_python3 is not ready for 3.3 yet.
+
+ 15:48:26 <barry> slangasek: i think beta2 was delayed a week.  not sure how that's going to play out
+
+ 15:48:44 <cjwatson> ScottK: What's needed?
+
+ 15:48:58 <slangasek> ScottK: not ready in what sense?
+
+ 15:49:04 <ev> very excited about mock in the standard library
+
+ 15:49:13 <ScottK> See Debian Bug #672178
+
+ 15:49:14 <ubottu> Debian bug 672178 in src:python3-defaults "dh_python3: not ready for Python 3.3" [Normal,Open] http://bugs.debian.org/672178
+
+ 15:50:13 <slangasek> barry: ^^ seems that should get tracked on the blueprint then?
+
+ 15:50:13 <barry> i'll open a bug on the ubuntu srcpkg and link it to that debian bug
+
+ 15:50:19 <barry> slangasek: yes
+
+ 15:52:40 <barry> bug 1026203
+
+ 15:52:42 <ubottu> Launchpad bug 1026203 in python3-defaults (Ubuntu) "python3-defaults does not yet support Python 3.3" [Undecided,New] https://launchpad.net/bugs/1026203
+
+ 15:56:18 <cjwatson> ok, sounds like that's all, thanks
+
+ 15:56:20 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

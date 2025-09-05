@@ -1,0 +1,523 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 16:03:46 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-02-13-16.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Lightning round
+''LINK:'' http://ubuntuone.com/6Vnd5a9kML8WsHH6GvBoYP   (xnox, 16:28:12)
+
+ *Bugs
+''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-r-tracking-bug-tasks.html   (bdmurray, 16:30:37)
+
+ *AOB
+''LINK:'' http://www.huffingtonpost.co.uk/2013/02/11/baby-mauled-by-fox-bromley-hospital_n_2660061.html   (slangasek, 16:43:49)
+
+
+
+Meeting ended at 16:45:48 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (49)
+ * stgraber (30)
+ * ogra_ (28)
+ * bdmurray (26)
+ * xnox (24)
+ * ubottu (19)
+ * jodh (17)
+ * barry (15)
+ * cjwatson (13)
+ * doko (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:03:46 <slangasek> #startmeeting
+
+ 16:03:46 <meetingology> Meeting started Wed Feb 13 16:03:46 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:03:46 <meetingology> 
+
+ 16:03:46 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:04:54 * stgraber waves
+
+ 16:05:03 <slangasek> [TOPIC] Lightning round
+
+ 16:08:30 <ogra_> hello ?
+
+ 16:08:47 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 16:08:47 <slangasek> ev xnox stokachu stgraber barry doko cjwatson bdmurray jodh slangasek ogra
+
+ 16:08:47 <slangasek> and no ev today, so xnox:
+
+ 16:08:47 <slangasek> xnox:
+
+ 16:08:47 <slangasek> is my network broken again? :)
+
+ 16:09:02 <xnox> * fix fai with mdadm bug #1008250
+
+ 16:09:02 <xnox> * Path pilot tuesday
+
+ 16:09:02 <xnox> * Uploaded lvm2 sru for precise bug #833368
+
+ 16:09:02 <xnox> * Uploaded new release of btrfs-tools
+
+ 16:09:02 <xnox> * Work with U1 team on ubiquity design changes / plugins
+
+ 16:09:02 <xnox> * Completing mdadm merge & plymouth integration
+
+ 16:09:03 <ubottu> bug 1008250 in fai (Ubuntu Quantal) "removed mdadm-startall is still used in fai-setup-storage" [Medium,Confirmed] https://launchpad.net/bugs/1008250
+
+ 16:09:04 <xnox> - btw plymouth ubuntu-logo theme is missing ask-question callbacks
+
+ 16:09:05 <ubottu> bug 833368 in lvm2 (Ubuntu Precise) "clustered lvm commands fail with "activation/monitoring=0 is incompatible with clustered Volume Group" error" [High,Fix committed] https://launchpad.net/bugs/833368
+
+ 16:09:06 <xnox> fixing that (patch was proposed on lp by community)
+
+ 16:09:08 <xnox> * Postponed a few specs / WI (ubiquity raid work, wubi, swiftmirror)
+
+ 16:09:10 <xnox> * Working on nexus7 & ubiquity bugs (disabling rotation, displaying background)
+
+ 16:09:12 <xnox> ..
+
+ 16:10:37 <stgraber> stokachu: around?
+
+ 16:11:26 <stgraber> alright, my turn then
+
+ 16:11:32 <stgraber> Feature work:
+
+ 16:11:32 <stgraber> - Upstart (BLUEPRINT: foundations-r-upstart-user-session-enhancements)
+
+ 16:11:32 <stgraber> - Prepare a first build including the user session changes.
+
+ 16:11:32 <stgraber> - Found a gcc bug which was tracked down by doko, still working on the details.
+
+ 16:11:35 <stgraber> - Should have a refreshed package later today.
+
+ 16:11:38 <stgraber> - Container (BLUEPRINT: servercloud-r-lxc)
+
+ 16:11:40 <stgraber> - A few more reviews.
+
+ 16:11:43 <stgraber> - Tested and sent pull request for 0.9~alpha3
+
+ 16:11:45 <stgraber> - Started preparing the packaging for 0.9~alpha3 in raring.
+
+ 16:11:48 <stgraber> - Networking (BLUEPRINT: foundations-r-networking)
+
+ 16:11:50 <stgraber> - Still waiting on test results for the infiniband support, no other progress there.
+
+ 16:11:53 <stgraber> - Opened an RT ticket to get update on IPv6 support in the DC.
+
+ 16:11:56 <stgraber> - Asked for two extra test SIM cards for dual-stack 3G networking.
+
+ 16:11:58 <stgraber> Other work:
+
+ 16:12:01 <stgraber> - Networking
+
+ 16:12:03 <stgraber> - Spent quite a bit of time getting Ofono to work with NetworkManager, slowly getting there.
+
+ 16:12:06 <stgraber> (glib + gobject + dbus in NM can be the source of rather bad headaches...)
+
+ 16:12:09 <stgraber> - QATracker
+
+ 16:12:12 <stgraber> - Prepare for 12.04.2 and alpha-2, looked into a bug I'll need to fix pretty soon (related to testcase and testsuite deprecation).
+
+ 16:12:15 <stgraber> - UEFI
+
+ 16:12:17 <stgraber> - Tested precise UEFI desktop, all looked good.
+
+ 16:12:20 <stgraber> - Bricked my laptop yesterday after a kernel panic ... waiting for replacement (looks like it may be some corrupted/full nvram issue as the panic is stored in nvram nowadays)
+
+ 16:12:24 <stgraber> TODO:
+
+ 16:12:26 <stgraber> - Prepare an update upstart test package.
+
+ 16:12:29 <stgraber> - Continue the ofono/NM work.
+
+ 16:12:31 <stgraber> - Try to finish any LXC feature work for this cycle (1 item left).
+
+ 16:12:34 <stgraber> (DONE)
+
+ 16:13:07 <barry> bug 1112496; bug 1077092; bug 1077087; filed bug 1118815; looked at bug 1103024
+
+ 16:13:18 <ubottu> bug 1112496 in python-imaging (Ubuntu Raring) "python-imaging broken in raring" [High,Fix released] https://launchpad.net/bugs/1112496
+
+ 16:13:19 <ubottu> bug 1077092 in Ubuntu One storage protocol "Switch from python-oauth to python-oauthlib" [Undecided,Fix committed] https://launchpad.net/bugs/1077092
+
+ 16:13:20 <ubottu> bug 1077087 in Ubuntu Single Sign On Client "Switch from python-oauth to python-oauthlib" [Undecided,Fix committed] https://launchpad.net/bugs/1077087
+
+ 16:13:22 <ubottu> bug 1118815 in MAAS "Remove python-oauth from the archive" [Low,Triaged] https://launchpad.net/bugs/1118815
+
+ 16:13:23 <ubottu> bug 1103024 in apturl (Ubuntu) "apturl-gtk crashed with TypeError in _on_finished(): 5 parameters needed for signal action-done; 3 given" [Medium,Confirmed] https://launchpad.net/bugs/1103024
+
+ 16:13:50 <barry> btw, 1118815 has lots of bug tasks for everything in the archive still dep'ing python-oauth
+
+ 16:13:53 <slangasek> xnox: yeah, saw the ask-question escalation; I should be able to get that implemented this week
+
+ 16:14:00 <barry> foundations-r-python3-oauth: done (finally!) though my status page seems to not agree (possibly because of the linked new bugs?)
+
+ 16:14:03 <slangasek> xnox: although, shouldn't this be a yes/no question?
+
+ 16:14:07 <barry> foundations-r-python33: done
+
+ 16:14:41 <barry> foundations-r-python-versions: ongoing of course, but good progress on work items.  seeing if i can reboot the xapian port effort since it's now blocking s-i and s-c.  dealing with upstream trunk build issues :(  filed bug 1124208 to track hplip port.
+
+ 16:14:43 <ubottu> bug 1124208 in HPLIP "Port to Python 3" [Undecided,New] https://launchpad.net/bugs/1124208
+
+ 16:14:48 <barry> done
+
+ 16:15:37 <doko> - next round of openjdk security updates (and the next ones announced for Feb 19 ...)
+
+ 16:15:37 <doko> - GCC update, which introduced the following issue ...
+
+ 16:15:37 <doko> - track down a GCC issue (LP: #1123588), still needs a test case, help needed.
+
+ 16:15:37 <doko> - icedtea-web update for 12.04.
+
+ 16:15:37 <doko> - some syncs and merges
+
+ 16:15:41 <ubottu> Launchpad bug 1123588 in gcc " [4.7 Regression] wrong code with the fix for PR53844" [Medium,New] https://launchpad.net/bugs/1123588
+
+ 16:16:07 <xnox> barry: s-i as in ....?
+
+ 16:16:15 <barry> xnox: s-i == session-installer
+
+ 16:16:19 <xnox> ack.
+
+ 16:16:20 <doko> (done)
+
+ 16:16:26 <cjwatson> Mostly still working on 12.04.2.  Nearly done but there are a few remaining glitches to sort out and a batch of respins (see #ubuntu-release).
+
+ 16:16:28 <cjwatson> phased-updates: Sorted out review comments on https://code.launchpad.net/~cjwatson/launchpad/bpph-phase/+merge/144154 and pushed up a set of changes for re-review.
+
+ 16:16:30 <ogra_> barry, thats a bashism !
+
+ 16:16:31 <cjwatson> Future release planning.
+
+ 16:16:34 <cjwatson> Learned how to update *-cross-toolchain-base (sort of), and did so for eglibc 2.17.
+
+ 16:16:37 <cjwatson> Various other cross-building fixes, including multiarching check.
+
+ 16:16:40 <cjwatson> Fixed lots of bugs involving outdated config.guess/config.sub and the like.
+
+ 16:16:43 <cjwatson> ..
+
+ 16:16:48 <xnox> ogra_: it's pythonic
+
+ 16:16:53 <ogra_> pfft
+
+ 16:16:55 <barry> :)
+
+ 16:17:06 <bdmurray> Work items I'm working on:
+
+ 16:17:11 <xnox> ogra_: also \!
+
+ 16:17:17 <bdmurray> create and update a BucketSystems column family to keep track of unique systems in a bucket: INPROGRESS
+
+ 16:17:29 <bdmurray> Import developer to package and developer to team mappings and filter the default view on errors.ubuntu.com to problems the developer and their team are responsible for: INPROGRESS
+
+ 16:17:41 <bdmurray> auto comment on bugs needing verification (indicate that it needs to happen in the next 15 days) at some interval (3 months): INPROGRESS
+
+ 16:17:58 <bdmurray> other work
+
+ 16:18:07 <slangasek> barry: linked new bugs will be reported as WIs, yes :)  Do we need to postpone those?
+
+ 16:18:15 <barry> slangasek: yes
+
+ 16:18:21 <bdmurray> in daisy renamed user_token system_token as it is specific for each system not each user
+
+ 16:18:24 <bdmurray> research into next steps with bucketsystems branch
+
+ 16:18:27 <cjwatson> bdmurray: sorry you're still blocked on me for phased-updates - the review feedback turned out to be a bit complex ...
+
+ 16:18:27 <bdmurray> modified bucketsystems code by moving some of it to oopsrepository
+
+ 16:18:29 <bdmurray> created oops-repository merge proposal
+
+ 16:18:32 <bdmurray> created daisy merge proposal for bucketsystems work
+
+ 16:18:34 <bdmurray> updated oops-repository merge proposal per evan's feedback
+
+ 16:18:37 <bdmurray> fixed get_subscribed_packages in errors to fetch more than 75 results
+
+ 16:18:39 <barry> slangasek: though i hate to postpone the bugs but i guess if we get volunteers they can tweak the statuses
+
+ 16:18:40 <bdmurray> research into first_version appearing in first couple of columns of bucketversions CF
+
+ 16:18:42 <bdmurray> created and tested a cassandra column family for caching the package to team mapping
+
+ 16:18:45 <bdmurray> submitted errors branch that utilizes userbinarypackages cf
+
+ 16:18:48 <bdmurray> submitted daisy branch that creates and populates userbinarypackages cf
+
+ 16:18:50 <bdmurray> research into quantity of bugs tagged regression-update
+
+ 16:18:53 <bdmurray> review of teams mapped to packages in the package to team mapping spreadsheet
+
+ 16:18:56 <bdmurray> wrote a tool to compare launchpad user package subscriptions to the package to team mapping spreadsheet
+
+ 16:18:58 <slangasek> indeed we can
+
+ 16:18:59 <bdmurray> google hangout with western oregon university students re bug triage
+
+ 16:19:15 <bdmurray> cjwatson: no problem ev is working on some changes to the database that will modify some of my work too (for the better though)
+
+ 16:19:25 <bdmurray> ‼ done
+
+ 16:19:34 <jodh> * blueprints
+
+ 16:19:35 <jodh> - foundations-r-upstart-user-session-enhancements:
+
+ 16:19:35 <jodh> - lp:~jamesodhunt/upstart/upstart-shutdown:
+
+ 16:19:35 <jodh> - Raised MP for mail code.
+
+ 16:19:38 <jodh> - Wrote test code (currently debugging a failure in an existing
+
+ 16:19:41 <jodh> test triggered by new test code).
+
+ 16:19:44 <jodh> - Reviewed and merged lp:~stgraber/upstart/upstart-user-cwd
+
+ 16:19:47 <jodh> - Wrote lp:~jamesodhunt/upstart/init--inherit-env (merged).
+
+ 16:19:51 <jodh> - foundations-r-upstart-roadmap: no progress
+
+ 16:19:54 <jodh> - foundations-r-arm-ubiquity: no progress
+
+ 16:19:57 <jodh> * misc
+
+ 16:20:00 <jodh> - bug 1120660: Fixed, tested, identified work-around and raised
+
+ 16:20:02 <ubottu> bug 1120660 in upstart (Ubuntu) "Kernel Panic when running 'sudo dpkg --configure -a' ?" [High,Confirmed] https://launchpad.net/bugs/1120660
+
+ 16:20:03 <jodh> upstream MP on lp:~jamesodhunt/upstart/bug-1120660
+
+ 16:20:07 <jodh> - bug 1123588: helping to investigate.
+
+ 16:20:08 <ubottu> bug 1123588 in gcc " [4.7 Regression] wrong code with the fix for PR53844" [Medium,New] https://launchpad.net/bugs/1123588
+
+ 16:20:10 <jodh> 𐒎
+
+ 16:20:10 <jodh> 
+
+ 16:20:58 <slangasek> jodh: "mail code"?
+
+ 16:21:52 <jodh> slangasek: 's/for mail code//' :)
+
+ 16:21:57 <slangasek> ok :)
+
+ 16:22:17 <slangasek> * ovmf package uploaded; in raring and Debian NEW queue
+
+ 16:22:18 <slangasek> * ubuntukylin theme package sponsored and waiting in NEW
+
+ 16:22:18 <slangasek> * updated pam package at cjwatson's prompting (fixes aarch64, etc); follow-on sponsor uploads of lightdm, gdm
+
+ 16:22:20 <slangasek> * sponsorship review of openwsman update for smb
+
+ 16:22:23 <slangasek> * upstart branch reviews
+
+ 16:22:25 <slangasek> * fix bug #1115875 on the initramfs-tools side - running ldd on firmware is silly
+
+ 16:22:27 <ubottu> bug 1115875 in initramfs-tools (Ubuntu) "ld-2.17.so crashed with SIGSEGV in <unavailable> in ??()" [Undecided,New] https://launchpad.net/bugs/1115875
+
+ 16:22:28 <slangasek> * todo: systemd package upload this week, in advance of the desktop team's sprint next week
+
+ 16:22:31 <slangasek> (done)
+
+ 16:22:43 <ogra_> done:
+
+ 16:22:43 <ogra_> * thanks to infinity for giving us a dedicated nexus7 builder ! (no more hunting down broken image builders for me atm)
+
+ 16:22:43 <ogra_> * helped to fix bugs caused by rotation code moving into gnome-settings-daemon (old conffiles were not deleted etc)
+
+ 16:22:43 <ogra_> * worked a bit on xz compression testing
+
+ 16:22:44 <ogra_> * workitem cleanup
+
+ 16:22:46 <ogra_> * lots of vet. visits (both cats are better nstead of bzr we all get letters now now !)
+
+ 16:22:50 <ogra_> todo:
+
+ 16:22:52 <ogra_> * finish xz compression for nexus7 images
+
+ 16:22:54 <ogra_> * plymouth in initrd
+
+ 16:22:56 <ogra_> * look at enabling flavour builds of nx7 images now that we have a dedicated builder
+
+ 16:22:58 <ogra_> * research the installer focus breakage with compiz (probably another incarnation of bug 1068994 ... though i heard similar reports from panda users by now)
+
+ 16:22:59 <ubottu> bug 1068994 in ubuntu-nexus7 "button1 gets stuck after a while" [Critical,Confirmed] https://launchpad.net/bugs/1068994
+
+ 16:23:01 <ogra_> * get the android 4.2.2 kernel changes into our nx7 kernel
+
+ 16:23:03 <ogra_> done
+
+ 16:26:21 * xnox is attached by a fox through a balcony door - luckily it seems to be scared of camera flash.
+
+ 16:26:29 <xnox> s/attached/attacked/
+
+ 16:26:38 <slangasek> you have a fox on your... balcony?
+
+ 16:26:44 <xnox> yes.
+
+ 16:26:56 <ogra_> heh, nice, i could send you some of my nightly raccoons from here to help you fight him
+
+ 16:27:02 <slangasek> is this like the Pacific Northwest tree octopus?
+
+ 16:27:30 <slangasek> any questions for anyone on the above?
+
+ 16:27:46 <ogra_> yes, why is my focus so broken on 12.04
+
+ 16:28:07 <ogra_> * lots of vet. visits (both cats are better nstead of bzr we all get letters now now !) was supposed to read * lots of vet. visits (both cats are better !)
+
+ 16:28:12 <xnox> http://ubuntuone.com/6Vnd5a9kML8WsHH6GvBoYP
+
+ 16:28:41 <barry> xnox: is that a robofox?
+
+ 16:28:47 <ogra_> doesnt look like it wants to attack you though
+
+ 16:29:09 <slangasek> barry: that would explain the battery, wouldn't it
+
+ 16:29:15 <ogra_> more like "i want to sleep on that warm carpet over there"
+
+ 16:29:32 * xnox the battery is unrelated (house mate recharging replacement car battery)
+
+ 16:29:39 <barry> slangasek: exactly.  i think xnox just wanted to show off his latest 3d print makerbot effort
+
+ 16:29:49 <slangasek> xnox: I like our theory better
+
+ 16:29:52 <slangasek> [TOPIC] Bugs
+
+ 16:30:03 <slangasek> bdmurray: what news?
+
+ 16:30:13 * xnox note that there reported multiple attacks by foxes recently in and around london
+
+ 16:30:33 <bdmurray> the rls-r-tracking list is rather lengthy
+
+ 16:30:37 <bdmurray> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-r-tracking-bug-tasks.html
+
+ 16:31:04 <ogra_> xnox, you think they are already trained to look cute until they attack ?
+
+ 16:31:42 <slangasek> can everyone here go through that report today (after the meeting is fine) and review the rls-r-tracking bugs that are assigned to them, and see if there are any that should be un-targeted?
+
+ 16:32:26 <slangasek> and we should probably dole out the unassigned ones
+
+ 16:32:36 <slangasek> xnox: is bug #1080437 on you?
+
+ 16:32:38 <ubottu> bug 1080437 in ubiquity (Ubuntu Raring) "no background during the 13.04 daily install" [High,Confirmed] https://launchpad.net/bugs/1080437
+
+ 16:32:53 <xnox> slangasek: yes.
+
+ 16:33:44 <slangasek> xnox: do you have a handle on how to fix it?
+
+ 16:33:46 <cjwatson> I'll take bug 664526, which I rather suspect is user error somehow but at least needs a test run
+
+ 16:33:48 <ubottu> bug 664526 in ubiquity (Ubuntu Raring) "setting nomodeset in grub, if live session was started with nomodeset" [High,Confirmed] https://launchpad.net/bugs/664526
+
+ 16:34:05 <ogra_> slangasek, there are multiple
+
+ 16:34:15 <ogra_> (and thats the prob i think)
+
+ 16:34:28 <cjwatson> I can also take bug 1112472
+
+ 16:34:30 <ubottu> bug 1112472 in apt-clone (Ubuntu Raring) "dep8 test failed because test data is too old" [High,Triaged] https://launchpad.net/bugs/1112472
+
+ 16:34:31 <slangasek> well, I guess we should only fix it one way though :)
+
+ 16:34:47 <ogra_> compiz wallpaper plugin, gnome-settings-daemon wallapaer plugin ... and there is old code in ubiquity itself iirc
+
+ 16:34:48 <slangasek> bug #1097922 is odd.  barry, doko, can one of you take this?
+
+ 16:34:49 <ubottu> bug 1097922 in newt (Ubuntu Raring) "byobu-config crashed with ImportError in /usr/lib/python2.7/dist-packages/snack.py: /usr/lib/python2.7/dist-packages/_snack.so: undefined symbol: _Py_RefTotal" [High,Confirmed] https://launchpad.net/bugs/1097922
+
+ 16:34:49 <xnox> slangasek: latest plan agreed on #-desktop is to reuse g-s-d background plugin code in the ubiquity's wallpaper app as it is proven to work.
+
+ 16:35:17 <barry> slangasek: sure
+
+ 16:35:32 <doko> hmm, built for the dbg interpreter?
+
+ 16:35:40 <barry> doko: sounds like it
+
+ 16:36:41 <slangasek> barry: thanks
+
+ 16:37:10 <slangasek> cjwatson: any progress on bug #1097113?
+
+ 16:37:11 <ubottu> bug 1097113 in ubiquity (Ubuntu Raring) "skip timezone selection" [High,Triaged] https://launchpad.net/bugs/1097113
+
+ 16:37:34 <cjwatson> not as yet, sorry, I'll reviw
+
+ 16:37:36 <cjwatson> +e
+
+ 16:37:39 <slangasek> oh, bug #1095887 should be fixed now
+
+ 16:37:41 <ubottu> bug 1095887 in pam (Ubuntu Raring) "package libpam-modules 1.1.3-7ubuntu4 failed to install/upgrade: trying to overwrite shared '/usr/share/man/man8/pam_group.8.gz', which is different from other instances of package libpam-modules:i386" [High,Fix committed] https://launchpad.net/bugs/1095887
+
+ 16:37:43 <cjwatson> but need to finish .2 first
+
+ 16:37:43 <slangasek> cjwatson: cheers
+
+ 16:37:47 * slangasek nods
+
+ 16:38:28 * xnox has still 2 merge proposals for kylin.
+
+ 16:38:37 <slangasek> bdmurray: do you think that puts enough of a dent in it for this week?
+
+ 16:39:10 <bdmurray> slangasek: yes, I do
+
+ 16:40:26 <slangasek> ok, great
+
+ 16:40:47 <slangasek> [TOPIC] AOB
+
+ 16:41:06 <bdmurray> Next Monday is a US Holiday, but I'm taking this Friday off
+
+ 16:42:45 <slangasek> anything else?
+
+ 16:42:56 <slangasek> (I'll be off next Monday fwiw)
+
+ 16:43:25 * barry too
+
+ 16:43:40 * ogra_ wont
+
+ 16:43:42 <ogra_> :(
+
+ 16:43:49 <slangasek> http://www.huffingtonpost.co.uk/2013/02/11/baby-mauled-by-fox-bromley-hospital_n_2660061.html
+
+ 16:44:38 <slangasek> xnox: so I guess you shouldn't let the fox inside
+
+ 16:45:01 <slangasek> ogra_: yeah but I'm sure you have National Beer Day or something coming up soon enough ;)
+
+ 16:45:02 <doko> xfox?
+
+ 16:45:12 <ogra_> haha, yeah
+
+ 16:45:46 <slangasek> heh
+
+ 16:45:48 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

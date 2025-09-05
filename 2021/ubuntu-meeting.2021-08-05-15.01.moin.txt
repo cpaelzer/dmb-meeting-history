@@ -1,0 +1,472 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 05 Aug at 15:01 &mdash; 15:26 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-08-05-15.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:01.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:16.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:16)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html   (bdmurray, 15:18)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html   (bdmurray, 15:18)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 15:18.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:19)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (bdmurray, 15:19)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:24.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (49)
+ * sil2100 (25)
+ * xypron (19)
+ * ubottu (15)
+ * jawn-smith (15)
+ * slyon (15)
+ * dbungert (14)
+ * doko (11)
+ * schopin (10)
+ * juliank (9)
+ * waveform (8)
+ * ginggs (8)
+ * rs2009 (4)
+ * meetingology (2)
+ * mclemenceau_ (1)
+
+
+
+== Full log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started at 15:01:02 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <bdmurray> #topic Lightning Round
+
+ 15:01 <juliank> o/
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray doko sil2100 mwhudson juliank waveform slyon jawn-smith dbungert xypron ginggs schopin)
+
+ 15:01 <bdmurray> dbungert jawn-smith vorlon slyon doko xypron bdmurray waveform schopin juliank sil2100 mwhudson ginggs
+
+ 15:02 <dbungert> * +1 - golang-testify unstuck by way of retest clicks.  Not a flaky test, just
+
+ 15:02 <dbungert> other bugs that have been since resolved
+
+ 15:02 <dbungert> * subiquity / u-d-i - bitlocker detction - annotations code ready with final PR
+
+ 15:02 <dbungert> pending for u-d-i.  May end up adding a dedicated API for making it simpler
+
+ 15:02 <dbungert> to detect the presence of bitlocker, discussion pending
+
+ 15:02 <dbungert> * subiquity / u-d-i - free software only install option - first step here is to
+
+ 15:02 <dbungert> control the components in sources.list on the installed system.  Have a
+
+ 15:02 <dbungert> working prototype based on curtin sources_list template, but that wipes out
+
+ 15:02 <dbungert> the stock sources.list.  Exploring alternatives that can preserve stock
+
+ 15:02 <dbungert> sources.list comments at least.
+
+ 15:02 <dbungert> * LP: #1821412 - put together SRU friendly plan for a simpler code change than
+
+ 15:02 <dbungert> previous work.  Have a plausible diff, next action is to test it and prove
+
+ 15:02 <ubottu> Launchpad bug 1821412 in update-notifier (Ubuntu) "'System program problem' report button does nothing" [High, In Progress] https://launchpad.net/bugs/1821412
+
+ 15:02 <dbungert> to myself that it's worthy of upload to impish
+
+ 15:02 <dbungert> (done)
+
+ 15:02 <xypron> This week I worked an tools needed for UEFI booting on RISC-V.
+
+ 15:02 <xypron> Furthermore I am looking at list of all packages available for ARM64 but not for RISC-V
+
+ 15:02 <xypron> #1938898 mokutil: not built on riscv64
+
+ 15:02 <xypron> fix released
+
+ 15:02 <xypron> #1938795 efibootmgr: missing riscv64 build
+
+ 15:02 <xypron> built in ppa
+
+ 15:02 <xypron> #1938787 gcc-defaults: missing cross compilers for building on RISC-V
+
+ 15:02 <xypron> evaluated
+
+ 15:02 <xypron> #1938705 dmidecode: not built on riscv64
+
+ 15:02 <xypron> fixed released
+
+ 15:03 <xypron> #1938699 cpu-checker: riscv64 build missing
+
+ 15:03 <xypron> fixed released
+
+ 15:03 <xypron> #1938582 efitools does not build on RISC-V
+
+ 15:03 <xypron> built in ppa
+
+ 15:03 <xypron> #1938438 sbsigntool does not build on riscv64
+
+ 15:03 <xypron> built in ppa
+
+ 15:03 <xypron> #1938324 gnu-efi does not support RISC-V
+
+ 15:03 <xypron> fixed released
+
+ 15:03 <xypron> <done>
+
+ 15:03 <bdmurray> jawn-smith: how about now
+
+ 15:03 <doko> did we shuffle again?
+
+ 15:03 <jawn-smith> * Investigate failed mysql tests blocking shadow
+
+ 15:03 <bdmurray> xypron is excited
+
+ 15:03 <jawn-smith> * unrelated, and shadow is now in -updates
+
+ 15:03 <jawn-smith> * Re-write ubuntu-image in go
+
+ 15:03 <jawn-smith> * Image preparation steps PR merged
+
+ 15:03 <jawn-smith> * New PR to be opened today for load_gadget_yaml and post-processing of the gadget.yaml file
+
+ 15:03 <jawn-smith> * The following steps have functionality developed but need code cleanup and test cases:
+
+ 15:03 <jawn-smith> * populate_rootfs_contents
+
+ 15:03 <jawn-smith> * populate_rootfs_contents_hooks
+
+ 15:03 <jawn-smith> * generate_disk_info
+
+ 15:04 <jawn-smith> * calculate_rootfs_size
+
+ 15:04 <jawn-smith> * populate_bootfs_contents
+
+ 15:04 <jawn-smith> * populate_prepare_partitions
+
+ 15:04 <jawn-smith> * Also need to create PR in snapd to export some things. I have begun working on that
+
+ 15:04 <jawn-smith> [done]
+
+ 15:04 <bdmurray> vorlon is out
+
+ 15:04 <slyon> - Only 1 interview & 1 take-home test this time :)
+
+ 15:04 <slyon> - Town Hall & Documentation workshops
+
+ 15:04 <slyon> - Improved zhmcclient SRU (LP: #1919451)
+
+ 15:04 <slyon> - Fixed IBM Z lvm+luks+multipath boot, provding 3 curtin fixes (LP: #1895192)
+
+ 15:04 <slyon> - Some snapd vs systemd cgroups v2 testing & review
+
+ 15:04 <slyon> === Netplan ===
+
+ 15:04 <ubottu> Launchpad bug 1919451 in zhmcclient (Ubuntu Focal) "Update (python-)zhmcclient to latest release" [Medium, In Progress] https://launchpad.net/bugs/1919451
+
+ 15:04 <ubottu> Launchpad bug 1895192 in Ubuntu on IBM z Systems "Optimistic approach of using zkey for encrypted installations on s390x not working" [High, In Progress] https://launchpad.net/bugs/1895192
+
+ 15:04 <slyon> - Upstream release of netplan 0.103 \o/
+
+ 15:04 <slyon> + some bug grooming & changelog assembly
+
+ 15:04 <slyon> + lots of testing
+
+ 15:04 <slyon> - Updated netplan.io packaging
+
+ 15:04 <slyon> + fighting autopkgtests as the Ubuntu infrastructure shows some issues that
+
+ 15:04 <slyon> did not show up in the pre-testing
+
+ 15:04 <slyon> + prepared SRU paperwork and SRU packaging (LP: 1919451)
+
+ 15:04 <slyon> (done)
+
+ 15:04 <doko> - unplanned: investigate gcc-N-cross ftbfs, triggered by a glibc merge
+
+ 15:04 <doko> - unplanned: fix glibc-2.34 dependency generation
+
+ 15:04 <doko> - first look at x86-vN hardware compatibility report, generated from ubuntu-report
+
+ 15:04 <doko> - about to start the first impish test rebuild
+
+ 15:04 <doko> and gcc-defaults pointing to GCC 11 just migrated
+
+ 15:05 <doko> (done)
+
+ 15:05 <bdmurray> investigation into LP: #1914075 (confirmed it was fixed)
+
+ 15:05 <bdmurray> deep dive into LP: #1921427 (no answers though - SAD)
+
+ 15:05 <bdmurray> submitted PR for cassandra-charm updating apache keys
+
+ 15:05 <bdmurray> reported LP: #1938338 regarding SRU of intel-iot image building
+
+ 15:05 <ubottu> Launchpad bug 1914075 in ubuntu-meta (Ubuntu) "subiquity 20.04.2 fails to install hwe kernel offline" [Undecided, Fix Released] https://launchpad.net/bugs/1914075
+
+ 15:05 <ubottu> Launchpad bug 1921427 in update-notifier (Ubuntu) "/usr/lib/update-notifier/list-oem-metapackages:AttributeError:/usr/lib/update-notifier/list-oem-metapackages@56:write_oem_metapackage_list" [Undecided, New] https://launchpad.net/bugs/1921427
+
+ 15:05 <ubottu> Launchpad bug 1938338 in livecd-rootfs (Ubuntu Focal) "Backport support for building intel-iot images to Focal" [High, Fix Committed] https://launchpad.net/bugs/1938338
+
+ 15:05 <bdmurray> discovered / discussed UC20 FDE w/ storage-safety unset behavior
+
+ 15:05 <bdmurray> rebuilt UC20 Intel IoT image w/ storage-safety=prefer-unencrypted
+
+ 15:05 <bdmurray> conducted an interview
+
+ 15:05 <bdmurray> merged a platform seed change regarding jasper
+
+ 15:05 <bdmurray> submitted usd-importer MP re kernel dkms universe packages for SRU reviewing
+
+ 15:05 <bdmurray> retried mysql autopkgtests (focal, hirsute) for shadow SRU
+
+ 15:06 <bdmurray> merged hints for schopin
+
+ 15:06 <bdmurray> force-reset-test ruby2.5 for bionic (regressed in -security)
+
+ 15:06 <bdmurray> submitted ubuntu-archive-tools MP re debdiff and versions
+
+ 15:06 <bdmurray> sru-verification of ubuntu-release-upgader in focal, hirsute -proposed
+
+ 15:06 <bdmurray> uploaded python-apt and ubuntu-release-upgrader for 20.04.3
+
+ 15:06 <bdmurray> submitted a PR re ubuntu-dev-tools and import-bug-from-debian re debian bug 969510
+
+ 15:06 <ubottu> Debian bug 969510 in ubuntu-dev-tools "import-bug-from-debian: can create bad bug descriptions" [Normal, Open] https://bugs.debian.org/969510
+
+ 15:06 <bdmurray> ✔ done
+
+ 15:06 <bdmurray> waveform:
+
+ 15:06 <waveform> * Finished isolated testing of u-r-u quirk for migrating users from u-boot in impish (LP: #1936401)
+
+ 15:06 <waveform> * Posted a revised patch for focal backport of update-notifier (LP: #1836475)
+
+ 15:06 <waveform> * Investigated reported kernel upgrade boot failure (LP: #1937924)
+
+ 15:06 <waveform> * Investigated UC18 boot issue with pending kernel (decompression related)
+
+ 15:06 <waveform> * pibootctl documentation work (after the docs workshop!)
+
+ 15:06 <waveform> * Pi meetings
+
+ 15:06 <ubottu> Launchpad bug 1936401 in ubuntu-release-upgrader (Ubuntu) "Migrate Pi users away from u-boot in impish" [Undecided, New] https://launchpad.net/bugs/1936401
+
+ 15:06 <ubottu> Launchpad bug 1836475 in update-notifier (Ubuntu Focal) "[SRU] update-notifier-common weekly cron job runs at the same time for all computers across the globe" [High, Triaged] https://launchpad.net/bugs/1836475
+
+ 15:06 <waveform> * Take home tests
+
+ 15:06 <ubottu> Launchpad bug 1937924 in linux-raspi (Ubuntu) "kernel upgrade via apt 5.11.0.1015-raspi kills the OS on Raspberry Pi4B" [Undecided, New] https://launchpad.net/bugs/1937924
+
+ 15:06 <waveform> (done)
+
+ 15:06 <schopin> * Documentation workshops
+
+ 15:07 <schopin> * openssl:
+
+ 15:07 <schopin> + test-rebuild of build-rdepends for main and universe against openssl3
+
+ 15:07 <schopin> -> documentation of the whole procedure for future reference
+
+ 15:07 <schopin> -> prepare software to generate a report for ubuntu-devel
+
+ 15:07 <schopin> -> build still in progress as we speak :)
+
+ 15:07 <schopin> + EVP SRU triggered a whole bunch of autopkgtest failure, dealt with most of it (bug #1931994)
+
+ 15:07 <schopin> * opencryptoki: SRU uploaded to hirsute-security for bug 1928780
+
+ 15:07 <schopin> * netplan: working on updating documentation for the new release
+
+ 15:07 <schopin> (done)
+
+ 15:07 <bdmurray> juliank:
+
+ 15:07 <juliank> * synced apt 2.3.7, need to follow up on update excuse.
+
+ 15:07 <juliank> * finished a new shim to submit with patches for load option parsing (LP: #1937115) (PR#393, PR#399)
+
+ 15:07 <ubottu> Launchpad bug 1937115 in shim (Ubuntu Impish) "Unable to boot/install Impish daily in UEFI boot mode" [Critical, In Progress] https://launchpad.net/bugs/1937115
+
+ 15:07 <juliank> * sponsored dmidecode, cpu-checker, efibootmgr, mokutil for xypron
+
+ 15:07 <juliank> * uploaded gnu-efi (synced), cpu-checker (synced) and sbsigntool in Debian, helping xypron merging the latter back
+
+ 15:07 <juliank> (done)
+
+ 15:08 <bdmurray> sil2100:
+
+ 15:09 <sil2100> * SRU reviews and releases
+
+ 15:09 <sil2100> * 20.04.3:
+
+ 15:09 <sil2100> - Sync-up meetings, status updates
+
+ 15:09 <sil2100> - Reviews for .3
+
+ 15:09 <sil2100> - Preparing base-files upload, waiting for review
+
+ 15:09 <sil2100> - Prepared language-pack refreshes for .3, accepted to -proposed
+
+ 15:09 <sil2100> - Required changes to debian-cd and ubuntu-cdimage
+
+ 15:09 <sil2100> - Lots of coordination between teams
+
+ 15:09 <sil2100> * Fixed u-boot SRU for focal to include the right target names in the postinst fix
+
+ 15:09 <sil2100> * Townhall
+
+ 15:09 <sil2100> * Rebased private-tests ESM branch to have a cleaner history
+
+ 15:09 <sil2100> * Tried releasing fix for running live-build locally
+
+ 15:09 <sil2100> - Fix causes ADT regressions in livecd-rootfs
+
+ 15:09 <sil2100> - Tried understandign the issue better, lots of debugging in the ADT environment
+
+ 15:09 <sil2100> - Wasn't able to find a case that would work in all envs so reverted the change
+
+ 15:09 <sil2100> * Pushed a small fix for livecd-rootfs iotg handling
+
+ 15:09 <sil2100> * Reviewed PR for ubuntu-image initial states for William, some iterating on that
+
+ 15:09 <sil2100> * Started working on ubuntu-image manifest generation state
+
+ 15:09 <sil2100> * Reviewed LP-team spec for core snap source generation
+
+ 15:09 <sil2100> * Some work on process documentation
+
+ 15:09 <sil2100> * Discussed ways to go forward with installer images on riscv
+
+ 15:09 <sil2100> * Looking into UC22 image builds again
+
+ 15:09 <sil2100> * Lots of various discussions
+
+ 15:10 <sil2100> (done)
+
+ 15:10 <sil2100> (was still writing the status)
+
+ 15:10 <bdmurray> ginggs:
+
+ 15:10 <ginggs> * documentation workshops
+
+ 15:10 <ginggs> * retried autopkgtests for openssl SRUs
+
+ 15:10 <ginggs> * tasksel is now no longer in main, ready to pull the trigger on a sync,
+
+ 15:10 <ginggs> barring launchpad learning about a tasks section
+
+ 15:10 <ginggs> * I looked at LP: #1779767 and decided the manpage issue mentioned in comment 13 was worth its own bug LP: #1938924
+
+ 15:10 <ginggs> * Now digging into #1922342 and LP: #1930884, which may be related
+
+ 15:10 <ubottu> Launchpad bug 1779767 in cron (Ubuntu Hirsute) "Default cron PATH does not include /snap/bin" [Medium, Fix Released] https://launchpad.net/bugs/1779767
+
+ 15:10 <ubottu> Launchpad bug 1938924 in cron (Ubuntu) "Update crontab(5) manpage to match new behaviour" [Undecided, New] https://launchpad.net/bugs/1938924
+
+ 15:10 <ubottu> Launchpad bug 1930884 in syslinux (Ubuntu) "failure to boot impish daily (no boot in 65 mins)" [Undecided, Expired] https://launchpad.net/bugs/1930884
+
+ 15:10 <ginggs> (done)
+
+ 15:11 <bdmurray> are there any questions on status?
+
+ 15:11 <rs2009> Hi, would it be possible to enable CONFIG_SW_SYNC_USER and set CONFIG_ANDROID_BINDER_DEVICES to 'binder,hwbinder,vndbinder,anbox-binder,anbox-hwbinder,anbox-vndbinder' in the kernel config to get Waydroid to work out of the box on Ubuntu?
+
+ 15:12 <bdmurray> rs2009: this isn't the appropriate place for that question. you might try in #ubuntu-devel or whatever the kernel team irc channel is
+
+ 15:13 <rs2009> Okay, sure. Had asked there earlier, but didn't get a response there so thought of asking in the Foundations team meeting.
+
+ 15:13 <bdmurray> ginggs: How many things had to be done to get tasksel out of main? Seeding jasper and what else.
+
+ 15:13 <rs2009> (in #ubuntu-kernel
+
+ 15:13 <bdmurray> rs2009: The Foundations team doesn't work directly on the kernel.
+
+ 15:14 <jawn-smith> There is a #ubuntu-kernel
+
+ 15:14 <ginggs> bdmurray: sil2100 demoted tasksel, tasksel-data, ubiquity-frontend-debconf and oem-config-debconf binaries
+
+ 15:14 <rs2009> john-smith: I had asked in #ubuntu-kernel on 1st, but didn't get a response.
+
+ 15:15 <bdmurray> okay, moving on
+
+ 15:16 <bdmurray> #topic Release Incoming Bugs
+
+ 15:16 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ii-incoming-bug-tasks.html#foundations-bugs
+
+ 15:17 <bdmurray> bug 1938588
+
+ 15:17 <ubottu> Bug 1938588 in ubuntu-meta (Ubuntu) "Ubuntu Server 18.04.5 install fails: TSC_DEADLINE disabled due to errata" [Undecided, New] https://launchpad.net/bugs/1938588
+
+ 15:17 <bdmurray> The was discussed in a 20.04.3 meeting and is being investigated but we should card it so we don't lose track.
+
+ 15:18 <mclemenceau_> Ok, done then
+
+ 15:18 <bdmurray> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html
+
+ 15:18 <bdmurray> nothing for us here
+
+ 15:18 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 15:18 <bdmurray> nothing for us here
+
+ 15:18 <bdmurray> #topic Team proposed-migration report
+
+ 15:19 <juliank> apt is mine, duh
+
+ 15:19 <doko> link?
+
+ 15:19 <bdmurray> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:19 <bdmurray> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:20 <juliank> binutils/crash - is ddeb-retriever not working?
+
+ 15:20 <juliank> the linux-image-5.11.0-20-generic-dbgsym should be on ddebs.u.c
+
+ 15:21 <doko> uninstallability issue
+
+ 15:22 <doko> netplan.io?
+
+ 15:23 <slyon> I'm working on it. Unfortunately the tests fail on loaded systems due to a systemd-networkd regression.
+
+ 15:24 <doko> I think that's all
+
+ 15:24 <bdmurray> okay, thanks doko!
+
+ 15:24 <bdmurray> #topic AOB
+
+ 15:25 <bdmurray> anything else?
+
+ 15:26 <bdmurray> alright, thanks everybody!
+
+ 15:26 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

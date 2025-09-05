@@ -1,0 +1,532 @@
+== Meeting information ==
+ * #ubuntu-meeting: ubuntu-server-team, 07 Feb at 16:04 &mdash; 16:54 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2017/ubuntu-meeting.2017-02-07-16.04.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Review ACTION points from previous meeting ===
+The discussion about "Review ACTION points from previous meeting" started at 16:05.
+
+
+=== Zesty Development ===
+The discussion about "Zesty Development" started at 16:06.
+
+  * ''LINK:'' https://wiki.ubuntu.com/ZestyZapus/ReleaseSchedule 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/tomsfastmath/+bug/1619239 
+  * ''LINK:'' https://code.launchpad.net/~louis-bouchard/ubuntu/+source/nut/+git/nut/+merge/311471 
+ * '''Release Bugs''' (16:36)
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-z-tracking-bug-tasks.html#ubuntu-server 
+
+=== Server & Cloud Bugs & SRU/Pending Uploads (caribou) ===
+The discussion about "Server & Cloud Bugs & SRU/Pending Uploads (caribou)" started at 16:41.
+
+  * SRU are pending for : os-prober, ifupdown, systemd, multipath-tools, qemu, sosreport
+
+=== Weekly Updates & Questions for the QA Team (powersj) ===
+The discussion about "Weekly Updates & Questions for the QA Team (powersj)" started at 16:43.
+
+  * ''LINK:'' https://jenkins.ubuntu.com/server/ 
+
+=== Weekly Updates & Questions for the Kernel Team (smb, sforshee) ===
+The discussion about "Weekly Updates & Questions for the Kernel Team (smb, sforshee)" started at 16:44.
+
+
+=== Upcoming Call For Papers ===
+The discussion about "Upcoming Call For Papers" started at 16:45.
+
+  * ''LINK:'' https://lwn.net/Calendar/Monthly/cfp/ 
+
+=== Ubuntu Server Team Events ===
+The discussion about "Ubuntu Server Team Events" started at 16:46.
+
+
+=== Open Discussion ===
+The discussion about "Open Discussion" started at 16:48.
+
+
+=== Announce next meeting date, time and chair ===
+The discussion about "Announce next meeting date, time and chair" started at 16:53.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jgrimm (104)
+ * rbasak (47)
+ * caribou (21)
+ * cpaelzer (21)
+ * nacc (12)
+ * powersj (4)
+ * smb (3)
+ * meetingology (3)
+ * coreycb (2)
+ * xnox (2)
+ * ubottu (2)
+ * zul (1)
+
+
+
+== Full Log ==
+
+
+ 16:04 <jgrimm> #startmeeting ubuntu-server-team
+
+ 16:04 <meetingology> Meeting started Tue Feb  7 16:04:27 2017 UTC.  The chair is jgrimm. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:04 <meetingology> 
+
+ 16:04 <meetingology> Available commands: action commands idea info link nick
+
+ 16:04 <jgrimm> hi folks!  will be a light turnout as handful of server folks are sprinting on cloud-init/curtin atm
+
+ 16:05 <jgrimm> #topic Review ACTION points from previous meeting
+
+ 16:05 <rbasak> For reference, http://ubottu.com/meetingology/logs/ubuntu-meeting/2017/ubuntu-meeting.2017-01-31-16.00.html is the last meeting.
+
+ 16:05 <rbasak> No action points there.
+
+ 16:05 <rbasak> I'll talk about minuting later :)
+
+ 16:05 <jgrimm> rbasak, ok i was about to ask you
+
+ 16:05 <jgrimm> thanks!
+
+ 16:06 <jgrimm> moving on then!
+
+ 16:06 <jgrimm> #topic Zesty Development
+
+ 16:06 <jgrimm> #link https://wiki.ubuntu.com/ZestyZapus/ReleaseSchedule
+
+ 16:06 <jgrimm> FeatureFreeze one week away!
+
+ 16:07 <jgrimm> anyone want to talk about anything explicitly?
+
+ 16:07 <rbasak> I've stuck squid3 and monitoring-plugins merges for review in the queue, if anyone has time.
+
+ 16:07 <rbasak> monitoring-plugins is relatively trivial.
+
+ 16:07 <rbasak> squid3 is complex but I'm reasonably confident about it now.
+
+ 16:07 <cpaelzer> I got as far as "opening the browser tab" :-/
+
+ 16:07 <rbasak> I've got some others to do. Remember to use "grep-merges" to see what you touched last.
+
+ 16:07 <rbasak> I intend to post the MPs for everything, but upload if nobody gets round to reviewing.
+
+ 16:08 <rbasak> Do we have any complex merges remaining?
+
+ 16:08 <jgrimm> nacc reviewed moin, openvpn, and python-boto for me.. i need ot rework moin, openvpn for some mostly trivial to address comments
+
+ 16:08 <cpaelzer> rbasak: for review you mean?
+
+ 16:08 <rbasak> cpaelzer: by remaining I mean no MP yet.
+
+ 16:09 <cpaelzer> ok, no not from me then
+
+ 16:09 <rbasak> I see quite a bit INPROGRESS in the blueprint.
+
+ 16:09 <jgrimm> rbasak, yes.. i'd like to understand status from everyone on INPROGRESS
+
+ 16:09 <jgrimm> its not a terribly long list
+
+ 16:10 <jgrimm> but just to make sure on target
+
+ 16:10 <rbasak> jgrimm: that's a good idea. Do you want to run through them one by one?
+
+ 16:10 <rbasak> Or just a report by-owner?
+
+ 16:10 <jgrimm> maybe by owner is more efficient
+
+ 16:10 <rbasak> There are also some unassigned TODOs that are FF-sensitive.
+
+ 16:11 <cpaelzer> I need to recheck on liblockfile
+
+ 16:11 <jgrimm> rbasak, some of those are 'nice to haves', where i think that is true i'll probably move out of the list
+
+ 16:11 <jgrimm> cpaelzer, would you like to go first
+
+ 16:11 <cpaelzer> for DPDK you all have seen my current stalling on ubuntu-devel
+
+ 16:11 <cpaelzer> qemu is stuck on a nova test, but coreycb and zul look into that
+
+ 16:11 <rbasak> So for me: squid3: done, MP pending. monitoring-plugins not listed but also done, MP pending. I have capacity now. I was going to hit up as much as I could remaining.
+
+ 16:11 <cpaelzer> all else done
+
+ 16:11 <rbasak> I noticed a minor dovecot bump in Debian that could do with re-merging (upstream microrelease).
+
+ 16:12 <jgrimm> #https://blueprints.launchpad.net/ubuntu/+spec/servercloud-z-server-core
+
+ 16:12 <jgrimm> rbasak, i asked cpaelzer to take dovecot remerge
+
+ 16:12 <rbasak> OK.
+
+ 16:12 <coreycb> zul, you still working on that ^^?
+
+ 16:13 <zul> coreycb: sort of...still cant reproduce it out of autopkgtest
+
+ 16:13 <rbasak> Also, I want to gather all the upload tags and get them into the importer repo. I have an item on my todo to sort that. So if everyone could just keep their outstanding ones lying around somewhere ready for my collection, that'd be great :)
+
+ 16:13 <nacc> rbasak: it's relatively important to do that promptly now
+
+ 16:13 <coreycb> cpaelzer, we'll get to it, we're way backed up on openstack release stuff
+
+ 16:13 <nacc> rbasak: as the importer will not integrate them at import-time if they're not there, and it's running automatically
+
+ 16:14 <rbasak> nacc: I'm not too worried if they don't get integrated, as long as they're there.
+
+ 16:14 <cpaelzer> I found my liblockfile status - in fact I tihnk it can become a sync
+
+ 16:14 <rbasak> If we do really want them integrated now, then we should sort where they're being collected from ASAP.
+
+ 16:14 <nacc> rbasak: ok, just makes re-merging non-trivial :)
+
+ 16:14 <cpaelzer> but the remaining Delta is all about special cross compilation, and the new versions are iterating fast
+
+ 16:15 <jgrimm> cpaelzer, i'll trust you are on it.
+
+ 16:15 <cpaelzer> that said I sent to infinity and doko but didn't hear yet
+
+ 16:15 <cpaelzer> currently I'd think we better keep it stable as it was for 5 years and sync early next cycle
+
+ 16:15 <cpaelzer> I get in touch with both again to get an ack on that
+
+ 16:15 <jgrimm> cpaelzer, ack
+
+ 16:16 <jgrimm> rbasak, did you have anything else.
+
+ 16:16 <rbasak> No that's all from me.
+
+ 16:16 <rbasak> Oh
+
+ 16:16 <jgrimm> rbasak, will you pick up some of the untaken packages then?
+
+ 16:16 <rbasak> What about the unassigned work items that are FF sensitive?
+
+ 16:16 <rbasak> Right.
+
+ 16:16 <rbasak> Sure. Shall I take one at a time, so as not to lock out others who might have capacity?
+
+ 16:16 * nacc is working on ldb/samba today
+
+ 16:16 <rbasak> Since I haven't looked at how big they are yet.
+
+ 16:17 <nacc> as we have a critical bug on samba
+
+ 16:18 <jgrimm> rbasak, nss, libpam-mount, and sorting the sssd related MIR seem to be the last bits unowned
+
+ 16:18 <rbasak> OK
+
+ 16:18 <jgrimm> the numad for qemu is essentially DONE
+
+ 16:18 <jgrimm> i just need to fix the blueprint to reflect, and as nacc said he is already working on ldb
+
+ 16:19 <jgrimm> so.. we have owners for most items.. that being said, i probably need to rescan what has come in since I last refreshed the list
+
+ 16:19 <nacc> jgrimm: yeah, sorry, have been heads-down on iscsi, will focus on getting caught up on merges the rest of the week and then bugs next week
+
+ 16:19 <jgrimm> nacc, thanks.. right we want to hit the merges hard this week for FF deadline
+
+ 16:20 <jgrimm> caribou, around?
+
+ 16:20 <caribou> yes
+
+ 16:20 <jgrimm> nut merge?
+
+ 16:20 <caribou> didn't have time to look at it, sorry
+
+ 16:21 <jgrimm> caribou, no worries. just wanted to see if its still on your radar.. able to get in before FF?
+
+ 16:21 <caribou> jgrimm: hoping so but UA workload is rather heavy these days
+
+ 16:22 <jgrimm> caribou, do you recall whether its big/little effort?
+
+ 16:22 <caribou> jgrimm: yes, not that big
+
+ 16:22 <jgrimm> i know it has been a long time since you've looked at it, but gauging whether its worth someone else picking up
+
+ 16:22 <jgrimm> caribou, ok.. i can snag it if you'd like?
+
+ 16:23 <jgrimm> you can be a reviewer! :)
+
+ 16:23 <caribou> jgrimm: I think that rbasak had already had a look at the merge and there was a tag missing or something
+
+ 16:23 <caribou> lemme check
+
+ 16:23 <jgrimm> caribou, ok, yes if its close that would be nice to knock out
+
+ 16:23 * rbasak doesn't recall
+
+ 16:23 <jgrimm> rbasak, was early in cycle iirc
+
+ 16:24 <jgrimm> rbasak, oh there is the MIR bug you opened against parallax to look at too
+
+ 16:25 <jgrimm> rbasak, MIR or otherwise resolve parallax (LP: #1653959): TODO
+
+ 16:25 <ubottu> Launchpad bug 1653959 in parallax (Ubuntu) "[MIR] parallax, dependency of crmsh" [Undecided,Incomplete] https://launchpad.net/bugs/1653959
+
+ 16:25 <rbasak> Yeah that does need sorting.
+
+ 16:25 <jgrimm> caribou, we can come back to you at the end wrt what to do with 'nut'
+
+ 16:25 <caribou> jgrimm: btw, the MIR for tomsfastmath should turn the clamav merge into a straight sync
+
+ 16:26 <jgrimm> caribou, oh.. i thought that was done already
+
+ 16:26 <jgrimm> still universe. :(
+
+ 16:27 <cpaelzer> well it only gets to main once something pulls it in
+
+ 16:27 <cpaelzer> what is the status of the mir itself?
+
+ 16:27 <jgrimm> caribou, Fix Committed!
+
+ 16:27 <jgrimm> so my memory isn't failing me as bad as i thought
+
+ 16:27 <cpaelzer> so that should me one could trigger the sync now right?
+
+ 16:28 <jgrimm> https://bugs.launchpad.net/ubuntu/+source/tomsfastmath/+bug/1619239
+
+ 16:28 <ubottu> Launchpad bug 1619239 in tomsfastmath (Ubuntu) "[MIR] tomsfastmath (runtime dependency of clamav)" [High,Fix committed]
+
+ 16:28 <jgrimm> cpaelzer, sounds good
+
+ 16:28 <caribou> jgrimm: yes, but what is triggering the move from Universe to Main ?
+
+ 16:28 <rbasak> Is that MIR actually ready to go?
+
+ 16:28 <rbasak> It's not clear to me from the bug comments.
+
+ 16:28 <rbasak> I'll ask in #ubuntu-devel.
+
+ 16:29 <rbasak> But if it is, then we just sync, right?
+
+ 16:29 <jgrimm> i believe that is what caribou is saying
+
+ 16:30 <cpaelzer> caribou: in case it is read the upload of something in main that depends on it will cause a component mismatch, but the AA will find the MIR and move it (experts please trump my knowledge here)
+
+ 16:30 <cpaelzer> s/read/ready/
+
+ 16:30 <rbasak> Right.
+
+ 16:31 <jgrimm> ok.. anything else for FF milestone?
+
+ 16:31 <jgrimm> caribou, you'll let me know about 'nut' offline?
+
+ 16:31 <jgrimm> whether you can push it along, or prefer someone else to carry forward
+
+ 16:31 <caribou> jgrimm: yep, I'm on it
+
+ 16:31 <powersj> here's my update: htop MIR is in security review; iotop, nicstat MIR are done, need to add to seed; curtin SRU exception is in review by folks on the team; ISO sizes still seem to be below limits; etckeeper merge to be done hopefully this week :)
+
+ 16:32 <jgrimm> powersj, hold on hoss
+
+ 16:32 <nacc> heh
+
+ 16:32 <jgrimm> ok, now powersj!
+
+ 16:32 <jgrimm> :)
+
+ 16:33 <jgrimm> anyone else i missed
+
+ 16:33 <jgrimm> smb, how is xen?
+
+ 16:33 <smb> jgrimm, probably still waiting on a bunch of things
+
+ 16:33 <smb> there is a 4.8 in proposed for zesty
+
+ 16:33 <jgrimm> smb, ack.. thanks
+
+ 16:34 <jgrimm> ok, anyone else with blueprint/FF related items or discussion?
+
+ 16:34 <jgrimm> ...3...2...1...
+
+ 16:34 <caribou> jgrimm: I can update on 'nut'
+
+ 16:34 <caribou> :)
+
+ 16:34 <jgrimm> ha!
+
+ 16:34 <jgrimm> go
+
+ 16:34 <caribou> https://code.launchpad.net/~louis-bouchard/ubuntu/+source/nut/+git/nut/+merge/311471
+
+ 16:35 <caribou> there was some tag mismatch that I fixed in a new branch, but for some reason another one seems to be missing
+
+ 16:36 <jgrimm> rbasak, nacc ^^ any recommendations
+
+ 16:36 <caribou> jgrimm: well, rbasak ask to push a new MP, I'll try to do it by EOW
+
+ 16:36 <jgrimm> caribou, great! thank you
+
+ 16:36 <jgrimm> #subtopic Release Bugs
+
+ 16:37 <jgrimm> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-z-tracking-bug-tasks.html#ubuntu-server
+
+ 16:37 <nacc> jgrimm: afaict, simple typo and then use of `usd tag` and then a push of tags should fix rbasak's linter
+
+ 16:37 <jgrimm> nacc, gotcha
+
+ 16:38 <jgrimm> anything on zesty bug list for discussion
+
+ 16:38 <jgrimm> nacc, i need to follow-up on python-django as we seem to be at an impasse
+
+ 16:38 <nacc> caribou: i would also suggest deleting those incorrect tags in the process (`git push lpusip :tags/{deconstruct,logical}/2.7.4-4ubuntu1`
+
+ 16:39 <nacc> jgrimm: ack, i don't think i've seen any movement on that bug
+
+ 16:39 <cpaelzer> sorry interrupt here, I need to drop
+
+ 16:39 <jgrimm> nacc, maybe take git-workflow tooling discussion out to #ubuntu-devel
+
+ 16:39 <jgrimm> cpaelzer, ok, will take interrupt from you.. i'm assuming for SRU status
+
+ 16:39 <caribou> nacc: there is a _v2 branch with what should be the correct tags, but one seems to be missing
+
+ 16:40 <cpaelzer> progress on libvirt, libvirt (next SRU), and strongswan
+
+ 16:40 <nacc> caribou: oh ok, sorry, didn't realize that
+
+ 16:40 <cpaelzer> qemu waiting for merge to complete
+
+ 16:40 <cpaelzer> cu
+
+ 16:40 <jgrimm> caribou, please take that thread out to #ubuntu-devel
+
+ 16:40 <caribou> jgrimm: k
+
+ 16:40 <jgrimm> cpaelzer, is that it?
+
+ 16:41 <jgrimm> by your cu, i'm assuming you left the building. :)
+
+ 16:41 <jgrimm> ok, getting back on track to the agenda
+
+ 16:41 <jgrimm> #topic Server & Cloud Bugs & SRU/Pending Uploads (caribou)
+
+ 16:41 <caribou> #info SRU are pending for : os-prober, ifupdown, systemd, multipath-tools, qemu, sosreport
+
+ 16:41 <jgrimm> caribou, anything new in that list?
+
+ 16:42 <caribou> jgrimm: I think that the systemd is
+
+ 16:42 <caribou> jgrimm: no, that one was there last week
+
+ 16:42 <caribou> jgrimm: so no, don't think so
+
+ 16:42 <jgrimm> caribou,  ok great!
+
+ 16:42 <jgrimm> anything for discussion here from anyone?
+
+ 16:43 <jgrimm> cool, thanks Louis!
+
+ 16:43 <caribou> np
+
+ 16:43 <jgrimm> #topic Weekly Updates & Questions for the QA Team (powersj)
+
+ 16:43 <powersj> Last week, finished getting ppc64el ISO testing operational. Have 3 failures working through: raid1, lvm, multi-lvm. These are test issues, not actual failures yet. arm64 node is now running tests on jenkins. Few test merge requests for curtin and cloud-init.
+
+ 16:43 <powersj> This week, sprinting with cloud-init/curtin folks. Getting those merge reqeusts in and getting the SRU exception for curtin reviewed. Expanding curtin's vmtests to run on ppc64el and s390x. Finally, trying my first merge with jgrimm.
+
+ 16:43 <jgrimm> \o/
+
+ 16:43 <jgrimm> questions for powersj?
+
+ 16:44 <jgrimm> #link https://jenkins.ubuntu.com/server/
+
+ 16:44 <jgrimm> #topic Weekly Updates & Questions for the Kernel Team (smb, sforshee)
+
+ 16:44 <smb> Nothing new yet for zesty. Xenial point release delayed a bit / currently working on clearing up dkms list to build with 4.8 kernels in xenial. Are there questions?
+
+ 16:44 <jgrimm> anyone?
+
+ 16:44 <jgrimm> thanks smb!
+
+ 16:45 <jgrimm> #topic Upcoming Call For Papers
+
+ 16:45 <jgrimm> #link https://lwn.net/Calendar/Monthly/cfp/
+
+ 16:46 <jgrimm> netdev CFP deadline on Feb 20
+
+ 16:46 <jgrimm> anything else?
+
+ 16:46 <jgrimm> #topic Ubuntu Server Team Events
+
+ 16:47 <jgrimm> as mentioned previously, handful of folks sequestered away for a cloud-init/curtin sprint in austin. :)
+
+ 16:47 <xnox> powersj, but we did have vmtests running on s390x already =) or has that regressed?
+
+ 16:48 <jgrimm> #topic Open Discussion
+
+ 16:48 <rbasak> o/
+
+ 16:48 <powersj> xnox: we have not been running them, and learned yesterday that zipl is not getting installed in images.
+
+ 16:48 <rbasak> I'd like to cut some red tape on doing minutes. As you know, I have quite a backlog.
+
+ 16:48 <rbasak> I propose to change https://wiki.ubuntu.com/MeetingLogs/Server into a manual list.
+
+ 16:48 <rbasak> Containing just URLs to the MeetBot automatic minutes.
+
+ 16:49 <rbasak> So all we need to do to prepare minutes in future is add that link.
+
+ 16:49 <jgrimm> rbasak, downsides?
+
+ 16:49 <rbasak> And rely on MeetBot to generate them sensibly, and for the chair to use the #info and related commands much more to fill it out.
+
+ 16:49 <rbasak> I don't really see any downsides. The full log is generated by MeetBot and still available.
+
+ 16:49 <xnox> powersj, fun
+
+ 16:49 <rbasak> I suppose we'd have a dependency on ubottu.com.
+
+ 16:50 <rbasak> We will no longer have an opportunity to edit the minutes later.
+
+ 16:50 <rbasak> But I don't think we care enough about it anyway. The full logs will always be present for anyone confused.
+
+ 16:51 <jgrimm> rbasak, i'm not opposed..
+
+ 16:51 <rbasak> I'll JFDI then.
+
+ 16:51 <rbasak> It'll save chair effort later.
+
+ 16:52 <jgrimm> rbasak, let's try it..
+
+ 16:52 <jgrimm> and if we don't like it, we can go back
+
+ 16:52 <rbasak> Sounds good, thanks.
+
+ 16:52 <jgrimm> i'm all for eliminating busy work
+
+ 16:52 <jgrimm> any one else?   wrt rbasak proposal, or other business?
+
+ 16:53 <nacc> seems reasonable to me
+
+ 16:53 <jgrimm> #topic Announce next meeting date, time and chair
+
+ 16:53 <jgrimm> Same bat-time, same bat-channel.  Feb 14
+
+ 16:54 <jgrimm> and chair is..rharper
+
+ 16:54 <jgrimm> :)
+
+ 16:54 <jgrimm> thanks everyone
+
+ 16:54 <jgrimm> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

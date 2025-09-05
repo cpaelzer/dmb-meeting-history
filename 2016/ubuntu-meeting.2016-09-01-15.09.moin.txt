@@ -1,0 +1,365 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 01 Sep at 15:09 &mdash; 15:34 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2016/ubuntu-meeting.2016-09-01-15.09.log.html]]
+
+
+
+== Meeting summary ==
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * pitti (52)
+ * cyphermox (27)
+ * tdaitx (22)
+ * xnox (13)
+ * doko (12)
+ * robru (11)
+ * bdmurray (10)
+ * ubottu (6)
+ * Laney (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:09 <pitti> #startmeeting
+
+ 15:09 <meetingology> Meeting started Thu Sep  1 15:09:16 2016 UTC.  The chair is pitti. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:09 <meetingology> 
+
+ 15:09 <meetingology> Available commands: action commands idea info link nick
+
+ 15:09 <pitti> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx xnox chiluk)
+
+ 15:09 <pitti> tdaitx pitti bdmurray chiluk slangasek infinity barry doko cyphermox caribou xnox robru sil2100
+
+ 15:10 <tdaitx> = OpenJDK security update
+
+ 15:10 <tdaitx> - Further fixes on OpenJDK 6 since now g++ also segfaults when building it on Trusty/arm64
+
+ 15:10 <tdaitx> - Added patches to fix headers with pch disabled
+
+ 15:10 <tdaitx> - Added watch file + repack script
+
+ 15:10 <tdaitx> - Moved package source format to 3.0 (quilt)
+
+ 15:10 <tdaitx> = Helping on -proposed
+
+ 15:10 <tdaitx> - mozart requires autoconf2.13 which generates code that is unusable by gcc 6 (due to a different output from "g++ -E conftest.C"); not sure how to proceed: patch configure, update to newer autoconf (how?), or what?
+
+ 15:10 <tdaitx> - fixing repsnapper FTBFS on powerpc/ppc64el;
+
+ 15:10 <tdaitx> * replace abs(double) with std::abs(double) - but why does abs(double) works fine on the other archs? (LP: #1619289)
+
+ 15:10 <ubottu> Launchpad bug 1619289 in repsnapper (Ubuntu) "repsnapper FTBFS with gcc6" [Undecided,New] https://launchpad.net/bugs/1619289
+
+ 15:10 <tdaitx> * powerpc/ppc64el missing TCGETS2 - what is the right fix? why is this even needed? (LP: #1619100)
+
+ 15:10 <ubottu> Launchpad bug 1619100 in repsnapper (Ubuntu) "FTBFS on ppc64el: termios problems" [Undecided,New] https://launchpad.net/bugs/1619100
+
+ 15:10 <tdaitx> = Other
+
+ 15:10 <tdaitx> - Is it my impression or the builders are taking longer to get stuff from the ppas? Even with free build machines and a free queue it takes quite a while to start.
+
+ 15:10 <tdaitx> (done)
+
+ 15:10 <pitti> autopkgtest:
+
+ 15:10 <pitti> - Move result web UI from gazillions of plain files to sqlite and dynamic page generation, as debci kept running out of inodes and suffered from multi-hour delays. New sqlite+flask app now takes 0.1%(!) of the disk space, 10% of the code, and 30 seconds for each update run.
+
+ 15:10 <pitti> - Fix "apt-get source" version detection for single-line "Package-List:"
+
+ 15:10 <pitti> - britney: Implement Testsuite-Triggers:; should hopefully pinpoint regressions better
+
+ 15:10 <pitti> netplan:
+
+ 15:10 <pitti> - Add support for bonds, VLAN, and wifi with wpasupplicant+networkd (#1616928)
+
+ 15:10 <pitti> - -Correctly handle DHCP defaults in NM (#1617051)
+
+ 15:10 <pitti> - Read config from /lib/netplan/ for policies shipped in packages
+
+ 15:10 <pitti> distro:
+
+ 15:10 <pitti> - initramfs: Fix rootdelay interpretation (#1615751)
+
+ 15:10 <pitti> - merges: iptables
+
+ 15:10 <pitti> misc:
+
+ 15:10 <pitti> - meeting: Integrate ubuntu system touch tests with the CI train
+
+ 15:11 <pitti> - meeting: package install in cloud init
+
+ 15:11 <pitti> - patch pilot shift on Friday
+
+ 15:11 <pitti> - Learn basics about snapd, file some bugs (#1618198, #1618206, #1618207)
+
+ 15:11 <pitti> END
+
+ 15:11 <pitti> tdaitx: thanks for helping wit -proposed!
+
+ 15:11 <pitti> networking, PPAs, Launchpad publisher etc. all have taken ages for two or three days now
+
+ 15:11 <pitti> indeed it seems the Canonical DC has some trouble
+
+ 15:11 <bdmurray> invetigation into errors when updating HWE stack on Trusty
+
+ 15:11 <bdmurray> reviewed all Xorg HWE stack bug reports
+
+ 15:11 <bdmurray> subscribed teams to Xorg HWE stack packages
+
+ 15:11 <bdmurray> updated 14.04 HWE EoL wiki page w/ references to fglrx deprecation
+
+ 15:11 <tdaitx> pitti, long overdue, trying to catch up now =)
+
+ 15:11 <bdmurray> added fglrx warning to hwe-support-status / update-manager
+
+ 15:11 <bdmurray> updated xorg-server-lts-xenial to conflict w/ fglrx
+
+ 15:11 <bdmurray> SRU verification of LP: #1617080, LP: #1617448
+
+ 15:11 <ubottu> Launchpad bug 1617080 in update-manager (Ubuntu Xenial) "update-manager apport package hook should gather HWE information" [Medium,Triaged] https://launchpad.net/bugs/1617080
+
+ 15:11 <ubottu> Launchpad bug 1617448 in xorg-server-lts-xenial (Ubuntu Trusty) "HWE upgrade to lts-xenial stack fails if fglrx is installed" [High,Fix committed] https://launchpad.net/bugs/1617448
+
+ 15:11 <bdmurray> uploaded livecd-rootfs SRU for X for LP: #1561250, LP: #1565985
+
+ 15:11 <bdmurray> reviewed / approved ubuntu-archive-tools mp regarding team changes
+
+ 15:11 <ubottu> Launchpad bug 1561250 in cloud-images "Xenial vagrant image is missing its hostname in /etc/hosts" [Undecided,Confirmed] https://launchpad.net/bugs/1561250
+
+ 15:11 <ubottu> Launchpad bug 1565985 in cloud-images "vagrant vb ubuntu/xenial64 cannot mount synced folders" [Undecided,In progress] https://launchpad.net/bugs/1565985
+
+ 15:11 <bdmurray> ✔ done
+
+ 15:12 <cyphermox> chiluk_: ?
+
+ 15:13 <xnox> pass -> see email no?
+
+ 15:13 <cyphermox> ah
+
+ 15:13 <xnox> slangasek, out
+
+ 15:13 <xnox> infinity not on irc
+
+ 15:13 <xnox> barry is also out, no?
+
+ 15:13 <cyphermox> barry isn't around either AFAIK
+
+ 15:13 <doko> barry is away too
+
+ 15:13 <xnox> doko =)
+
+ 15:14 <doko> - gcc-6 and binutils updates
+
+ 15:14 <doko> - gcc Linaro snapshot merge and build, trying to get some transitions done
+
+ 15:14 <doko> - MIR's, FTBFS, cleaning update-excuses
+
+ 15:14 <doko> - openjdk-9 build, forwarding bug reports
+
+ 15:14 <doko> - gdb 7.12
+
+ 15:14 <doko> - llvm toolchain updates
+
+ 15:14 <doko> - some python module updates
+
+ 15:14 <doko> - fight with autopkg testers ...
+
+ 15:14 <doko> - gave back failed builds in yakkety and yakkety-proposed
+
+ 15:14 <doko> - launchpad is slooowwwww
+
+ 15:14 <doko> (done)
+
+ 15:14 <cyphermox> grub:
+
+ 15:14 <cyphermox> - still working on unbreaking grub2 built with binutils 2.27
+
+ 15:14 <cyphermox> - more testing of IPv6 PXE boot in UEFI and sync with lamont
+
+ 15:14 <cyphermox> - testing grub builds with binutils 2.26.1
+
+ 15:14 <cyphermox> console-conf:
+
+ 15:14 <cyphermox> - tweaks for serial/VT console gettys to behave correctly
+
+ 15:14 <cyphermox> - various bug fixes for inclusion on the snap images
+
+ 15:14 <cyphermox> ubiquity:
+
+ 15:14 <cyphermox> - testing SRUs including HiDPI scaling fixes and SecureBoot UI
+
+ 15:14 <cyphermox> network-manager:
+
+ 15:14 <cyphermox> - needs more work for VPN DNS nameservers in split-tunnel mode
+
+ 15:14 <cyphermox> ubuntu-image:
+
+ 15:14 <cyphermox> - figuring out how this works and fixing up cloud-init preseeding
+
+ 15:14 <cyphermox> (done)
+
+ 15:15 <pitti> I get about 50 kB/s from archive.ubuntu.com (normally about 2.5 MB/s)..
+
+ 15:15 <xnox> actually email was from caribou, not from chiluk....
+
+ 15:15 <cyphermox> pitti: it's not just you
+
+ 15:15 <xnox> short week - monday was a bank holiday
+
+ 15:15 <xnox> finished all the zua feature work for now, all up to date in the ppa
+
+ 15:15 <xnox> helping fixing adt tests in openstack things, to fix s390x regressions (in progress, some will land with b3 uploads)
+
+ 15:15 <xnox> gpg2 -> gpg transition
+
+ 15:15 <xnox> ..
+
+ 15:15 <cyphermox> wha?
+
+ 15:15 <cyphermox> oh, nvm
+
+ 15:15 <pitti> he meant "<-" :)
+
+ 15:15 <cyphermox> he may have meant just dropping the 2.
+
+ 15:15 <pitti> oh, you meant renaming
+
+ 15:16 * xnox meant just dropping the 2 =)
+
+ 15:16 <cyphermox> wee
+
+ 15:16 <cyphermox> that means I can remove some scripts here.
+
+ 15:16 <xnox> gpg is now gpg2, gpg2 is now symlink to gpg
+
+ 15:16 <pitti> let's all discuss for 15 minutes which direction the arrow should be
+
+ 15:16 * pitti can kill his ~/bin/gpg symlink \o/
+
+ 15:16 <cyphermox> yeah
+
+ 15:16 <cyphermox> now the yubikey GPG magic is a first-class citizen
+
+ 15:17 <robru> lp:bileto
+
+ 15:17 <robru> - git support (in production but busted pending firewall fixes)
+
+ 15:17 <robru> - ignore no-change rebuilds in dest archive
+
+ 15:17 <robru> - ephemeral PPAs (in production but not usable yet)
+
+ 15:17 <robru> (done)
+
+ 15:18 <pitti> robru: oh, you are trying git clones from a ProdStack instance?
+
+ 15:18 <robru> pitti: git fetching and pushing, but yes
+
+ 15:18 <pitti> robru: (I banged my head on teh wall about that for too long and gave up)
+
+ 15:18 <robru> pitti: is there some secret?
+
+ 15:18 <pitti> robru: I do it in scalingstack instances now
+
+ 15:18 <robru> pitti: there is simply no giving up, we need this
+
+ 15:18 <pitti> PS is too annoyingly paranoid
+
+ 15:18 <cyphermox> robru: "- ignore no-change rebuilds in dest archive"  how do you do that?
+
+ 15:18 <pitti> Laney has discussed something like this with IS for ages
+
+ 15:19 <pitti> no sil2100 either
+
+ 15:20 <robru> cyphermox: we download the DSC of the latest version in trunk's changelog, and then we download the DSC of the latest version in distro, debdiff them, and filterdiff out debian/changelog. if the result is an empty file, we ignore that. if the result has nonzero size, we report the error (preventing publication), and insist the user sync this change back to
+
+ 15:20 <robru> trunk and rebuild.
+
+ 15:20 <cyphermox> ah, right
+
+ 15:20 <pitti> ♪ where have all the developers gone? long time passing ♪ ♫
+
+ 15:21 <Laney> pitti: robru: If you just need a whitelist of domains, you can get IS to add that for you in squid
+
+ 15:22 <Laney> assuming HTTP
+
+ 15:22 <Laney> for git://, dunno
+
+ 15:22 <robru> Laney: no we specifically need fetching and pushing for git+ssh
+
+ 15:22 <tdaitx> so, any easy way to deal with a package that requires autoconf-2.13 when that autoconf generates stuff don't work on gcc6?
+
+ 15:22 <pitti> tdaitx: ugh, 2.*13*?
+
+ 15:22 <pitti> I didn't know that dinosaurs were still alive :)
+
+ 15:23 <tdaitx> yeah, the package/project has not seem an update in quite a few years
+
+ 15:23 <pitti> (autoconf 2.13 released in 1998 :) )
+
+ 15:23 <pitti> tdaitx: remove-package ?
+
+ 15:24 <tdaitx> you tell me =)
+
+ 15:25 <pitti> oh dear, firefox and thunderbird use it
+
+ 15:25 <pitti> they didn't even exist yet when 2.13 was already obsolete..
+
+ 15:25 <pitti> tdaitx: so, I'm afraid everything will be "not easy" at this point :(
+
+ 15:26 <Laney> does it really require 2.13?
+
+ 15:26 <pitti> tdaitx: best might be to not run autoconf2.13 at boot, but have a good old debian/patches/99_autotools.pathc with the pregenerated stuff
+
+ 15:26 <Laney> convert to something more modern :)
+
+ 15:26 <pitti> tdaitx: and then maybe some extra 99.1_autoconf2.13_quirks.patch to fiddle with Makefile.in to work with gcc-6
+
+ 15:26 <pitti> but obviously, converting to 2.50 is best ;)
+
+ 15:27 <tdaitx> well, I can't regenerate anything there with a newer autoconf, I would have to update it
+
+ 15:27 <pitti> regenerate with 2.13, I mean
+
+ 15:27 <pitti> tdaitx: which package are we talknig about, btw?
+
+ 15:27 <tdaitx> pitti, mozart
+
+ 15:27 <pitti> we should at least yell at  upstream about that
+
+ 15:27 <pitti> this is like "don't build me"
+
+ 15:32 <tdaitx> pitti, meh, I was stupid to trust the launchpad page, it says "Mozart — Content Management Framework based on JAVA.", but control file has "Mozart Programming System"
+
+ 15:32 <tdaitx> the programming system is now at mozart 2.0, 1.4 is not being used any longer
+
+ 15:33 <tdaitx> the mozart content management framework is dead, doesn't even have a project page any longer
+
+ 15:34 <pitti> any other business?
+
+ 15:34 <pitti> let's formally close this
+
+ 15:34 <pitti> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,441 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 05 Dec at 16:01 &mdash; 16:57 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-12-05-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 16:02.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 16:12.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html 
+
+=== iso testing packages ===
+The discussion about "iso testing packages" started at 16:22.
+
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 16:32.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#unknown 
+
+=== AOB ===
+The discussion about "AOB" started at 16:54.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (58)
+ * xnox (19)
+ * cyphermox (18)
+ * rbalint (15)
+ * vorlon (15)
+ * juliank (14)
+ * ubottu (11)
+ * sil2100 (11)
+ * doko (9)
+ * waveform (7)
+ * tdaitx (7)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started Thu Dec  5 16:01:57 2019 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:02 <bdmurray> #topic Lightning rounds
+
+ 16:02 <bdmurray> mwhudson infinity xnox sil2100 rbalint juliank waveform doko cyphermox vorlon bdmurray tdaitx
+
+ 16:02 <bdmurray> mwhudson is not here
+
+ 16:02 <bdmurray> infinity: ?
+
+ 16:03 <bdmurray> xnox: !
+
+ 16:03 <xnox> here
+
+ 16:03 <xnox> but not ready
+
+ 16:03 <xnox> next
+
+ 16:04 <bdmurray> sil2100: are you ready?
+
+ 16:04 <sil2100> Yes
+
+ 16:04 <sil2100> - Moar kernel reviews
+
+ 16:04 <sil2100> - SRU reviews and releases
+
+ 16:04 <sil2100> - Finished some training
+
+ 16:04 <sil2100> - Coordination, preparation and releases for the raspi 19.10.1
+
+ 16:04 <sil2100> - Fixed the screen-reader not staying enabled on the target system (in ubiquity)
+
+ 16:04 <sil2100> - Verified ubuntu-image for all series + snap, promoted to stable
+
+ 16:04 <sil2100> - Promoted new core18 to stable
+
+ 16:04 <sil2100> - Sync regarding the IMX6 work, started planning multi-volume u-i livecd-rootfs support
+
+ 16:04 <sil2100> - Work on manifest diffing for ISO testing
+
+ 16:04 <sil2100> (done)
+
+ 16:04 <bdmurray> rbalint:
+
+ 16:04 <rbalint> * fixed valgrind ftbfs with openmpi 4.0
+
+ 16:04 <rbalint> * trainings
+
+ 16:04 <rbalint> * SRU verifications: wslu, valgrind, unattended-upgrades
+
+ 16:05 <rbalint> * working on showing motd in containers, fixing packages to make that work:
+
+ 16:05 <rbalint> pam, base-files, ubuntu-release-upgrader, update-notifier, update-motd
+
+ 16:05 <rbalint> (done)
+
+ 16:05 <bdmurray> juliank:
+
+ 16:05 <juliank> * reviewed vorlon's autopkgtest merge proposal for cross-testing
+
+ 16:05 <juliank> * worked on apt credential leaking bug
+
+ 16:05 <juliank> - investigated applying auth.conf entries to https only, allow explicit protocol matching (machine http://...)
+
+ 16:05 <juliank> - investigated dropping credentials after following a cross-origin redirect
+
+ 16:05 <juliank> - stable releases - add opt-in protocol matching, as opposed to https-only be default
+
+ 16:05 <juliank> * broke the APT unit tests, but did not notice it, because for some unknown reason
+
+ 16:05 <juliank> gtest is not being detected anymore and the tests silently skipped
+
+ 16:05 <juliank> * released apt 1.9.5
+
+ 16:05 <juliank> * noticed that APT CI was timing out on salsa half the time, work on making it faster
+
+ 16:05 <juliank> - drop coverage testing (only gives you a percentage in gitlab UI anyway...)
+
+ 16:06 <juliank> - trying to add ccache, but only seems to upload 1 file to cache
+
+ 16:06 <juliank> - future work: split up build and test stages, also avoids building twice
+
+ 16:06 <juliank> * noticed I forgot about bug 1801338 in apt, tried to re-reproduce
+
+ 16:06 <ubottu> bug 1801338 in apt (Ubuntu Cosmic) "apt fails to properly handle server-side connection closure" [Undecided,Triaged] https://launchpad.net/bugs/1801338
+
+ 16:06 <juliank> (done)
+
+ 16:06 <bdmurray> waveform:
+
+ 16:06 <waveform> * Finished fix for LP: #1311056, adding tests
+
+ 16:06 <waveform> * Testing pi images on multiple pis
+
+ 16:06 <waveform> * Fighting/debugging lxd snap on LVM (not through choice!)
+
+ 16:06 <waveform> * Testing pi images on multiple pis
+
+ 16:06 <waveform> * Worked on pi configuration tool; basic implementation now done, needs docs, bells & whistles
+
+ 16:06 <waveform> * Testing pi images on multiple pis ... seriously, there was a lot of this!
+
+ 16:06 <ubottu> Launchpad bug 1311056 in python-apt (Ubuntu) "apt-add-repository adds duplicate commented/disabled source lines" [High,Triaged] https://launchpad.net/bugs/1311056
+
+ 16:06 <waveform> (done)
+
+ 16:06 <bdmurray> doko:
+
+ 16:07 <doko> - first gcc-10 package done
+
+ 16:07 <doko> - investigating gcc-10 bootstrap failure on ppc64el
+
+ 16:07 <doko> - isl transition done
+
+ 16:07 <doko> - some python uploads
+
+ 16:07 <doko> - python2.7 SRUs for bionic and eoan
+
+ 16:07 <doko> - gcc-7, gcc-8 SRUs for bionic and eoan
+
+ 16:07 <doko> - trying to figure out how to build gcc-10 on i386 ("use the launchpad api" is no help)
+
+ 16:07 <doko> (done)
+
+ 16:07 <cyphermox> code reviews:
+
+ 16:07 <cyphermox> - netplan PR108 (802.1x auth-phase2, merged)
+
+ 16:07 <cyphermox> - netplan PR109 (generated wpa for 802.1x, needs changes)
+
+ 16:07 <cyphermox> - netplan PR113 (wireguard, needs another schema review)
+
+ 16:07 <cyphermox> - netplan PR114 (L2TP, needed changes, got updated, needs schema review)
+
+ 16:07 <cyphermox> - netplan PR115 (dummy interfaces, needs changes)
+
+ 16:07 <cyphermox> - subiquity PR577 (error reports, approved)
+
+ 16:07 <cyphermox> prepare fix for bash-completions in util-linux (umount) (bug LP: #1845529)
+
+ 16:07 <cyphermox> debugging issues with my test for walinuxagent
+
+ 16:07 <ubottu> Launchpad bug 1845529 in bash-completion (Ubuntu Focal) "bash completion shows `awk: line 18: function gensub never defined` on `umount /dev/<Tab>`" [High,Triaged] https://launchpad.net/bugs/1845529
+
+ 16:07 <cyphermox> doing verification (building reverse-depends) for unicode-data SRUs
+
+ 16:07 <cyphermox> netplan NM plugin:
+
+ 16:07 <cyphermox> - refactored netplan parser to turn it into libnetplan, made sure names won't conflict
+
+ 16:07 <cyphermox> - added initial parser code for backend-specific settings (NM has permissions, UUIDs, etc that need to be carried)
+
+ 16:07 <cyphermox> - mapping netplan netdefs to NMConnection fields
+
+ 16:07 <cyphermox> (done)
+
+ 16:08 * xnox is ready
+
+ 16:08 <bdmurray> xnox have at it then
+
+ 16:08 <xnox> 5th of December
+
+ 16:08 <xnox> Fixed up url=http://*.iso for netboot and url=http://*preseed.cfg for pressed duplication. This was causing failure to boot pressed desktops, and was causing redundant .iso downloads on subiquity netboot
+
+ 16:08 <xnox> S390x uploads:
+
+ 16:08 <xnox> Glibc cherry-pick (which probably will never migrate)
+
+ 16:08 <xnox> Boost dropping python2
+
+ 16:08 <xnox> Debugging snap-bootstrap / ubuntu-core-initramfs integration
+
+ 16:08 <xnox> Booked travel for engineering sprint, FOSDEM
+
+ 16:09 <xnox> Discussing linux-snap changes with apw for UC20
+
+ 16:09 <xnox> done
+
+ 16:09 <xnox> bah
+
+ 16:09 <xnox> my indenting got eaten
+
+ 16:09 <xnox> never mind
+
+ 16:09 <bdmurray> vorlon:
+
+ 16:09 <cyphermox> xnox: new tool for writing down tasks?
+
+ 16:09 <vorlon> * i386 compat-only architecture:
+
+ 16:09 <vorlon> * launchpad whitelist applied
+
+ 16:09 <vorlon> * autopkgtests now running on amd64 base instead of i386
+
+ 16:09 <vorlon> * will start the removal of stale binary packages today
+
+ 16:09 <vorlon> * have been doing manual removals of specific binary packages blocking proposed-migration, will be nice to stop playing whack-a-mole with these
+
+ 16:09 <vorlon> * britney doesn't necessarily notice that binary packages for the arch have been removed, so there will probably be more release team hints needed for test failures before we're done
+
+ 16:09 <vorlon> (done)
+
+ 16:10 <xnox> cyphermox:  kind of. Google doc.
+
+ 16:10 <cyphermox> hah, heh
+
+ 16:10 <bdmurray> resolved traceback in daisy with unicode in Stacktrace data
+
+ 16:10 <bdmurray> submitted RT, MP regarding updating daisy code for the above
+
+ 16:10 <bdmurray> reported LP: #1853660 regarding a cloud-init crash on the Pi4
+
+ 16:10 <ubottu> Launchpad bug 1853660 in cloud-init (Ubuntu) "cloud-init crashed with OSError in write_file(): [Errno 117] Structure needs cleaning: '/var/lib/cloud/data/tmpcct746jf' -> '/var/lib/cloud/data/status.json'" [Medium,Invalid] https://launchpad.net/bugs/1853660
+
+ 16:10 <bdmurray> reported LP: #1853661 regarding systemd-timesyncd.server not sync'ing
+
+ 16:10 <bdmurray> 19.10.1 Raspberry Pi iso testing
+
+ 16:10 <bdmurray> SRU releases of unattended-upgrades, wslu
+
+ 16:10 <ubottu> Launchpad bug 1853661 in systemd (Ubuntu) "systemd-timesyncd.server failed with exit code 3" [Undecided,New] https://launchpad.net/bugs/1853661
+
+ 16:10 <bdmurray> short week with Thanksgiving
+
+ 16:10 <bdmurray> tdaitx:
+
+ 16:11 <tdaitx> * apport O_PATH fix (LP: #1851806)
+
+ 16:11 <tdaitx> - build ubuntu cloud autopkgtest images
+
+ 16:11 <tdaitx> - testing on xenial, bionic, disco, eoan, focal
+
+ 16:11 <tdaitx> * jck tested samples, uploaded full snap
+
+ 16:11 <tdaitx> - hopping that snap will make login easier to automate
+
+ 16:11 <ubottu> Launchpad bug 1851806 in apport (Ubuntu) "'module' object has no attribute 'O_PATH'" [Undecided,New] https://launchpad.net/bugs/1851806
+
+ 16:11 <tdaitx> * training
+
+ 16:11 * tdaitx is done
+
+ 16:12 <bdmurray> #topic Release incoming bugs
+
+ 16:12 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 16:13 <bdmurray> bug 1852772
+
+ 16:13 <ubottu> bug 1852772 in software-properties (Ubuntu) "test_updates_interval fails on focal" [High,Triaged] https://launchpad.net/bugs/1852772
+
+ 16:13 <bdmurray> there's been an upload to fix it but...
+
+ 16:14 <bdmurray> LP timed out on me
+
+ 16:14 <bdmurray> Its stuck in -proposed
+
+ 16:14 <bdmurray> anyway we won't be working on that more so rls-ff-notfixing
+
+ 16:15 <bdmurray> same with that other software-properties one
+
+ 16:15 <bdmurray> bug 1853912
+
+ 16:15 <ubottu> bug 1853912 in casper (Ubuntu) "/etc/pollinate/add-user-agent should be populated (in the server live env) to allow better identification of live clients" [Undecided,Triaged] https://launchpad.net/bugs/1853912
+
+ 16:15 <bdmurray> vorlon: I think we want to take that for 20.04 correct?
+
+ 16:16 <vorlon> bdmurray: yes please
+
+ 16:16 <xnox> yeah
+
+ 16:16 <bdmurray> And remind me what we decided about air gapped upgrades e.g. bug 1834501
+
+ 16:16 <ubottu> bug 1834501 in ubuntu-release-upgrader (Ubuntu Eoan) "do-release-upgrade from bionic->any disables lxd without snapstore access" [Undecided,New] https://launchpad.net/bugs/1834501
+
+ 16:18 <vorlon> still important, we should take
+
+ 16:18 <bdmurray> Okay, targetting and carding it
+
+ 16:18 <bdmurray> well lets do that last one bug 1774843
+
+ 16:18 <ubottu> bug 1774843 in apport (Ubuntu) "apport python exception handler messes up python3.7" [Medium,Triaged] https://launchpad.net/bugs/1774843
+
+ 16:19 <bdmurray> this seems pretty straight forward and reasonable to me
+
+ 16:19 <bdmurray> so I think we should take it
+
+ 16:19 <cyphermox> +1
+
+ 16:20 <bdmurray> I had a look at ee and bb and there is nothing new there
+
+ 16:22 <bdmurray> #topic iso testing packages
+
+ 16:23 <bdmurray> sil2100 sent an email about targetted iso testing based on packages changing in the manifest
+
+ 16:23 <bdmurray> He and I would both appreciate feedback on that
+
+ 16:23 <bdmurray> Here is fine for it
+
+ 16:24 <xnox> e.g. major kernel change from v5.3.* to v5.4.* ?
+
+ 16:32 <bdmurray> #topic Team proposed-migration report
+
+ 16:32 <bdmurray> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:32 <bdmurray> Let's have a look at the python2 packages there
+
+ 16:32 <bdmurray> vorlon: you said a bunch of those are related to apport?
+
+ 16:33 <vorlon> bdmurray: yes, at least lazr.* and python-launchpadlib are
+
+ 16:34 <vorlon> I haven't looked at polib, python-colorama, etc; they may be related or not
+
+ 16:34 <bdmurray> I think python-colorama is on balint's list
+
+ 16:40 <rbalint> bdmurray, it is mine, needs a removal of a unused leaf package
+
+ 16:41 <rbalint> i'm on it
+
+ 16:41 <bdmurray> rbalint: got it, thanks
+
+ 16:46 <bdmurray> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#unknown
+
+ 16:46 <rbalint> bdmurray, it is held back by hinge
+
+ 16:46 <rbalint> bdmurray, will ask for removal of hinge
+
+ 16:47 <bdmurray> doko: so you are concerned about the python packages in the unknown section correct?
+
+ 16:51 <doko> bdmurray: those which are canidates, but there are non of those now
+
+ 16:51 <bdmurray> doko: so should we look again next week?
+
+ 16:51 <vorlon> rbalint: do you know why hinge hasn't been removed from Debian testing yet? (Debian bug #936704)
+
+ 16:51 <ubottu> Debian bug 936704 in src:hinge "hinge: Python2 removal in sid/bullseye" [Serious,Open] http://bugs.debian.org/936704
+
+ 16:52 <rbalint> vorlon, i think this should not matter
+
+ 16:52 <vorlon> it matters to me because if it had been removed from testing we could autodetect it sooner
+
+ 16:52 <rbalint> vorlon, yes, that's true, but we detected it now
+
+ 16:53 <vorlon> yes; but this won't be the only one
+
+ 16:53 <vorlon> anyway, hinge removed :P
+
+ 16:53 <rbalint> vorlon, i'll check the story in Debian
+
+ 16:53 <rbalint> vorlon, thanks :-)
+
+ 16:54 <bdmurray> Okay, let's look again for unowned candidates next week.
+
+ 16:54 <bdmurray> #topic AOB
+
+ 16:54 <bdmurray> Anything else?
+
+ 16:55 <bdmurray> Speaking of unowned things. I notice nobody is subscribed to linux-firmware-dragonboard410
+
+ 16:55 <bdmurray> sil2100: ^^
+
+ 16:56 <bdmurray> Alright, I'll chase him down later.
+
+ 16:57 <bdmurray> If there is nothing else let's adjourn.
+
+ 16:57 <rbalint> o/
+
+ 16:57 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

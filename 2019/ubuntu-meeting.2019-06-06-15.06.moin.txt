@@ -1,0 +1,613 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 06 Jun at 15:06 &mdash; 16:02 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-06-06-15.06.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:06.
+
+
+=== Release incoming bugs (bionic) ===
+The discussion about "Release incoming bugs (bionic)" started at 15:15.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html#foundations-bugs 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html#foundations-bugs 
+
+=== Release incoming bugs (eoan) ===
+The discussion about "Release incoming bugs (eoan)" started at 15:17.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:57.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:00.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * gaughen (56)
+ * vorlon (55)
+ * bdmurray (26)
+ * sil2100 (22)
+ * juliank (21)
+ * ubottu (13)
+ * cyphermox (13)
+ * rbalint (12)
+ * ogra (12)
+ * tdaitx (10)
+ * mwhudson (9)
+ * xnox (8)
+ * waveform (6)
+ * doko (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:06 <gaughen> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:06 <meetingology> Meeting started Thu Jun  6 15:06:02 2019 UTC.  The chair is gaughen. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:06 <meetingology> 
+
+ 15:06 <meetingology> Available commands: action commands idea info link nick
+
+ 15:06 <gaughen> #topic Lightning rounds
+
+ 15:06 <gaughen> xnox bdmurray vorlon tdaitx mwhudson infinity juliank rbalint sil2100 waveform doko cyphermox
+
+ 15:06 <gaughen> xnox, you won!
+
+ 15:06 <gaughen> or did cyphermox win?
+
+ 15:07 <bdmurray> worked with webops regarding retracers unable to connect to cassandra
+
+ 15:07 <bdmurray> reported bug regarding tar extract xattrs only doing user.* (LP: #1831150)
+
+ 15:07 <ubottu> Launchpad bug 1831150 in tar (Ubuntu) "only user.* extended attributes restored upon extraction" [Undecided,New] https://launchpad.net/bugs/1831150
+
+ 15:07 <rbalint> (headlight) xnox enabled lz4
+
+ 15:07 <bdmurray> also reported it upstream to the GNU bug tracker
+
+ 15:08 <gaughen> bdmurray, go while xnox is away
+
+ 15:08 <bdmurray> research into history of the addition of xattrs support into tar
+
+ 15:08 <bdmurray> sent an email to the bug-tar mailing list regarding extract and xattrs
+
+ 15:08 <bdmurray> reviewed mlocate thread, sent summary to foundations mailing list
+
+ 15:08 <bdmurray> looked into how Fedora, CentOS install and configure mlocate
+
+ 15:08 <bdmurray> commented on snapcraft forum post re: offline do-release-upgrade and snap transition
+
+ 15:08 <bdmurray> meetings regarding rls- tagged bug backlog and review of bugs
+
+ 15:08 <bdmurray> ✔ done
+
+ 15:08 <bdmurray> vorlon:
+
+ 15:08 <vorlon> * laying out specs for the cycle roadmap
+
+ 15:08 <vorlon> * reviewing specs
+
+ 15:08 <vorlon> * discussions around architectures
+
+ 15:08 <vorlon> * SRU reviews
+
+ 15:08 <vorlon> * livecd-rootfs SRUs for minimal images; and another one in the pipe to fix snap seeding on bionic
+
+ 15:09 <vorlon> (done)
+
+ 15:09 <tdaitx> Out on most of Tuesday because I enjoy waiting in lines for appointments.
+
+ 15:09 <tdaitx> * report on removed debian packages that might be blocking proposed-migration
+
+ 15:09 <tdaitx> - based on code from process-removals (probably should be extracted as a lib later on)
+
+ 15:09 <tdaitx> - looking at other scripts that generate reports (isn't there a way other than mixing python and html?)
+
+ 15:09 <tdaitx> * looking over improving openjdk autopkgtests
+
+ 15:09 <tdaitx> - fetching buildlogs and autopkgtest results to filter out unstable tests from the openjdk testsuite
+
+ 15:09 <tdaitx> Other:
+
+ 15:09 <tdaitx> - keeping track of the openjdk pre-releases
+
+ 15:09 <tdaitx> (done)
+
+ 15:09 <mwhudson> got reusing-partitions into review
+
+ 15:09 <mwhudson> looked at finalrd-related autopkgtest failures
+
+ 15:09 <mwhudson> thinking about unattended server installs
+
+ 15:09 <mwhudson> (fin)
+
+ 15:09 <mwhudson> oh yeah and flew to europe with small children
+
+ 15:10 <vorlon> bdmurray: do you have a link to the offline do-release-upgrade question?
+
+ 15:10 <bdmurray> vorlon: https://forum.snapcraft.io/t/offline-do-release-upgrades-from-xenial-to-bionic-introducing-snap-pkgs/11327/5
+
+ 15:10 <mwhudson> tdaitx: well the report i added uses jinja2
+
+ 15:11 <sil2100> No infinity?
+
+ 15:12 <sil2100> juliank
+
+ 15:12 <juliank> * (was out last week Wed, Thu, and Fri)
+
+ 15:12 <juliank> * Uploaded apport/xenial that fixes its linux vs. linux-signed autopkgtest failure
+
+ 15:12 <juliank> * SRUed lvm2 fix for path of systemd-run in 69-lvm-metad.rules (LP: #1830169)
+
+ 15:12 <ubottu> Launchpad bug 1830169 in Ubuntu on IBM z Systems "lvm udev rule fails to call systemd-run" [Medium,In progress] https://launchpad.net/bugs/1830169
+
+ 15:12 <juliank> * Analysed other apport/xenial autopkgtest failures re launchpad interaction
+
+ 15:12 <juliank> * Investigating autopkgtest failures for my pending SRUs
+
+ 15:12 <juliank> (done I think)
+
+ 15:12 <rbalint> (two weeks with ~one on vacation)
+
+ 15:13 <rbalint> * proposed patch for qemu LP: #1823872 to let other security updates installed when the installed unattended-upgrades is not fixed, released throught -security* proposed patch for qemu LP: #1823872 to let other security updates installed when the installed unattended-upgrades is not fixed, released throught -security
+
+ 15:13 <ubottu> Launchpad bug 1823872 in unattended-upgrades (Ubuntu Trusty) "Fixing fsfreeze-hook can break unattended upgrades" [Medium,Confirmed] https://launchpad.net/bugs/1823872
+
+ 15:13 <rbalint> * fixed LP: #1830427
+
+ 15:13 <ubottu> Launchpad bug 1830427 in ec2-hibinit-agent (Ubuntu Disco) "Instance may loose network connectivity after resuming the 2nd time" [Undecided,Fix committed] https://launchpad.net/bugs/1830427
+
+ 15:13 <rbalint> * unattended-upgrades fixes
+
+ 15:13 <rbalint> * Fixed 16.04 WSL app that installed 18.04 accidentally
+
+ 15:13 <rbalint> * updated wireshark through Debian to 2.6.9
+
+ 15:13 <rbalint> * updated gce-compute-image-packages to 20190522 including preparing SRUs
+
+ 15:13 <rbalint> * uploaded updated waylandpp to unstable then synced it to eoan
+
+ 15:13 <rbalint> * partner work
+
+ 15:13 <rbalint> (done)
+
+ 15:13 <sil2100> - SRU reviews and releases
+
+ 15:13 <sil2100> - Ouchy on Friday, had PM off
+
+ 15:13 <sil2100> - Kernel SRU releases - phasing out the releases this time
+
+ 15:13 <sil2100> - Short DMB meeting (no quorum)
+
+ 15:13 <sil2100> - Preparing two solution-propositions for the classic preinstalled image /boot/grub upgrade problem
+
+ 15:13 <sil2100> * One in livecd-rootfs and one in ubuntu-image - not sure which is the best way
+
+ 15:13 <sil2100> - Modifying kernel-sru-release to support releasing kernels to -updates and then -security only
+
+ 15:13 <sil2100> - Poking people for testing the -security updated toolchain packages
+
+ 15:13 <sil2100> - Copying the toolchain packages to -proposed, making sure they look good
+
+ 15:13 <sil2100> - NEW reviews:
+
+ 15:14 <sil2100> * BinNEW review of ubuntustudio-look
+
+ 15:14 <sil2100> * A NEW review of lsp-plugins, iterating on the package some more, finally approved - still waiting for fixes for all arches
+
+ 15:14 <sil2100> - Reviewing and releasing of Dave's new u-boot merge
+
+ 15:14 <sil2100> - Melting, too hot here
+
+ 15:14 <sil2100> (done)
+
+ 15:14 <waveform> * Responded to comments on Pi Amazing spec
+
+ 15:14 <waveform> * Validated Pi3 armhf images work on Pi2 under all circumstances (including kernel upgrades, flash-kernel upgrades, switching cards between machines); prepped branch removing all the pi2 hacks and uboot.env stuff from flash-kernel
+
+ 15:14 <waveform> * Spent Wednesday feeling horrid :(
+
+ 15:14 <waveform> * Digging into Bluetooth on Pi under Ubuntu Core (needs firmware for 3B+, apparmor profiles for raw sockets, and a mechanism to disable UART and kernel serial console to avoid boot cycles)
+
+ 15:14 <waveform> * Proposed livecd-rootfs change to seed cloud-init from boot partition on Pi (changes to pi3-gadget are already committed)
+
+ 15:14 <waveform> (done)
+
+ 15:14 <gaughen> doko,
+
+ 15:14 <doko> - OpenJDK fun ...  Had a phone call with AdoptJDK and some Debian maintainers about the current versioning rants/issues. Up
+
+ 15:14 <doko> dated OpenJDK 8, LTS and 13 packages.
+
+ 15:14 <doko> - Python 3.8 beta1
+
+ 15:14 <doko> - GCC clash protection and cet updates, together with amurray
+
+ 15:14 <doko> (done)
+
+ 15:14 <tdaitx> mwhudson: nice! thanks for the pointer
+
+ 15:14 <gaughen> cyphermox,
+
+ 15:15 <cyphermox> - shim review: Endless, Newstart, Hiddn Security
+
+ 15:15 <cyphermox> - coordinating work for shim update / planning for signing artifact changes for shim 16 (reproducible builds)
+
+ 15:15 <cyphermox> - networkmanager autopkgtests / handoff to desktop team
+
+ 15:15 <cyphermox> - re-started grub2 merge + grub-initrd-fallback.service changes / bootctl support
+
+ 15:15 <cyphermox> - more on 'netplan info' spec / proof of concept
+
+ 15:15 <cyphermox> - walinuxagent update (bug LP: #1827995)
+
+ 15:15 <cyphermox> - consulting on some NAC questions
+
+ 15:15 <ubottu> Launchpad bug 1827995 in walinuxagent (Ubuntu) "Request to integrate Microsoft's new Azure Linux Agent 2.2.40" [Wishlist,Triaged] https://launchpad.net/bugs/1827995
+
+ 15:15 <cyphermox> (done)
+
+ 15:15 <gaughen> #topic Release incoming bugs (bionic)
+
+ 15:15 <gaughen> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html#foundations-bugs
+
+ 15:15 <bdmurray> bug 1831252
+
+ 15:15 <ubottu> bug 1831252 in initramfs-tools (Ubuntu Bionic) "panic=-1 is completely ignored by the initrd causing unexpected behaviour" [Undecided,New] https://launchpad.net/bugs/1831252
+
+ 15:16 <bdmurray> that's an ee bug I guess I jumped the gun
+
+ 15:16 <juliank> No foundations bugs in bb-incoming
+
+ 15:16 <rbalint> http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html#foundations-bugs
+
+ 15:17 <gaughen> #topic Release incoming bugs (eoan)
+
+ 15:17 <gaughen> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html#foundations-bugs
+
+ 15:17 <bdmurray> bug 1831252
+
+ 15:17 <ubottu> bug 1831252 in initramfs-tools (Ubuntu Bionic) "panic=-1 is completely ignored by the initrd causing unexpected behaviour" [Undecided,New] https://launchpad.net/bugs/1831252
+
+ 15:17 <bdmurray> ogra: Are you planning on working on that bug?
+
+ 15:18 <ogra> bdmurray, i discussed it with xnox and thought this is foundations land
+
+ 15:19 <ogra> we have fixed it downstream for the specific customer that had issues with it though (by simply setting panic=30)
+
+ 15:19 <ogra> so i wasnt actually planning to ...
+
+ 15:19 <vorlon> I don't understand how the initramfs handling of the panic argument on the kernel commandline in any way impacts the kernel's behavior
+
+ 15:20 <ogra> it doesnt
+
+ 15:20 <vorlon> I expect that to be handled in kernel
+
+ 15:20 <vorlon> I agree it's foundations' responsibility if there's a bug in initramfs-tools
+
+ 15:20 <vorlon> I just don't yet understand the stated bug
+
+ 15:21 <vorlon> I guess we should take it for investigation
+
+ 15:21 <cyphermox> otoh later you'll have a mangled kernel cmdline in userspace; is that an issue? why are we even mucking with panic= in initramfs?
+
+ 15:21 <ogra> panic=-1 is a kernel option to force immediate reboot (vs using a positive value for delay)
+
+ 15:21 <vorlon> cyphermox: the kernel commandline is not writable by init
+
+ 15:21 <cyphermox> vorlon: no, but things in initramfs may want it for some reason
+
+ 15:22 <cyphermox> and it would be in some environment, even if it's not modified in /proc/cmdline
+
+ 15:22 <ogra> and in the initrd script there is no handling of negative values so it drops you to a shell instead of rebooting
+
+ 15:22 <vorlon> right, so if the kernel panics, it itself should see the panic=-1 on the (immutable) commandline
+
+ 15:22 <vorlon> and reboot
+
+ 15:22 <cyphermox> yup
+
+ 15:22 <vorlon> and bugger userspace
+
+ 15:22 <ogra> except that its not the kernel that panics but an initrd script that fails
+
+ 15:22 <vorlon> you're saying the initramfs script fails because the option is set?
+
+ 15:22 <ogra> then the panic() function kicks in ... fails and drops to a shell
+
+ 15:23 <ogra> yes
+
+ 15:23 <vorlon> ok
+
+ 15:23 <ogra> it has no handling for panic=-1
+
+ 15:23 <vorlon> so yes, let's dig into that
+
+ 15:23 <gaughen> vorlon, thoughts on the importance?
+
+ 15:23 <vorlon> gaughen: medium, really
+
+ 15:23 <ogra> if you use secureboot you probably dont want the system to drop you into a shell at any time ... in case an admin has set panic=-1
+
+ 15:23 <gaughen> should we shove this discussion in the bug?
+
+ 15:24 <ogra> s/shell/root shell/
+
+ 15:24 <xnox> bah
+
+ 15:24 <xnox> bah
+
+ 15:24 <xnox> bah
+
+ 15:24 <vorlon> black sheep
+
+ 15:24 <bdmurray> have you any wool?
+
+ 15:25 <gaughen> xnox!
+
+ 15:25 <gaughen> welcome
+
+ 15:25 <gaughen> missed you
+
+ 15:25 <gaughen> xnox, don't worry rbalint gave your status
+
+ 15:25 <xnox> status report no ready: openssl, zecureboot, subiquity, systemd, kernel =)
+
+ 15:25 <bdmurray> bug 1823434 came out of rls-dd review
+
+ 15:25 <ubottu> bug 1823434 in pkg-config (Ubuntu) "pkg-config ftbfs in disco" [High,New] https://launchpad.net/bugs/1823434
+
+ 15:25 <gaughen> xnox, we've moved on
+
+ 15:26 <vorlon> I've confirmed the build failure
+
+ 15:26 <vorlon> in ee
+
+ 15:27 <vorlon> I'm surprised it's not also reported in Debian, but it looks like we have a newer version than they do
+
+ 15:28 <gaughen> I think we should handle this one. Will card it
+
+ 15:29 <vorlon> I think we should (auto-)commit to all ftbfs fixes of our packages in main
+
+ 15:30 <gaughen> I'm okay with us quickly going through these, just quick.
+
+ 15:30 <gaughen> next one bdmurray!
+
+ 15:31 <bdmurray> bug 1798369
+
+ 15:31 <ubottu> bug 1798369 in ubiquity (Ubuntu) "Reinstall Ubuntu (with preserving existing data) shows error message due to "Could not get lock /target/var/cache/apt/archives/lock"" [High,Confirmed] https://launchpad.net/bugs/1798369
+
+ 15:31 <bdmurray> I tested this the other day and while I didn't get the same error message I did still get an error
+
+ 15:32 <vorlon> did this one come up in a different context last meeting?
+
+ 15:32 <vorlon> the bug is familiar
+
+ 15:32 <bdmurray> Yes, does that option still exist was the question so I tested it
+
+ 15:32 <cyphermox> we did bring up other ubiqutiy bugs last meeting
+
+ 15:32 <vorlon> ok
+
+ 15:34 <xnox> vorlon:  panic is also used by initramfs, and drops to shell with '-1' setting instead of actually panicing kernel, for it to read panic= and do the instant reboot.
+
+ 15:34 <xnox> vorlon:  the panic() function of initramfs.
+
+ 15:34 <gaughen> xnox, you're living in the past!
+
+ 15:34 <gaughen> we've moved on
+
+ 15:34 <vorlon> xnox: so there's only impact if something else in the initramfs is broken
+
+ 15:34 <xnox> vorlon:  yes.
+
+ 15:35 <vorlon> hence, medium
+
+ 15:38 <bdmurray> That's it for high bugs
+
+ 15:39 <vorlon> I notice this is in the list https://bugs.launchpad.net/ubuntu/+source/apt/+bug/1825001
+
+ 15:39 <ubottu> Launchpad bug 1825001 in apt (Ubuntu) "Allow archives to send a 4xx response to tell apt to try again later" [Wishlist,Triaged]
+
+ 15:39 <vorlon> triaged as wishlist
+
+ 15:39 <vorlon> but it's a request from Canonical IS
+
+ 15:39 <gaughen> bdmurray and cyphermox are going to meet offline and burn through the whole ee list
+
+ 15:40 <vorlon> because they want to mitigate the impact of apt client requests when the pipe is over capacity
+
+ 15:41 <juliank> oh, god I was scrolled up in the buffer
+
+ 15:42 <juliank> So the main issue I think is that systemd does not give us an option to do retries on timers
+
+ 15:42 <xnox> vorlon:  do they want to return that to _all_ clients or _some_ clients?
+
+ 15:42 <vorlon> juliank: added a comment to clarify: I think what we actually care about is a user agent in the apt requests
+
+ 15:42 <vorlon> xnox: ^^ that
+
+ 15:42 <juliank> vorlon: There's a different bug for interactive user agent
+
+ 15:42 <vorlon> ah
+
+ 15:42 <vorlon> then maybe this bug should be wontfix
+
+ 15:42 <juliank> vorlon: https://bugs.launchpad.net/ubuntu/+source/apt/+bug/1825000
+
+ 15:42 <ubottu> Launchpad bug 1825000 in apt (Ubuntu) "Add ability for mirrors to distinguish interactive and non-interactive apt runs" [Wishlist,Triaged]
+
+ 15:42 <vorlon> or fix released
+
+ 15:43 <vorlon> ok then I think the latter (with the lower bug number) is the actually interesting one
+
+ 15:43 <juliank> vorlon: I want to have real retrying if something failed temporarily, but it's blocked on systemd
+
+ 15:43 <juliank> Or writing a daemon or something
+
+ 15:43 <vorlon> juliank: ok, well I think /that/ is truly wishlist
+
+ 15:44 <juliank> Yes, that's what I discussed w/ someone on IRC, and hence the reason why I marked it as wishlist
+
+ 15:44 <vorlon> whereas injecting a different user agent for u-u so that the archive can selectively shed requests when under load is more important
+
+ 15:44 <juliank> But that's not entirely clear
+
+ 15:44 <juliank> We should inject a user agent when running from timers I guess
+
+ 15:44 <vorlon> juliank: what do you think about bumping priority of LP: #1825000 and putting it in the queue?
+
+ 15:44 <ubottu> Launchpad bug 1825000 in apt (Ubuntu) "Add ability for mirrors to distinguish interactive and non-interactive apt runs" [Wishlist,Triaged] https://launchpad.net/bugs/1825000
+
+ 15:44 <vorlon> yeah
+
+ 15:45 <gaughen> vorlon, juliank you two done?
+
+ 15:45 <juliank> Like, also for apt-get update which runs by apt-daily.timer
+
+ 15:45 <gaughen> nope
+
+ 15:45 <vorlon> (do the json hooks give us enough now to inject a U-A header?)
+
+ 15:45 <juliank> Let's bump it to something useful
+
+ 15:45 <juliank> vorlon: No
+
+ 15:45 <vorlon> ok
+
+ 15:45 <gaughen> juliank, vorlon shall I card this?
+
+ 15:45 <vorlon> gaughen: yes please
+
+ 15:46 <bdmurray> Oh, there was one more bug a friend brought up.
+
+ 15:46 <gaughen> moving on
+
+ 15:46 <gaughen> oooh
+
+ 15:46 <bdmurray> bug 1831453 ;-)
+
+ 15:47 <ubottu> bug 1831453 in subiquity (Ubuntu) "[Hyper-V] Install issue for Ubuntu 19.04" [Undecided,New] https://launchpad.net/bugs/1831453
+
+ 15:47 <gaughen> oh me!
+
+ 15:47 <gaughen> I thought that would come up at the end in other topics
+
+ 15:47 <gaughen> thank you bdmurray
+
+ 15:47 <bdmurray> What can I say except "you're welcome"
+
+ 15:48 <gaughen> bdmurray, did you see my eye rolling unicorn gif?
+
+ 15:49 <gaughen> I figured you'd see it since it involved a unicorn and I know how you feel about unicorns
+
+ 15:49 <gaughen> ALTHOUGH, we still don't know who is responsible for the unicorn
+
+ 15:50 * gaughen is singing "let it go"
+
+ 15:51 <vorlon> I don't understand, what is the reason for this bug being brought in?
+
+ 15:51 <vorlon> who is running subiquity in hyper-v?
+
+ 15:51 <vorlon> and why
+
+ 15:51 <gaughen> the bug submitter
+
+ 15:52 <vorlon> I don't think it's a priority for us to support subiquity under hyper-v
+
+ 15:52 <vorlon> we provide cloud images for hyper-v
+
+ 15:53 <vorlon> and if the submitter is doing this for installer testing, any bugs found on hyper-v only are not a priority
+
+ 15:57 <gaughen> #topic Team proposed-migration report
+
+ 15:57 <gaughen> #link http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:58 <gaughen> lxml
+
+ 15:58 <mwhudson> pandas on ppc64el
+
+ 15:58 <mwhudson> that screams "i want to look at that"
+
+ 15:58 <juliank> who names a package pandas?
+
+ 15:58 <sil2100> mwhudson: that's mine
+
+ 15:59 <gaughen> sil2100, you'll look at lxml/pandas?
+
+ 15:59 <sil2100> I mean, I have it my look-at-list
+
+ 15:59 <vorlon> juliank: scientists
+
+ 15:59 <sil2100> Yep o/
+
+ 15:59 <gaughen> sil2100, okay it's yours!
+
+ 15:59 <mwhudson> ../../../usr/lib/python2.7/dist-packages/pandas/tests/series/test_analytics.py::TestSeriesAnalytics::test_isin Killed
+
+ 15:59 <gaughen> sil2100, want me to card it?
+
+ 16:00 <sil2100> gaughen: I made a card
+
+ 16:00 <gaughen> sil2100, will you add it to big packages
+
+ 16:00 <gaughen> or whatever steve said
+
+ 16:00 <sil2100> I can confirm and add it if needed
+
+ 16:00 <gaughen> thank you sil2100
+
+ 16:00 <gaughen> #topic AOB
+
+ 16:00 <bdmurray> I'm out this afternoon and tomorrow
+
+ 16:00 <gaughen> bdmurray, have fun up there!
+
+ 16:01 <gaughen> bdmurray, I hear there are 8 kegs of beer being carted up for the event
+
+ 16:01 <gaughen> anything else?
+
+ 16:01 <vorlon> nothing here
+
+ 16:01 <gaughen> oooh!
+
+ 16:01 <gaughen> new chair
+
+ 16:01 <gaughen> juliank!
+
+ 16:02 <gaughen> next chair is juliank
+
+ 16:02 <juliank> ack
+
+ 16:02 <gaughen> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

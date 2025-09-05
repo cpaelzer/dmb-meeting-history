@@ -1,0 +1,618 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 04 Feb at 16:01 &mdash; 16:46 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-02-04-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 16:01.
+
+ * ''LINK:'' https://code.launchpad.net/~xnox/britney/+git/hints-ubuntu/+merge/397491   (xnox, 16:03)
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 16:09.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 16:09)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 16:17)
+
+=== Team proposed-migration report ===
+
+Discussion started by bdmurray at 16:23.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 16:23)
+ * ''LINK:'' https://code.launchpad.net/~jawn-smith/autopkgtest-cloud/+git/autopkgtest-cloud/+merge/397452   (bdmurray, 16:37)
+
+=== AOB ===
+
+Discussion started by bdmurray at 16:44.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (52)
+ * bdmurray (49)
+ * juliank (26)
+ * ubottu (26)
+ * xnox (26)
+ * rbalint (16)
+ * slyon (15)
+ * JawnSmith (14)
+ * doko (13)
+ * sil2100 (12)
+ * waveform (11)
+ * dbungert (10)
+ * mclemenceau (5)
+ * meetingology (2)
+ * tdaitx (1)
+
+
+
+== Full log ==
+
+
+ 16:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:04 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:01 <bdmurray> #topic Lightning Round
+
+ 16:01 <sil2100> o/
+
+ 16:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint mwhudson juliank waveform slyon jawnsmith dbungert)
+
+ 16:01 <juliank> o/
+
+ 16:01 <bdmurray> slyon bdmurray xnox doko vorlon jawnsmith rbalint dbungert waveform juliank tdaitx mwhudson sil2100
+
+ 16:01 <bdmurray> slyon:
+
+ 16:01 <slyon> - +1 Maintenance (Wed+Thu)
+
+ 16:01 <slyon> * autopkgtests, FTBFS, universe merges
+
+ 16:01 <slyon> * fixing iotjs on s390x
+
+ 16:01 <slyon> - Sponsored binutils for jawn-smith, bug #1889742
+
+ 16:01 <slyon> * bin-sync from sil2100's Bileto PPA
+
+ 16:01 <slyon> - Working on NetworkManager YAML backend implementation
+
+ 16:01 <slyon> * using new libnetplan API
+
+ 16:01 <ubottu> Error: Could not gather data from Launchpad for bug #1889742 (https://launchpad.net/bugs/1889742). The error has been logged
+
+ 16:01 <slyon> === Netplan ===
+
+ 16:01 <slyon> - Triaged bug #1913062, prepared PR#188, needs review
+
+ 16:01 <slyon> - Triaged bug #1908944
+
+ 16:01 <slyon> - Investigated bug #1905273
+
+ 16:01 <slyon> - Uploaded netplan.io 0.101-0ubuntu5 for new systemd compatibility
+
+ 16:01 <slyon> (done)
+
+ 16:01 <ubottu> bug 1913062 in netplan.io (Ubuntu) "netplan apply backtrace" [Undecided,Triaged] https://launchpad.net/bugs/1913062
+
+ 16:01 <ubottu> bug 1908944 in netplan "Line number in route error is incorrect" [Low,Triaged] https://launchpad.net/bugs/1908944
+
+ 16:01 <ubottu> bug 1905273 in netplan "VLAN interface not added to bridge" [Undecided,Incomplete] https://launchpad.net/bugs/1905273
+
+ 16:02 <bdmurray> uploaded bcmwl backport fixing LP: #1872908
+
+ 16:02 <bdmurray> 20.04 HWE kernel investigation and messaging (discourse post etc)
+
+ 16:02 <bdmurray> SRU verification of LP: #1914091
+
+ 16:02 <bdmurray> uploaded apport for hirsute fixing LP: #1912326
+
+ 16:02 <ubottu> Launchpad bug 1872908 in bcmwl (Ubuntu Focal) "bcmwl kernel module does not build with kernel version 5.6 or 5.8" [Medium,Fix released] https://launchpad.net/bugs/1872908
+
+ 16:02 <ubottu> Launchpad bug 1914091 in ubiquity (Ubuntu Focal) "OEM kernel removed during install, metapackage marked for removal in the target system" [Critical,Fix released] https://launchpad.net/bugs/1914091
+
+ 16:02 <ubottu> Error: Launchpad bug 1912326 could not be found
+
+ 16:02 <bdmurray> reported / fixed a whoopsie bug with bionic servers (LP: #1914481)
+
+ 16:02 <bdmurray> discovered / fixed an issue retracing crashes in hirsute
+
+ 16:02 <bdmurray> deployed above changes to staging / production Error Trackers
+
+ 16:02 <ubottu> Launchpad bug 1914481 in whoopsie (Ubuntu Groovy) "use the size of the data when determing the server response" [Undecided,New] https://launchpad.net/bugs/1914481
+
+ 16:02 <bdmurray> ✔ done
+
+ 16:03 <xnox> 20.04.2 release fun
+
+ 16:03 <xnox> fixing subiquity images to have HWE kernels
+
+ 16:03 <xnox> fixing subiquity images to have the right pool
+
+ 16:03 <xnox> fixing ubuntu-drivers-common to have the right metas for the right nvidia
+
+ 16:03 <xnox> fixing ubiquity to remove the right nvidias when doing oem installs
+
+ 16:03 <xnox> riscv64 image is shiny too
+
+ 16:03 <xnox> grub2
+
+ 16:03 <xnox> fixing problems with grub on cloud images
+
+ 16:03 <xnox> fixing missing systemd-detect-virt
+
+ 16:03 <xnox> fixing grub not being installed into ESP, such that it will be upgraded later on
+
+ 16:03 <xnox> fixing missing postinst scripts in grub2-signed on arm64
+
+ 16:03 <xnox> working on grub2.04-signed backport to bionic
+
+ 16:03 <xnox> working with MAAS team to upgrade grub2, at least on amd64, to focal one
+
+ 16:03 <xnox> proposed-migration
+
+ 16:03 <xnox> need bambam hint merged please, such that we don't break things that use imagemagick with new glibc
+
+ 16:03 <xnox> https://code.launchpad.net/~xnox/britney/+git/hints-ubuntu/+merge/397491
+
+ 16:03 <xnox> fixed socat ftbfs on amd64
+
+ 16:03 <xnox> done i think....
+
+ 16:03 <doko> just think, or done?
+
+ 16:04 <doko> - GCC 11 landing in -proposed
+
+ 16:04 <doko> - GCC 10 update
+
+ 16:04 <doko> - binutils 2.36 release
+
+ 16:04 <doko> - two +1 maintenance days, and finally openmpi migrated
+
+ 16:04 <doko> - OpenJDK 17 snapshot
+
+ 16:04 <doko> - started looking at universe merges, sent +1 proposal
+
+ 16:04 <xnox> done
+
+ 16:04 <doko> - wrote about LTO by default (wiki, mail)
+
+ 16:04 <doko> - glibc 2.33 snapshot testing
+
+ 16:04 <doko> (done)
+
+ 16:04 <vorlon> * SRU reviews
+
+ 16:04 <vorlon> * merges, and chasing autopkgtest regressions
+
+ 16:04 <vorlon> * new git is now unblocked, new xfsprogs is blocked by an MIR from June
+
+ 16:04 <vorlon> * community team maintenance tasks
+
+ 16:04 <vorlon> * risc-v discussions
+
+ 16:04 <vorlon> * reviewing proposed changes to popularity-contest
+
+ 16:04 <vorlon> * +1 maintenance today/tomorrow
+
+ 16:04 <vorlon> (done)
+
+ 16:04 <JawnSmith> * LP: #1912371 MIR for flashrom
+
+ 16:04 <ubottu> Launchpad bug 1912371 in flashrom (Ubuntu) "[MIR] flashrom" [Undecided,New] https://launchpad.net/bugs/1912371
+
+ 16:04 <JawnSmith> * LP: #1829401 Crash in software-properties when mirror is invalid
+
+ 16:04 <ubottu> Launchpad bug 1829401 in software-properties (Ubuntu) "gi.repository.GLib.GError: pk-client-error-quark: could not do untrusted question as no klass support" [High,Triaged] https://launchpad.net/bugs/1829401
+
+ 16:04 <JawnSmith> * LP: #1912718 Fixing regression where old kernel packages cannot be autoremoved by the GUI
+
+ 16:04 <ubottu> Launchpad bug 1912718 in update-manager (Ubuntu Hirsute) "update-manager: clicks do not toggle checkboxes for "Remove old kernels"" [High,Fix released] https://launchpad.net/bugs/1912718
+
+ 16:04 <JawnSmith> * Performing tests on point release iso
+
+ 16:04 <JawnSmith> * confirmed LP: #1231091
+
+ 16:04 <ubottu> Launchpad bug 1231091 in ubiquity (Ubuntu) "Screenreader starts, but does not work with installer (ubiquity) in live session" [High,Confirmed] https://launchpad.net/bugs/1231091
+
+ 16:04 <JawnSmith> * Increase timeout of autopkgtest for software-properties
+
+ 16:04 <JawnSmith> [done]
+
+ 16:04 <rbalint> * filed LP: #1914062
+
+ 16:04 <ubottu> Launchpad bug 1914062 in systemd (Ubuntu) "NetworkManager-wait-online.service in 1.28.0-2ubuntu1 fails to start in LXC" [High,Triaged] https://launchpad.net/bugs/1914062
+
+ 16:04 <rbalint> * uploaded glibc 2.33-0ubuntu1
+
+ 16:05 <rbalint> * merged and testing systemd
+
+ 16:05 <rbalint> * glibc, systemd, unattended-upgrades bugs gardening
+
+ 16:05 <rbalint> (done)
+
+ 16:05 <dbungert> * New hire stuff
+
+ 16:05 <dbungert> * LP: #1913321 MIR for libiniparser1 off to MIR team
+
+ 16:05 <dbungert> * LP: #1706168 update-notifier feature to now show the prompt if the command we would run doesn't exist
+
+ 16:05 <ubottu> Launchpad bug 1913321 in iniparser (Ubuntu Hirsute) "[MIR] iniparser (dependency of mtd-utils)" [Undecided,Incomplete] https://launchpad.net/bugs/1913321
+
+ 16:05 <ubottu> Launchpad bug 1706168 in update-notifier (Ubuntu) "dialog shouldn't be display if Command doesn't exist" [Medium,In progress] https://launchpad.net/bugs/1706168
+
+ 16:05 <dbungert> * subiquity preseed compat: repo created, basic python package setup, WIP to learn preseed/autoinstall and figure out priority data mappings
+
+ 16:05 <dbungert> (done)
+
+ 16:05 <bdmurray> waveform:
+
+ 16:05 <waveform> * Checked liburi-perl in excuses (transient error)
+
+ 16:05 <waveform> * Finished GPIO investigations...
+
+ 16:05 <waveform> * looked into RPi.GPIO replacement, RPi.GPIO2 (no packaging, and too broken to be a viable replacement without considerable work)
+
+ 16:05 <waveform> * and liblgpio / librgpio (much more promising, but lots of packaging work needed, plus some other concerns like gpiozero)
+
+ 16:05 <waveform> * both libgpiod based, thankfully no work needed there (post-focal anyway)
+
+ 16:05 <waveform> * Investigated bluetooth detection issue on CM4 (pi-bluetooth update pushed upstream; need to add to local package)
+
+ 16:05 <vorlon> tdaitx: btw I'm currently reviewing popularity-contest diff in bileto, where do you want review feedback?
+
+ 16:05 <waveform> (done)
+
+ 16:05 <bdmurray> vorlon: in a telegram
+
+ 16:06 <bdmurray> juliank:
+
+ 16:06 <juliank> * urgent update-manager fixes for .2 release back last friday:
+
+ 16:06 <juliank> - Revert previous change to UpdateList.py, as it breaks kernel -autoremoval (LP: #1912718)
+
+ 16:06 <ubottu> Launchpad bug 1912718 in update-manager (Ubuntu Hirsute) "update-manager: clicks do not toggle checkboxes for "Remove old kernels"" [High,Fix released] https://launchpad.net/bugs/1912718
+
+ 16:06 <juliank> - UpdateManager/backend/__init__.py: Make commit_oem a no-op in the base  class to avoid crash when people force synaptic backend (LP: #1913732)
+
+ 16:06 <ubottu> Launchpad bug 1913732 in update-manager (Ubuntu) "/usr/bin/update-manager:NotImplementedError:<lambda>:on_button_install_clicked:start_install:_start_pane:start:commit_oem" [Undecided,New] https://launchpad.net/bugs/1913732
+
+ 16:06 <juliank> * copied discourse post about phased updates in apt to mailing lists, responded to discussions
+
+ 16:06 <juliank> * replied to folks on reddit pointing them at the "dkms not in -security" bug and explaining they should upgrade
+
+ 16:06 <juliank> * discussion about bug 1914278
+
+ 16:06 <ubottu> bug 1914278 in packagekit (Ubuntu) "discover is not removing unused kernels" [Undecided,New] https://launchpad.net/bugs/1914278
+
+ 16:06 <juliank> * responded to debian bug about apt log file documentation
+
+ 16:06 <juliank> * verified that it's fixed and closed bug 1914426
+
+ 16:06 <ubottu> bug 1914426 in update-manager (Ubuntu) "/usr/bin/update-manager:UnboundLocalError:<lambda>:on_button_install_clicked:start_install:_start_pane:start" [Undecided,Invalid] https://launchpad.net/bugs/1914426
+
+ 16:06 <juliank> * reassigned bug 1914416 to aptdaemon
+
+ 16:06 <ubottu> bug 1914416 in aptdaemon (Ubuntu) "/usr/bin/update-manager:dbus.exceptions.DBusException(org.freedesktop.DBus.Error.TimedOut):activate_name_owner:get_name_owner:call_blocking:_inline_callbacks:_run_transaction_helper:get_aptdaemon:get_object:__init__:activate_name_owner:start_service_by_name:call_blocking" [Undecided,Incomplete] https://launchpad.net/bugs/1914416
+
+ 16:06 <juliank> * uploaded gnu-efi 3.0.9-2 to Debian with a bunch of debian/* fixes, and moved maintainer to EFI team
+
+ 16:06 <juliank> * uploaded dh-autoreconf 20 to Debian which fixes a dependency cycle with debhelper
+
+ 16:06 <vorlon> bdmurray: a telegram that's been tucked into the pocket of some bluejeans?
+
+ 16:06 <juliank> (done)
+
+ 16:06 <bdmurray> tdaitx:
+
+ 16:07 <bdmurray> sil2100: how about you?
+
+ 16:08 <sil2100> - 20.04.2
+
+ 16:08 <sil2100> - ...which I am now finalizing for release
+
+ 16:08 <sil2100> - Thanks to everyone involved!
+
+ 16:08 <sil2100> - Some reviews for people
+
+ 16:08 <sil2100> - HWE meetings
+
+ 16:08 <sil2100> - Preparing some engineering estimates
+
+ 16:08 <sil2100> - + other stuff that I can summarize on the next meeting, because now .2
+
+ 16:08 <sil2100> (done)
+
+ 16:08 <bdmurray> Any questions on status?
+
+ 16:09 <bdmurray> #topic Release Incoming Bugs
+
+ 16:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs
+
+ 16:10 <bdmurray> bug 1231091
+
+ 16:10 <ubottu> bug 1231091 in ubiquity (Ubuntu) "Screenreader starts, but does not work with installer (ubiquity) in live session" [High,Confirmed] https://launchpad.net/bugs/1231091
+
+ 16:10 <bdmurray> JawnSmith: do you want to talk about this?
+
+ 16:10 <JawnSmith> Screen reader works fine for ubiquity if you don't drop to live session first, but after dropping to live session and restarting ubiquity screen reader cannot seem to read it
+
+ 16:11 <JawnSmith> Screen reader still works fine for other applications in live session, just not ubiquity
+
+ 16:11 <bdmurray> So you choose try ubuntu then start ubiquity again and it doesn't work?
+
+ 16:12 <xnox> because ubiquity is priviledged sudo process
+
+ 16:12 <JawnSmith> Correct. That is the scenario wherein screen reader stops working with ubiquity.
+
+ 16:12 <xnox> for which we prohibit the user-permissions-only screenreader
+
+ 16:12 <xnox> to read
+
+ 16:12 <xnox> as if ubiquity, when launched from live session should kill screenreader
+
+ 16:12 <xnox> and relaunch it
+
+ 16:12 <bdmurray> xnox: Can you comment on the bug then?
+
+ 16:14 <bdmurray> JawnSmith: Is there a test case which asks people to test this?
+
+ 16:14 <JawnSmith> Yes there is
+
+ 16:14 <JawnSmith> The one named Install (Screen Reader)
+
+ 16:14 <bdmurray> That sounds worth changing somehow then.
+
+ 16:15 <JawnSmith> If we remove the step to drop to live session and restart ubiquity the test would pass
+
+ 16:15 <bdmurray> bug 1914062
+
+ 16:15 <ubottu> bug 1914062 in systemd (Ubuntu) "NetworkManager-wait-online.service in 1.28.0-2ubuntu1 fails to start in LXC" [High,Triaged] https://launchpad.net/bugs/1914062
+
+ 16:16 <xnox> bdmurray:  done (re screenreader)
+
+ 16:16 <rbalint> upstream lxd and upstream system disagree how containers should look like
+
+ 16:16 <rbalint> please card it, i'll try to resolve that
+
+ 16:16 <bdmurray> okay, will card it
+
+ 16:17 <bdmurray> nothing for rls-gg
+
+ 16:17 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 16:18 <mclemenceau> o/
+
+ 16:18 <bdmurray> bug 1571506
+
+ 16:18 <ubottu> bug 1571506 in initramfs-tools (Ubuntu Hirsute) "update-initramfs should include firmware from /lib/firmware/updates" [Wishlist,Triaged] https://launchpad.net/bugs/1571506
+
+ 16:20 <bdmurray> let's card that
+
+ 16:20 <mclemenceau> ok
+
+ 16:20 <mclemenceau> will do
+
+ 16:21 <bdmurray> bug 1914044
+
+ 16:21 <ubottu> bug 1914044 in glibc (Ubuntu Focal) "[SRU] gstreamer fails with "cannot allocate memory in static TLS block" error on aarch64" [Undecided,Confirmed] https://launchpad.net/bugs/1914044
+
+ 16:21 <rbalint> +1 need to sru it
+
+ 16:22 <bdmurray> is it already fixed in some releases?
+
+ 16:23 <rbalint> yes, in groovy and up
+
+ 16:23 <bdmurray> okay can you fix the default task then?
+
+ 16:23 <bdmurray> #topic Team proposed-migration report
+
+ 16:23 <vorlon> [LINK] https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:24 <vorlon> python3-defaults is on me but I'd like to hand it off, the remaining autopkgtest regressions are strange and deep and I haven't had time to dig into them
+
+ 16:24 <vorlon> any volunteers?
+
+ 16:25 <bdmurray> So you are looking for a Dr Strange?
+
+ 16:25 <vorlon> bdmurray: heh
+
+ 16:25 <vorlon> (that's the mercurial and ubuntu-image test failures; siconos is an autopkgtest regression, I've just retriggered that one)
+
+ 16:25 <bdmurray> When does mwhudson get back?
+
+ 16:25 <mclemenceau> on the 9
+
+ 16:26 <vorlon> do we have anyone here who likes working on ubuntu-image and might have some cycles
+
+ 16:26 <waveform> well, the mercurial one is armhf only - I could have a crack at it (though I can't say I know anything about mercurial's guts)
+
+ 16:26 <sil2100> o/
+
+ 16:26 <mclemenceau> sounds like JawnSmith could take a peek at ubuntu-image
+
+ 16:26 <JawnSmith> o/ I'd be happy to
+
+ 16:27 <vorlon> waveform: when I looked into it the strange thing was that the mismatched error message in the log doesn't even match any strings in the source
+
+ 16:27 <vorlon> python3-defaults: JawnSmith
+
+ 16:27 <waveform> hmmm, intriguing
+
+ 16:29 <vorlon> pexpect: tdaitx: do you still have this one?
+
+ 16:29 <tdaitx> yeah, started looking at it yesterday night
+
+ 16:29 <vorlon> ok
+
+ 16:29 <vorlon> git is mine, just waiting on autopkgtest queues
+
+ 16:29 <rbalint> systemd is mint
+
+ 16:29 <rbalint> mine
+
+ 16:29 <juliank> linux mint
+
+ 16:29 <bdmurray> it'd be neat if waiting had days by it
+
+ 16:30 <vorlon> rbalint: I thought we previously triaged this as an NM issue for the desktop team to work on it?
+
+ 16:30 <juliank> debian edition
+
+ 16:30 <bdmurray> mint julep
+
+ 16:30 <juliank> nana
+
+ 16:30 <rbalint> vorlon, this is the lxd vs systemd upstream thing
+
+ 16:30 <doko> bdmurray: how would that help?
+
+ 16:30 <vorlon> rbalint: ok
+
+ 16:30 <rbalint> n-m just tries to use udev
+
+ 16:31 <vorlon> mtd-utils is an MIR; LP: #1913321 is assigned to the MIR team, I'm not sure why it's marked incomplete
+
+ 16:31 <ubottu> Launchpad bug 1913321 in iniparser (Ubuntu Hirsute) "[MIR] iniparser (dependency of mtd-utils)" [Undecided,Incomplete] https://launchpad.net/bugs/1913321
+
+ 16:31 <vorlon> but seems no action for us right now
+
+ 16:31 <dbungert> vorlon: I think they have a concern about a redundant ini library
+
+ 16:31 <bdmurray> doko: well like with ipython - were the tests started recently?
+
+ 16:31 <vorlon> juliank: any concerns about libassuan?
+
+ 16:32 <juliank> it looks werid but I can have a look
+
+ 16:32 <vorlon> dbungert: can you follow up on the iniparser MIR bug to be sure?
+
+ 16:32 <dbungert> vorlon: on it
+
+ 16:34 <vorlon> bdmurray: you mentioned last week needing to do a software-properties upload and it now blocks a couple of packages on armhf, is this on your radar somehow?  (or if not, can you take it?)
+
+ 16:36 <bdmurray> vorlon: Yes, JawnSmith and I'll sort it out
+
+ 16:36 <vorlon> sounds like this needs autopkgtest-cloud overrides
+
+ 16:36 <juliank> what?
+
+ 16:37 <bdmurray> its a long test on armhf
+
+ 16:37 <juliank> I can do autopkgtest-cloud things
+
+ 16:37 <vorlon> sqlite3: sil2100?
+
+ 16:37 <sil2100> Ok o/
+
+ 16:37 <bdmurray> https://code.launchpad.net/~jawn-smith/autopkgtest-cloud/+git/autopkgtest-cloud/+merge/397452
+
+ 16:37 <sil2100> I should have many more cycles now
+
+ 16:37 <vorlon> erlang vs sonic-pi, haven't we seen this one before? waveform ?
+
+ 16:38 <vorlon> dbungert: could you take libreadonly-perl?
+
+ 16:38 <waveform> yes - that one is very likely timing again - just having a look
+
+ 16:38 <slyon> I can look into libreadonly-perl, did some work on it during my +1 shift recently
+
+ 16:38 <dbungert> vorlon: yes
+
+ 16:38 <vorlon> waveform: thanks
+
+ 16:38 <vorlon> dbungert: ah I guess slyon will take libreadonly-perl
+
+ 16:38 <dbungert> OK
+
+ 16:38 <vorlon> dbungert: you can have open-iscsi
+
+ 16:38 <slyon> vorlon: dbungert: ack
+
+ 16:39 <vorlon> usbutils is a missing riscv64 build of libosinfo
+
+ 16:39 <vorlon> xnox: would you like this one?
+
+ 16:39 <dbungert> vorlon: OK for open-iscsi
+
+ 16:39 <vorlon> I'll take boost1.74
+
+ 16:40 <vorlon> kmod is my upload, I'll take that also
+
+ 16:40 <vorlon> libdatrie is a regression of the i386 cross autopkgtest, anyone want to try their hand at fixing one of those?
+
+ 16:40 <xnox> vorlon:  ok.
+
+ 16:42 <vorlon> rbalint: would you like to look at libdatrie?
+
+ 16:43 <rbalint> vorlon, i'll have everyhing reggressed with glibc 2.33 next week:-)
+
+ 16:43 <juliank> It's just some boring i386 crosstesting thingy
+
+ 16:43 <vorlon> then there's another string of packages that are my merges (e2fsprogs, systemd blocking iproute2, xfsprogs)
+
+ 16:43 <rbalint> vorlon, so i'd pass on that for now
+
+ 16:43 <vorlon> rbalint: ok
+
+ 16:43 <juliank> ah no
+
+ 16:43 <vorlon> doko: could you look at libdatrie/i386?
+
+ 16:43 <juliank> I want to look at libdatrie
+
+ 16:43 <vorlon> heh
+
+ 16:43 <vorlon> ok juliank gets libdatrie
+
+ 16:43 <doko> apt dependency?
+
+ 16:44 <juliank> I just read the code recently
+
+ 16:44 <vorlon> doko: could you take automake-1.16 blocking lzip?
+
+ 16:44 <doko> ok
+
+ 16:44 <vorlon> juliank: yeah but the failure is likely related to cross-test dependencies so unrelated to the code :)
+
+ 16:44 <vorlon> and I think we can stop there for this week
+
+ 16:44 <vorlon> bdmurray:
+
+ 16:44 <juliank> it's failing to find pkg-config lib
+
+ 16:44 <bdmurray> #topic AOB
+
+ 16:44 <juliank> I'm out Fri and Mon
+
+ 16:44 <rbalint> i'll be out tomorrow
+
+ 16:44 <vorlon> juliank: yeah there are examples of how to do that, I can point you to an existing patch if you like
+
+ 16:45 <bdmurray> 20.04.2 will be out today!
+
+ 16:45 <waveform> I'll be out Tuesday morning next week
+
+ 16:45 <juliank> vorlon: sure, I'd appreciate that
+
+ 16:45 <vorlon> juliank: Debian bug #974171
+
+ 16:45 <ubottu> Debian bug 974171 in marisa "marisa: Please make autopkgtests cross-test-friendly" [Minor,Fixed] http://bugs.debian.org/974171
+
+ 16:46 <bdmurray> Okay, thanks everybody
+
+ 16:46 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

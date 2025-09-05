@@ -1,0 +1,330 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 16 Jan at 16:02 &mdash; 16:51 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-01-16-16.02.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:02.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2025-01-16/53334   (juliank, 16:03)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:15.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-pp-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:15)
+ * ''LINK:'' http://reports.qa.ubuntu.com/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:32)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:38.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:38)
+
+=== AOB ===
+
+Discussion started by juliank at 16:51.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (79)
+ * adrien (9)
+ * dviererbe (8)
+ * schopin (7)
+ * zhsj (7)
+ * enr0n (6)
+ * liushuyu (5)
+ * rkratky (4)
+ * meetingology (2)
+ * pushkarnk (2)
+ * Skia (2)
+ * r41k0u (2)
+ * mclemenceau (1)
+ * ginggs (1)
+
+
+
+== Full log ==
+
+
+ 16:02 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:02 <meetingology> Meeting started at 16:02:04 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:02 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:02 <pushkarnk> o/
+
+ 16:02 <juliank> #topic Lightning rounds
+
+ 16:03 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-2025-01-16/53334
+
+ 16:03 <dviererbe> o/
+
+ 16:03 <mclemenceau> o/
+
+ 16:03 <enr0n> o/
+
+ 16:04 <schopin> oL
+
+ 16:07 <adrien> zhsj: do you think 1.24 will make it in plucky?
+
+ 16:07 <zhsj> adrien: yes
+
+ 16:07 <adrien> great, thanks :)
+
+ 16:08 <zhsj> the plan is to change the default on 13 Feb
+
+ 16:08 <adrien> Right after the 1.24 release, then? I'm not very familiar with the go release schedule.
+
+ 16:09 <zhsj> the week before FF
+
+ 16:09 <adrien> BTW, I was discussing about that a few minutes ago due to the FIPS changes.
+
+ 16:09 <adrien> :)
+
+ 16:09 <adrien> not much time to do the switch indeed
+
+ 16:10 * adrien is used to openssl which releases right after FF and therefore has a 6-months delay :P 
+
+ 16:11 <zhsj> rc version is already released, updating the package after FF is still possible (no new features)
+
+ 16:12 <adrien> that's right; well, still easier to do it before :)
+
+ 16:14 <juliank> I have been dabbling in Rust this week but I don't have super interesting status
+
+ 16:15 <juliank> #topic Release incoming bugs
+
+ 16:15 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-pp-incoming-bug-tasks.html#foundations-bugs
+
+ 16:16 <juliank> bug http://launchpad.net/bugs/2093107
+
+ 16:16 <juliank> I guess still more wor ktodo
+
+ 16:18 <juliank> tagging it
+
+ 16:18 <juliank> bug 2091361
+
+ 16:18 <juliank> That sounds horrible
+
+ 16:19 <juliank> That might be easy to work around by changing to explicit perl-base depends, if that works
+
+ 16:20 <juliank> tagging it
+
+ 16:20 <juliank> Yes I assigned it to me, I am curiois
+
+ 16:20 <juliank> bug 2093081
+
+ 16:21 <juliank> what?
+
+ 16:21 <enr0n> I started looking into this, but I don't know what's going on yet
+
+ 16:22 <enr0n> But what I found is that when the nginx service is started, basically nothing in /usr/bin is visible/executable, or something?
+
+ 16:22 <juliank> enr0n: I'll go assign it to you and tag it todo :D
+
+ 16:22 <enr0n> Please don't tag it
+
+ 16:22 <juliank> Sounds like the sandbox is going weird
+
+ 16:22 <enr0n> yeah
+
+ 16:23 <enr0n> Needs more time, but I am not ready to commit it to the backlog
+
+ 16:24 <juliank> We cannot size it yet, but  I can leave it around, but it may be useful to load a spike to investigate the next pulse
+
+ 16:24 <juliank> bug 2093420
+
+ 16:25 <juliank> That sounds ok, I'll go take that
+
+ 16:25 <schopin> Thank you very much :)
+
+ 16:25 <juliank> bug 2094814
+
+ 16:26 <schopin> Extra-Includes strikes again.
+
+ 16:26 <dviererbe> This is the same issue that I mentioned tuesday. I just tagged tls-incomming
+
+ 16:26 <dviererbe> *rls
+
+ 16:27 <dviererbe> I already prepared a MP for the seed to exclude it
+
+ 16:27 <dviererbe> if we are ok with that
+
+ 16:27 <juliank> dviererbe: alright I will leave that with you then
+
+ 16:27 <schopin> I think it's fine. I need to take the time to try and change the Extra-Include line to remove *-doc, see what falls out.
+
+ 16:28 <dviererbe> schopin: is it okay if I go ahead with the exclude in the mean time?
+
+ 16:28 <schopin> sure :)
+
+ 16:28 <dviererbe> ack
+
+ 16:29 <juliank> bug 2089690
+
+ 16:29 <juliank> So this is awkward, but sqv is ready now I think, I should split the other ones out perhaps?
+
+ 16:30 <juliank> But I'll go tag it todo
+
+ 16:30 <juliank> bug 2093024
+
+ 16:30 <Skia> This one looked interesting, I'll probably take it :-)
+
+ 16:31 <juliank> Alright Skia
+
+ 16:32 <juliank> rls-oo is empty
+
+ 16:32 <juliank> #link http://reports.qa.ubuntu.com/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 16:32 <juliank> bug 1888347
+
+ 16:32 <juliank> remains incomplete
+
+ 16:32 <juliank> 18 days left until autoclose
+
+ 16:32 <zhsj> hmm, i fixed a previous zip crashes last year https://bugs.launchpad.net/ubuntu/+source/zip/+bug/2062535
+
+ 16:33 <zhsj> may be related
+
+ 16:33 <juliank> bug 2088268
+
+ 16:33 <juliank> should probably check at some point but not today?
+
+ 16:33 <dviererbe> I remember that unzip also had issues with unicode characters
+
+ 16:33 <juliank> w/ security
+
+ 16:33 <liushuyu> "check_zipfile.isra+474" sounds like GCC propagated some LTO optimizations to this function
+
+ 16:34 <Skia> zhsj: I saw it already, but doesn't seem to be the same thing. I haven't dug far though, and the crash is in the Ubuntu delta, so it's a good candidate for sure
+
+ 16:34 <juliank> Maybe discuss ways to solve the bug in a separate thread :)
+
+ 16:34 <juliank> Like in #ubuntu-devel if you want
+
+ 16:34 <juliank> bug 2092501
+
+ 16:35 <juliank> This should be incomplete because we're lacking all sorts of detail to be able to SRU this
+
+ 16:35 <juliank> Namely which platforms are affected, which patches are actually needed from the upstream bugs, how to test it
+
+ 16:35 <liushuyu> This was from a company internal email
+
+ 16:36 <liushuyu> Original bug report is https://github.com/fwupd/fwupd/issues/7402
+
+ 16:37 <liushuyu> (which provides the information about the hardware)
+
+ 16:38 <juliank> it's not clear at all as  there's several separate bugs referenced and we should have clear documentation in the bug itself about what the issue is, what the impact is, and how to fix it
+
+ 16:38 <juliank> We can revisit this next week, but we need more info
+
+ 16:38 <juliank> Moving on; jj is empty
+
+ 16:38 <juliank> ff is empty
+
+ 16:38 <juliank> #topic Team proposed-migration report
+
+ 16:38 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:39 <juliank> Let the pain begin
+
+ 16:39 * juliank moves windows
+
+ 16:39 <juliank> pv is with mwhudson
+
+ 16:40 <juliank> rust-defaults is not interesting
+
+ 16:40 <juliank> ubiquity blocking xorg-server (2:21.1.14-2ubuntu1 to 2:21.1.15-2ubuntu1) for 27 days  is with me, surprisingly, but I got a surprise visit tomorrow
+
+ 16:40 <juliank> So ENOTIME this week
+
+ 16:41 <juliank> pyudev is with waveform
+
+ 16:42 <juliank> I probably missed repeating some, but I think we are in python3-deefaults land now
+
+ 16:42 <juliank> We had done ansible-core to mailman-hyperkitty last week
+
+ 16:43 <juliank> So next assignments are:
+
+ 16:43 <juliank> - masakari: anderssson123
+
+ 16:43 <juliank> - mat2/0.13.4-2.1: utkarsh
+
+ 16:44 <juliank> Confusingly some people now have two _active_ proposed migration items and other zero, as lots of people have one more item overall
+
+ 16:44 <juliank> - mosquitto/2.0.20-1: sespiros
+
+ 16:45 <schopin> juliank: I can get a second one.
+
+ 16:46 <juliank> - nova/3:30.0.0-0ubuntu1: schopin
+
+ 16:46 <schopin> ack
+
+ 16:46 <juliank> - nut/2.8.1-3.1ubuntu2: liushuyu
+
+ 16:46 <juliank> - open-iscsi/2.1.10-1ubuntu2: ginggs
+
+ 16:47 <juliank> - pagekite/1.5.2.201011-2.1ubuntu2: pushkarnk
+
+ 16:47 <ginggs> ack
+
+ 16:47 <pushkarnk> ack
+
+ 16:47 <liushuyu> juliank: okay
+
+ 16:47 <r41k0u> juliank I can take another
+
+ 16:48 <juliank> - parallax/1.0.6-4: chrisccoulson (not optimistic) :D
+
+ 16:48 <juliank> - patroni/3.3.4-1: r41k0u
+
+ 16:48 <r41k0u> ack
+
+ 16:49 <adrien> I can take one too
+
+ 16:49 <juliank> Ah zhsj doesn't have one yet
+
+ 16:49 <juliank> - pcbasic/2.0.7-4: zhsj
+
+ 16:49 <rkratky> I don't have one (and I need to learn to do this, eventually :)
+
+ 16:50 <juliank> - pcbasic/2.0.7-4: rkratky
+
+ 16:50 <rkratky> ack
+
+ 16:50 <juliank> oops double
+
+ 16:50 <juliank> Let's swap then
+
+ 16:50 <juliank> - postfix/3.9.1-9: zhsj
+
+ 16:50 <rkratky> I see, ack
+
+ 16:50 <zhsj> ack
+
+ 16:50 <juliank> rkratky: Well I'll keep you on pcbasic
+
+ 16:50 <rkratky> right
+
+ 16:51 <juliank> #topic AOB
+
+ 16:51 <juliank> 3
+
+ 16:51 <juliank> 2
+
+ 16:51 <juliank> 1
+
+ 16:51 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

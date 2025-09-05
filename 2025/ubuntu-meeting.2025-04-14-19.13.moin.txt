@@ -1,0 +1,267 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Developer Membership Board meeting, started by rbasak, 14 Apr at 19:13 &mdash; 20:08 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-04-14-19.13.log.html
+
+
+
+== Meeting summary ==
+
+=== Application review ===
+
+Discussion started by rbasak at 19:14.
+
+ * ''LINK:'' https://wiki.ubuntu.com/MassimilianoPellizzer/DkmsUploadApplication   (rbasak, 19:14)
+ * ''VOTE:'' Grant mpellizzer upload to the DKMS packageset (Denied)  (rbasak, 20:05)
+
+=== AOB ===
+
+Discussion started by rbasak at 20:07.
+
+
+
+
+== Vote results ==
+
+ * [[https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-04-14-19.13.log.html#85|Grant mpellizzer upload to the DKMS packageset]]
+  * Motion denied (For: 0, Against: 2, Abstained: 0)
+   * Voters: rbasak, bdrung
+
+
+
+== People present (lines said) ==
+
+ * rbasak (48)
+ * mpellizzer (33)
+ * bdrung (14)
+ * meetingology (9)
+ * teward (6)
+
+
+
+== Full log ==
+
+
+ 19:13 <rbasak> #startmeeting Developer Membership Board
+
+ 19:13 <meetingology> Meeting started at 19:13:02 UTC.  The chair is rbasak.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 19:13 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 19:13 <teward> bdrung: 'sharp stick' is tantamount to "tomahawk missiles" when it comes to me and Simon
+
+ 19:13 <teward> but in this case the chat server is busting me up too so I can't even access my logs - M_LIMIT_EXCEEDED
+
+ 19:13 <rbasak> I'm going to jump straight to today's application since we're nearly 25% in already
+
+ 19:14 <rbasak> #topic Application review
+
+ 19:14 <rbasak> mpellizzer: welcome!
+
+ 19:14 <teward> yeah lets do that
+
+ 19:14 <mpellizzer> o/
+
+ 19:14 <rbasak> #link https://wiki.ubuntu.com/MassimilianoPellizzer/DkmsUploadApplication
+
+ 19:14 <rbasak> I'll start with some questions
+
+ 19:14 <rbasak> mpellizzer: after https://launchpad.net/ubuntu/+source/falcosecurity-libs/0.20.0-1ubuntu2, what happens next?
+
+ 19:16 <mpellizzer> The falcosecurity package has some problems related to a patch which landed in kernel 6.13. The way Debian patched it does not work for Ubuntu so I had to keep the delta there. I started an upstream discussion with falco maintainers on how to solve the problem
+
+ 19:17 <rbasak> Is this for 0.20.0-1ubuntu1 or 0.20.0-1ubuntu2?
+
+ 19:17 <mpellizzer> For ubuntu1
+
+ 19:17 <rbasak> OK. And for ubuntu2, you disabled the s390x test, right? What happens next with that delta?
+
+ 19:18 <mpellizzer> I have to check on MoM if a merge with Debian it's possible in order to reduce the Delta to a minimum as soon as possible (since I am the last uploader)
+
+ 19:19 <rbasak> OK. What's your team's process for ensuring that MoM is checked regularly, or the equivalen?
+
+ 19:19 <mpellizzer> We don't have a "team procedure". As a general rule the last uploader is the one that should take care of the package.
+
+ 19:20 <rbasak> OK - so what's your own procedure?
+
+ 19:21 <mpellizzer> I check merge-o-matic to see if Debian addressed the issue I patched, in case Debian (or upstream) did it, I can the drop the Ubuntu patch. Merges are more rare however with DKMS since we are working with kernel 6.14 (6.15 for the next development) and Debian is behind wrt kernel version
+
+ 19:22 <rbasak> Are you doing that for all packages you uploaded routinely? How are you checking MoM for your own uploads?
+
+ 19:22 <mpellizzer> Usually when I do a Ubuntu patch I send the patch upstream or to Debian (if regards a fix related to a kernel they support)
+
+ 19:22 <mpellizzer> Just for what I upload
+
+ 19:23 <mpellizzer> A good thing to do would also to subscribe to Debian PTS to get notified about Debian uploads
+
+ 19:24 <rbasak> WHat happens if someone from your team leaves? Will they be personally checking for syncs and merges against delta they previously uploaded?
+
+ 19:25 <mpellizzer> If someone leaves someone else must take care of the package. Usually when we do an hwe transition or we update the development kernel version (from v6.13 to v6.14 for example) most of the dkms must be fixed because they FTBFS, that is a good moment to change the "owner" of the package
+
+ 19:26 <rbasak> How do you spot the FTBFS?
+
+ 19:27 <mpellizzer> Personally I use a VM with a script with tries to install every DKMS using reverse dependecies and gives me a report of what was installed and what not. But also autopkgtest triggered when we upload a new kernel are a good source of information wrt what is failing
+
+ 19:29 <rbasak> OK
+
+ 19:30 <bdrung> You touched rtl8812au last. What is your approach on this package?
+
+ 19:34 <mpellizzer> I pull sources from the dev release (Plucky in this case). I install the dkms in a VM and if it FTBFS the dkms framework will give me a log with compile time errors. Given compile time errors I try to spot which is the upstream kernel commit which is causing that new error. Given the break commit I look for similar in-tree drivers and how they solved the proble. Last I try to fix my package similarly
+
+ 19:36 <bdrung> That approach addresses regressions with newer kernels. Do you have an approach to new upstream release?
+
+ 19:37 <bdrung> s/release/releases/
+
+ 19:37 <mpellizzer> I am not sure I understood the question. Can you repeat it please?
+
+ 19:38 <bdrung> Do you track upstream and update dkms packages to new upstream releases?
+
+ 19:39 <mpellizzer> Yes, but this particular package has not been updated for several years (given what we have as upstream in our debian/control)
+
+ 19:40 <bdrung> That's why I picked that package as tricky example.
+
+ 19:40 <mpellizzer> For this reason we have an ubuntu25 noow
+
+ 19:41 <rbasak> Are you aware of dep3 headers?
+
+ 19:42 <bdrung> rbasak, I had that question in mind as well.
+
+ 19:42 <mpellizzer> Yes they are standard metadata usend in packages. In particular in patches
+
+ 19:42 <mpellizzer> Like Origin, Subject etc
+
+ 19:43 <bdrung> mpellizzer, will we see a rtl8812au ubuntu50 at some point or will someone from your team do apply a new upstream version?
+
+ 19:44 <bdrung> mpellizzer, do the added patches in https://launchpadlibrarian.net/780212195/smifb2_2.4.0-2_2.4.0-2ubuntu1.diff.gz follow dep3? If not, what could be improved?
+
+ 19:45 <mpellizzer> It's not a choice I take do on my own but I think we will obsolete the driver before reaching an ubuntu50
+
+ 19:45 <rbasak> mpellizzer: why didn't https://launchpad.net/ubuntu/+source/falcosecurity-libs/0.20.0-1ubuntu1 include dep3 headers?
+
+ 19:46 <mpellizzer> *looking at the diffs*
+
+ 19:46 <rbasak> mpellizzer: and https://launchpad.net/ubuntu/+source/smifb2/2.4.0-2ubuntu1 has origin: but doesn't point to upstream commits?
+
+ 19:47 <mpellizzer> Something I could add as a metdata to my patches is the LP bug link, I think
+
+ 19:47 <rbasak> Indeed
+
+ 19:48 <rbasak> And above you mentioned that there was a discussion with upstream - but I couldn't find any link to that either through dep3 or the LP bug
+
+ 19:48 <rbasak> This will make it difficult for anyone else to merge that package
+
+ 19:48 <rbasak> Oh sorry, I missed that bdrung asked essentially the same question
+
+ 19:48 <mpellizzer> I could definitely improve that and I will.
+
+ 19:49 <bdrung> My spin of that question is: How would your improved patch header look like?
+
+ 19:50 <mpellizzer> Wrt https://launchpad.net/ubuntu/+source/smifb2/2.4.0-2ubuntu1, from a quick look I can see that some patches have the origin, some other have not. The one which have not the header are patches I wrote and eventually submitted upstream
+
+ 19:50 <mpellizzer> I can improve inserting more info in the headers for sure. Bug links, PR I do upstream open issues and so on
+
+ 19:51 <bdrung> Can you give an example of one of those patches?
+
+ 19:52 <mpellizzer> Upstream ones?
+
+ 19:52 <bdrung> resolve-compile-errors-on-kernel-above-v6.x.patch for example.
+
+ 19:52 <mpellizzer> This is something I did upstream https://github.com/teddywlq/smifb2/pull/26
+
+ 19:53 <mpellizzer> This is the patch you asked about https://github.com/teddywlq/smifb2/commit/e7c7628ac58d092dc66019f17ac748e9ada27d1a
+
+ 19:54 <mpellizzer> I could have but this full link in origin
+
+ 19:54 <rbasak> In bug 2096645 I'm pleased to see that you specified in your test plan to test both relevant kernels. But in comment 10, did you actually run modprobe against both kernels? Or just one of them?
+
+ 19:56 <teward> i have a hard stop in 4 minutes, fyi.  That and I have to go raise Hell with two of my higher-tier role hats with Canonical for Matrix-related reasons.
+
+ 19:56 <mpellizzer> I tested every kernel I said I tested :) I have a server on which I can run VMs destry them snapshot them etc, so it's easy to change kernels ther
+
+ 19:57 <rbasak> The comment doesn't make that clear unfortunately
+
+ 19:57 <rbasak> It looks like you only ran modprobe once
+
+ 19:57 <mpellizzer> I could have been more explicit you are right
+
+ 19:58 <rbasak> I don't know what you actually did, but it really looks like you built against both kernels while booted against only one kernel
+
+ 19:58 <rbasak> (with both kernels installed)
+
+ 19:58 <rbasak> We're out of time though :-/
+
+ 19:58 <bdrung> I get the same impression reading your comment on that bug
+
+ 19:58 <mpellizzer> When you have multiple kernel installed dkms tries to build them against everything you have installed
+
+ 19:59 <rbasak> Indeed, but if modprobing against both kernels is part of the test plan, then that isn't sufficient
+
+ 19:59 <mpellizzer> You have to reboot change kernel and run modprobe on each of them to actually load it
+
+ 19:59 <rbasak> Right :)
+
+ 19:59 <mpellizzer> I rebooted and tested every kernel
+
+ 20:00 <rbasak> I appreciate that and you already said that the comment could be more explicit
+
+ 20:00 <rbasak> The reason I'm asking is because the SRU team is supposed to verify that and it's difficult to do from what you wrote, and that may cause unnecessary round trips in the bug to clarify, that's all.
+
+ 20:00 <rbasak> Oh I forgot I was chairing.
+
+ 20:00 <rbasak> I guess we need to vote now as we're out of time.
+
+ 20:01 <rbasak> #vote Grant mpellizzer upload to the DKMS packageset
+
+ 20:01 <meetingology> Please vote on: Grant mpellizzer upload to the DKMS packageset
+
+ 20:01 <meetingology> Public votes can be registered by saying +1, -1 or +0 in channel (for private voting, private message me with 'vote +1|-1|+0 #channelname')
+
+ 20:01 <mpellizzer> Got it, I will improve this for sure. Thanks for the advice
+
+ 20:01 <rbasak> -1 reasons to follow
+
+ 20:01 <meetingology> -1 reasons to follow received from rbasak
+
+ 20:01 <rbasak> One of the reasons is that we're out of time, unfortunately
+
+ 20:02 <bdrung> -1 You are on a good track, but there are several points (like dep3) where I like to see a longer, stronger track record.
+
+ 20:02 <meetingology> -1 You are on a good track, but there are several points (like dep3) where I like to see a longer, stronger track record. received from bdrung
+
+ 20:02 <rbasak> Your work in keeping the DKMS packages working seems excellent. Please keep that up! What I'm looking to see also though is that you're maintaining the full lifecycle of Ubuntu delta. For this I have relatively little to go on. There doesn't seem to be much evidence that you're syncing packages when they need syncing (eg. there are no sync requests in your application) and there's not a great story
+
+ 20:02 <rbasak> on how merges are managed. What *is* there isn't great - eg. missing or incomplete dep3 headers.
+
+ 20:05 <rbasak> #endvote
+
+ 20:05 <meetingology> Voting ended on: Grant mpellizzer upload to the DKMS packageset
+
+ 20:05 <meetingology> Votes for: 0, Votes against: 2, Abstentions: 0
+
+ 20:05 <meetingology> Motion denied
+
+ 20:05 <rbasak> Sorry we weren't able to approve your application this time.
+
+ 20:06 <rbasak> I have to say (yet again) I'm disappointed in your team for letting you down here.
+
+ 20:07 <rbasak> The rigor I'm looking for really should be the standard held by your sponsors before sponsoring, and then you wouldn't hit this problem at this stage.
+
+ 20:07 <rbasak> We're over time, so I'll end the meeting here, if there's nothing else?
+
+ 20:07 <rbasak> #topic AOB
+
+ 20:07 <rbasak> AOB?
+
+ 20:07 <teward> my vote was -1 by the way
+
+ 20:07 <rbasak> Thanks teward
+
+ 20:07 <bdrung> I would have requestion to vote for Contributing developer, but your first sponsored upload is only 4 month ago (https://udd.debian.org/cgi-bin/ubuntu-sponsorships.cgi?render=html&sponsor=&sponsor_search=name&sponsoree=massimiliano.pellizzer%40canonical.com&sponsoree_search=email)
+
+ 20:07 <teward> so you technically have a -3 there.
+
+ 20:08 <rbasak> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

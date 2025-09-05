@@ -1,0 +1,271 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status, 08 Sep at 14:30 &mdash; 14:50 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-09-08-14.30.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+The discussion about "Review of previous action items" started at 14:31.
+
+
+=== current component mismatches ===
+The discussion about "current component mismatches" started at 14:31.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg 
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg 
+  * ''LINK:'' https://git.launchpad.net/~ubuntu-core-dev/ubuntu-seeds/+git/platform 
+
+=== New MIRs ===
+The discussion about "New MIRs" started at 14:41.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir 
+
+=== Incomplete bugs / questions ===
+The discussion about "Incomplete bugs / questions" started at 14:46.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir 
+
+=== Any other business? ===
+The discussion about "Any other business?" started at 14:48.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (73)
+ * didrocks (17)
+ * sarnold (7)
+ * meetingology (3)
+ * ddstreet (3)
+ * ubottu (1)
+
+
+
+== Full Log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started Tue Sep  8 14:30:26 2020 UTC.  The chair is cpaelzer. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:30 <meetingology> 
+
+ 14:30 <meetingology> Available commands: action commands idea info link nick
+
+ 14:30 <cpaelzer> ddstreet: sarnold: didrocks: jamespage: doko: - Hi o/
+
+ 14:30 <sarnold> good morning
+
+ 14:31 <ddstreet> o/
+
+ 14:31 <cpaelzer> doko: I'm not sure if you are fully back, let us know when you are around :-)
+
+ 14:31 <didrocks> hey o/
+
+ 14:31 <cpaelzer> hello, let us get started here ...
+
+ 14:31 <cpaelzer> #topic Review of previous action items
+
+ 14:31 <cpaelzer> that one is easy, no previous items other than doing reviews of last week
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <cpaelzer> you'll see openstack showing up on "its own" now which is a change I did and jamespage agreed
+
+ 14:32 <cpaelzer> that isn't changing mismatches, just that we more clearly see where things come from
+
+ 14:32 <cpaelzer> jamespage: there is a whole bunch of octavia things that need some handling once you can get to it
+
+ 14:33 <cpaelzer> I thinke coreycb filed them, jamespage reviewed and they are not in the security queue
+
+ 14:33 <cpaelzer> other things in mismatches
+
+ 14:34 <cpaelzer> shim-canonical was mentioned in a discussion by xnox recently, that belongs to the boot process and should be rather new (didn
+
+ 14:34 <cpaelzer> 't exist last time)
+
+ 14:34 <cpaelzer> iüü-usb is ready but for the security review as well
+
+ 14:34 <cpaelzer> nice
+
+ 14:34 <cpaelzer> ipp-usb I meant
+
+ 14:34 <sarnold> :)
+
+ 14:35 <cpaelzer> the lintian->*perl is usually handled by doko/foundations
+
+ 14:35 * cpaelzer hopes he is back now or at least next week to do that
+
+ 14:35 <cpaelzer> didrocks: you wanted to check gnome-software last week
+
+ 14:35 <cpaelzer> found anything?
+
+ 14:35 <cpaelzer> it is still in mismatches
+
+ 14:35 <didrocks> cpaelzer: I investigated, one sec, need to find my notes :)
+
+ 14:36 <cpaelzer> :-)
+
+ 14:36 <cpaelzer> they didn't end up as comment on https://bugs.launchpad.net/ubuntu/+source/gnome-software/+bug/1536870
+
+ 14:36 <ubottu> Launchpad bug 1536870 in gnome-software (Ubuntu) "[MIR] gnome-software" [Undecided,Fix released]
+
+ 14:37 <didrocks> the issue is that gstreamer1.0-packagekit Recommends 'gnome-software | apper | packagekit-installer'
+
+ 14:37 <didrocks> packagekit-installer is provided by ubuntu-desktop
+
+ 14:37 <cpaelzer> and you want that recommends reduced then?
+
+ 14:37 <cpaelzer> instead of a re-promotion
+
+ 14:37 <didrocks> he issue is that the feature is provided by snap-store but we don't have a way to tell apt or germinate about that snap
+
+ 14:37 <didrocks> t*
+
+ 14:37 <didrocks> so, we don’t want to introduce a delta, we are in sync with debian
+
+ 14:37 <didrocks> we don’t want it in main
+
+ 14:38 <didrocks> seb asked foundation for a blacklist of our tooling
+
+ 14:38 <didrocks> no answer AFAIK
+
+ 14:38 <didrocks> I will ask again
+
+ 14:38 <didrocks> or snap store providing those requirements :)
+
+ 14:38 <cpaelzer> didrocks: the platform .git has the blacklist
+
+ 14:38 <cpaelzer> just propose a MP against it right away
+
+ 14:39 <cpaelzer> https://git.launchpad.net/~ubuntu-core-dev/ubuntu-seeds/+git/platform
+
+ 14:39 <didrocks> I will have a try there
+
+ 14:39 <cpaelzer> ok
+
+ 14:39 <cpaelzer> logcheck - hmm
+
+ 14:40 <cpaelzer> server team needs to look after that one
+
+ 14:40 <cpaelzer> I'll pass that on
+
+ 14:41 <cpaelzer> nothing else surprisingly new there
+
+ 14:41 <cpaelzer> going on
+
+ 14:41 <cpaelzer> #topic New MIRs
+
+ 14:41 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:41 <cpaelzer> didrocks: libostree was yours and got back to new
+
+ 14:42 <cpaelzer> is that on your todo list already?
+
+ 14:42 <didrocks> cpaelzer: yep
+
+ 14:42 <cpaelzer> ok
+
+ 14:42 <cpaelzer> and then due to your review on google-guest-agent telling them they need all golang deps
+
+ 14:42 <cpaelzer> we now have a bunch of gloang deps opened
+
+ 14:43 <didrocks> I can take some, but not all
+
+ 14:43 <sarnold> - Upstream makes no releases, Debian is behind by many upstream commits
+
+ 14:43 <cpaelzer> sarnold: is that for these glang things?
+
+ 14:43 <sarnold> ouch :(
+
+ 14:43 <didrocks> (I know quite well upstream code for protobuf and ini-ini)
+
+ 14:43 <sarnold> cpaelzer: yeah
+
+ 14:44 <cpaelzer> then didrocks why don't you take proto and ininit
+
+ 14:44 <cpaelzer> that is two
+
+ 14:44 <cpaelzer> I'd take kardianos (two)
+
+ 14:45 <cpaelzer> leaves tarm groupcache and logging
+
+ 14:45 <cpaelzer> ddstreet: sarnold: jamespage: one each ?
+
+ 14:45 <sarnold> cpaelzer: better not, I've got a large security backlog to work through, sorry :(
+
+ 14:45 <cpaelzer> let us not talk about backlogs, but I understand
+
+ 14:45 <ddstreet> i can take 2
+
+ 14:46 <cpaelzer> logging is incomplete
+
+ 14:46 <cpaelzer> so take the other two
+
+ 14:46 <ddstreet> ack
+
+ 14:46 <cpaelzer> I assigned you
+
+ 14:46 <cpaelzer> ok, enough work from new :-/
+
+ 14:46 <cpaelzer> let us look at incomplete
+
+ 14:46 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:46 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:47 <cpaelzer> well the same topic on google-* go things
+
+ 14:47 <cpaelzer> ipmitool is driven by server & foundations but not ready yet
+
+ 14:47 <cpaelzer> nftables waits on some more info
+
+ 14:47 <cpaelzer> yeah nothing in there requires work by us atm
+
+ 14:48 <cpaelzer> other opinions looking through thos?
+
+ 14:48 <cpaelzer> e
+
+ 14:48 <cpaelzer> we can still speak up in the next section
+
+ 14:48 <cpaelzer> #topic Any other business?
+
+ 14:49 <cpaelzer> as I mentioned we landed several seed changes (what made openstack visible in mismatches)
+
+ 14:49 <cpaelzer> but we changed way more, I'm glad it didn't totally break everything
+
+ 14:49 <cpaelzer> :-)
+
+ 14:49 <sarnold> hehe, nice
+
+ 14:49 <cpaelzer> anything else for today?
+
+ 14:49 <didrocks> nothing for me
+
+ 14:50 <cpaelzer> well then take the 10 minutes we gained for something useful
+
+ 14:50 <cpaelzer> see you next week with all assigned MIRs reviewed :-)
+
+ 14:50 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

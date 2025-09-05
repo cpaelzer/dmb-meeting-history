@@ -1,0 +1,575 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 13 Sep at 15:02 &mdash; 15:50 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2018/ubuntu-meeting.2018-09-13-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+  * ''LINK:'' http://people.canonical.com/~doko/ftbfs-report/test-rebuild-20180911-cosmic.html 
+
+=== Bugs ===
+The discussion about "Bugs" started at 15:22.
+
+  * ''LINK:'' https://bugs.launchpad.net/vaultlocker/+bug/1780332 
+
+=== AOB ===
+The discussion about "AOB" started at 15:48.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (60)
+ * bdmurray (28)
+ * xnox (26)
+ * ubottu (21)
+ * cyphermox (20)
+ * juliank (16)
+ * doko (15)
+ * sil2100 (13)
+ * tdaitx (12)
+ * rbalint (10)
+ * Odd_Bloke (7)
+ * philroche (5)
+ * rcj (4)
+ * fginther (4)
+ * tobikoch (3)
+ * aleks_bogdanov (3)
+ * meetingology (3)
+ * gaughen (3)
+ * cshep (2)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Thu Sep 13 15:02:06 2018 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <slangasek> [TOPIC] Lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e slangasek bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson rcj philroche Odd_Bloke fginther juliank cshep aleks_bogdanov tobikoch)
+
+ 15:02 <slangasek> fginther aleks_bogdanov tdaitx cshep bdmurray xnox philroche infinity cyphermox doko mwhudson sil2100 Odd_Bloke slangasek juliank rbalint rcj tobikoch
+
+ 15:02 <slangasek> fginther: hello!
+
+ 15:02 <fginther> * Out for three days on holiday
+
+ 15:02 <fginther> * Created a new test image for a partner
+
+ 15:02 <fginther> * Cloud image build system vanguarding
+
+ 15:02 <fginther> * done
+
+ 15:03 <rbalint> o/
+
+ 15:03 <aleks_bogdanov> * working on simple streams exporters
+
+ 15:03 <aleks_bogdanov> * getting to learn all the systems and processes
+
+ 15:03 <aleks_bogdanov> * done
+
+ 15:03 <tdaitx> Short week: last Friday, working 6h/day this week
+
+ 15:03 <tdaitx> * fixed openjdk atk bridge error (LP: #1788250) a while ago
+
+ 15:03 <tdaitx> - provided package to the security team, released on Bionic yesterday
+
+ 15:03 <tdaitx> * updated openjdk-lts sru exception, created ffe bug report (LP: #1791716)
+
+ 15:03 <tdaitx> * provided debdiff for new openjdk-11/openjdk-lts to doko
+
+ 15:03 <ubottu> Launchpad bug 1788250 in openjdk-8 (Ubuntu) "AWT applications fail with java.awt.AWTError: Assistive Technology not found: org.GNOME.Accessibility.AtkWrapper" [Undecided,Confirmed] https://launchpad.net/bugs/1788250
+
+ 15:03 <ubottu> Launchpad bug 1791716 in java-common (Ubuntu) "FFe: sync java packages from Debian to fix OpenJDK 10/11 issues in Cosmic" [Undecided,Incomplete] https://launchpad.net/bugs/1791716
+
+ 15:03 <tdaitx> * fixed orphanedold-dkms files, tested on Xenial, Bionic, and Cosmic, SRU for Xenial/Bionic and patch for Cosmic (LP: #1791959)
+
+ 15:04 <ubottu> Launchpad bug 1791959 in initramfs-tools (Ubuntu) "[SRU] remove orphaned initrd old-dkms files in /boot" [Medium,Confirmed] https://launchpad.net/bugs/1791959
+
+ 15:04 <tdaitx> * so far unable to cause sync to hang in order to reproduce LP: #1667512
+
+ 15:04 <ubottu> Launchpad bug 1667512 in initramfs-tools (Ubuntu) "update-initramfs hangs on upgrade, dpkg unusable, unbootable system" [Medium,Fix released] https://launchpad.net/bugs/1667512
+
+ 15:04 <tdaitx> (done)
+
+ 15:04 <slangasek> cshep:
+
+ 15:05 <cshep> working on updating image classes
+
+ 15:05 <cshep> that's pretty much it. done
+
+ 15:05 <bdmurray> committed a fix for an OOPS encounted when submitting crashes to daisy
+
+ 15:05 <bdmurray> https://oops.canonical.com/oops/?oopsid=OOPS-fed140a72ccf553f7f43898fbc0a8f4c
+
+ 15:05 <bdmurray> submitted RT re daisy and apport code updates for the production Error Tracker
+
+ 15:05 <bdmurray> modified upgrade-charm hooks in Error Tracker charms to use proper directories
+
+ 15:05 <bdmurray> fixed cheetah issue w/ logrotation jobs for daisy and errors app servers
+
+ 15:05 <bdmurray> sorted out issues with staging version of the Error Tracker
+
+ 15:05 <bdmurray> submitted RT regarding staging errors frontends access to prod cassandra
+
+ 15:05 <bdmurray> updated Error Tracker main page filtering to show only deb crashes and add a
+
+ 15:05 <bdmurray> figured out how to and imported a snap crash into the staging version of the Error Tracker
+
+ 15:05 <bdmurray> selection for 'all other binary packages'
+
+ 15:05 <bdmurray> updated Bionic release notes to include info re dropping of powerpc arch
+
+ 15:05 <bdmurray> investigation into apport SRU regressions
+
+ 15:06 <bdmurray> overrode increased rate of crashes for open-vm-tools after discussion w/ cpaelzar
+
+ 15:06 <bdmurray> SRU verification of libc6 upgrade change (LP: #1787649)
+
+ 15:06 <ubottu> Launchpad bug 1787649 in ubuntu-release-upgrader (Ubuntu Bionic) "ubuntu-release-upgrader crashed with SystemError: E:Error, pkgProblemResolver::Resolve generated breaks, this may be caused by held packages." [High,Fix committed] https://launchpad.net/bugs/1787649
+
+ 15:06 <bdmurray> review of didier's apport MP which fixes LP: #1791324
+
+ 15:06 <ubottu> Launchpad bug 1791324 in apport (Ubuntu Bionic) "/usr/share/apport/apport-gtk:KeyError:/usr/share/apport/apport-gtk@598:run_argv:run_crashes:run_crash" [Medium,New] https://launchpad.net/bugs/1791324
+
+ 15:06 <bdmurray> irc discussion with tdaitx re LP: #1791959 and old-dkms files
+
+ 15:06 <ubottu> Launchpad bug 1791959 in initramfs-tools (Ubuntu) "[SRU] remove orphaned initrd old-dkms files in /boot" [Medium,Confirmed] https://launchpad.net/bugs/1791959
+
+ 15:06 <bdmurray> ordered a dragonboard and parts
+
+ 15:06 <bdmurray> ✔  done
+
+ 15:06 <bdmurray> xnox:
+
+ 15:06 <xnox> * smc-tools new upstream release LP: #1689782
+
+ 15:06 <xnox> * PATH is broken, fixing everywhere:
+
+ 15:06 <xnox> LP: #1792004 LP: #1614080
+
+ 15:06 <xnox> https://github.com/systemd/systemd/pull/10073
+
+ 15:06 <xnox> * openssh-server socket activation patches
+
+ 15:06 <ubottu> Launchpad bug 1689782 in smc-tools (Ubuntu) "[18.10 FEAT] New package: smc-tools >=1.1.0" [Wishlist,Fix released] https://launchpad.net/bugs/1689782
+
+ 15:06 <xnox> - done, reviewed with debian maintainers & foundations
+
+ 15:06 <ubottu> Launchpad bug 1792004 in systemd (Ubuntu) "built-in PATH seems to have sbin and bin out of order; and inconsistent" [Undecided,New] https://launchpad.net/bugs/1792004
+
+ 15:06 <xnox> - will clean-up more and post to systemd-devel review
+
+ 15:06 <ubottu> Launchpad bug 1614080 in bash (Ubuntu) "PATH contains dot when PATH is unset before running bash" [Medium,Fix released] https://launchpad.net/bugs/1614080
+
+ 15:06 <xnox> - also will post for review to openssh-portable
+
+ 15:06 <xnox> * debugging finarld incomplete shutdown initrd generations
+
+ 15:07 <xnox> done
+
+ 15:07 <philroche> * Cloud image modification for partner clouds
+
+ 15:07 <philroche> * Helping onboard new team members
+
+ 15:07 <philroche> * Preparing for team sprint next week
+
+ 15:07 <philroche> (done)
+
+ 15:07 <philroche> cyphermox:
+
+ 15:08 <cyphermox> - MIR: gpsd
+
+ 15:08 <cyphermox> - SRU verifications for gnu-efi, shim 13 in trusty, shim 15 in bionic
+
+ 15:08 <cyphermox> - fixing netplan autopkgtests prior to upload
+
+ 15:09 <cyphermox> - optional-addresses upstream systemd work
+
+ 15:09 <cyphermox> - merged mwhudson's optional-addresses code for netplan
+
+ 15:09 <cyphermox> - plymouth fix for tty deactivation (LP: #1767918) and SRU to bionic
+
+ 15:09 <cyphermox> - fwupdate: drop uefi artefacts
+
+ 15:09 <cyphermox> - investigating missing MokSBStateRT in efivars
+
+ 15:09 <ubottu> Launchpad bug 1767918 in plymouth (Ubuntu Bionic) "Login password from GDM is shown in plain text on the VT1 console" [High,Triaged] https://launchpad.net/bugs/1767918
+
+ 15:09 <cyphermox> - SRU syslinux with patch for gnu-efi 3.0.8 support in bionic
+
+ 15:09 <cyphermox> - proposed-migration: looked into python-pkginfo
+
+ 15:09 <cyphermox> (done)
+
+ 15:09 <doko> - at the GNU Cauldron in Manchester from Thu to Mon
+
+ 15:09 <doko> - working on toolchain SRUs with sil2001
+
+ 15:09 <doko> - review all open MIRs
+
+ 15:09 <doko> - archive work, toolchain updates
+
+ 15:09 <doko> (done)
+
+ 15:09 <doko> ohh, and started a cosmic test rebuild
+
+ 15:10 <doko> http://people.canonical.com/~doko/ftbfs-report/test-rebuild-20180911-cosmic.html
+
+ 15:10 <juliank> +1
+
+ 15:11 <slangasek> xnox: do you suppose we could get a central writeup afterwards of how you expect PATH to work, so we a) know what would be a regression, and b) can make sure there are no holes in it?
+
+ 15:11 <bdmurray> sil2100:
+
+ 15:11 <sil2100> - Candidate reviews
+
+ 15:11 <sil2100> - Kernel SRU reviews
+
+ 15:11 <sil2100> - Regular SRU reviews and releases
+
+ 15:11 <sil2100> - FFe reviews
+
+ 15:11 <sil2100> - raspi3 u-i classic:
+
+ 15:11 <sil2100> * Adding some tweaks to ubuntu-image for easier kernel/initrd preparation
+
+ 15:11 <sil2100> * Figuring out the correct uboot.env for raspi3
+
+ 15:11 <Odd_Bloke> slangasek: You want to understand the PATH forward?
+
+ 15:11 <sil2100> * Add some more changes to the gadget tree and livecd-rootfs to get proper boot contents
+
+ 15:11 <sil2100> * Multiple test image builds - final local image finally booting into the system on the rootfs
+
+ 15:11 <sil2100> - Tweaks to the work-in-progress britney branch for SRU ADT regression handling, test suite additions
+
+ 15:11 <xnox> Odd_Bloke, ahahhahahhaha
+
+ 15:11 <sil2100> - Travel preparations
+
+ 15:11 <xnox> slangasek, possibly.
+
+ 15:11 <sil2100> (done)
+
+ 15:11 <Odd_Bloke> * Visiting a partner last week, so playing catch-up this week
+
+ 15:11 <Odd_Bloke> * Double-checked that microcode is correctly installed in bare metal images we provide to partners
+
+ 15:11 <Odd_Bloke> * Met with our new folks for the first time!
+
+ 15:11 <Odd_Bloke> * Continued work on streamlining the delivery of our images to GKE
+
+ 15:11 <xnox> slangasek, but i would argue we should drop /usr/local and then people will stop listening
+
+ 15:11 <Odd_Bloke> (done)
+
+ 15:12 <Odd_Bloke> slangasek:
+
+ 15:12 <xnox> slangasek, because e.g. unattended-upgrades.service should not have /usr/local in PATH
+
+ 15:13 <doko> tdaitx: fyi: the above test rebuild is done using openjdk-11 as the default
+
+ 15:13 <tdaitx> doko: ack, thanks for that!
+
+ 15:14 <rbalint> xnox, why shouldn't u-u have /usr/local/bin ?
+
+ 15:14 <tdaitx> doko: just for curiosity sake, does the rebuild respect the build dependebcy order at all?
+
+ 15:14 <slangasek> * SRU processing, there are some good shims and grubs running around
+
+ 15:14 <slangasek> * Support for nvidia modules in GKE
+
+ 15:14 <slangasek> * Preparing for keyring cabal activities during the sprint
+
+ 15:14 <slangasek> * proposed-migration wrangling
+
+ 15:14 <slangasek> * upcoming:
+
+ 15:14 <slangasek> * swapping tomorrow for sprint travel
+
+ 15:14 <slangasek> * travelling to sprint
+
+ 15:14 <slangasek> (done)
+
+ 15:14 <juliank> * submitted systemd-networkd state documentation PR (https://github.com/systemd/systemd/pull/10033)
+
+ 15:14 <juliank> * debugged packagekit -crashing- restarting when upgrading itself (bug 1790613) - hello, maintainer scripts!
+
+ 15:15 <ubottu> bug 1790613 in packagekit (Ubuntu Bionic) "Regression: packagekit crashes updating itself to 1.1.9-1ubuntu2.18.04.1" [High,Triaged] https://launchpad.net/bugs/1790613
+
+ 15:15 <juliank> * fixed ipxe FTBFS
+
+ 15:15 <juliank> * fixed ipxe booting grub via shim in qemu (bug 1789319)
+
+ 15:15 <ubottu> bug 1789319 in MAAS "Unable to load shimx64.efi using iPXE over UEFI" [Undecided,Triaged] https://launchpad.net/bugs/1789319
+
+ 15:15 <juliank> * some apt upstream discussions
+
+ 15:15 <juliank> * reviewed an update-manager merge proposal from rbalint (https://code.launchpad.net/~rbalint/update-manager/retry-after-failed-transaction/+merge/354648)
+
+ 15:15 <juliank> * submitted PR for networkd-dispatcher /etc overrides (https://gitlab.com/craftyguy/networkd-dispatcher/merge_requests/40)
+
+ 15:15 <juliank> * merged newt for automake 1.16 (after a friendly request from LocutusOfBorg, who merged automake); reported some bugs in debian
+
+ 15:15 <juliank> (done)
+
+ 15:15 <rbalint> (short week)
+
+ 15:15 <slangasek> rbalint:
+
+ 15:15 <rbalint> * triaging unattended-upgrades regressions
+
+ 15:15 <rbalint> * gardening update-manager bugs
+
+ 15:15 <rbalint> * fixing LP: #1317164 and LP: #1791931 which have > 100 duplicates and lot of reported crashes
+
+ 15:15 <ubottu> Launchpad bug 1317164 in update-manager (Ubuntu) "Show reason of TransactionFailed and let the user try again instead of crashing" [High,In progress] https://launchpad.net/bugs/1317164
+
+ 15:15 <ubottu> Launchpad bug 1791931 in update-manager (Ubuntu) "Update-manager crashes in _show_transaction due to packages being already removed" [High,In progress] https://launchpad.net/bugs/1791931
+
+ 15:15 <rbalint> * renaming WSL apps to proudly include LTS in the name
+
+ 15:15 <rbalint> (done)
+
+ 15:15 <doko> tdaitx: no. why would it be necessary?
+
+ 15:16 <slangasek> xnox: I'm asking you for documentation, not a polemic
+
+ 15:16 <slangasek> rcj:
+
+ 15:17 <tdaitx> doko: hmm, I don't see maven, ant, or gradle there, is that expected?
+
+ 15:17 <rcj> * Debugging and reported a missing dependency in linux-firmware (bug #1792189)
+
+ 15:17 <ubottu> bug 1792189 in linux-firmware (Ubuntu) "linux-firmware does not depend on initramfs-tools" [Undecided,New] https://launchpad.net/bugs/1792189
+
+ 15:17 <doko> tdaitx: still running ... blame the libreoffice/chromium/firefox test builds for the delay ...
+
+ 15:17 <rcj> * cloud image development and fixes
+
+ 15:17 <rcj> (done)
+
+ 15:17 <tobikoch> * Learning about image building.
+
+ 15:17 <tobikoch> * Debugging small problems related to that.
+
+ 15:17 <tobikoch> (happy end)
+
+ 15:18 <slangasek> tdaitx: it rebuilds using the main archive for build-dependencies, so in principle everything there should be buildable against itself now without bootstrapping
+
+ 15:18 <slangasek> and anything that isn't is a failure
+
+ 15:18 <xnox> rbalint, because /usr/local/bin/python3 breaks distro upgrades.
+
+ 15:18 <slangasek> xnox: just create a systemd unit that watches for /usr/local/bin/python3 with inotify and deletes it
+
+ 15:18 <tdaitx> slangasek: ack, thanks
+
+ 15:18 <xnox> slangasek, excellent idea!
+
+ 15:19 <rbalint> xnox, u-u does not really run during distro upgrades
+
+ 15:19 <xnox> rbalint, /any/ package upgrade can fail... we have bugs...
+
+ 15:19 <slangasek> any other questions on status?
+
+ 15:22 <slangasek> [TOPIC] Bugs
+
+ 15:23 <slangasek> bdmurray: hello
+
+ 15:23 <bdmurray> bug 1754777
+
+ 15:23 <ubottu> bug 1754777 in casper (Ubuntu) "bionic casper nfsboot not reaching desktop env, failure to mount various kernel filesystems and /tmp" [High,Confirmed] https://launchpad.net/bugs/1754777
+
+ 15:24 <slangasek> bdmurray: I don't think casper nfs support is a priority for us
+
+ 15:25 <cyphermox> people still use nfs?
+
+ 15:25 <cyphermox> :D
+
+ 15:26 <slangasek> doko: btw is that rebuild test going to show up at http://qa.ubuntuwire.org/ftbfs/rebuilds/ soon?
+
+ 15:26 <bdmurray> Could somebody comment on the bug since it has a lot of people affected?
+
+ 15:26 <slangasek> who are these lots of people that are affected?
+
+ 15:27 <slangasek> if you're doing casper+nfs, you're doing something custom
+
+ 15:27 <cyphermox> oh, actually
+
+ 15:27 <cyphermox> could it be some kind of edubuntu thing maybe?
+
+ 15:27 <slangasek> there's no edubuntu in 18.04
+
+ 15:27 <cyphermox> no, but people do upgrade
+
+ 15:27 <cyphermox> I wonder if it's casper used outside of for install purposes.
+
+ 15:28 <doko> slangasek: no, using my modified ftbfs-report. and you wanted to review my changes and propose a package where to file these changes ...
+
+ 15:28 <cyphermox> (not that it particularly changes whether we support nfs+casper really)
+
+ 15:28 <doko> and only sending the annonucement once main has finished to build
+
+ 15:28 <gaughen> I have a bug I wanted to ask about before we move on, slangasek
+
+ 15:30 <slangasek> doko: afaik you still need to push changes to lp:~wgrant/lp-ftbfs-report/production
+
+ 15:30 <rcj> suspenseful
+
+ 15:30 <gaughen> https://bugs.launchpad.net/vaultlocker/+bug/1780332
+
+ 15:31 <ubottu> Launchpad bug 1780332 in cryptsetup (Ubuntu) "vaultlocker does not ensure that udev is triggered to create /dev/disk/by-uuid/<uuid-in-luks-header> symlink and fails" [Undecided,New]
+
+ 15:31 <slangasek> doko: so you need wgrant to review rather than me
+
+ 15:33 <doko> slangasek: we should add these scripts to some distro repo
+
+ 15:36 <slangasek> doko: it should have its own repo, but you still need to negotiate that with wgrant to change which branch he's deploying from
+
+ 15:36 <doko> well, next week. he got the same emails that you got
+
+ 15:36 <doko> sil2100: sru ping?
+
+ 15:36 <xnox> i'll comment on the bug
+
+ 15:36 <slangasek> xnox: ta :)
+
+ 15:36 <slangasek> bdmurray: other bugs?
+
+ 15:37 <bdmurray> How about a crash? https://errors.ubuntu.com/problem/ef53414acdfe092569388629a5c446880d0bcba1
+
+ 15:37 <slangasek> are crashes bugs?
+
+ 15:37 <rbalint> slangasek, they can become ones :-)
+
+ 15:38 <slangasek> systemd-journald crashing
+
+ 15:38 <slangasek> in fsync()
+
+ 15:39 <slangasek> am I blind that I can't find here what signal it's crashing with?
+
+ 15:39 <bdmurray> 6
+
+ 15:39 <sil2100> doko: I just need the SRU verification steps mentioned on the tracking bugs and then it should be good to go
+
+ 15:39 <cyphermox> slangasek: top of the screen, in the breadcrumbs thing
+
+ 15:40 <cyphermox> ah, bdmurray already answered
+
+ 15:40 <slangasek> oh, that's the 6? ok
+
+ 15:40 <slangasek> so it's a SIGABRT
+
+ 15:40 <juliank> similar to https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1773148?
+
+ 15:40 <ubottu> Launchpad bug 1773148 in systemd (Ubuntu Cosmic) "/lib/systemd/systemd-journald:6:fsync:fsync_directory_of_file:journal_file_rotate:do_rotate:server_rotate" [Undecided,New]
+
+ 15:41 <juliank> both crash in fsync.c:27 with SIGABORT
+
+ 15:41 <slangasek> rbalint, xnox: ^^ so should we be concerned about this, or does systemd-journald recover gracefully and this is a non-event?
+
+ 15:41 <slangasek> since SIGABRT likely means journald itself thought there was a problem
+
+ 15:41 <juliank> Probably systemd is aborting the syscall in fsync because the fsync hangs or something?
+
+ 15:42 <juliank> same bug: https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1750855 it seems
+
+ 15:42 <ubottu> Error: launchpad bug 1750855 not found
+
+ 15:43 <bdmurray> juliank: yeah, that was my thought
+
+ 15:44 <slangasek> right, so I'm not sure that's user-affecting
+
+ 15:44 <slangasek> or fixable in systemd
+
+ 15:45 <juliank> Does systemd send SIGABRT to unresponsive services or something?
+
+ 15:45 <slangasek> it will, yes
+
+ 15:45 <slangasek> there's a keepalive on journald and I think logind
+
+ 15:45 <slangasek> so a hanging fsync() could just be tripping the watchdog
+
+ 15:46 <xnox> slangasek, juliank - systemd sends SIGABRT when internal timer times-out.
+
+ 15:46 <slangasek> right
+
+ 15:46 <xnox> because Watchdog= thing is set
+
+ 15:46 <xnox> actually
+
+ 15:46 <slangasek> we did change watchdog on some of the processes, didn't we?
+
+ 15:46 <juliank> ok
+
+ 15:46 <xnox> i thought we agreed to drop watchdog stanza on journald
+
+ 15:46 <xnox> slangasek, yeah, that's what i thought.
+
+ 15:46 <slangasek> well, I'm sure I opined that we should drop it
+
+ 15:46 <xnox> maybe we only talked about it in portland
+
+ 15:46 <slangasek> I don't know if it was agreed :)
+
+ 15:47 <slangasek> xnox: so should we take this into the backlog?
+
+ 15:47 <xnox> yeah
+
+ 15:47 <slangasek> ok, doing
+
+ 15:47 <bdmurray> that's it for me then
+
+ 15:48 <xnox> i wonder if we can have a graceful watchdog, which instead of killing things, would log that "i would have killed it"
+
+ 15:48 <slangasek> I'll take via bug #1750855
+
+ 15:48 <ubottu> Error: Launchpad bug 1750855 could not be found
+
+ 15:48 <slangasek> [TOPIC] AOB
+
+ 15:48 <slangasek> anything else?
+
+ 15:48 <bdmurray> then should we mark the ET created bug as a dupe of the private crash?
+
+ 15:48 <slangasek> probably
+
+ 15:49 <bdmurray> doing so
+
+ 15:49 <slangasek> going once (AOB)
+
+ 15:49 <gaughen> sold!
+
+ 15:50 <slangasek> ok
+
+ 15:50 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

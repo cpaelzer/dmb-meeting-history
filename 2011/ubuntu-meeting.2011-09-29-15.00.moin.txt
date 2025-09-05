@@ -1,0 +1,564 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by NCommander at 15:00:03 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-09-29-15.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/ARM/Meeting/2011/20110929   (NCommander, 15:00:53)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html   (NCommander, 15:01:17)
+''LINK:'' http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-2.html   (NCommander, 15:01:31)
+''ACTION:'' Everyone to postpone any remaining work items  (NCommander, 15:03:06)
+ *ARM Server Status (NCommander, Daviey)
+
+ *Kernel Status (cooloney, ppisati)
+
+ *ARM Porting/FTBFS status (NCommander, janimo)
+
+ *ARM Image Status (ogra, NCommander)
+
+ *QA Status (GrueMaster, mahmoh)
+
+ *Linaro Updates (rsalveti)
+
+ *AOB
+
+
+
+Meeting ended at 15:55:01 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * Everyone to postpone any remaining work items
+
+
+
+== People present (lines said) ==
+
+ * ogra_ (101)
+ * NCommander (40)
+ * janimo (35)
+ * GrueMaster (28)
+ * rsalveti (18)
+ * infinity (13)
+ * ppisati (8)
+ * meetingology (4)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 15:00:03 <NCommander> #startmeeting
+
+ 15:00:03 <meetingology> Meeting started Thu Sep 29 15:00:03 2011 UTC.  The chair is NCommander. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:00:03 <meetingology> 
+
+ 15:00:03 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:00:52 * janimo waves
+
+ 15:00:53 <NCommander> [link] https://wiki.ubuntu.com/ARM/Meeting/2011/20110929
+
+ 15:01:09 <NCommander> there are no outstanding action items
+
+ 15:01:17 <NCommander> [link] http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm.html
+
+ 15:01:31 <NCommander> [link] http://people.canonical.com/~platform/workitems/oneiric/ubuntu-arm-ubuntu-11.10-beta-2.html
+
+ 15:01:43 <ogra_> that doersnt make any sense :)
+
+ 15:01:46 <ogra_> B2 is gone
+
+ 15:01:54 <NCommander> argh
+
+ 15:02:10 <NCommander> ENEEDCAFFIENE
+
+ 15:02:21 <ogra_> :)
+
+ 15:02:50 <NCommander> the burndown chart looks good, we completed pretty much all major work items this cycle
+
+ 15:03:06 <NCommander> [action] Everyone to postpone any remaining work items
+
+ 15:03:06 * meetingology Everyone to postpone any remaining work items
+
+ 15:03:18 <ogra_> yeah, doko trashes our statisticts
+
+ 15:03:28 <ogra_> i think the postponing happened already
+
+ 15:03:40 <ogra_> i only see three Wi left
+
+ 15:03:51 <ogra_> two from doko, one assigned to the team ?
+
+ 15:04:14 <ogra_> why the heck is that assigned to the team
+
+ 15:04:17 <janimo> quite a few of my WIs are testing/research which are not affected by a particular release date
+
+ 15:04:25 <GrueMaster> I need to postpone the lava work.  Seems the system was reengineered and will require me to rethink how I deploy it (again).
+
+ 15:04:33 <ogra_> janimo, didnt you add the 4M boundary stuff already ?
+
+ 15:04:52 <NCommander> I just postedponed my one oustanding work item
+
+ 15:05:02 <janimo> ogra_, add it where? I think that was done first in Oneiric
+
+ 15:05:16 <ogra_> janimo, yes, me too, thats why i ask you :)
+
+ 15:05:25 <ogra_> there is an open WI for it
+
+ 15:05:41 <ogra_> align rootfs to 4M boundary on OMAP preinstalled images (debian-cd)
+
+ 15:05:43 <janimo> GrueMaster, yes, I had two lava WIs . One took too long for little benefit, the other I just postponed. No more yak-shaving for me
+
+ 15:05:48 <infinity> Pretty sure I merged that in debian-cd for janimo months ago.
+
+ 15:05:52 <ogra_> i think i merged code from you that had this
+
+ 15:06:00 <ogra_> or reviwed
+
+ 15:06:02 <GrueMaster> heh
+
+ 15:06:07 <ogra_> *reviewed
+
+ 15:06:08 <janimo> ogra_, so it is done, not sure where it is to be added. You mean it does not show up in the tracker?
+
+ 15:06:22 <ogra_> janimo, it does, but not assigned to you
+
+ 15:06:24 <janimo> that may be because silly syntax in the whiteboard then
+
+ 15:06:32 <janimo> ah. weird. Anyway it is done :)
+
+ 15:06:37 * ogra_ will fix that post meeting, i just wanted to be sure it happened
+
+ 15:06:51 <NCommander> anything else here or can I move?
+
+ 15:06:56 <ogra_> move
+
+ 15:07:04 <janimo> it happened. OTOH I saw no perceptible speed gain in booting panda with that partition alignment
+
+ 15:07:07 <NCommander> [topic] ARM Server Status (NCommander, Daviey)
+
+ 15:07:32 <GrueMaster> ogra_: I'll mark the bug as fix released.
+
+ 15:07:51 <ogra_> yeah, thx
+
+ 15:08:10 <NCommander> with the exception of guided partitioning (will cover in image status), I'm very happy with the state of our server images and feelthey are ready for release
+
+ 15:09:10 <NCommander> anyone got anything else?
+
+ 15:09:22 <ogra_> Daviey, ??
+
+ 15:09:46 <ogra_> doesnt look like
+
+ 15:09:56 <NCommander> [topic]Kernel Status (cooloney, ppisati)
+
+ 15:10:19 <ogra_> audio !!!
+
+ 15:10:20 <ppisati> a new omap4 kernel has been pushed yesterday
+
+ 15:10:39 <ppisati> with 4460 support and some other goodies
+
+ 15:10:46 <ppisati> today the audio fix should go in
+
+ 15:10:51 <ogra_> \o/
+
+ 15:11:00 <janimo> ppisati, also support for pvr is in?
+
+ 15:11:13 <janimo> or rather did not regress
+
+ 15:11:16 <ogra_> janimo, i think rsalveti cared for that
+
+ 15:11:20 <janimo> ok
+
+ 15:11:21 <ogra_> in the tree we merged
+
+ 15:11:24 <ppisati> janimo: the new gfx driver you mean?
+
+ 15:11:27 * rsalveti waves
+
+ 15:11:30 <janimo> not that I have an omap4 to test on but ...
+
+ 15:11:32 <janimo> ppisati, yes
+
+ 15:11:58 <ppisati> should be a separate pkg, but the kernel we pulled had a couple of reverts to accomodate it
+
+ 15:12:01 <rsalveti> janimo: in theory it should work with the driver already available at the ppa
+
+ 15:12:04 <rsalveti> just didn't test it yet
+
+ 15:12:07 <janimo> ok
+
+ 15:12:22 <ogra_> would be good to know before release if it works ;)
+
+ 15:12:39 <ogra_> but thats still weeks :)
+
+ 15:13:11 <ogra_> janimo, what about ac100 ?
+
+ 15:13:21 <janimo> it works
+
+ 15:13:22 <ogra_> do you plan another upload with the quietening patch ?
+
+ 15:13:31 <ogra_> or do we keep that for post release
+
+ 15:13:40 <janimo> if there's any more fixes needed they should be batched in an upload
+
+ 15:13:51 <janimo> ogra_, what does it quiet exactly? nvec?
+
+ 15:13:53 <ogra_> k, i agree
+
+ 15:14:03 <ogra_> janimo, the horrtible niosy boot
+
+ 15:14:21 <janimo> ogra_, I'd rather have it before release. Also enable MD/DM as those were dropped vs your package
+
+ 15:14:36 <ogra_> janimo, k, then go ahead :)
+
+ 15:14:44 <janimo> ogra_, hmm, nosiy boot, isn't that taken care of by quiet on the cmdline?
+
+ 15:14:50 <janimo> ok, we'll discuss it on ac100
+
+ 15:14:51 <ogra_> yes
+
+ 15:14:58 <ogra_> but it wasnt acxtually quiet
+
+ 15:15:08 <ogra_> marvins tree has the fix already
+
+ 15:15:10 * janimo needs to check.
+
+ 15:15:22 * ogra_ is done
+
+ 15:15:32 <janimo> ok, but he also has crazy zcache stuff, so I may need to cherry pick . We'll see
+
+ 15:15:43 <rsalveti> ppisati: and remember that to have proper 4460 support we still need to fix bug 851974
+
+ 15:15:45 <ubottu> Launchpad bug 851974 in u-boot-linaro (Ubuntu) "FFe: u-boot-linaro 11.09, misc fixes for new silicon and boards" [Undecided,New] https://launchpad.net/bugs/851974
+
+ 15:15:48 <ogra_> zcache needs to be explicitly enabled on kernel cmdline
+
+ 15:15:53 <ogra_> dont bother
+
+ 15:16:15 <ppisati> rsalveti: is uboot going to be updated?
+
+ 15:16:25 <ppisati> i mean, the pkg in the archive
+
+ 15:16:26 <rsalveti> ppisati: it needs to be updated :-)
+
+ 15:16:27 <ogra_> rsalveti, jcrigby is already working on the upload (i acked the bug)
+
+ 15:16:28 <ppisati> ok
+
+ 15:16:59 <rsalveti> ogra_: great, thanks
+
+ 15:17:09 <ogra_> does he need a sponsor ?
+
+ 15:17:14 * ogra_ forgot to ask
+
+ 15:17:16 <rsalveti> nops
+
+ 15:17:19 <ogra_> k
+
+ 15:17:30 <rsalveti> will include the release team then
+
+ 15:18:56 <ogra_> NCommander, ? move ?
+
+ 15:19:06 <NCommander> [topic] ARM Porting/FTBFS status (NCommander, janimo)
+
+ 15:19:18 <janimo> nothing to report
+
+ 15:19:25 <janimo> currently looking at ido ftbfs
+
+ 15:20:04 <NCommander> So the guided partition on omap isa bit of a problem. Specifically, you can't set a device in a partman reciepe. The documentation is misleading since the device{} tag only works for LVM
+
+ 15:20:23 <ogra_> topic ?
+
+ 15:20:40 <NCommander> This doesn't fit into ARM porting?
+
+ 15:20:57 <ogra_> i thought you wanted to save it for image :)
+
+ 15:20:59 <ogra_> anyway
+
+ 15:21:07 * ogra_ throws bug 857299 in the room
+
+ 15:21:08 <ubottu> Launchpad bug 857299 in banshee (Ubuntu) "banshee window remain white on startup on pandaboard" [Undecided,New] https://launchpad.net/bugs/857299
+
+ 15:21:27 <ogra_> i fear that needs serious caretaking
+
+ 15:21:37 <ogra_> and it happens on ac100 too
+
+ 15:21:40 <janimo> ah, banshee again
+
+ 15:22:13 <NCommander> That being said, partman-uboot is done, and works extremely well, so it adds sanity checking. I'm unsure though if I should upload it this late (although it will properly add warnings to an unbootable configuration)
+
+ 15:22:47 <ogra_> NCommander, whats its status now (i.e. the package we have in the archive) ?
+
+ 15:22:57 <ogra_> i assume its worse ?
+
+ 15:23:58 <NCommander> we have nothing in the archive, I was holding off uploading. Uploading partman-uboot will get the netboot installer to do error checking, but I don't know how to force the installer straight to the manual partitioning screen
+
+ 15:24:15 <NCommander> as such there is no error or sanity checking during partitioning on OMAP
+
+ 15:24:31 <ogra_> partman-uboot isnt there from the dove times ?
+
+ 15:24:40 <NCommander> oh, no its there
+
+ 15:24:48 <NCommander> Theres just no OMAP code in it as of writing
+
+ 15:24:50 <ogra_> and its unusable atm
+
+ 15:25:00 <ogra_> right and we dont support dove
+
+ 15:25:05 <ogra_> upload away !
+
+ 15:25:07 <NCommander> right the current partman-uboot does nothing on OMAP. The new version fixes it
+
+ 15:25:11 <NCommander> k
+
+ 15:25:19 <NCommander> (actually, I left dove support in incase it ever comes back :-))
+
+ 15:25:21 <NCommander> uploading now
+
+ 15:25:29 <ogra_> awesome
+
+ 15:25:30 <NCommander> [topic] ARM Image Status (ogra, NCommander)
+
+ 15:25:48 <ogra_> well, archive is skewed
+
+ 15:25:54 * NCommander headthunks
+
+ 15:25:57 <ogra_> up to yesterday they built fine
+
+ 15:26:01 <janimo> mx53 boot and installer is very slow
+
+ 15:26:07 <ogra_> hey, x86 skew this time
+
+ 15:26:09 <ogra_> :)
+
+ 15:26:12 <janimo> slower than I remember the omap3 to be
+
+ 15:27:05 <ogra_> how is the system after install ?
+
+ 15:27:18 <ogra_> i think we can live with a slow install if the system itself is ok
+
+ 15:28:08 <ogra_> (and with a slow boot fwiw)
+
+ 15:28:46 <janimo> ogra_, it worked apart from trying to start ubiquity again. Need to see again with oem-config out
+
+ 15:28:48 * GrueMaster proposes going back to live/installer images for P.
+
+ 15:28:52 <janimo> this was yesterday's image
+
+ 15:28:58 <janimo> GrueMaster, +1
+
+ 15:29:09 <ogra_> GrueMaster, make the install faster than 2h and we can talk
+
+ 15:29:14 <janimo> if that measn installers like x86 ubuntu uses
+
+ 15:29:29 <ogra_> it also means extra hours for testing
+
+ 15:29:32 <janimo> ogra_, something worth at least investigating. spec?
+
+ 15:29:39 <ogra_> and we will likely have more arches next round again
+
+ 15:29:47 <ogra_> janimo, definitely
+
+ 15:30:01 <janimo> ogra_, only if we keep preinstalled. Which is a misnomer as it still asks questions and takes time
+
+ 15:30:18 * ogra_ is all for not diverging (though preinstalled fulfills a need as well)
+
+ 15:30:25 <GrueMaster> The point is we need some way to get off of SD if the system has a better medium available (USB, SATA, etc).
+
+ 15:30:35 <infinity> We just need to sort out how to add in-place/resize as an option to d-i.
+
+ 15:30:37 <ogra_> agreed
+
+ 15:30:38 <janimo> unlike linaros which is really a dd-able preinstall, albeit without the luxury of picking name for user 1000
+
+ 15:30:40 <infinity> I think I may have a spec for that.
+
+ 15:30:44 <NCommander> We'll spec it for UDS
+
+ 15:30:52 <ogra_> yeah, there is a d-i spec for that
+
+ 15:31:23 <ogra_> infinity, did you solve the slideshow issue ?
+
+ 15:31:37 * ogra_ saw all the other fixes but cant remember that one
+
+ 15:31:41 <infinity> ogra_: Fix committed to ubiquity.  Was an upload done while I was asleep?
+
+ 15:31:50 <ogra_> i dont think so
+
+ 15:31:54 <ogra_> thanks !
+
+ 15:33:22 <ogra_> NCommander, move ?
+
+ 15:33:32 <NCommander> [topic] QA Status (GrueMaster, mahmoh)
+
+ 15:34:20 <GrueMaster> With the current state of the daily images, I really shouldn't comment.
+
+ 15:34:35 <GrueMaster> So much is broken (at least for me).
+
+ 15:34:51 <GrueMaster> Server images are fine.  Desktop....
+
+ 15:35:46 <ogra_> desktop up to date from a week ago works relatively fine here on the ac100
+
+ 15:36:30 <GrueMaster> Where to start. yesterday's daily omap4.  Oem-config recycles instead of finishing install.   One indicator was flash-kernel not syncing befor umount.
+
+ 15:36:42 <GrueMaster> Changed flash-kernel, but it doesn't appear to be the only issue.
+
+ 15:37:05 <infinity> I can't reproduce that looping business. :/
+
+ 15:37:06 <ogra_> well, there are a bunch of fixes in the archive already but we didnt get images yet
+
+ 15:37:13 <infinity> (I could reproduce the f-k thing, and it's fixed)
+
+ 15:37:29 <GrueMaster> Enabled debugging in oem-config only increases the useless messaging by 10-20x.  Still no failure indicator, except now it crashes.
+
+ 15:37:35 <ogra_> the looping wont happen if oem-config is uninstalled at the right timwe
+
+ 15:37:40 <ogra_> so thats a moot bug
+
+ 15:37:56 <GrueMaster> So why isn't it uninstalling?
+
+ 15:37:57 <ogra_> since the deinstallation shoudl be fixed now
+
+ 15:38:05 <ogra_> preseed issue
+
+ 15:38:21 <GrueMaster> But there was no indication.
+
+ 15:38:30 <GrueMaster> Nothing in recent logs.
+
+ 15:38:32 <ogra_> inifnity fixed it
+
+ 15:38:39 <ogra_> in live-build i think
+
+ 15:39:15 <GrueMaster> If that was the oem-config-gtk, it is in yesterday's image.
+
+ 15:39:21 <infinity> Yeah.
+
+ 15:39:33 <infinity> But you won't get to oem-config-remove if oem-config is crashing for you.
+
+ 15:39:36 <ogra_> was that supposed to be fixed in yesterdays ?
+
+ 15:39:39 <infinity> So, that might still need investigation.
+
+ 15:39:43 <ogra_> oh
+
+ 15:39:45 <ogra_> indeed
+
+ 15:40:05 <GrueMaster> And I still don't know why oem-config is crashing.
+
+ 15:40:20 <GrueMaster> I have looked through every log.
+
+ 15:41:38 <NCommander> anything else?
+
+ 15:41:47 <ogra_> not from me
+
+ 15:42:00 <GrueMaster> At any rate, other issues I have been seeing are sound (analog audio device renamed from SDP4430 to Panda in the kernel without alsaucm conf files being updated).  And I haven't been able to get much further in daily testing.
+
+ 15:42:24 <GrueMaster> Nothing else here.
+
+ 15:42:40 <ogra_> well, and dont expect images for the next two days given the upload rate
+
+ 15:43:01 <GrueMaster> I don't expect images until Tuesday, earliest.
+
+ 15:43:06 <ogra_> heh
+
+ 15:43:23 <ogra_> i guess sat or sun images should work again
+
+ 15:43:39 * GrueMaster won't hold his breath.
+
+ 15:44:03 <ogra_> indeed and i didnt mean to ask you to work on sat or sun :)
+
+ 15:44:41 <GrueMaster> If they are there, I may give them a cursory glance over morning coffee.
+
+ 15:45:06 <infinity> GrueMaster: The audio device name was reverted.
+
+ 15:45:20 <ogra_> s/was/is just being/
+
+ 15:45:40 <GrueMaster> infinity: I know.  I am just reporting it for the meeting minutes.
+
+ 15:45:43 <infinity> I'll stick with was, I accpted that last night!
+
+ 15:45:53 <GrueMaster> I am actively in that discussion even now during the meeting.
+
+ 15:46:01 <infinity> Heh.
+
+ 15:46:21 <ogra_> infinity, well, reading the #ubuntu-arm backlog it is just being changed
+
+ 15:46:25 <GrueMaster> And until it is in an image, the issue remains open.
+
+ 15:46:53 <ogra_> anyway
+
+ 15:46:56 <ogra_> NCommander, move :)
+
+ 15:47:08 <NCommander> [topic] Linaro Updates (rsalveti)
+
+ 15:47:34 <infinity> Oh, nevermind, the revert last night was DRM names.  I guess we're changing drivers all over the place. :P
+
+ 15:47:34 * rsalveti waves
+
+ 15:48:09 <rsalveti> guess the main things we have to report are kind at ubuntu already :-)
+
+ 15:48:19 <rsalveti> the work on the tilt tree, to make it work with 4460
+
+ 15:48:32 <rsalveti> new u-boot-linaro release, fixing 4430 ES2.0 and bringing support for 4460
+
+ 15:48:42 <rsalveti> libjpeg-turbo is now at the archive
+
+ 15:49:15 <rsalveti> other than that we have a release today
+
+ 15:49:27 <rsalveti> and plan to start moving to oneiric next week already
+
+ 15:49:51 <rsalveti> that's most from my side
+
+ 15:50:32 <GrueMaster> rsalveti: What changes to u-boot are there on the beagle side?  Is it just to sync the source tree?
+
+ 15:50:56 <rsalveti> GrueMaster: boot timeout is now 2 secs
+
+ 15:51:07 <rsalveti> and generally just code sync with upstream
+
+ 15:51:09 <GrueMaster> Ah, good.
+
+ 15:51:27 <GrueMaster> 10 seconds was a bit excessive.
+
+ 15:51:43 <NCommander> anything else, we're almost out of time
+
+ 15:52:36 <NCommander> [topic] AOB
+
+ 15:52:55 * ogra_ has something
+
+ 15:53:18 <ogra_> since we have our own ARM track at UDS again now ... and will have to give a summaryx at the end again ...
+
+ 15:53:57 <ogra_> which always costed us half the day to collect on friday ... davidm thought it would be good if we had a closing meeting every day after the last session
+
+ 15:53:59 <NCommander> I'll be working at putting together a draft of all server blueprints based off the PBLueprintIdeas Page
+
+ 15:54:21 <ogra_> so everyone will have to write down stuff about the sessions he was in at end of the day
+
+ 15:54:35 <ogra_> tahts all ... just wanted to announce that
+
+ 15:54:40 <janimo> ok
+
+ 15:54:55 <NCommander> closing the meeting out in 3
+
+ 15:54:57 <NCommander> 2
+
+ 15:54:59 <NCommander> 1
+
+ 15:55:01 <NCommander> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

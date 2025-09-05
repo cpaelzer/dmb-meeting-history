@@ -1,0 +1,512 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:00:41 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-10-19-15.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Precise blueprints
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 15:46:39 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (54)
+ * ev (33)
+ * cjwatson (25)
+ * bdmurray (25)
+ * mvo (17)
+ * stgraber (16)
+ * ubottu (16)
+ * jhunt (15)
+ * doko (12)
+ * barry (11)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:00:41 <slangasek> #startmeeting
+
+ 15:00:41 <meetingology> Meeting started Wed Oct 19 15:00:41 2011 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 15:00:41 <meetingology> 
+
+ 15:00:41 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01:30 <slangasek> [TOPIC] lightning round
+
+ 15:01:33 <slangasek> $ echo $(shuf -e cjwatson barry doko stgraber jhunt mvo ev bdmurray slangasek)
+
+ 15:01:36 <slangasek> cjwatson mvo slangasek ev barry doko jhunt stgraber bdmurray
+
+ 15:02:17 <slangasek> cjwatson: you win!
+
+ 15:02:24 <cjwatson> opening precise; lots of syncs, merges, NEW processing, build fixes, ...
+
+ 15:02:24 <cjwatson> main needs-merge graph looks really good so far, thanks to everyone who's been working on that
+
+ 15:02:27 <cjwatson> concentrating on the libjpeg transition, since that's big and caused several failures; also trying to keep on top of Pre-Depends additions for xz-compressed binary packages
+
+ 15:02:30 <cjwatson> looking into optimising cron.germinate; seems to be at least 7 minutes of room for improvement here; LP a bit non-committal on whether this would let us run the publisher */30, but might be possible
+
+ 15:02:34 <cjwatson> further optimisation of cdimage mirroring; now under 10 seconds for a no-op sync, and down to sensible times when we actually have to mirror anything
+
+ 15:02:37 <cjwatson> +1 maintenance team proposal
+
+ 15:02:40 <cjwatson> ..
+
+ 15:03:10 <mvo> apt: merge/upload new version to precise, work on cherrypick for  #868977, #672314 to oneiric-proposed
+
+ 15:03:10 <mvo> software-center: add missing recommends on lzma for bug #868188, planning work, debug/fix steel storm2 desktop file bug, work on review languages and sorting, work on unicode_literals version (lp:~mvo/software-center/unicode_literals) to fight the str/unicode mess, add workaround for the white pixel border bug, look into startup time regression, commit one trivial workaround to trunk
+
+ 15:03:10 <mvo> update-manager: update for precise, SRU work, add postgresql to the removal blacklist and reupload (#871893), fix screensaver poke, fix crash when packages get downgraded (#873411, comment #8), honor dpkg desired  install state (dpkg --set-selection state), some work on #859373, mostly diangose, cyhermox is the man
+
+ 15:03:11 <ubottu> Launchpad bug 868188 in software-center (Ubuntu) ""Internal Error ...google-chrome-stable_current_amd64.deb could not be opened"" [Medium,In progress] https://launchpad.net/bugs/868188
+
+ 15:03:14 <mvo> apt-btrfs-snapshot: fix another issue with incorrect fstab lines (#873411, comment #7)
+
+ 15:03:16 <mvo> cups: test/upload fix for the upgrade issue #874835
+
+ 15:03:18 <mvo> misc: apt-clone, unattended-upgrades updates
+
+ 15:03:20 <mvo> review/sponsor compizconfig-backend-gconf upload for #207065 (yes, really low bugnumber)
+
+ 15:03:22 <mvo> apturl: debug/fix multiarch pkgname parsing (LP: #872146)
+
+ 15:03:24 <mvo> update-notifier: upload new -prposed version with fix for overlong menu text (#871691)
+
+ 15:03:26 <mvo> EOF
+
+ 15:04:43 <slangasek> working on getting upstart into a state that it can be used in Debian (groundwork in sysvinit and lsb-base); maybe we can get a few more packages turned into syncs that way...
+
+ 15:05:12 <slangasek> working through my own list of merges for precise
+
+ 15:05:36 <slangasek> broke ia32-libs in precise - it'll fix itself when everything is multiarched
+
+ 15:06:40 <slangasek> tracking various SRUs for oneiric (bug #874130, bug #871083, et al)
+
+ 15:06:42 <ubottu> Launchpad bug 874130 in krb5 (Ubuntu Precise) "Canonicalize fallback only works for different realm (MITKRB RT #6917)" [High,Triaged] https://launchpad.net/bugs/874130
+
+ 15:06:43 <ubottu> Launchpad bug 871083 in pam (Ubuntu Oneiric) "package libpam-modules 1.1.3-2ubuntu1 failed to install/upgrade: ErrorMessage: './usr/share/man/man8/pam_shells.8.gz' is different from the same file on the system" [Medium,Fix committed] https://launchpad.net/bugs/871083
+
+ 15:06:47 <slangasek> EOF
+
+ 15:07:31 <ev> - Release week sprinting.
+
+ 15:07:32 <ev> - Fixed some interesting bugs in ubiquity found during smoke testing and
+
+ 15:07:32 <ev> pushed out a new version into Precise.
+
+ 15:07:32 <ev> - Chat with mvo on downloading external resources in dpkg (flash,
+
+ 15:07:32 <ev> msttcorefonts), and queueing package installations in
+
+ 15:07:33 <ev> software-center/update-manager (language packs at install).
+
+ 15:07:33 <ev> - Meeting with Kate to discuss her requirements for the crash database and
+
+ 15:07:33 <ev> metrics.
+
+ 15:07:40 <ev> - Post-release ubiquity bug triage.
+
+ 15:07:40 <ev> - Still lots of disk errors. Wubi will help here, but I wonder if we should
+
+ 15:07:40 <ev> start looking for squashfs errors in syslog or if there's a better API for
+
+ 15:07:40 <ev> this.
+
+ 15:07:41 <ev> - Wrote Precise blueprints for uploading to trunk and rdepends testing.
+
+ 15:07:41 <ev> - Created USB disks for the Ubuntu Shop and wrote up checksumming instructions
+
+ 15:07:41 <ev> for the supplier, given Robbie's recent disaster.
+
+ 15:07:42 <ev> - Investigated how and where we're using the gstreamer automatic codec
+
+ 15:07:42 <ev> installation for Christian.
+
+ 15:07:43 <ev> - Started researching Cassandra and other bits and pieces for crash and
+
+ 15:07:43 <ev> metrics.
+
+ 15:07:44 <ev> - Wrote a test for ubiquity to verify that we have a completely translated
+
+ 15:07:44 <ev> interface.  Annoyingly this requires a whitelist for a small set of widgets
+
+ 15:07:45 <ev> that we translate on the fly, as the page they're associated with is run.
+
+ 15:08:50 <mvo> ev: I would love to hear more about the verify that the interface is translated test, I want this too for s-c :)
+
+ 15:08:53 <slangasek> glad to see that NM regression fixed so quickly in SRU
+
+ 15:09:02 <slangasek> s/regression/mid-upgrade breakage/
+
+ 15:09:09 <ev> so then it didn't get cut off?
+
+ 15:09:11 <cjwatson> translated or translateable?
+
+ 15:09:15 <cjwatson> IYSWIM
+
+ 15:09:37 <ev> translated - it overrides translate_widget adn does the lookups itself
+
+ 15:09:44 <mvo> I assume you use a fake language like "mirror" or something that can be "auto-translated"? or how does it work?
+
+ 15:09:54 <cjwatson> I'd call that translateable I think, but OK, good :)
+
+ 15:10:01 <ev> err yes
+
+ 15:10:02 <ev> indeed
+
+ 15:10:07 <barry> i often use a fake 'rot13' language for stuff like that :)
+
+ 15:10:12 <mvo> haha
+
+ 15:10:14 <mvo> nice as well
+
+ 15:10:53 <slangasek> detection of missing translations - very nice :)
+
+ 15:11:04 <barry> mvo: that's what they speak in Feedonia
+
+ 15:11:12 <barry> er, Freedonia
+
+ 15:11:41 <slangasek> barry: you're up
+
+ 15:11:51 <barry> ah, sorry didn't see ev's "done"
+
+ 15:11:52 <barry> syncs, merges, blueprints; investigated didrocks i18n crasher bug & wrote blog post; review rfc 6377; pypi testing experiment & TIP mailing list post; bug 813146 debugging; done.
+
+ 15:11:53 <barry> 
+
+ 15:11:55 <ubottu> Launchpad bug 813146 in linux (Ubuntu Precise) "kernel panic when running Python test suite on ecryptfs" [Critical,In progress] https://launchpad.net/bugs/813146
+
+ 15:12:24 <ev> slangasek: it kept biting me (and writing the test even found one more missing one, yay)
+
+ 15:13:06 <slangasek> ev: right, good demonstration of the value of automatic testing :)
+
+ 15:13:17 <ev> :)
+
+ 15:13:42 <barry> slangasek: one nice thing to the pypi testing work is that a few other related projects have come out of the woodwork.  we're discussing merging/collaboration
+
+ 15:14:37 <ev> pypants?
+
+ 15:14:41 <slangasek> barry: great!
+
+ 15:15:09 <barry> ev: those folks haven't spoken up, but pyti is one and pycheeseshop is another
+
+ 15:15:15 <ev> cool
+
+ 15:15:19 <barry> (pyti being a gsoc2011 project)
+
+ 15:15:51 <barry> (i'm done btw)
+
+ 15:16:10 <doko> - precise opening with some initial changes
+
+ 15:16:10 <doko> - fix ARM libobjc and libjava bootstrap failures on GCC trunk
+
+ 15:16:10 <doko> - work on component-mismatches, pester some people, fixed -perl packages
+
+ 15:16:10 <doko> - some MIRs
+
+ 15:16:10 <doko> - syncs and merges
+
+ 15:16:12 <doko> done
+
+ 15:16:24 <jhunt> In London last week for sprint. Spent a lot of time working on bug
+
+ 15:16:24 <jhunt> 849414 / bug 553745. Still unable to create. Reason this problem "comes
+
+ 15:16:24 <jhunt> and goes" I think is due to us switching off apport post release. I've
+
+ 15:16:24 <jhunt> requested users with the problem re-enable and send us some logs if they
+
+ 15:16:24 <jhunt> can grab one. Now switched back to Upstart. I now understand the
+
+ 15:16:27 <jhunt> TEST_ALLOC_FAIL issue I was seeing (TEST_ALLOC_FAIL is an evil but very
+
+ 15:16:27 <ubottu> Launchpad bug 553745 in plymouth (Ubuntu Maverick) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Triaged] https://launchpad.net/bugs/553745
+
+ 15:16:29 <jhunt> useful invention). Currently going through Upstart job logging test code
+
+ 15:16:32 <jhunt> and enabling TEST_ALLOC_FAIL for it (this is slow as you need to track
+
+ 15:16:34 <jhunt> each alloc call and the logger has various failure paths that vary the
+
+ 15:16:37 <jhunt> number of alloc calls). Plan: finish Upstart tests and get this feature
+
+ 15:16:39 <jhunt> into Precise "real soon now", get NIH multi-arched (started with
+
+ 15:16:42 <jhunt> stgraber last week). Out this Friday. Wednesday Wish: that someone would
+
+ 15:16:44 <jhunt> fix bug 861268 :)
+
+ 15:16:46 <ubottu> Launchpad bug 861268 in xorg (Ubuntu) "text corruption in terminals (xterm, urxvt) and emacs" [Undecided,New] https://launchpad.net/bugs/861268
+
+ 15:16:47 <jhunt> ☯
+
+ 15:17:12 <stgraber> - Was in London last week for the release sprint, testing/breaking/fixing the world
+
+ 15:17:16 <stgraber> - Took Monday off
+
+ 15:17:18 <stgraber> - Started looking at bug 876829
+
+ 15:17:20 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Triaged] https://launchpad.net/bugs/876829
+
+ 15:17:21 <stgraber> - Registered a few specs for UDS, still quite a few more to discuss and register
+
+ 15:17:24 <stgraber> - Spent a bit of time talking about app isolation (arkose, apparmor, arb-wrapper, ...)
+
+ 15:17:27 <stgraber> - Got my first Precise container running
+
+ 15:17:30 <stgraber> - Started discussing what's needed to make Edubuntu 12.04 an LTS release
+
+ 15:17:32 <stgraber> - TODO
+
+ 15:17:35 <stgraber> - Patch pilot this afternoon
+
+ 15:17:37 <stgraber> - Go through the merges where I'm touched-it-last and hopefully grab a few from Colin's list
+
+ 15:17:41 <stgraber> - Initial upload of ltsp and ldm in Precise so we can do some work on it at the LTSP hackfest next week (as the Debian maintainer will also be there)
+
+ 15:17:44 <stgraber> - More pre-UDS planning (ISO tracker, recovery mode, local DNS resolver by default, Edubuntu, ...)
+
+ 15:17:47 <stgraber> - Publish the automated IPv6 testing and get it running on Precise. Prepare a short demo for the testing in Ubuntu event at UDS.
+
+ 15:17:50 <stgraber> - See how I can help James getting libnih ported to multi-arch so we can get non-x86 containers running on x86 hardware
+
+ 15:17:53 <stgraber> - Try to spend some time on the ARB queue, we have quite a few apps in there that need packaging/review
+
+ 15:17:54 <barry> jhunt: nice "done" character :)
+
+ 15:17:56 <stgraber> (done)
+
+ 15:18:03 <slangasek> doko: nice job with the MIRs; components-mismatches looks much better than the flurry of post-opening emails would have suggested
+
+ 15:18:05 <bdmurray> reassignment of no package apport-bug reports to the correct package
+
+ 15:18:05 <bdmurray> wrote a bug bot function to take care of these going forward
+
+ 15:18:05 <bdmurray> descrption based no package assignment testing
+
+ 15:18:05 <bdmurray> bug bot fix for private people and patch subscription
+
+ 15:18:16 <bdmurray> wrote and uploaded and apport-pacakge hook for synaptic
+
+ 15:18:16 <bdmurray> modified cheese apport package hook to file bugs about linux (LP: #793950)
+
+ 15:18:19 <bdmurray> data visualization brainstorming
+
+ 15:18:22 <bdmurray> fixing of bug stats scripts to take into account Incomplete changes
+
+ 15:18:24 <bdmurray> fixing bugstats-complete on cranberry to count private bugs
+
+ 15:18:26 <bdmurray> research into flashplugin-downloader bug 870281 and out of date mirrors
+
+ 15:18:26 <bdmurray> wrote a bugpattern for flashplugin bug 870643
+
+ 15:18:26 <bdmurray> wrote a bugpattern for 873397 (ubiquity adobe acrobat and archive.canonical.com)
+
+ 15:18:28 <ubottu> Launchpad bug 870281 in flashplugin-nonfree (Ubuntu Oneiric) "installer crash when user choose to install additional software: http://archive.canonical.com/pool/partner/a/adobe-flashplugin/adobe-flashplugin_10.3.183.10.orig.tar.gz doesn't exist" [High,Fix released] https://launchpad.net/bugs/870281
+
+ 15:18:29 <bdmurray> sru of bug fix for bug 207065 for Lucid
+
+ 15:18:30 <ubottu> Launchpad bug 870643 in flashplugin-nonfree (Ubuntu) "package flashplugin-downloader 11.0.1.152ubuntu1 failed to install/upgrade: wget: unable to resolve host address `archive.canonical.com'" [High,Confirmed] https://launchpad.net/bugs/870643
+
+ 15:18:32 <ubottu> Launchpad bug 207065 in compizconfig-backend-gconf (Ubuntu Lucid) "Bad Compiz Bindings Bug" [Low,Fix committed] https://launchpad.net/bugs/207065
+
+ 15:18:32 <jhunt> barry: ☺
+
+ 15:18:34 <bdmurray> ubiquity bug cleanup of install failures due to media errors on hard disks (not just cd drives)
+
+ 15:18:37 <bdmurray> wrote a udd query for ubuntu bug reports with the same bug watch
+
+ 15:18:40 <bdmurray> done
+
+ 15:19:56 <slangasek> 861268 - eep
+
+ 15:21:33 <cjwatson> slangasek: not to minimise doko's work, certainly, though some of the component-mismatches stuff was because I'd been a bit too hasty in telling it to look at armhf
+
+ 15:21:49 <slangasek> cjwatson: ah
+
+ 15:21:59 <cjwatson> turning that back off avoided some of the insanity, after doko pointed it out to me earlier today
+
+ 15:22:17 <doko> well, still ~30 -perl left, and ~25 -java (resolved by jamespage)
+
+ 15:22:42 <slangasek> bdmurray: could we have http://reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-next-milestone-important-bug-tasks.html pointed at oneiric-updates for a bit?
+
+ 15:22:44 <doko> but it's indeed understandable again
+
+ 15:23:07 <doko> people really should get an email, when a package enters into dep-wait
+
+ 15:23:13 <bdmurray> slangasek: sure
+
+ 15:23:17 <cjwatson> doko: are you dealing with promotions as you go along, or should I be watching the mir-track list?
+
+ 15:23:18 <slangasek> bdmurray: thanks!
+
+ 15:23:27 <slangasek> doko: does that not happen?  I thought it did
+
+ 15:23:29 <doko> cjwatson, yes doint so
+
+ 15:23:42 <doko> slangasek, did you see one for your cron merge? ;-P
+
+ 15:23:56 <cjwatson> doko: great, thanks
+
+ 15:23:59 <slangasek> doko: I saw mail for it, but that might be just because I receive the component-mismatches diffs! :D
+
+ 15:24:15 <doko> ahh, I don't get those
+
+ 15:24:36 <slangasek> I'll MIR that soon, fwiw
+
+ 15:24:53 <slangasek> [TOPIC] Precise blueprints
+
+ 15:25:00 <slangasek> (not to be confused with "precise blueprints")
+
+ 15:25:27 <slangasek> public service announcement... please get blueprints filed by the end of this week, so we can get them on the UDS schedule in time to let the schedule *settle*
+
+ 15:25:32 <slangasek> any questions? :)
+
+ 15:25:34 * mvo nods
+
+ 15:25:59 <ev> slangasek: I've sent you an email about that
+
+ 15:26:21 <slangasek> ev: will reply right after the meeting
+
+ 15:26:25 <ev> cheers
+
+ 15:26:28 <slangasek> [TOPIC] Bugs
+
+ 15:26:53 <slangasek> bdmurray: any interesting bugs popping out of the woodwork post-release?
+
+ 15:27:10 <bdmurray> slangasek: this report has quite a few on it http://reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-recently-important-bug-tasks.html
+
+ 15:28:47 <bdmurray> bug 836378 for example
+
+ 15:28:48 <ubottu> Launchpad bug 836378 in grub2 (Ubuntu) "Oneiric upgrade, boot hangs at error: symbol not found: grub_divmod64_full" [High,Confirmed] https://launchpad.net/bugs/836378
+
+ 15:28:52 <slangasek> hmm, bug #874518 looks like a duplicate of bug #874130
+
+ 15:28:54 <ubottu> Launchpad bug 874518 in openssh (Ubuntu) "ssh with kerberos fails after upgrade to 11.10" [High,New] https://launchpad.net/bugs/874518
+
+ 15:28:54 <ubottu> Launchpad bug 874130 in krb5 (Ubuntu Precise) "Canonicalize fallback only works for different realm (MITKRB RT #6917)" [High,Triaged] https://launchpad.net/bugs/874130
+
+ 15:29:03 <cjwatson> bdmurray: yet another case of misconfiguration, not new
+
+ 15:29:18 <slangasek> cjwatson: you have a bucket for that bug then?
+
+ 15:29:22 <cjwatson> basically *every* "symbol not found" error in grub2 is a local misconfiguration
+
+ 15:29:40 <cjwatson> I'll reply to it
+
+ 15:30:01 <slangasek> heh, I guess those would be hard to bugpattern
+
+ 15:30:05 <cjwatson> yep
+
+ 15:30:10 <slangasek> since they tend to be filed by hand
+
+ 15:30:36 <bdmurray> well the bug bot could do something though
+
+ 15:31:53 <slangasek> cjwatson: can you work with bdmurray to figure out what the bug bot should do?
+
+ 15:33:37 <slangasek> bug #877194 looks like a system that hasn't been properly upgraded to natty in the first place..
+
+ 15:33:38 <cjwatson> I guess
+
+ 15:33:39 <ubottu> Launchpad bug 877194 in update-manager (Ubuntu) "do-release-upgrade in console to oneric fails: SystemError: E:Could not perform immediate configuration on 'multiarch-support'. Please see man 5 apt.conf under APT::Immediate-Configure for details. (2)" [High,Incomplete] https://launchpad.net/bugs/877194
+
+ 15:33:54 <cjwatson> I don't know if I'm comfortable with them being auto-closed though
+
+ 15:34:04 <cjwatson> I think people would prefer to interact with a human here rather than a bot
+
+ 15:34:10 <slangasek> cjwatson: your call
+
+ 15:34:44 <ev> just auto mark them as incomplete, then it doesn't have to be on your conscious when they're closed ;)
+
+ 15:34:50 <bdmurray> cjwatson: I don't think closing is necessary but giving people some direction to head in or tagging the bugs so they can be dealt with in batches may help
+
+ 15:36:01 <cjwatson> how about tagging any grub2 bug whose summary matches "symbol not found" as grub-modules-skew, then?
+
+ 15:36:39 <bdmurray> that sounds fine to me
+
+ 15:37:23 <cjwatson> and maybe ask for the output of 'sudo debconf-show grub-pc | grep install_devices'
+
+ 15:37:25 <slangasek> what about bugs on grub1 (which is where this one was filed)?
+
+ 15:38:19 <slangasek> there's also bug #858122 which is a major pain for upgrading... we really need to deploy some workaround for these users that have had insserv run on their systems against their will.  someone want to volunteer to look at that?
+
+ 15:38:21 <ubottu> Launchpad bug 858122 in Release Notes for Ubuntu "incomplete migration to /run (shutdown script order has been demolished)" [High,In progress] https://launchpad.net/bugs/858122
+
+ 15:39:50 <bdmurray> slangasek: might there be duplicates of that bug lying around / hidden elsewhere?
+
+ 15:39:57 <slangasek> certainly
+
+ 15:40:06 <bdmurray> and what would I look for?
+
+ 15:40:09 <slangasek> probably not easily autodetectable
+
+ 15:40:09 <cjwatson> grub(1)> yes
+
+ 15:40:24 <cjwatson> I've followed up to bug 836378 now with detailed explanation/directions, and marked it invalid
+
+ 15:40:26 <ubottu> Launchpad bug 836378 in grub2 (Ubuntu) "Oneiric upgrade, boot hangs at error: symbol not found: grub_divmod64_full" [High,Invalid] https://launchpad.net/bugs/836378
+
+ 15:40:36 <mvo> I haven't looked at all yet into 858122 but if noone else will I can give it a go
+
+ 15:40:58 <slangasek> bdmurray: well, if you can figure out a search term that matches "user rebooted after upgrade and their system didn't come up because dbus was missing and replacing /var/run with a symlink fixed it"... :)
+
+ 15:41:19 <slangasek> mvo: appreciate it!
+
+ 15:41:47 <slangasek> mvo: fwiw, I think the most appropriate workaround here is probably to shove the standard symlinks in /etc/rc6.d back to their intended sequence numbers by hand on upgrade
+
+ 15:42:04 <slangasek> so that, y'know, sendsigs, unmount, and reboot all happen in the intended order :P
+
+ 15:42:30 <slangasek> if we fix *that*, the migrate-on-shutdown code should Just Work
+
+ 15:42:38 <mvo> slangasek: heh,  that makes sense :)
+
+ 15:43:00 <slangasek> we also need some fix for insserv itself breaking things, though :/
+
+ 15:43:22 <slangasek> not sure what kind of fix would be SRUable there... I almost want to move insserv off the path, or make it a no-op
+
+ 15:44:13 <slangasek> mvo: anyway, you can have a look and see what you think :)
+
+ 15:44:27 <slangasek> any other bugs that aren't getting the attention they need?
+
+ 15:45:09 <bdmurray> not that I know of
+
+ 15:45:28 <slangasek> [TOPIC] AOB
+
+ 15:45:39 <slangasek> who knows a joke?
+
+ 15:46:39 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

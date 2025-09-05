@@ -1,0 +1,217 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jdstrand at 18:08:01 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-03-19-18.08.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting   (jdstrand, 18:08:06)
+ *Announcements
+
+ *Weekly stand-up report
+
+ *Highlighted packages
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/jruby.html   (jdstrand, 18:22:06)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/rt73.html   (jdstrand, 18:22:09)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/xcftools.html   (jdstrand, 18:22:12)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/chasen.html   (jdstrand, 18:22:16)
+''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/open-vm-tools.html   (jdstrand, 18:22:18)
+
+ *Miscellaneous and Questions
+
+
+
+Meeting ended at 18:31:32 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (39)
+ * mdeslaur (10)
+ * sbeattie (9)
+ * tyhicks (7)
+ * micahg (4)
+ * jjohansen (4)
+ * meetingology (3)
+ * ubottu (2)
+
+
+
+== Full Log ==
+
+
+ 18:08:01 <jdstrand> #startmeeting
+
+ 18:08:01 <meetingology> Meeting started Mon Mar 19 18:08:01 2012 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:08:01 <meetingology> 
+
+ 18:08:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:08:03 <jjohansen> \o
+
+ 18:08:05 <jdstrand> The meeting agenda can be found at:
+
+ 18:08:06 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 18:08:13 <jdstrand> [TOPIC] Announcements
+
+ 18:08:31 <jdstrand> Julian Taylor (jtaylor) provided a debdiff for oneiric for super (LP: #954579)
+
+ 18:08:34 <jdstrand> Your work is very much appreciated and will keep Ubuntu users secure. Great job! :)
+
+ 18:08:42 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 18:08:47 <jdstrand> I'll go first
+
+ 18:09:35 <jdstrand> I'm on triage this week. I'm happy to see that after running process_cves this morning, there was nothing new in oss-security
+
+ 18:10:09 <jdstrand> (I went back 5 weeks by exporting my oss-security folder in evo as mbox, then running check-cves --untriaged on it)
+
+ 18:10:49 <jdstrand> so, hopefully this indicates we are back on track despite mitre's efforts to thwart us :)
+
+ 18:11:23 <mdeslaur> hehe
+
+ 18:11:33 <jdstrand> my focus this week is on finishing up my MIR secruity audits. I completed many last week but have 3 left. I think 1 more will be coming after that though
+
+ 18:11:46 <jdstrand> depending on time, I will then move to install audits
+
+ 18:11:51 <mdeslaur> jdstrand: you did the locate_cves on it first though, right?
+
+ 18:12:18 <jdstrand> mdeslaur: you know, I missed that step :)
+
+ 18:12:25 * jdstrand will report back momentarily
+
+ 18:12:26 <mdeslaur> jdstrand: whoops :)
+
+ 18:12:32 <jdstrand> mdeslaur: you're next
+
+ 18:12:58 <mdeslaur> I'm working on a ca-certificates-java issue, and will go down the list after that
+
+ 18:13:05 <mdeslaur> I'm in the happy place this week
+
+ 18:13:14 <mdeslaur> meh, nothing further to report
+
+ 18:13:18 <mdeslaur> sbeattie, you're up
+
+ 18:13:46 <sbeattie> I'm on community this week, and have at least mahara to review.
+
+ 18:14:06 <sbeattie> Otherwise, I'm working on apparmor bugs
+
+ 18:14:16 <sbeattie> That's pretty much it for me.
+
+ 18:14:22 <sbeattie> micahg: tag, you're it.
+
+ 18:14:38 <micahg> I have patch piloting, as well as everything I didn't finish last week (Thunderbird update, Icedtea regression, thunderbird SRU), all to be completed this week, then there's webkit and possibly a chromium major update if they're on their 6 week schedule
+
+ 18:15:01 <micahg> well, thunderbird SRU not to be completed, but uploaded :)
+
+ 18:15:36 <micahg> questions?
+
+ 18:15:52 <micahg> off to tyhicks then :)
+
+ 18:16:09 <tyhicks> I'm in the happy place this week
+
+ 18:17:07 <tyhicks> Making good progress on the freetype update. I noticed that Debian mainly only patched the invalid write vulns, while I'm also patching the invalid reads.
+
+ 18:17:44 <tyhicks> It is a taking a bit longer, but I've got all the tests in place and I've backported everything to oneiric. Hopefully the other backports aren't too bad now.
+
+ 18:18:19 <tyhicks> I've got another revision of my patch for bug 842647 done
+
+ 18:18:21 <ubottu> Launchpad bug 842647 in eCryptfs "[git] file blocks duplicated at the end of the file" [High,In progress] https://launchpad.net/bugs/842647
+
+ 18:18:43 <tyhicks> test kernels just got finished building and I'll be posting a link to those shortly, after doing a quick smoke test
+
+ 18:19:06 <tyhicks> That's about it for me. I'll be moving on to another update after I'm done with freetype.
+
+ 18:19:15 <tyhicks> jjohansen: You're up
+
+ 18:19:26 <jjohansen> I am continuing to look at Bug #959560, and any other apparmor bug that surfaces, or needs looking into (that includes following up with Christain on the mod_apparmor bug and also the APPARMOR_STOP mode for debugging).  I need to post out the next revision of the mount rules kernel patch to lkml, get some mount rule tests added to the regression test suite,  I also needed to start catching up on some of the deferred kernel
+
+ 18:19:27 <ubottu> Launchpad bug 959560 in AppArmor "deny mount does not work correctly" [Undecided,New] https://launchpad.net/bugs/959560
+
+ 18:20:18 <jjohansen> sigh, /me needs to also work on getting that paste right so it doesn't show up as one big blob
+
+ 18:20:23 <jjohansen> jdstrand: back to you
+
+ 18:21:14 <jdstrand> thanks
+
+ 18:21:30 <jdstrand> so it looks like there were 6 things in oss-sec we didn't have. still not bad
+
+ 18:21:44 <jdstrand> [TOPIC] Highlighted packages
+
+ 18:21:49 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 18:21:53 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 18:22:06 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/jruby.html
+
+ 18:22:09 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/rt73.html
+
+ 18:22:12 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/xcftools.html
+
+ 18:22:16 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/chasen.html
+
+ 18:22:18 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/open-vm-tools.html
+
+ 18:22:29 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 18:22:33 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 18:23:29 <sbeattie> jdstrand: I noted you were planning on doing install audits; should we also start verifying qa-r-t tests for precise?
+
+ 18:24:29 <sbeattie> I'm asking because I fixed on issue with mysql/qart on precise, but now the upstream tests are failing, and it may require fixing something in the mysql package.
+
+ 18:25:29 <jdstrand> sbeattie: I'm not sure how we want to do these. we (I) failed in getting them done for precise and aiui the qa team is incorporating them
+
+ 18:25:49 <jdstrand> sbeattie: my feeling at this time is to just update them as we have time
+
+ 18:26:24 <jdstrand> and fix any bugs that the qa team reports. we can maybe formalize this a bit more next month. I don't think any of us have time to get this done before april all things considered
+
+ 18:26:48 <jdstrand> mdeslaur: what are your thoughts?
+
+ 18:27:15 <sbeattie> jdstrand: I somewhat agree, and in fact, the whole reason I looked at mysql was due to GrueMaster pointing out the breakage.
+
+ 18:27:21 <mdeslaur> I think we should wait for qa team bug reports and/or patches
+
+ 18:27:44 <sbeattie> but for some things it's better to know in advance...
+
+ 18:28:15 <mdeslaur> well, for stuff like apparmor where we're pretty much the maintainer, I agree we should be looking at them for precise
+
+ 18:28:34 <mdeslaur> but for other packages, I assume the qa team is running them on the dev release
+
+ 18:28:35 <jdstrand> sbeattie: certainly. the QA team is supposed to get to the point where they are running these all the time, so the advanced notice is just part of our normal qa process.afaik, we aren't there yet, but should be fixing any bugs that they give to us
+
+ 18:29:03 <jdstrand> mdeslaur: oh certainly. if a qrt package is tied to our acceptance criteria, we need to be running it
+
+ 18:29:13 <jdstrand> s/package/script/
+
+ 18:29:47 <jdstrand> sbeattie: can you hand that mysql failure to someone else on the team for now?
+
+ 18:29:55 <jdstrand> sbeattie: can discuss outside of the meeting
+
+ 18:30:15 <sbeattie> jdstrand: okay.
+
+ 18:31:31 <jdstrand> mdeslaur, sbeattie, micahg, tyhicks, jjohansen: thanks!
+
+ 18:31:32 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

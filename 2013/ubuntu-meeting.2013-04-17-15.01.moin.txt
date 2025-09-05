@@ -1,0 +1,740 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:01:17 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-04-17-15.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+
+ *AOB
+''LINK:'' https://wiki.ubuntu.com/DevelopmentCodeNames#A13.10   (xnox, 15:31:53)
+''ACTION:'' slangasek to follow up on codename for s opening  (slangasek, 15:34:53)
+
+
+
+Meeting ended at 15:35:13 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * slangasek to follow up on codename for s opening
+
+
+
+== Action items, by person ==
+
+ * slangasek
+ ** slangasek to follow up on codename for s opening
+
+
+
+== People present (lines said) ==
+
+ * ev (123)
+ * xnox (42)
+ * slangasek (29)
+ * ubottu (27)
+ * cjwatson (26)
+ * ogra_ (22)
+ * bdmurray (19)
+ * barry (14)
+ * doko (12)
+ * jodh (11)
+ * stokachu (8)
+ * meetingology (4)
+
+
+
+== Full Log ==
+
+
+ 15:01:17 <slangasek> #startmeeting
+
+ 15:01:17 <meetingology> Meeting started Wed Apr 17 15:01:17 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01:17 <meetingology> 
+
+ 15:01:17 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:27 <slangasek> [TOPIC] lightning round
+
+ 15:02:29 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra cjwatson xnox stokachu)
+
+ 15:02:32 <slangasek> xnox stokachu doko bdmurray stgraber jodh ev barry slangasek ogra cjwatson
+
+ 15:02:49 * xnox win.
+
+ 15:03:21 <xnox> * commited symbols tracking for C++ touch stack for daily landing
+
+ 15:03:21 <xnox> https://code.launchpad.net/~xnox/platform-api/hybris-symbols/+merge/158878
+
+ 15:03:21 <xnox> https://code.launchpad.net/~xnox/qtubuntu-sensors/symbols/+merge/158884
+
+ 15:03:21 <xnox> dpkg-gensymbols "(c++)" tag is awesome
+
+ 15:03:21 <xnox> * Fully build pyqt4 against qt5 in a PPA:
+
+ 15:03:22 <xnox> Now needs a strategy for packages naming & coinstallability with
+
+ 15:03:24 <xnox> pyqt4 build against qt4. Both use same namespace.
+
+ 15:03:26 <xnox> * Forwarded ubuntu-one ubiquity plugin screenshots to design for
+
+ 15:03:28 <xnox> review (as per request from john lea)
+
+ 15:03:30 <xnox> * utah ISO image static validations fixes:
+
+ 15:03:32 <xnox> - merged lp:~xnox/utah/test-server-squashfs
+
+ 15:03:34 <xnox> - merged lp:~xnox/utah/wubi-is-in-raring
+
+ 15:03:36 <xnox> - merged lp:~xnox/qa-regression-testing/sb-make-pem-certs-1
+
+ 15:03:38 <xnox> - Figured out with jdstrand how to verify linux-signed-image
+
+ 15:03:40 <xnox> signatures, still todo write the utah checks for it. At the moment
+
+ 15:03:42 <xnox> have a branch that shim & grub efi boot images are present, that GPT
+
+ 15:03:44 <xnox> partition table exists & uefi boot images are present.
+
+ 15:03:46 <xnox> - lp:~xnox/ubuntu-test-cases/desktop merged & setup to automatically
+
+ 15:03:50 <xnox> test LVM2 daily desktop installs in jenkins
+
+ 15:03:52 <xnox> * openssl sru re-published
+
+ 15:03:54 <xnox> * Wrote a dh_acc addon to generate & compare api/abi library dumps
+
+ 15:03:56 <xnox> using abi-compliance-checker. Contacted tedg for early testing &
+
+ 15:03:58 <xnox> debian maintainers to include it in debian packaging.
+
+ 15:04:00 <xnox> * Merged wubi merge-proposals, planning to test quickly proposed changes in a VM.
+
+ 15:04:02 <xnox> ..
+
+ 15:04:04 <xnox> s/have a branch that/have a branch that checks/
+
+ 15:04:22 <stokachu> - no bugs on fire this week
+
+ 15:04:24 <stokachu> - looking for sponsor =) on http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=705192
+
+ 15:04:25 <stokachu> - setup test ppa for OP on bug 1169740, waiting on feedback before posting SRU
+
+ 15:04:27 <stokachu> - i think bug 1094496 was somewhat verified but curious if I should wait for tester to re-test at their work environment where memory leak was seen. (re: #15)
+
+ 15:04:28 <stokachu> (done)
+
+ 15:04:30 <ubottu> Debian bug 705192 in sponsorship-requests "RFS: sosreport/2.3+git20130416-1 ITP" [Wishlist,Open]
+
+ 15:04:31 <ubottu> bug 1169740 in rsyslog (Ubuntu Raring) "rsyslog hangs loading modules" [Undecided,Confirmed] https://launchpad.net/bugs/1169740
+
+ 15:04:32 <ubottu> bug 1094496 in gnome-keyring (Ubuntu Precise) "gnome-keyring-daemon leaks memory" [High,Fix committed] https://launchpad.net/bugs/1094496
+
+ 15:04:58 * xnox also helped with a bug around pre-seeding grub-installer...
+
+ 15:06:11 <doko> - GCC 4.6.4 and 4.7.3 releases, backports to precise and lucid (well lucid wasn'
+
+ 15:06:11 <doko> t necessary)
+
+ 15:06:11 <doko> - autopkgtests for python2.7 and python3.3. submit upstream issues about tests f
+
+ 15:06:11 <doko> ailing in the installed test environment
+
+ 15:06:11 <doko> - icedtea-web update
+
+ 15:06:12 <doko> - buildd watch ... test rebuild is now finished after 16 days
+
+ 15:06:14 <doko> - fix some more build failures
+
+ 15:06:16 <doko> - look into build failures with updated ecj, fixed openjdk so far. don't think t
+
+ 15:06:18 <doko> hat I can fix the other three ones
+
+ 15:06:20 <doko> (done)
+
+ 15:06:40 <doko> and starting with openjdk security updates again ...
+
+ 15:07:13 <bdmurray> bug triage of ubiquity / upgrade bugs
+
+ 15:07:13 <bdmurray> escalation regarding th mirror - bug 1168299
+
+ 15:07:13 <bdmurray> searched for duplicates of bug 1163142
+
+ 15:07:13 <bdmurray> retested bug 1160441
+
+ 15:07:13 <bdmurray> research into bug 1058884
+
+ 15:07:17 <ubottu> bug 1168299 in ubuntu-release-upgrader (Ubuntu) "Can't upgrade to raring: libvisio download fails with Forbidden" [Undecided,Invalid] https://launchpad.net/bugs/1168299
+
+ 15:07:18 <ubottu> bug 1163142 in aptdaemon (Ubuntu) "Hangs when "preconfiguring packages" at the installation of a language" [High,Fix released] https://launchpad.net/bugs/1163142
+
+ 15:07:20 <ubottu> bug 1160441 in ubiquity (Ubuntu Raring) "Calendar is still in English despite French is selected as the Language during the installation" [Medium,Triaged] https://launchpad.net/bugs/1160441
+
+ 15:07:21 <ubottu> bug 1058884 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade crashed with EOFError in /usr/lib/ubuntu-release-upgrader/check-new-release: EOF read where not expected" [Low,Triaged] https://launchpad.net/bugs/1058884
+
+ 15:07:27 <bdmurray> uploaded fix for release upgrader bug 1166346
+
+ 15:07:28 <bdmurray> uploaded fix for apport bug 1168126
+
+ 15:07:28 <bdmurray> setup error tracker in canonistack again
+
+ 15:07:28 <bdmurray> merge proposal for an errors api call for srcversionbuckets
+
+ 15:07:28 <bdmurray> worked on a branch to backfill the srcversionbuckets column family
+
+ 15:07:29 <ubottu> bug 1166346 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade 12.04 to 12.10 gives fatal error" [High,Fix released] https://launchpad.net/bugs/1166346
+
+ 15:07:31 <ubottu> bug 1168126 in apport (Ubuntu) "ubiquity package hook sends too many bugs to grub-installer" [High,Fix released] https://launchpad.net/bugs/1168126
+
+ 15:07:38 <bdmurray> code reviews for evan
+
+ 15:07:39 <bdmurray> SRU review of python-gnutls for P and Q
+
+ 15:07:39 <bdmurray> modified SRU report to show removal candidates
+
+ 15:07:39 <bdmurray> research into update-notifier's reboot notification and derivatives using update-notifier's tray applet
+
+ 15:07:47 <bdmurray> ⌁ done
+
+ 15:08:29 <ev> thanks for the reviews
+
+ 15:09:12 <slangasek> stokachu: bug #1094496> that's not a complete verification, the commenter hasn't confirmed the lack of leak in an environment where the leak is proven to happen
+
+ 15:09:14 <ubottu> bug 1094496 in gnome-keyring (Ubuntu Precise) "gnome-keyring-daemon leaks memory" [High,Fix committed] https://launchpad.net/bugs/1094496
+
+ 15:09:26 <barry> bdmurray: yeah, i still can't wrap my head around what's causing bug 1058884
+
+ 15:09:27 <ubottu> bug 1058884 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade crashed with EOFError in /usr/lib/ubuntu-release-upgrader/check-new-release: EOF read where not expected" [Low,Triaged] https://launchpad.net/bugs/1058884
+
+ 15:09:33 <stokachu> slangasek: ok ill ping Hein again and see if they've had a chance to do so
+
+ 15:09:40 <slangasek> (commented on the bug)
+
+ 15:09:58 <stokachu> slangasek: ah you're fast
+
+ 15:10:44 <bdmurray> barry: I'd mentioned including or saving dmesg from the upgrade process, what do you think?
+
+ 15:11:29 <slangasek> bdmurray: so you retested bug #1160441 and it's "triaged", I guess that means the bug still exists after testing?
+
+ 15:11:31 <ubottu> bug 1160441 in ubiquity (Ubuntu Raring) "Calendar is still in English despite French is selected as the Language during the installation" [Medium,Triaged] https://launchpad.net/bugs/1160441
+
+ 15:11:35 <barry> bdmurray: i guess my main question is: if this is a reading-pyc-file race condition, then what other processes are running at the same time?
+
+ 15:11:44 <bdmurray> slangasek: correct
+
+ 15:11:50 <slangasek> jodh: ah, you're up, no stgraber today
+
+ 15:11:57 <barry> bdmurray: do you think the dmesg output would tell us that?
+
+ 15:12:06 <jodh> * blueprints:
+
+ 15:12:06 <jodh> - foundations-r-upstart-user-session-enhancements:
+
+ 15:12:06 <jodh> - Updated lp:~jamesodhunt/upstart/python-upstart-module as results
+
+ 15:12:06 <jodh> of barrys excellent review (awaiting feedback from any of the devs).
+
+ 15:12:09 <jodh> * boot:
+
+ 15:12:12 <jodh> - upstart:
+
+ 15:12:15 <jodh> - bug 1157713: fixed and raised MP on
+
+ 15:12:17 <ubottu> bug 1157713 in upstart "upstart tests which run without inotify fail occasionally" [Undecided,In progress] https://launchpad.net/bugs/1157713
+
+ 15:12:19 <jodh> lp:~jamesodhunt/upstart/bug-1157713-inotify-test-failures
+
+ 15:12:22 <jodh> (awaiting feedback).
+
+ 15:12:25 <jodh> - bug 1124384: continued investigations.
+
+ 15:12:26 <ubottu> bug 1124384 in cloud-init (Ubuntu) "reload-configuration can confuse upstart" [High,Confirmed] https://launchpad.net/bugs/1124384
+
+ 15:12:28 <jodh> λ
+
+ 15:12:30 <bdmurray> barry: no, I was thinking that'd be useful for hardware issues
+
+ 15:12:58 <ev> Go get a ☕, this is going to be a long one.
+
+ 15:13:06 <barry> bdmurray: it's probably a good idea then, if nothing else, to rule h/w issues out
+
+ 15:13:19 <barry> ev: ping me when you're done. :)
+
+ 15:13:22 <ev> - Verified that we successfully back-populated the FirstError and ErrorsByDate
+
+ 15:13:23 <ev> data for bug 1077122 in:
+
+ 15:13:23 <ev> http://rt.admin.canonical.com/Ticket/Display.html?id=60205
+
+ 15:13:23 <ev> - Made a first pass at weighting the average errors per calendar day (jsfiddle
+
+ 15:13:23 <ev> is wonderful, by the way):
+
+ 15:13:23 <ev> http://jsfiddle.net/Ra4xT/1/
+
+ 15:13:23 <ev> http://paste.ubuntu.com/5697852/
+
+ 15:13:24 <ubottu> bug 1077122 in Errors "Machine weighted at 100% 89 days after last report, 0% 90 days after" [High,Confirmed] https://launchpad.net/bugs/1077122
+
+ 15:13:43 <ev> - Code review for Brian:
+
+ 15:13:43 <ev> https://code.launchpad.net/~brian-murray/errors/newbuckets/+merge/158244
+
+ 15:13:43 <ev> - Followed up on the backfill of SourceVersionBuckets CF for Brian:
+
+ 15:13:43 <ev> https://rt.admin.canonical.com/Ticket/Display.html?id=60732
+
+ 15:13:43 <ev> - Bug fixes for https://errors.ubuntu.com:
+
+ 15:13:43 <ev> - https://bugs.launchpad.net/errors/+bug/1167849
+
+ 15:13:43 <ev> - https://bugs.launchpad.net/errors/+bug/1167865
+
+ 15:13:44 <ev> - Meeting with Katherine to develop an NDA for https://errors.ubuntu.com
+
+ 15:13:47 <ubottu> Launchpad bug 1167849 in Errors "crash-signatures-for-bug does not work" [Undecided,Fix committed]
+
+ 15:13:47 <xnox> slangasek: bdmurray: i'm not sure, but i thought that we select locale based on the location, instead of installer language, but I might be wrong here. Also we had a similar bug with respect to country mirror selection (that one was done based on language instead of location) which is now tested for automatically on daily images.
+
+ 15:13:48 <ubottu> Launchpad bug 1167865 in Errors "Nonexistent buckets raise an exception" [Undecided,Fix committed]
+
+ 15:13:58 <ev> - Drafted guidelines for use and rules for approval for accessing the error
+
+ 15:13:58 <ev> reports:
+
+ 15:13:58 <ev> https://wiki.ubuntu.com/ErrorTracker/Guidelines
+
+ 15:13:58 <ev> Friday:
+
+ 15:13:58 <ev> - Refactoring crash submission process as I build out the test suite and fix
+
+ 15:13:58 <ev> support for kernel OOPS crashes:
+
+ 15:13:58 <ev> https://code.launchpad.net/~ev/daisy/refactor-submission/+merge/158566
+
+ 15:14:16 <ev> - RT for hash-based bucket URLs:
+
+ 15:14:16 <ev> https://portal.admin.canonical.com/60762
+
+ 15:14:16 <ev> - Looking at how we can better handle timeouts when writing reports to
+
+ 15:14:16 <ev> Cassandra. Conversed with Tom about it and moved to a consistent 30 second
+
+ 15:14:16 <ev> timeout. Beyond that, we've got bigger problems.
+
+ 15:14:17 <ev> - Testing refinements to the FirstError and ErrorsByRelease script.
+
+ 15:14:17 <ev> - Worked with webops to get some retracers processing the failed queue:
+
+ 15:14:18 <ev> https://graphite.engineering.canonical.com/render/?width=1129&height=614&_salt=1365757153.811&target=daisy_servers.rabbitmq.messages.failed_retrace_amd64
+
+ 15:14:30 <ev> Monday:
+
+ 15:14:30 <ev> - Testing the fix for weighted average errors per calendar day is taking ages
+
+ 15:14:30 <ev> (as of writing it timed out after processing 12.9 million reports of some 43
+
+ 15:14:30 <ev> million, having run over the weekend), so I'm running the new totals with
+
+ 15:14:30 <ev> what we have so far, since the denominator for the calculation is being
+
+ 15:14:30 <ev> updated in the same process.
+
+ 15:14:43 <ev> - Still not working properly ('Precise (again)'):
+
+ 15:14:43 <ev> http://jsfiddle.net/Ra4xT/4/
+
+ 15:14:43 <ev> - Hash-based URLs for buckets on errors.ubuntu.com (RT 60762) deployed and
+
+ 15:14:43 <ev> verified.
+
+ 15:14:43 <ev> - Updated errors.ubuntu.com to use the new hash-based URLs:
+
+ 15:14:43 <ev> https://code.launchpad.net/~ev/errors/bucket-short-urls/+merge/158911
+
+ 15:14:44 <ev> - (Finally) finished up the code to rebuild the metadata about what Ubuntu
+
+ 15:14:44 <ev> releases and binary package versions have been seen for each problem:
+
+ 15:14:53 <ev> https://code.launchpad.net/~ev/oops-repository/bucket-versions/+merge/158946
+
+ 15:14:53 <ev> https://code.launchpad.net/~ev/daisy/bucket-versions/+merge/158948
+
+ 15:14:53 <ev> - Helping Jane diagnose a Intel graphics / apport issue.
+
+ 15:14:53 <ev> - Investigating Disco (http://discoproject.org/) as a possible alternative to
+
+ 15:14:53 <ev> Hadoop.
+
+ 15:14:53 <ev> - Fighting Canonistack, as per usual (out of security groups on lcy01):
+
+ 15:14:54 <ev> https://eu1.salesforce.com/500D000000OTnPi
+
+ 15:15:01 <ev> - James pointed me to the fact that juju doesn't delete security groups when
+
+ 15:15:01 <ev> its done with them. So if you see this message, euca-describe-groups &&
+
+ 15:15:01 <ev> euca-delete-group.
+
+ 15:15:01 <ev> - Catch up with James:
+
+ 15:15:01 <ev> - Where we stand with the prodstack deployment: He's waiting until after
+
+ 15:15:01 <ev> release to move Cassandra in as they're short on resource and it will be
+
+ 15:15:01 <ev> the first big test of Ceph for them.
+
+ 15:15:07 <ev> - Started to build out Hadoop to benchmark it against get_range() in pycassa
+
+ 15:15:08 <ev> (given the multi-day queries listed above), but James and I did a quick
+
+ 15:15:08 <ev> code review and identified some low hanging fruit to try first. He's also
+
+ 15:15:08 <ev> keen on waiting until we deploy to prodstack after release before setting
+
+ 15:15:19 <ev> off on benchmarking Hadoop, as he thinks it'll be far more interesting to
+
+ 15:15:19 <ev> test the live performance characteristics and not canonistack getting
+
+ 15:15:19 <ev> massively contented halfway through a benchmark.
+
+ 15:15:19 <ev> Tuesday:
+
+ 15:15:25 <ev> - Debugging and fixing bugs in the retracers for webops:
+
+ 15:15:25 <ev> - https://bugs.launchpad.net/daisy/+bug/1169486
+
+ 15:15:25 <ev> - http://rt.admin.canonical.com/Ticket/Display.html?id=60844
+
+ 15:15:25 <ev> - Trying to write up some best practices / investigative work for writing large
+
+ 15:15:26 <ubottu> Launchpad bug 1169486 in Daisy "Unicode exception when inserting StacktraceAddressSignature during retrace" [Undecided,Fix released]
+
+ 15:15:32 <ev> Cassandra queries:
+
+ 15:15:32 <ev> - https://wiki.ubuntu.com/ErrorTracker/CassandraQueries
+
+ 15:15:32 <ev> - Code review for Brian:
+
+ 15:15:32 <ev> - https://code.launchpad.net/~brian-murray/daisy/build-sourceversionbuckets/+merge/159006
+
+ 15:15:32 <ev> - Writing a unit test for the weighting of error reports since A) TDD, bro and
+
+ 15:15:37 <ev> B) with the processing of 45 million error reports taking at least 10 hours,
+
+ 15:15:37 <ev> isn't not exactly quick to test small changes to the way we weight the errors
+
+ 15:15:37 <ev> on production.
+
+ 15:15:37 <ev> - Reviewing the draft NDA for errors.ubuntu.com.
+
+ 15:15:42 <ev> Wednesday:
+
+ 15:15:42 <ev> - Ongoing discussion on the draft NDA for errors.ubuntu.com.
+
+ 15:15:43 <ev> - Writing up https://wiki.ubuntu.com/ErrorTracker/DailyTasks
+
+ 15:15:43 <ev> - Deployed refactoring of error report submission to production (RT 60876).
+
+ 15:15:43 <ev> - http://rt.admin.canonical.com/Ticket/Display.html?id=60876
+
+ 15:15:47 <ev> - Deployed hashed-based bucket URL support to production (RT 60877).
+
+ 15:15:47 <ev> - http://rt.admin.canonical.com/Ticket/Display.html?id=60877
+
+ 15:15:47 <ev> - More work on the unit test for the weighting of errors. Refactoring as I go
+
+ 15:15:47 <ev> to allow testing of all parts of this (submission, getting unique system
+
+ 15:15:47 <ev> counts, and weighting).
+
+ 15:15:53 <ev> Outstanding RTs:
+
+ 15:15:54 <ev> - Retracers failing inside apport-retrace due to http_proxy.
+
+ 15:15:54 <ev> - https://rt.admin.canonical.com//Ticket/Display.html?id=60751
+
+ 15:15:54 <ev> - We've fixed the issue and are processing all the errors that went into the
+
+ 15:15:59 <ev> failed queue. This looks like it will take the rest of the month, unless
+
+ 15:15:59 <ev> we get some prodstack-based retracers up and running soon:
+
+ 15:15:59 <ev> https://graphite.engineering.canonical.com/render/?width=1129&height=614&_salt=1366017649.536&from=-14days&target=daisy_servers.rabbitmq.messages.failed_retrace_amd64
+
+ 15:16:03 <ev> - Migrate cassandra nodes into prodstack
+
+ 15:16:03 <ev> - https://rt.admin.canonical.com//Ticket/Display.html?id=60652
+
+ 15:16:03 <ev> - See chat with James above. Blocked by the 13.04 release.
+
+ 15:16:10 <ev> - Hadoop for daisy.ubuntu.com
+
+ 15:16:10 <ev> - https://rt.admin.canonical.com//Ticket/Display.html?id=55518
+
+ 15:16:10 <ev> - Blocked on the build-out of a secondary Cassandra cluster on prodstack, as
+
+ 15:16:10 <ev> above.
+
+ 15:16:15 <ev> - This arrangement is common practice, as running intensive Hadoop queries
+
+ 15:16:15 <ev> will potentially have an impact on performance.
+
+ 15:16:15 <ev> - Lets move the retracers onto prodstack
+
+ 15:16:19 <ev> - https://rt.admin.canonical.com//Ticket/Display.html?id=58019
+
+ 15:16:19 <ev> - The priority on this has been increased, but it's still waiting for a
+
+ 15:16:19 <ev> webop with spare time, according to Liam.
+
+ 15:16:26 <ev> - Setup stagingstack environment for errors.ubuntu.com
+
+ 15:16:26 <ev> - https://rt.admin.canonical.com//Ticket/Display.html?id=58535
+
+ 15:16:26 <ev> - This is partially waiting on me creating nrpe hooks, but according to Liam
+
+ 15:16:26 <ev> there are a few webops tasks that still need to be done.
+
+ 15:16:28 <ev> Blocked:
+
+ 15:16:28 <ev> - https://bugs.launchpad.net/touch-preview-images/+bug/1167415
+
+ 15:16:29 <ev> - I haven't heard anything on this. I'll follow up at not-UDS.
+
+ 15:16:30 <ubottu> Launchpad bug 1167415 in touch-preview-images "android kernel ignores /proc/sys/kernel/core_pattern" [Undecided,New]
+
+ 15:16:32 <ev> barry: done! :)
+
+ 15:16:43 <barry> ev: thanks! :)
+
+ 15:16:47 <slangasek> xnox: it might make sense to treat LC_TIME the same as LC_MESSAGES, given that it involves string translation?  cjwatson?
+
+ 15:16:56 <barry> bug 1102593. bug 1058884. bug 1078697 (awaiting sru approval for precise; landed in raring and lucid-cat). reviewed lcx c extension module for stgraber.  worked on click packages and chatted w/stgraber re: full image updates.  looked at/worked on various upstream python bugs affecting ubuntu (issue17712 - test_gdb failures; issue17759 - test_urllibnet failures; issue17012 - shutil.which() bug).  trying to squeeze in ffes for
+
+ 15:16:57 <barry> python-virtualenv 1.9.1 and pip 1.3.1 into raring (ssl downloads from pypi ftw).  done.  todo: ota image updates.
+
+ 15:16:59 <ubottu> bug 1102593 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade crashed with UnboundLocalError in doDistUpgradeFetching(): local variable 'e' referenced before assignment" [Medium,Triaged] https://launchpad.net/bugs/1102593
+
+ 15:17:00 <ubottu> bug 1058884 in ubuntu-release-upgrader (Ubuntu) "do-release-upgrade crashed with EOFError in /usr/lib/ubuntu-release-upgrader/check-new-release: EOF read where not expected" [Low,Triaged] https://launchpad.net/bugs/1058884
+
+ 15:17:01 <ubottu> bug 1078697 in apt (Ubuntu Precise) "Ubuntu archive is missing SHA-1/SHA-256 hashes for some packages" [High,In progress] https://launchpad.net/bugs/1078697
+
+ 15:17:46 <cjwatson> slangasek: Yeah, I was thinking something like that but hadn't gone off to analyse it yet.  It's unfortunate since LC_TIME kind of straddles the boundary here
+
+ 15:18:22 <barry> btw, the fix for bug 1078697 has been accepted into lucid-cat and should land on lp next wednesday i'm told
+
+ 15:18:23 <ubottu> bug 1078697 in apt (Ubuntu Precise) "Ubuntu archive is missing SHA-1/SHA-256 hashes for some packages" [High,In progress] https://launchpad.net/bugs/1078697
+
+ 15:18:29 <barry> done
+
+ 15:18:46 <cjwatson> shutil.which> oh, cute
+
+ 15:18:53 <cjwatson> 'bout time
+
+ 15:19:14 <barry> cjwatson: indeed.  it had a nice little bug triggered by your use case, now fixed upstream :)
+
+ 15:19:47 <cjwatson> I've had a version of that in the osextras module I carry bits of around everywhere for ages
+
+ 15:19:59 <cjwatson> (Also, holy adverb stacking Batman)
+
+ 15:20:11 <slangasek> ev: on bug #1167415, it might be worth adding more detail on which device you're testing on (since the kernel may vary across devices within Android), and also if it's on a device that we have an Ubuntu image supported on (like Nexus7 desktop preinstalled), to cross-check there?
+
+ 15:20:12 <ubottu> bug 1167415 in touch-preview-images "android kernel ignores /proc/sys/kernel/core_pattern" [Undecided,New] https://launchpad.net/bugs/1167415
+
+ 15:20:27 <barry> cjwatson: fwiw, the py3.3 implementation is not far from yours :)
+
+ 15:20:29 <ev> slangasek: will do
+
+ 15:20:46 <cjwatson> Heh
+
+ 15:21:08 <cjwatson> I seem to do this a lot - the current /usr/bin/which is a descendant of my code too
+
+ 15:21:12 <doko> barry, cjwatson: should 17012 be included in raring?
+
+ 15:21:35 <barry> doko: would be great if it were
+
+ 15:22:08 <slangasek> well, my report's real short this week
+
+ 15:22:09 <slangasek> * driving the release checklist this week
+
+ 15:22:09 <slangasek> * planning for the Oakland sprint
+
+ 15:22:11 <slangasek> (done)
+
+ 15:22:24 <ogra_> done:
+
+ 15:22:24 <ogra_> * nearly finished the livecd-rootfs implementation which is now dropped after infinity vetoed the design in the last minute (and me apparently killing kapok.buildd completely with the first working build)
+
+ 15:22:24 <ogra_> * looking into using a (currently 2.1G big) package to instead have the builds abusing a package builder which isnt ideal either and would require huge uploads or diffed tarballs from the various git trees at least...
+
+ 15:22:24 <ogra_> (preferably i would just like an additional android cross build machine (simple desktop class PC) to simply build the source as intended by its creators but according to infinity thats not possible either due to budget.
+
+ 15:22:26 <slangasek> sort of all-consuming bullet points ;)
+
+ 15:22:27 <ogra_> * discussing if we should not better keep the android builds in jenkins/IBS completely
+
+ 15:22:29 <ogra_> * pretty frustrating week after all ...
+
+ 15:22:31 <ogra_> 
+
+ 15:22:33 <ogra_> todo:
+
+ 15:22:35 <ogra_> * find a solution for that mess above ...
+
+ 15:22:37 <ogra_> * sort out ESTA for sprint travel
+
+ 15:22:39 <ogra_> * finally start looking into emulator work
+
+ 15:22:41 <ogra_> :wq
+
+ 15:22:52 <cjwatson> Finished initial app package installer prototype.  Currently shelved pending discussion (and probably 13.04 release).
+
+ 15:22:55 <cjwatson> Finished ghc transition. \o/
+
+ 15:22:57 <cjwatson> Fought Canonistack a bit; ended up submitting a support ticket for an apparently lost volume (though I should have a backup of everything important; this is for the auto-cross-builder).
+
+ 15:23:01 <cjwatson> Prepared LP branch for bug 1169627, to make queue review a bit easier.  Landing as I paste this.
+
+ 15:23:03 <ubottu> bug 1169627 in Launchpad itself "Show link to source archive for copies in +queue" [Low,In progress] https://launchpad.net/bugs/1169627
+
+ 15:23:04 <cjwatson> Investigated bug 851562, for the same reason.  Looks as though it may require a database change.
+
+ 15:23:05 <ubottu> bug 851562 in Launchpad itself "Diff's not available for sync's on +queue page like for regular uploads" [High,Triaged] https://launchpad.net/bugs/851562
+
+ 15:23:07 <cjwatson> Refreshed translations in various packages (ubiquity, gfxboot-theme-ubuntu, debian-installer).
+
+ 15:23:10 <cjwatson> Reviewed various help pages for web team.
+
+ 15:23:13 <cjwatson> Merged installation-guide fix to update it to raring.
+
+ 15:23:15 <cjwatson> Digging into bug 1124384.  Making some progress, I think ...
+
+ 15:23:16 <ubottu> bug 1124384 in cloud-init (Ubuntu) "reload-configuration can confuse upstart" [High,Confirmed] https://launchpad.net/bugs/1124384
+
+ 15:23:18 <cjwatson> Various bits of upload queue review.
+
+ 15:23:20 <cjwatson> Gave up on my dying N900 and ordered a Nexus 4.
+
+ 15:23:23 <cjwatson> ..
+
+ 15:23:39 <ogra_> i have a spare n900 here if you want to replace it :P
+
+ 15:23:41 <ev> speaking of the sprint, VS19 is quite the party plane.
+
+ 15:24:24 <xnox> cjwatson: join the Nexus club =))))
+
+ 15:24:34 <xnox> ev: i am not on it this time around =(
+
+ 15:25:02 <ev> :-/
+
+ 15:25:13 <cjwatson> ogra_: Heh, maybe - I should probably have a Nexus all things considered anyway
+
+ 15:25:20 <ogra_> hehe, yeah
+
+ 15:25:29 * xnox is a black duck on a United Airlines flight.... I wonder if anyone flies on those at all =)
+
+ 15:25:38 <cjwatson> I think I'm on United
+
+ 15:25:42 <ogra_> the n900 is such a nice thing though ...
+
+ 15:25:48 <slangasek> cjwatson: well, it's a bit early to be thinking about dogfooding Ubuntu Touch on your primary phone :)
+
+ 15:25:55 <cjwatson> Yeah, UA931
+
+ 15:26:01 <cjwatson> slangasek: Well, yeah, but eventually :)
+
+ 15:26:03 <ogra_> slangasek, shhh
+
+ 15:26:07 <slangasek> [TOPIC] Bugs
+
+ 15:26:51 <xnox> slangasek: cjwatson: at least nexus4 supports full-image phone backup over adb. thus it should be safe to reflash it with ubuntu touch and revert back. But I have yet to trust myself enough to do that.
+
+ 15:26:55 <slangasek> fwiw bdmurray and I discussed the question of how we're handling defect escalations, and concluded that it might be better to handle these by mail daily rather than in the weekly meeting - especially right now as we're so close to release
+
+ 15:27:23 <slangasek> so if you're getting mails from Brian about defects, please treat them with a high priority
+
+ 15:27:41 <slangasek> ok?
+
+ 15:28:08 <cjwatson> ack
+
+ 15:28:12 <ogra_> just because its brian though
+
+ 15:28:16 <slangasek> stokachu: and it sounded like things are under control on your side, right?
+
+ 15:28:31 <stokachu> slangasek: yea man, everything is caught up this week
+
+ 15:28:40 <xnox> cjwatson: i'm on UA955 somehow, yet there are 4 people in total on yours =/
+
+ 15:28:46 <slangasek> ok, great
+
+ 15:28:48 <slangasek> [TOPIC] AOB
+
+ 15:28:50 <xnox> ack on the bugs.
+
+ 15:28:56 <slangasek> anything else, then?
+
+ 15:29:28 * slangasek throws people off balance with a half-length meeting ;)
+
+ 15:30:31 <xnox> I guess we can discuss and vote on the next code name, then ;-)
+
+ 15:31:11 <ogra_> yeah, its about time for a name ...
+
+ 15:31:48 <xnox> Squishy Salamander sounds ok
+
+ 15:31:49 <barry> squishy swan
+
+ 15:31:53 <xnox> https://wiki.ubuntu.com/DevelopmentCodeNames#A13.10
+
+ 15:31:57 <cjwatson> Has somebody poked Mark about this already?
+
+ 15:32:08 <ogra_> you think he forgot ?
+
+ 15:32:10 <xnox> or one can look at: https://wiki.ubuntu.com/DevelopmentCodeNames#S
+
+ 15:32:17 * ogra_ bets clan doesnt
+
+ 15:32:37 <cjwatson> It's been getting later and later
+
+ 15:32:45 <ogra_> yup
+
+ 15:33:05 * xnox giggles at Spastic Stallion
+
+ 15:33:06 <bdmurray> I thought ScottK had committed to poking
+
+ 15:33:24 <xnox> ScottK: do you know the next codename? =)
+
+ 15:34:01 <slangasek> Synalgesic Stegosaurus
+
+ 15:34:18 * ogra_ votes for "end of edit conflict" ... that seems to be very popular for all releases
+
+ 15:34:29 <ev> ha!
+
+ 15:34:50 <xnox> Hmm.... with unity logo spinning clockwise, maybe it will be simply named SS.
+
+ 15:34:53 <slangasek> [ACTION] slangasek to follow up on codename for s opening
+
+ 15:34:53 * meetingology slangasek to follow up on codename for s opening
+
+ 15:35:03 <slangasek> xnox: <facepalm>
+
+ 15:35:13 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

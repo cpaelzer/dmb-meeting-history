@@ -1,0 +1,789 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:19 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-10-10-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' http://pad.lv/794112 - sitting in unapproved queue since 9/28, anything I can do to move this along?  (stokachu, 15:08:16)
+''LINK:'' http://pad.lv/1036834 - based on recent email discussions and the impact of this bug I'd still like to have this pushed into Precise.  (stokachu, 15:08:18)
+
+ *Bugs
+''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html   (slangasek, 15:40:59)
+
+ *AOB
+
+
+
+Meeting ended at 15:58:44 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (63)
+ * cjwatson (61)
+ * ubottu (39)
+ * ev (35)
+ * infinity (31)
+ * bdmurray (30)
+ * stgraber (23)
+ * xnox (21)
+ * ogra_ (15)
+ * jodh (14)
+ * stokachu (11)
+ * doko (11)
+ * mvo (4)
+ * meetingology (3)
+ * barry (2)
+
+
+
+== Full Log ==
+
+
+ 15:02:19 <slangasek> #startmeeting
+
+ 15:02:19 <meetingology> Meeting started Wed Oct 10 15:02:19 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:19 <meetingology> 
+
+ 15:02:19 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:42 * stgraber waves
+
+ 15:02:47 <slangasek> [TOPIC] lightning round
+
+ 15:03:54 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:03:58 <slangasek> infinity jodh doko stokachu barry slangasek xnox cjwatson ev ogra stgraber bdmurray
+
+ 15:04:17 <infinity> This week:
+
+ 15:04:17 <infinity> - working on glibc-2.16 + patches for R
+
+ 15:04:17 <infinity> - archive cleanup
+
+ 15:04:18 <infinity> - general release prep
+
+ 15:04:18 <infinity> - fixed the Pandas to stop timing out builds
+
+ 15:04:19 <infinity> - laundry
+
+ 15:04:27 <infinity> ☭
+
+ 15:04:32 <jodh> - libnih: Fixed bug 740390, raised SRU for precise (bug 1062202)
+
+ 15:04:32 <jodh> and pushed fix to precise-proposed.
+
+ 15:04:32 <jodh> - upstart:
+
+ 15:04:35 <jodh> - Identified and fixed bridge respawn issue.
+
+ 15:04:37 <doko> rinse the panda's?
+
+ 15:04:39 <ubottu> Launchpad bug 740390 in libnih (Ubuntu Precise) "libdbus-1-3 upgrade does not respawn init, resulting in unclean shutdown" [Undecided,New] https://launchpad.net/bugs/740390
+
+ 15:04:39 <jodh> - Wrote more tests.
+
+ 15:04:40 <ubottu> Launchpad bug 1062202 in libnih (Ubuntu Precise) "[SRU] libnih upgrade does not respawn init, resulting in unclean shutdown" [High,Triaged] https://launchpad.net/bugs/1062202
+
+ 15:04:40 <ogra_> whee, so you wont be in smelly t-shits at UDS ?
+
+ 15:04:42 <jodh> - ifupdown: identified cause of recent unclean shutdowns (bug 740390)
+
+ 15:04:45 <jodh> - TODO:
+
+ 15:04:45 <doko> please go on without me
+
+ 15:04:48 <jodh> - finish Upstart tests and bridge auto-reconnect.
+
+ 15:04:51 <jodh> - work on bug 1060249 and other rel bugs.
+
+ 15:04:53 <ubottu> Launchpad bug 1060249 in debconf (Ubuntu Quantal) "frontend crashed with signal 5 in free_pending_nulls()" [High,Confirmed] https://launchpad.net/bugs/1060249
+
+ 15:04:54 <jodh> - Upstream D-Bus changes for connection handling over a stateful re-exec.
+
+ 15:04:54 <jodh> ᧿
+
+ 15:04:57 <jodh> 
+
+ 15:05:17 <infinity> Hrm, that character fails to fit on one line.
+
+ 15:07:49 <infinity> stokachu: ?
+
+ 15:08:01 <stokachu> no doko
+
+ 15:08:06 <infinity> 09:04 < doko> please go on without me
+
+ 15:08:07 <slangasek> he said to go on without him
+
+ 15:08:10 <stokachu> ah sorry
+
+ 15:08:16 <stokachu> http://pad.lv/794112 - sitting in unapproved queue since 9/28, anything I can do to move this along?
+
+ 15:08:18 <stokachu> http://pad.lv/1036834 - based on recent email discussions and the impact of this bug I'd still like to have this pushed into Precise.
+
+ 15:08:19 <ubottu> Launchpad bug 794112 in nfs-utils (Ubuntu Precise) "Kerberos + LDAP + NFSv4 - Unable to recover unattended client" [High,In progress]
+
+ 15:08:20 <ubottu> Launchpad bug 1036834 in gdb (Ubuntu Precise) "[FFe] gdb should be marked "Multi-arch: allowed"" [High,In progress]
+
+ 15:08:22 <stokachu> done
+
+ 15:08:43 <infinity> stokachu: I can look at the stuck upload there.
+
+ 15:08:47 <barry> bug 1061149 (reported).  bug 711162 (pushed upstream).  bug 1060489.  bug 915626 (investigated).  bug 1063980 (reported).  bug 1056811 (investigated).  patch piloted.  general bug triaging.  python-mode 6.0.12-{1,2} for sid.  gwibber py3 reviews and merges.  done.
+
+ 15:08:53 <ubottu> Launchpad bug 1061149 in acpi-support (Ubuntu) "boot occasionally hangs while "Checking battery state..."" [Undecided,New] https://launchpad.net/bugs/1061149
+
+ 15:08:54 <infinity> stokachu: I think SRU has been slacking in lead-up to Q release.
+
+ 15:08:54 <ubottu> Launchpad bug 711162 in ubuntuone-client (Ubuntu Quantal) "ubuntuone-login crashed with ValueError in call_async(): Unable to guess signature from an empty dict" [High,Fix released] https://launchpad.net/bugs/711162
+
+ 15:08:55 <ubottu> Launchpad bug 1060489 in claws-mail-extra-plugins (Ubuntu) "FTBFS due to build-dep conflicts" [High,Invalid] https://launchpad.net/bugs/1060489
+
+ 15:08:56 <ubottu> Launchpad bug 915626 in usb-creator (Ubuntu Quantal) "usb-creator-gtk crashed with SIGSEGV" [High,Confirmed] https://launchpad.net/bugs/915626
+
+ 15:08:57 <ubottu> Launchpad bug 1063980 in unity (Ubuntu) "Regression in animation speed" [Undecided,Opinion] https://launchpad.net/bugs/1063980
+
+ 15:09:04 <stokachu> infinity: cool thanks im getting h34t from management
+
+ 15:09:15 <stokachu> infinity: ah no worries
+
+ 15:11:53 <cjwatson> slangasek: your turn, I think
+
+ 15:12:14 <doko> sorry, door bell. back again
+
+ 15:12:20 <stokachu> the milkman?
+
+ 15:12:21 <slangasek> no, it's doko's turn ;)
+
+ 15:12:38 <cjwatson> :-)
+
+ 15:12:43 <ogra_> <doko> please go on without me
+
+ 15:12:44 <ogra_> :)
+
+ 15:12:49 <doko> - monitoring the panda zoo, called is emergency line twice this we to re-enable the pandas
+
+ 15:12:49 <doko> - remaining MIR's
+
+ 15:12:49 <doko> - fixing build failures
+
+ 15:12:49 <doko> - prepare for r-series opening
+
+ 15:12:49 <doko> - libhybris work
+
+ 15:12:52 <doko> (done)
+
+ 15:13:28 <slangasek> barry: 1061149 should either be kernel or pm-utils, fwiw; acpi-support has no bugs because it has no real remaining code ;)
+
+ 15:13:58 <slangasek> infinity, doko: so are we copacetic now as a result of the sysctl panda change?
+
+ 15:14:10 <barry> slangasek: ah, cool.  maybe i'll add them both and let those teams deathmatch on them
+
+ 15:14:11 <cjwatson> It's almost all good
+
+ 15:14:12 <infinity> slangasek: It all looks pretty decent.
+
+ 15:14:28 <cjwatson> rusalka fell over a few times and looks independently broken
+
+ 15:14:30 <infinity> slangasek: I think it's as good as it's gonna get until we get new hardware, and good enough to hobble along for now.
+
+ 15:14:37 <cjwatson> So it's being left disabled for now
+
+ 15:14:42 <infinity> cjwatson: rusalka is dead for entirely different reasons AFAICT.
+
+ 15:14:49 <cjwatson> Right, as I said :-)
+
+ 15:14:50 <infinity> cjwatson: It's actually hard locking, not timing out.
+
+ 15:14:54 <cjwatson> Independently broken
+
+ 15:15:01 <doko> slangasek, infinity: there are some builds which failed due to bad file system, e.g. files in /var/lib/dpkg, giving these back usually lets the build succeed
+
+ 15:15:17 <doko> I haven't seen any new ones this week
+
+ 15:15:19 <cjwatson> doko: Yeah, similarly occasionally they fail to get their chroot tarball right
+
+ 15:15:21 <slangasek> ok, but at least the buildd manager isn't losing sight of the builders
+
+ 15:15:24 <infinity> doko: Yeah, that's not new behaviour, and I'm not sure we have a fix for that.
+
+ 15:15:24 <cjwatson> I think I saw one or two
+
+ 15:15:40 <infinity> slangasek: Nope, buildd-manager and the buildds seem to be mostly getting along.
+
+ 15:15:46 <slangasek> excellent
+
+ 15:15:59 <slangasek> * short week, celebrating National White Hegemony of the New World Day
+
+ 15:16:00 <slangasek> * mountall bugfix upload: bug #1063061 (SB support), bug #1060296 (cloud-affecting regression from my cloud boot fix)
+
+ 15:16:00 <infinity> slangasek: (Well, there was one occurence of lp-buildd not waking up fast enough, but that's been a problem for years, nothing new)
+
+ 15:16:02 <slangasek> * Secure Boot: shim uploaded, signed by MS, and re-uploaded as shim-signed; d-i, grub2 integration tag-teaming w/ cjwatson
+
+ 15:16:03 <ubottu> Launchpad bug 1063061 in linux (Ubuntu Quantal) "please backport support for EFI vars > 1KB" [Medium,In progress] https://launchpad.net/bugs/1063061
+
+ 15:16:04 <ubottu> Launchpad bug 1060296 in mountall (Ubuntu Quantal) "'df /' reports Filesystem '-'" [High,Fix released] https://launchpad.net/bugs/1060296
+
+ 15:16:05 <slangasek> * fix update-notifier regression caused by us not having a good way to block bad translations of variable names (bug #1003100)
+
+ 15:16:06 <ubottu> Launchpad bug 1003100 in update-notifier (Ubuntu Quantal) "package-data-downloader: KeyError: 'paquetes'" [High,Triaged] https://launchpad.net/bugs/1003100
+
+ 15:16:08 <slangasek> * multiarch review of appmenu-gtk (bug #932860), kicked it back with further fixes needed, sorry stokachu
+
+ 15:16:10 <ubottu> Launchpad bug 932860 in appmenu-gtk (Ubuntu Precise) "Broken (or missing) multiarch support" [High,In progress] https://launchpad.net/bugs/932860
+
+ 15:16:13 <slangasek> (done)
+
+ 15:16:16 <infinity> stokachu: Accepted.
+
+ 15:16:35 <slangasek> infinity: well, bugs can be "nothing new" yet become a huge problem suddenly due to timing / scaling?
+
+ 15:16:48 <slangasek> infinity: is that happening here with any of the remaining arm-affecting bugs?
+
+ 15:17:05 <infinity> slangasek: True, and I aim to fix the launchpad-buildd swapping out thing at some point, but it's not preventing us from working.
+
+ 15:17:09 <cjwatson> slangasek: In this case, not a big problem, chort sat there for a few hours and had to be resurrected
+
+ 15:17:13 <slangasek> ok
+
+ 15:17:14 <infinity> slangasek: The current state of affairs is "good enoug for now".
+
+ 15:17:42 <xnox> * rls-q-tracking:
+
+ 15:17:42 <xnox> - bug 1056300 turned out to be changes in gtk+, now reverted and that
+
+ 15:17:42 <xnox> brought back screen reading to ubiquity. This unblocks me on
+
+ 15:17:42 <xnox> working on remaining a11y ubiquity rls-q-tracking bugs.
+
+ 15:17:42 <xnox> * working on ubiquity's rls-q-tracking bugs and adv-lvm
+
+ 15:17:43 <xnox> * Short week, was off friday-monday.
+
+ 15:17:44 <ubottu> Launchpad bug 1056300 in GTK+ "If a GTK application quits the main loop and restarts it again, accessibility is lost." [Medium,New] https://launchpad.net/bugs/1056300
+
+ 15:17:46 <xnox> ..
+
+ 15:18:05 <cjwatson> Finished armel/main rebuild for ARMv5t.
+
+ 15:18:05 <cjwatson> Lots of build fixes, buildd babysitting, and general +1 maintenance work; trying to get most of the relevant lists to zero for release.
+
+ 15:18:08 <cjwatson> Applied Wookey's aarch64 config.guess/config.sub patches.
+
+ 15:18:11 <cjwatson> Panting for breath down the home stretch of UEFI secure boot support:
+
+ 15:18:13 <cjwatson> * Merged a few tweaks from Fedora.
+
+ 15:18:16 <cjwatson> * Implemented kernel handling policy.
+
+ 15:18:18 <cjwatson> * Created a separate signed image for use on removable media.
+
+ 15:18:21 <cjwatson> * Arranged for grub-install to install signed images if appropriate.
+
+ 15:18:23 <cjwatson> * Fixed up grub-efi-amd64-signed to do the installation.
+
+ 15:18:26 <cjwatson> * Attempted to make the installer install the necessary packages when the SecureBoot variable is set.
+
+ 15:18:29 <cjwatson> Merged the bits of the sponsoring-queue patch for bug 632382 that I'm happy with (i.e. the Upstart job).
+
+ 15:18:30 <ubottu> Launchpad bug 632382 in console-setup (Ubuntu Precise) "Console font does not get set" [Undecided,New] https://launchpad.net/bugs/632382
+
+ 15:18:32 <cjwatson> ..
+
+ 15:18:56 <ev> - Finishing up the webops sprint in BlueFin.
+
+ 15:18:57 <ev> - We now have charms for daisy, the retracers, and errors. Basic
+
+ 15:18:57 <ev> documentation exists at:
+
+ 15:18:57 <ev> https://wiki.canonical.com/ErrorTracker/Deployment
+
+ 15:18:57 <ev> Oddly, adding support for configuration options (the EC2 keys for daisy
+
+ 15:19:05 <ev> and daisy-retracer) is confusing the AMQP relationship, which is calling
+
+ 15:19:05 <ev> config-changed rather than relation-changed. Looking into it.
+
+ 15:19:05 <ev> - We now backend to S3 for the core file storage. This should make the
+
+ 15:19:05 <ev> infrastructure far more scalable.
+
+ 15:19:10 <ev> - Firefighting the retracers again. This time it what first appeared to be a
+
+ 15:19:10 <ev> unicode issue deep inside apport's report writing code, but looks to be more
+
+ 15:19:10 <ev> like some bogus data coming from the slightly older version of gdb we're
+
+ 15:19:10 <ev> running on the retracers. Still investigating.
+
+ 15:19:16 <ev> - Tom would like me to come up with a better way of handling programming
+
+ 15:19:16 <ev> errors in the retracer path. Right now we bring the retracers down hard
+
+ 15:19:17 <ev> whenever apport-retrace or the wrapping code raises an exception. One
+
+ 15:19:17 <ev> alternative is to throw the crashes which trigger an exception on a
+
+ 15:19:17 <ev> separate rabbit queue to be evaluated by me without having to involve
+
+ 15:19:17 <ev> webops too much.
+
+ 15:19:21 <ev> - Got a change to daisy deployed that starts collecting by-problem type counts
+
+ 15:19:21 <ev> of instances every day. Modified errors to then show us "all collected" and
+
+ 15:19:21 <ev> "by 12.04 standards" (in the case of 12.10) lines. This latter line is all
+
+ 15:19:25 <ev> the problem types minus the RecoverableError type, which didn't exist in
+
+ 15:19:25 <ev> 12.04.
+
+ 15:19:25 <ev> - Refactored the legend code to cope with the "all collected" and "by XX.XX
+
+ 15:19:25 <ev> standards" subtypes.
+
+ 15:19:31 <ev> - Taught errors to change the URL to match the 'most common problems' table
+
+ 15:19:31 <ev> selection. This will teach people the URL parameters they can load the
+
+ 15:19:31 <ev> website with:
+
+ 15:19:34 <ev> http://errors.ubuntu.com/?package=software-center
+
+ 15:19:34 <ev> It will also make the Awesome Bar in Firefox more Awesome, according to Seb.
+
+ 15:19:34 <ev> - Meeting with legal counsel to work through our crashes privacy policy.
+
+ 15:19:34 <ev> - Started to look into generating a crash signature for kernel oops reports at
+
+ 15:19:34 <ev> Andy's request.
+
+ 15:19:36 <ev> (done)
+
+ 15:19:41 <ogra_> done:
+
+ 15:19:41 <ogra_> * 80% of my time was spent in an internal project (the stuff there is coming along nicely)
+
+ 15:19:41 <ogra_> * worked around an issue with libreoffice on arm (LP: #1062448)
+
+ 15:19:41 <ogra_> * uploaded nvidia-tegra drivers
+
+ 15:19:41 <ogra_> * added a new arch to flash-kernel
+
+ 15:19:42 <ogra_> * various image tests etc
+
+ 15:19:43 <ubottu> Launchpad bug 1062448 in libreoffice (Ubuntu Quantal) "soffice.bin crashed with SIGSEGV in lucene::index::IndexFileNames::fileNameFromGeneration()" [High,Triaged] https://launchpad.net/bugs/1062448
+
+ 15:19:44 <ogra_> * was a good citizen and managed to do my piloting shift this time round :)
+
+ 15:19:46 <ogra_> 
+
+ 15:19:48 <ogra_> todo:
+
+ 15:19:50 <ogra_> * register specs for the shiny new upcoming R tasks
+
+ 15:19:53 <ogra_> * do a 12.10 release with arm images !
+
+ 15:19:54 <ogra_> ..
+
+ 15:20:12 <stgraber> - Attended LTSP by the sea from Thursday to Sunday
+
+ 15:20:13 <stgraber> - Monday was a public holiday
+
+ 15:20:13 <stgraber> - Container
+
+ 15:20:13 <stgraber> - Upstream work, reviewing patches, maintaining staging branch. Starting cherry-pick of fixes for 0.8 upstream release.
+
+ 15:20:15 <stgraber> - Release
+
+ 15:20:18 <stgraber> - Quite a bunch of queue reviews
+
+ 15:20:21 <stgraber> - Some FFe/UIFe reviews
+
+ 15:20:24 <stgraber> - Networking
+
+ 15:20:25 <stgraber> - Fixed some regression introduced in ifupdown when we dropped the sysvinit script (bug 1061639)
+
+ 15:20:27 <ubottu> Launchpad bug 1061639 in ifupdown (Ubuntu Quantal) "Upstartification of /etc/init.d/networking has lost deconfiguring-networking event causing bad side-effects" [High,Fix released] https://launchpad.net/bugs/1061639
+
+ 15:20:29 <stgraber> - Updated ifenslave-2.6 to work with biosdevname (bug 948538)
+
+ 15:20:30 <ubottu> Launchpad bug 948538 in ifenslave-2.6 (Ubuntu) "eth* device names hardcoded in debian/pre-up script" [Wishlist,Fix released] https://launchpad.net/bugs/948538
+
+ 15:20:31 <stgraber> - Updated isc-dhcp-server to fix apparmor profile for isc-dhcp-server-ldap (bug 1057358)
+
+ 15:20:33 <ubottu> Launchpad bug 1057358 in isc-dhcp (Ubuntu Precise) "dhcpd in isc-dhcp-server-ldap cannot read /etc/ldap/ldap.conf due to missing entry in apparmor profile" [Medium,Triaged] https://launchpad.net/bugs/1057358
+
+ 15:20:34 <stgraber> - Went through the networking related bugs, did some cleanup.
+
+ 15:20:37 <stgraber> - Installer
+
+ 15:20:39 <stgraber> - Did a firmware upgrade on my laptop (took a while to figure out how exactly to do it), now have a new UEFI with SecureBoot support.
+
+ 15:20:42 <stgraber> - Spent some more time on casper, got the bug count down to something reasonable and uploaded a bunch of bugfixes.
+
+ 15:20:45 <stgraber> - Uploaded a new ubiquity-slideshow-ubuntu with updated screenshots, the ubuntu-gnome slideshow and refreshed translations. (bug 1064232, bug 1051162)
+
+ 15:20:47 <ubottu> Launchpad bug 1064232 in ubiquity-slideshow-ubuntu (Ubuntu Quantal) "[FFe] New screenshots for installer slideshow in Ubuntu 12.10" [High,Fix released] https://launchpad.net/bugs/1064232
+
+ 15:20:49 <ubottu> Launchpad bug 1051162 in ubiquity-slideshow-ubuntu (Ubuntu) "FFe: ubiquity-slideshow-ubuntu-gnome" [Wishlist,Fix released] https://launchpad.net/bugs/1051162
+
+ 15:20:49 <stgraber> - Refreshed the edubuntu-live installer steps translations.
+
+ 15:20:50 <stgraber> - Did some work on post-install preseed generation, will try to get a prototype out today.
+
+ 15:20:54 <stgraber> 
+
+ 15:20:56 <stgraber> - Travel/Schedule
+
+ 15:20:58 <stgraber> - I'm off tomorrow and Friday, back on Monday working from Switzerland until UDS
+
+ 15:21:02 <stgraber> (DONE)
+
+ 15:21:25 <bdmurray> debugged tested and fixed ubuntu-release-upgrader bug 1058102
+
+ 15:21:25 <bdmurray> uploaded fix for bug 964674 to quantal
+
+ 15:21:25 <bdmurray> SRU preparation and work for update-manager bug 964674
+
+ 15:21:25 <bdmurray> SRU preparation and work on update-manager bug 1060353
+
+ 15:21:26 <ubottu> Launchpad bug 1058102 in ubuntu-release-upgrader (Ubuntu Quantal) "The strings in "ubuntu-release-upgrader" are not translated in UI" [High,Fix released] https://launchpad.net/bugs/1058102
+
+ 15:21:29 <ubottu> Launchpad bug 964674 in update-manager (Ubuntu Precise) "update-manager fails to display an error message" [High,Fix committed] https://launchpad.net/bugs/964674
+
+ 15:21:30 <ubottu> Launchpad bug 1060353 in update-manager (Ubuntu Precise) "DistUpgradeApport.py causes an apport assertion error" [High,In progress] https://launchpad.net/bugs/1060353
+
+ 15:21:32 <bdmurray> bug testing / research into usb-creator bug 915626
+
+ 15:21:32 <bdmurray> bug testing / research into update-manager bug 1051110
+
+ 15:21:33 <bdmurray> SRU verification of bug 523896
+
+ 15:21:33 <ubottu> Launchpad bug 915626 in usb-creator (Ubuntu Quantal) "usb-creator-gtk crashed with SIGSEGV" [High,Confirmed] https://launchpad.net/bugs/915626
+
+ 15:21:35 <ubottu> Launchpad bug 1051110 in update-manager (Ubuntu Quantal) "ucf debconf prompt lands in hidden terminal instead of using gnome frontend" [High,Fix released] https://launchpad.net/bugs/1051110
+
+ 15:21:36 <ubottu> Launchpad bug 523896 in shadow (Ubuntu Precise) "useradd: cannot lock /etc/passwd; try again later." [High,Fix committed] https://launchpad.net/bugs/523896
+
+ 15:21:54 <bdmurray> ⁂ done
+
+ 15:24:56 <bdmurray> regarding those update-manager SRUs I'd like to get them through the SRU process as soon as possible
+
+ 15:25:11 <infinity> bdmurray: Poke me post-meeting, and we'll see what can be done.
+
+ 15:25:17 <bdmurray> infinity: thanks
+
+ 15:25:37 * slangasek clears his scrollback
+
+ 15:25:39 <slangasek> any questions?
+
+ 15:25:51 <bdmurray> jodh: is anything more needed for bug 1060249?
+
+ 15:25:53 <ubottu> Launchpad bug 1060249 in debconf (Ubuntu Quantal) "frontend crashed with signal 5 in free_pending_nulls()" [High,Confirmed] https://launchpad.net/bugs/1060249
+
+ 15:26:34 <jodh> bdmurray: unsure - I've been focussing on Upstart. I saw the latest stack trace but need to dig around. All help welcome at this stage :)
+
+ 15:26:51 <slangasek> [TOPIC] Bugs
+
+ 15:26:59 <bdmurray> jodh: okay, I've a virtual machine that I just rebooted and received that crash report
+
+ 15:27:30 <bdmurray> bug 1064391 seems like something that could be notfixing
+
+ 15:27:31 <ubottu> Launchpad bug 1064391 in ubiquity (Ubuntu) "panda boot device selection label is "Help for GRUB device selection goes here"" [Medium,New] https://launchpad.net/bugs/1064391
+
+ 15:28:00 <slangasek> jodh: it sounds from your report like the bridge crash on re-exec issue is sorted now, yes?  Can you refocus your attention on that debconf bug?  We should really get that knocked out this week so we can get the fix on the CD
+
+ 15:28:19 <xnox> bdmurray: it needs design. As this is the case of: we are not going to install grub as there is only one way to install bootloader anyway.
+
+ 15:28:21 <jodh> slangasek: indeed! Right - will do.
+
+ 15:28:35 <slangasek> jodh: thanks
+
+ 15:28:54 <cjwatson> Uh, we always used to hide that label on non-x86
+
+ 15:29:01 <cjwatson> It's a regression if we now do - doesn't need design
+
+ 15:29:06 <cjwatson> *now don't
+
+ 15:29:07 <slangasek> xnox: "needs design" certainly implies "not going to be fixed for this release"; but as cjwatson says, that sounds like something that should be hidden
+
+ 15:29:35 <xnox> hmm.. ok, will check.
+
+ 15:29:50 <slangasek> what are you guys looking at as far as further installer uploads between now and release?
+
+ 15:30:02 <slangasek> I've seen a number of ubiquity bugs getting targeted that weren't there before
+
+ 15:30:37 <infinity> I'm considering twiddling omap image sizes for bug #1040393 before release, but only if I can test it well locally.
+
+ 15:30:39 <ubottu> Launchpad bug 1040393 in debian-installer (Ubuntu Precise) "omap netboot partition too small for flash-kernel backup procedure" [Undecided,New] https://launchpad.net/bugs/1040393
+
+ 15:30:52 <cjwatson> Personally my plans involve only whatever turns up in SB testing
+
+ 15:31:04 <cjwatson> I have serious doubts I'll be able to fit in anything else
+
+ 15:31:11 * slangasek nods
+
+ 15:31:23 <cjwatson> I don't mind if xnox manages to squeeze in some screen reading fixes; those are typically nonintrusive
+
+ 15:31:31 * xnox ponders if it was me over-targeting ubiquity bugs...
+
+ 15:31:32 <slangasek> xnox: you seem to have the lion's share of targeted ubiquity bugs assigned to yourself, what's your game plan?
+
+ 15:31:44 <slangasek> xnox: short answer: yes ;)
+
+ 15:32:03 <xnox> slangasek: my plan is unintrusive small fixes, or bumping to r.
+
+ 15:32:12 <cjwatson> And the lowmem bug I'm going to punt, I just haven't got round to writing up my findings yet
+
+ 15:32:36 <infinity> bdmurray: Don't poke me post-meeting after all, update-manager is reviewed and accepted.
+
+ 15:33:17 <cjwatson> xnox: I kind of feel bug 1056744 should be higher-priority than the screen reader bugs, maybe?
+
+ 15:33:19 <ubottu> Launchpad bug 1056744 in ubiquity (Ubuntu Quantal) "Ubiquity crashes after creating an encrypted partition manually" [Medium,Confirmed] https://launchpad.net/bugs/1056744
+
+ 15:33:47 <xnox> cjwatson: yeah, probably. more chances of hitting that one.
+
+ 15:34:17 <slangasek> bdmurray: you had accepted 1059471 from the -incoming queue, but I'm not convinced this is something we should commit to... it's a corner case involving mounting via symlink
+
+ 15:34:28 <slangasek> and I don't think we're going to get a chance to fix that before release
+
+ 15:35:23 <slangasek> bdmurray: any reason you think my assessment there is wrong and we should make room for it on the priority list?
+
+ 15:35:27 <cjwatson> usb-creator is probably broken in 12.10 (udisks2 etc.), as discussed, but I have a feeling we should target that to SRUs at this point; it's not install-critical that it be right in the released images
+
+ 15:35:35 <xnox> bug 1053030 is interesting and mostly affects e.g. panda boards when user didn't plugin external storage and hence need some guards for R-series.
+
+ 15:35:37 <ubottu> Launchpad bug 1053030 in ubiquity (Ubuntu Quantal) "highly confusing UI on desktop when installation media is big enough and no external storage is attached" [High,Confirmed] https://launchpad.net/bugs/1053030
+
+ 15:35:50 <bdmurray> slangasek: I think you added the quantal task I just removed the rls-q-incoming tag
+
+ 15:35:57 <slangasek> well, right
+
+ 15:35:58 <bdmurray> because it had a quantal task
+
+ 15:36:00 <xnox> you cannot run usb-creator sensibly from the live-session any way.
+
+ 15:36:13 <bdmurray> but no I don't think it should be a priority
+
+ 15:36:30 <slangasek> bdmurray: but quantal task + rls-q-incoming means "targeted to release but no decision made yet on whether to commit"
+
+ 15:37:03 <xnox> slangasek: according to skaet the tags are redudant if there is series task with any state.
+
+ 15:37:14 <cjwatson> OK, I've updates-ified the usb-creator bugs
+
+ 15:37:16 <xnox> slangasek: that applies to rls-q-wontfix as well.
+
+ 15:37:32 <slangasek> which was what I meant :)  so if you weren't removing the tag as a sign of making a decision, then ok
+
+ 15:37:32 <cjwatson> hmph, I didn't have slangasek's understanding of that combination
+
+ 15:37:34 <slangasek> xnox: that's incorrect
+
+ 15:37:56 <cjwatson> useful distinction to have
+
+ 15:38:01 <slangasek> community members can target bugs to the release; that does not imply canonical-foundations has a committment to fix them
+
+ 15:38:04 <xnox> slangasek: horum. please clarify the combinations of tags with series tags then, somewhere on the mailing list then.
+
+ 15:38:04 <bdmurray> ' the nomination should not be accepted without assigning the bug task to a person or team and the 'rls-q-incoming' tag removed. '
+
+ 15:38:20 <xnox> slangasek: and assignees.
+
+ 15:38:22 <cjwatson> yeah, except lots of people can make-and-accept nominations in one shot
+
+ 15:38:30 <slangasek> bdmurray: ok, I think that needs revisited
+
+ 15:38:33 <cjwatson> and indeed have no way to just nominate, if they have that privilege
+
+ 15:38:42 <infinity> Yeah, there's that.
+
+ 15:38:46 <slangasek> anyway, -notfixing this bug for now
+
+ 15:38:50 <bdmurray> slangasek: yes and clarified on the RCBugTargetting page
+
+ 15:38:52 <cjwatson> so the documentation bdmurray quotes is insufficiently informed about Launchpad
+
+ 15:39:11 * xnox ... aren't we all?!
+
+ 15:39:14 <slangasek> xnox: I refer to my original mail on this subject ;)
+
+ 15:39:30 <xnox> slangasek: i shall added to my bookmarks then.
+
+ 15:39:48 <slangasek> bug #1016643
+
+ 15:39:51 <ubottu> Launchpad bug 1016643 in apt (Ubuntu Quantal) "add-apt-repository downloads gpg key in an insecure fashion" [High,Triaged] https://launchpad.net/bugs/1016643
+
+ 15:40:16 <slangasek> pinged mvo on the bug last week, no response
+
+ 15:40:23 <slangasek> pinged on IRC now :)
+
+ 15:40:51 <slangasek> anything else that's a concern on that bug list?
+
+ 15:40:59 <slangasek> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html
+
+ 15:42:14 <bdmurray> regarding bug 997200 its seems like the underlying issue is bug 346386
+
+ 15:42:17 <ubottu> Launchpad bug 997200 in network-manager (Ubuntu R-series) "update-manager can't handle hotel web access pages" [High,Triaged] https://launchpad.net/bugs/997200
+
+ 15:42:18 <ubottu> Launchpad bug 346386 in apt (Ubuntu Precise) "[MASTER] Update fails with invalid package files with "Encountered a section with no Package: header"" [Undecided,Confirmed] https://launchpad.net/bugs/346386
+
+ 15:42:26 <cjwatson> There's an even earlier bug.
+
+ 15:42:33 <cjwatson> bug 24061
+
+ 15:42:36 <ubottu> Launchpad bug 24061 in apt (Ubuntu Precise) "GPG error with apt-get/aptitude/update-manager behind proxy (BADSIG 40976EAF437D05B5)" [High,Triaged] https://launchpad.net/bugs/24061
+
+ 15:42:50 <slangasek> is that *still* not fixed?
+
+ 15:43:08 <cjwatson> It keeps getting fixed for some cases and popping up for more.
+
+ 15:43:11 <bdmurray> well 346386 mvo fixed in quantal according to the changelog
+
+ 15:43:20 <cjwatson> Because apt is awesome and similar code exists in like ten different places.
+
+ 15:43:24 <slangasek> heh
+
+ 15:44:20 <cjwatson> See my analysis in bug 24061 comments 66 and 67
+
+ 15:44:33 <ubottu> Launchpad bug 24061 in apt (Ubuntu Precise) "GPG error with apt-get/aptitude/update-manager behind proxy (BADSIG 40976EAF437D05B5)" [High,Triaged] https://launchpad.net/bugs/24061
+
+ 15:44:55 <cjwatson> But I think realistically we're going to end up punting for yet another release.
+
+ 15:45:08 <slangasek> meh
+
+ 15:45:08 <slangasek> ok
+
+ 15:45:13 <cjwatson> -updates would be nice though, as it happens *all the time*
+
+ 15:45:53 <slangasek> would it make a difference to have a step-by-step reproducer?
+
+ 15:46:17 <slangasek> oh, you did that :-)
+
+ 15:46:19 <cjwatson> That was what I was trying to provide with the stunt proxy code I posted to 24061.
+
+ 15:46:22 <slangasek> ok
+
+ 15:46:39 <cjwatson> What we fundamentally need to do is lock Michael and David in a room until it's fixed :-)
+
+ 15:46:50 <cjwatson> I tried my best at the time but didn't understand the necessary fix well enoug
+
+ 15:46:53 <cjwatson> h
+
+ 15:47:15 <cjwatson> Some kind of proxy hack ought to go in apt's test suite,imo
+
+ 15:47:19 <bdmurray> so the apt change in quantal is likely insufficient?
+
+ 15:47:26 <slangasek> so should we mark 997200 as a duplicate and bump that one in the queue?
+
+ 15:47:54 <cjwatson> bdmurray: I suspect yet another partial fix
+
+ 15:48:21 <cjwatson> Though hmm, it seems to have at least tried to be more comprehensive
+
+ 15:48:27 <cjwatson> Try with my proxy and see what happens?
+
+ 15:48:40 <bdmurray> yes I will do that
+
+ 15:49:04 <stokachu> infinity: thanks man
+
+ 15:49:19 <cjwatson> comments 90 and 92 assert it still happens but don't bother to mention a release
+
+ 15:49:28 <bdmurray> I believe that is precise
+
+ 15:49:31 <cjwatson> However Ursula says it still affects her on quantal, in comment 94
+
+ 15:49:51 <cjwatson> Although, if it broke for you once you have to do manual cleanup, and I don't know if she did that
+
+ 15:49:52 <bdmurray> she and I talked about it this morning and she says she has not run into it
+
+ 15:50:01 <cjwatson> So it's possible that was a relic
+
+ 15:50:04 <bdmurray> yes
+
+ 15:50:26 <cjwatson> If miracles have happened and that's a complete fix, we should SRU it and have some kind of party
+
+ 15:51:03 <xnox> cjwatson: and crown  somebody "Cluedo" champion?
+
+ 15:51:05 <cjwatson> It looks like the branch that landed included a dummy webserver
+
+ 15:51:11 <cjwatson> Which is definitely the right approach
+
+ 15:51:35 <bdmurray> looking at logs I don't think Ursula had cleared her lists after getting the new apt
+
+ 15:51:38 <infinity> Even if it's not a complete fix, I wonder if it might not be a bad idea to have something that detects the badness and does a bit of cleanup so users don't have to.
+
+ 15:51:59 <infinity> But, if we're confident it's actually fixed, that becomes dead code, I suppose.
+
+ 15:52:33 <infinity> The whole time, though, the failure mode has actually been far worse than the bug itself.
+
+ 15:52:47 <infinity> If it could have just said "yeah, stuff's broken, cleaning up so you can try again", people wouldn't mind as much. :P
+
+ 15:54:06 <stokachu> infinity: if you got a second would you approve bug 683640
+
+ 15:54:08 <ubottu> Launchpad bug 683640 in lsb (Ubuntu Precise) "status_of_proc is returning incorrect error code" [High,In progress] https://launchpad.net/bugs/683640
+
+ 15:54:08 <slangasek> bdmurray: you're following up on that bug then, to see if the quantal apt passes cjwatson's test?
+
+ 15:54:24 <bdmurray> slangasek: yes indeed
+
+ 15:54:44 <bdmurray> and if it passes I look at a precise SRU
+
+ 15:55:21 <slangasek> bdmurray: perfect, thanks
+
+ 15:55:25 <slangasek> any other bugs?
+
+ 15:56:05 <infinity> stokachu: The analysis of that bug seems wrong to me.
+
+ 15:56:15 <bdmurray> not from me
+
+ 15:56:33 <slangasek> [TOPIC] AOB
+
+ 15:56:38 <slangasek> Any other business?
+
+ 15:56:42 <bdmurray> I am out on Friday
+
+ 15:57:13 <mvo> meh, so #24061 reappeared?
+
+ 15:57:23 <slangasek> mvo: we don't know, the bug hasn't been closed :)
+
+ 15:57:26 <stokachu> infinity: from comment #2?
+
+ 15:57:29 <mvo> oh
+
+ 15:57:30 <slangasek> (at least, not recently)
+
+ 15:57:43 <slangasek> mvo: bdmurray will check
+
+ 15:57:48 <mvo> ok - this time the fix includes a proxy inspired by the one from cjwatson to guard against regressions
+
+ 15:57:52 <mvo> *fingerscrossed*
+
+ 15:58:07 <cjwatson> Right, could be nobody noticed that it closed #24061
+
+ 15:58:22 <cjwatson> Glad to know my suggestion was useful :)
+
+ 15:58:44 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

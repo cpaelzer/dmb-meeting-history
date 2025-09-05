@@ -1,0 +1,483 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 12 Dec at 16:02 &mdash; 16:40 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-12-12-16.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 16:02.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 16:11.
+
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 16:14.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 16:38.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * vorlon (50)
+ * bdmurray (32)
+ * juliank (22)
+ * tdaitx (17)
+ * sil2100 (15)
+ * doko (14)
+ * ubottu (13)
+ * rbalint (12)
+ * xnox (12)
+ * cyphermox (12)
+ * waveform (9)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:02 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:02 <meetingology> Meeting started Thu Dec 12 16:02:05 2019 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:02 <meetingology> 
+
+ 16:02 <meetingology> Available commands: action commands idea info link nick
+
+ 16:02 <bdmurray> #topic Lightning rounds
+
+ 16:02 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson juliank waveform)
+
+ 16:03 <bdmurray> mwhudson cyphermox bdmurray infinity waveform doko vorlon tdaitx rbalint juliank xnox sil2100
+
+ 16:03 <cyphermox> winnitude!
+
+ 16:03 <bdmurray> cyphermox:
+
+ 16:03 <cyphermox> MIR reviews
+
+ 16:03 <cyphermox> updating doc for UEFI/ SecureBoot for juliank's benefit
+
+ 16:03 <cyphermox> I have a hangout with sil2100 later for netplan hand-off
+
+ 16:04 <cyphermox> discussing shim review process with potential contributors
+
+ 16:04 <cyphermox> other hand-offy things prior to my departure
+
+ 16:04 <cyphermox> netplan NM plugin still in -progress by progressing nicely
+
+ 16:04 <cyphermox> (done)
+
+ 16:04 <juliank> +1
+
+ 16:04 <bdmurray> I've got nothing to report
+
+ 16:05 <bdmurray> infinity is at a conference
+
+ 16:05 <bdmurray> waveform:
+
+ 16:05 <waveform> * Finished LP: #1311056
+
+ 16:05 <waveform> * Answering lots of forum posts and questions about the Eoan re-spin
+
+ 16:05 <waveform> * Added one issue to release notes with workaround (attached hardware interfering with serial console, preventing boot)
+
+ 16:05 <waveform> * Started work on Bionic Pi 4 support; investigating whether the u-boot script changes that broke in Eoan can be added back in safely
+
+ 16:05 <waveform> * Work on merging core and classic boot scripts
+
+ 16:05 <ubottu> Launchpad bug 1311056 in python-apt (Ubuntu) "apt-add-repository adds duplicate commented/disabled source lines" [High,Triaged] https://launchpad.net/bugs/1311056
+
+ 16:05 <waveform> * Brief experiment with ZFS on Pi (it works ...?)
+
+ 16:05 <waveform> (done)
+
+ 16:05 <bdmurray> doko:
+
+ 16:06 <doko> gcc-10 packages are available in a frist version now, native and cross
+
+ 16:07 <doko> looked at component mismatches, and python2 getting pulled into main again, maybe some i386 breajage?
+
+ 16:07 <doko> some MIR work
+
+ 16:07 <doko> (done)
+
+ 16:07 <bdmurray> vorlon:
+
+ 16:07 <vorlon> bdmurray: skip? need another minute
+
+ 16:07 <bdmurray> tdaitx:
+
+ 16:07 <tdaitx> * apport O_PATH fix (LP: #1851806)
+
+ 16:07 <tdaitx> - backported LP: #1854237 to xenial, bionic, disco, eoan
+
+ 16:07 <tdaitx> - found and fixed some issues
+
+ 16:07 <tdaitx> - found more issues with the previous security update regarding python2 compatibility
+
+ 16:07 <tdaitx> - got autopkgtest to run using python2, but too many stuff fails for it to be useful right now; some bits of code are not python2 compatible; should we improve this so future sru's are python2 compatible?
+
+ 16:07 <ubottu> Launchpad bug 1851806 in apport (Ubuntu) "'module' object has no attribute 'O_PATH'" [Undecided,Confirmed] https://launchpad.net/bugs/1851806
+
+ 16:07 <tdaitx> - testing alternatives but seems there's no "secure" way to open() /proc/pid in python2
+
+ 16:07 <ubottu> Launchpad bug 1854237 in apport (Ubuntu Eoan) "autopkgtests fail after security fixes" [High,New] https://launchpad.net/bugs/1854237
+
+ 16:07 <tdaitx> * setup environment to build adoptopenjdk with debug and extra verbosity (currently fails to build) to compare libjawt.so config/flags
+
+ 16:07 <tdaitx> Other:
+
+ 16:08 <tdaitx> - setting up travel for the sprint
+
+ 16:08 <tdaitx> (done)
+
+ 16:08 <tdaitx> rbalint: go! =)
+
+ 16:08 <rbalint> * uploaded vmdk-stream-converter to unstable finally
+
+ 16:08 <rbalint> * uploads via Debian: wireshark 3.0.7-1
+
+ 16:08 <rbalint> * fixed LP: #1855520 with a revert, then properly (please accept the SRUs)
+
+ 16:08 <ubottu> Launchpad bug 1855520 in wslu (Ubuntu) "Issue with wsl-integration.sh script causing slow start of Ubuntu shell with WSL2" [High,Fix released] https://launchpad.net/bugs/1855520
+
+ 16:08 <rbalint> * all uploads & srus to show motd from /etc/profile.d when show-motd is installed
+
+ 16:08 <rbalint> * merged systemd 244-3, tests tests are running under bileto ticket 3801
+
+ 16:08 <rbalint> * fixed and SRU-d (please accept it): LP: #1855522
+
+ 16:08 <ubottu> Launchpad bug 1855522 in landscape-client (Ubuntu Eoan) "/etc/update-motd.d/50-landscape-sysinfo shows error in WSL" [Undecided,New] https://launchpad.net/bugs/1855522
+
+ 16:08 <rbalint> * several rounds of upstream binutils code reviews for LP: #1843479
+
+ 16:08 <ubottu> Launchpad bug 1843479 in gzip (Ubuntu) "gzip in Ubuntu Eoan results in Exec format error on WSL1" [High,In progress] https://launchpad.net/bugs/1843479
+
+ 16:08 <rbalint> (done)
+
+ 16:09 <bdmurray> juliank:
+
+ 16:09 <vorlon> bdmurray: ready now
+
+ 16:09 <juliank> * ubiquity: When removing packages [for minimal install], also remove automatically installed packages that are no longer required (LP: #1798992)
+
+ 16:09 <ubottu> Launchpad bug 1798992 in ubiquity (Ubuntu Focal) "Fresh minimal desktop installation has packages pending autoremoval, pending updates" [High,Fix committed] https://launchpad.net/bugs/1798992
+
+ 16:09 <juliank> * apt: fix segmentation fault when passing empty argument to 'satisfy'
+
+ 16:09 <juliank> * python-apt 1.9.1 (soon 1.9.2):
+
+ 16:09 <juliank> - merged waveform's "Don't duplicate disabled sources during add()" (LP: #1311056)
+
+ 16:09 <ubottu> Launchpad bug 1311056 in python-apt (Ubuntu) "apt-add-repository adds duplicate commented/disabled source lines" [High,Triaged] https://launchpad.net/bugs/1311056
+
+ 16:09 <juliank> - migration from md5 to HashStringList (debian bug 944696)
+
+ 16:09 <ubottu> Debian bug 944696 in python-apt "python-apt: relies on MD5 internally to download packages" [Serious,Fixed] http://bugs.debian.org/944696
+
+ 16:09 <juliank> - migration to PY_SSIZE_T_CLEAN (debian bug 944091)
+
+ 16:09 <ubottu> Debian bug 944091 in src:python-apt "deprecation warnings with 3.8 in the autopkg tests" [Serious,Fixed] http://bugs.debian.org/944091
+
+ 16:09 <juliank> - fix for the HashStringList migration (debian bug 946597)
+
+ 16:09 <ubottu> Debian bug 946597 in python-apt "python-apt: security regression in 1.9.1" [Critical,Open] http://bugs.debian.org/946597
+
+ 16:09 <juliank> * initial look at the poppler thing I botched up in eoan (LP: #1849773)
+
+ 16:09 <ubottu> Launchpad bug 1849773 in evince (Ubuntu) "/usr/bin/evince:11:strstr:TextSelectionPainter::hasGlyphLessFont:TextSelectionPainter::endPage:TextPage::drawSelection:poppler_page_render_selection" [High,Confirmed] https://launchpad.net/bugs/1849773
+
+ 16:09 <juliank> * preparing some stuff
+
+ 16:09 <juliank> (done)
+
+ 16:09 <bdmurray> vorlon:
+
+ 16:10 <vorlon> * partially killing architectures is tedious
+
+ 16:10 <vorlon> * found and worked around a bug in the germinate handling that was wrongly pruning build-deps that we still needed
+
+ 16:10 <vorlon> * in response to the above ballooning the package set again, pruned opencv, gdcm, etc by changing gst-plugins-bad1.0 to not build a binary on i386 that isn't required for us
+
+ 16:10 <vorlon> * still eyeing the numpy package being in the set and considering more source changes to get rid of it
+
+ 16:10 <vorlon> * working through the list of autopkgtest regressions on i386 now that we're cross-testing (total test count reduced from 311 to 299 after the last germinate change)
+
+ 16:10 <vorlon> * discussions around handling of /usr/bin/python in 20.04
+
+ 16:10 <vorlon> (done)
+
+ 16:10 <bdmurray> xnox:
+
+ 16:10 <xnox> 12th of December
+
+ 16:10 <xnox> Proposed migration:
+
+ 16:10 <xnox> Sheparded autopkgtest regressions blocking glibc and other uploads
+
+ 16:10 <xnox> Doing a few removals in debian to drop python2 things
+
+ 16:10 <xnox> This should make boost migratable soon* (debian removals pending before end of year)
+
+ 16:10 <xnox> Working on subiquity encryption UX with mwhudson
+
+ 16:10 <xnox> Working with snapd team on uc20 firstboot install
+
+ 16:10 <xnox> Working with desktopy people on oem stuff
+
+ 16:10 <xnox> done
+
+ 16:10 <sil2100> - SRU reviews and releases
+
+ 16:10 <sil2100> * Work on getting the toolchain SRUs reviewed and accepted as well
+
+ 16:10 <sil2100> - Finished manifest differ, deployed it on a canonistack instance
+
+ 16:10 <sil2100> - Finalizing 19.10.1 raspi stuff
+
+ 16:10 <sil2100> - Work on enabling uc20 daily image builds, changes to livecd-rootfs and cdimage
+
+ 16:11 <sil2100> * A bit back and forth with snapd
+
+ 16:11 <sil2100> * Now still a small u-i change is needed to get the builds going
+
+ 16:11 <sil2100> - Some digging into netplan
+
+ 16:11 <sil2100> - Meeting with Iain about the new autopkgtest deployment plan
+
+ 16:11 <sil2100> (done)
+
+ 16:11 <bdmurray> #topic Release incoming bugs
+
+ 16:11 <bdmurray> link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 16:12 <bdmurray> bug 1856059 is very new
+
+ 16:12 <ubottu> bug 1856059 in jellyfish (Ubuntu) "jellyfish: please remove arm64, ppc64el binaries" [Undecided,New] https://launchpad.net/bugs/1856059
+
+ 16:12 <vorlon> that doesn't seem like it belongs on ff-incoming
+
+ 16:12 <vorlon> make sure ubuntu-archive is subscribed, move on?
+
+ 16:13 <bdmurray> Do we really need to card this or can somebody JFDI it?
+
+ 16:13 <bdmurray> ubuntu-archive is subscribed
+
+ 16:13 <bdmurray> I'll untag it
+
+ 16:13 <bdmurray> rls-ee is empty
+
+ 16:14 <bdmurray> rls-bb has nothing new
+
+ 16:14 <bdmurray> #topic Team proposed-migration report
+
+ 16:14 <xnox> urgh
+
+ 16:14 <bdmurray> https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:15 <cyphermox> fwiw cyrus-imapd will probably disappear shortly, I have just been looking at it
+
+ 16:19 <cyphermox> claiming libmoo-perl
+
+ 16:20 <vorlon> I will work on glibc with xnox
+
+ 16:21 <doko> I'll pick python-packaging,
+
+ 16:21 <vorlon> cyphermox for libmoo-perl (really cyrus-imapd)
+
+ 16:21 <bdmurray> I'll take apport
+
+ 16:21 <vorlon> bdmurray gets apport
+
+ 16:21 <vorlon> waveform: can you look at polib?
+
+ 16:21 <cyphermox> I'll take gawk given that it's cyrus-imapd
+
+ 16:21 <rbalint> i take curl
+
+ 16:22 <waveform> vorlon, okay
+
+ 16:22 <bdmurray> lets hold on there and start from the top
+
+ 16:22 <bdmurray> you still get what you took though
+
+ 16:22 <vorlon> doko: can you also take python-fixtures?
+
+ 16:23 <juliank> oh, the apt blocked by ... stuff I guess I can do some retries
+
+ 16:23 <tdaitx> bdmurray: why is apport even blocking stuff? update excuses points to 2.20.11-0ubuntu9 but we have 2.20.11-0ubuntu13 on focal for a while now
+
+ 16:23 <vorlon> if a package is a 'candidate' but stuck, look at https://people.canonical.com/~ubuntu-archive/proposed-migration/update_output.txt
+
+ 16:23 <doko> vorlon: no, this is all autopilot
+
+ 16:24 <vorlon> doko: and because of that you can't look at it?
+
+ 16:25 <vorlon> I'll take python-testtools
+
+ 16:25 <doko> that's autopilot as well
+
+ 16:25 <vorlon> doko: so?
+
+ 16:25 <vorlon> it still needs tdoing
+
+ 16:25 <doko> vorlon: do you work on autopilot removal?
+
+ 16:25 <juliank> I retried the python-apt triggered failures, seems they should have been fixed in the meantime
+
+ 16:26 <vorlon> doko: two archive admins are better than one for working on this
+
+ 16:26 <tdaitx> bdmurray: I requested autopktest retrys for apt and gdb so new apport will unblock them
+
+ 16:26 <vorlon> I expect it'll take several rounds
+
+ 16:26 <bdmurray> tdaitx: steal my work!
+
+ 16:26 <vorlon> doko: I'll let you have python-fixtures and python-testtools then
+
+ 16:26 <juliank> tdaitx: me too, for apt
+
+ 16:27 <vorlon> gawk, curl are claimed
+
+ 16:27 <vorlon> tdaitx: can you look at cmake?
+
+ 16:27 <juliank> makes me wonder if we have a fix for dropping duplicate requests in autopkgtest queue yet
+
+ 16:27 <tdaitx> vorlon: yeah
+
+ 16:27 <vorlon> juliank: psycopg2?
+
+ 16:27 <sil2100> juliank: no, Simon prepped a branch one time, I requested changes and I don't think it moved since then
+
+ 16:28 <doko> isn't that better handled by server team, psycopg2?
+
+ 16:28 <juliank> it would be, I guess
+
+ 16:28 <vorlon> it's listed as a foundations package
+
+ 16:28 <juliank> we can retry
+
+ 16:29 <juliank> let me try that
+
+ 16:29 <vorlon> juliank: ok you're on point for that
+
+ 16:29 <vorlon> apport/gdb is taken by bdmurray
+
+ 16:29 <vorlon> systemd/libseccomp: sil2100 ?
+
+ 16:29 <vorlon> cyphermox: can you also look at sudo? (cyrus-imapd, but also mediawiki)
+
+ 16:29 <rbalint> i take libseccomp
+
+ 16:29 <sil2100> vorlon: ok o/
+
+ 16:30 <rbalint> i think systemd 244 fixed it
+
+ 16:30 <vorlon> sil2100: ah, rbalint is fighting you for it
+
+ 16:30 <vorlon> sil2100: you can have libwww-perl isntead
+
+ 16:30 <sil2100> vorlon: aww, ok, fine as well ;)
+
+ 16:30 <sil2100> Let me card it then
+
+ 16:30 <tdaitx> so, cmake being blocked by ros-robot-state-publisher seems to be done, seb got it to pass 2 hours ago
+
+ 16:30 <vorlon> juliank: are you taking apt?
+
+ 16:30 <cyphermox> vorlon: ack, sudo
+
+ 16:30 <juliank> vorlon: Yeah
+
+ 16:30 <vorlon> ok
+
+ 16:31 <vorlon> netcat-openbsd: waveform: ?
+
+ 16:31 <juliank> vorlon: Those were temporary failures I think, so I just retried them too :)
+
+ 16:31 <waveform> vorlon, I can take a look
+
+ 16:31 <vorlon> doko: can you also take requests, or are you full?
+
+ 16:32 <vorlon> tdaitx: libdate-manip-perl
+
+ 16:32 <doko> I don't want to commit to that, but again, the oslo stuff is openstack ...
+
+ 16:32 <tdaitx> vorlon: ack
+
+ 16:32 <juliank> oh, if only we could grep all failures for postgres 11 and retry them
+
+ 16:32 <vorlon> anyone think they need more for this week?
+
+ 16:32 <vorlon> otherwise I would stop there
+
+ 16:32 <vorlon> juliank: download the artifacts tarballs and look for postgres?
+
+ 16:32 <rbalint> +1 for stopping :-)
+
+ 16:32 <doko> I'll look at python-meshio
+
+ 16:32 <juliank> well, yes it'd work
+
+ 16:33 <doko> vorlon: what about the packages with missing i386 builds, like binutils?
+
+ 16:33 <vorlon> doko: binutils should not be missing any i386 builds, it's in the whitelist
+
+ 16:33 <vorlon> what exactly are you referring to?
+
+ 16:33 <doko> ahh, no, failing atopkg test
+
+ 16:34 <xnox> can we remove packages from release, and allow new version to be stuck in proposed? ie. some debian packages are like that, due to e.g. automatic removal from testing
+
+ 16:34 <vorlon> xnox: demoting to proposed, instead of removing from proposed and release, has a non-negligible cost of clogging up proposed-migration reports
+
+ 16:34 <doko> if you can convince rm to override autopkg tests too ...
+
+ 16:35 <vorlon> doko: yes, I had overridden binutils autopkgtest for the version in release, I'll do the proposed version now as well
+
+ 16:35 <xnox> vorlon:  ack
+
+ 16:37 <vorlon> I think we're done with this topic
+
+ 16:37 <vorlon> bdmurray: ?
+
+ 16:38 <bdmurray> #topic AOB
+
+ 16:39 <bdmurray> Anybody?
+
+ 16:39 <vorlon> nothing here
+
+ 16:39 <vorlon> I won't be at the next meeting, it's past my EOY :)
+
+ 16:40 <bdmurray> Okay then. Thanks everybody!
+
+ 16:40 <sil2100> Thanks!
+
+ 16:40 <tdaitx> thanks!
+
+ 16:40 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

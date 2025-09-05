@@ -1,0 +1,396 @@
+#title #ubuntu-meeting: Ubuntu Server Team
+
+Meeting started by SpamapS at 16:03:31 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-04-24-16.03.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Action points from last meeting
+
+ *Precise Development
+''LINK:'' http://status.ubuntu.com/ubuntu-precise/ubuntu-server.html   (SpamapS, 16:13:55)
+
+ *Ubuntu Server Team Events
+
+ *Weekly Updates & Questions for the QA Team (hggdh)
+
+ *Weekly Updates & Questions for the Kernel Team (smb)
+
+ *Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ *Open Discussion
+''ACTION:'' rbasak add bug 974218 to precise release notes  (SpamapS, 16:30:08)
+''LINK:'' https://wiki.ubuntu.com/PrecisePangolin/   (arosales, 16:32:47)
+
+ *Announce next meeting date and time
+
+
+
+Meeting ended at 16:38:59 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * rbasak add bug 974218 to precise release notes
+
+
+
+== Action items, by person ==
+
+ * rbasak
+ ** rbasak add bug 974218 to precise release notes
+
+
+
+== People present (lines said) ==
+
+ * SpamapS (66)
+ * arosales (25)
+ * jamespage (12)
+ * ubottu (10)
+ * hallyn (10)
+ * rbasak (7)
+ * zul (6)
+ * smoser (6)
+ * adam_g (4)
+ * meetingology (4)
+ * smb (2)
+ * hggdh (2)
+ * utlemming (2)
+ * roaksoax (1)
+ * ScottK (1)
+
+
+
+== Full Log ==
+
+
+ 16:03:31 <SpamapS> #startmeeting Ubuntu Server Team
+
+ 16:03:31 <meetingology> Meeting started Tue Apr 24 16:03:31 2012 UTC.  The chair is SpamapS. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:03:31 <meetingology> 
+
+ 16:03:31 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:03:36 <SpamapS> and so we begin :)
+
+ 16:03:41 <arosales> SpamapS: sorry, I should be better about updating the wiki
+
+ 16:03:53 <SpamapS> arosales: its the chair's responsibility, not yours
+
+ 16:04:04 <hallyn> and documented on the knowledgebase very well
+
+ 16:04:13 <arosales> ah, ok
+
+ 16:04:18 * arosales doesn't feel as bad :-)
+
+ 16:04:18 <SpamapS> #topic Action points from last meeting
+
+ 16:04:20 <hallyn> but maybe we're not informing ppl of that
+
+ 16:04:27 <SpamapS> SpamapS invite aquette to next server team meeting to discuss servercloud-p-cloud-power-management
+
+ 16:04:38 <SpamapS> hallyn: indeed
+
+ 16:04:47 <SpamapS> too late for that, its officially "off the list"
+
+ 16:04:54 <SpamapS> jamespage to raise bugs for FTBFS for server related packages from latest rebuild test.
+
+ 16:05:06 <jamespage> SpamapS, no longer required
+
+ 16:05:12 <SpamapS> brilliant
+
+ 16:05:17 <SpamapS> #topic Precise Development
+
+ 16:05:17 <jamespage> thats really old
+
+ 16:05:17 <smoser> o/
+
+ 16:05:20 <SpamapS> Aren't we like, done?
+
+ 16:05:29 <jamespage> i'd hope so :-)
+
+ 16:05:36 <SpamapS> done or not, we're moving on :)
+
+ 16:05:50 <SpamapS> anybody have something to bring up re the release that happens in 2 days?
+
+ 16:05:59 <jamespage> do lots of testing
+
+ 16:06:00 <arosales> 7 bugs on http://reports.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html
+
+ 16:06:06 <hallyn> bottoms up?
+
+ 16:06:07 <arosales> release notes these ?
+
+ 16:06:18 <SpamapS> or SRU them
+
+ 16:06:31 <SpamapS> we'll go over them for that purpose alone
+
+ 16:06:35 <SpamapS> bug 928990
+
+ 16:06:38 <ubottu> Launchpad bug 928990 in cloud-init (Ubuntu Quantal) "fsck / dirty filesystem on instance is death" [High,Triaged] https://launchpad.net/bugs/928990
+
+ 16:06:43 <arosales> any of these we should make users aware of as we release?
+
+ 16:06:51 <smoser> jamespage, marked that one as wont-fix i think.
+
+ 16:06:58 <smoser> and moved to that new Q
+
+ 16:07:00 <SpamapS> says Triaged now
+
+ 16:07:16 <smoser> well, its triaged for Q. wont-fix for precise
+
+ 16:07:16 <SpamapS> ah the report is picking up the wrong status
+
+ 16:07:20 <jamespage> smoser: I did start reviewing them this morning
+
+ 16:07:24 <SpamapS> who maintains that report?
+
+ 16:07:25 <utlemming> its marked for Quantal
+
+ 16:07:38 <SpamapS> bug 930916
+
+ 16:07:41 <ubottu> Launchpad bug 930916 in amavisd-new (Ubuntu) "amavis start-stop script fails to stop amavisd" [High,Confirmed] https://launchpad.net/bugs/930916
+
+ 16:07:49 <jamespage> anything that won't be fixed for precise and won't be SRU's should be pushed to Quantal IMHO
+
+ 16:07:52 <SpamapS> Ugh thats me, I kept deferring. I'll see if I can get a near-0-day SRU for that
+
+ 16:08:09 <SpamapS> bug 974613
+
+ 16:08:11 <ubottu> Launchpad bug 974613 in Glance "Glance database issues after upgrade : 1054, "Unknown column 'images.protected' in 'field list'"" [Undecided,Incomplete] https://launchpad.net/bugs/974613
+
+ 16:08:33 <jamespage> adam_g, is that one fixed with the change you made to the way glance upgrades?
+
+ 16:08:58 <adam_g> jamespage: yes
+
+ 16:09:06 <adam_g> jamespage: ill mark accordingly with a note
+
+ 16:09:18 <SpamapS> woot
+
+ 16:09:24 <SpamapS> bug 974584
+
+ 16:09:26 <ubottu> Launchpad bug 974584 in sysvinit (Ubuntu) "Semaphores cannot be created in lxc container" [High,Confirmed] https://launchpad.net/bugs/974584
+
+ 16:09:44 <hallyn> fixed in precise
+
+ 16:09:57 <hallyn> open for quantal
+
+ 16:10:05 <SpamapS> errr
+
+ 16:10:13 <SpamapS> no
+
+ 16:10:29 <SpamapS> there is nothing fixed in precise that will not also be fixed in quantal
+
+ 16:10:57 <SpamapS> hallyn: can you look at the sysvinit status and see if thats valid?
+
+ 16:10:58 <hallyn> fine.  fixed for lxc.  open for initscripts in quantal
+
+ 16:11:17 <SpamapS> hallyn: ah, so it was worked around in precise
+
+ 16:11:22 <SpamapS> bug 880339
+
+ 16:11:24 <ubottu> Launchpad bug 880339 in mysql-5.5 (Ubuntu Precise) "AppArmor profile needs update" [Medium,Incomplete] https://launchpad.net/bugs/880339
+
+ 16:11:25 <hallyn> yes
+
+ 16:11:56 <SpamapS> still no feedback from the user... but I'm pretty sure we can just close that, all testing I've done shows a working system on upgrade from 11.10 -> 12.04 w/ mysql installed
+
+ 16:12:02 <SpamapS> bug 907197
+
+ 16:12:04 <ubottu> Launchpad bug 907197 in nova (Ubuntu) "ip address can't be injected into the instance when using lxc " [Medium,Incomplete] https://launchpad.net/bugs/907197
+
+ 16:12:16 <jamespage> ditto - still waiting for feedback from original reporter
+
+ 16:12:36 <SpamapS> bug 901881
+
+ 16:12:38 <ubottu> Launchpad bug 901881 in glance (Ubuntu) "nova and glance should depend on python-keystone" [Low,In progress] https://launchpad.net/bugs/901881
+
+ 16:13:04 <zul> quantal
+
+ 16:13:11 <zul> or sru
+
+ 16:13:22 <SpamapS> zul: does it need a release note?
+
+ 16:13:31 <zul> i dont think so
+
+ 16:13:33 <SpamapS> zul: how about, quantal *and* sru ?
+
+ 16:13:55 <SpamapS> http://status.ubuntu.com/ubuntu-precise/ubuntu-server.html
+
+ 16:14:03 <arosales> So possible known issues to document in the release notes would just be  bug 928990?
+
+ 16:14:04 <ubottu> Launchpad bug 928990 in cloud-init (Ubuntu Quantal) "fsck / dirty filesystem on instance is death" [High,Triaged] https://launchpad.net/bugs/928990
+
+ 16:14:21 <SpamapS> pretty steady push of getting things done everybody
+
+ 16:14:21 <zul> SpamapS: that would be good idea
+
+ 16:14:56 <utlemming> aroslaes: I don't think it needs to be documented. The issue is really about needing a rescue console. The behavior here is no different than a phyiscal server.
+
+ 16:14:59 <smoser> arosales, we can document that, thats fine. but it is present sense 10.04
+
+ 16:15:11 <SpamapS> Please take a moment today to go through the blueprints you own and make sure all the work items are POSTPONED or DONE ..
+
+ 16:15:43 <SpamapS> helpful btw, http://status.ubuntu.com/ubuntu-precise/u/launchpad-username.html
+
+ 16:15:56 <arosales> smoser: utlemming: I'll confirm with you guys before suggesting any additions to the release notes, and what the wording should be if it does need to be documented
+
+ 16:16:17 <smoser> k
+
+ 16:16:49 <arosales> roaksoax:  are items hwere going to be postponed: https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-orchestra
+
+ 16:16:49 <SpamapS> Anything else?
+
+ 16:17:02 <SpamapS> arosales: at this point, *everything* is POSTPONED
+
+ 16:17:15 <arosales> SpamapS: ah, gotcha
+
+ 16:17:19 * roaksoax looks
+
+ 16:17:26 <SpamapS> there is no more doing, only postponing :)
+
+ 16:17:31 * arosales just seconds folks to udpate their blueprints
+
+ 16:17:35 <hallyn> don't we have 2 mor days?
+
+ 16:17:47 <SpamapS> hallyn: not really
+
+ 16:18:00 <hallyn> surprised
+
+ 16:18:24 <SpamapS> universe freezes today
+
+ 16:18:26 <SpamapS> 1600 UTC
+
+ 16:18:29 <SpamapS> ok moving on
+
+ 16:18:34 <hallyn> (n/a)
+
+ 16:18:45 <ScottK> freezes/froze
+
+ 16:18:59 <SpamapS> true
+
+ 16:19:00 <SpamapS> :)
+
+ 16:19:15 <SpamapS> #topic Ubuntu Server Team Events
+
+ 16:19:49 <arosales> Sounds like ODS went well
+
+ 16:20:26 <arosales> m_3 @ railsconf (http://railsconf2012.com/) 23 -25 April
+
+ 16:21:01 <SpamapS> UDS in 2 weeks!
+
+ 16:21:41 <SpamapS> #topic Weekly Updates & Questions for the QA Team (hggdh)
+
+ 16:21:56 <SpamapS> hggdh: how's 12.04 looking?
+
+ 16:22:03 <hggdh> nothing from me, fully immersed on 12.04 testing
+
+ 16:22:09 <hggdh> seems good so far :-)
+
+ 16:22:19 <SpamapS> #topic Weekly Updates & Questions for the Kernel Team (smb)
+
+ 16:22:25 <SpamapS> smb: anything to report?
+
+ 16:22:48 <smb> Already that time... hm not really, lots of testing around but nothing specific
+
+ 16:22:55 <smb> ..
+
+ 16:23:22 <SpamapS> smb: thx
+
+ 16:23:28 <SpamapS> #topic Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ 16:23:37 <rbasak> Nothing to report. Any questions for me?
+
+ 16:25:25 <rbasak> I'll take that as a no.
+
+ 16:25:30 <SpamapS> sorry
+
+ 16:25:38 <SpamapS> #topic Open Discussion
+
+ 16:25:44 <rbasak> Bug 974218 may break upgrades from lucid to precise for users with bonded interfaces, causing the server to fail to bring interfaces up on boot due to a race condition. This is difficult or impossible to reproduce, but based on the reports I think it might be worth release noting. Any thoughts on this?
+
+ 16:25:45 <ubottu> Launchpad bug 974218 in ifenslave-2.6 (Ubuntu) "Ifenslave-2.6 problem in ubuntu 12;04 precise" [Undecided,Confirmed] https://launchpad.net/bugs/974218
+
+ 16:26:55 <arosales> seems like a good candidate for release notes --> known issues
+
+ 16:28:22 <SpamapS> another thing, UDS blueprints
+
+ 16:28:33 <rbasak> The trouble is that I'm not sure how much of an issue it is. But it does seem to be a valid problem, and the impact is severe for those affected.
+
+ 16:28:55 <rbasak> (easy workaround though)
+
+ 16:28:56 <SpamapS> Make sure if you have a blueprint that everybody can come ready to discuss. Do not shy away from starting a discussion *now* on ubuntu-devel or ubuntu-server.
+
+ 16:28:57 <jamespage> arosales, rbasak: I think its worth a mentio
+
+ 16:29:00 <jamespage> n
+
+ 16:29:41 <SpamapS> agreed
+
+ 16:30:04 <rbasak> OK I'll flesh out the bug and send something to arosales then?
+
+ 16:30:08 <SpamapS> #action rbasak add bug 974218 to precise release notes
+
+ 16:30:08 * meetingology rbasak add bug 974218 to precise release notes
+
+ 16:30:10 <ubottu> Launchpad bug 974218 in ifenslave-2.6 (Ubuntu) "Ifenslave-2.6 problem in ubuntu 12;04 precise" [Undecided,Confirmed] https://launchpad.net/bugs/974218
+
+ 16:30:42 <arosales> rbasak: yes, please send to me and I'll work with the release team to document
+
+ 16:30:53 <rbasak> OK
+
+ 16:30:55 <arosales> Any other release notes items?
+
+ 16:31:11 <zul> that we are awesome
+
+ 16:31:25 <arosales> zul: that has already been there since alpha 1
+
+ 16:31:50 <jamespage> arosales, where can we see the current release notes?  its hard to remember what already went in
+
+ 16:31:53 <zul> oh good....no other words are needed then
+
+ 16:32:46 <arosales> here is the landing page for most things related to the release
+
+ 16:32:47 <arosales> https://wiki.ubuntu.com/PrecisePangolin/
+
+ 16:32:59 <arosales> release notes --> https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes
+
+ 16:33:06 <arosales> I have a few changes I need to make
+
+ 16:33:16 <arosales> but if any one has any data to add please feel free
+
+ 16:33:40 <arosales> Ubuntu Server is specifically @ https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes/UbuntuServer
+
+ 16:33:55 <arosales> ..
+
+ 16:34:29 <jamespage> does someone have something for the squid -> squid3 config transition stuff as its not automated...
+
+ 16:36:12 <arosales> adam_g: I think you were doing some work their
+
+ 16:37:05 <adam_g> jamespage: what do you mean?
+
+ 16:37:21 <adam_g> oh, release notes..
+
+ 16:38:06 <SpamapS> Ok, if thats all then?
+
+ 16:38:19 <SpamapS> #topic Announce next meeting date and time
+
+ 16:38:51 <SpamapS> Next meeting will be next Tuesday, May 1, at 1600 UTC, right here in #ubuntu-meeting
+
+ 16:38:59 <SpamapS> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,430 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 15:04:42 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-07-11-15.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *bugs
+
+ *AOB
+
+
+
+Meeting ended at 15:34:48 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (43)
+ * stokachu (31)
+ * ev (28)
+ * ubottu (25)
+ * stgraber (24)
+ * ogra_ (14)
+ * bdmurray (12)
+ * barry (8)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:04:42 <cjwatson> #startmeeting
+
+ 15:04:42 <meetingology> Meeting started Wed Jul 11 15:04:42 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:04:42 <meetingology> 
+
+ 15:04:42 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:04:47 <cjwatson> #topic lightning round
+
+ 15:04:53 <cjwatson> Launchpad and archive admin tools:
+
+ 15:04:53 <cjwatson> * API queue client will be feature-complete once the current state of devel is QAed and deployed.
+
+ 15:04:56 <cjwatson> * Went through all archive admin tools based on the old queue script and either migrated them to the API (new-binary-debian-universe, kernel-overrides) or dropped them (new-remove-duplicates).
+
+ 15:05:00 <cjwatson> * Fixed privacy bug in PackageUpload API.
+
+ 15:05:03 <cjwatson> * Tweaked auto-sync to take advantage of new PackageUpload API work.
+
+ 15:05:05 <cjwatson> * Landed work to automatically copy package description translations between pockets (awaiting deployment).
+
+ 15:05:08 <cjwatson> Installer:
+
+ 15:05:11 <cjwatson> * Worked with xnox to track down and fix bug 1020574.
+
+ 15:05:12 <ubottu> Launchpad bug 1020574 in ubiquity (Ubuntu) "SystemError: Broken pipe while installing language packs" [Critical,Fix released] https://launchpad.net/bugs/1020574
+
+ 15:05:13 <cjwatson> * Removed reliance on an old X server argument for Plymouth transitioning (bug 1019377).
+
+ 15:05:14 <ubottu> Launchpad bug 1019377 in ubiquity (Ubuntu) "ubiquity-dm crashed with XStartupError in run(): X server exited with return code 1" [High,Fix released] https://launchpad.net/bugs/1019377
+
+ 15:05:16 <cjwatson> * Worked on tracking down bug 1023036.  No real luck as yet.
+
+ 15:05:17 <ubottu> Launchpad bug 1023036 in ubiquity (Ubuntu Quantal) "Error on /usr/share/ubiquity/plugininstall.py", line 1687, affecting desktop images (preseeded install)" [Critical,Triaged] https://launchpad.net/bugs/1023036
+
+ 15:05:19 <cjwatson> Other:
+
+ 15:05:21 <cjwatson> * Cleaned up various bugs (mostly related to the switch to Python 3 or to recent package splits) in software-properties, update-manager, and ubuntu-release-upgrader.
+
+ 15:05:24 <cjwatson> * Some progress on converting the server image to use a squashfs for the base system.
+
+ 15:05:27 <cjwatson> * Fixed up compiler warnings in jbigkit, allowing it to be moved to main (bug 993304) and hence allowing syncs of tiff and tiff3.
+
+ 15:05:28 <ubottu> Launchpad bug 993304 in jbigkit (Ubuntu) "[MIR] jbigkit" [Medium,Fix released] https://launchpad.net/bugs/993304
+
+ 15:05:30 <cjwatson> ..
+
+ 15:05:47 <stokachu> bug #977947 - needs sponsor
+
+ 15:05:48 <ubottu> Launchpad bug 977947 in libbonobo (Ubuntu Quantal) "Please transition libbonobo to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977947
+
+ 15:05:48 <cjwatson> Also 1023036 is currently impeded by the dh_python3 regression being discussed on -devel
+
+ 15:05:49 <stokachu> bug #977952 - needs sponsor
+
+ 15:05:50 <ubottu> Launchpad bug 977952 in libbonoboui (Ubuntu Precise) "Please transition libbonoboui to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977952
+
+ 15:05:51 <stokachu> bug #977940 - needs sponsor
+
+ 15:05:52 <ubottu> Launchpad bug 977940 in gnome-vfs (Ubuntu Precise) "Please transition gnome-vfs to multi-arch" [Medium,In progress] https://launchpad.net/bugs/977940
+
+ 15:05:53 <stokachu> bug #977959 - in progress
+
+ 15:05:54 <ubottu> Launchpad bug 977959 in libgnome (Ubuntu Precise) "Please transition libgnome to multi-arch" [Medium,Confirmed] https://launchpad.net/bugs/977959
+
+ 15:05:55 <stokachu> bug #932860 - in progress
+
+ 15:05:56 <ubottu> Launchpad bug 932860 in appmenu-gtk (Ubuntu Precise) "Broken (or missing) multiarch support" [High,Triaged] https://launchpad.net/bugs/932860
+
+ 15:06:01 <stokachu> bug #979661 - (precise) verified/fix released
+
+ 15:06:02 <ubottu> Launchpad bug 979661 in update-manager (Ubuntu Quantal) "oneiric to precise: debconf: unable to initialize frontend: Gnome and falls back to Dialog" [Critical,Fix released] https://launchpad.net/bugs/979661
+
+ 15:06:03 <stokachu> bug #890928 - (precise) verified/fix released
+
+ 15:06:04 <ubottu> Launchpad bug 890928 in libxkbfile (Ubuntu Precise) "When trying to install libxkbfile1:i386 the pkg manager asks to remove too many important packages [Multi-arch]" [Low,Fix released] https://launchpad.net/bugs/890928
+
+ 15:06:05 <stokachu> bug #992352 - (precise) verified/fix released
+
+ 15:06:06 <ubottu> Launchpad bug 992352 in chromium-browser (Ubuntu Quantal) "Please update to 18.0.1025.168" [Medium,Triaged] https://launchpad.net/bugs/992352
+
+ 15:06:07 <stokachu> bug #578536 - patched version sent to one of affected users who's been testing it for 3 weeks on systems automounting ~13k mounts with great success. Will know their final testing results tomorrow and will start the process of getting an SRU approved.
+
+ 15:06:08 <ubottu> Launchpad bug 578536 in autofs5 (Ubuntu Natty) "when stopped, automount orphans some mounts" [Medium,Fix committed] https://launchpad.net/bugs/578536
+
+ 15:06:12 <stokachu> - Working +1 this month, started going through universe failed builds.
+
+ 15:06:14 <stokachu> - Vacation next week.
+
+ 15:06:15 <cjwatson> Anyone want to volunteer to help out stokachu with sponsorships?
+
+ 15:06:16 <stokachu> ...
+
+ 15:06:28 <ev> - Short week; holiday on Tuesday.
+
+ 15:06:28 <ev> - Lots of work on the debconf GTK+ redesign:
+
+ 15:06:28 <ev> https://wiki.ubuntu.com/ErrorTracker#When_there_is_a_Debconf_prompt
+
+ 15:06:28 <ev> - Built a new set of tests around the dialogs. There were a lot of things
+
+ 15:06:28 <ev> that were already broken that this caught, like the password dialog not
+
+ 15:06:29 <ev> handling a default one.
+
+ 15:06:29 <ev> - Implemented all of the dialog types. Just need to handle packing the
+
+ 15:06:30 <ev> select and multiselect types into a scrolled window when there's more than
+
+ 15:06:30 <ev> 6 items.
+
+ 15:06:35 <ev> - Started documenting how people can contribute to errors.ubuntu.com and
+
+ 15:06:35 <ev> dumping my personal todo list into bug reports:
+
+ 15:06:35 <ev> https://wiki.ubuntu.com/ErrorTracker/Contributing
+
+ 15:06:35 <ev> https://wiki.ubuntu.com/ErrorTracker/Contributing/Debconf
+
+ 15:06:35 <ev> - Sat down with Matthew to come up for a better design to the compiz/apport
+
+ 15:06:36 <ev> application hang dialog. The implementation is mostly there, but I'll need
+
+ 15:06:36 <ev> to spend at least a day on the changes he's going to create as a result of
+
+ 15:06:37 <ev> our discussion.
+
+ 15:06:39 <ev> - Continued discussion with Martin over my API for applications handling
+
+ 15:06:39 <ev> recoverable errors in apport. We have a fairly straightforward plan that
+
+ 15:06:40 <ev> involves passing the data over stdout to a special apport binary,
+
+ 15:06:40 <ev> nul-separated. This replaces the existing attempt at a solution which used
+
+ 15:07:03 <ogra_> .. ?
+
+ 15:07:13 <stokachu> i think he flooded himself offline
+
+ 15:07:17 <ogra_> haha
+
+ 15:07:29 <ev> what, me?
+
+ 15:07:35 <cjwatson> 16:06 <ev>   nul-separated. This replaces the existing attempt at a solution which used
+
+ 15:07:38 <cjwatson> (end)
+
+ 15:07:39 <ev> I HATE IRC
+
+ 15:07:43 <stokachu> lol
+
+ 15:07:52 <ev> nul-separated. This replaces the existing attempt at a solution which used
+
+ 15:07:53 <ev> DBus.
+
+ 15:07:53 <ev> (done)
+
+ 15:08:16 <bdmurray> development of arsenal and python-launchpadlib-toolkit search filtering for reopened bug tasks and days in status
+
+ 15:08:19 <bdmurray> SRU verification of apport bug 1002535
+
+ 15:08:21 <ubottu> Launchpad bug 1002535 in apport (Ubuntu Precise) "'not a debian format' package install failures should be Unreportable" [Medium,Fix committed] https://launchpad.net/bugs/1002535
+
+ 15:08:22 <bdmurray> investigation into and fixing of apport-package bugs not being tagged package-conflict and not having a DuplicateSignature.txt
+
+ 15:08:26 <bdmurray> apport fix for parsing DpkgTerminalLog in python 3 (bytes vs strings)
+
+ 15:08:26 <bdmurray> upload apt-clone modification to remove usernames and passwords for apt source files
+
+ 15:08:29 <bdmurray> ubuntu-release-upgrader modification to gather apt-clone system state again
+
+ 15:08:37 <bdmurray> some holidays last week
+
+ 15:08:52 <bdmurray> ⌁ done ⌁
+
+ 15:09:21 <barry> status for two weeks since last wed was a usa holiday: rather weird couple of weeks because of weather issues, but anyway.  bug 1018579, bug 1016170, bug 1019618, bug 823150, spun python-mode 6.0.10 for debian.  worked a bit on dbus merge sid->quantal but it's tricky so stalled.  i continue to work on port of xapian to python 3 via cython.  mostly going well, but it's make-progress-hit-roadblock-rinse-repeat.
+
+ 15:09:21 <barry> <git@github.com:warsaw/xapian.git> done.
+
+ 15:09:21 <barry> 
+
+ 15:09:25 <ubottu> Launchpad bug 1018579 in dovecot (Ubuntu Precise) "dovecot panic" [Critical,Fix committed] https://launchpad.net/bugs/1018579
+
+ 15:09:26 <ubottu> Launchpad bug 1016170 in grub (Ubuntu) "No login screen unless "quiet splash" removed from boot line" [High,Confirmed] https://launchpad.net/bugs/1016170
+
+ 15:09:28 <ubottu> Launchpad bug 1019618 in python-pyxattr (Ubuntu) "Sync python-pyxattr 0.5.1-1 (main) from Debian unstable (main)" [Wishlist,Fix released] https://launchpad.net/bugs/1019618
+
+ 15:09:29 <ubottu> Launchpad bug 823150 in pyxdg (Debian) "Please provide a python3 package" [Unknown,New] https://launchpad.net/bugs/823150
+
+ 15:09:48 <ogra_> done:
+
+ 15:09:48 <ogra_> * made mx5 images work again (very hard to do if you cant do testbuilds (the arm livefs builder is constantly occupied))
+
+ 15:09:48 <ogra_> * many fixes for ac100 images (still not 100% done though)
+
+ 15:09:48 <ogra_> * started packaging a new nvidia-tegra hardfloat driver (v15 final)
+
+ 15:09:48 <ogra_> * kernel and image testing for omap3
+
+ 15:09:49 <ogra_> * was painfully trying to get a 2 graphics cards 3 monitor setup on my new desktop running
+
+ 15:09:52 <ogra_> * some work on foundations-q-hwpack-integration
+
+ 15:09:54 <ogra_> * digged up java 12.10 plans for the release team
+
+ 15:09:55 <barry> cjwatson: re: bug 1016170 could be grub/efi problem?
+
+ 15:09:56 <ogra_> todo:
+
+ 15:09:58 <ogra_> * more foundations-q-hwpack-integration
+
+ 15:10:00 <ogra_> * research QA setup for arm testing more
+
+ 15:10:04 <ogra_> ✓
+
+ 15:10:46 <stgraber> oh, already :)
+
+ 15:10:58 <stgraber> - Containers
+
+ 15:10:58 <stgraber> - Some more apparmor improvements in quantal.
+
+ 15:10:58 <stgraber> - Pushed SRU to -proposed bundling most of the fixes from quantal (2 important fixes, 2 common wishlist and 4 minor fixes)
+
+ 15:11:01 <stgraber> - Implemented clone() in python API, defined next steps for LXC API with Serge. Fixed some bugs in the python module.
+
+ 15:11:04 <stgraber> - Installer
+
+ 15:11:06 <stgraber> - Merged os-prober
+
+ 15:11:07 <cjwatson> barry: possibly; I have no bandwidth to investigate at the moment though :-(
+
+ 15:11:09 <stgraber> - Debugged a weird IPv6 regression, tracked down to bug 1023174
+
+ 15:11:10 <ubottu> Launchpad bug 1023174 in linux (Ubuntu) ""ip -6 addr flush" flushes much more than just the addresses" [Medium,Confirmed] https://launchpad.net/bugs/1023174
+
+ 15:11:11 <stgraber> - ISO tracker
+
+ 15:11:14 <stgraber> - Fixed all minor bugs identified during alpha-2 testing, deployment waiting on IS
+
+ 15:11:17 <stgraber> - Networking
+
+ 15:11:19 <stgraber> - Got IPv6 testing working again on quantal, simplified the code to be pretty self-contained (no longer requires IPv6 connectivity), next step is to send that to QA.
+
+ 15:11:22 <stgraber> - bug 1023437
+
+ 15:11:24 <ubottu> Launchpad bug 1023437 in ifupdown (Ubuntu) "ifupdown conflicts with netbase both of which own /etc/init.d/networking" [Undecided,New] https://launchpad.net/bugs/1023437
+
+ 15:11:25 <stgraber> - Other
+
+ 15:11:27 <stgraber> - Finally got around to merging open-iscsi, first time since jaunty... ended up dropping all our delta except for the upstart job, added some glue to handle the upgrades and now finishing to test in d-i.
+
+ 15:11:31 <stgraber> - Some ARB app review, the app showdown made the ARB New queue reach 140 packages... Still over 20 or so to review today...
+
+ 15:11:34 <stgraber> - Patch pilot on Monday
+
+ 15:11:37 <stgraber> - Spent a few minutes dealing with a compiz regression in a copied SRU (uploaded a revert).
+
+ 15:11:40 <barry> cjwatson: no worries, it's not fatal.  at least i have a machine to debug with if you need
+
+ 15:11:40 <stgraber> - TODO this week
+
+ 15:11:42 <stgraber> - Finish reviewing/triaging ppp and libnl-3 bugs, then start looking at SRUs for the network packages.
+
+ 15:11:45 <stgraber> - Go through the pending-sru and help for these that are stuck on verification-needed
+
+ 15:11:48 <stgraber> (DONE)
+
+ 15:13:37 <stgraber> stokachu: so that's 977947, 977952 and 977940 that are ready for sponsoring?
+
+ 15:13:58 <stokachu> stgraber: yea 2 of them are merge proposals i believe
+
+ 15:14:04 <stokachu> stgraber: ones got a debdiff attached
+
+ 15:14:16 <stgraber> stokachu: ok. I'll add to my todo, hopefully I can get to it this afternoon
+
+ 15:14:26 <stokachu> stgraber: cool man
+
+ 15:16:21 <cjwatson> #topic bugs
+
+ 15:16:47 <bdmurray> bug 1006860 seems to have a patch in it now
+
+ 15:16:49 <ubottu> Launchpad bug 1006860 in gdb (Ubuntu) "gdb crashes when loading core files (in is_ctor_or_dtor)" [High,Confirmed] https://launchpad.net/bugs/1006860
+
+ 15:16:51 <cjwatson> anyone have anything we need to be looking at?  as mentioned earlier, my attention's mostly on 1023036 once the python3 bit gets fixed
+
+ 15:17:17 <stokachu> other than the 2 bugs im in progress on, are there other multiarch that need attention?
+
+ 15:18:03 <cjwatson> bdmurray: seb128 and tvoss were discussing that earlier on -devel; seb128 was going to grab doko about it when he's next online
+
+ 15:18:43 <bdmurray> cjwatson: got it thanks
+
+ 15:19:25 <bdmurray> bug 1022864 just came into the rls-q queue
+
+ 15:19:25 <cjwatson> stokachu: there's bug 990761 in partner; infinity was looking at that yesterday, but might not mind having it taken off him.  (I think my last comment in that bug may be a bit simplistic, since it's not clear that acroread has been converted to expect multiarch; there's more detail in the duplicate bug 998837.)
+
+ 15:19:26 <ubottu> Launchpad bug 1022864 in ubuntu-release-upgrader (Ubuntu Precise) "Oneiric to Precise upgrade test failed: User settings are not preserved on upgrade" [Critical,New] https://launchpad.net/bugs/1022864
+
+ 15:19:28 <ubottu> Launchpad bug 990761 in acroread (Ubuntu) "acroread 9.5.1 is not installable on Ubuntu Precise amd64 system" [Undecided,Confirmed] https://launchpad.net/bugs/990761
+
+ 15:19:29 <ubottu> Launchpad bug 990761 in acroread (Ubuntu) "duplicate for #998837 acroread 9.5.1 is not installable on Ubuntu Precise amd64 system" [Undecided,Confirmed] https://launchpad.net/bugs/990761
+
+ 15:19:33 <stokachu> these last two finish the requirements needed for lotus notes on amd64
+
+ 15:19:42 <cjwatson> 1022864 is such a BS critical :)
+
+ 15:19:58 * cjwatson drops to high
+
+ 15:20:23 <stokachu> cjwatson: want me to put those on my list?
+
+ 15:20:48 <cjwatson> stokachu: If you wouldn't mind, I think it'd be helpful
+
+ 15:21:03 <stokachu> cjwatson: ok ive got them added to be worked on
+
+ 15:21:12 <cjwatson> Does anyone know what deals with gtk-theme migration?  it's not ubuntu-release-upgrader, and I suspect it's something in desktop
+
+ 15:21:29 <ev> no idea
+
+ 15:22:04 <cjwatson> Maybe gsettings-desktop-schemas since that ships that gsettings schema
+
+ 15:22:11 <bdmurray> if it is affecting precise is the ubuntu-release-upgrader task really accurate?
+
+ 15:22:24 <cjwatson> bdmurray: Probably not, but it's inaccurate anyway
+
+ 15:23:09 <cjwatson> Sent over to gsettings-desktop-schema and desktop can worry about it
+
+ 15:25:44 <cjwatson> bug 1021293 has also come up for 12.04, and so far I haven't had time to figure it out
+
+ 15:25:46 <ubottu> Launchpad bug 1021293 in ubiquity (Ubuntu) "Ubuntu 12.04 install stalls when doing apt-get upgrade" [High,Triaged] https://launchpad.net/bugs/1021293
+
+ 15:26:23 <stokachu> i'd take it but i think im at my threshold
+
+ 15:26:39 <cjwatson> Yeah, I may still get to it after all but wanted to mention it
+
+ 15:27:13 <stokachu> ill add it to my list anyway and see if i can contribute
+
+ 15:27:37 <cjwatson> OK.  Suspect it needs strace -f attached at an appropriate point, since it already has debconf debugging and that isn't being informative enough
+
+ 15:28:14 <cjwatson> #topic AOB
+
+ 15:28:15 <cjwatson> anything else?
+
+ 15:29:15 <stokachu> oh
+
+ 15:29:25 <stokachu> +1 is it recommended to use pbuilder or sbuild?
+
+ 15:29:41 <stokachu> ive just been using pbuilder but it sounds like sbuild can do some sort of resume building
+
+ 15:29:43 * barry prefers sbuild
+
+ 15:30:05 <ev> stokachu: https://wiki.ubuntu.com/FoundationsTeam/PreferredTechnologies#Building
+
+ 15:30:07 <stokachu> launchpad uses sbuild for their build service correct?
+
+ 15:30:28 <stokachu> ev: awesome! thanks
+
+ 15:30:32 <barry> stokachu: sbuild has lots of nice hooks, and when the build goes awry, you can do several things to help with debugging
+
+ 15:31:00 <stokachu> awesome thats what i needed
+
+ 15:31:03 <barry> stokachu: also: http://www.wefearchange.org/2011/09/sbuild-with-local-newer-dependencies.html
+
+ 15:31:23 <stokachu> barry: nice got it bookmarked :D
+
+ 15:32:26 <cjwatson> stokachu: Launchpad uses an old fork of sbuild
+
+ 15:32:45 <cjwatson> One of these days maybe we'll get it current
+
+ 15:33:03 <cjwatson> But yeah, that would be my recommendation too
+
+ 15:33:12 <stokachu> ok sweet, thanks guys
+
+ 15:34:48 <cjwatson> all right
+
+ 15:34:48 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

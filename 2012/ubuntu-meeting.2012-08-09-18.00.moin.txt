@@ -1,0 +1,461 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by jono at 18:00:30 UTC.  The full logs are available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-08-09-18.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+
+
+
+Meeting ended at 18:42:35 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jono (124)
+ * cielak (51)
+ * mfisch (20)
+ * janos (7)
+ * ubottu (3)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 18:00:30 <jono> #startmeeting
+
+ 18:00:30 <meetingology> Meeting started Thu Aug  9 18:00:30 2012 UTC.  The chair is jono. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 18:00:30 <meetingology> 
+
+ 18:00:30 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:00:31 <mfisch> hi
+
+ 18:00:40 <jono> welcome everyone to the Ubuntu Accomplishments meeting!
+
+ 18:00:45 <jono> who is here for the meeting today?
+
+ 18:00:57 <cielak> o/
+
+ 18:01:08 <mfisch> me!
+
+ 18:01:17 <jono> alrighty :-)
+
+ 18:01:25 * janos too
+
+ 18:01:28 <jono> woo!
+
+ 18:01:44 <jono> so before we start, a quick update on the Canonical IS RT ticket
+
+ 18:02:08 <jono> I had a response from Canonical IS about us deploying our service there and they are currently evaluating hardware and resource needs
+
+ 18:02:23 <jono> one thing they made clear is that it is unlikely to be deployed before late Aug due to a data center move]
+
+ 18:02:50 <cielak> I have a question in this matter
+
+ 18:02:53 <jono> the good news is that this looks this is going to go ahead
+
+ 18:02:54 <jono> sure cielak
+
+ 18:03:02 <janos> nice nice
+
+ 18:03:13 <cielak> are they going to migrate the server including the U1 setup?
+
+ 18:03:26 <jono> cielak, yeah
+
+ 18:03:34 <cielak> I mean - after they deploy the validation server on their machines, will shares keep being active?
+
+ 18:03:52 <jono> cielak, yes, they should be
+
+ 18:04:09 <cielak> alright! I was worried if we'll need to somehow recreate them all...
+
+ 18:04:13 <jono> we are just deploying the same U1 user on a different machine
+
+ 18:04:26 <cielak> hm, that makes sense
+
+ 18:04:27 <jono> the sharecheck script int he validation server should reload them all and resubscribe them
+
+ 18:04:41 <cielak> yeah :)
+
+ 18:04:42 <cielak> thanks :)
+
+ 18:04:45 <jono> and the good news is that while we set this up our existing server can still be serving requests
+
+ 18:05:03 <cielak> won't they collide?
+
+ 18:06:01 <jono> cielak, they wont collide so long as only one server is processing the jobs
+
+ 18:06:09 <jono> having the multiple shares set up should be fine
+
+ 18:06:23 <jono> so we can get the shares working on the IS server while the current server processes jobs
+
+ 18:06:25 <cielak> aah, so only one signs the trophies, but all can browse then?
+
+ 18:06:30 <cielak> them*
+
+ 18:06:33 <jono> right
+
+ 18:06:39 <cielak> that's cool!
+
+ 18:06:43 <jono> and then we switch over the signing to the new server
+
+ 18:07:09 <jono> any more questions about the move?
+
+ 18:07:27 <cielak> not from me
+
+ 18:07:30 <jono> cool
+
+ 18:07:37 <jono> alrighty, so onto 0.3 planning
+
+ 18:07:52 <jono> so we have a few outstanding MPs to review
+
+ 18:08:00 <jono> cielak, did you get a chance to look at the big rename branch?
+
+ 18:08:14 <cielak> not yet, I gave only a brief look ;)
+
+ 18:08:16 <jono> I know mfisch took a look
+
+ 18:08:27 <jono> cool, I think should an invasive change will want a look from each of us
+
+ 18:08:27 <mfisch> yeah I did a couple looks
+
+ 18:08:40 <jono> and then we will need to port the viewer and lens, which shouldnt be much work
+
+ 18:08:41 <cielak> although it seems to me that ideally we would merge it together with a similar branch for the viewer
+
+ 18:08:41 <mfisch> it is invasive but using grep and vi it's easy to follow
+
+ 18:08:53 <mfisch> yeah the viewer merge should be ready to go
+
+ 18:09:25 <jono> mfisch, oh did you work on the change to the viewer?
+
+ 18:09:32 <mfisch> no
+
+ 18:09:45 <mfisch> sorry I mean should be ready to go before we merge the daemon
+
+ 18:09:50 <jono> oh I see
+
+ 18:09:52 <jono> yeah, I agree
+
+ 18:10:25 <jono> one other point
+
+ 18:10:37 <jono> we should also fix https://bugs.launchpad.net/bugs/1026749 while we are doing this
+
+ 18:10:39 <ubottu> Launchpad bug 1026749 in Ubuntu Accomplishments Daemon "private class names variables should be preceded by _" [Low,Confirmed]
+
+ 18:10:46 <jono> mfisch, would you be happy to work on this?
+
+ 18:11:34 <jono> actually that bug is not critical
+
+ 18:11:42 <jono> I forgot it is about vars as opposed to functions
+
+ 18:12:19 <mfisch> hold on 1 sec
+
+ 18:12:33 <jono> sure
+
+ 18:12:50 <mfisch> yeah I can do that, but it will not affect the API
+
+ 18:13:10 <jono> yeah, no worrieds
+
+ 18:13:17 <jono> if you can assign it to yourself that would be cool
+
+ 18:13:40 <jono> ooh
+
+ 18:13:42 <jono> we should also fix https://bugs.launchpad.net/bugs/1024085
+
+ 18:13:44 <ubottu> Launchpad bug 1024085 in Ubuntu Accomplishments Daemon "trophy files use date-accomplished, API uses date-completed" [Undecided,Confirmed]
+
+ 18:13:54 <jono> I am just trying to ensure we focus on API related changes
+
+ 18:14:44 <jono> anyone want to take this one?
+
+ 18:15:45 <jono> cielak, which bugs would you like to focus on in 0.3 as we move forward?
+
+ 18:15:59 <jono> I am wondering if it is possible for us to get some assignments on these bugs
+
+ 18:16:07 <jono> I would like to open up further testing in a few weeks if poss
+
+ 18:16:50 <cielak> well, the point is that in 2 days I'll be offline for 2 weeks, so I would rather not assign myself to anything greater to avoid blocking anything
+
+ 18:16:59 <mfisch> I thought that one was fixed with the big API change?
+
+ 18:17:21 <jono> cielak, ahhh of course
+
+ 18:17:24 <jono> good point
+
+ 18:17:33 <jono> mfisch, oh it is?
+
+ 18:17:40 <cielak> by the way, I am delighted to see Brian working extensively on some bugs out there :)
+
+ 18:17:50 <mfisch> jono: looking
+
+ 18:18:10 <jono> cielak, totally!
+
+ 18:18:31 <jono> so maybe while cielak is away, mfisch would you be happy to look at the daemon bugs and I will look at viewer bugs?
+
+ 18:18:33 <cielak> hm, I can take #1033773, this shouldn't take time ;)
+
+ 18:18:55 <mfisch> jono: unfortately I'm also off and on next week
+
+ 18:18:58 <mfisch> week after is fine
+
+ 18:19:13 <jono> mfisch, no worries, so I will try and nail some viewer bugs next week
+
+ 18:19:22 <jono> and then we can reconvene around the daemon bugs the week after
+
+ 18:19:32 <jono> and obviously other folks are welcome to contribute fixes too!
+
+ 18:19:36 <mfisch> ok
+
+ 18:19:41 <mfisch> are we holding this API change until then?
+
+ 18:19:50 <jono> cielak, that would be awesome
+
+ 18:19:53 <mfisch> if it gets stale due to other commits the merge will suck
+
+ 18:20:01 <jono> mfisch, I would like to get the API change done before cielak leaves if possible
+
+ 18:20:08 <jono> cielak, any chance you can review the API change today?
+
+ 18:20:14 <mfisch> agreed
+
+ 18:20:15 <jono> and then I will take a look and we can commit
+
+ 18:20:28 <cielak> jono: I'll do my best to
+
+ 18:20:52 <jono> thanks cie
+
+ 18:20:54 <jono> thanks cielak
+
+ 18:20:59 <cielak> I agree this MP has to be merged soon to avoid conflicts
+
+ 18:21:10 <jono> yeah, so if we all focus on this first I think this makes sense
+
+ 18:21:18 <mfisch> I'm flying out on Saturday and have a lot of stuff to do here, so I'll be limited availability this week too :(
+
+ 18:21:20 <jono> I want to dive deep on the viewer over the next week
+
+ 18:21:25 <jono> mfisch, np
+
+ 18:21:42 <mfisch> jono: the date-completed stuff is not in this merge
+
+ 18:21:46 <jono> if we can get these API changes finalized before you guys leave, I can focus on the viewer fine
+
+ 18:21:48 <jono> mfisch, ok
+
+ 18:21:52 <jono> we can change that later
+
+ 18:22:33 <jono> ok so I have one topic to discuss
+
+ 18:22:49 <jono> I would like to add some debugging tools in the daemon/client
+
+ 18:23:09 <jono> so when someone experiences a problem (e.g. the trophy not getting validated) we can ask them to run a command and it gives us all the data we need
+
+ 18:23:23 <mfisch> like an apport script?
+
+ 18:23:32 <jono> that kind of thing
+
+ 18:23:50 <jono> right now we often ask people to run through various steps
+
+ 18:23:50 <cielak> apport integration sounds quite cool
+
+ 18:24:09 <jono> I would just like to make the debugging experience easier for everyone involved
+
+ 18:24:48 <jono> any thoughts on how we do this?
+
+ 18:24:56 <jono> I have never written an apport script before
+
+ 18:25:20 <jono> would that mean someone can use: ubuntu-bug accomplishments-viewer ?
+
+ 18:25:37 <cielak> examining apport docs might be helpful to recognise what possibilities do we have
+
+ 18:25:52 <cielak> but   ubuntu-bug   would probably work
+
+ 18:25:56 <cielak> although
+
+ 18:26:10 <jono> that would be cool
+
+ 18:26:16 <cielak> I expect it would report bug in Ubuntu package, instead of our project :)
+
+ 18:26:25 <cielak> maybe this can be tuned up
+
+ 18:26:33 <jono> particularly someone can select the issue in the debug window
+
+ 18:26:41 <jono> e.g. my trophies were not validated
+
+ 18:27:05 <cielak> yay, that would provide an awesome experience
+
+ 18:27:43 <jono> indeed :-)
+
+ 18:27:58 <jono> what would be cool is if the following happens:
+
+ 18:28:08 <jono> * someone files a bug that their trophies were not validated
+
+ 18:28:26 <jono> * a script checks if they have an account on LP, checks the remove share, and posts the report to the bug
+
+ 18:28:35 <jono> so the entire debugging process is automated
+
+ 18:29:16 <cielak> hang on a second
+
+ 18:29:29 <cielak> why would it check for a LP account?
+
+ 18:29:46 <cielak> to see if the trophy should be awarded?
+
+ 18:29:52 <jono> I was presuming if the trophy that did not validate was an LP one
+
+ 18:29:58 <jono> yeah, so imagine this:
+
+ 18:30:12 <jono> * the user expects his ubuntu-member trophy to be valdiated
+
+ 18:30:14 <cielak> oh, then this is very wrong
+
+ 18:30:33 <cielak> that means we include trophy scripts logic in our apport script
+
+ 18:30:40 <jono> * it isnt, so he files a bug, and the apport script would check the remove share to see if the trophies are there, and check LP to see if he has an account
+
+ 18:30:43 <jono> cielak, no no
+
+ 18:30:57 <jono> I am just suggesting we explore methods of automating the debugging
+
+ 18:31:03 <jono> this is just an idea off the top of my head :-)
+
+ 18:31:08 <cielak> alright ;)
+
+ 18:31:20 <jono> I am just trying to think of areas in which we can avoid the IRC debugging sessions we sometimes need to have
+
+ 18:31:34 <jono> I dont think we should include trophy scripts in our debugging support :-)
+
+ 18:31:42 <cielak> yet the script could simply   ls   the trophies directory to give us an idea of what the user expects and what's not signed ;)
+
+ 18:31:46 <cielak> yeah ;)
+
+ 18:31:50 <jono> indeed
+
+ 18:32:11 <jono> cielak, I just wanted to present the mindset here of what we can do to make things easier for debugging
+
+ 18:32:23 <jono> we can maybe discuss this more when you guys return from your trips
+
+ 18:32:27 <cielak> okay ;)
+
+ 18:32:40 <jono> ok, so this is the plan so far:
+
+ 18:33:06 <jono> * cielak is going to work on https://bugs.launchpad.net/bugs/1033773 and try and review the API change MP before he heads out
+
+ 18:33:08 <ubottu> Launchpad bug 1033773 in Ubuntu Accomplishments Daemon "Repeated syncing of unvalidated trophies causes confusing behavior" [High,Confirmed]
+
+ 18:33:30 <jono> * I will focus on viewer-related bugs while you guys are away and keep on top of MPs
+
+ 18:33:42 <jono> * we will discuss the debugging approach when you guys get back
+
+ 18:33:50 <jono> sounds like a good plan :-)
+
+ 18:33:58 <cielak> yeah :)
+
+ 18:34:08 <jono> cool
+
+ 18:34:10 <jono> any other topics?
+
+ 18:34:13 * cielak has one more
+
+ 18:34:21 <jono> \sure
+
+ 18:34:36 <cielak> something about the daemon again, but this time more like the UI design
+
+ 18:34:45 <cielak> one of the things we postponed for 0.3
+
+ 18:34:55 <cielak> what I mean is the main notification bubble
+
+ 18:35:05 <cielak> which says 'You have accomplished something!'
+
+ 18:35:09 <jono> right
+
+ 18:35:20 <cielak> I guess we may need to reword it
+
+ 18:35:23 <jono> oh yes
+
+ 18:35:38 <jono> what did we discuss last time?
+
+ 18:36:03 <cielak> not only it looks inconsistent with Ubuntu desktop, but it appears we're dealing with the syndrome of 'talking computer'
+
+ 18:36:26 <jono> yes
+
+ 18:36:36 <jono> any thoughts on a better string to use?
+
+ 18:36:37 <cielak> we discussed that since there is quite a lot of options available, we'll do it for 0.3 so that translators will have time to update their work
+
+ 18:36:45 <cielak> yeah, quite a lot
+
+ 18:37:09 <cielak> obviously this has to be an affirmative statement, with a feel of 'notification'
+
+ 18:37:41 <jono> maybe we can collate ideas on a wiki page
+
+ 18:37:46 <jono> to choose the best one
+
+ 18:38:12 <cielak> alright, I can put my thoughts together on a wiki page
+
+ 18:38:24 <jono> cool
+
+ 18:38:32 <jono> and maybe mail the list and we can review the options
+
+ 18:38:35 * janos don't really see what's so wrong with 'You have accomplished something!' ...
+
+ 18:38:38 <cielak> alright!
+
+ 18:39:15 <jono> cielak, did you want to explain to janos your concerns here?
+
+ 18:39:50 <janos> jono cielak you can do later, that was just me wondering out loud
+
+ 18:40:29 <cielak> well, since I'll do it in the e-mail anyway, maybe you'll read them there ;)
+
+ 18:40:40 <jono> ok cool
+
+ 18:40:41 <janos> yup, no prob
+
+ 18:40:45 <jono> alrighty
+
+ 18:40:57 <jono> btw, janos, the web viewer seems to be working great for me
+
+ 18:41:04 <jono> has imbrandon contributed the new CSS yet?
+
+ 18:41:09 <janos> btw i noticed meetingology has a command # - action, maybe we could tag some actionable stuff from the above?
+
+ 18:41:21 <janos> good question, wondering if imbrandon is around...
+
+ 18:41:45 <jono> he might not be online now
+
+ 18:41:51 <jono> yeah, I need to learn meetingology more :-)
+
+ 18:41:58 <jono> ok cool, I guess we will wrap it
+
+ 18:42:05 <jono> thanks for joining the meeting folks!
+
+ 18:42:11 <jono> the road to 0.3 continues!
+
+ 18:42:20 <jono> thanks for all of your wonderful efforts!
+
+ 18:42:29 <cielak> thanks everyone :)
+
+ 18:42:35 <jono> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

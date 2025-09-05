@@ -1,0 +1,671 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 07 Aug at 15:01 &mdash; 15:49 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-08-07-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== lightning round ===
+The discussion about "lightning round" started at 15:01.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:20.
+
+
+=== Phased updates ===
+The discussion about "Phased updates" started at 15:24.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-archive/phased-updates.html 
+  * ''LINK:'' http://people.canonical.com/~brian/tmp/phased-updates.html 
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (70)
+ * slangasek (55)
+ * jodh (52)
+ * bdmurray (43)
+ * xnox (24)
+ * cjwatson (24)
+ * stokachu (15)
+ * doko (12)
+ * ubottu (8)
+ * meetingology (3)
+ * stgraber (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Wed Aug  7 15:01:19 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01 <slangasek> [TOPIC] lightning round
+
+ 15:01 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:01 <slangasek> bdmurray slangasek ev xnox barry jodh stokachu stgraber doko cjwatson
+
+ 15:01 <slangasek> (and barry and stgraber are off today)
+
+ 15:02 <bdmurray> this covers some of the stuff I did before my vacation
+
+ 15:02 <bdmurray> updated errors not to return failed buckets (LP: #1202416)
+
+ 15:02 <bdmurray> updated daisy branch to cache packages for more teams
+
+ 15:02 <bdmurray> various package to team mapping work
+
+ 15:02 <bdmurray> set up mailing lists for new package to team mapping teams
+
+ 15:02 <bdmurray> arsenal modifications for package to team mapping work
+
+ 15:02 <ubottu> Launchpad bug 1202416 in Errors "package-version-new-buckets should not return failed retraces" [Medium,Fix released] https://launchpad.net/bugs/1202416
+
+ 15:02 <bdmurray> modified arsenal to better handle the search criteria with negated tags
+
+ 15:02 <bdmurray> submitted merge proposal for unsubbed-packages to ubuntu-archive-tools
+
+ 15:02 <bdmurray> updated sru-release to set phased_update_percentage to 10 and submitted merge proposal for it
+
+ 15:02 <bdmurray> tested the phased-updater on lillypilly
+
+ 15:03 <bdmurray> worked on SRU verification of bug 1205374
+
+ 15:03 <bdmurray> upload of ubuntu-release-upgrader to saucy fixing a test failure
+
+ 15:03 <bdmurray> testing of ubuntu-release-upgrader unsupported release dialog
+
+ 15:03 <ubottu> bug 1205374 in whoopsie (Ubuntu Raring) "Only attempts to retry the existing crash reports once, after two hours." [Undecided,Fix committed] https://launchpad.net/bugs/1205374
+
+ 15:03 <bdmurray> ✔ done
+
+ 15:04 <slangasek> * client sprint on the IoM; it was nice to be in everyone's timezone last week :)
+
+ 15:04 <slangasek> * prepping for DebConf next week
+
+ 15:04 <slangasek> * prepping for 12.04.3, the week after DebConf
+
+ 15:05 <slangasek> (done)
+
+ 15:05 <ev> - Discussions with pitti and the QA team on automatically uploading to whoopsie
+
+ 15:05 <ev> when there are crashes in jenkins:
+
+ 15:05 <ev> http://bazaar.launchpad.net/~apport-hackers/apport/trunk/view/head:/data/whoopsie-upload-all
+
+ 15:05 <ev> - Discussions with the MIR team on reporting errors for hanging applications in
+
+ 15:05 <ev> Touch. Some investigation of Android's ANR (application not responding) and
+
+ 15:05 <ev> the Mir architecture. Blocked on waiting for a Nexus 4 (nvidia on the 7 makes
+
+ 15:05 <ev> running Mir a difficult task).
+
+ 15:05 <ev> - Created and tested an upstart job for automatic error reporting. Updated the
+
+ 15:05 <ev> Touch seeds to use this new package.
+
+ 15:05 <ev> - Built out some functional tests for the whoopsie-preferences daemon, after
+
+ 15:05 <ev> the MIR requested (but didn't block on) them:
+
+ 15:05 <ev> https://code.launchpad.net/~ev/whoopsie-preferences/functional-tests
+
+ 15:05 <ev> - Work on generating a unique system identifier on touch devices. Blocked on
+
+ 15:05 <ev> waiting for the Nexus 4 (need a SIM for getting an IMEI):
+
+ 15:05 <ev> https://code.launchpad.net/~ev/whoopsie/android-serial/+merge/178306
+
+ 15:05 <ev> - Fighting errors that have cropped up in recent revisions of the charms
+
+ 15:05 <ev> (haproxy, cassandra, etc). With these fixes in place, we're now running the
+
+ 15:05 <ev> entire infrastructure (on canonistack) with gojuju. This should hopefully
+
+ 15:05 <ev> speed up RT 58019 and was necessary to test running the retracers with the
+
+ 15:05 <ev> latest and greatest apport:
+
+ 15:05 <ev> - https://code.launchpad.net/~ev/canonical-marshal/cassandra-dont-assume-bzr/+merge/178520
+
+ 15:05 <ev> - https://code.launchpad.net/~ev/canonical-marshal/haproxy-write-listen-stanza/+merge/178569
+
+ 15:05 <ev> - Meeting with Katherine to discuss automatic error reporting on Touch.
+
+ 15:05 <ev> Followed up with Cimi and Katie Taylor on getting a bit of text added to the
+
+ 15:05 <ev> first use experience. Katie will get the exact text from Katherine, but I
+
+ 15:05 <ev> think we're safe to enable this.
+
+ 15:05 <ev> - Fixing kernel OOPS reporting to daisy.ubuntu.com by testing and updating
+
+ 15:05 <ev> our version of apport.
+
+ 15:05 <ev> http://bazaar.launchpad.net/~daisy-pluckers/daisy/trunk/revision/387
+
+ 15:05 <ev> Updates from webops:
+
+ 15:05 <ev> - The backup of the Cassandra DC cluster and initial Cassandra prodstack
+
+ 15:05 <ev> cluster (etstack - what we built to migrate away from the ENOSPC disaster,
+
+ 15:05 <ev> not to be confused with the production prodstack cluster) is now complete. We
+
+ 15:06 <ev> have a meeting with Acunu in the office on Monday to have a little cry and
+
+ 15:06 <ev> maybe fix some things.
+
+ 15:06 <ev> - Moving the retracers on prodstack is still waiting for action by the webops
+
+ 15:06 <ev> team (https://portal.admin.canonical.com/58019). Tom suggested it was a
+
+ 15:06 <ev> resource problem on their end. I'll keep prodding.
+
+ 15:06 <ev> Random:
+
+ 15:06 <ev> - I'm going to start subscribing the team to merge proposals for projects I've
+
+ 15:06 <ev> written in C. I'll do my best to get involved in upstart MPs in return.
+
+ 15:06 <ev> (done!)
+
+ 15:06 <jodh> ev: you rock! :)
+
+ 15:07 <slangasek> ev: N4> is the PO raised?
+
+ 15:07 <ev> slangasek: it is - should be here by the end of the week
+
+ 15:08 <slangasek> huzzah
+
+ 15:08 <xnox> * catched up on some merges/syncs, i TIL.
+
+ 15:08 <xnox> * finished multiarch of tk/tcl 8.6.
+
+ 15:08 <xnox> * multiarched boost-dev for cross-building (for doko)
+
+ 15:08 <xnox> * fixed privileges dropping in ubiquity since migration to pkexec
+
+ 15:08 <xnox> ( thus fixing U1 page )
+
+ 15:08 <xnox> * Fighting the emulator for Ubuntu touch (legacy, unflipped, arm at
+
+ 15:08 <xnox> the moment):
+
+ 15:08 <xnox> - so far the emulator is winning
+
+ 15:08 <xnox> - it boots and mounts filesystems, but linker gets unresolved
+
+ 15:08 <xnox> symbols when trying to run ubuntuappmanager. (from AOSP build)
+
+ 15:08 <xnox> - or fails to mount filesystems. (from phablet build)
+
+ 15:08 <xnox> - trying to mix & match until in works
+
+ 15:08 <xnox> ..
+
+ 15:08 <jodh> * foundations-1305-upstart-work-items:
+
+ 15:08 <jodh> - upstart dep-8 integration tests:
+
+ 15:08 <jodh> - Reworked MP for lp:~jamesodhunt/upstart/python-upstart-module
+
+ 15:08 <jodh> - DEP-8 test code now finished, but not fully tested (read on).
+
+ 15:08 <jodh> Has to perform some interesting setup:
+
+ 15:08 <jodh> - Start a nested VM and timeout-wait for it to boot.
+
+ 15:08 <jodh> - Configure nested VM:
+
+ 15:09 <jodh> - Copy the source tree to the VM.
+
+ 15:09 <jodh> - Enable Upstart debug mode by updating grub config.
+
+ 15:09 <jodh> - Manually install test dependencies.
+
+ 15:09 <jodh> - Create a test job to check for a successful boot (yes,
+
+ 15:09 <jodh> cloud-init does this too, but just in case... :)
+
+ 15:09 <jodh> - Create a chroot environment.
+
+ 15:09 <jodh> - Reboot the VM and timeout-wait for it to boot.
+
+ 15:09 <jodh> - Run the tests via ssh in the background to avoid hanging
+
+ 15:09 <jodh> indefinately should the nested VMs kernel panic.
+
+ 15:09 <jodh> - Timeout if the test takes too long to run or the VM dies/cannot
+
+ 15:09 <jodh> be connected to.
+
+ 15:09 <jodh> - Handle the scenarios where the test *does* kill the nested VM:
+
+ 15:09 <jodh> - Reboot it, forcing an fsck and wait for it to come back up.
+
+ 15:09 <jodh> - Copy the test results data from the nested VM back into the
+
+ 15:09 <jodh> autopkg VM for collection and presentation via Jenkins.
+
+ 15:09 <jodh> - Some of the above setup will hopefully be added to autopkgtest
+
+ 15:09 <jodh> when we have this working well.
+
+ 15:09 <jodh> - However, this work item is blocked on bug 1208455:
+
+ 15:09 <ubottu> bug 1208455 in linux (Ubuntu) "general protection fault running apt-get inside double nested kvm VM" [High,Incomplete] https://launchpad.net/bugs/1208455
+
+ 15:09 <jodh> - Discussions with kernel and QA teams.
+
+ 15:09 <jodh> - Tried forcing nested mode for all *three* environments (host,
+
+ 15:10 <jodh> autopkgtest vm and pristine "nested" (actually double-nested))
+
+ 15:10 <jodh> vm, but still get kernel panic.
+
+ 15:10 <jodh> - Test code now updated to force nested mode in the 2 environments
+
+ 15:10 <jodh> it can configure now, just as a precaution.
+
+ 15:10 <jodh> - Part of the explanation for the double-nested vm running at 200%
+
+ 15:10 <jodh> cpu in OpenStack turned out to be bug 1208853.
+
+ 15:10 <jodh> - Currently trying with linux-image-3.11.0-0-generic from
+
+ 15:10 <ubottu> bug 1208853 in byobu (Ubuntu) "dozens of byobu-status processes running on ubuntu server" [Critical,Fix released] https://launchpad.net/bugs/1208853
+
+ 15:10 <slangasek> jodh: heard anything back from the kernel team yet wrt the nested kvm horrors?
+
+ 15:10 <jodh> '-proposed' as recommended by the kernel team.
+
+ 15:10 <jodh> * other:
+
+ 15:10 <jodh> - Reviewed lp:~ev/whoopsie/be-more-verbose.
+
+ 15:10 <jodh> - Worked on DebConf presentation.
+
+ 15:10 <jodh> ʡ
+
+ 15:10 <ev> (oh and thanks xnox for the code review on the android system identifier stuff!)
+
+ 15:10 <slangasek> jodh: also, do you have console output from the nested VM?  I'm inclined to think this would be more reliable than just driving it over ssh
+
+ 15:10 <jodh> been chatting in #ubuntu-kernel about it most of today.
+
+ 15:10 <jodh> my "best hope" seems to be a 3.11 kernel (testing currently in progress), else ....?
+
+ 15:11 <stokachu> bug 1121874 and bug 1207123 are uploaded and just need sru approval
+
+ 15:11 <ubottu> bug 1121874 in mysql-5.5 (Ubuntu Raring) "MySQL launch fails silently if < 4MB of disk space is available" [Medium,Triaged] https://launchpad.net/bugs/1121874
+
+ 15:11 <stokachu> done
+
+ 15:11 <ubottu> bug 1207123 in gnutls26 (Ubuntu Precise) "Key usage violation in certificate has been detected" [Undecided,New] https://launchpad.net/bugs/1207123
+
+ 15:11 <xnox> ev: C merge proposal reviews is nice =) i <3 C
+
+ 15:11 <slangasek> jodh: ok
+
+ 15:11 <ev> don't we all
+
+ 15:12 <slangasek> stokachu: ok, noted :)
+
+ 15:12 <jodh> we have the console log on the bug.
+
+ 15:12 <slangasek> doko: your turn
+
+ 15:12 <stokachu> thanks!
+
+ 15:12 <xnox> ev: i've been reading up on "The C++ programming language" (4th edition, updated with C++'11) and i'm starting to drink the kool-aid =) ps. i can share the book, if anyone else is interested.
+
+ 15:12 <doko> - AArch64 bringup (now normal and buildd chroots can be, and finally are built natively)
+
+ 15:12 <doko> - Test two Linaro changes to fix two regressions.
+
+ 15:12 <doko> - Try to cross-build unity8, first getting b-d's all installed.
+
+ 15:12 <jodh> slangasek: we capture the console output as a "test artifact"
+
+ 15:12 <doko> (done)
+
+ 15:13 <jodh> slangasek: I did think about running the tests directly as upstart jobs. we could explore that if required.
+
+ 15:13 <cjwatson> xnox: C++> I'm so sorry
+
+ 15:13 <ev> xnox: I'm very tempted to give it another try, mostly because we're building our SDK on top of it. Also because I'm curious about RAII.
+
+ 15:13 <cjwatson> foundations-1305-click-package:
+
+ 15:13 <cjwatson> - File format tweak to support MIME type detection.
+
+ 15:13 <cjwatson> - Move MIME type declaration from shared-mime-info to click, per shared-mime-info upstream.
+
+ 15:13 <cjwatson> - Scary scary improvement in handling of removal of old links for single-version hooks.  (Nobody seems to have noticed the previous bug yet ...)
+
+ 15:13 <cjwatson> - Add a sort of virtual hook facility (Hook-Name in .hook files), which should support Ted's Upstart-based desktop hook.
+
+ 15:13 <cjwatson> foundations-1305-arm64-bringup:
+
+ 15:13 <cjwatson> - Finally sorted out the auto-cross-builder again.
+
+ 15:13 <jodh> xnox: I'm interested :)
+
+ 15:13 <cjwatson> - Diagnosed and fixed http://bugs.debian.org/718482.
+
+ 15:13 <ev> cjwatson: lol
+
+ 15:13 <ubottu> Debian bug 718482 in apt "apt: CompareProviders ranks Priority above native architecture" [Normal,Open]
+
+ 15:13 <cjwatson> Prepared https://code.launchpad.net/~cjwatson/launchpad/series-alias/+merge/178103 to make "devel" symlinks work.
+
+ 15:13 <cjwatson> Review-induced tweaks to https://code.launchpad.net/~cjwatson/launchpad/buildstatus-aborted/+merge/176990.
+
+ 15:13 <slangasek> jodh: I'm arguing that the console output should be used to detect VM crashes, and possibly even for driving the tests themselves
+
+ 15:13 <cjwatson> Tested bug 1205407 for raring.
+
+ 15:13 <ubottu> bug 1205407 in shadow (Debian) "su: kill child process group on signal, not just immediate child" [Unknown,Fix committed] https://launchpad.net/bugs/1205407
+
+ 15:13 <cjwatson> foundations-r-phased-updates: Helped to deploy the phased updater.
+
+ 15:13 <cjwatson> PuTTY security update.
+
+ 15:13 <cjwatson> Fighting qemu to get 4K/4K disk tests working again.  So far, failed.
+
+ 15:13 <cjwatson> Preparing daily quality talk for DebConf.
+
+ 15:13 <cjwatson> ..
+
+ 15:14 <slangasek> jodh: because using anything other than the console makes detection more heuristic
+
+ 15:14 <slangasek> jodh: if you could configure everything to run noninteractively within the VM, and capture all the needed results from the VM console output, I think that's going to be most reliable *and* most efficient
+
+ 15:15 <xnox> ev: RAII is quite intersting, given that it's scope save without requiring to wrap your code in a try/with block with a "finally:" as one does in python. There is no finally. And things like initialisations and "auto" types are all very nice.
+
+ 15:15 <jodh> slangasek: maybe we should discuss after the meeting? I'm not clear how we'd drive tests via the console but in the background. I know there are socket options on qemu but would need to dig into the manual.
+
+ 15:15 <slangasek> (no races with ssh startup, for one thing)
+
+ 15:15 <stokachu> ev: re: gojuju are you still writing all hooks in bash?
+
+ 15:16 <slangasek> jodh: well, I'm perhaps assuming you aren't so much driving the tests via console as you are consuming the results
+
+ 15:16 <xnox> cjwatson: i started with a rather large article published by microsoft "why one shall not use c++ for drivers/kernel mode" and that set quite a few things straight to start with.
+
+ 15:16 <ev> stokachu: for the moment, though I'd like to move to the new python libraries
+
+ 15:16 <ev> it's just a matter of time
+
+ 15:16 <ev> this is already working
+
+ 15:16 <stokachu> ev: cool just curious what everyone is using
+
+ 15:16 <ev> sure
+
+ 15:16 <slangasek> jodh: yes, it should be possible to wire the VM's console up to a pty and drive it interactively, but I don't think that should actually be necessary - anyway, sure, we can talk more after the meeting
+
+ 15:16 <ev> I think python is the way to go for future charms
+
+ 15:16 <ev> stokachu: the u1 charms are worth looking at for best practices
+
+ 15:16 <jodh> slangasek: so I guess you're implying we do run the tests via an upstart job. I can look at doing that, but if this needs to happen fast, I guess we can use what we have as long as we can overcome this kernel issue?
+
+ 15:16 <slangasek> doko: chroots built natively - huzzah!
+
+ 15:17 <stokachu> ev: definately, we just got done writing our cts app deployment in bash
+
+ 15:17 <stokachu> ev: cool ill take a look at those
+
+ 15:17 <xnox> stokachu: i have some in python and some in shell. anything beyond package installation & relationships, I preffer the python modules.
+
+ 15:17 <doko> slangasek, well, last two or three packages still building ...
+
+ 15:17 <ev> stokachu: sidnei is the guy to talk to for pointers on their codebase / access
+
+ 15:17 <jodh> slangasek: ok, note that I'm essentially emulating some of what the autopkg test infrastructure does atm.
+
+ 15:17 <ev> and sure thing
+
+ 15:17 <stokachu> thanks :D
+
+ 15:18 <slangasek> ev: new python libraries for use with gojuju? curious
+
+ 15:18 <cjwatson> All my charms are still in shell, largely because I haven't written anything new since switching to Go Juju
+
+ 15:19 <xnox> slangasek: yeah somebody did a mini python module, with useful hooks / functions which has been cargo culted for a while.
+
+ 15:19 <ev> slangasek: weird, right? :)
+
+ 15:19 * xnox doesn't want to come anywhere near the "official" nginx charm. it's written in php.
+
+ 15:19 <ev> ha!
+
+ 15:19 <slangasek> jodh: yes, tests via upstart job; yes, what you currently have is enough to be getting on with - I just think you will find that moving it to be more noninteractive and capturing from the console will significantly simplify things and make it more robust, so we don't have to worry about false test failures
+
+ 15:20 <slangasek> Any other questions wrt lightning round?
+
+ 15:20 <slangasek> [TOPIC] AOB
+
+ 15:21 <ev> php, because, well: https://github.com/search?p=1&q=extension%3Aphp+mysql_query+%24_GET&ref=searchresults&type=Code
+
+ 15:21 <slangasek> wat
+
+ 15:21 <slangasek> that's not a charm, that's a hex
+
+ 15:22 <stokachu> LOL
+
+ 15:22 <ev> :D
+
+ 15:22 <slangasek> though I guess since it's php, it will be implicitly *cast* from hex to charm
+
+ 15:22 <slangasek> half the time
+
+ 15:22 <slangasek> ANYWAY
+
+ 15:22 <slangasek> so I had one thing for AOB
+
+ 15:22 <stgraber> ev: scary ;)
+
+ 15:22 <slangasek> half the team is at DebConf next week
+
+ 15:22 <stokachu> i sense dissatisfaction
+
+ 15:22 <ev> wooooo party for the rest of us
+
+ 15:22 <ev> I'm buying a hammock
+
+ 15:23 <slangasek> that leaves just ev, bdmurray, barry, and stokachu here
+
+ 15:23 <slangasek> if you guys want to have a meeting next week, feel free?
+
+ 15:23 <slangasek> but don't expect the rest of us to show :)
+
+ 15:23 <cjwatson> they get to do everyone else's work then
+
+ 15:23 <cjwatson> eeeeexcellent
+
+ 15:23 <stokachu> if bdmurray doesnt mind ill just ping him directly next week on any bugs
+
+ 15:23 <bdmurray> stokachu: that'd be fine
+
+ 15:23 <stokachu> thanks man
+
+ 15:24 <ev> cjwatson: I'm going to subcontract your work to the sales team.
+
+ 15:24 <slangasek> any other Any Other Business?
+
+ 15:24 <ev> nope
+
+ 15:24 <stokachu> no topic this week?
+
+ 15:24 <xnox> ev: i have flashbacks....
+
+ 15:24 <slangasek> stokachu: shortly :)
+
+ 15:24 <stokachu> ah ok
+
+ 15:24 <slangasek> [TOPIC] Phased updates
+
+ 15:24 * slangasek turns the floor over to bdmurray
+
+ 15:25 <slangasek> who can tell us all about the awesome results of integrating errors.u.c with our SRU process!
+
+ 15:25 <bdmurray> For a while now we've wanted to gradually roll out packages in -updates to users.
+
+ 15:26 <bdmurray> update-manager has had this support for a while but until recently we were lacking server side support for this
+
+ 15:26 <bdmurray> Thanks to some help from cjwatson and ev this now done.
+
+ 15:26 <ev> WOOHOOO!
+
+ 15:27 <bdmurray> Starting right now (for raring) when a SRU is released it will have the phased-update-percentage set to 10%.
+
+ 15:28 <bdmurray> Every 6 hours there is a job that checks for regressions in that version of the package and if there are none the p-u-p is incremented by 10%.
+
+ 15:28 <doko> how are these users choosen?
+
+ 15:28 <bdmurray> If a user uses update-manager to install updates, update-manager chooses for them.
+
+ 15:29 <bdmurray> It's possible to choose to install all updates being phased or none.
+
+ 15:29 <bdmurray> doko: does that answer your question?
+
+ 15:29 <doko> yes, thanks
+
+ 15:30 <bdmurray> so what are the regression checks?
+
+ 15:30 <doko> so 10% of the phased ones
+
+ 15:30 <cjwatson> detail: update-manager generates a random number which is consistent across runs for each machine and package
+
+ 15:30 <cjwatson> So if the p-u-p is 10% then that random number [0,1] must be <=0.1
+
+ 15:30 <cjwatson> Or something along those lines
+
+ 15:30 <bdmurray> Thanks cjwatson
+
+ 15:31 <bdmurray> So we use errors.ubuntu.com to see if there are any crashes reported about the new version of the package (the one in -updates) that were not reported about the previous version of the package.
+
+ 15:31 <jodh> bdmurray: how was the value 6 hours chosen?
+
+ 15:33 <bdmurray> jodh: I just picked something that didn't seem too fast
+
+ 15:33 <slangasek> yeah, it's a pretty arbitrary value; we may have to tune it later
+
+ 15:33 <jodh> bdmurray: I just wondered if it should be >24 hours to allow for those systems that are only updated daily?
+
+ 15:33 <slangasek> but it's intended to ensure the roll-out is slow enough that we can collect meaningful data on errors.u.c in each interval
+
+ 15:34 <slangasek> jodh: all systems are only updated daily, but there are a lot of systems
+
+ 15:34 <bdmurray> jodh: then it would take about 9 days for everybody to get an update, which seems really long
+
+ 15:34 * slangasek nods
+
+ 15:35 <slangasek> anyway, not everybody applies the updates as soon as they're visible... some users let updates linger for days or weeks before applying them
+
+ 15:35 <bdmurray> In addition to checking for new crashes, the error tracker is also queried to see if there is an increased rate of crashes about the package.
+
+ 15:35 <slangasek> so we know there's a lag time between the update being published and reports of regressions coming in, though we don't know exactly how long that lag is
+
+ 15:35 <cjwatson> The initial run took about 10 minutes, so every six hours is probably reasonable enough load
+
+ 15:37 <bdmurray> If either type of regression is detected then the phasing of the update is stopped by setting it to 0.
+
+ 15:37 <bdmurray> This will prevent other users from receiving the updated version of the package.
+
+ 15:38 <bdmurray> The job also generates an html report of packages currently undergoing phasing which displays the p-u-p and any detected regressions.
+
+ 15:39 <bdmurray> Addiitionally, an email is sent to the signer of the package (uploader) and its creator (either the uploader or sponsee).
+
+ 15:39 <bdmurray> The email notifies them of the problem and that the phasing has been stopped.
+
+ 15:39 <slangasek> bdmurray: do you have the link to that html report?
+
+ 15:40 <bdmurray> Yes, but its empty right now.
+
+ 15:40 <bdmurray> http://people.canonical.com/~ubuntu-archive/phased-updates.html
+
+ 15:40 <xnox> cjwatson: "intial run took about 10 minutes" what does that run mean? to generate report, or for a a first regression to be filed in errors since first phased publishing?
+
+ 15:40 <bdmurray> An example of its content can be found here
+
+ 15:40 <bdmurray> http://people.canonical.com/~brian/tmp/phased-updates.html
+
+ 15:40 <bdmurray> xnox: to generate the report and review the updates
+
+ 15:41 <xnox> ack.
+
+ 15:41 <bdmurray> There is also support in the phased-updater to override specific problems, if a crash is determined not to be a regression.
+
+ 15:43 <bdmurray> So once the SRU team starts releasing packages to raring-updates we'll see some activity.
+
+ 15:43 <bdmurray> I think that covers it.
+
+ 15:43 <slangasek> congrats to bdmurray, ev, cjwatson for getting this landed
+
+ 15:44 <slangasek> very exciting to see us leveraging errors.u.c in this way
+
+ 15:44 <ev> thanks for all the heavy lifting, guys!
+
+ 15:44 <ev> me too! :D
+
+ 15:44 <slangasek> any more audience questions? :)
+
+ 15:44 <jodh> bdmurray: is there a plan for handling phased updates to server systems?
+
+ 15:45 <bdmurray> I'm not aware of one and I believe ev is just working on error reporting for servers.
+
+ 15:45 <doko> FLAGRANT SYSTEM ERROR
+
+ 15:45 <doko> Computer over.
+
+ 15:45 <doko> Virus = Very Yes.
+
+ 15:45 <doko> very yes?
+
+ 15:45 <ev> it's a joke (that's sadly going away)
+
+ 15:45 <ev> you've encountered a bug in the code
+
+ 15:45 <stokachu> strOngBaD
+
+ 15:45 * ev looks it up
+
+ 15:47 <ev> doko: appears to be a bug in django_openid_auth (https://oops.canonical.com/oops/?oopsid=OOPS-180ace38c5a200b3c30ff08a1f98505c for those in ~daisy-pluckers). I'll see what I can do.
+
+ 15:48 <xnox> ?!
+
+ 15:48 <slangasek> ok, sounds like that's it for the meeting
+
+ 15:49 <slangasek> y'all can dissect django on another channel :)
+
+ 15:49 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

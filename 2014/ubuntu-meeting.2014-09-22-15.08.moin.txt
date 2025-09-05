@@ -1,0 +1,212 @@
+== Meeting information ==
+ * #ubuntu-meeting: DMB, 22 Sep at 15:08 &mdash; 15:34 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-09-22-15.08.log.html]]
+
+
+
+== Meeting summary ==
+
+Review of previous action items
+Applications - Timo Jyrinki
+=== Applications - Timo Jyrinki ===
+The discussion about "Applications - Timo Jyrinki" started at 15:11.
+
+  * ''Vote:'' Mirv for MOTU (Carried)
+
+=== AOB ===
+The discussion about "AOB" started at 15:32.
+
+
+
+
+== Vote results ==
+
+ * [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-09-22-15.08.log.html#47 Mirv for MOTU]]
+  * Motion carried (For/Against/Abstained 6/0/0)
+   *  Voters bdrung_work, stgraber, xnox, Laney, bdmurray, ScottK
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ScottK (26)
+ * Mirv (25)
+ * meetingology (14)
+ * xnox (7)
+ * Laney (3)
+ * bdmurray (2)
+ * bdrung_work (1)
+ * stgraber (1)
+
+
+
+== Full Log ==
+
+
+ 15:08 <ScottK> #startmeeting DMB
+
+ 15:08 <meetingology> Meeting started Mon Sep 22 15:08:27 2014 UTC.  The chair is ScottK. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:08 <meetingology> 
+
+ 15:08 <meetingology> Available commands: action commands idea info link nick
+
+ 15:08 <ScottK> #info Review of previous action items
+
+ 15:09 <ScottK> Don't see any.
+
+ 15:10 <ScottK> #info Applications - Timo Jyrinki
+
+ 15:10 <ScottK> Mirv: Can you tell us a bit about yourself and why you're applying for MOTU?
+
+ 15:11 <ScottK> #topic Applications - Timo Jyrinki
+
+ 15:11 <ScottK> (there we go)
+
+ 15:11 <Mirv> I'm a DD since 2008 and I've had PPU rights since last year to Qt packages
+
+ 15:11 * xnox o/
+
+ 15:11 <Mirv> I'd like to have MOTU rights to be more able to handle the CI Train landings (a portion of them) and to be able to do patch piloting in a sane way
+
+ 15:12 <Mirv> in the past I've tried to eg. help Xubuntu and Ubuntu Studio guys, but it's a bit hard since eventually I've needed a sponsorer
+
+ 15:12 <ScottK> Do you do much in the way of non-CI train managed uploads?
+
+ 15:13 * Mirv also just managed to catch a bus in a rain with laptop open and it's not broken
+
+ 15:13 <Mirv> ScottK: I would do on my patch pilot shifts in the future. otherwise generally not much, since everything I do related to Ubuntu phone efforts tends to go through silos.
+
+ 15:13 <ScottK> OK.
+
+ 15:14 <Mirv> for the train landings, MOTU would help me to approve universe packaging changes without consuming other MOTUs or core-devs' time
+
+ 15:14 <ScottK> How can we make the Qt5 process better with Debian?  It seems like Ubuntu is always behind and we end up with packages that are autosynced, but not buildable.
+
+ 15:15 <Mirv> ScottK: it's hard to predict the future. when the phone effort started squeezing down on feature releases and 5.3.0 seemed to work for us very well, it seemed less risky to cherry-pick fixes instead of going for 5.3.1
+
+ 15:16 <ScottK> And now we're going to release 14.10 two releases behind.
+
+ 15:16 <Mirv> 5.3.2 is now out and I've started working on that again, but it'd be for the start of v-series
+
+ 15:16 <Mirv> the original problem is that Ubuntu phone efforts have a very heavy QA and 0 regressions policy, which makes it harder to do timely transitions compared to Debian
+
+ 15:17 <Mirv> notably our 5.3.0 does have a portion of 5.3.1 as is, and a lot of important fixes for qtbase and qtdeclarative
+
+ 15:17 <ScottK> But now that they have their own RTM derivative, why should Ubuntu be stuck because of phone?
+
+ 15:18 <Mirv> we will get to the same problem with 5.4.x - from phone point of view, it'd seem less risky to consider switching to .2/.3 Qt upstream releaes instead of .0, but again other interest holders would probably like .0. Not sure though this time, as Qt 5 is becoming more mature and Debian is going into freeze with 5.3.2
+
+ 15:18 <ScottK> Next cycle Kubuntu will probably need 5.4 for Plasma 5, so it'll be fun.  Think about it.
+
+ 15:19 <ScottK> Anyone else?
+
+ 15:19 <Mirv> ScottK: my understanding is that phone effort will merge back to Ubuntu around the beginning of v-series. at the moment, there is no specific reason why someone else couldn't have worked on 5.3.1 to Ubuntu, and actually mitya57 did a bit of that too
+
+ 15:19 <Mirv> ScottK: yeah, it'll need to be continously pondered. I assumed as much (5.4 wanted)
+
+ 15:20 <Mirv> note that I don't have information on the derivative distro long term plans. but when the focus is there, like now, Ubuntu can have Qt uploads freely regardless of what the phone efforts wants
+
+ 15:21 <xnox> Mirv: have you handled large soname transitions in Ubuntu? how would you do one, if you had to?
+
+ 15:22 <Mirv> xnox: soname transitions are something I need to always get back to documentation with, since I do that rarely. I did some during the Unity / Compiz 12.10/13.04 cycles, bumping the package names according to the soname changes and handling reverse dependencies.
+
+ 15:23 <Mirv> and providing conflicts/breaks as needed for the bumped library
+
+ 15:24 <Mirv> in short, I'd read the documentation and prepare carefully so that there wouldn't be problem in the release pocket migration
+
+ 15:25 <bdmurray> Mirv: in your application you make reference to some check lists that you use. Are those personal check lists or have you shared them somewhere (e.g. a wiki)?
+
+ 15:26 <xnox> Mirv: speaking about proposed migration - Where is ubuntu documentation for it? Can you identify and tell why xiphos package has not migrated to release pocket yet?
+
+ 15:26 <Mirv> bdmurray: personal really. I've a mix of helper scripts and pseudo-scripts (check-lists) for eg. packaging review when Canonical upstream devs want their packages into archive
+
+ 15:26 <Mirv> and I use emacs org-mode too
+
+ 15:27 <Mirv> xnox: https://wiki.ubuntu.com/ProposedMigration
+
+ 15:27 <Mirv> xnox: on a quick look at http://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses.html the binaries seem missing
+
+ 15:27 <Mirv> ah, right, in the NEW queue https://launchpad.net/ubuntu/utopic/+queue?queue_state=0&queue_text=
+
+ 15:28 <Mirv> so archive admin would need to do binary approval
+
+ 15:28 <xnox> Mirv: cool, thanks.
+
+ 15:30 <Laney> I'm good
+
+ 15:31 <ScottK> #vote Mirv for MOTU
+
+ 15:31 <meetingology> Please vote on: Mirv for MOTU
+
+ 15:31 <meetingology> Public votes can be registered by saying +1, +0 or -1 in channel, (for private voting, private message me with 'vote +1/-1/+0 #channelname)
+
+ 15:31 <ScottK> +1
+
+ 15:31 <meetingology> +1 received from ScottK
+
+ 15:31 <Laney> +1
+
+ 15:31 <meetingology> +1 received from Laney
+
+ 15:31 <bdrung_work> +1
+
+ 15:31 <meetingology> +1 received from bdrung_work
+
+ 15:31 <Laney> Would be good to see you in #ubuntu-motu
+
+ 15:31 <ScottK> Yes
+
+ 15:31 <xnox> +1
+
+ 15:31 <meetingology> +1 received from xnox
+
+ 15:31 <bdmurray> +1
+
+ 15:31 <meetingology> +1 received from bdmurray
+
+ 15:31 <Mirv> done, saved to irssi settings
+
+ 15:31 <ScottK> stgraber: ?
+
+ 15:32 <stgraber> +1
+
+ 15:32 <meetingology> +1 received from stgraber
+
+ 15:32 <ScottK> #endvote
+
+ 15:32 <meetingology> Voting ended on: Mirv for MOTU
+
+ 15:32 <meetingology> Votes for:6 Votes against:0 Abstentions:0
+
+ 15:32 <meetingology> Motion carried
+
+ 15:32 <ScottK> Mirv: Congratulations.
+
+ 15:32 <ScottK> #topic AOB
+
+ 15:32 <ScottK> Anyone have anything else?
+
+ 15:33 <Mirv> thanks all!
+
+ 15:33 * xnox didn't complete tasks from last meeting yet
+
+ 15:33 <xnox> will do them today, promise =)
+
+ 15:33 <ScottK> OK.
+
+ 15:33 <ScottK> Anyone else?
+
+ 15:34 <ScottK> That's it then.
+
+ 15:34 <ScottK> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

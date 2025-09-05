@@ -1,0 +1,503 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 25 Mar at 15:00 &mdash; 15:33 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-03-25-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:09.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs   (bdmurray, 15:09)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (vorlon, 15:17)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:21.
+
+ * ''LINK:'' https://magenta.jak-linux.org/ubuntu-archive/distcheck/hirsute/release.txt   (juliank, 15:29)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (45)
+ * juliank (29)
+ * vorlon (26)
+ * ubottu (22)
+ * xnox (21)
+ * sil2100 (21)
+ * ahasenack (21)
+ * slyon (13)
+ * JawnSmith (10)
+ * waveform (7)
+ * dbungert (7)
+ * meetingology (2)
+ * mclemenceau (2)
+ * cpaelzer (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:54 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <mclemenceau> o/
+
+ 15:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox doko sil2100 rbalint mwhudson juliank waveform slyon jawnsmith dbungert)
+
+ 15:01 <bdmurray> juliank mwhudson jawnsmith waveform slyon dbungert bdmurray xnox rbalint vorlon sil2100 doko
+
+ 15:01 <bdmurray> juliank:
+
+ 15:02 <juliank> * +1 maintenance on Monday, Tuesday - infrastructure
+
+ 15:02 <juliank> - autopkgtest-cloud: rebased the initial work on multiple cloud workers on top of current wip/mojo-juju-2
+
+ 15:02 <juliank> * +1 maintenance - packages (excluding simple retries I've forgotten about)
+
+ 15:02 <juliank> - toil:
+
+ 15:02 <juliank> + handle socket.timeout during AWS detection
+
+ 15:02 <juliank> + toil: add to big_packagei
+
+ 15:02 <juliank> - lintian vs aptdaemon: got pinged about aptdaemon failure, retried it. not sure if really +1 - lintian migrated.
+
+ 15:02 <juliank> - rust cleanup:
+
+ 15:02 <juliank> + Remove rust-num and rust-num-rational from archive (LP: #1920947)
+
+ 15:02 <ubottu> Launchpad bug 1920947 in rust-num-rational (Ubuntu) "Remove rust-num and rust-num-rational from archive" [Undecided,Fix released] https://launchpad.net/bugs/1920947
+
+ 15:02 <juliank> + Remove rust-proc-macro2 and rust-proc-quote (LP: #1920957)
+
+ 15:02 <ubottu> Launchpad bug 1920957 in rust-proc-quote (Ubuntu) "Remove rust-proc-macro2 and rust-proc-quote" [Undecided,New] https://launchpad.net/bugs/1920957
+
+ 15:02 <juliank> + Remove rust-derive-more from hirsute{,-proposed} (LP: #1920959)
+
+ 15:02 <ubottu> Launchpad bug 1920959 in rust-derive-more (Ubuntu) "Remove rust-derive-more from hirsute{,-proposed}" [Undecided,New] https://launchpad.net/bugs/1920959
+
+ 15:02 <juliank> - non-rust cleanup:
+
+ 15:02 <juliank> + Remove ams.lv2 (LP: #1920961)
+
+ 15:02 <ubottu> Launchpad bug 1920961 in ams.lv2 (Ubuntu) "Remove ams.lv2" [Undecided,New] https://launchpad.net/bugs/1920961
+
+ 15:02 <juliank> - synced privoxy 3.0.32-1 (upgrade from 3.0.31-1 which was failing), but needs further investigation
+
+ 15:02 <juliank> - remove gconf-editor again, add it to sync blocklist (LP: #1921100)
+
+ 15:02 <ubottu> Launchpad bug 1921100 in gconf-editor (Ubuntu) "remove gconf-editor again, add it to sync blocklist" [Undecided,New] https://launchpad.net/bugs/1921100
+
+ 15:02 <juliank> * Spent quite a while on Monday finding, reporting, and fixing/working around issues in kernel and recovery stuff :/ :
+
+ 15:02 <juliank> - my lxd storage pool (btrfs) failed. btrfsck hated the FS so much it crashed. Had to setup lxd from scratch :/ (same as https://github.com/kdave/btrfs-progs/issues/318)
+
+ 15:02 <juliank> - when removing the old lxd storage pool LV, I noticed that lvremove failed to issue discards and tracked that down to a kernel issue, and reported it with upstream bug link (LP: #1920821)
+
+ 15:02 <ubottu> Launchpad bug 1920821 in linux (Ubuntu Hirsute) "BLKDISCARD fails on LUKS volume hosting LVM PV" [Undecided,New] https://launchpad.net/bugs/1920821
+
+ 15:02 <juliank> - trying to enter root shell in friendly-recovery menu, but both the ctrl+d prompt thingy and recovery menu run at same time it seems; menu does not react to input (LP: #1920834)
+
+ 15:02 <ubottu> Launchpad bug 1920834 in friendly-recovery (Ubuntu) "races with something, input not registered" [Undecided,New] https://launchpad.net/bugs/1920834
+
+ 15:02 <juliank> * Spent more time on 5.11 kernel communication inadequacies on Tuesday :)
+
+ 15:02 <juliank> * Reviewed some shim-review template updates
+
+ 15:02 <juliank> * shim-review:
+
+ 15:02 <juliank> - Reviewed template updates
+
+ 15:02 <juliank> - Answered some questions, and asked some submissions to elaborate on some points
+
+ 15:02 <juliank> - Reviewed Miray submission review, waiting for more input
+
+ 15:02 <juliank> (done)
+
+ 15:03 <bdmurray> JawnSmith:
+
+ 15:03 <JawnSmith> * Testing new raspi kernel to ensure all lgpio protocols work
+
+ 15:03 <JawnSmith> * basic GPIO, i2c, and pwm work so far. SPI still needs to be tested
+
+ 15:03 <JawnSmith> * Writing demo scripts for an lgpio tutorial
+
+ 15:03 <JawnSmith> * Basic GPIO LED toggle example
+
+ 15:03 <JawnSmith> * i2c script to control an arduino and make it blink an LED
+
+ 15:03 <JawnSmith> * PWM script to control fan speed
+
+ 15:03 <JawnSmith> * LP: #1571506 SRU verification: passed
+
+ 15:03 <ubottu> Launchpad bug 1571506 in initramfs-tools (Ubuntu Hirsute) "update-initramfs should include firmware from /lib/firmware/updates" [Wishlist,Fix released] https://launchpad.net/bugs/1571506
+
+ 15:03 <JawnSmith> * LP: #1874824 fixing issues with pgrep/pkill when large stack limit is set
+
+ 15:03 <ubottu> Launchpad bug 1874824 in procps (Ubuntu Groovy) "pgrep reports error "cannot allocate" when run without stack limit" [Undecided,In progress] https://launchpad.net/bugs/1874824
+
+ 15:03 <JawnSmith> [done]
+
+ 15:03 <bdmurray> waveform:
+
+ 15:03 <waveform> * lgpio package tweaked and uploaded (LP: #1916901)
+
+ 15:03 <waveform> * Worked on colorzero package (new dep for gpiozero, required for bumping version) (LP: #1921391)
+
+ 15:03 <waveform> * Added PR for netplan multi-driver match (LP: #1918421)
+
+ 15:03 <waveform> * Working on pi-gadget tweaks as temporary workaround for multi-driver match
+
+ 15:03 <waveform> * Figured out some arm64 boot issues on new stuff
+
+ 15:03 <ubottu> Launchpad bug 1916901 in Ubuntu "[needs-packaging] lg (lgpio, rgpio, rgpiod, rgs)" [Wishlist,Fix committed] https://launchpad.net/bugs/1916901
+
+ 15:03 <waveform> * Pi meetings
+
+ 15:03 <ubottu> Launchpad bug 1921391 in Ubuntu "[needs-packaging] colorzero" [Undecided,New] https://launchpad.net/bugs/1921391
+
+ 15:03 <ubottu> Launchpad bug 1918421 in netplan.io (Ubuntu) "netplan does not match multiple driver specifications" [Undecided,Triaged] https://launchpad.net/bugs/1918421
+
+ 15:03 <waveform> (done)
+
+ 15:04 <slyon> - Takehome test
+
+ 15:04 <slyon> - Backlog/Roadmap grooming
+
+ 15:04 <slyon> === Netplan ===
+
+ 15:04 <slyon> - LP bug gardening
+
+ 15:04 <slyon> - netplan v0.102 release (FFe, SRU, lots of testing)
+
+ 15:04 <slyon> * migrated in HH, pending for FF & GG
+
+ 15:04 <slyon> - Merged 'set' CLI writeback to existing file PR#197
+
+ 15:04 <slyon> - Merged 'networkctl reload/reconfigure' PR#200
+
+ 15:04 <slyon> - Improved integration test reliability/flakyness
+
+ 15:04 <slyon> - Fixed some bugs in the test-suite, PR#201 etc.
+
+ 15:04 <slyon> - Reviewed waveform's 'driver matching' PR#202
+
+ 15:04 <slyon> (done)
+
+ 15:04 <dbungert> * LP: #1717584 - redo MP after discussion.  Still determining passno policy.
+
+ 15:04 <ubottu> Launchpad bug 1717584 in curtin "fs_passno is written as 0, 0 by default." [Medium,Confirmed] https://launchpad.net/bugs/1717584
+
+ 15:04 <dbungert> * LP: #1821412 - evaluate this fix for SRU but I have questions on it's
+
+ 15:04 <dbungert> effectiveness on the problem.  The stated fix behavior doesn't seem relevant
+
+ 15:04 <ubottu> Launchpad bug 1821412 in update-notifier (Ubuntu) ""System program problem" report button does nothing" [High,Fix released] https://launchpad.net/bugs/1821412
+
+ 15:04 <dbungert> to systemd systems.  Next action: revisit the bug and implement a new fix.
+
+ 15:04 <dbungert> * Subiquity - enable selection of updates during install thru API - code
+
+ 15:04 <dbungert> (done)
+
+ 15:04 <dbungert> probably done, test underway
+
+ 15:04 <bdmurray> sponsored F and G SRUs for LP: #1892367
+
+ 15:04 <bdmurray> merged test case for amd64 netinstall of server live
+
+ 15:04 <bdmurray> fixed an apport issue with retracing /usr/lib/netplan/generate crashes
+
+ 15:04 <bdmurray> updated apport code in the production Error Tracker
+
+ 15:04 <ubottu> Error: Could not gather data from Launchpad for bug #1892367 (https://launchpad.net/bugs/1892367). The error has been logged
+
+ 15:04 <bdmurray> reported LP: #1920568 regarding updating the autocert charm
+
+ 15:04 <bdmurray> pinged IS regarding updating ddebs key for prod Error Tracker
+
+ 15:04 <bdmurray> merged autopkgtest-cloud MP from ginggs
+
+ 15:04 <bdmurray> sponsoring report change reviews for seb
+
+ 15:05 <ubottu> Launchpad bug 1920568 in autocert-charm "Please update the autocert-charm with latest charmhelpers" [High,Fix released] https://launchpad.net/bugs/1920568
+
+ 15:05 <bdmurray> sponsoring report change reviews for seb
+
+ 15:05 <bdmurray> uploaded apport to hirsute fixing LP: #1920837
+
+ 15:05 <bdmurray> attended a meeting with some Ubuntu flavour representatives
+
+ 15:05 <bdmurray> uploaded Tiago's popcon changes for LP: #1921178
+
+ 15:05 <bdmurray> candidate interview
+
+ 15:05 <ubottu> Launchpad bug 1920837 in apport (Ubuntu) "apport bugs from official raspi or riscv images are not identified" [High,Fix released] https://launchpad.net/bugs/1920837
+
+ 15:05 <ubottu> Launchpad bug 1921178 in popularity-contest (Ubuntu) "stop trying to send data to Ubuntu's inactive server" [Medium,Fix released] https://launchpad.net/bugs/1921178
+
+ 15:05 <bdmurray> xnox:
+
+ 15:05 <xnox> fixing riscv kernel config & l2cache driver, local build done, need to retest from cold boot before submitting to the kernel team
+
+ 15:05 <xnox> shimx64.efi 15.3 is built and is good; however launchpad is incorrectly signing it, preparing sru of sbsigntool from focal to bionic for launchpad. This blocks submitting shim for signing.
+
+ 15:05 <xnox> fwupdate: synced fixes into hirsute, and it has SBAT support. But it will need SRUs to stable series.... or maybe one fwupdate?
+
+ 15:05 <xnox> one grub - everything is now lovely in -proposed in all the series
+
+ 15:05 <xnox> Openssl discussions & Spec discussions for hybrid classic/core boot
+
+ 15:05 <xnox> rebuilding rustc again with a better llvm s390x patch
+
+ 15:05 <xnox> done
+
+ 15:05 <bdmurray> balint is out so vorlon
+
+ 15:06 <vorlon> * caught up with email from 2 weeks ago, I think
+
+ 15:06 <vorlon> * continuing archive cleanup work in the post-freeze hirsute
+
+ 15:06 <vorlon> * removed two of the longest-lingering rust packages in -proposed, thanks juliank for doing the analysis
+
+ 15:06 <vorlon> * discussions around Ubuntu installs for a new class of x86 device
+
+ 15:06 <vorlon> (done)
+
+ 15:07 <bdmurray> sil2100:
+
+ 15:07 <sil2100> - Was off on Monday
+
+ 15:07 <sil2100> - SRU reviews and releases
+
+ 15:07 <sil2100> - Product discussions
+
+ 15:07 <sil2100> - Late for the TB meeting!
+
+ 15:07 <sil2100> - PR review for netplan's reload/reconfigure networkd instead of restart
+
+ 15:07 <sil2100> - A quick HWE meeting
+
+ 15:07 <sil2100> - ESM britney:
+
+ 15:07 <sil2100> * Put some MPs for review
+
+ 15:07 <sil2100> * Investigated into OpenID integration, quite easy and nice
+
+ 15:07 <sil2100> - Interviews
+
+ 15:07 <sil2100> - Preparing ubuntu-image 1.11 low-impact release
+
+ 15:07 <sil2100> * Prepared FFe, got it approved
+
+ 15:07 <sil2100> * Uploaded packages and SRUs
+
+ 15:07 <sil2100> - NEW review of lg-gpio for Dave, accepted with small changes
+
+ 15:07 <sil2100> - Deployed and tested the new daily-canary cdimage implementation for canary images
+
+ 15:07 <sil2100> - Modified the needrestart sanity test to skip some tests when in a container (for the armhf case)
+
+ 15:07 <sil2100> - Help with hints
+
+ 15:07 <sil2100> (done)
+
+ 15:08 <bdmurray> any questions on status?
+
+ 15:09 <bdmurray> #topic Release Incoming Bugs
+
+ 15:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-hh-incoming-bug-tasks.html#foundations-bugs
+
+ 15:09 <bdmurray> bug 1821415 has been tagged for the desktop team
+
+ 15:09 <ubottu> bug 1821415 in policykit-1 (Ubuntu) "pkexec fails in a non-graphical environment" [Low,Triaged] https://launchpad.net/bugs/1821415
+
+ 15:10 <bdmurray> bug 1896186 was meant to be tagged notfixing which I've done
+
+ 15:10 <ubottu> bug 1896186 in linux-firmware-raspi2 (Ubuntu) "Raspberry Pi HDMI output looks dull, low contrast" [Low,Triaged] https://launchpad.net/bugs/1896186
+
+ 15:10 <bdmurray> I spoke with some flavours about bug 1842047
+
+ 15:10 <ubottu> bug 1842047 in ubiquity (Ubuntu) "Flavors should use their slideshows in oem-config" [Wishlist,Confirmed] https://launchpad.net/bugs/1842047
+
+ 15:11 <bdmurray> So this is actually about the slides what appear when the system is shipped to the end user e.g. first boot.
+
+ 15:11 <bdmurray> MATE installs end up seeing the Ubuntu slideshow
+
+ 15:11 <xnox> 1821415 => but fixing it in polkit is hard; hence desktop team notfixed it => are any workaround we can apply in apport instead? or do they not work for how things apport does?
+
+ 15:12 <bdmurray> xnox: I was having difficulty launching pkagenttty (sp?)
+
+ 15:12 <xnox> bdmurray:  =(
+
+ 15:12 <xnox> suspected so, not sure if anybody uses it.
+
+ 15:13 <bdmurray> to be more specific launching it in python and then calling pkexec
+
+ 15:13 <bdmurray> The flavours understand we are close to release but would like to see the oem config bug fixed for II. Does that seem like something we could schedule?
+
+ 15:15 <bdmurray> I'll retag it rls-ii-incoming
+
+ 15:16 <bdmurray> rls-gg and rls-ff have nothing worthy of discussion
+
+ 15:16 <bdmurray> so on to vorlon
+
+ 15:17 <bdmurray> I'll jump the gun about pexpect colin added upading the buildds to his todo list
+
+ 15:17 <vorlon> [LINK] https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:18 <vorlon> ok so that's pexpect addressed
+
+ 15:18 <vorlon> glibc, I believe rbalint has an MP for fixing up remaining hints to let it through; so we should see that get through today
+
+ 15:18 <vorlon> iproute2 vs systemd/ppc64el (again?)
+
+ 15:19 <vorlon> looks like that might be fixed by a retry, I'll take it (was my upload)
+
+ 15:19 <bdmurray> I'll retry software-properties on armhf
+
+ 15:19 <vorlon> systemd is listed as waiting on some armhf autopkgtest results... which are sure to never arrive at this point since they're not in the queue.  I'll retrigger those.
+
+ 15:20 <vorlon> apt and dpkg are candidates - anything blocking them?
+
+ 15:20 <sil2100> dpkg should be migrating
+
+ 15:20 <juliank> apt released
+
+ 15:20 <vorlon> looks like they've been accepted
+
+ 15:20 <sil2100> (since the chrony regression is worked on and in-flight)
+
+ 15:20 <vorlon> apport v binutils?
+
+ 15:21 <bdmurray> that's me
+
+ 15:21 <vorlon> ok
+
+ 15:21 <vorlon> then that's it
+
+ 15:21 <vorlon> bdmurray: back to you
+
+ 15:21 <bdmurray> # AOB
+
+ 15:21 <bdmurray> #topic AOB
+
+ 15:21 <ahasenack> I have something, if I may
+
+ 15:21 <slyon> Europe will be switching timezones on Sunday, back to the usual schedule
+
+ 15:22 <bdmurray> ahasenack: you may
+
+ 15:22 <ahasenack> I'd like to promote rsyslog-gnutls to main in bionic+. It was just done for hirsute: https://bugs.launchpad.net/ubuntu/+source/rsyslog/+bug/388605
+
+ 15:22 <ubottu> Launchpad bug 388605 in rsyslog (Ubuntu Groovy) "[MIR] rsyslog" [Undecided,New]
+
+ 15:22 <ahasenack> the MIR back then approved src:rsyslog
+
+ 15:22 <ahasenack> but nothing pulled rsyslog-gnutls into main, so it was left in universe
+
+ 15:22 <ahasenack> I'm wondering how we could do this for stable releases now
+
+ 15:24 <vorlon> do you want it promoted because it will be seeded somewhere now?
+
+ 15:24 <vorlon> it makes no practical difference for security support since the source is already in main
+
+ 15:24 <ahasenack> it's not seeded yet, that would be one way to have it promoted I guess, like we did for hirsute
+
+ 15:24 <xnox> ahasenack:  you need to propose a seed change. i.e. into like cloud-supported one.
+
+ 15:24 <ahasenack> I asked the secteam, they said if a vulnerability affected only this plugin, they would see this package is in universe and probably not update it
+
+ 15:25 <vorlon> ok I'd prefer we not go through this process just to retroactively change the component of a binary package
+
+ 15:25 <vorlon> I see
+
+ 15:25 <vorlon> so the process is to make sure the package is in -updates, since the release pocket is immutable; this may be just a copy from release to -updates
+
+ 15:25 <vorlon> and then an override
+
+ 15:25 <ahasenack> rmadison, for those who haven't run it: https://pastebin.ubuntu.com/p/h4XfQ76hZy/
+
+ 15:25 <xnox> and a seed change =)
+
+ 15:25 <vorlon> and as xnox says, we should seed it for bookkeeping purposes, though in practice no one looks at component-mismatches post-release
+
+ 15:26 <ahasenack> how would I proceed, make an MP for a seed change?
+
+ 15:26 <xnox> maybe we should have per-series component-missmatches reports, even if we don't action them.
+
+ 15:26 <xnox> ahasenack:  yes.
+
+ 15:26 <vorlon> running a report that we won't look at - pass :)
+
+ 15:26 <ahasenack> you want it against cloud-supported?
+
+ 15:27 <ahasenack> we did it in a sysadmin seed for hirsute
+
+ 15:27 <xnox> ahasenack: or any other appropriate place.
+
+ 15:27 <ahasenack> ok
+
+ 15:27 <ahasenack> I can do that, for all bionic+
+
+ 15:27 <xnox> ahasenack:  there is server-supported too => if server team will be supporting it.
+
+ 15:27 <ahasenack> bionic, focal and groovy
+
+ 15:27 <ahasenack> it's a foundations package
+
+ 15:27 <xnox> ahasenack:  or you can install it by default in ubuntu-server.... if you want it to be always avilable/installed
+
+ 15:27 <xnox> (but that's a bit heavy weight)
+
+ 15:27 <xnox> ahasenack:  seeds are product based. there is no "foundatins-supported" =)
+
+ 15:27 <ahasenack> no, just in main, not installed by default
+
+ 15:27 <cpaelzer> it is not desired to install it by default, not even as recommends
+
+ 15:28 <xnox> ahasenack:  cpaelzer: cloud-supported are teh CPC images/products, hence i see that as suitable.
+
+ 15:28 <ahasenack> ok, so seed change, then I ping an archive admin?
+
+ 15:28 <ahasenack> to copy it to main/updates
+
+ 15:28 <ahasenack> only focal had an update for it
+
+ 15:28 <xnox> (one day CPC may say actually this is no longer used, etc.)
+
+ 15:28 <ahasenack> bionic and groovy have it in the release pocket only
+
+ 15:29 <vorlon> ahasenack: yes
+
+ 15:29 <ahasenack> vorlon: xnox ok, thanks
+
+ 15:29 <juliank> #link https://magenta.jak-linux.org/ubuntu-archive/distcheck/hirsute/release.txt
+
+ 15:29 <juliank> lots of missing  build-depends on missing dh-systemd:amd64
+
+ 15:32 <bdmurray> okay, anything else?
+
+ 15:32 <JawnSmith> I'll be out Thursday/Friday of next week. I'm on +1 maintenance until then
+
+ 15:32 <mclemenceau> I'll be out tomorrow
+
+ 15:33 <bdmurray> okay, thanks everybody!
+
+ 15:33 <sil2100> o/
+
+ 15:33 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

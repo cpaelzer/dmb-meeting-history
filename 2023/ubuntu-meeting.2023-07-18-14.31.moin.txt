@@ -1,0 +1,430 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 18 Jul at 14:31 &mdash; 14:58 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-07-18-14.31.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:31.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:31)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:31)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:37)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:37.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:37)
+
+=== Process/Documentation improvements ===
+
+Discussion started by cpaelzer at 14:42.
+
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 14:42)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 14:42)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:50.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:50)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:50)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (cpaelzer, 14:50)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:55.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (115)
+ * sarnold (19)
+ * didrocks (15)
+ * slyon (10)
+ * seb128 (10)
+ * joalif (4)
+ * dviererbe (4)
+ * meetingology (2)
+ * eslerm (1)
+
+
+
+== Full log ==
+
+
+ 14:31 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:31 <meetingology> Meeting started at 14:31:05 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:31 <cpaelzer> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage ( eslerm dviererbe )
+
+ 14:31 <cpaelzer> plenty of people said hi already before the meeting got started
+
+ 14:31 <cpaelzer> so let me get going with the agenda
+
+ 14:31 <cpaelzer> #topic current component mismatches
+
+ 14:31 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:31 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:31 <sarnold> good morning
+
+ 14:31 <cpaelzer> rust -> fonts
+
+ 14:32 <cpaelzer> we know rust is temporarily demoted
+
+ 14:32 <cpaelzer> not suer why the fonts would show up now
+
+ 14:32 <cpaelzer> but given how things were int he past probably a false positive
+
+ 14:32 <slyon> cpaelzer: font's are only from the -doc packages, can be ignored
+
+ 14:32 <cpaelzer> ack
+
+ 14:32 <slyon> they will stay in universe
+
+ 14:32 <cpaelzer> then for actual fonts
+
+ 14:32 <sarnold> probably a previous mix of main vs universe binaries has been turned into "omg all these universe packages should be in main"
+
+ 14:32 <cpaelzer> fonts-liberation -> fonts-liberation-sans-narrow
+
+ 14:33 <cpaelzer> the former is a desktop package
+
+ 14:33 <cpaelzer> AFAIK those get a relative easy pass
+
+ 14:33 <cpaelzer> if they are really just fonts
+
+ 14:33 <cpaelzer> and there is no active code
+
+ 14:33 <cpaelzer> but we'd still want to see a bug that states that it is intentional and wanted
+
+ 14:33 <cpaelzer> because no matter how simple, the package will need an owner
+
+ 14:34 <didrocks> that was exactly my point
+
+ 14:34 <cpaelzer> didrocks: can you carry that to the desktop folks?
+
+ 14:34 <didrocks> sure, will do
+
+ 14:34 <cpaelzer> I feel like parrot
+
+ 14:34 <cpaelzer> the MIRs for the perl explosion will come
+
+ 14:34 <cpaelzer> soon (tm)
+
+ 14:35 <cpaelzer> jaraco seems almost ready right?
+
+ 14:36 <cpaelzer> ok joalif reviewed the last element recently
+
+ 14:36 <cpaelzer> todo is back on openstack
+
+ 14:36 <slyon> there are some open TODOs from joalif
+
+ 14:36 <cpaelzer> jamespage: ^^ FYI
+
+ 14:36 <cpaelzer> yep
+
+ 14:36 <cpaelzer> so far that is all I see in mismatches
+
+ 14:36 <cpaelzer> no further things that we need to act on in there right now
+
+ 14:37 <cpaelzer> #topic New MIRs
+
+ 14:37 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:37 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:37 <cpaelzer> empty
+
+ 14:37 <cpaelzer> wow
+
+ 14:37 <sarnold> broken?
+
+ 14:37 <slyon> xD
+
+ 14:37 <joalif> lol
+
+ 14:37 * sarnold pokes launchpad with a stick
+
+ 14:37 <didrocks> zen attitude :p
+
+ 14:37 <dviererbe> o/
+
+ 14:37 <didrocks> don’t be as negative as sarnold :p
+
+ 14:37 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:37 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:37 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> 5 incompletes with recent updates
+
+ 14:38 <cpaelzer> dhcpd I fixed the state as it has a few open todos left
+
+ 14:38 <cpaelzer> didrocks: did the same for aom
+
+ 14:39 <cpaelzer> libhttp-cookiejar-perl seems to be worked on by foundations
+
+ 14:39 <didrocks> python-rlpycairo and all reverse dependencies only used by hplip should be demoted it seems…
+
+ 14:39 <slyon> bug #2026608 I don't think this necessarily needs a security-review (considering lua has been in main for a while and covered by our security team), but maybe sarnold still wants to do a spot check and see if a full review would be useful (assign ubuntu-security, if you feel like)
+
+ 14:39 <slyon> didrocks: right. I brought that up with the desktop team, looks like we can demote hplip + dependencies later this cycle
+
+ 14:40 <cpaelzer> ok, good on hplip+dependencies then
+
+ 14:40 <cpaelzer> slyon: I agree on 2026608
+
+ 14:40 <sarnold> slyon: ack, thanks
+
+ 14:40 <cpaelzer> sarnold: what do you think?
+
+ 14:41 <sarnold> I'm inclined to agree that it just needs a very quick once-over
+
+ 14:41 <cpaelzer> on the quality side I agree to slyons list
+
+ 14:41 <cpaelzer> we need to give it some love
+
+ 14:41 <cpaelzer> to make it better than it is
+
+ 14:41 <cpaelzer> Lena will ping back on the case once ready
+
+ 14:41 <cpaelzer> nothing for us to act now
+
+ 14:42 <cpaelzer> ok, next topic then
+
+ 14:42 <cpaelzer> #topic Process/Documentation improvements
+
+ 14:42 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 14:42 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 14:42 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 14:42 <cpaelzer> 31 and 17 wait
+
+ 14:42 <cpaelzer> blocked by other things
+
+ 14:42 <cpaelzer> but 33 and 32 I'd land if there are no objections
+
+ 14:43 <cpaelzer> thanks dviererbe btw for the quick reviews
+
+ 14:43 <cpaelzer> thoughts/complaints on https://github.com/canonical/ubuntu-mir/pull/32 or https://github.com/canonical/ubuntu-mir/pull/33 ?
+
+ 14:44 * slyon approved on GH
+
+ 14:44 <didrocks> the find calls needs to be on the built binary, no? Otherwise dh_fixperms will fix them if nothing special in debian/rules?
+
+ 14:44 <didrocks> (so unsure about those checks, I generally only rely on grepping)
+
+ 14:45 <cpaelzer> yeah, there might be more like postinst
+
+ 14:45 <cpaelzer> that is why my added line says "at least"
+
+ 14:45 <cpaelzer> I felt that people might check even less than the find and grep
+
+ 14:45 <cpaelzer> so wanted to provide a hint
+
+ 14:45 <cpaelzer> if you find suid set then one can have a look at fixperms and others
+
+ 14:46 <didrocks> right, my point is that find on the source package will not give you what you expect :)
+
+ 14:46 <cpaelzer> like the built binaries
+
+ 14:46 <didrocks> yeah
+
+ 14:46 <cpaelzer> TBH I expected to check both src and extracted debs or so
+
+ 14:46 <didrocks> and another question on the other on the other PR: why checking dbus in particular? (it’s all local)
+
+ 14:46 <sarnold> comments added to both
+
+ 14:46 <didrocks> we can say the same then on any unix socket?
+
+ 14:46 <cpaelzer> the case I looked at had dbus and that is just as much an "open port" of some sort
+
+ 14:47 <cpaelzer> since I didn't want to extend the list infinitely I added "dbus or similar"
+
+ 14:47 <cpaelzer> IHO, but I'm happy to discuss, any kind of listning turn into potential attack vectors right?
+
+ 14:47 <cpaelzer> +M
+
+ 14:48 <didrocks> hum, I kind of disagree for things that are listening "locally", in that sense, clients connecting to the system bus are even more harmful and don’t enter this list
+
+ 14:48 <didrocks> let’s iterate over the PRs
+
+ 14:48 <cpaelzer> ok then
+
+ 14:48 <cpaelzer> pstpone for the meeting
+
+ 14:48 <cpaelzer> throw the comments onto the PRs
+
+ 14:48 <cpaelzer> some of you already did
+
+ 14:48 <dviererbe> > I felt that people might check even less than the find and grep
+
+ 14:48 <dviererbe> Just a thought: Would that be a good idea to create a tool like check-mir that makes it easier for people to check for sid/gid if so many do it worng or don't do it at all?
+
+ 14:48 <cpaelzer> I'll rework them and we can talk again here next time
+
+ 14:49 <cpaelzer> dviererbe: I found that often people then run the tool, do not know what/why it does, and then do fail to think e.g. about the new similar thing
+
+ 14:49 <sarnold> dviererbe: heh, yeah, I immediately wondered why we don't have an easy tool to find all the setuid/setgid files/directories in the packages
+
+ 14:49 <cpaelzer> you can write and maintain one :-)
+
+ 14:49 <cpaelzer> all the PR tries is to help with suggestions
+
+ 14:50 <sarnold> that's my fear
+
+ 14:50 <cpaelzer> I'm ok for now
+
+ 14:50 <cpaelzer> have enough on those to work on them
+
+ 14:50 <cpaelzer> going on in the agenda
+
+ 14:50 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:50 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:50 <cpaelzer> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 14:50 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:50 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:50 <cpaelzer> Internal link
+
+ 14:50 <cpaelzer> - ensure your teams items are prioritized among each other as you'd expect
+
+ 14:50 <cpaelzer> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 14:50 <cpaelzer> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 14:51 <eslerm> I believe we are set. Big item is cargo being assigned to a reviewer
+
+ 14:52 <cpaelzer> yeah
+
+ 14:52 <slyon> that's great to hear!
+
+ 14:52 <cpaelzer> dotnet is also bug
+
+ 14:52 <cpaelzer> big
+
+ 14:52 <cpaelzer> that does not have a face on it yet right?
+
+ 14:52 <sarnold> correct
+
+ 14:53 <cpaelzer> nvme-stast just entered the queue as I completed review this morning
+
+ 14:53 <sarnold> i'm worried that the "transition away from the dead package" story isn't quite complete yet
+
+ 14:53 <cpaelzer> also looking for a reviewer
+
+ 14:53 <cpaelzer> sarnold: well, we can wait for more details on this - but it would not block the security reivew would it?
+
+ 14:53 <sarnold> cpaelzer: no, but it is also probably more important than the security review
+
+ 14:54 <cpaelzer> it is required TODO #1 to clarify that further
+
+ 14:54 <sarnold> and I understand the discussion is underway
+
+ 14:55 <cpaelzer> Unless that is completed and approved as being sufficient it won't be promoted
+
+ 14:55 <sarnold> sounds good to me
+
+ 14:55 <cpaelzer> but to not lose too much time I think foundations would appreciate to enter the assigned security review queue
+
+ 14:55 <cpaelzer> I think we are ok on that, give it a thought if it could be assigned
+
+ 14:55 <cpaelzer> going on
+
+ 14:55 <cpaelzer> #topic Any other business?
+
+ 14:55 <cpaelzer> nothing here
+
+ 14:55 <didrocks> nothing either
+
+ 14:55 <sarnold> nothing from me
+
+ 14:56 <joalif> just fyi, i wont be joining the next 4 mtgs
+
+ 14:56 <seb128> o/ :-)
+
+ 14:56 <joalif> bank holidays + pto
+
+ 14:56 <sarnold> joalif: nice :)
+
+ 14:56 <sarnold> heya seb128
+
+ 14:56 <seb128> quick one, the fonts-liberation-sans-narrow mentioned earlier
+
+ 14:56 <cpaelzer> impressive joalif :-)
+
+ 14:56 <seb128> it seems to be a rename from fonts-liberation
+
+ 14:56 <sarnold> oh yes, iirc next week is a midcycle sprint, are we intending to have this meeting next week?
+
+ 14:56 <seb128> basically Debian did
+
+ 14:57 <seb128> fonts-liberation2 -> fonts-liberation
+
+ 14:57 <seb128> and
+
+ 14:57 <cpaelzer> on time off, there will be a sprint this (not much impact) and next (more impact) week that keeps people busy
+
+ 14:57 <seb128> fonts-liberation -> fonts-liberation-sans-narrow
+
+ 14:57 <cpaelzer> I'd appreciate, due to the sprint, someone taking over for me next week
+
+ 14:57 <seb128> because that's the only font remaining provided by the old srcname
+
+ 14:57 <seb128> do we still need a MIR?
+
+ 14:57 <didrocks> (same, I will be in the sprint, so if someone else is free to take over…)
+
+ 14:57 <slyon> cpaelzer: I can probably run the meeting next week.
+
+ 14:58 <cpaelzer> seb128: file a bug and explain, so there is an audit trail. Does not need to be a full MIR template
+
+ 14:58 <seb128> cpaelzer, ack, thanks
+
+ 14:58 <cpaelzer> thanks slyon
+
+ 14:58 <cpaelzer> ok then, seems we are done for today
+
+ 14:58 <sarnold> thanks cpaelzer, all
+
+ 14:58 <joalif> thanks cpaelzer, all :)
+
+ 14:58 <dviererbe> thanks, all
+
+ 14:58 <slyon> thanks cpaelzer, all!
+
+ 14:58 <cpaelzer> joalif:  we will keep the best cases open for when you are back then :-P
+
+ 14:58 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,185 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 19 Apr at 14:31 &mdash; 14:42 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-04-19-14.31.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 14:31.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 14:32.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 14:32)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 14:32)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 14:38.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 14:38)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by cpaelzer at 14:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (cpaelzer, 14:39)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 14:40.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (46)
+ * sarnold (5)
+ * slyon (4)
+ * meetingology (2)
+ * didrocks (2)
+ * joalif (2)
+
+
+
+== Full log ==
+
+
+ 14:31 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:31 <meetingology> Meeting started at 14:31:15 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 14:31 <didrocks> hey
+
+ 14:31 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 14:31 <cpaelzer> hello
+
+ 14:31 <cpaelzer> anything but a fast meeting would be odd today as we are in final freeze
+
+ 14:31 <joalif> o/
+
+ 14:31 <cpaelzer> hi sarnold joalif jamespage slyon didrocks
+
+ 14:31 <cpaelzer> #topic Review of previous action items
+
+ 14:31 <cpaelzer> none
+
+ 14:32 <cpaelzer> #topic current component mismatches
+
+ 14:32 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:32 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:32 <cpaelzer> all known false positives, except (to me) llvm -> z3
+
+ 14:33 <cpaelzer> [Reverse-Depends: libz3-dev, llvm-13-dev (MAIN)]
+
+ 14:33 <cpaelzer> slyon: maybe just add an extra exclude and be done with it?
+
+ 14:33 <cpaelzer> as -dev do not have to be in main and are often only there due to the auto-include
+
+ 14:34 <sarnold> hah I didn't know we shipped z3..
+
+ 14:34 <cpaelzer> yes https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.jammy/all confirms it is only from llvm-13-dev
+
+ 14:35 <cpaelzer> uh
+
+ 14:35 <cpaelzer> but
+
+ 14:35 <cpaelzer> llvm-13 recommends llvm-13-dev
+
+ 14:35 <cpaelzer> so auto-exclude won't cut it
+
+ 14:35 <slyon> yeah... is this related to the recent rustc MIR?
+
+ 14:35 <cpaelzer> no this is independent (to my knowledge)
+
+ 14:36 <cpaelzer> it is just llvm-13 being in main in jammy and for whatever reason it has grown a dep to z3
+
+ 14:36 <cpaelzer> slyon: could we leave checking the details with you as llvm in foundations?
+
+ 14:36 <slyon> yes, I guess that's fine
+
+ 14:37 <slyon> llvm13 is still kind of kernel, but foundations also has some stake in it :)
+
+ 14:37 <cpaelzer> kernel isn't here inhtis meeting 8they know why) :-)
+
+ 14:38 <cpaelzer> #topic New MIRs
+
+ 14:38 <cpaelzer> Mission: ensure to assign all incoming reviews for fast processing
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> none
+
+ 14:38 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:38 <cpaelzer> Mission: Identify required actions and spread the load among the teams
+
+ 14:38 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:38 <cpaelzer> rustc was promoted
+
+ 14:38 <cpaelzer> that was the only recent update
+
+ 14:39 <cpaelzer> #topic MIR related Security Review Queue
+
+ 14:39 <cpaelzer> Mission: Check on progress, do deadlines seem doable?
+
+ 14:39 <cpaelzer> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 14:39 <sarnold> I don't believe anything was finished last week when I was out
+
+ 14:39 <cpaelzer> ok I see telegraf is the next here, but we managed to get all 22.04 done
+
+ 14:40 <cpaelzer> sarnold: the most important thing last week was that I wanted to thank you and sbeattie - but no one was around
+
+ 14:40 <sarnold> it's almost time to celebrate telegraf's birthday :)
+
+ 14:40 <cpaelzer> thank you both
+
+ 14:40 <cpaelzer> please keep training the new team members to do reviews so that we no more collect such a backlog
+
+ 14:40 <cpaelzer> #topic Any other business?
+
+ 14:40 <cpaelzer> not from me
+
+ 14:40 <sarnold> thanks cpaelzer -- it was a team effort :) -- we couldn't have done it without the others also tackling reviews, as well
+
+ 14:40 <didrocks> nothing for me, good luck everyone with the release :)
+
+ 14:40 <sarnold> none from me
+
+ 14:40 <slyon> nothing
+
+ 14:40 <joalif> nothing
+
+ 14:42 <cpaelzer> ok, as predicted a light and easy meeting
+
+ 14:42 <cpaelzer> enjoy the calm time, the next release will open for development soon enough
+
+ 14:42 <cpaelzer> thank you all
+
+ 14:42 <cpaelzer> o/
+
+ 14:42 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

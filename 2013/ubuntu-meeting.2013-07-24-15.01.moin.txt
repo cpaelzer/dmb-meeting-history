@@ -1,0 +1,789 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 24 Jul at 15:01 &mdash; 15:42 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-07-24-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:02.
+
+
+=== Bugs ===
+The discussion about "Bugs" started at 15:13.
+
+
+=== Error tracking ===
+The discussion about "Error tracking" started at 15:14.
+
+  * ''LINK:'' https://code.launchpad.net/~ev/ubuntu-system-settings/diagnostics/+merge/174385 
+  * ''LINK:'' https://wiki.ubuntu.com/ErrorTracker#line-37 
+  * ''LINK:'' https://code.launchpad.net/~ev/apport/grouped_reports 
+  * ''LINK:'' http://randomascii.wordpress.com/2013/02/20/symbols-on-linux-part-three-linux-versus-windows/ 
+  * ''LINK:'' https://errors.ubuntu.com/retracers-results/ 
+  * ''LINK:'' https://errors.ubuntu.com seems to be doing well. We've had 36 people sign the
+  * ''LINK:'' https://launchpad.net/~error-tracker-access 
+  * ''LINK:'' https://code.launchpad.net/~ev/errors/whats-unusual-architecture 
+  * ''LINK:'' https://wiki.ubuntu.com/ErrorTracker#When_an_update_is_available_to_fix_a_crash 
+  * ''LINK:'' https://wiki.ubuntu.com/ErrorTracker#Collecting_extra_information_for_particular_errors 
+  * ''LINK:'' https://wiki.ubuntu.com/ErrorTracker/ServerSideHooks 
+  * ''LINK:'' https://en.wikipedia.org/wiki/Weak_symbol 
+  * ''LINK:'' http://lwn.net/Articles/558600/ if you have a subscription
+  * ''LINK:'' http://lwn.net/SubscriberLink/558106/5222e063b48fd989/ 
+
+=== AOB ===
+The discussion about "AOB" started at 15:40.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * ev (220)
+ * cjwatson (60)
+ * jodh (43)
+ * stgraber (14)
+ * barry (9)
+ * ubottu (8)
+ * meetingology (3)
+ * stokachu (1)
+ * doko (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <cjwatson> #startmeeting
+
+ 15:01 <meetingology> Meeting started Wed Jul 24 15:01:56 2013 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01 <stokachu> np
+
+ 15:02 <cjwatson> [TOPIC] Lightning round
+
+ 15:02 <cjwatson> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray cjwatson xnox)
+
+ 15:02 <cjwatson> bdmurray doko jodh xnox barry stgraber cjwatson ev
+
+ 15:02 <ev> win!
+
+ 15:02 <cjwatson> Hope everyone is here, I didn't have a chance to check the holiday calendar
+
+ 15:03 <jodh> cjwatson: I think xnox is on hols.
+
+ 15:03 <barry> mumble was just jodh and barry
+
+ 15:03 * stgraber waves
+
+ 15:04 <cjwatson> Brian is on holiday too
+
+ 15:04 <cjwatson> doko: around?
+
+ 15:05 * ev watches the tumbleweeds roll by
+
+ 15:06 <cjwatson> I guess we should move on, maybe he'll catch up
+
+ 15:06 <cjwatson> jodh:
+
+ 15:06 <jodh> * foundations-1305-upstart-work-items:
+
+ 15:06 <jodh> - python module (for DEP-8 integration tests):
+
+ 15:06 <jodh> - Meeting with pitti, jibel and racb re bug 1158391.
+
+ 15:06 <ubottu> bug 1158391 in Auto Package Testing "ability to have a DEP-8 test run a test in a separate full system environment" [High,Confirmed] https://launchpad.net/bugs/1158391
+
+ 15:06 <jodh> - Discussions with xnox+barry on how to get my sub-sub-class tests
+
+ 15:06 <jodh> to run correctly.
+
+ 15:06 <jodh> - Split tests out of existing module into:
+
+ 15:06 <ev> I'm sure everyone is just at the bank, negotiating how they're going to pay for a "one of a kind" Ubuntu Edge
+
+ 15:06 <jodh> - Session-level Upstart Tests (non-priv and root user).
+
+ 15:06 <jodh> - System-level Upstart tests (root user only).
+
+ 15:06 <jodh> - Added a few new state/session methods to the module.
+
+ 15:06 <jodh> - Wrote a DEP-8 "test" to create a chroot environment that will be
+
+ 15:06 <jodh> used by the python tests.
+
+ 15:06 <jodh> - Made good progress on writing the System-level Upstart tests.
+
+ 15:06 <jodh> Currently hitting a D-Bus issue with the module.
+
+ 15:06 <jodh> * upstart:
+
+ 15:07 <jodh> - Reviewed and merged:
+
+ 15:07 <jodh> lp:~ted/upstart/dbus-configure-event
+
+ 15:07 <jodh> lp:~ted/upstart/dbus-arguments.
+
+ 15:07 <jodh> - Fixed a bug in the Upstart apport hook.
+
+ 15:07 <jodh> - upstart/android bridge:
+
+ 15:07 <jodh> - wrote a basic bridge over the w/e:
+
+ 15:07 <jodh> lp:~jamesodhunt/upstart/upstart-text-bridge
+
+ 15:07 <jodh> - still has a silly name. Possible contenders for a better one are:
+
+ 15:07 <jodh> - upstart-comms-bridge
+
+ 15:07 <jodh> - upstart-injection-bridge
+
+ 15:07 <jodh> - upstart-recv-bridge
+
+ 15:07 <jodh> - upstart-peer-bridge
+
+ 15:07 <jodh> - upstart-client-bridge
+
+ 15:07 <jodh> - upstart-host-bridge
+
+ 15:07 <jodh> - upstart-proxy-bridge
+
+ 15:07 <jodh> - upstart-external-bridge
+
+ 15:07 <jodh> Vote now! :)
+
+ 15:07 <cjwatson> upstart-london-bridge </not-really>
+
+ 15:07 <jodh> - Modified watchprops to be an Android service that talks to the upstart-text-bridge:
+
+ 15:07 <jodh> http://phablet.ubuntu.com/gitweb?p=ubuntu/upstart-property-watcher.git;a=tree
+
+ 15:07 <jodh> ⟁
+
+ 15:08 <jodh> :)
+
+ 15:08 <jodh> upstart-edge-bridge maybe?
+
+ 15:08 <barry> assuming xnox is afk
+
+ 15:09 <barry> system-image-updates: LP: #1192585, LP: #1202915, LP: #1202283, LP: #1204090.  upload 0.7, working on 0.8. meetings (weekly, QA team).
+
+ 15:09 <ubottu> Launchpad bug 1192585 in Ubuntu system image "Add a dbus API" [High,Fix released] https://launchpad.net/bugs/1192585
+
+ 15:09 <barry> other: python bug 18531 (**kws and METH_KEYWORDS).  LP: #1203374 (turns out, fubar w/ -4 kernel), patch piloting.
+
+ 15:09 <ubottu> Launchpad bug 1202915 in Ubuntu system image "The client reboots the phone when there's no update" [Critical,Fix released] https://launchpad.net/bugs/1202915
+
+ 15:09 <ubottu> Launchpad bug 1202283 in Ubuntu system image "system-image-cli -v should display the files that are being downloaded" [Medium,Fix released] https://launchpad.net/bugs/1202283
+
+ 15:09 <barry> done
+
+ 15:09 <ubottu> Launchpad bug 1204090 in Ubuntu system image "Drop 'device' from client.ini" [Critical,Fix committed] https://launchpad.net/bugs/1204090
+
+ 15:09 <ubottu> bug 18531 in Ubuntu "lam: new changes from Debian require merging" [Medium,Fix released] https://launchpad.net/bugs/18531
+
+ 15:09 <ubottu> Launchpad bug 1203374 in HPLIP "hplip fails between 3.12.6-3.1 and 3.13.4-1+b1" [Undecided,New] https://launchpad.net/bugs/1203374
+
+ 15:09 <cjwatson> barry: he's on holiday
+
+ 15:10 <stgraber> jodh: upstart-simple-bridge? (anyway, whatever we choose is going to be vague and confusing ;))
+
+ 15:10 <stgraber> So I unfortunately don't have something to copy/paste
+
+ 15:10 <stgraber> but I've been fixing system-image stuff last week
+
+ 15:10 <stgraber> once everything worked I posted https://www.stgraber.org/2013/07/20/introducing-the-ubuntu-touch-image-based-upgrader/
+
+ 15:10 <jodh> stgraber: yeah, maybe that might work ;)
+
+ 15:10 <stgraber> I wrote a few more tools this week to help with cleanup of system-image and day to day maintenance
+
+ 15:11 <ev> "The images usually boot and work"
+
+ 15:11 <stgraber> otherwise, I've been doing release-related work this week
+
+ 15:11 <ev> cute
+
+ 15:11 <stgraber> and I'll be away pretty much all of next week
+
+ 15:11 <stgraber> DONE
+
+ 15:11 <stgraber> ev: well, the images I import currently come from "pending" not "current" so I'm ignoring Jenkins, hence the "usually boot" :)
+
+ 15:11 <cjwatson> foundations-1305-click-package:
+
+ 15:11 <cjwatson> - PackageKit backports.
+
+ 15:12 <cjwatson> - Redesigned the hooks specification to be actually implementable, and implemented it.
+
+ 15:12 <ev> :)
+
+ 15:12 <cjwatson> - Helped out Steve Beattie and Jamie Strandboge with the AppArmor hook.
+
+ 15:12 <stgraber> I haven't had one that didn't boot yet though (on nexus4 and nexus7)
+
+ 15:12 <cjwatson> - Wrote a first-pass desktop file hook.
+
+ 15:12 <cjwatson> - Reviewed, adjusted, and merged "click pkgdir" from Ted Gould.
+
+ 15:12 <cjwatson> Release engineering sprint:
+
+ 15:12 <cjwatson> - Image build pipeline review.
+
+ 15:12 <cjwatson> - Minor fiddling with changelogs.ubuntu.com.
+
+ 15:12 <cjwatson> - Designed livefs builds in Launchpad, with William Grant, Adam Conrad, and Steve Kowalik.
+
+ 15:12 <cjwatson> - Working on proper build cancellation, which we've worked out is a prerequisite for moving livefs builds.  Attempting to inhale enough knowledge of how buildd-manager and the buildd slaves work.
+
+ 15:12 <cjwatson> Finally jammed Apache 2.4 into saucy.
+
+ 15:12 <cjwatson> ..
+
+ 15:12 <ev> - Further Cassandra on prodstack fun. We really painted ourselves into a
+
+ 15:12 <ev> corner. Fortunately, we now have a support contract with Acunu \o/, so happy
+
+ 15:12 <ev> times soon.
+
+ 15:12 <ev> - Further work on the Touch UI for error reporting configuration. We ran into
+
+ 15:12 <ev> some interesting problems around using QDBus* in that it doesn't really
+
+ 15:12 <ev> handle service activation well - you need to watch for NameOwnerChanged
+
+ 15:12 <ev> rather than relying on isValid(). That probably makes no sense. Diffs:
+
+ 15:12 <ev> http://bazaar.launchpad.net/~ev/ubuntu-system-settings/diagnostics/revision/133
+
+ 15:12 <ev> http://bazaar.launchpad.net/~ev/ubuntu-system-settings/diagnostics/revision/134
+
+ 15:12 <ev> - Fixes to whoopsie-preferences and shepherding it into main.
+
+ 15:12 <ev> - Participated in Juju GUI user testing. It's looking amazing. I cannot wait to
+
+ 15:12 <ev> use this in production, especially the deployment collections.
+
+ 15:12 <ev> - Learned about weak symbols in GCC and put to use in a unit test of the
+
+ 15:12 <ev> uploading code in whoopsie. This should make developing a broader API between
+
+ 15:12 <ev> whoopsie and daisy a lot easier (need to support report uploads, core
+
+ 15:12 <ev> uploads, server-side hooks, etc).
+
+ 15:12 <ev> - Started learning Acunu Analytics. Deployed to canonistack and started data
+
+ 15:12 <ev> modelling with its API. James is blocking us moving to this until after we've
+
+ 15:12 <ev> finished the Cassandra cluster migration, understandably. We should be able
+
+ 15:12 <ev> to make it fairly safe in production by tuning the Cassandra 1.2 ACLs to only
+
+ 15:12 <ev> give it read access to the Error Tracker column families. It's very
+
+ 15:13 <ev> responsive - this should solve a lot of problems for us, namely showing the
+
+ 15:13 <ev> top problems in a rolling 24 hour period (rather than "20130724") in
+
+ 15:13 <ev> realtime, as well as the "what's interesting about this problem?" section.
+
+ 15:13 <ev> done!
+
+ 15:13 <cjwatson> [TOPIC] Bugs
+
+ 15:13 <cjwatson> I guess we can skip this this week, as we have no Brian, unless anyone has anything to ask about
+
+ 15:13 <barry> nope
+
+ 15:13 <stgraber> nope
+
+ 15:14 <cjwatson> [TOPIC] Error tracking
+
+ 15:14 <cjwatson> So I asked Evan to lead our discussion topic this week, on errors.ubuntu.com
+
+ 15:14 <ev> grab a warm beverage, it's story time
+
+ 15:14 <cjwatson> I know we typically get novels in the lightning round :-)
+
+ 15:14 <ev> oops, I spoke out of turn :)
+
+ 15:15 * ev cracks his knuckles
+
+ 15:15 <ev> Hi!
+
+ 15:15 <ev> The biggest thing going on with the Error Tracker is the move from a six node
+
+ 15:15 <ev> cluster running on traditional servers to a 12 node cluster running on juju,
+
+ 15:15 <ev> prodstack, and Ceph (distributed storage, similiar to EBS but not shit).
+
+ 15:15 <cjwatson> But perhaps we can hear a more contextful tale of where we are and where we're going soon here
+
+ 15:15 <cjwatson> Go for it :)
+
+ 15:15 <ev> This was needed for two reasons.
+
+ 15:15 <ev> One, we've overtaxed the existing nodes to the point where they don't have
+
+ 15:15 <ev> enough free space to run compaction (Cassandra doesn't do deletes per se, it
+
+ 15:15 <ev> writes tombstones and cleans up the mess periodically). They're also holding
+
+ 15:15 <ev> too much data. Each node carries about 3TB when they should have no more than
+
+ 15:15 <ev> 1TB. This makes everything slower and less fault-tolerant.
+
+ 15:15 <ev> Two, we have no backup. This isn't as scary as it sounds - the data is
+
+ 15:15 <ev> replicated on at least two nodes (previously 3), but it means we cannot upgrade
+
+ 15:16 <ev> Cassandra to a modern version (we're on 1.0.7 hoping to go to 1.2/2.0) without
+
+ 15:16 <ev> fear of it eating the world. We cannot turn on compression which will give us a
+
+ 15:16 <ev> performance increase and probably significantly drive down the storage needed
+
+ 15:16 <ev> per node (crash reports are just textual data - it compresses well).
+
+ 15:16 <ev> In moving to this new 12 node cluster, we enabled Cassandra's multi-datacenter
+
+ 15:16 <ev> replication and told the nodes in the new DC one by one to rebuild themselves
+
+ 15:16 <ev> from pieces of the existing cluster. This fell over in a big heap, partially
+
+ 15:16 <ev> because the existing nodes were already overtaxed (we really painted ourselves
+
+ 15:16 <ev> into a corner) and possibly because we may have found a bug in the replication
+
+ 15:16 <ev> code. This unfortunately stalled what was supposed to be a weekend move into a
+
+ 15:16 <ev> many week affair.
+
+ 15:16 <ev> We're at the point where we need outside help to fix this. We've signed on with
+
+ 15:16 <ev> Acunu, a London-based Cassandra company to provide that support. They're
+
+ 15:16 <ev> getting us to a safe place where we'll do the following:
+
+ 15:16 <ev> - Move into the second cluster.
+
+ 15:16 <ev> - Test upgrading to 1.2 and enable compression in the decomissioned
+
+ 15:16 <ev> real-hardware cluster.
+
+ 15:16 <ev> - Upgrade to 1.2 and enable compression in prodstack.
+
+ 15:16 <ev> - Assimilate the old nodes into prodstack, build a hot-standby and analytics
+
+ 15:16 <ev> (Hadoop in this case) Cassandra cluster.
+
+ 15:16 <ev> Acunu also makes a product called Analytics
+
+ 15:16 <ev> (http://www.acunu.com/uploads/1/1/5/5/11559475/070913_aa_datasheet_v5.pdf),
+
+ 15:16 <ev> which we're going to use to *finally* build the top-k report you see on the
+
+ 15:16 <ev> front page of errors.ubuntu.com over a rolling 24 hour period, 7 day period, 30
+
+ 15:16 <ev> day period, 365 day period, and all time. What's more, we'll have it display in
+
+ 15:16 <ev> real-time (finally as well). It looks likely that it can scale to handle the
+
+ 15:16 <ev> complex set of combinations required to implement the "What's interesting about
+
+ 15:16 <ev> this problem?" section (https://wiki.ubuntu.com/ErrorTracker#unusual) and may
+
+ 15:16 <ev> someday form the basic for the generic metrics collection that mpt, ted, and I
+
+ 15:16 <ev> have dreamed of.
+
+ 15:16 <ev> Once the migration is settled we can get back to hacking on the database. We
+
+ 15:16 <ev> have a few back-population jobs, namely weighting errors
+
+ 15:16 <ev> (https://bugs.launchpad.net/errors/+bug/1069827) that have been languishing for
+
+ 15:16 <ev> some considerable time. This one in particular may be replaced with Analytics
+
+ 15:16 <ev> though.
+
+ 15:16 <ev> James, Tom, and I will also be working on a talk for the London Cassandra
+
+ 15:16 <ubottu> Ubuntu bug 1069827 in Errors "Error rate incorrectly spikes with any influx of machines" [High,Confirmed]
+
+ 15:17 <ev> community on our experiences with Cassandra, Juju, and Ceph. There are some
+
+ 15:17 <ev> doubts that Ceph will be successful, so it should make for a very interesting
+
+ 15:17 <ev> discussion (and great use case for Juju).
+
+ 15:17 <ev> The headaches around migrating these terabytes of data has got me thinking
+
+ 15:17 <ev> again about internally opening up access to all the report data via Hadoop
+
+ 15:17 <ev> (James is against giving Joe Random Community Member a turing complete system
+
+ 15:17 <ev> with access to the production database).
+
+ 15:17 <ev> I've implemented a Hadoop subordinate charm that we'll quickly deploy on all
+
+ 15:17 <ev> the Cassandra nodes once we're on 1.2. There are also some interesting projects
+
+ 15:17 <ev> around Hadoop and Pig I've been looking into which make monitoring and query
+
+ 15:17 <ev> building a lot easier:
+
+ 15:17 <ev> - http://cloudera.github.io/hue/
+
+ 15:17 <ev> - https://github.com/twitter/ambrose
+
+ 15:17 <ev> - https://github.com/Netflix/Lipstick
+
+ 15:17 <ev> A lot has changed in the past few months, and CQL
+
+ 15:17 <ev> (https://github.com/datastax/python-driver) is increasingly becoming a
+
+ 15:17 <ev> compelling alternative to the "iter world" use case that Hadoop currently
+
+ 15:17 <ev> handles. It, like Netflix's Astyanax Cassandra client library (Thrift-based),
+
+ 15:17 <ev> uses a thread pool to do a bunch of gets, rather than a blocking get_range. So
+
+ 15:17 <doko> sorry, a bit late
+
+ 15:17 <ev> implementing something on top of this or indeed Astyanax
+
+ 15:17 <ev> (https://github.com/Netflix/astyanax/wiki/All-rows-query) may prove worthwhile.
+
+ 15:17 <ev> If nothing else, we'll definitely start using this approach to speed up our
+
+ 15:17 <ev> other APIs that wrap calls into Cassandra.
+
+ 15:17 <ev> Meanwhile, work continues on getting error reporting up and running for Ubuntu
+
+ 15:17 <ev> Touch. I've split the DBus service that manages error reporting out of
+
+ 15:17 <ev> activity-log-manager/gnome-control-center so it can be used in
+
+ 15:17 <ev> ubuntu-system-settings (the QML settings UI). That latter project now has UI
+
+ 15:17 <ev> for error reporting:
+
+ 15:17 <ev> https://code.launchpad.net/~ev/ubuntu-system-settings/diagnostics/+merge/174385
+
+ 15:17 <ev> Apport now has a noninteractive frontend
+
+ 15:17 <ev> (http://bazaar.launchpad.net/~apport-hackers/apport/trunk/view/head:/data/apport-noui),
+
+ 15:17 <ev> which will handle error reporting for Touch, Server, and desktop systems where
+
+ 15:17 <ev> power users just want to send us stuff:
+
+ 15:17 <ev> https://wiki.ubuntu.com/ErrorTracker#line-37
+
+ 15:17 <ev> We still need to implement enabling this for server via d-i. I've had some
+
+ 15:17 <ev> discussions with the Juju GUI designers about the right place to put this.
+
+ 15:17 <ev> As all of these pieces fall into place, and as click packaging comes online,
+
+ 15:17 <ev> I'll be working to reduce the overhead of Apport.
+
+ 15:17 <ev> It's also worth spending some time on improving the UI for the desktop, and
+
+ 15:17 <ev> someday I'll finish off the branch to group system error reports with the next
+
+ 15:17 <ev> application crash:
+
+ 15:17 <ev> https://code.launchpad.net/~ev/apport/grouped_reports
+
+ 15:17 <ev> With click packaging and the SDK, we'll need some way to get debugging symbols
+
+ 15:17 <ev> for retracing. I've discussed this with Colin and the hope is that we can build
+
+ 15:17 <ev> a symbol server:
+
+ 15:17 <ev> http://randomascii.wordpress.com/2013/02/20/symbols-on-linux-part-three-linux-versus-windows/
+
+ 15:17 <ev> Working with what we have today, we're still getting ddebs added into the
+
+ 15:18 <ev> Publisher. Last I heard we're waiting on storage. Once that's in place, our
+
+ 15:18 <ev> retrace rate should increase quite dramatically:
+
+ 15:18 <ev> https://errors.ubuntu.com/retracers-results/
+
+ 15:18 <ev> James and I also have plans to move the retracers into builddstack, hopefully
+
+ 15:18 <ev> with autoscaling. There might be an intermediary of running some in prodstack
+
+ 15:18 <ev> as we are very much unable to keep up with the retracer queue at present.
+
+ 15:18 <ev> We still want to accept more types of errors. If we weren't using an ancient
+
+ 15:18 <ev> version of apport on production (oops!) we'd be getting kernel OOPS reports. I
+
+ 15:18 <ev> have plans to fix and back-populate this once the database migration is over.
+
+ 15:18 <ev> I'm also going to be working with the X/Mir team to start collecting GPU hangs
+
+ 15:18 <ev> and come up with some forward looking plan for porting my error reports from
+
+ 15:18 <ev> application hangs code from compiz to the new world order.
+
+ 15:18 <ev> https://errors.ubuntu.com seems to be doing well. We've had 36 people sign the
+
+ 15:18 <ev> NDA for access:
+
+ 15:18 <ev> https://launchpad.net/~error-tracker-access
+
+ 15:18 <ev> Brian has been working hard on building an API in errors.ubuntu.com for phased
+
+ 15:18 <ev> updates. I believe this is just waiting on some Launchpad bits to land. Brian?
+
+ 15:18 <ev> As mentioned, we've started work on implementing "What's interesting about this
+
+ 15:18 <ev> problem" which will give us a better idea of when a problem is in the library
+
+ 15:18 <ev> underneath the package, or specific to a architecture, locale, or day of the
+
+ 15:18 <ev> week. The code we have for this takes a simplistic (and thus often inaccurate)
+
+ 15:18 <ev> approach to the problem while leveraging a threadpool to do the heavy lifting
+
+ 15:18 <ev> of iterating over hundreds or thousands of reports:
+
+ 15:18 <ev> https://code.launchpad.net/~ev/errors/whats-unusual-architecture
+
+ 15:18 <ev> Moving to Acunu Analytics should fix this.
+
+ 15:18 <ev> I have high hopes of finding time to implement the API for "is this problem
+
+ 15:18 <ev> fixed in a later version of the package" call to be used by Apport:
+
+ 15:18 <ev> https://wiki.ubuntu.com/ErrorTracker#When_an_update_is_available_to_fix_a_crash
+
+ 15:18 <ev> I might build this as a microservice, following what I've learned from watching
+
+ 15:18 <ev> Netflix OSS videos :).
+
+ 15:18 <ev> I'm also hopeful that we'll find the time and resource to implement server-side
+
+ 15:18 <cjwatson> Phased updates: the Launchpad bits have landed, as have Brian's ubuntu-archive-tools patches
+
+ 15:18 <ev> hooks soon, but it requires review from the security team:
+
+ 15:18 <ev> https://wiki.ubuntu.com/ErrorTracker#Collecting_extra_information_for_particular_errors
+
+ 15:18 <ev> https://wiki.ubuntu.com/ErrorTracker/ServerSideHooks
+
+ 15:18 <cjwatson> I think it may just have run into Brian's holiday
+
+ 15:18 <ev> * * * AUDIENCE PARTICIPATION TIME! * * *
+
+ 15:18 <ev> I'd be interested to know if any of you have thoughts on how we can allow
+
+ 15:18 <ev> remote code execution (delivered over SSL, obviously) within the apport hook
+
+ 15:18 <ev> framework, but still allow the hooks to be able to attach the contents of
+
+ 15:19 <ev> Assuming we just say that hooks have to run with the permissions of the user
+
+ 15:19 <ev> that the application crashed under, how would you implement running the hooks
+
+ 15:19 <ev> under that user? Upstart user session jobs?
+
+ 15:19 <ev> Finally, as a random aside, I discovered GCC's weak symbols:
+
+ 15:19 <ev> https://en.wikipedia.org/wiki/Weak_symbol
+
+ 15:19 <ev> This seems to solve all my crying over not being able to sparingly mock in C.
+
+ 15:19 <ev> Expect lots of this to surface in whoopsie as I add support for server-side
+
+ 15:19 <ev> hooks and problem fixed notifications.
+
+ 15:19 <ev> Also, C++'s RAII kind of confuses me in it not being obvious where memory is
+
+ 15:19 <ev> allocated for all these Qt objects, but does seem to produce some clean, safely
+
+ 15:19 <ev> managed code.
+
+ 15:19 <ev> As always, I could really use your help. If you want to volunteer for code
+
+ 15:19 <ev> review, let me know and I'll add you to ~daisy-pluckers. If you want to try
+
+ 15:19 <ev> your hand at hacking on it, let me know and I will gladly handhold you through
+
+ 15:19 <ev> setting everything up. The same goes for anyone you know who might be
+
+ 15:19 <ev> interested. It's pretty easy, it deploys with juju in a few short commands once
+
+ 15:19 <ev> your instance limits on prodstack have been increased.
+
+ 15:19 <ev> Thanks guys.
+
+ 15:19 <ev> \o/
+
+ 15:20 <cjwatson> ev: There was an article about "CMocka" in this week's LWN
+
+ 15:20 <cjwatson> http://lwn.net/Articles/558600/ if you have a subscription
+
+ 15:20 <ev> oh? I didn't think we still had access
+
+ 15:20 <cjwatson> Some of us are Debian developers :)
+
+ 15:20 <ev> :)
+
+ 15:21 <stgraber> Ubuntu members still have access (at least I do)
+
+ 15:21 <ev> I can't even make a beard joke anymore
+
+ 15:21 <ev> because you no longer have one
+
+ 15:21 <cjwatson> http://lwn.net/SubscriberLink/558106/5222e063b48fd989/
+
+ 15:21 <ev> and I do
+
+ 15:21 <ev> yay
+
+ 15:21 <ev> thanks
+
+ 15:22 <cjwatson> Running hooks under the user> does it actually need anything from the user's session, or just need the user's file privileges?
+
+ 15:24 <ev> I'm not sure I follow.
+
+ 15:24 <jodh> ev: can you explain why we can't encode the required logic in existing apport hooks?
+
+ 15:24 <ev> presumably just the latter
+
+ 15:25 <ev> jodh: they will largely be the existing hooks, but they cannot have interactive UI
+
+ 15:25 <cjwatson> Things you might need from the user's session: environment variables set by upstart, connections to dbus session bus, etc.
+
+ 15:25 <ev> so no password prompts, no yes/no dialogs, etc
+
+ 15:25 <cjwatson> But if you just need to reliably read files owned by the user, switching uid is sufficient
+
+ 15:25 <ev> ah right
+
+ 15:26 <stgraber> and it's relatively easy to read the list of upstart user sessions and dump the environment from there if you need to
+
+ 15:26 <ev> switching uid -> have something privileged that looks for the hooks and runs them, first dropping privs to the right uid?
+
+ 15:27 <cjwatson> Right, if you're planning on doing things as arbitrary users then you must have a privileged dispatcher anyway
+
+ 15:27 <ev> prsumably upstart can be the privileged dispatcher?
+
+ 15:27 <cjwatson> Might be worth remembering to set $HOME.  Aside from that it really depends what else you need
+
+ 15:27 <jodh> ev: still not clear. If apport now has a noninteractive frontend, what are we needing to do "dynamically"? Can you give some examples?
+
+ 15:27 <cjwatson> It could be, but that might be more trouble than it's worth if you just want to spawn a subprocess and wait for it to finish
+
+ 15:27 <ev> yeah, good point
+
+ 15:28 <cjwatson> click certainly doesn't use Upstart jobs when it's executing user-level hooks, for instance
+
+ 15:28 <cjwatson> It would be possible but would really involve way too much runaround
+
+ 15:28 * ev nods
+
+ 15:29 <cjwatson> Symbol server: ack, though this is at the handwave level right now.  Is darkserver free software?
+
+ 15:30 <cjwatson> Apparently so, http://fedoraproject.org/wiki/Darkserver
+
+ 15:30 <cjwatson> May indeed be worth a look; the less we have to write new server code the better ...
+
+ 15:30 <ev> jodh: the hooks will be dynamically executed in that whoopsie will send a report to daisy, daisy will reply back with "oh, a developer wants you to run this hook code. HERE", and then something will take care of launching a python subprocess as the right user with the hook code
+
+ 15:30 <barry> folks in F/RH land were raving about this at pycon
+
+ 15:31 <ev> this of course doesn't handle operations that require raised privileges, like give me xorg.0.log
+
+ 15:31 <cjwatson> ddebs/publisher> Blocked on the SAN move, which we really rather hope happens soon before the librarian runs out of space, but we're assured it will
+
+ 15:31 <cjwatson> I believe it's been decoupled from the precise upgrade now, which should help
+
+ 15:31 <ev> cjwatson: following our discussion about software engineering largely being an exercise in shopping, I agree wholeheartedly
+
+ 15:31 <ev> I'll have a look
+
+ 15:31 <jodh> ev: ok, but can you give a concrete of example of what a dev might want you to run that cannot be pushed out as a standard apport hook?
+
+ 15:32 <ev> jodh: we don't want to ship them as standard apport hooks not because they can accomplish something more, but because we can deliver them without involving publisher cycles and the user hitting the upgrade button
+
+ 15:33 <ev> also because they can accomplish more :) - we can target hooks to a specific problem
+
+ 15:33 <ev> or package, or $world
+
+ 15:33 <cjwatson> I've certainly had cases of ad-hoc things I want people to run that I wouldn't want to push out to the wordl
+
+ 15:33 <cjwatson> Not that I can think of specific examples right now
+
+ 15:33 <jodh> ev: so if this feature is introduced, how would these dynamic chunks of code get tested reliably before delivery?
+
+ 15:33 <cjwatson> But I think it has happened with us all
+
+ 15:33 <cjwatson> Of course the security properties are rather scary
+
+ 15:33 <ev> jodh: a code review approach, but if they catch fire, they wont bring down the user's system
+
+ 15:34 <ev> see https://wiki.ubuntu.com/ErrorTracker#Collecting_extra_information_for_particular_errors for the nitty gritty
+
+ 15:34 <ev> very scary
+
+ 15:34 <jodh> ev: I was about to use those same words :)
+
+ 15:34 <ev> but it's no more scary than a rogue ubuntu developer
+
+ 15:34 <cjwatson> If it relates to click packages then I'd suggest that the extra chunk of code should run with the apparmor profile of the click app
+
+ 15:34 <ev> we're only giving ubuntu-devs access to this, and they already have root on your machien
+
+ 15:34 * ev nods
+
+ 15:34 <ev> yes, definitely
+
+ 15:37 <cjwatson> OK, any other questions?  I've certainly been gratified by the steadily increasing amount of information we're getting from errors, and the extent to which we're putting it to use
+
+ 15:37 <ev> yay! thank you very much
+
+ 15:37 <cjwatson> Particularly in assorted SRUs
+
+ 15:38 <ev> it helps to hear that it's useful
+
+ 15:39 <barry> ev: very impressive, thanks for presenting this
+
+ 15:39 <ev> aw shucks. Thanks
+
+ 15:40 <cjwatson> #topic AOB
+
+ 15:41 <cjwatson> Anything else people have today?
+
+ 15:41 <barry> nope
+
+ 15:42 <ev> I'm all chatted out
+
+ 15:42 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

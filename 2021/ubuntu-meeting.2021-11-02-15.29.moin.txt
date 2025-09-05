@@ -1,0 +1,456 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by cpaelzer, 02 Nov at 15:29 &mdash; 16:02 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-11-02-15.29.log.html
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+
+Discussion started by cpaelzer at 15:30.
+
+
+=== current component mismatches ===
+
+Discussion started by cpaelzer at 15:30.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (cpaelzer, 15:30)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (cpaelzer, 15:30)
+
+=== New MIRs ===
+
+Discussion started by cpaelzer at 15:40.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (cpaelzer, 15:40)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by cpaelzer at 15:49.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (cpaelzer, 15:49)
+
+=== Any other business? ===
+
+Discussion started by cpaelzer at 15:50.
+
+ * ''LINK:'' https://github.com/cpaelzer/ubuntu-mir/pull/2   (cpaelzer, 15:56)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/swtpm/+bug/1948748   (cpaelzer, 15:59)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (131)
+ * sarnold (23)
+ * didrocks (20)
+ * slyon (14)
+ * jamespage (4)
+ * ubottu (4)
+ * meetingology (2)
+
+
+
+== Full log ==
+
+
+ 15:29 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:29 <meetingology> Meeting started at 15:29:52 UTC.  The chair is cpaelzer.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:29 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:29 <cpaelzer> hello everyone
+
+ 15:30 <slyon> o/
+
+ 15:30 <cpaelzer> another ping for the log => didrocks: jamespage: ddstreet: sarnold: slyon: doko: ping for MIR meeting
+
+ 15:30 <cpaelzer> #topic Review of previous action items
+
+ 15:30 <cpaelzer> We have plenty of things, but more for the "other business" section than actions
+
+ 15:30 <didrocks> hey
+
+ 15:30 <cpaelzer> so I'd go on ...
+
+ 15:30 <cpaelzer> #topic current component mismatches
+
+ 15:30 <cpaelzer> archive open, so expect more ...
+
+ 15:30 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:30 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:31 <cpaelzer> going through them left to right
+
+ 15:31 <cpaelzer> 1. lintian into libio-prompt-tiny-perl
+
+ 15:32 <cpaelzer> that seems to be another small perl lib, slyon usually Doko has handled those, would you mind having a lool
+
+ 15:32 <cpaelzer> look
+
+ 15:32 <slyon> will do
+
+ 15:32 <cpaelzer> then piprewire (we promoted recently) into "wireplumber"
+
+ 15:32 <cpaelzer> that sounds like didrocks playground, will you have a look what we want to do there didrocks ?
+
+ 15:32 <didrocks> yeah, was about to say that
+
+ 15:33 <cpaelzer> then postgresql-14 is mine, it is sad that it is here we we likely won't be able to fully switch to 14
+
+ 15:33 <cpaelzer> dependent projetcs usually take too long
+
+ 15:33 <cpaelzer> but in any case, my business
+
+ 15:33 <cpaelzer> then policykit is a known false-positive
+
+ 15:33 <cpaelzer> python-croniter -> python-tzlocal - does that mean anything to anyone?
+
+ 15:34 <didrocks> not to me
+
+ 15:34 <slyon> no
+
+ 15:34 <sarnold> iirc it's fallout from the upstream tzdata mess
+
+ 15:34 <cpaelzer> that would be foundations, but maybe we wait a week on that one and see if we get a request
+
+ 15:35 <cpaelzer> next would be cherrypy3
+
+ 15:35 <cpaelzer> jamespage: that would be you
+
+ 15:35 <cpaelzer> but it is still all approved except python-cheroot
+
+ 15:35 <jamespage> I need to loop back to that
+
+ 15:35 <sarnold> on my todo-list
+
+ 15:35 <cpaelzer> which waits on security
+
+ 15:35 <cpaelzer> php8.1 is with us and being worked on
+
+ 15:35 <jamespage> there we go then
+
+ 15:35 <cpaelzer> wow, so many ...
+
+ 15:36 <cpaelzer> cmake->dh-elpa sounds foundationish
+
+ 15:36 <cpaelzer> slyon: ?
+
+ 15:36 <sarnold> our colleagues have been busy
+
+ 15:36 <cpaelzer> to be clear you do not have to do all the MIRs, but find someone in the team to think about it
+
+ 15:36 <slyon> ACK. I'll put it on my list
+
+ 15:36 <cpaelzer> pillow -> raqm means nothing to me
+
+ 15:36 <cpaelzer> known to anyone?
+
+ 15:37 <slyon> pillow is foundations..
+
+ 15:37 <sarnold> the README kinds looks like desktopish thing, but pillow .. dunno
+
+ 15:38 <cpaelzer> ok, another on on you then @slyon
+
+ 15:38 <slyon> ok
+
+ 15:38 <cpaelzer> as I said, do not feel as if you have to do everything on these
+
+ 15:38 <cpaelzer> just ensure they become handled
+
+ 15:38 <cpaelzer> instead of cluttering this view and blocking proposed migration
+
+ 15:38 <cpaelzer> ruby3.0 is on us and worked on
+
+ 15:38 <cpaelzer> then a few known false positives
+
+ 15:39 <cpaelzer> licensecheck -> libio-interactive-perl is the last
+
+ 15:39 <cpaelzer> another python lib for slyon
+
+ 15:39 <slyon> yes
+
+ 15:39 <cpaelzer> puh, that was as much as I was afraid it would be
+
+ 15:39 <cpaelzer> let us ensure with our teams to at least file bugs for those cases so that we can find the status from this view
+
+ 15:40 <cpaelzer> #topic New MIRs
+
+ 15:40 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:40 <cpaelzer> The first one is "new" again, I will talk about that one later in the "other business" section
+
+ 15:40 <cpaelzer> egl-wayland I need to have a loolk
+
+ 15:40 <cpaelzer> look
+
+ 15:41 <cpaelzer> oh this was the one waiting for proper non-automated test steps right?
+
+ 15:41 <sarnold> yeah
+
+ 15:41 <didrocks> indeed
+
+ 15:41 <cpaelzer> let us all have a look if we like the new answer now ...
+
+ 15:42 <cpaelzer> Not yet perfectly what I wanted, but kind of "good enough" and I'd not want this to be a victim of being "the first"
+
+ 15:42 <sarnold> same here
+
+ 15:43 <cpaelzer> I'd be tempted to say yes to this one, as I can now at least imagine what is to be tested
+
+ 15:43 <sarnold> at least, I hope it makes sense for desktopish folks to know what to do based o this
+
+ 15:43 <sarnold> I know I'd still need more hand-holding if it were me..
+
+ 15:43 <cpaelzer> votes please - +1 if you agree to ack this based on this
+
+ 15:43 <cpaelzer> +1
+
+ 15:43 <slyon> +1
+
+ 15:43 <sarnold> +1
+
+ 15:43 <didrocks> I’m still afraid on this kind of testing to not be completed per history, -1 for me
+
+ 15:44 <cpaelzer> didrocks: you mean the experience tells us it won't be doen - is that what you say?
+
+ 15:44 <didrocks> yeah, you won’t see right away the breakage and per history of the uploader, this won’t get fixed quickly
+
+ 15:45 <didrocks> but I’m in the minority camp, let’s hope I’m wrong :)
+
+ 15:45 <cpaelzer> This is a Desktoppy topic, you might bring it up on your side as well
+
+ 15:45 <cpaelzer> this is at least already better to what we had in the past
+
+ 15:45 <didrocks> well, desktop doesn’t maintaing the graphical part/acceleration of the stack
+
+ 15:45 <sarnold> oh. hmm.
+
+ 15:46 <cpaelzer> oh is that why it is kernel team subscribed?
+
+ 15:46 <didrocks> indeed, the kernel team does
+
+ 15:46 <didrocks> same with nvidia acceleration, where there are multi years bug like you enable acceleration, which disable it, and no action on it despite bugs reported, hence my concern
+
+ 15:46 <cpaelzer> hmm, I'm unsure then - let me do a simple question ont he bug, to be sure
+
+ 15:46 <cpaelzer> if the answer is good we can then ack based on the vote of today
+
+ 15:47 <didrocks> indeed
+
+ 15:47 <cpaelzer> I want to ask to commit som some regular frequency of testing this
+
+ 15:47 <didrocks> sounds like the good approach to me :)
+
+ 15:49 <cpaelzer> send https://bugs.launchpad.net/ubuntu/+source/egl-wayland/+bug/1935082/comments/24
+
+ 15:49 <ubottu> Launchpad bug 1935082 in egl-wayland (Ubuntu) "[MIR] egl-wayland" [Undecided, Confirmed]
+
+ 15:49 <cpaelzer> #topic Incomplete bugs / questions
+
+ 15:49 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:50 <sarnold> thanks cpaelzer, nice
+
+ 15:50 <cpaelzer> last update on vulkan was the reivew, and I know it is being worked on e.g. to add the tests
+
+ 15:50 <cpaelzer> so this list is all fine
+
+ 15:50 <cpaelzer> let me get to the crowded next section of the meeting
+
+ 15:50 <cpaelzer> #topic Any other business?
+
+ 15:50 <cpaelzer> First of all a good and positive news :-)
+
+ 15:51 <cpaelzer> Lukas has done three great reviews and clearly seems to be able to follow the rules, help us to improve the team and IMHO should be allowed to "work alone" now.
+
+ 15:51 <cpaelzer> don't be too concerned if unsure I'm sure he will ask
+
+ 15:51 <cpaelzer> But that is just my opinion, therfore I wanted to call for +1/-1 on letting him handle things alone
+
+ 15:51 <cpaelzer> +1
+
+ 15:51 <sarnold> +1
+
+ 15:51 <didrocks> +1
+
+ 15:51 <slyon> +0 :)
+
+ 15:51 <sarnold> a halo? :)
+
+ 15:51 <cpaelzer> ok slyon doesn't have a vote and ddstreet jamespage are distracted by other things but we already reached qorum
+
+ 15:51 <cpaelzer> thanks
+
+ 15:52 <cpaelzer> slyon: and thanks for you helping the team
+
+ 15:52 <cpaelzer> !
+
+ 15:52 <sarnold> thanks slyon :)
+
+ 15:52 <cpaelzer> it won't be more formal than that slyon, sorry
+
+ 15:52 <slyon> thank you for your reviews and the approval!
+
+ 15:52 <cpaelzer> next topic, fuse3
+
+ 15:52 <didrocks> can we give him all MIRs now? kthxbye :)
+
+ 15:52 <cpaelzer> => https://bugs.launchpad.net/ubuntu/+source/fuse3/+bug/1934510
+
+ 15:52 <cpaelzer> Rightfully asked by various Desktop people if we could consider to promote it now to unblock and resolve plenty of work now instead of last minute.
+
+ 15:52 <ubottu> Launchpad bug 1934510 in fuse3 (Ubuntu) "[MIR] fuse3 as a dependency of qemu 6.0 and GNOME apps" [Undecided, New]
+
+ 15:52 <cpaelzer> Paride has had a look at all the affected subprojects and updated the status
+
+ 15:52 <cpaelzer> See https://bugs.launchpad.net/ubuntu/+source/fuse3/+bug/1934510/comments/15
+
+ 15:52 <cpaelzer> I said the following but would like to sync and agree with you about it:
+
+ 15:52 <cpaelzer> "+1 to land and promote early (unblocking a lot) if the transition to demote fuse(2) can and will be completed inside the 22.04 cycle"
+
+ 15:52 <cpaelzer> Any opposing thoughts?
+
+ 15:52 <cpaelzer> Benefit: all teams can work on their dependencies soon instead of last minute
+
+ 15:53 <cpaelzer> Risk: if we do not manage to get fuse2 demoted in time we would have two fuses
+
+ 15:53 <cpaelzer> in 22.04 which is an LTS
+
+ 15:53 <cpaelzer> this mostly needs a +1 from the owning team and security
+
+ 15:53 <cpaelzer> = slyon + sarnold
+
+ 15:53 <slyon> +1 from foundations. We have all the patches ready and are working on the transition
+
+ 15:53 <cpaelzer> I'd be in favor of doing it this way (promoting now'ish), but what do you think?
+
+ 15:54 <didrocks> even if we don’t vote formally +1 as well, we did it multiple times in the past already and it worked well
+
+ 15:54 <cpaelzer> sarnold: I can tell you from VMWare that they want to do this for the next release, it doesn't exist yet but that much for intentions
+
+ 15:54 <sarnold> +1 -- lets get this going
+
+ 15:54 <cpaelzer> thanks
+
+ 15:54 <cpaelzer> I'll update the case
+
+ 15:56 <cpaelzer> bug updated
+
+ 15:56 <cpaelzer> and last but not least - the rewrite of our rules
+
+ 15:56 <cpaelzer> to be more readable, clear and useful
+
+ 15:56 <cpaelzer> https://github.com/cpaelzer/ubuntu-mir/pull/2
+
+ 15:56 <ubottu> Pull 2 in cpaelzer/ubuntu-mir "Unify rules and templates" [Open]
+
+ 15:56 <cpaelzer> I have an ack there by slyon didrocks and ddstreet
+
+ 15:56 <cpaelzer> and I wanted to thank you for cross reading it
+
+ 15:56 <cpaelzer> each iteration looking at it made me do improvements
+
+ 15:57 <cpaelzer> and the spriti here is "better than before, can be improved further"
+
+ 15:57 <slyon> Thanks for doing all this cleanup. Using the new template is much better than the previous approach.
+
+ 15:57 <cpaelzer> It is a building block and prereq to express what we want to do with rust
+
+ 15:57 <didrocks> well, thank **you** for doing this huge task :)
+
+ 15:57 <cpaelzer> thanks
+
+ 15:57 <cpaelzer> so +1/-1 for me landing those changes as shown here?
+
+ 15:57 <slyon> +1
+
+ 15:57 <cpaelzer> +1 from me (in case my vote counts)
+
+ 15:58 <cpaelzer> and as I said we had +1 from ddstreet and didrocks on the PR already
+
+ 15:58 <didrocks> yeah
+
+ 15:58 <cpaelzer> sarnold: jamespage: any opinion from you ?
+
+ 15:58 <sarnold> I'm sorry to say that I've not seen this in a few weeks and can't remember much about it
+
+ 15:58 <sarnold> this is vastly longer than I remember, which makes me wonder if I even remember the right thing
+
+ 15:59 <cpaelzer> ok, since we have reached qorum already how about /me updating it and you feel free to comment if you spot anything later
+
+ 15:59 <sarnold> ack, thanks
+
+ 15:59 <cpaelzer> great
+
+ 15:59 <cpaelzer> and now final topic
+
+ 15:59 <cpaelzer> swtpm
+
+ 15:59 * sarnold buries head in sand
+
+ 15:59 <cpaelzer> it was agreed that we need this and as usual now it is urgent
+
+ 15:59 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/swtpm/+bug/1948748
+
+ 15:59 <ubottu> Launchpad bug 1948748 in swtpm (Ubuntu) "[MIR] swtpm" [Undecided, New]
+
+ 15:59 <cpaelzer> vorlon: and I have worked on this to get it to this stage asap
+
+ 16:00 <cpaelzer> but now it is on security
+
+ 16:00 <cpaelzer> given the constraints on this, anything that can be done to give this some prio in seucrity would propably be great
+
+ 16:00 <cpaelzer> "security"
+
+ 16:00 <sarnold> yeah, it's bumped python-cheroot
+
+ 16:00 <sarnold> I've run it through coverity so far, hooray for the easy building and no problems there :) I haven't started in on it yet
+
+ 16:01 <cpaelzer> thanks, as I said in the past if we can make anything to get you @sarnold more resources/prio let us know
+
+ 16:01 <cpaelzer> otherwise please just hear our call and do as much as you can :-)
+
+ 16:01 <cpaelzer> that would be my list of topics
+
+ 16:01 <sarnold> we've hired on some new folks and as they get settled, hopefully I'll be able to bring them up on MIRs :)
+
+ 16:01 <cpaelzer> still it seems there is hope
+
+ 16:01 <cpaelzer> anything else from you to discuss ?
+
+ 16:01 <sarnold> nothing from me
+
+ 16:01 <slyon> nothing here
+
+ 16:02 <cpaelzer> ok, I guess ddstreet and jamespage will continue to be distracted
+
+ 16:02 <cpaelzer> didrocks: from you anything?
+
+ 16:02 <didrocks> anything for me
+
+ 16:02 <didrocks> nothing*
+
+ 16:02 <jamespage> sorry - trying todo two meetings at once is multifailing
+
+ 16:02 <jamespage> but nothing more from me
+
+ 16:02 <didrocks> sorry, in another HO as well now :)
+
+ 16:02 <cpaelzer> I know, not problem jamespage
+
+ 16:02 <cpaelzer> s/not/no/
+
+ 16:02 <cpaelzer> ok, then thanks to all of you
+
+ 16:02 <cpaelzer> we made great steps forward
+
+ 16:02 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

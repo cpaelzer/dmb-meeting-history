@@ -1,0 +1,465 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 13 Jul at 15:02 &mdash; 15:38 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2017/ubuntu-meeting.2017-07-13-15.02.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+
+=== Bug queue ===
+The discussion about "Bug queue" started at 15:26.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-aa-incoming-bug-tasks.html#foundations-bugs 
+
+=== AOB ===
+The discussion about "AOB" started at 15:34.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (39)
+ * bdmurray (29)
+ * sil2100 (25)
+ * cyphermox (24)
+ * tdaitx (15)
+ * chiluk (13)
+ * xnox (9)
+ * rbalint (7)
+ * philroche (7)
+ * ubottu (7)
+ * fginther (6)
+ * Odd_Bloke (6)
+ * Tribaal (5)
+ * rcj (5)
+ * meetingology (3)
+ * gaughen (2)
+
+
+
+== Full Log ==
+
+
+ 15:02 <slangasek> #startmeeting
+
+ 15:02 <meetingology> Meeting started Thu Jul 13 15:02:59 2017 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02 <meetingology> 
+
+ 15:02 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <slangasek> $ echo $(shuf -e doko bdmurray slangasek infinity sil2100 cyphermox tdaitx xnox mwhudson rbalint rcj philroche Odd_Bloke Tribaal fginther)
+
+ 15:03 <slangasek> Odd_Bloke doko fginther sil2100 xnox rcj slangasek cyphermox Tribaal tdaitx mwhudson philroche infinity rbalint bdmurray
+
+ 15:03 <chiluk> o/
+
+ 15:04 <slangasek> Odd_Bloke: hello
+
+ 15:05 <Odd_Bloke> Sigh, of course I'd be first when I'm running late.
+
+ 15:05 <rbalint> o/
+
+ 15:05 <Odd_Bloke> * Preparing for the product sprint next week
+
+ 15:05 <Odd_Bloke> * Cherry-picked all the git commits
+
+ 15:05 <Odd_Bloke> done
+
+ 15:06 <Odd_Bloke> doko:
+
+ 15:06 <Odd_Bloke> (Or maybe not because he's on vacation.)
+
+ 15:06 <sil2100> I think doko is away?
+
+ 15:06 <slangasek> yes
+
+ 15:06 <slangasek> fginther:
+
+ 15:06 <fginther> * Image testing for walinuxagent 2.2.14
+
+ 15:07 <fginther> * Automated image publication workflow improvements
+
+ 15:07 <fginther> + Utility for processing manifest differences
+
+ 15:07 <fginther> + Jobs for checking and acting upon manifest differences
+
+ 15:07 <fginther> * Enabled publishing of blobs to Azure Germany
+
+ 15:07 <fginther> done
+
+ 15:07 <sil2100> - A lot of regular SRU reviews and releases
+
+ 15:07 <sil2100> - ubuntu-image:
+
+ 15:07 <sil2100> * Minor fixes to the release script
+
+ 15:07 <sil2100> * HIGHLIGHT: Releasing ubuntu-image 1.1 - deb and snap
+
+ 15:07 <sil2100> * Investigating and fixing issues with some multiarch dependent libraries
+
+ 15:07 <slangasek> sil2100:
+
+ 15:07 <sil2100> * Re-releasing fixed zesty-based 1.1 snap (beta channel)
+
+ 15:07 <sil2100> - Releasing the previous gce-compute-image-packages to -updates
+
+ 15:07 <sil2100> - Reviewing and sponsoring Balint's trusty gce-compute-image-packages fix
+
+ 15:07 <sil2100> - Change the kernel-sru-review cache branch per Steve's reviews
+
+ 15:07 <sil2100> - Checking skiboot artful -> xenial delta, SRUing latest upstream release to xenial
+
+ 15:08 <sil2100> - Reading up on the point release process, prepping minor stuff
+
+ 15:08 <sil2100> (done)
+
+ 15:08 <slangasek> xnox:
+
+ 15:08 <xnox> systemd for xenial reviewed and accepted to proposed THANK YOU; all test cases passes \o/ so it can safely age for 16.04.3
+
+ 15:08 <xnox> s390-tool for xenial reviewed and accepted to proposed THANK YOU; yet to validate
+
+ 15:08 * xnox is confused about "verification-needed verification-needed-$suite" added on all the sru bugs. I thought "verification-needed" is redundant then.
+
+ 15:08 <xnox> ocaml transition in progress, with demotions only 23 odd packages left
+
+ 15:08 <xnox> subiquity - discussing how to proceed with vlan views with michael, will start prototyping next
+
+ 15:08 <xnox> WSL got published; and fixed up; and blogged; and fixed up.
+
+ 15:08 <xnox> ..
+
+ 15:10 <bdmurray> rcj: your turn
+
+ 15:11 <rcj> bdmurray: thx
+
+ 15:12 <sil2100> xnox: it is a bit redundant, yes, but we decided to leave it in case people want to easily look for bugs that need verification
+
+ 15:12 <rcj> It was a quiet week, I've been down in the cloud-image publication plumbing
+
+ 15:12 <xnox> sil2100, ok.
+
+ 15:13 <rcj> quiet in terms of interesting bits.  We have daily publication of all releases swapped over to the new code.
+
+ 15:13 <rcj> done
+
+ 15:13 <rcj> slangasek:
+
+ 15:14 <slangasek> * SRU reviews
+
+ 15:14 <slangasek> * Landed fix for broken files on ddebs.u.c, then spent a couple days regenerating cache after accidental breakage (LP: #1702550)
+
+ 15:14 <ubottu> Launchpad bug 1702550 in ddeb-retriever "Several files on ddebs.ubuntu.com have bogus content" [High,Fix released] https://launchpad.net/bugs/1702550
+
+ 15:14 <slangasek> * Landed sil2100's branches for ubuntu-archive-tools
+
+ 15:14 <slangasek> * fixes to pc gadget snaps to build from source in archive
+
+ 15:14 <slangasek> * security release for ubuntu-image
+
+ 15:14 <slangasek> * publish new fixed candidate,stable channel core images
+
+ 15:14 <slangasek> * first cut of policy for "Ubuntu main" snaps
+
+ 15:14 <slangasek> * preparing for next week product sprint
+
+ 15:14 <slangasek> * off tomorrow, swapping for sprint travel
+
+ 15:14 <slangasek> (done)
+
+ 15:14 <slangasek> cyphermox:
+
+ 15:14 <cyphermox> - back from vacation, catching up
+
+ 15:15 <cyphermox> MIRs:
+
+ 15:15 <cyphermox> - sbuild, python-scrypt, python-bcrypt, open-isns, numactl, nghttp2
+
+ 15:15 <cyphermox> - pyparted needs help (tests not being run)
+
+ 15:15 <cyphermox> netplan:
+
+ 15:15 <cyphermox> - [HIGHLIGHT] preparing release 0.25:
+
+ 15:15 <cyphermox> - fixing autopkgtests
+
+ 15:15 <cyphermox> - better handle unconfigured devices re: how to deal with IPv6 RAs
+
+ 15:15 <cyphermox> - improve MTU setting for the NetworkManager handler
+
+ 15:15 <cyphermox> artful:
+
+ 15:15 <cyphermox> - reviewing ubiquity merge proposals
+
+ 15:15 <cyphermox> - reupload shim-signed SRUs for non-interactive, apport hook fixes, state tracking
+
+ 15:15 <cyphermox> paperwork:
+
+ 15:15 <cyphermox> - filling backlog cards, discussing pasta processes
+
+ 15:15 <cyphermox> (done)
+
+ 15:15 <cyphermox> sil2100: that pyparted thing, we should discuss after the meeting, not sure if you had seen the bug I filed
+
+ 15:16 <slangasek> sil2100: (and that I assigned to you :)
+
+ 15:16 <slangasek> Tribaal:
+
+ 15:16 <sil2100> Oh
+
+ 15:16 * sil2100 needs to fix his bugmail
+
+ 15:16 <cyphermox> bug LP: #1695058
+
+ 15:16 <ubottu> Launchpad bug 1695058 in pyparted (Ubuntu) "should run tests as part of the package build" [High,Triaged] https://launchpad.net/bugs/1695058
+
+ 15:16 <Tribaal> * Refactoring, adding tests in our build tools
+
+ 15:16 <Tribaal> * Added/fixed the GCE publication using mutiqueue SCSI
+
+ 15:16 <Tribaal> * Some work on automatic promotion
+
+ 15:16 <sil2100> cyphermox: thanks! I can take that, sure
+
+ 15:16 <Tribaal> (not very interesting but *meh*)
+
+ 15:16 <Tribaal> (done)
+
+ 15:16 <tdaitx> > OpenJDK security update
+
+ 15:16 <tdaitx> > Squad, Trello and whatnot
+
+ 15:16 <tdaitx> > Other: fixed rtl8812 wifi by replacing network-manager with wicd (https://github.com/astsam/rtl8812au/issues/36)
+
+ 15:16 <tdaitx> (done)
+
+ 15:17 <cyphermox> hum wat?
+
+ 15:17 <tdaitx> yeah, weird
+
+ 15:17 <cyphermox> indeed, I think I have a rtl8812au and it worked fine..
+
+ 15:17 <tdaitx> I can help debug that
+
+ 15:17 <cyphermox> can you file a bug on LP?
+
+ 15:17 <philroche> * Automated promotion work
+
+ 15:17 <tdaitx> sure
+
+ 15:17 <philroche> + Cleanup of dailies
+
+ 15:18 <cyphermox> tdaitx: ta
+
+ 15:18 <philroche> * ENA attribute enabled for Trusty images on AWS
+
+ 15:18 <slangasek> tdaitx: any +1 maintenance right now?
+
+ 15:18 <philroche> * gce-compute-image-packages package SRU verification
+
+ 15:18 <philroche> (done)
+
+ 15:18 <cyphermox> philroche: what is ENA attribute?
+
+ 15:18 <bdmurray> is infinity about?
+
+ 15:18 <slangasek> no infinity?
+
+ 15:18 <slangasek> rbalint:
+
+ 15:18 <tdaitx> slangasek, planned for tomorrow
+
+ 15:18 <chiluk> tdaitx the rtl8812au seems like something that should get really fixed and not just worked around.
+
+ 15:19 <slangasek> tdaitx: on the day I'm not around to sponsor, too bad :)
+
+ 15:19 <rbalint> * short week, was on long vacation
+
+ 15:19 <rbalint> * Debian uploads: pam-ssh-agent-auth
+
+ 15:19 <rbalint> * multiple unattended-updates changes including helping out upstream sorting out PR-s, Ubuntu delta, Debian patches, LP: #1690980
+
+ 15:19 <ubottu> Launchpad bug 1690980 in OEM Priority Project "unattended-upgrades does not block shutdown of system, as it is designed to" [Critical,Triaged] https://launchpad.net/bugs/1690980
+
+ 15:19 <philroche> cyphermox: It means that you can used enhanced networking on AWS.
+
+ 15:19 <cyphermox> slangasek: I can sponsor uploads for tdaitx
+
+ 15:19 <cyphermox> philroche: cool
+
+ 15:19 <philroche> Speeds up to 20Gb/s
+
+ 15:19 <rbalint> * google-compute-engine-oslogin SRU LP: #1703647
+
+ 15:19 <tdaitx> slangasek, cyphermox and there's sil2100 as well
+
+ 15:19 <ubottu> Launchpad bug 1703647 in gce-compute-image-packages (Ubuntu Trusty) "google-compute-engine-oslogin 20170622-0ubuntu1~14.04.0 installation fails on Trusty" [Undecided,Fix committed] https://launchpad.net/bugs/1703647
+
+ 15:19 <rbalint> (no highlights for now)
+
+ 15:19 <rbalint> (done)
+
+ 15:19 <slangasek> bdmurray:
+
+ 15:19 <bdmurray> tdaitx: Are you going to SRU the openjdk package hook?
+
+ 15:20 <bdmurray> utilized cassandra database query to verify libgweather SRU was good
+
+ 15:20 <bdmurray> tested release upgrades from EoL releases
+
+ 15:20 <bdmurray> worked with balint on unattended-upgrades bug LP: #1690980
+
+ 15:20 <bdmurray> tested balint's patch for unattended-upgrades bug LP: #1690980
+
+ 15:20 <bdmurray> discussion re pulseaudio regressions
+
+ 15:20 <ubottu> Launchpad bug 1690980 in OEM Priority Project "unattended-upgrades does not block shutdown of system, as it is designed to" [Critical,Triaged] https://launchpad.net/bugs/1690980
+
+ 15:20 <slangasek> tdaitx: yeah, but if I don't get to sponsor I don't have content for an endorsement!
+
+ 15:20 <tdaitx> bdmurray, yes
+
+ 15:20 <bdmurray> sorted out issue with upstream apport's crash digger and bad attachments
+
+ 15:20 <bdmurray> uploaded new version of lptools to AA to handle same bad attachments issue
+
+ 15:20 <sil2100> Me too!
+
+ 15:20 <bdmurray> merged powersj MoM MP to add team stats for ubuntu-server
+
+ 15:20 <bdmurray> piggy-backed on the above and added foundations-bugs
+
+ 15:20 <bdmurray> merged bug pattern MP for a samba bug report
+
+ 15:20 <sil2100> I need to sponsor some stuff for you!
+
+ 15:20 <bdmurray> tdaitx: then we'd need whoopsie SRU'ed too to allow the field through
+
+ 15:20 <bdmurray> replied to team process / setup emails
+
+ 15:20 <bdmurray> irc discussion with moon127 regarding PS4 swift storage (dump it!)
+
+ 15:20 <bdmurray> HIGHLIGHT: blogged about using Error Tracker for SRUs (http://www.murraytwins.com/blog/?p=144)
+
+ 15:20 <bdmurray> answered questions in #ubuntu-bugs regarding bug expiry
+
+ 15:20 <bdmurray> updated meta-release-development and m-r-lts-development to only have supported upgrade paths
+
+ 15:20 <gaughen> cool!
+
+ 15:20 <bdmurray> removed --sandbox option from update-manager to match u-r-u (LP: #1605259)
+
+ 15:20 <ubottu> Launchpad bug 1605259 in update-manager (Ubuntu) "do-release-upgrade --sandbox fails" [Undecided,New] https://launchpad.net/bugs/1605259
+
+ 15:20 <bdmurray> u-r-u & u-m clarify the definition of the "-d" switch (LP: #1700829)
+
+ 15:21 <ubottu> Launchpad bug 1700829 in update-manager (Ubuntu Artful) "-d switch doesn't accurately describe itself" [High,Triaged] https://launchpad.net/bugs/1700829
+
+ 15:21 <bdmurray> special SRU review of livecd-rootfs for X for infinity
+
+ 15:21 <bdmurray> ✔ done
+
+ 15:21 <tdaitx> bdmurray, yeah, it's on my todo list, what do I need to do there exactly?
+
+ 15:21 <gaughen> bdmurray, I just looked at your blog on Tuesday!
+
+ 15:21 <bdmurray> tdaitx: copy what I did in artful ;-)
+
+ 15:21 <slangasek> any questions over status?
+
+ 15:22 <tdaitx> chiluk, I need to take a deeper look into that, since the rtl works on the command line or wicd, but not on nm
+
+ 15:22 <chiluk> yeah tdaitx.. a LOT of people are hitting nm issues lately
+
+ 15:22 <tdaitx> bdmurray, k, tks
+
+ 15:22 <chiluk> every laptop I own right now has weirdness.
+
+ 15:22 <chiluk> I think it may even be timing related.
+
+ 15:23 <chiluk> as in nm-applet coming up before network-manager or the driver are ready
+
+ 15:23 <bdmurray> tdaitx: https://launchpadlibrarian.net/323195476/whoopsie_0.2.55_0.2.56.diff.gz
+
+ 15:23 <chiluk> I'll add some status as well since at least xnox used to care about intel-microcode
+
+ 15:23 <chiluk> lp#1700373 - intel-microcode - backported 20170511 to x, y, then discovered intel released 20170707 over the weekend.  Then backported 20170707 for SRU in x,y,z. Tested said backport, created public PPA for additional testing.  SRU currently waiting in Upload queue for x, y, z.
+
+ 15:23 <chiluk> lp1673481 - Completed verification of y and z.
+
+ 15:24 <tdaitx> bdmurray, in case I get the openjdk update before whoopsie, the only problem is that we won't get that field uploaded right?
+
+ 15:24 <bdmurray> tdaitx: right that field won't make it into errors but the rest of the report will and the whole thing would land in LP
+
+ 15:24 <xnox> ## Highlight: systemd 234 released upstream with contributions from Canonical for persistent interface naming of the ACPI platform devices, relevant on ARM64
+
+ 15:25 <sil2100> chiluk: I didn't find time to review the intel-microcode SRU yet
+
+ 15:25 <sil2100> Oh
+
+ 15:25 <sil2100> Ok
+
+ 15:26 <slangasek> [TOPIC] Bug queue
+
+ 15:26 <slangasek> [LINK] http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-aa-incoming-bug-tasks.html#foundations-bugs
+
+ 15:27 <slangasek> bdmurray: we did try to review this last week while you were out, and nothing moved
+
+ 15:27 <slangasek> I don't remember why this one critical is lingering in incoming
+
+ 15:28 <bdmurray> slangasek: because a community member made it critical w/o much justification
+
+ 15:28 <tdaitx> chiluk, when you quit you missed sil2100's comment: <sil2100> chiluk: I didn't find time to review the intel-microcode SRU yet
+
+ 15:28 <sil2100> Ah, chiluk is back!
+
+ 15:28 <sil2100> tdaitx: thanks ;)
+
+ 15:28 <slangasek> bdmurray: ah, cough
+
+ 15:28 <chiluk> sil2100: ... not back... but now part of the community
+
+ 15:28 <sil2100> chiluk: if other SRU members won't find cycles for the review I might pick it up tomorrow
+
+ 15:28 <chiluk> yeah sil2100.. I'm ok with us being a little slow on it.
+
+ 15:29 <chiluk> although from all my testing the microcode update seems to be fairly specific to only kabylake and skylake-e/x
+
+ 15:30 <bdmurray> I don't think there are many new things in rls-aa-incoming
+
+ 15:30 <chiluk> sil2100... Indeed has given me 40% time to make sure that Ubuntu continues to work as their development environment... and do some platform enablement.
+
+ 15:32 <slangasek> ok, 1646739 dispatched (marked as a duplicate)
+
+ 15:34 <slangasek> bdmurray: anything else on there worth looking at?
+
+ 15:34 <bdmurray> slangasek: not today
+
+ 15:34 <slangasek> [TOPIC] AOB
+
+ 15:36 <slangasek> Anything else?
+
+ 15:38 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

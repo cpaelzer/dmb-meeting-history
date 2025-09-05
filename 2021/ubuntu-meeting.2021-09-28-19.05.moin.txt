@@ -1,0 +1,239 @@
+== Meeting information ==
+
+ * #ubuntu-meeting meeting, started by vorlon, 28 Sep at 19:05 &mdash; 19:38 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-09-28-19.05.log.html
+
+
+
+== Meeting summary ==
+
+=== Apologies ===
+
+Discussion started by vorlon at 19:05.
+
+
+=== Action review ===
+
+Discussion started by vorlon at 19:07.
+
+ * ''ACTION:'' rbasak to draft refined rules for the proposed "stability" requirement for third-party software repositories  (vorlon, 19:32)
+
+=== Scan the mailing list archive for anything we missed (standing item) ===
+
+Discussion started by vorlon at 19:35.
+
+
+=== Check up on community bugs (standing item) ===
+
+Discussion started by vorlon at 19:36.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu-community/+bugs?field.assignee=techboard zarro boogs  (vorlon, 19:36)
+
+=== Select a chair for the next meeting (next from https://launchpad.net/~techboard/+members) ===
+
+Discussion started by vorlon at 19:36.
+
+ * Next meeting 2021-10-12 @ 20:00 London time; chair: sil2100, backup: mdesleaur  (vorlon, 19:37)
+
+=== AOB ===
+
+Discussion started by vorlon at 19:37.
+
+
+
+
+== Action items, by person ==
+
+ * rbasak
+  * rbasak to draft refined rules for the proposed "stability" requirement for third-party software repositories
+
+
+
+== People present (lines said) ==
+
+ * vorlon (49)
+ * rbasak (27)
+ * mdeslaur (6)
+ * meetingology (3)
+ * ubottu (1)
+
+
+
+== Full log ==
+
+
+ 19:05 <vorlon> #startmeeting
+
+ 19:05 <meetingology> Meeting started at 19:05:06 UTC.  The chair is vorlon.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 19:05 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 19:05 <vorlon> #topic Apologies
+
+ 19:06 <vorlon> I haven't seen any on the mailing list, I guess sil2100 and cyphermox are just lost somewhere ;)
+
+ 19:07 <vorlon> hmm https://wiki.ubuntu.com/TechnicalBoardAgenda seems to have been mangled somewhat, please hold while I look at history
+
+ 19:07 <vorlon> #topic Action review
+
+ 19:08 <vorlon> AGREED: MATE is required to resolve the PPA situation by the J release. Otherwise, MATE will not be an official flavour in J. (rbasak, 19:11)
+
+ 19:08 <rbasak> Looks like I mistakenly copied that as an action but it wasn't an action.
+
+ 19:08 <vorlon> ok, was going to ask :)
+
+ 19:08 * vorlon rbasak to communicate the TB's MATE resolution to the MATE flavour leads.
+
+ 19:08 <rbasak> However, I do have an action to make sure the MATE team know about this, and I haven't done that yet :-/
+
+ 19:08 <vorlon> ack, carrying over
+
+ 19:09 * vorlon formal ratification of third party seeded snap security policy, depends on:
+
+ 19:09 * vorlon vorlon to circle around with store, snapcraft, et all, and revise the snap source revision policy to be more clear with regards to rebuildability and GPL compliance.
+
+ 19:09 <vorlon> these are carry-over for me
+
+ 19:09 * vorlon vorlon to reply to seeded snap upload permissions question on list
+
+ 19:09 <vorlon> also carry-over, though, I've made myself some jira cards for these now so I'm tracking better in one place
+
+ 19:09 * vorlon sil2100 to start a draft summarizing the OEM archive portion of the meeting which xnox and TB will review, edit, and ratify before we move on to figuring out the next step
+
+ 19:09 <vorlon> sil2100 not here, so carrying over for him
+
+ 19:09 * vorlon all TB members to "vote" or explain what they do not like of a proposal on https://pad.ubuntu.com/third-party-repository-requirements
+
+ 19:10 <vorlon> I've only just started on this today (sorry) - I did leave comments objecting to the very first proposed requirement though ;) would we want to discuss that here?
+
+ 19:11 <rbasak> I just added a response to your comment. Maybe we can bring that in here now?
+
+ 19:11 <vorlon> or wait until we have more comments or more TB members present at the meeting?
+
+ 19:11 <vorlon> happy to discuss now
+
+ 19:12 <rbasak> I'd like to better understand your reasoning on this point so might as well do that part now at least please
+
+ 19:13 <vorlon> so, I understand your suggestion that this be an exception only for the browsers (firefox, chromium) because for other seeded snaps, maintained by Ubuntu developers / Canonical employees, it is likely that we want these to be stably maintained
+
+ 19:13 <vorlon> however, I am not convinced that this should be expressed as a TB policy
+
+ 19:14 <vorlon> I expect the number of snaps installed by default (which I think is what we're talking about here) is going to be fairly small
+
+ 19:14 <rbasak> I think that LTSness in the "doesn't massively change" sense is important. I'm not comfortable with packages shipping in a future LTS "switching over" to snaps that don't LTS wily-nily
+
+ 19:15 <rbasak> Hence my desire for it to be a TB policy. I'm not opposed to maintaining a list of exceptions, much like the TB used to do for MREs.
+
+ 19:15 <rbasak> And I'm open to non-browser exceptions too, depending.
+
+ 19:16 <rbasak> Counter-example: recently we had https://bugs.launchpad.net/ubuntu/+source/telegram-desktop/+bug/1942699, which I advocated against for the SRU team, and that was the final team decision (an exception would require a TB approval anyway I think)
+
+ 19:16 <ubottu> Launchpad bug 1942699 in telegram-desktop (Ubuntu Impish) "SRU: Update Telegram Desktop to 2.9.2" [Undecided, Fix Released]
+
+ 19:16 <rbasak> Although if that were a snap, it'd be unlikely to be seeded I think
+
+ 19:17 <vorlon> I think my main concerns with putting this in a TB policy are: 1) how do we express that in a policy that's not confusing, given that the snap experience in general explicitly does not make such committments, and 2) how do we actually gate any of this (because without a gate, the policy will likely be violated sooner or later)
+
+ 19:17 <rbasak> But a flavour might
+
+ 19:17 <vorlon> (and granted, there's a lot of policies we'd apply that are specific to default seeded snaps and not part of the snap store generally)
+
+ 19:18 <rbasak> We already document the requirements for seeded snaps. Why would it be confusing to have this as a requirement?
+
+ 19:18 <vorlon> right
+
+ 19:19 <rbasak> Or are you asking how I would define "stable"?
+
+ 19:19 <vorlon> yeah, I think that's the core of it
+
+ 19:20 <rbasak> I agree any judgement here is subjective. And the tricky part is that we (the Ubuntu governance structure) won't be gating or deciding on a per-upload basis, unlike SRUs.
+
+ 19:21 <mdeslaur> I'm a bit conflicted on this one...while I do think leaf desktop applications should be allowed to be updated to new versions, I don't like the idea of something like apache becoming a snap and getting behavioural changes all the time
+
+ 19:21 <rbasak> So I think it'd have to document the gist of what we mean, trust/rely on the intentions of snap packagers, and deal with issues if they are raised with us after the fact - for example by requiring a subsequent release to drop the seed.
+
+ 19:22 <rbasak> mdeslaur: while I do think leaf desktop applications should be allowed to be updated to new versions> interesting - I think we are opposed there.
+
+ 19:23 <rbasak> Well, specifically, leaf desktop applications that are installed by default, I mean. If a user chooses to install a specific snap, then that's something different.
+
+ 19:23 <vorlon> for another not-entirely-hypothetical example: if bluez were a snap on the desktop, how would we expect a policy around stability to be applied?
+
+ 19:24 <vorlon> are we going to have a policy with carve-outs for browsers, + hardware enablement, + ...
+
+ 19:24 <rbasak> I suppose what I want is the ability for an Ubuntu LTS install to avoid changing as much as possible, so users aren't forced into "rolling" any more than they have to be, and any deviation from that is opt-in. That causes me to not want this to happen for default installed apps, since they're not really opt-in. Not possible for firefox of course.
+
+ 19:25 <rbasak> vorlon: good question. Maybe we can grant a standing exception for anything that would be acceptable under SRU policy?
+
+ 19:25 <mdeslaur> why would someone want to get a snap installed by default instead of a deb if they can't update versions?
+
+ 19:25 <vorlon> well - there are some packages explicitly called out under hwe, but I think a number of them wind up being case-by-case decisions by the SRU team; and the SRU team is not in the loop on snap updates
+
+ 19:26 <mdeslaur> I mean, that's the whole point
+
+ 19:26 <vorlon> I think both Ubuntu Desktop and Ubuntu Server have a rather confined set of "default installed apps", by design, and that this would not change as a result of snaps
+
+ 19:27 <vorlon> flavors of course may take a different view
+
+ 19:27 <vorlon> (cough, Ubuntu Studio isos currently fail to build because the root squashfs is now too large to be a file on an iso9660 fs, cough)
+
+ 19:28 <rbasak> mdeslaur: can we distinguish users from Ubuntu developers? I think LTS users expect behaviour not to change as much as possible (with pragmatic exceptions). Developers might find it easier to just ship a snap instead of packaging a stable deb - such as in this DisplayCAL example that brought up this entire topic. I don't think a not-stable snap is appropriate in this kind of case - hence my desire
+
+ 19:28 <rbasak> to not permit it.
+
+ 19:28 <rbasak> Unless it fits under our normal HWE exception, but that requires behaviour to generally not change.
+
+ 19:29 <rbasak> Rather than throwing the baby out with the bathwater and allowing "anything goes".
+
+ 19:31 <vorlon> rbasak: as a path forward, could I suggest you draft some text for what you think the rule should look like, including the appropriate exceptions, and we can have a conversation about what that full rule might look like?
+
+ 19:31 <vorlon> I think my concern distills down to this being too cumbersome to express the rule accurately and therefore it's overhead that won't improve the outcomes, but I'm willing to give on this
+
+ 19:31 <rbasak> vorlon: ack
+
+ 19:32 <rbasak> We can leave the rest of this item until after you've finished reviewing it?
+
+ 19:32 <vorlon> #action rbasak to draft refined rules for the proposed "stability" requirement for third-party software repositories
+
+ 19:32 * meetingology rbasak to draft refined rules for the proposed "stability" requirement for third-party software repositories
+
+ 19:32 <vorlon> sounds good to me
+
+ 19:33 <mdeslaur> ok
+
+ 19:34 <vorlon> the next thing on TechnicalBoardAgenda is about displaycal, but I'm not sure if that's a leftover?
+
+ 19:34 <rbasak> I have a better understanding of your views now FWIW, which will be really helpful.
+
+ 19:34 <rbasak> I consider the displaycal item blocked on the previous one just discussed.
+
+ 19:35 <vorlon> ok
+
+ 19:35 <vorlon> #topic Scan the mailing list archive for anything we missed (standing item)
+
+ 19:36 <vorlon> last mails on https://lists.ubuntu.com/archives/technical-board/ were from August and have been addressed
+
+ 19:36 <vorlon> #topic Check up on community bugs (standing item)
+
+ 19:36 <vorlon> https://bugs.launchpad.net/ubuntu-community/+bugs?field.assignee=techboard zarro boogs
+
+ 19:36 <vorlon> #topic Select a chair for the next meeting (next from https://launchpad.net/~techboard/+members)
+
+ 19:36 <vorlon> looks like it should be sil2100 w/ mdeslaur as backup?
+
+ 19:37 <mdeslaur> ack
+
+ 19:37 <vorlon> #info Next meeting 2021-10-12 @ 20:00 London time; chair: sil2100, backup: mdesleaur
+
+ 19:37 <vorlon> #topic AOB
+
+ 19:37 <vorlon> anything else?
+
+ 19:37 <mdeslaur> not from me
+
+ 19:38 <rbasak> Not from me
+
+ 19:38 <vorlon> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

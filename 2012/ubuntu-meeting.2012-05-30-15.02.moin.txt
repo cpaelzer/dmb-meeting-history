@@ -1,0 +1,1040 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:05 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-05-30-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''ACTION:'' bdmurray to get package install reports with broken logs reported against the package manager instead of a random package with a trigger  (slangasek, 15:31:29)
+''LINK:'' http://ubuntu.5.n6.nabble.com/Installing-drivers-on-USB-sticks-td727548.html   (bdmurray, 15:36:45)
+''ACTION:'' xnox to merge autofs  (xnox, 15:40:22)
+''LINK:'' http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469354   (cjwatson, 15:53:31)
+
+ *Python porting virtual sprint
+
+ *AOB
+''LINK:'' https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562 - would love some extra eyes on that one  (ev, 16:03:09)
+''ACTION:'' slangasek to send an email about Python sprint  (xnox, 16:04:57)
+''ACTION:'' more reviews for ev's merge proposal  (xnox, 16:06:43)
+''LINK:'' https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562   (xnox, 16:06:50)
+''LINK:'' https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562   (slangasek, 16:07:24)
+''LINK:'' https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562   (slangasek, 16:07:59)
+
+
+
+Meeting ended at 16:08:42 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * bdmurray to get package install reports with broken logs reported against the package manager instead of a random package with a trigger
+ * xnox to merge autofs
+ * slangasek to send an email about Python sprint
+ * more reviews for ev's merge proposal
+
+
+
+== Action items, by person ==
+
+ * bdmurray
+ ** bdmurray to get package install reports with broken logs reported against the package manager instead of a random package with a trigger
+ * ev
+ ** more reviews for ev's merge proposal
+ * slangasek
+ ** slangasek to send an email about Python sprint
+ * xnox
+ ** xnox to merge autofs
+
+
+
+== People present (lines said) ==
+
+ * slangasek (122)
+ * ev (80)
+ * cjwatson (56)
+ * xnox (44)
+ * ogra_ (34)
+ * stgraber (29)
+ * bdmurray (29)
+ * stokachu (26)
+ * ubottu (21)
+ * jodh (12)
+ * doko (9)
+ * barry (8)
+ * meetingology (7)
+
+
+
+== Full Log ==
+
+
+ 15:02:05 <slangasek> #startmeeting
+
+ 15:02:05 <meetingology> Meeting started Wed May 30 15:02:05 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:05 <meetingology> 
+
+ 15:02:05 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:28 <slangasek> [TOPIC] lightning round
+
+ 15:02:31 <slangasek> echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson)
+
+ 15:02:36 <slangasek> cjwatson stgraber barry ev jodh doko bdmurray infinity ogra slangasek
+
+ 15:02:45 <slangasek> oh
+
+ 15:02:46 <slangasek> hmm!
+
+ 15:02:49 <slangasek> did I pull the wrong list? :)
+
+ 15:02:54 <doko> fired!
+
+ 15:03:06 <barry> it always takes 2 attempts :)
+
+ 15:03:06 <slangasek> stupid cut'n'paste
+
+ 15:03:17 * xnox the lightning round is broken second meeting in a row.....
+
+ 15:03:17 <jodh> there must be a charm to do this :)
+
+ 15:03:19 <ogra_> doko, better than fried
+
+ 15:03:22 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:03:25 <slangasek> ogra doko cjwatson barry stokachu ev jodh infinity slangasek stgraber xnox bdmurray
+
+ 15:03:28 <slangasek> is that better? :)
+
+ 15:03:35 <stokachu> \o/
+
+ 15:03:45 * ogra_ starts then
+
+ 15:03:47 <ogra_> done:
+
+ 15:03:48 <ogra_> * merges and FTBFS fixes (pending uploads)
+
+ 15:03:48 <ogra_> * whitmonday on ... guess ... monday
+
+ 15:03:48 <ogra_> * bugged infinity (who then bugged webops) enough to actually get our arm live builders back up
+
+ 15:03:48 <ogra_> * synced the new flash-kernel from debian
+
+ 15:03:48 <ogra_> todo:
+
+ 15:03:52 <ogra_> * switch to livefs builds for arm
+
+ 15:03:54 <ogra_> * test and fine bugs due to the flash-kernel switch
+
+ 15:03:56 <ogra_> * prepare for A1 and try to get as many arm images working as possible
+
+ 15:03:58 <ogra_> ..
+
+ 15:05:46 <doko> - vacation last week
+
+ 15:05:52 <doko> - Linaro connect this week
+
+ 15:06:09 <doko> - fixing GCC 4.7 build failures (~80 and counting)
+
+ 15:06:11 <doko> ..
+
+ 15:06:17 <ogra_> .oO( why does he get all the candy and we dont )
+
+ 15:06:24 <cjwatson> Packaging:
+
+ 15:06:24 <cjwatson> * Various random syncs and merges.
+
+ 15:06:24 <cjwatson> * Finished packaging OpenSSH 6.0p1, and merged to quantal.
+
+ 15:06:24 <cjwatson> * Spent the best part of a day bisecting GRUB to track down what turned out to be a memory leak that disproportionately affected EFI systems due to the larger disk cache in use there.  Backported the fix.
+
+ 15:06:26 <slangasek> doko: is that 80 fixed, or 80 to go?
+
+ 15:06:28 <cjwatson> Launchpad:
+
+ 15:06:31 <cjwatson> * Removed support for daily installer uploads, not used since the days of dak (bug 827965).
+
+ 15:06:33 <ubottu> Launchpad bug 827965 in Launchpad itself "Ditch daily installers" [High,Fix released] https://launchpad.net/bugs/827965
+
+ 15:06:34 <cjwatson> * Lots of work on the custom upload code (e.g. bug 827973); mostly extensive refactoring to support future changes.
+
+ 15:06:35 <ubottu> Launchpad bug 827973 in Launchpad itself "Unify custom-upload filename parsing and handling" [High,In progress] https://launchpad.net/bugs/827973
+
+ 15:06:37 <cjwatson> * Arranged for imports of Debian publication records to be a bit more responsive.
+
+ 15:06:38 <slangasek> (are we counting up or down? :)
+
+ 15:06:40 <cjwatson> * Landed the first part of my work on the queue API (bug 1006173), exporting the acceptFromQueue() and rejectFromQueue() methods on PackageUpload objects.  Should be deployed in a day or two.
+
+ 15:06:42 <ubottu> Launchpad bug 1006173 in Launchpad itself "Queue tool requires direct DB access" [High,In progress] https://launchpad.net/bugs/1006173
+
+ 15:06:44 <cjwatson> * Discussions of how to sanely lay out the rest of the queue API.  I have an initial version working from before these discussions, but it'll need to be upended somewhat now.
+
+ 15:06:46 <doko> slangasek, 80+ fixed, see http://bugs.debian.org/cgi-bin/pkgreport.cgi?tag=ftbfs-gcc-4.7;users=debian-gcc@lists.debian.org
+
+ 15:06:48 <cjwatson> * Fixed buggy Packages-arch-specific parsing (bug 917708).
+
+ 15:06:49 <ubottu> Launchpad bug 917708 in Launchpad itself "Launchpad does not recognize Arch = any-arm" [Low,In progress] https://launchpad.net/bugs/917708
+
+ 15:06:50 <cjwatson> To do: Have a quick look at bug 1003443, since we've had a number of reports of that.
+
+ 15:06:51 <slangasek> ok
+
+ 15:06:52 <ubottu> Launchpad bug 1003443 in ubiquity (Ubuntu Quantal) "Ubuntu Quantal Desktop 21120523 failed to install: ubi-timezone failed with exit code 2" [Critical,Confirmed] https://launchpad.net/bugs/1003443
+
+ 15:06:53 <cjwatson> ..
+
+ 15:07:19 <barry> short week due to usa holiday; working on the lazr.restfulclient stack (wsgi_intercept, lazr.authorization, oauth) - going slow but making progress; tracked down incompatibility in py3 version of httplib2 <http://tinyurl.com/7anbxcn>; reviewed slangasek's python-pam branch; updated transition tracker (now auto-updating, thanks xnox!); first dm dputs to debian for flufl.* packages; AM assigned, working through DD process; reviewed and
+
+ 15:07:19 <barry> accepted pep 421 - need to review patches.  todo: continue w/lazr stack; done.
+
+ 15:07:43 <stokachu> nothing to report. but i did work hard for it. done.
+
+ 15:07:53 <stokachu> :D
+
+ 15:07:59 <ev> - Continued work on the tastypie port of the web API. I've put this down for
+
+ 15:08:00 <ev> now as it's taking longer than expected and I need to focus on client-side
+
+ 15:08:01 <ev> work which has a FeatureFreeze deadline.
+
+ 15:08:03 <ev> - Fixes to our handling of unicode data through the web API.
+
+ 15:08:04 <ev> - Helped Marcus and Tom with some terminal screenshots.
+
+ 15:08:05 <ev> - Reviewed and merged Dmitrijs' branch to remove migration-assistant.
+
+ 15:08:06 <ev> - Dropped migration-assistant from quantal and precise-proposed.
+
+ 15:08:12 <ev> - errors.ubuntu.com now greys out problems which it believes may be fixed (in
+
+ 15:08:13 <ev> trunk).  This looks at whether the most recent published binary in Launchpad
+
+ 15:08:15 <ev> is the most recent version daisy has seen and whether the linked bug is
+
+ 15:08:15 <cjwatson> barry: Is the "py3 wsgi_intercept with half its brain removed" sketch plan working out?
+
+ 15:08:16 <ev> marked as fixed. If all goes well here, we'll change this to hide problems
+
+ 15:08:18 <ev> it believes are fixed.
+
+ 15:08:19 <slangasek> cjwatson: queue api - woot!
+
+ 15:08:19 <ev> - Started implementing Matthew's redesign of the diagnostic settings page.
+
+ 15:08:20 <ev> This adds a checkbox for automatically sending reports and installing
+
+ 15:08:21 <ev> updates when the computer is in an unusable state (can't login, etc).
+
+ 15:08:24 <ev> - Split libwhoopsie out of whoopsie to handle generating the system
+
+ 15:08:24 <ev> identifier. I'd appreciate any attention you can give the merge
+
+ 15:08:26 <ev> (https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562) and I'll
+
+ 15:08:27 <ev> return the favor. This is for:
+
+ 15:08:29 <ev> - Whoopsie, obviously. (Not sure if it's best practice to link or build in).
+
+ 15:08:30 <ev> - The preferences page in gnome-control-center, so we can have a button that
+
+ 15:08:32 <ev> takes the user to a webpage of all the crashes that have occurred on their
+
+ 15:08:33 <ev> computer.
+
+ 15:08:34 <ev> - The metrics database.
+
+ 15:08:35 <ev> - The hardware database.
+
+ 15:08:38 <ev> - Call with Kate and others on the QA Dashboard project.
+
+ 15:08:39 <ev> - Call with Ivanka on putting some structure to the various discussions going
+
+ 15:08:41 <ev> on around metrics.
+
+ 15:08:42 <ev> - Started researching the server side apport hooks. Some trickyness around
+
+ 15:08:44 <ev> running them as the user who experienced the crash, given that they'll be
+
+ 15:08:45 <ev> fed from the whoopsie process running as the whoopsie user. Suggestions
+
+ 15:08:47 <ev> welcome.
+
+ 15:08:48 <ev> - Started researching moving the Launchpad retracers onto the crash database
+
+ 15:08:50 <ev> retracer system, teaching them to talk to Cassandra instead of the existing
+
+ 15:08:51 <ev> sqlite database, and synthesizing a bug from the crash database retracers
+
+ 15:08:53 <ev> when one does not already exist. I've asked pitti to review my plans.
+
+ 15:08:54 <ev> - Started researching creating crash reports from unresponsive applications.
+
+ 15:08:56 <ev> The plan at the moment is to hook into compiz via a new plugin (or patch the
+
+ 15:08:57 <ev> Unity plugin) that checks the active property of the compiz window at the
+
+ 15:08:59 <ev> glPaint interval, then hand off the $PID to a process that can ptrace so we
+
+ 15:09:00 <ev> can gdb attach and bt, handing off to apport.
+
+ 15:09:02 <ev> I've chatted with Neil about this, and he approves of the compiz side of the
+
+ 15:09:03 <ev> plan. I've started a discussion with the security team about the ptrace
+
+ 15:09:05 <ev> side (https://bugs.launchpad.net/ubuntu/+bug/1006398).
+
+ 15:09:06 <ev> - Ongoing conversation with Francis, Robert Collins, and William Grant around
+
+ 15:09:06 <ubottu> Launchpad bug 1006398 in Ubuntu "Bypassing ptrace restrictions for errors from hanging applications" [Undecided,New]
+
+ 15:09:08 <ev> creating an API to map crash signatures to fixed versions of binary
+
+ 15:09:09 <ev> packages. I need to write an LEP and largely do the work myself, but they'll
+
+ 15:09:11 <ev> provide guidance.
+
+ 15:09:12 <ev> - Merged Dmitrijs' usb-creator branch to clear partitions rather than entire
+
+ 15:09:14 <ev> disks. Uploaded a new usb-creator.
+
+ 15:09:15 <ev> - Webops got paged that the retracers are having ongoing connectivity problems
+
+ 15:09:17 <ev> to Cassandra. It looks like we have a load problem somewhere in the system,
+
+ 15:09:18 <ev> so I've dedicated a day to getting Cassandra state monitoring via JMX,
+
+ 15:09:20 <ev> jmxtrans, and Graphite up and running:
+
+ 15:09:21 <ev> https://rt.admin.canonical.com//Ticket/Display.html?id=53325
+
+ 15:09:23 <ev> - Helped review Martin's merge to ubiquity that moves from jockey driver
+
+ 15:09:23 <barry> cjwatson: more or less, yes.  the only parts we care about are the httplib2 injections (hence the py3 httplib2 bug discovered), and whatever else is necessary to make that work in the context of lazr.*  i have a branch, probably not pushed yet.
+
+ 15:09:24 <ev> installation to ubuntu-drivers:
+
+ 15:09:26 <ev> https://code.launchpad.net/~pitti/ubiquity/ubuntu-drivers-common/+merge/107744
+
+ 15:09:27 <ev> - Started adding Graphite reporting to the API calls in
+
+ 15:09:28 <ev> http://errors.ubuntu.com.
+
+ 15:09:29 <ev> (done)
+
+ 15:09:42 <jodh> * boot/upstart:
+
+ 15:09:42 <jodh> - working on stateful re-exec blueprint.
+
+ 15:09:42 <jodh> - updated stateful re-exec Design doc.
+
+ 15:09:42 <jodh> - discussions with cjwaton and slangasek regarding upgrade scenarios.
+
+ 15:09:45 <jodh> - added basic JSON serialisation/deserialisation for sessions.
+
+ 15:09:48 <jodh> * archive/mountall: testing changes prior to first upload for bug 805509.
+
+ 15:09:50 <ubottu> Launchpad bug 805509 in mountall (Ubuntu Precise) "mountall(8) man page does not list any of the 9 available options." [Wishlist,Triaged] https://launchpad.net/bugs/805509
+
+ 15:09:52 <jodh> ┋
+
+ 15:09:54 <barry> cjwatson: (still fiddling with the insanity of wsgi on py3 though, so it may not yet be completely right)
+
+ 15:09:55 <jodh> 
+
+ 15:09:59 <cjwatson> barry: *nod*
+
+ 15:10:09 <slangasek> barry: +1 to your post to ubuntu-devel asking if we can prune jockey from the python3 dependency list ;)
+
+ 15:10:20 <barry> slangasek: less is more :)
+
+ 15:10:57 <slangasek> ev: if errors.ubuntu.com will hide problems it believes are fixed, how do we find out that it's wrong in this belief?
+
+ 15:11:20 <ev> slangasek: indeed, I don't want to make it ever go away completely
+
+ 15:11:36 <ev> but there may be value in splitting that into two views
+
+ 15:11:39 <ev> or hiding it by default
+
+ 15:11:50 <ev> we'll see how it goes though - I'm not definitely saying this will happen
+
+ 15:12:07 <xnox> infinity is not here?!...
+
+ 15:12:19 <cjwatson> he's connecting I think
+
+ 15:12:37 <slangasek> ev: right - just want to know what that view is and make sure we're monitoring it in some fashion :)
+
+ 15:12:44 * doko looks at the bar
+
+ 15:12:51 <ev> slangasek: understood
+
+ 15:12:53 <ogra_> xnox, he mailed iirc
+
+ 15:13:28 <ogra_> being at connect it is a decision between bar and meeting ... ;)
+
+ 15:14:11 <slangasek> jodh: oh cool, you're on top of those mountall merge requests then?  I'll clear those out of my queue
+
+ 15:14:49 <slangasek> no infinity today, he's excused for it being 11pm in Hong Kong
+
+ 15:15:00 <slangasek> as doko would've been, but apparently he chose IRC over beer :)
+
+ 15:15:13 <slangasek> * short week, memorial day holiday in the US
+
+ 15:15:13 <slangasek> * merge: autoconf, anacron (which now has upstart support in Debian)
+
+ 15:15:13 <slangasek> * fix makedev (bug #1001460)
+
+ 15:15:13 <slangasek> * SRU update-notifier for a regression caused by fixing the inclusion of translations, bug #1003100
+
+ 15:15:15 <ogra_> or has beer with IRC
+
+ 15:15:16 <slangasek> * SRU processing
+
+ 15:15:17 <ubottu> Launchpad bug 1001460 in makedev (Ubuntu Quantal) "preinst fails in d-i" [Critical,Fix released] https://launchpad.net/bugs/1001460
+
+ 15:15:18 <slangasek> * ported python-pam (not yet landed)
+
+ 15:15:19 <ubottu> Launchpad bug 1003100 in update-notifier (Ubuntu Quantal) "package-data-downloader: KeyError: 'paquetes'" [High,Fix committed] https://launchpad.net/bugs/1003100
+
+ 15:15:21 <slangasek> * reviewing merge proposals from xnox
+
+ 15:15:23 <slangasek> ..
+
+ 15:15:39 <jodh> slangasek: I'm testing your mountall changes now.
+
+ 15:15:53 <stgraber> - Networking
+
+ 15:15:53 <stgraber> - Spent some time testing candidates SRU for an IPv6 bug in Network Manager
+
+ 15:15:56 <stgraber> - Pushed some bugfixes in isc-dhcp to quantal
+
+ 15:15:59 <stgraber> - Prepared and uploaded SRU of isc-dhcp to 12.04
+
+ 15:16:01 <stgraber> - SRU
+
+ 15:16:04 <stgraber> - Pushed the next LXC SRU, containing quite a few bugfixes and reducing the delta with Quantal.
+
+ 15:16:07 <stgraber> - Sponsored libgcrypt11 for stokachu
+
+ 15:16:09 <stgraber> - Containers
+
+ 15:16:09 <slangasek> jodh: hmm, the ones I staged in the branch?
+
+ 15:16:12 <stgraber> - Pushed some improvements upstream, did some more work on the API design
+
+ 15:16:15 <stgraber> - Kernel SRU validation for apparmor bugfix required by LXC in 12.04
+
+ 15:16:17 <stgraber> - Implemented workaround for conflict with dnsmasq by shipping a dnsmasq.d config file
+
+ 15:16:20 <stgraber> - ISO tracker
+
+ 15:16:23 <stgraber> - Finished user interface for the testcase management changes
+
+ 15:16:25 <stgraber> - Fixed the API and updated python-qatracker, unit test says it's all good :)
+
+ 15:16:28 <stgraber> - Did some other minor improvements to the DB schema
+
+ 15:16:30 <slangasek> jodh: perhaps I should push the rest of my changes here - I was planning 2.37 to go straight to Debian unstable
+
+ 15:16:31 <stgraber> - Fixed remaining bits of the admin UI
+
+ 15:16:33 <stgraber> - Weekly meeting with QA, got some more changes to do
+
+ 15:16:36 <stgraber> - Other
+
+ 15:16:38 <stgraber> - Setup fortnightly 12.04.1 team meeting, starting tomorrow at 14:00 UTC in #ubuntu-meeting
+
+ 15:16:41 <stgraber> - Discussed API key policy with pastebin.com, ported to new API and SRUed to everything
+
+ 15:16:44 <slangasek> jodh: and it's just been blocked because we need plymouth updated in Debian first
+
+ 15:16:44 <stgraber> - Updated a bunch of bugs to go have the required SRU fields
+
+ 15:16:47 <stgraber> - TODO this week
+
+ 15:16:49 <stgraber> - Continue with ISO tracker changes based on the list from QA and work items
+
+ 15:16:52 <stgraber> - Monitor current SRUs and get them all tested as soon as they hit -proposed
+
+ 15:16:55 <stgraber> - Prepare for alpha1
+
+ 15:16:56 <jodh> slangasek: ok - i'll hold fire.
+
+ 15:16:58 <stgraber> (DONE)
+
+ 15:17:35 <xnox> == ubiquity-lvm-luks ==
+
+ 15:17:35 <xnox> * Working with mpt on the design
+
+ 15:17:36 <xnox> * LINK https://wiki.ubuntu.com/Ubiquity/AdvancedPartitioningSchemes
+
+ 15:17:36 <xnox> * Prototyping / testing changes in ubiquity
+
+ 15:17:37 <xnox> == foundations-q-btrfs-requirements ==
+
+ 15:17:37 <xnox> * btrfs-tools sponsored!
+
+ 15:17:38 <xnox> * needs discussion about backporting to precise (not sure about
+
+ 15:17:38 <xnox> kernel version dependencies, as precise has 3.2)
+
+ 15:17:39 <xnox> == other ==
+
+ 15:17:39 <xnox> * e2fsprogs sponsored!
+
+ 15:17:40 <xnox> * going to debconf, organised travel
+
+ 15:17:40 <xnox> * shepherding boost1.49 transition
+
+ 15:17:41 <xnox> * uploading gcc 4.7 patches to debian (~7)
+
+ 15:17:41 <xnox> * replying to merge request reviews...
+
+ 15:17:47 <slangasek> stgraber: did you get my note about Debian bug #673490?
+
+ 15:17:49 <ubottu> Debian bug 673490 in bridge-utils "serious doubts about /lib/udev/bridge-network-interface" [Important,Open] http://bugs.debian.org/673490
+
+ 15:17:56 <doko> slangasek, I'll catch up later =)
+
+ 15:18:02 <slangasek> doko: heh
+
+ 15:18:10 <xnox> short...
+
+ 15:18:29 <stgraber> slangasek: yes, will try to find some time to look at it/reply later this week
+
+ 15:18:36 <doko> xnox, thanks for the gcc work
+
+ 15:18:37 <slangasek> stgraber: ok - just
+
+ 15:18:39 <ogra_> xnox, nah, stokachu was short :)
+
+ 15:18:46 <stokachu> i win
+
+ 15:18:47 <slangasek> stgraber: ok, just making sure you got it and I didn't mis-send
+
+ 15:19:09 <ogra_> xnox, and he worked harder than you ! (he said so !!!)
+
+ 15:19:19 <stokachu> hah
+
+ 15:19:29 <bdmurray> bug triage of initramfs-tools package install failures
+
+ 15:19:29 <bdmurray> updated bug-bot to handle live media package install failures with a full /cdrom
+
+ 15:19:31 * xnox is shunned again ^_^
+
+ 15:19:32 <bdmurray> ran bug-bot against old apport-package install failures on old releases
+
+ 15:19:34 <bdmurray> bug-bot expand logging messages to be more verbose about all the actions taken
+
+ 15:19:42 <bdmurray> modifications to bug-bot to deal with ubiquity bug reports differently
+
+ 15:19:42 <bdmurray> fixed https://wiki.ubuntu.com/X/Bugs/UpdateManagerWarningForI8xx url in the ubuntu wiki which update-manager links to
+
+ 15:19:45 <bdmurray> wrote a bug pattern for update-notifier bug 1003100 regarding paquetes
+
+ 15:19:47 <ubottu> Launchpad bug 1003100 in update-notifier (Ubuntu Quantal) "package-data-downloader: KeyError: 'paquetes'" [High,Fix committed] https://launchpad.net/bugs/1003100
+
+ 15:19:47 <bdmurray> merge proposal for grub2 with modification to apport package hook
+
+ 15:20:09 <bdmurray> consolidation of man-db driver installation on Live Media bug reports into bug 985636
+
+ 15:20:11 <ubottu> Launchpad bug 985636 in man-db (Ubuntu) "package man-db 2.5.7-4 failed to install/upgrade: subprocess installed post-installation script returned error exit status 1" [Undecided,Incomplete] https://launchpad.net/bugs/985636
+
+ 15:20:12 <bdmurray> investigation into apport-collect failure on precise - LP: #1004029
+
+ 15:20:15 <bdmurray> email to ubuntu-devel regarding migration-assistant
+
+ 15:20:17 <bdmurray> patch piloting
+
+ 15:20:20 <bdmurray> Stable Release Updates team training
+
+ 15:20:26 <bdmurray> ⌁ done ⌁
+
+ 15:20:51 * xnox is the 'paquetes' bug due to switching default locale to french?
+
+ 15:20:59 <bdmurray> heh
+
+ 15:21:01 <slangasek> no
+
+ 15:21:05 <ogra_> only for the desktop though
+
+ 15:21:06 <slangasek> that would be paquets
+
+ 15:21:34 <slangasek> this was because the translation teams for ALL the languages on the Iberian subcontinent were ambitious and translated a variable name that wasn't expected to be translated ;)
+
+ 15:21:39 * xnox should check upon / verify the grub2 sru
+
+ 15:22:06 <ogra_> heh
+
+ 15:22:27 <slangasek> (and python's Template routine bails with eparse on a variable it can't substitute)
+
+ 15:23:22 <slangasek> any other questions about any of the above?  concerns about the switch to French locale and keyboard? :)
+
+ 15:23:24 * barry hides
+
+ 15:23:59 * slangasek ponders shutting down bug reporting against the resolvconf package entirely
+
+ 15:24:21 <slangasek> can we have a bug pattern that matches the package name and just redirects to stgraber's blog? :)
+
+ 15:24:23 * xnox uses US layout on the UK keyboards. I think I will survive fr locale, as I already fight all the 'helpful' geo-location keyboard suggestions.
+
+ 15:24:38 <slangasek> us dvorak alternate international ftw
+
+ 15:24:55 <barry> slangasek: on an mbp keyboard
+
+ 15:25:00 <slangasek> nooooo
+
+ 15:25:00 <xnox> slangasek: lucky me, I used resolvconf for like ~2 years now =)))) I was happy about the switch.
+
+ 15:25:17 <slangasek> xnox: I'm not sure how you managed while the package in Ubuntu was in such a state, but ok :)
+
+ 15:25:22 <slangasek> [TOPIC] Bugs
+
+ 15:25:23 * ogra_ never got the hang of dvorak ... its so much work to scrape off all the letters off the keys and add them in a different order
+
+ 15:26:09 * xnox ogra_ you know that you can pull out the key with the letter sticker and rearrange ? =)
+
+ 15:26:22 <bdmurray> bug 985636
+
+ 15:26:23 <ogra_> nah, thats cheating !
+
+ 15:26:26 * xnox not so much on my Microsoft Ergonomic keyboard
+
+ 15:26:27 <ubottu> Launchpad bug 985636 in man-db (Ubuntu) "package man-db 2.5.7-4 failed to install/upgrade: subprocess installed post-installation script returned error exit status 1" [Undecided,Incomplete] https://launchpad.net/bugs/985636
+
+ 15:26:50 <bdmurray> looks to me like people were trying to install nvidia in the live environment after installing ubuntu
+
+ 15:27:04 <stokachu> Needs sponsor: * http://launchpad.net/bugs/974054 (oneiric is affected as well)
+
+ 15:27:05 <cjwatson> is there any way we can make these bugs stop landing on man-db?
+
+ 15:27:06 <ubottu> Launchpad bug 974054 in isc-dhcp (Ubuntu Oneiric) "dhcpd attempts to use /var/run/dhcpd.pid, AppArmor errors" [Undecided,Confirmed]
+
+ 15:27:08 <stokachu> Needs guidance for getting bug more attention: * http://launchpad.net/bugs/520386 (mir: https://bugs.launchpad.net/ubuntu/+source/netcf/+bug/904014)
+
+ 15:27:11 <ubottu> Launchpad bug 520386 in libvirt (Ubuntu Lucid) "libvirt-bin hypervisor does not support virConnectNumOfInterfaces / unable to create domain with virt-manager using network bridge" [Low,Confirmed]
+
+ 15:27:11 <cjwatson> they're basically never its fault
+
+ 15:27:12 <ubottu> Launchpad bug 904014 in netcf (Ubuntu) "[MIR] netcf" [Undecided,In progress]
+
+ 15:27:29 <bdmurray> these what?
+
+ 15:27:46 <cjwatson> all the gazillion bugs of the general shape of 985636
+
+ 15:28:03 <cjwatson> a bunch of them were bugs in some package management programs, which I recall fixing a cycle or two ago
+
+ 15:28:03 <bdmurray> right so any package install failure shouldn't be about man-db?
+
+ 15:28:18 <slangasek> man-db has a trigger, which is why it bears the brunt
+
+ 15:28:35 <cjwatson> right, the same goes for other packages with triggers and I don't know that a simple blacklist is right
+
+ 15:28:40 <ogra_> yeah, we should probably make that silent or dont say the package name in the output
+
+ 15:28:43 <stgraber> stokachu: I'll look at the oneiric part of bug 974054
+
+ 15:28:45 <ubottu> Launchpad bug 974054 in isc-dhcp (Ubuntu Oneiric) "dhcpd attempts to use /var/run/dhcpd.pid, AppArmor errors" [Undecided,Confirmed] https://launchpad.net/bugs/974054
+
+ 15:28:49 <cjwatson> we want to somehow figure out how to identify the actual package at fault
+
+ 15:28:58 <stokachu> stgraber: cool thanks
+
+ 15:29:00 <cjwatson> the problem is that due to aforementioned package manager bugs the dpkg terminal log is empty
+
+ 15:29:05 <slangasek> heh, yes
+
+ 15:29:21 <slangasek> can we just sunset those buggy versions of the package manager?  or SRU?
+
+ 15:29:30 <cjwatson> I'm kind of at the point where I'd say that if the terminal log is that useless (only started/ended entries) and there's nothing else of much use, we should just unreportable the bug
+
+ 15:29:30 <slangasek> that particular bug was reported against Ubuntu 10.10
+
+ 15:29:53 <xnox> stokachu: the netcf / libvirt bugs affect me. Anything needed there in particular?
+
+ 15:30:07 <slangasek> cjwatson: maybe it would be better to intercept and report it against the package manager itself, so we know if there are problems with log breakage?
+
+ 15:30:15 <cjwatson> quite possibly
+
+ 15:30:17 <stokachu> xnox: someone recently created a ppa for lucid so probably needs some testing
+
+ 15:30:20 <cjwatson> bug 680328 is the one I remember
+
+ 15:30:22 <ubottu> Launchpad bug 680328 in qapt (Ubuntu Maverick) "Many postinst scripts fail using either PackageKit, or QApt" [Undecided,New] https://launchpad.net/bugs/680328
+
+ 15:30:29 <cjwatson> we never did get round to SRUing that to maverick, and can't now
+
+ 15:30:30 <stokachu> xnox: i know serge is swamped but this bug is a high visibility one
+
+ 15:30:48 <slangasek> bdmurray: ^^ do you want to take the action to get package install reports with broken logs reported against the package manager?
+
+ 15:31:02 <bdmurray> and we might be able to find out which package manager from the history log file - if it has data
+
+ 15:31:09 <cjwatson> so we could just bin any such bugs from 10.10; >=11.04 would be something different
+
+ 15:31:10 <bdmurray> slangasek: yes
+
+ 15:31:29 <slangasek> [ACTION] bdmurray to get package install reports with broken logs reported against the package manager instead of a random package with a trigger
+
+ 15:31:29 * meetingology bdmurray to get package install reports with broken logs reported against the package manager instead of a random package with a trigger
+
+ 15:31:33 <slangasek> bdmurray: thanks
+
+ 15:32:21 <bdmurray> regarding the bug in question - is it possible to try and install nvidia on live media anymore?
+
+ 15:33:17 <slangasek> stgraber: 974054> thanks for taking
+
+ 15:33:22 <slangasek> bdmurray: is that meant to be blocked?
+
+ 15:34:06 <slangasek> I guess you'd get inconsistent results with nvidia installed in the live env, since you can't update the initramfs
+
+ 15:34:20 <slangasek> and would therefore get the drm driver loaded at next boot for plymouth
+
+ 15:34:21 <stgraber> slangasek: it's roughly the same fix I uploaded to quantal and precise, just didn't think oneiric was also affected.
+
+ 15:34:23 <bdmurray> slangasek: I believe so, I'll go back and look again
+
+ 15:34:56 <slangasek> cjwatson, ev, stgraber: any of you recall if we're blocking nvidia driver installation in the live env?
+
+ 15:35:19 <ev> not offhand
+
+ 15:35:19 <cjwatson> well, there's no way to stop you *trying* to apt-get install it; I don't recall what happens though ...
+
+ 15:35:20 <bdmurray> That's what I remember and email thread on ubuntu-devel with pitti and bryce talking about it
+
+ 15:35:48 <slangasek> well, I guess we don't want the GUI to facilitate this bit of foot shooting :)
+
+ 15:36:14 * xnox as a user, jockey didn't run & didn't offer to install those in the livecd. Only on installed system. But yeah people follow 'guides' and 'tutorials' and install it byhand.
+
+ 15:36:29 <slangasek> bdmurray: I guess maybe it's worth you following up with them then, since no one here knows for sure
+
+ 15:36:45 <slangasek> bdmurray: did you have more bugs?  Let's look at the two stokachu mentioned and then we can circle around to any more you have for us
+
+ 15:36:45 <bdmurray> http://ubuntu.5.n6.nabble.com/Installing-drivers-on-USB-sticks-td727548.html
+
+ 15:36:50 <stokachu> who is the goto person for nfs?
+
+ 15:36:53 <bdmurray> slangasek: okay
+
+ 15:37:24 * xnox slowly hides from stokachu
+
+ 15:37:38 <slangasek> stokachu: I generally tend to the client side; bryce happens to look after the server side with a community hat on; but xnox can be your point of contact for nfs going forward ;)
+
+ 15:37:55 <ogra_> stokachu, a hybrid between xnox (filesystems) and stgraber (networking) .... "xngraber"
+
+ 15:38:02 <stokachu> sweet :D
+
+ 15:38:19 <stokachu> nothing atm but im working an autofs case i may speak to one of you about
+
+ 15:38:20 <xnox> what is the question about nfs?
+
+ 15:38:35 <slangasek> whimper, autofs
+
+ 15:38:48 <slangasek> we still have shutdown ordering bugs in that package, unless something's changed recently
+
+ 15:38:54 <stokachu> yes... 1500+ mounts all hanging on autofs reload
+
+ 15:39:03 <slangasek> lovely
+
+ 15:39:07 <ogra_> ugh
+
+ 15:39:16 <slangasek> yeah, that's one to discuss out of band :)
+
+ 15:39:18 <stokachu> exactlyyy
+
+ 15:39:28 <cjwatson> speaking of autofs, does anyone fancy merging our autofs5 changes into the new autofs source package in Debian?
+
+ 15:39:46 <cjwatson> (well, "new", it used to be in lucid before the rename to autofs5, but it looks like now it's been renamed back
+
+ 15:39:49 <cjwatson> )
+
+ 15:40:22 <xnox> [ACTION] xnox to merge autofs
+
+ 15:40:22 * meetingology xnox to merge autofs
+
+ 15:40:27 <slangasek> xnox: thanks :)
+
+ 15:40:30 <ogra_> wow, brave !
+
+ 15:41:02 * xnox is that a suicide or something. I'm not core-dev so one of you will have to review it =))))
+
+ 15:41:05 <cjwatson> cool, thanks
+
+ 15:41:11 * xnox laughs
+
+ 15:42:06 <stokachu> would firefox be considered a desktop or foundations area
+
+ 15:42:16 <slangasek> ogra_: what's the worst that can happen if he breaks every filesystem package in the archive during his probation period? ;)
+
+ 15:42:20 <slangasek> stokachu: desktop
+
+ 15:42:21 <bdmurray> what? desktop!
+
+ 15:42:22 <xnox> we used to have a separate team for it
+
+ 15:42:52 <slangasek> bug #520386
+
+ 15:42:52 <stokachu> ok cool b/c this is the ugliest FF bug
+
+ 15:42:54 <ubottu> Launchpad bug 520386 in libvirt (Ubuntu Lucid) "libvirt-bin hypervisor does not support virConnectNumOfInterfaces / unable to create domain with virt-manager using network bridge" [Low,Confirmed] https://launchpad.net/bugs/520386
+
+ 15:43:12 <slangasek> so that one needs a core-dev for an SRU, by the look of it
+
+ 15:43:19 <cjwatson> yeah, over to desktop with an extra hard kick
+
+ 15:43:37 <slangasek> it looks like it needs fixed in quantal first though, according to the bug state?
+
+ 15:43:40 <ogra_> slangasek, we hire him and assing all these packages to him forever ?
+
+ 15:43:46 <ogra_> *assign
+
+ 15:43:53 <slangasek> stokachu: is 520386 fixed in quantal?
+
+ 15:44:12 <stokachu> slangasek: i don't believe so ill need to double check; progress has been moving very slow on it
+
+ 15:44:14 <slangasek> ogra_: ah, the sisyphus approach to performance management
+
+ 15:44:21 <ogra_> :)
+
+ 15:44:34 <stokachu> is serge in here?
+
+ 15:44:46 <ogra_> doesnt look like
+
+ 15:44:52 <slangasek> stokachu: nope - he's server team; you'll probably want to touch base with him directly then
+
+ 15:44:56 <ogra_> (if you mean hallyn)
+
+ 15:45:04 <slangasek> stokachu: once there's a fix in quantal we can certainly help shepherd it through for SRUing
+
+ 15:45:09 <stokachu> ah, yea serge hallyn, ok ill ping him
+
+ 15:45:12 <stokachu> slangasek: ok good deal
+
+ 15:45:34 <stokachu> ogra_: whats his nick on irc?
+
+ 15:45:38 <slangasek> stokachu: 'hallyn'
+
+ 15:45:41 <ogra_> hallyn
+
+ 15:45:43 <slangasek> he's on #ubuntu-devel
+
+ 15:45:48 <ogra_> and -server
+
+ 15:45:54 <stokachu> ok ill pop over there after meeting
+
+ 15:45:55 <ogra_> and sometimes in -kernel
+
+ 15:46:10 <slangasek> stokachu: any other bugs that want discussing?
+
+ 15:46:25 <slangasek> stokachu: congrats on the progress on the NSS+ldap+gcrypt nightmare bug, btw :)
+
+ 15:46:44 <stokachu> slangasek: thanks -- could not have done it without Mr Chu :)
+
+ 15:47:07 <stokachu> slangasek: oh i did get an email from someone who i think is upstream maintainer about it, ill forward it to you
+
+ 15:47:53 <slangasek> stokachu: ok cool
+
+ 15:48:05 <stokachu> slangasek: sent
+
+ 15:48:05 <slangasek> bdmurray: how about from your side... any other bugs?
+
+ 15:48:33 <bdmurray> bug 349469 has some recent debugging data in it
+
+ 15:48:35 <ubottu> Launchpad bug 349469 in debconf (Ubuntu) "debconf: DbDriver "config": /var/cache/debconf/config.dat is locked by another process: Resource temporarily unavailable" [Medium,Triaged] https://launchpad.net/bugs/349469
+
+ 15:50:32 <slangasek> yes
+
+ 15:50:59 <slangasek> the common denominator seems to be aptd
+
+ 15:51:39 <slangasek> but it doesn't make sense why the dpkg lock doesn't get in the way first
+
+ 15:52:02 <slangasek> anyone have any theories how this could happen?
+
+ 15:52:20 <slangasek> if not, I can follow up with bdmurray to try to formulate a plan of attack for debugging
+
+ 15:53:00 <cjwatson> Is the dpkg lock applied before preconfiguration?
+
+ 15:53:15 <slangasek> ah, of course it wouldn't be
+
+ 15:53:29 <cjwatson> haha
+
+ 15:53:31 <cjwatson> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469354
+
+ 15:53:32 <slangasek> and apt only checks the dpkg lock, it doesn't set one of its own?
+
+ 15:53:33 <ubottu> Debian bug 469354 in debconf "debconf: dpkg-reconfigure should acquire dpkg lock" [Normal,Open]
+
+ 15:53:59 <slangasek> bdmurray: woo, triaged ;)
+
+ 15:54:21 <cjwatson> but when I looked at the recent process tree, I didn't see any other apt/dpkg/debconf-like processes
+
+ 15:54:22 <xnox> in apt there is a window of oportunity when no apt/dpkg lock exist, as a user found out, between the two resolution loops you can e.g. start synaptic and create a deadlock.
+
+ 15:54:29 <xnox> not sure if it's the same.
+
+ 15:54:37 <slangasek> cjwatson: which ones were you looking at?
+
+ 15:54:37 <cjwatson> one package management process does not a lock collision make?
+
+ 15:54:38 * xnox this maybe old info
+
+ 15:54:56 <slangasek> cjwatson: the process trees are being provided by the users after hitting the bug
+
+ 15:54:59 <cjwatson> xnox: simply starting synaptic wouldn't take the debconf lock
+
+ 15:55:11 <slangasek> so the collided process has exited non-zero by that point
+
+ 15:55:14 <cjwatson> ah
+
+ 15:55:20 <xnox> cjwatson: true, you need to launch a synaptic action for example.
+
+ 15:55:29 <cjwatson> xnox: which would take the apt lock
+
+ 15:55:33 <cjwatson> modulo that debconf bug
+
+ 15:55:47 <cjwatson> Still, all that would do is move the lock collision somewhere else
+
+ 15:55:51 <cjwatson> It would probably still show up
+
+ 15:55:55 * xnox will try to reproduce my old deadlock, didn't see it happen in a while
+
+ 15:56:07 <cjwatson> This isn't a deadlock, it's just a failure to acquire the lock
+
+ 15:57:40 <xnox> ok.
+
+ 15:59:06 <slangasek> followed up to the bug
+
+ 15:59:29 <slangasek> cjwatson, bdmurray: thanks, nice to have a prospect finally of fixing that one
+
+ 15:59:41 <cjwatson> heh, snap
+
+ 15:59:47 <cjwatson> except you linked to the Ubuntu bug with the same number
+
+ 15:59:53 <slangasek> heh, sorry
+
+ 16:00:13 <slangasek> I typed 'Debian' in my head
+
+ 16:00:23 <slangasek> bdmurray: anything else?
+
+ 16:00:34 <bdmurray> no that's good for me
+
+ 16:00:38 <slangasek> ok, thanks
+
+ 16:00:45 <slangasek> [TOPIC] Python porting virtual sprint
+
+ 16:01:12 <slangasek> as I mentioned earlier, we'll be doing a 3-day virtual sprint next month for python porting
+
+ 16:01:26 <slangasek> June 11-13
+
+ 16:01:40 <slangasek> so now you have it mentioned somewhere logged ;)
+
+ 16:02:48 <slangasek> I'll send email along soon-ish with the exact plans for the hours we'll be working... but it should be less of a shift for everyone compared with the last sprint we did, because we'll run two groups with 4-hour overlap instead of moving everyone to the dead center
+
+ 16:03:00 <slangasek> [TOPIC] AOB
+
+ 16:03:02 <slangasek> anything else?
+
+ 16:03:09 <ev> https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562 - would love some extra eyes on that one
+
+ 16:03:16 <slangasek> I was just going to mention that actually :)
+
+ 16:03:20 <ev> it's just C, it won't bite
+
+ 16:03:35 <slangasek> ev: why use c99 instead of $(CC)?
+
+ 16:03:58 <ev> slangasek: $(CC) with the c99 option?
+
+ 16:04:04 <slangasek> if you need to
+
+ 16:04:06 <cjwatson> Yeah, you should always use $(CC) for x-compiling support
+
+ 16:04:07 <ev> I do
+
+ 16:04:19 <slangasek> then yeah, especially now that there's a lib, $(CC) would be a good idea
+
+ 16:04:20 <ev> need to use c99 features, that is
+
+ 16:04:26 <cjwatson> (not that whoopsie wouldn't need more work for that)
+
+ 16:04:44 <slangasek> do you actually have to invoke gcc with -std=c99 to make use of c99 features?
+
+ 16:04:46 <cjwatson> no multiarch support?
+
+ 16:04:57 <xnox> [ACTION] slangasek to send an email about Python sprint
+
+ 16:04:57 * meetingology slangasek to send an email about Python sprint
+
+ 16:05:01 <slangasek> I thought you only have to do that to *disallow* code that's *not* c99-compliant
+
+ 16:05:02 <ev> ah yes - I hadn't considered that. I was more thinking to hell with people trying to run it under clang
+
+ 16:05:14 <cjwatson> we don't care about that for the rest of the distro ;-)
+
+ 16:05:19 <slangasek> right :)
+
+ 16:05:42 <ev> slangasek: if I run it without, it cries about variables defined in loop constructs
+
+ 16:05:44 <ev> if memory serves
+
+ 16:06:10 <slangasek> anyway, I'll try to send some more feedback on that merge request... would be good if others could as well
+
+ 16:06:15 <ev> thanks!
+
+ 16:06:18 <slangasek> it's just the addition of a shared library in C, it won't bite ;)
+
+ 16:06:21 <slangasek> anything else?
+
+ 16:06:21 <jodh> ev: I'm up for reviewing that too.
+
+ 16:06:24 <ev> and I will gladly return the favor
+
+ 16:06:43 <xnox> [ACTION] more reviews for ev's merge proposal
+
+ 16:06:43 * meetingology more reviews for ev's merge proposal
+
+ 16:06:50 <xnox> [LINK] https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562
+
+ 16:06:53 <cjwatson> if you haven't already, you should nm -D the shared library to make sure only the symbols you absolutely need are exported
+
+ 16:06:57 <ev> so do subscribe the team to merges. I'll try to get to yours quickly, so you're not left waiting to land branches.
+
+ 16:06:59 * xnox meetingology fail
+
+ 16:07:21 <cjwatson> and in answer to your earlier question, you should link whoopsie dynamically against libwhoopsie rather than (effectively) shipping two copies
+
+ 16:07:24 <slangasek> [LINK] https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562
+
+ 16:07:30 <slangasek> hmmph
+
+ 16:07:43 <xnox> LINK https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562
+
+ 16:07:52 <cjwatson> try #link
+
+ 16:07:53 <ev> cjwatson: ahhh, noted, thanks! dynamically link> thanks bunches for clarifying that. I couldn't find a good answer elsewhere.
+
+ 16:07:59 <slangasek> #link https://code.launchpad.net/~ev/whoopsie/libwhoopsie/+merge/107562
+
+ 16:08:09 <cjwatson> there's basically hardly ever a good reason to link statically
+
+ 16:08:29 * xnox so we test audio & irc bots during team meetings
+
+ 16:08:36 <ev> *cough* Go
+
+ 16:08:42 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

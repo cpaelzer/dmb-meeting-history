@@ -1,0 +1,399 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 27 Mar at 15:01 &mdash; 15:37 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-03-27-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== lightning round ===
+The discussion about "lightning round" started at 15:02.
+
+  * ''LINK:'' http://www.imdb.com/title/tt0051381/ 
+
+=== AOB ===
+The discussion about "AOB" started at 15:24.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (39)
+ * cjwatson (29)
+ * bdmurray (24)
+ * stgraber (24)
+ * jodh (16)
+ * ubottu (14)
+ * doko_ (11)
+ * barry (8)
+ * caribou (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:01 <slangasek> #startmeeting
+
+ 15:01 <meetingology> Meeting started Thu Mar 27 15:01:35 2014 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <slangasek> [TOPIC] lightning round
+
+ 15:02 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson xnox caribou infinity)
+
+ 15:02 <slangasek> doko slangasek infinity cjwatson bdmurray caribou barry jodh xnox stgraber
+
+ 15:03 <slangasek> doko_: hi
+
+ 15:03 <doko_> - another round of GCC updates
+
+ 15:03 <doko_> - python 3.4 update, python 3.3 removal
+
+ 15:03 <doko_> - cleaning up a bit in -proposed, nbs
+
+ 15:03 <doko_> - scan for compiler ICEs in the 4.9 test rebuild, file upstream issues
+
+ 15:03 <doko_> - some random updates and ftbfs fixes
+
+ 15:03 <doko_> (done) there was more, can't remember all ...
+
+ 15:04 <barry> \o/ for 3.3 removal
+
+ 15:04 <doko_> a few days remaining to remove ruby1.9.1 and update to ruby2.0 ;-P
+
+ 15:05 <slangasek> oh?
+
+ 15:05 <slangasek> * catching up on the world after being heads-down on customer work for two weeks
+
+ 15:05 <slangasek> * moving forward on the Java role; expected to begin interviewing next week
+
+ 15:05 <slangasek> * participating in good discussions about the current landing process and bottlenecks around image promotion (cf. Qt5.2)
+
+ 15:05 <slangasek> * discussions around some late FFes coming in
+
+ 15:05 <slangasek> * performance review discussions using the new and improved process
+
+ 15:05 <slangasek> (done)
+
+ 15:05 <slangasek> doko_: are we switching to ruby2.0 for trusty, or is it your turn to troll? :)
+
+ 15:06 <slangasek> infinity's not here, so cjwatson:
+
+ 15:06 <cjwatson> Finished landing upstart-app-launch performance improvements via libclick.
+
+ 15:06 <cjwatson> Clawed away some of the backlog of uninstallables on arm64/ppc64el.
+
+ 15:06 <cjwatson> grub-installer fixes for ppc64el.
+
+ 15:06 <doko_> well, I assume security would like to only support one version, but nobody is pushing for it, and the puppet people won't look at it as usual :-/
+
+ 15:06 <cjwatson> Continuing work on making ubuntu-sdk-libs-dev:armhf installable for "click chroot".  Landed: dee, libaccounts-glib.  Current blockers: libfriends, qml-friends.
+
+ 15:06 <cjwatson> ubiquity fixes for final beta (reviewed bug 1297312, worked around bug 1296697).
+
+ 15:06 <ubottu> bug 1297312 in ubiquity (Ubuntu Trusty) "ubiquity-dm fails with: FileNotFoundError: [Errno 2] No such file or directory: '/usr/lib/x86_64-linux-gnu/indicator-application-service'" [Critical,Fix released] https://launchpad.net/bugs/1297312
+
+ 15:06 <cjwatson> Started trying to get my juju cross-build environment back up on trusty.
+
+ 15:06 <ubottu> bug 1296697 in ubiquity (Ubuntu Trusty) "Trusty Desktop installer crashed with "Encrypted Home" set" [Critical,Fix released] https://launchpad.net/bugs/1296697
+
+ 15:06 <cjwatson> ..
+
+ 15:07 <cjwatson> ruby updates are a long way behind - I spent some time looking at various bits, it's a mess
+
+ 15:07 <cjwatson> like ruby-gnome2, we can fix it, realistically it'll take a new upstream version which'll need an FFe
+
+ 15:07 <cjwatson> and it's kind of all like that
+
+ 15:08 <cjwatson> but maybe I just don't know it well enough
+
+ 15:08 <slangasek> doko_: who are "the puppet people"?
+
+ 15:09 * barry thinks that sounds like a great band name or horror movie title
+
+ 15:09 <slangasek> doko_: in the future, can we please make such questions a UDS session, so that we discuss with the server team at the beginning of the cycle and get a committment from them to include this work on their roadmap for the cycle?
+
+ 15:09 <barry> http://www.imdb.com/title/tt0051381/
+
+ 15:10 <slangasek> cjwatson: speaking of puppets, I had bug #1292628 escalated to me in person; this seems to be a regression in the interaction between grub-install, grub-installer, and kickseed following the recent grub-installer rewrite.  Do you think this should be on the radar for 14.04?
+
+ 15:10 <ubottu> bug 1292628 in grub2 (Ubuntu) "'grub-install --force "(hd0)"' fails on trusty during installation" [High,Triaged] https://launchpad.net/bugs/1292628
+
+ 15:11 <doko_> slangasek, how? the plans for 2.0 did start in debian only in January ...
+
+ 15:11 <cjwatson> slangasek: I'll have a look
+
+ 15:11 <slangasek> doko_: hmmm. put the UDS session on the agenda, and make the server team do their homework on ruby versions before the meeting? :)
+
+ 15:12 <doko_> ok
+
+ 15:12 <cjwatson> surprising that the grub-mkdevicemap code would have broken; so hopefully it's not too hard
+
+ 15:12 <slangasek> the planning for ruby2.0 may have started in January, but I guess if someone would have asked the Debian ruby team in November they would've had a good guess
+
+ 15:12 * bdmurray is ready but waiting
+
+ 15:12 <cjwatson> I vaguely recall the Debian ruby maintainer mentioning 2.0 at debconf in July/August or so
+
+ 15:13 <slangasek> cjwatson: sorry, it's not grub-mkdevicemap that's the problem per se, the problem is that kickseed is feeding us '(hd0)' as an override and grub-install never has a device map on disk so seems to not do anything sensible
+
+ 15:13 <cjwatson> though it was in passing and I don't think he mentioned a timescale
+
+ 15:13 <cjwatson> slangasek: right, but the grub-mkdevicemap calling code in grub-installer is meant to deal with that just as it did in prior releases
+
+ 15:13 <slangasek> hmm
+
+ 15:13 <slangasek> ok
+
+ 15:13 <slangasek> stgraber: ?
+
+ 15:13 <cjwatson> I'm not disbelieving the bug or anything, just saying it's hopefully shallow
+
+ 15:14 <doko_> yes, met him at Connect a few weeks ago. I think we can't remove it, but likely demote it if puppet works with 2.0
+
+ 15:14 <stgraber> slangasek: ?
+
+ 15:15 <bdmurray> I think I was next so I'll start now
+
+ 15:15 <bdmurray> confirm prodstack data is appearing on graphite
+
+ 15:15 <bdmurray> reported daisy bug 1295400 regarding retracer sandboxes
+
+ 15:15 <bdmurray> submitted merge proposal to daisy to remove sandbox dir data after each retrace (bug 1295400)
+
+ 15:15 <ubottu> bug 1295400 in Daisy "retracer requires a lot of storage for instance sandboxes" [High,New] https://launchpad.net/bugs/1295400
+
+ 15:15 <bdmurray> merged thedac's changes to the daisy-retracer charm
+
+ 15:15 <bdmurray> updated daisy's submit.py to reject crashes from armel systems as we have no retracer for them
+
+ 15:15 <bdmurray> verified that bug 1267112 is in fact fixed since we have a bucket for the ubiquity / autopilot-gtk bug
+
+ 15:15 <ubottu> bug 1267112 in Daisy "errors indicates a retraced crash but isn't showing a stack trace" [High,Fix released] https://launchpad.net/bugs/1267112
+
+ 15:15 <bdmurray> investigation into hplip-data crashes missing package and sourcepackage information
+
+ 15:15 <bdmurray> tested daisy (haproxy config) changes to reduce occurrence of 502 errors in whoopsie
+
+ 15:15 <bdmurray> worked with thedac regarding missing OOPS reports from prodstack version of errors
+
+ 15:15 <bdmurray> updated my apport retrace-package-versions merge proposal
+
+ 15:15 <bdmurray> sent error tracker armhf announcement
+
+ 15:16 <bdmurray> investigation into armhf crashes on errors (webbrowser-app failed to retrace, likely due to outdated debug symbol package for liblttng-ust0)
+
+ 15:16 <bdmurray> SRU queue work with arges
+
+ 15:16 <bdmurray> uploaded a fix for bug 1294392
+
+ 15:16 <ubottu> bug 1294392 in ubuntu-release-upgrader (Ubuntu) "PAE check prevents Precise to Trusty upgrades on non-Intel ports" [High,Fix released] https://launchpad.net/bugs/1294392
+
+ 15:16 <bdmurray> ␗ done
+
+ 15:16 <bdmurray> research into update-manager test suite failures (bug 1295392)
+
+ 15:16 <ubottu> bug 1295392 in update-manager (Ubuntu) "test suite failures" [Medium,Fix committed] https://launchpad.net/bugs/1295392
+
+ 15:16 <slangasek> stgraber: hah, yes, somehow I thought you were next - sorry :)
+
+ 15:16 <slangasek> caribou: anything you'd like to share today?
+
+ 15:17 <caribou> I'm next, it'll be quick
+
+ 15:17 <caribou> * Completed uvtool documentation in the server guide
+
+ 15:17 <caribou> *btmp logging re-enabling (Debian bug #742775)
+
+ 15:17 <ubottu> Debian bug 742775 in openssh-server "openssh-server: Please re-enable btmp logging" [Normal,Open] http://bugs.debian.org/742775
+
+ 15:17 <caribou> * Misc bug fixing
+
+ 15:17 <caribou> Done
+
+ 15:17 <barry> short week due to holiday
+
+ 15:18 <slangasek> bdmurray: we should have noisemakers and party hats for the armhf retracers
+
+ 15:18 <barry> phone: py3 autopilot: gallery-app, address-book-app.  trying to further debug phablet-test-run issues.
+
+ 15:18 <barry> ubuntu/debian: LP: #1295392. LP: #1296325. pystache FTBFS. pip 1.5.3-1 (blocked on python-distutil in stuck in NEW).  ensurepip/pyvenv for debian.  other general debian work
+
+ 15:18 <ubottu> Launchpad bug 1295392 in update-manager (Ubuntu) "test suite failures" [Medium,Fix committed] https://launchpad.net/bugs/1295392
+
+ 15:18 <ubottu> Launchpad bug 1296325 in oneconf (Ubuntu) "oneconf-query needs generic /usr/bin/python3 shebang" [High,Fix released] https://launchpad.net/bugs/1296325
+
+ 15:18 <barry> other: debugging python import problems for security team (http://tinyurl.com/l7ps5br).  code reviews for other internal projects.
+
+ 15:18 <barry> done
+
+ 15:18 <jodh> * foundations-1305-upstart-work-items
+
+ 15:18 <jodh> - cgroup support: Spent a lot of time debugging the async spawn issue
+
+ 15:18 <jodh> with help from cjwatson. As a result of that, we're now planning not
+
+ 15:18 <jodh> to pursue the async spawning feature due to the fact that to
+
+ 15:18 <jodh> implement this fully would require an extensive refactoring of the
+
+ 15:18 <jodh> Upstart core. As such, I'm now refocusing on the cgroup branch with
+
+ 15:18 <jodh> the intention of either having Upstart manage its own cgroups, or
+
+ 15:18 <jodh> working with hallyn to refactor cgmanager to allow Upstart to
+
+ 15:18 <jodh> leverage that work in some form.
+
+ 15:18 <jodh> * upstart
+
+ 15:18 <jodh> - Wrote draft release notes for Upstart
+
+ 15:18 <jodh> https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes/TechnicalOverviewUpstart
+
+ 15:19 <jodh> - Reworked MP for logrotate improvements:
+
+ 15:19 <cjwatson> caribou: fwiw I don't think the claim in that btmp bug is totally true; Debian stable at least still has -rw-rw---- 1 root utmp 0 Mar  1 08:02 /var/log/btmp
+
+ 15:19 <jodh> https://code.launchpad.net/~jamesodhunt/ubuntu/trusty/upstart/periodic-logrotate-using-events/+merge/212569
+
+ 15:19 <jodh> -
+
+ 15:19 <jodh> Ⱆ
+
+ 15:19 <cjwatson> caribou: this isn't simple, need to track down exactly what changed and when
+
+ 15:19 <cjwatson> otherwise I'll cause regressions
+
+ 15:19 <caribou> cjwatson: ok, will check that out
+
+ 15:19 <stgraber> no xnox so I guess that's my turn then
+
+ 15:20 <stgraber> LXC:
+
+ 15:20 <stgraber> - Finally tracked down our last 1.0.2 blocker, will release 1.0.2 today with cgmanager support enabled in Ubuntu (that may be our last LXC upload for the cycle)!
+
+ 15:20 <stgraber> - Some more CI infrastructure work (almost everything runs in Jenkins now)
+
+ 15:20 <stgraber> - Code reviews
+
+ 15:20 <stgraber> - A couple of bugfixes for lxc-ls performance when > 2k containers and userns config fixes
+
+ 15:20 <stgraber> - Fire fighting the latest apparmor breakage (they broke the parser causing quite a few bug reports for LXC upstream and in Ubuntu...)
+
+ 15:20 <stgraber> logind:
+
+ 15:20 <stgraber> - Unblocked as the cgmanager MIR was finally approved!
+
+ 15:20 <stgraber> - Filed the FFe to get cgmanager support landed: bug 1297363
+
+ 15:20 <ubottu> bug 1297363 in systemd (Ubuntu) "[FFe] Add cgmanager support" [Undecided,New] https://launchpad.net/bugs/1297363
+
+ 15:20 <stgraber> network:
+
+ 15:20 <stgraber> - Uploaded a new ifupdown fixing quite a few bugs reported by CTS.
+
+ 15:20 <stgraber> - Uploaded a new vlan fixing another bug reported by CTS.
+
+ 15:20 <stgraber> - Did some more triaging of our network packages.
+
+ 15:20 <stgraber> - Answered some of lamont's OpenVPN questions and looked into a few NM OpenVPN crashes.
+
+ 15:20 <cjwatson> caribou: ah, actually that's not a problem per the code ... would still like to know when/where btmp changed perms though
+
+ 15:20 <stgraber> system-image:
+
+ 15:20 <stgraber> - some discussions and some code to get new image notifications delivered by the new push service.
+
+ 15:20 <stgraber> other:
+
+ 15:20 <stgraber> - Helping lttng upstream update their packages to a stable version for 14.04.
+
+ 15:20 <stgraber> - Couple of CI-Train landings.
+
+ 15:20 <stgraber> - Some FFe and queue review.
+
+ 15:20 <stgraber> - Helped setup Beta 2, tested Edubuntu, fixed a couple of issues, added ppc64el to tracker + cdimage scripts, ...
+
+ 15:20 <stgraber> (DONE)
+
+ 15:21 <cjwatson> caribou: ah, and openssh itself has started allowing group rw since the bug was originally filed, too, which was the other part of i
+
+ 15:21 <cjwatson> t
+
+ 15:22 <slangasek> any questions over status?
+
+ 15:22 <slangasek> btw, I should have mentioned, I'll be off Monday
+
+ 15:24 <slangasek> [topic] AOB
+
+ 15:24 <slangasek> anything else today?
+
+ 15:25 <bdmurray> Could someone have a look at bug 1296386 and related bug 1296373?
+
+ 15:25 <slangasek> has someone started putting together beach recommendations for the May sprint?
+
+ 15:25 <ubottu> bug 1296386 in casper (Ubuntu) "[PATCH] Remove 23etc_modules script" [Undecided,New] https://launchpad.net/bugs/1296386
+
+ 15:25 <ubottu> bug 1296373 in hw-detect (Ubuntu) "[PATCH] Fix sound on PowerPC" [Undecided,New] https://launchpad.net/bugs/1296373
+
+ 15:26 <slangasek> bdmurray: any reason those shouldn't be pushed to ubuntu-sponsors?
+
+ 15:26 <slangasek> alternatively, you could check if infinity wants to have a look at this
+
+ 15:26 <cjwatson> caribou: ah, I found it, https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=370050
+
+ 15:26 <ubottu> Debian bug 370050 in logrotate "general: /var/log/btmp permission should be 660" [Wishlist,Fixed]
+
+ 15:26 <bdmurray> ubuntu-sponsors deals with branches and debdiffs not ordinary patches last I knew
+
+ 15:27 <cjwatson> ubuntu-sponsors largely shouldn't care about the format
+
+ 15:27 <cjwatson> those are native packages, the difference between a patch and a debdiff is negligible
+
+ 15:27 <bdmurray> I don't think it was the format so much as the volume
+
+ 15:28 <bdmurray> However, the system (of choosing who to subscribe) was setup quite some time ago
+
+ 15:31 <slangasek> I think it's fine to have separate frontline review of patch-tagged bugs to make sure they're actually ready for sponsorship, but in this case I think it would be ready for sponsorship
+
+ 15:33 <bdmurray> slangasek: ah, that makes sense
+
+ 15:35 <bdmurray> okay, I'll ping infinity and depending on that subscribe sponsors
+
+ 15:35 <slangasek> bdmurray: sounds good
+
+ 15:35 <slangasek> aught else?
+
+ 15:36 <cjwatson> naught
+
+ 15:36 <cjwatson> except for wondering why the sudden Elizabethan English :)
+
+ 15:36 <slangasek> ;)
+
+ 15:36 <cjwatson> sorry, "save for"
+
+ 15:37 <slangasek> cjwatson: variety
+
+ 15:37 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

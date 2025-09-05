@@ -1,0 +1,949 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Ubuntu Backporters meeting, started by ddstreet, 22 Sep at 16:03 &mdash; 17:30 UTC.
+ * Full logs at https://new.ubottu.com/meetingology/logs/ubuntu-meeting/2021/ubuntu-meeting.2021-09-22-16.03.log.html
+
+
+
+== Meeting summary ==
+
+ * ''ACTION:'' clarify how to accept/reject uploads to -backports queues  (ddstreet, 16:06)
+ * ''AGREED:'' maintain a list of excluded packages, to be updated on ad-hoc basis and/or updated from mailing list discussion  (ddstreet, 16:22)
+ * ''AGREED:'' ubuntu backporters team is not responsible for future security updates to packages, nor is the security team, the package requestor (and/or their sponsor) should expect to maintain it  (ddstreet, 16:26)
+
+=== how the community requests backports ===
+
+Discussion started by ddstreet at 16:27.
+
+ * ''LINK:'' https://lists.ubuntu.com/archives/ubuntu-backports/2021-July/021758.html   (mapreri, 16:30)
+ * ''ACTION:'' update wiki/docs to reflect users can't just request a backport, and deprecate 'requestbackport' tool to print message and url indicating same  (ddstreet, 16:33)
+ * ''ACTION:'' ddstreet reply to previous ML requests and open backport request bugs indicating change in process  (ddstreet, 16:34)
+ * ''ACTION:'' teward update tooling, requestbackport  (ddstreet, 16:38)
+ * ''ACTION:'' ddstreet update wiki docs with new process  (ddstreet, 16:38)
+
+=== review of tooling, requestbackport and backportpackage ===
+
+Discussion started by ddstreet at 16:39.
+
+ * ''ACTION:'' teward review backportpackage tool  (ddstreet, 16:40)
+
+=== what releases are allowed/required to backport into ===
+
+Discussion started by ddstreet at 16:41.
+
+ * ''AGREED:'' backports to interim releases are allowed on case-by-case basis, but not required  (ddstreet, 16:43)
+ * ''ACTION:'' mapreri start ML discussion for list of dev tools to proactively put into -backports  (ddstreet, 16:46)
+ * ''AGREED:'' LTS->LTS upgrades must be supported, and -backports should remain enabled/used  (ddstreet, 17:12)
+ * ''AGREED:'' backported package versions must use suffix ~bpo along with target release version and .1, or as refined in ML discussion and stated in wiki docs  (ddstreet, 17:17)
+
+=== security updates ===
+
+Discussion started by ddstreet at 17:18.
+
+
+=== cleaning up wiki docs ===
+
+Discussion started by ddstreet at 17:19.
+
+
+=== restrictions on eligible packages ===
+
+Discussion started by ddstreet at 17:20.
+
+ * ''LINK:'' https://wiki.ubuntu.com/DocumentationTeam   (ddstreet, 17:23)
+ * ''LINK:'' https://launchpad.net/~ubuntu-community-wiki-editors so these?  (mapreri, 17:23)
+ * ''LINK:'' https://wiki.ubuntu.com/DocumentationTeam/Contact has the contact mechanisms right now to use  (teward, 17:24)
+ * ''ACTION:'' ddstreet schedule mtg in 2 weeks  (ddstreet, 17:27)
+ * ''ACTION:'' mapreri ask AA how to handle archive -backports approval/rejection  (ddstreet, 17:28)
+ * ''ACTION:'' ddstreet update agenda page from today's meeting items  (ddstreet, 17:28)
+
+
+
+== Action items, by person ==
+
+ * ddstreet
+  * ddstreet reply to previous ML requests and open backport request bugs indicating change in process
+  * ddstreet update wiki docs with new process
+  * ddstreet schedule mtg in 2 weeks
+  * ddstreet update agenda page from today's meeting items
+ * mapreri
+  * mapreri start ML discussion for list of dev tools to proactively put into -backports
+  * mapreri ask AA how to handle archive -backports approval/rejection
+ * teward
+  * teward update tooling, requestbackport
+  * teward review backportpackage tool
+ * **UNASSIGNED**
+  * clarify how to accept/reject uploads to -backports queues
+  * update wiki/docs to reflect users can't just request a backport, and deprecate 'requestbackport' tool to print message and url indicating same
+
+
+
+== People present (lines said) ==
+
+ * teward (183)
+ * ddstreet (125)
+ * mapreri (102)
+ * meetingology (17)
+
+
+
+== Full log ==
+
+
+ 16:03 <ddstreet> #startmeeting Ubuntu Backporters meeting
+
+ 16:03 <meetingology> Meeting started at 16:03:01 UTC.  The chair is ddstreet.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:03 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:03 <teward> mapreri: we could ask anyone who might know, i.e. vorlon who I know does AA tasks for accept/reject stuff
+
+ 16:03 <teward> but that's a separate discussion of what we'd need after implement.
+
+ 16:03 <teward> oops meeting started :)
+
+ 16:03 <mapreri> oh good, it felt like I was alone in having this technical doubt :D
+
+ 16:03 <ddstreet> just quickly for the record, we do have the action item of figuring out membership process/etc but i think we should punt that
+
+ 16:03 <teward> lets push that until we have full details of how backports will work
+
+ 16:04 <ddstreet> and jump right into general discussion
+
+ 16:04 <mapreri> k
+
+ 16:04 <teward> i'll wait before i rapidfire my clarification requests/concerns for you to give me the floor :P
+
+ 16:04 <ddstreet> yeah re: accept/reject i think they use tools from the ubuntu-archive-tools repo https://pad.lv/p/ubuntu-archive-tools
+
+ 16:05 <ddstreet> i *think* we may have the ACLs now to do that? but i'm not sure, i of course haven't actually tried it yet
+
+ 16:05 <ddstreet> let's put an action to ask someone about it
+
+ 16:06 <ddstreet> #action clarify how to accept/reject uploads to -backports queues
+
+ 16:06 * meetingology clarify how to accept/reject uploads to -backports queues
+
+ 16:06 <ddstreet> ok i'm done witht he floor, you guys jump in
+
+ 16:06 <teward> ok so
+
+ 16:06 <teward> first
+
+ 16:06 <teward> back when I was championing this process BEFORE I was on all the boards with all the hats...
+
+ 16:07 <teward> I had suggested that requests can ONLY come from developers willing to watch the package and handle sec updates, etc. to it.  NOT the backporters team, so that Backporters simply have the request/reject.
+
+ 16:07 <teward> I see references to torching the 'anyone can request' part of the existing process and to torch the entire current process which I agree with
+
+ 16:07 <teward> but are we going to limit requesting backports for approval, etc. to people who have upload rights (which would then need accept/reject for backports pocket from us)>
+
+ 16:07 <teward> but are we going to limit requesting backports for approval, etc. to people who have upload rights (which would then need accept/reject for backports pocket from us)?
+
+ 16:08 <teward> and therein require a request still to be filed for *approval* with justification therein as to why, and that that developer has still done testing to validate the program/package will still function?
+
+ 16:08 <teward> (I didn't see any explicit definitions to this point, either that or i missed it in the thread of discussions)
+
+ 16:10 <mapreri> mh
+
+ 16:10 <mapreri> we don't have such thing in debian, and I believe that, depending on the amount of requests, would still risk to be too much for us to handle
+
+ 16:11 <mapreri> otoh, we might want to also prevent people from filling up the bpo pocket
+
+ 16:11 <mapreri> I don't think we should require people to give us explanation unless we see something fishy going on
+
+ 16:11 <mapreri> but of course, uploading implies that the uploader did test properly before
+
+ 16:11 <teward> ack.
+
+ 16:12 <teward> so we would be limiting it, then, to those who can upload the given package, just that it'd require us to approve/reject the upload?
+
+ 16:12 <teward> and certain things would be rejected based on where it sits?
+
+ 16:12 <mapreri> i'm happy to write down in the rules that in case somebody regularly uploads stuff that then comes out it's not actually working will then be prevented (by us, manually) to contribute again or so.
+
+ 16:12 <teward> yeah I would suggest that, regardless, we dictate the rules and write it down
+
+ 16:12 <ddstreet> i think it's ok if someone wants to upload and finds a sponsor to upload for them, right?
+
+ 16:12 <teward> that's where it gets tricky
+
+ 16:13 <mapreri> as usual the sponsor is also responsible for not uploading shit
+
+ 16:13 <ddstreet> yeah
+
+ 16:13 <teward> ddstreet: if a Sponsor uploads it that's fine, but then SPonsored is required to make sure relevant patches, etc. are submitted for critical security bugs
+
+ 16:13 <teward> and as for scope of what people can upload, obvious things (core bits, etc.) are not permitted except in SPECIAL CASES
+
+ 16:13 <teward> (there are special cases for certain openstack things I think?)
+
+ 16:13 <mapreri> teward: that's the same of the rest of the archive, isn't it?
+
+ 16:13 <teward> s/think/think already/
+
+ 16:14 <teward> mapreri: well technically
+
+ 16:14 <teward> I'm a Core Dev
+
+ 16:14 <teward> if I try and upload a kernel package, i'm pretty sure it might let me, despite not being on the Kernel team, i'd get hell for it thoug
+
+ 16:14 * mapreri is planning on writing the application for thatt one of these days, btw.
+
+ 16:14 <teward> so technically i can upload to any pocket
+
+ 16:14 <teward> not that I WOULD but in case of certain things it'd raise Hell
+
+ 16:14 <teward> so we need to be clear what 'not allowed to touch' is
+
+ 16:15 <mapreri> sure, then what? :)
+
+ 16:15 <teward> as long as Sponsor or Uploader isn't stupid anddoesn't abuse it it's not aprolbme, but it was discussed setting limits
+
+ 16:15 <mapreri> for some reason neither debian nor ubuntu had the principle of least privilege applied to upload permissions :3
+
+ 16:15 <teward> i'd like those limits to be more clearly defined is all
+
+ 16:15 <teward> mapreri: so i'm going to stop you there briefly.
+
+ 16:15 <teward> on the basis of "We need to tread careful here"
+
+ 16:15 <teward> whether upload rights are a thing or not
+
+ 16:16 <teward> we need to set the standard for the scope of what Backports covers
+
+ 16:16 <teward> or we're going to end up in Sqaure One of backports that we had that led to the death of Backports in general again
+
+ 16:16 <teward> so my question is: do we have a clearly defined scope of what we will/won't permit to be put into backports?
+
+ 16:16 <mapreri> that was part of what was in ddstreet's mail as well.
+
+ 16:17 <ddstreet> and there certainly wasn't one before, and it may be hard to come up with one
+
+ 16:17 <mapreri> my take, is that we'll blacklist thing as we go.  starting with stuff that is already covered by HWE, and the cloud archive.
+
+ 16:17 <ddstreet> i do agree the kernel should be excluded
+
+ 16:17 <mapreri> but I wouldn't go with a whitelist, except for the non-LTS releases where we don't want to hassle.
+
+ 16:18 <teward> HWE, Cloud Archive, snapd and things that underwent deb-to-snap transitions
+
+ 16:18 <teward> HWE, Cloud Archive, snapd and things that underwent deb-to-snap transitions, packages that are so mission critical we can't update those without a full migration type task, etc.
+
+ 16:18 <teward> (Python comes to mind here...)
+
+ 16:18 <ddstreet> yep
+
+ 16:18 <mapreri> ack
+
+ 16:18 <ddstreet> it would probably be easier to add to the list as people request pkgs as mapreri is suggesting
+
+ 16:18 <teward> (certain python3 *packages* which are just modules packaged up could be different, but I mean core python version etc.)
+
+ 16:19 <teward> agreed.
+
+ 16:19 <mapreri> I'd also blacklist compilers at large perhaps?
+
+ 16:19 <teward> mapreri: agreed
+
+ 16:19 <teward> PHP and Web scripting language versions as well
+
+ 16:19 <mapreri> "interpreters"
+
+ 16:19 <teward> (Server Team would balk at that if we tried ti push updated PHP to an older release, without them handling it)
+
+ 16:19 <teward> mapreri: yep.
+
+ 16:20 <ddstreet> so we're all agreed to in principle having a list of excluded packages, that we update on an ad-hoc basis as a team?
+
+ 16:20 <teward> BASICALLY< when we first get started, I want a known "This stuff will not be accepted", which we'll update a specific list going forward as a team
+
+ 16:20 <teward> interpreters, core packages, stuff in Cloud archive, snapd, kernel, deb-to-snap packages, etc. would be automatically excluded to begin with.
+
+ 16:20 <teward> (includes compilers)
+
+ 16:20 <teward> so that we don't get innundated with requests for things that we wouldn't accept anyways
+
+ 16:20 <teward> (sponsored or otherwise)
+
+ 16:21 <ddstreet> i suggest we move the specific discussion of what's on the list to ML discussion, as i suspect it'll take time
+
+ 16:21 <mapreri> yes, we all seem in agreement on this.
+
+ 16:21 <teward> yup
+
+ 16:21 <teward> agreed we move specific discussion to the ML just wanted to make sure we had a basic thing of "this base category is a no-go" to start.
+
+ 16:22 <teward> rather than point at specifics specifically
+
+ 16:22 <mapreri> that's easily just a list in the wiki, let us subscribe to the wiki to make sure nobody mess with it, done.
+
+ 16:22 <ddstreet> #agreed maintain a list of excluded packages, to be updated on ad-hoc basis and/or updated from mailing list discussion
+
+ 16:22 <meetingology> AGREED: maintain a list of excluded packages, to be updated on ad-hoc basis and/or updated from mailing list discussion
+
+ 16:22 <ddstreet> yep definitely, should just go into the wiki page
+
+ 16:22 <mapreri> ddstreet: I think it would be best if you lead the discussion based on your agenda :)
+
+ 16:22 <ddstreet> ok
+
+ 16:22 <teward> one more thing in my dossier then i'll be silent
+
+ 16:22 <ddstreet> lemme pull up the email
+
+ 16:23 <ddstreet> sure go for it
+
+ 16:24 <teward> the security component is one thing I want to make sure we agree on: Neither the Backporters team nor the Security Team will be responsible for security updates and patches to Backported programs.  Like security updates in Universe packages, it is up to the uploader (or sponsored individual) to make sure teh backported package receives relevant security patches and drive them to land in the backports queue for the package.
+
+ 16:24 <teward> or similar wording, however we word it we make sure it's not our obligation nor Security obligation for items in -backports
+
+ 16:24 <teward> (there will be exceptions I think in certain cases but generally speaking)
+
+ 16:24 <teward> that's it on my radar for concerns/thoughts
+
+ 16:25 <mapreri> I think both me and ddstreet are on the same page, according to the mail :)
+
+ 16:25 <teward> just making sure ;)
+
+ 16:25 <ddstreet> +1 and i think we should also clarify to potential users of the package that neither our team nor the security team will monitor or enforce that the package requestor actually keeps it up to date
+
+ 16:25 <mapreri> but
+
+ 16:26 <teward> ddstreet: there may be exceptions if a specific team drives the backport
+
+ 16:26 <teward> but at that point that Team would be monitoring it
+
+ 16:26 <teward> (but yes in general principle I agree ddstreet)
+
+ 16:26 <mapreri> we write clearly to users to not expect anything.  otoh we write clearly to developers that we team expect them to do good and provide them.
+
+ 16:26 <ddstreet> #agreed ubuntu backporters team is not responsible for future security updates to packages, nor is the security team, the package requestor (and/or their sponsor) should expect to maintain it
+
+ 16:26 <meetingology> AGREED: ubuntu backporters team is not responsible for future security updates to packages, nor is the security team, the package requestor (and/or their sponsor) should expect to maintain it
+
+ 16:26 <teward> mapreri: agreed.
+
+ 16:27 <ddstreet> ok let me get to the agenda items from the email thread
+
+ 16:27 <ddstreet> #topic how the community requests backports
+
+ 16:27 <teward> we can expect that a given team or developer driving a package in would know this, but we do need to write it clearly for users to see "There is no guarantees of stuff here"
+
+ 16:28 <teward> ddstreet: -1 on 'community' requests in general, they have to do the work to get it sponsored for a backport upload, or a developer has to take that task, we should not just allow general 'requests' for backports.
+
+ 16:28 <teward> my 2 cents (this was mentioned before in the email)
+
+ 16:28 <teward> (but not by me)
+
+ 16:28 <ddstreet> +1 on updating the docs, and tooling, to reflect this
+
+ 16:29 <teward> agreed, +1 on updating docs and tooling
+
+ 16:29 <mapreri> ack.  Though I'm fine if community write to the ML saying "I'd like this bpo, could somebody pretty please provide it", without expecting the service :)
+
+ 16:29 <teward> mapreri: that's a given.
+
+ 16:29 <mapreri> but probably best to just not talk about "requests"
+
+ 16:29 <teward> but i think that should go to -devel-discuss
+
+ 16:29 <ddstreet> yeah i agree ML requests for help are fine
+
+ 16:29 <teward> because at that point if they're *requesting* someone to backport it, then it needs to go to a point where a dev has to actually be interested
+
+ 16:29 <teward> agreed on ML requests as well
+
+ 16:29 <ddstreet> just as long as they don't expect our team to do it
+
+ 16:29 <teward> just my 2 cents it shouldn't be sent with the expectation of being done/responded to
+
+ 16:30 <mapreri> there was such request in July fyi
+
+ 16:30 <teward> to backporters?
+
+ 16:30 <mapreri> https://lists.ubuntu.com/archives/ubuntu-backports/2021-July/021758.html
+
+ 16:30 <ddstreet> i think we should update our wiki page to clearly state the 'requestbackport' tool is deprecated, and also we should remove the tool from ubuntu-dev-tools package, to avoid confusion
+
+ 16:30 <teward> ddstreet: agreed
+
+ 16:31 <mapreri> I'd be for replacing it with a stub that print() a message and url to the wiki though
+
+ 16:31 <mapreri> rather than removing it right away
+
+ 16:31 <teward> i'm actually OK with that as well
+
+ 16:31 <teward> do a transitional removal - replace the code with a warning
+
+ 16:31 <teward> like we did for bitcoin when it was blacklisted/removed
+
+ 16:31 <teward> s/bitcoin/bitcoin and bitcoind/
+
+ 16:31 <ddstreet> ack, deprecation/stub is likely better
+
+ 16:32 <teward> i also think we should reply to the July request and indicate that we are redesigning Backports and to check back once we've published updated processes and documentation
+
+ 16:32 <teward> or at least wait until we have that stuff decided/published and then reply
+
+ 16:32 <mapreri> they also filed a bug, so that can happen together with when we'll handle (somehow) all the open bugs
+
+ 16:33 <ddstreet> #action update wiki/docs to reflect users can't just request a backport, and deprecate 'requestbackport' tool to print message and url indicating same
+
+ 16:33 * meetingology update wiki/docs to reflect users can't just request a backport, and deprecate 'requestbackport' tool to print message and url indicating same
+
+ 16:33 <ddstreet> either of you want to take an action to reply to the previous ML requests and/or bugs?
+
+ 16:33 <ddstreet> i can take it as administrative work otherwise
+
+ 16:34 <ddstreet> #action ddstreet reply to previous ML requests and open backport request bugs indicating change in process
+
+ 16:34 * meetingology ddstreet reply to previous ML requests and open backport request bugs indicating change in process
+
+ 16:34 <mapreri> i can take it, but not do it these few days
+
+ 16:35 <mapreri> as you prefer
+
+ 16:35 <ddstreet> sure feel free to do it, i probably would not get to it for a couple weeks :)
+
+ 16:35 <mapreri> well then, whoever starts first
+
+ 16:35 <ddstreet> i'll leave the action on me but not actually do anything for it
+
+ 16:35 <ddstreet> yep
+
+ 16:36 <ddstreet> ok i think we're cleared up on item #1, of how people initiate backports, right?
+
+ 16:36 <mapreri> ye
+
+ 16:37 <ddstreet> i think we should have an action to clean up the wiki page with the new process steps, either of you want to take that?
+
+ 16:37 <teward> ddstreet: if we have no objection to me updating the tooling i can handle tooling rejiggering for leaving requestbackport to just print the message
+
+ 16:37 <ddstreet> perfect go for it
+
+ 16:38 <mapreri> atm I'd prefer to leave at least the first round of wiki cleanup to others
+
+ 16:38 <ddstreet> ok i'll take the first round of wiki updates
+
+ 16:38 <ddstreet> #action teward update tooling, requestbackport
+
+ 16:38 * meetingology teward update tooling, requestbackport
+
+ 16:38 <ddstreet> #action ddstreet update wiki docs with new process
+
+ 16:38 * meetingology ddstreet update wiki docs with new process
+
+ 16:38 <teward> ddstreet: you can take it for the previous requests, but we could mass close all the old requests as "The Backports process has undergone radical changes and as such existing requests are being cancelled for resubmission under the new process"
+
+ 16:38 <teward> just as a suggestion ;)
+
+ 16:39 <teward> remind me which repo has the tooling?
+
+ 16:39 <ddstreet> ubuntu-dev-tools
+
+ 16:39 <teward> been a while since i double checked (three upgrades in place XD)
+
+ 16:39 <teward> thanks
+
+ 16:39 <ddstreet> #topic review of tooling, requestbackport and backportpackage
+
+ 16:39 <ddstreet> i think we covered requestbackport already
+
+ 16:40 <mapreri> teward: in case you are going to open a MR for u-d-t, I promise to be quick to review it :P
+
+ 16:40 <ddstreet> i guess one of us should just review the code for backportpackage, teward you want to do that review to see if anything needs changing there?
+
+ 16:40 <teward> mapreri: yep.  we may need to push some updates to retroactive releases if it's released as a package in the repos though
+
+ 16:40 <teward> ddstreet: yeah i'll handle that
+
+ 16:40 <ddstreet> #action teward review backportpackage tool
+
+ 16:40 * meetingology teward review backportpackage tool
+
+ 16:41 <teward> to my knowledge it's fine as it is, i still use it to backport packages even for PPAs when I do it, it's a fast way to snag from devel or SOURCERELEASE and prep for TARGETRELEASE regardless of if it's the main repos or not xD
+
+ 16:41 <teward> (I just change it to not use -backports before upload to PPAs)
+
+ 16:41 <ddstreet> #topic what releases are allowed/required to backport into
+
+ 16:42 <teward> *forks ubuntu-dev-tools to his account on LP to begin with*
+
+ 16:42 <teward> ddstreet: i suggest LTS only, because interim releases only have 9 months of coverage.
+
+ 16:42 <teward> as was stated in the email chain
+
+ 16:42 <mapreri> teward: yeah, I can handle the SRUs later on myself
+
+ 16:42 <teward> there may be exceptions where we have to accept for an interim release, again in edge cases
+
+ 16:43 <teward> but in general I'd say to the LTSes only, not to interim releases
+
+ 16:43 <teward> and not to LTSes that have entered ESM
+
+ 16:43 <ddstreet> so sounds like we agree on backports to interim releases are *allowed* on a case-by-case basis, but not required, right?
+
+ 16:43 <teward> ddstreet: i would say 'yes'
+
+ 16:43 <ddstreet> #agreed backports to interim releases are allowed on case-by-case basis, but not required
+
+ 16:43 <meetingology> AGREED: backports to interim releases are allowed on case-by-case basis, but not required
+
+ 16:44 <teward> generally speaking the backport target should be an LTS release that has not entered ESM or EOL yet, in my opinion, with case by case bases for interim releases
+
+ 16:44 <mapreri> I'd say that many dev tools are fine to have in interim releases
+
+ 16:44 <mapreri> like, debhelper, pbuilder, u-d-t, devscripts, sbuild, …?
+
+ 16:44 <ddstreet> yep dev tools will likely be the most common thing in interim releases
+
+ 16:44 <mapreri> me being involved in 3 out of the 5 above means I'm quite biased :)
+
+ 16:45 <teward> yep
+
+ 16:45 <ddstreet> should we start a ML thread on dev tools that we may want to proactively put into -backports?
+
+ 16:45 <teward> i think so, yes.
+
+ 16:45 <teward> or rather, proactively approve you mean, because it's still not on *us* to make sure they're all backported
+
+ 16:45 <mapreri> I'm happy to take the task of doing the first 4 of the above btw.
+
+ 16:45 <mapreri> because, at the very least, I'd like to have them for my own use (!)
+
+ 16:46 <ddstreet> sure, though for the tooling it's quite possible one of us would actually be doing the work of uploading the tools
+
+ 16:46 <teward> agreed
+
+ 16:46 <teward> mapreri: if you also take sbuild I'll send you some beer
+
+ 16:46 <teward> I regularly use sbuild in my test build envs and I like that being up to date xD
+
+ 16:46 <ddstreet> #action mapreri start ML discussion for list of dev tools to proactively put into -backports
+
+ 16:46 * meetingology mapreri start ML discussion for list of dev tools to proactively put into -backports
+
+ 16:46 <teward> all five of those stated are good candidates
+
+ 16:46 <teward> but we'll move to ML for that
+
+ 16:46 <mapreri> I don't use sbuild, so I can't really test it decently.  but I'm sure plenty of people will throw me darts if I break it so I'll know very quickly heh
+
+ 16:47 <teward> mapreri: if you can prep it and PPA it I can test
+
+ 16:47 <ddstreet> i gave you the action to start the ML discussion mapreri :)
+
+ 16:47 <mapreri> sure (to both)
+
+ 16:47 <ddstreet> and of course, I don't think any tool has to be pre-discussed, it should also be fine just to upload something as long as another team member is the reviewer
+
+ 16:48 <mapreri> this was more like pre-allowing things into interim releases
+
+ 16:48 <ddstreet> yeah
+
+ 16:48 <ddstreet> ok for this topic, we also should clarify the LTS->LTS and LTS->interim upgrades as briefly discussed in the ML
+
+ 16:49 <ddstreet> i think mapreri and i are in agreement on this
+
+ 16:49 <ddstreet> teward you as well?
+
+ 16:49 <teward> agreed
+
+ 16:49 <ddstreet> ok let me try to capture it as agreed statement
+
+ 16:49 <teward> no concerns there.
+
+ 16:49 <mapreri> one thing we aren't sure on is
+
+ 16:50 <mapreri> what to support: LTS+bpo → LTS², or LTS+bpo → LTS²+bpo ?
+
+ 16:50 * ddstreet has thunderstorm outside fyi, hopefully i won't lose power
+
+ 16:50 <teward> mapreri: as in source + destination?
+
+ 16:51 <teward> and LTS^2 as in, "Previous LTS"?
+
+ 16:51 <mapreri> as in supported upgrade path
+
+ 16:51 <teward> oh
+
+ 16:51 <mapreri> which also means which source to take from I suppose, yes
+
+ 16:51 <teward> i think we can handle those slightly differently
+
+ 16:51 <teward> but here's my thoughts
+
+ 16:51 <teward> any later release can be a source even an interim to a given LTS's backports repo.
+
+ 16:52 <teward> i.e. Impish -> CurrentlySupportedLTSes
+
+ 16:52 <teward> but if you skip over an LTS it has to be supported in that other LTS as well
+
+ 16:52 <teward> as for upgrade path, we should disable backports entirely, and whatever's in TargetRelease should be force-installed to supersede backports
+
+ 16:52 <mapreri> right.  but I want to be sure that whatever you backport is going to be upgradable to 22.04 then even if taken from impish (which should be the case)
+
+ 16:52 <teward> because backports are NOT guaranteed to upgrade properly
+
+ 16:52 <teward> that's what i just indicated here.
+
+ 16:53 <teward> as my second point/suggestion
+
+ 16:53 <mapreri> I don't want that
+
+ 16:53 <mapreri> force-installing to supersede backports sounds like something wasn't done properly
+
+ 16:54 <mapreri> why can't we guarantee proper upgrade paths?
+
+ 16:54 <teward> mapreri: define the scope of "We"
+
+ 16:54 <mapreri> I believe part of the check we need to do before approval is to make sure that the versioning is right.  and we are going to consider a bug if an upgrade fail, bug that's going to be assigned to the last uploader.
+
+ 16:55 <teward> that i agree, provided that the 'last uploader' (not the sponsor) is the one who handles fixing it
+
+ 16:55 <teward> and yes, verifying versioning is right is critical for any approvals
+
+ 16:55 <mapreri> so, why do you say "because backports are NOT guaranteed to upgrade properly" ?
+
+ 16:56 <mapreri> we are not going to be responsible in the same way AA is not responsible for regular upgrade failures, are they
+
+ 16:56 <teward> mapreri: well if you tried to upgrade my computer to Impish even if you could, Wireshark backported is 'newer' than the version in Impish right now on my system, and that means Wireshark could break
+
+ 16:56 <teward> that's what i want to make sure
+
+ 16:56 <teward> that it's not on the Backporters team to *fix* a broken package
+
+ 16:56 <teward> that brings one other question:
+
+ 16:56 <mapreri> ah yes, the only upgrade path starting from an LTS+bpo system is the next LTS
+
+ 16:56 <teward> how do we guarantee the upgrade path if OriginalUploader has gone missing or has no more interest.
+
+ 16:57 <teward> (short of removing the package from -backports which doesn't solve the problem)
+
+ 16:57 <mapreri> I guess it "falls on the community" like for all the other packages in the archive?
+
+ 16:57 <teward> i'm actually OK with that.
+
+ 16:58 <ddstreet> we're specifically talking about version numbers here, right?
+
+ 16:58 <teward> more or less
+
+ 16:58 <teward> more or less yess
+
+ 16:58 <teward> more or less yes
+
+ 16:58 <teward> blah i can't type to save my butt >.>
+
+ 16:59 <ddstreet> i think at the point of reviewing the backport, we can see if the LTS-backports version is < next-LTS version (both next-LTS-updates and next-LTS-backports)
+
+ 16:59 <ddstreet> i think that should be a hard rule
+
+ 16:59 <mapreri> yes, we agreed on it
+
+ 16:59 <teward> agreed
+
+ 16:59 <teward> as long as that is a hard rule that should rule out edge cases.
+
+ 17:00 <mapreri> and we are not going to support upgrades from LTS to interim
+
+ 17:00 <mapreri> (which the current bpo rule support, btw)
+
+ 17:00 <teward> agreed, not for backports.
+
+ 17:00 <teward> works for me
+
+ 17:00 <ddstreet> right, if someone upgrades into an interim, it's undefined if their -backports version would remain or be replaced
+
+ 17:00 <mapreri> but we should agree in only one of
+
+ 17:00 <mapreri> "(both next-LTS-updates and next-LTS-backports)"
+
+ 17:01 <mapreri> I mean
+
+ 17:01 <ddstreet> well next-LTS-backports should *always* be > next-LTS-updates
+
+ 17:01 <ddstreet> right?
+
+ 17:01 <ddstreet> so LTS-backports should, by rule, be < next-LTS-updates
+
+ 17:03 <mapreri> so it means that backports can't span 2 LTSs?  for example, backporting something from 22.04 all the way to 18.04.  is it possible, or no?  and if it is, we force people to *also* upload to 20.04-bpo?
+
+ 17:03 <ddstreet> for comparison, what the UCA archive does is just take the newer release package version and append '~cloud0' to force the version to be 'under' the version it's taken from
+
+ 17:04 <teward> technically speaking I think for our purposes if we do a backport we need to include the target release codename/number
+
+ 17:04 <teward> similar to how we have SRUs or updates that bump version numbers currently in all releases, we add on the version number in the version string
+
+ 17:04 <ddstreet> no i think backporting to multiple LTS should be ok, it should just follow similar versioning for srus, like if version 1.2.3 is backported to 18 and 20, then use versions '1.2.3~18.04.1' and '1.2.3~20.04.1' or something
+
+ 17:04 <ddstreet> yep
+
+ 17:04 <ddstreet> as teward said
+
+ 17:04 <teward> yeah that way we can have the same thing in multiple releases, following SRU Versioning Behavior
+
+ 17:05 <teward> that way if a later version shows up it'd still be superseded
+
+ 17:05 <ddstreet> we could probably require specific version formatting for backports
+
+ 17:05 <teward> agreed.
+
+ 17:05 <ddstreet> mapreri sound ok?
+
+ 17:05 <mapreri> right, so then the supported upgrade path is LTS+bpo → LTS²+bpo, not LTS² (ex. bpo).  fine, let's write it down properly in the doc
+
+ 17:05 <mapreri> so users are expected to *not* disable the bpo pocket from their sources.
+
+ 17:06 <ddstreet> i think it's ok either way for them to, isn't it?
+
+ 17:06 <mapreri> if we allow backports from 2 LTSs away, it might not be ok for them.
+
+ 17:07 <mapreri> even if it's not from LTSs away, just from the interim after the next lts
+
+ 17:07 <mapreri> like bpo from impish to bionic, we mandate also a bpo to focal to preserve the upgrade path, and users of bionic+bpo needs to have focal+bpo to be able to upgrade.
+
+ 17:08 <ddstreet> first part i agree with, bpo to focal before or along with bpo to bionic
+
+ 17:09 <ddstreet> but if they upgrade b->f, and they had version 1.2.3~18.04.1 in b, and f has version 1.2.2, they'll keep version 1.2.3~18.04.1 even if they disable -backports right?
+
+ 17:09 <ddstreet> i supposed if there are changing dependencies/libs that might break if they don't upgrade to 1.2.3~20.04.1
+
+ 17:09 <mapreri> then they'll find themself with, if they are lucky, an out-of-repo local package. if they unlucky some Breaks will prevent them from fully upgrading.
+
+ 17:10 <mapreri> neither of which is a proper system to have in my books
+
+ 17:10 <ddstreet> ok so we should require continuing to use -backports then, across release upgrades
+
+ 17:10 <ddstreet> i'm fine with that
+
+ 17:11 <mapreri> cool
+
+ 17:11 <mapreri> teward: are you fine too?
+
+ 17:11 <teward> sorry my boss called.
+
+ 17:11 <teward> i'm fine with that
+
+ 17:12 <ddstreet> #agreed LTS->LTS upgrades must be supported, and -backports should remain enabled/used
+
+ 17:12 <meetingology> AGREED: LTS->LTS upgrades must be supported, and -backports should remain enabled/used
+
+ 17:12 <mapreri> regarding the version string.  are we going to keep using the same namespace as SRUs and sec updates like I believe in the past?
+
+ 17:12 <teward> mapreri: i think we would have to, to avoid archive collisions, unless we intentionally want to update default policy to supersede backports, which sounds bads.
+
+ 17:12 <teward> s/bads/like it'd cause more harm than good/
+
+ 17:13 <mapreri> I'm mostly used to debian, where backports use ~bpoX+Y, whilst SRUs ~debX+Y
+
+ 17:13 <teward> we COULD use ~bpo-X.Y.Z if we wanted to be distinct
+
+ 17:13 <teward> but we have to be careful we don't collide
+
+ 17:13 <mapreri> which sorts nicely for them.  if would for us as well, but honestly besides being nice to distinguish the source of the package with only one glance, there is no much benefit ime
+
+ 17:13 <ddstreet> i'm fine with requiring ~bpo version suffix
+
+ 17:14 <teward> ddstreet: while also still providing the target version in the string in case the backport goes to two releases
+
+ 17:14 <teward> (i.e. both current LTSes)
+
+ 17:14 <teward> so we'd still have the bpo suffix but would stil be able to obey the versioning policy we already have used
+
+ 17:14 <ddstreet> so for example, if bionic had version 1.0.0 and focal had 1.2.3, a backport from f-> would be 1.2.3~bpo1 right?
+
+ 17:15 <ddstreet> or something like that?
+
+ 17:15 <teward> i think that works fine
+
+ 17:15 <mapreri> I'd hardcode the target release tbh
+
+ 17:15 <teward> mmm, now that i think about it
+
+ 17:15 <teward> we should hardcode the target release in the string too
+
+ 17:15 <ddstreet> right so 1.2.3~bpo18.04.1
+
+ 17:15 <mapreri> in some form, like ~bpo18.04.1 ?
+
+ 17:15 <ddstreet> ok yep
+
+ 17:15 <teward> so ~bpo18.04.1 would be suitable
+
+ 17:16 <teward> and must be present even if we're not sending to other releases.
+
+ 17:16 <mapreri> also, backporting version 1.2.3-2ubuntu20.04.1 to bionic, how would that go?
+
+ 17:16 <mapreri> (i.e., backporting from focal-updates)
+
+ 17:16 <teward> wouldn't that just be ~bpo18.04.1 at the end of that then?
+
+ 17:16 <teward> that could be confusing but it's a relevant question
+
+ 17:16 <mapreri> that's also in my mind, I'm double checking with you :)
+
+ 17:17 <teward> we might have to sit on that and think a bit, thoughts ddstreet ?
+
+ 17:17 <mapreri> (launchpad doesn't have length restrictions in the version string right?)
+
+ 17:17 <teward> (I'm running on the end of the 1 hour meeting and work needs me for a call)
+
+ 17:17 <ddstreet> #agreed backported package versions must use suffix ~bpo along with target release version and .1, or as refined in ML discussion and stated in wiki docs
+
+ 17:17 <meetingology> AGREED: backported package versions must use suffix ~bpo along with target release version and .1, or as refined in ML discussion and stated in wiki docs
+
+ 17:17 <ddstreet> yeah let's defer the specifics of it
+
+ 17:17 <teward> agreed, defer specifics for now
+
+ 17:18 <mapreri> we should write a table with all cases like https://wiki.ubuntu.com/SecurityTeam/UpdatePreparation#Update_the_packaging
+
+ 17:18 <teward> agreed, once we get there.  it won't all be decided in a single meeting
+
+ 17:18 <ddstreet> yes definitely
+
+ 17:18 <ddstreet> ok let's see if we can get thru the last 2 topics quickly, we're going long
+
+ 17:18 <ddstreet> #topic security updates
+
+ 17:19 <mapreri> I think we already covered it above?
+
+ 17:19 <ddstreet> i think we covered this; the requestor/uploader is responsible for this
+
+ 17:19 <ddstreet> yep
+
+ 17:19 <ddstreet> #topic cleaning up wiki docs
+
+ 17:19 <ddstreet> i think we covered this
+
+ 17:19 <ddstreet> all the old 'enabling backports' stuff needs to be removed
+
+ 17:19 <ddstreet> and we'll update the wiki with the new process
+
+ 17:20 <ddstreet> oh and the last topic sorry
+
+ 17:20 <ddstreet> #topic restrictions on eligible packages
+
+ 17:20 <ddstreet> i think we covered this
+
+ 17:20 <ddstreet> and moved the details of it to the ML
+
+ 17:20 <ddstreet> right?
+
+ 17:20 <mapreri> pretty much yes
+
+ 17:20 <mapreri> i think we need distinct ML threads to follow up :3
+
+ 17:21 <ddstreet> yep
+
+ 17:21 <ddstreet> ok i think we made it thru all the topics
+
+ 17:21 <mapreri> how does one edit help.u.c btw?  trying to log in myself gives a gateway timeout
+
+ 17:22 <ddstreet> i think only people on the doc team can edit it?
+
+ 17:23 <ddstreet> https://wiki.ubuntu.com/DocumentationTeam
+
+ 17:23 <mapreri> https://launchpad.net/~ubuntu-community-wiki-editors so these?
+
+ 17:23 <mapreri> 3 people?
+
+ 17:24 <mapreri> oh, that's "editorial rights" which is the superpowers
+
+ 17:24 <teward> For information on contributing see the Ubuntu Documentation Team wiki page.  <-- so yeah refer to the Documentation Team's wiki for things?
+
+ 17:24 <teward> and for proper contacts
+
+ 17:24 <teward> (in the footer of help.u.c)
+
+ 17:24 <ddstreet> yep i think https://wiki.ubuntu.com/DocumentationTeam/Organization
+
+ 17:24 <ddstreet> for the various teams, looks like they have a few
+
+ 17:24 <teward> https://wiki.ubuntu.com/DocumentationTeam/Contact has the contact mechanisms right now to use
+
+ 17:25 <teward> they have a general mailing list we can use too and let them handle delegation to the proper subteam
+
+ 17:25 <mapreri> so it's probably https://launchpad.net/~ubuntu-doc-contributors looking at the descriptions mh
+
+ 17:26 <ddstreet> ok anything else before we wrap up?
+
+ 17:26 <mapreri> I suppose we just either email them or join #-doc with the changes we'll need to do later on
+
+ 17:26 <teward> ^^
+
+ 17:26 <mapreri> I think we're good for now!
+
+ 17:26 <ddstreet> i guess, do we need another irc meeting?
+
+ 17:26 <teward> i have nothing more, unless more stuff comes up via ML, I think we're good for now
+
+ 17:26 <mapreri> I think we should at least schedule it yes
+
+ 17:26 <ddstreet> or are we good to just work in irc/ml now?
+
+ 17:26 <teward> at least schedule it, agreed
+
+ 17:26 <ddstreet> ok i'll schedule one for 2 weeks
+
+ 17:27 <teward> that way we can just cancel it if we have no action discussion items
+
+ 17:27 <teward> otherwise irc/ml
+
+ 17:27 <ddstreet> #action ddstreet schedule mtg in 2 weeks
+
+ 17:27 * meetingology ddstreet schedule mtg in 2 weeks
+
+ 17:27 <mapreri> everybody will start their own thread in the ML to continue, but we'll probably need to sync
+
+ 17:27 <ddstreet> great, thanks mapreri teward !
+
+ 17:27 <mapreri> should I take an action to ask vorlon or other AA on how to actually handle the archive?
+
+ 17:27 <ddstreet> sure yeah
+
+ 17:28 <ddstreet> #action mapreri ask AA how to handle archive -backports approval/rejection
+
+ 17:28 * meetingology mapreri ask AA how to handle archive -backports approval/rejection
+
+ 17:28 <ddstreet> i'll update the agenda page with the agreeds and actions
+
+ 17:28 <ddstreet> #action ddstreet update agenda page from today's meeting items
+
+ 17:28 * meetingology ddstreet update agenda page from today's meeting items
+
+ 17:28 <mapreri> then well, let's see this thing progress :)
+
+ 17:28 <teward> mapreri: i have to bug vorlon anyways on a couple things - Sponsors vs. Foundations related - if you don't reach out to AAs I'll reach out to vorlon :P
+
+ 17:29 <teward> as an aside when the stuff I have to bring up (in the next couple days, unless I figure it out myself) is done
+
+ 17:29 <mapreri> we have highlighted vorlon so many times here already that we could just wait and see what he does here :D
+
+ 17:29 <teward> lol
+
+ 17:29 <teward> true
+
+ 17:29 <ddstreet> lol
+
+ 17:29 <teward> unless they've muted here
+
+ 17:29 <ddstreet> indeed i tried to avoid that in the action item :)
+
+ 17:29 <teward> yep
+
+ 17:29 <mapreri> everybody talk about vorlon during meetings yep
+
+ 17:29 <ddstreet> haha lol
+
+ 17:29 <teward> v orlon gets all the pings always xD
+
+ 17:30 <ddstreet> ok we're only 50% over time so perfect mtg length :)
+
+ 17:30 <ddstreet> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

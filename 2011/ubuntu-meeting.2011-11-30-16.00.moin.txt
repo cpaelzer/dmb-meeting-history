@@ -1,0 +1,346 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by barry at 16:00:30 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2011/ubuntu-meeting.2011-11-30-16.00.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *bugs
+''LINK:'' http://91.189.93.73/qatracker/reports/defects/opened   (bdmurray, 16:14:09)
+
+ *aob
+
+
+
+Meeting ended at 16:39:13 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (37)
+ * barry (33)
+ * stgraber (33)
+ * jhunt (11)
+ * ubottu (7)
+ * mvo (7)
+ * doko (6)
+ * ev (6)
+ * meetingology (3)
+ * cyphermox (3)
+
+
+
+== Full Log ==
+
+
+ 16:00:30 <barry> #startmeeting
+
+ 16:00:30 <meetingology> Meeting started Wed Nov 30 16:00:30 2011 UTC.  The chair is barry. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 16:00:30 <meetingology> 
+
+ 16:00:30 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:00:51 <barry> slangasek and cjwatson are afk today
+
+ 16:01:02 <stgraber> good, I was just wondering if Steve poked someone about chairing the meeting :)
+
+ 16:01:16 <barry> yep, i'm the lucky pokee
+
+ 16:01:34 <barry> echo $(shuf -e barry doko stgraber jhunt ev bdmurray)
+
+ 16:01:41 <barry> jhunt ev stgraber doko barry bdmurray
+
+ 16:01:57 <jhunt> Whole week has been taken up with intense rework of Upstart job logging
+
+ 16:01:57 <jhunt> code for user jobs after I discovered a nasty issue. New code is simpler
+
+ 16:01:57 <jhunt> and cleaner, but still has a niggly issue I'm currently trying to track
+
+ 16:01:57 <jhunt> down.
+
+ 16:02:01 <jhunt> ⟷
+
+ 16:02:35 <barry> jhunt: i know all about those niggly issues that are hard to track down :)
+
+ 16:03:22 <barry> ev: you're up, if you're ready
+
+ 16:03:26 <ev> oh awesome
+
+ 16:03:38 <barry> should we come back around?
+
+ 16:03:47 <ev> - still helping the DX team get up to speed on automated testing using jenkins and autopilot
+
+ 16:03:48 <jhunt> barry: yeah, tracing individual file descriptors across 5-process logfiles gets hard (and time consuming :)
+
+ 16:04:07 <ev> - hacking away on the reporting daemon, recently adding some unit testing joy
+
+ 16:04:15 <ev> (done)
+
+ 16:04:34 <jhunt> ev: what about starring in a film? :)
+
+ 16:04:46 <ev> oh yes!
+
+ 16:04:53 <barry> autograph time!
+
+ 16:04:59 <ev> - engaged in subversion of Nokia's launch of the Lumia phone
+
+ 16:05:08 <stgraber> :)
+
+ 16:05:14 <stgraber> - ISO testing
+
+ 16:05:15 <stgraber> - Currently using the new tracker, fixing stuff as we go
+
+ 16:05:15 <stgraber> - Implemented donwload page
+
+ 16:05:15 <stgraber> - Worked on some DB sanity check scripts, export/import scripts
+
+ 16:05:15 <stgraber> - Working on migration of production server (still need to hear from IS)
+
+ 16:05:17 <stgraber> - Dailies are now pushed automatically to the new tracker!
+
+ 16:05:20 <stgraber> - Edubuntu
+
+ 16:05:22 <stgraber> - Did a bunch of fixes on Sunday
+
+ 16:05:25 <stgraber> - Doing ISO testing this week
+
+ 16:05:28 <stgraber> - Networking
+
+ 16:05:30 <stgraber> - Talked a bit with cyphermox about turning on privacy extensions, he had that turned on on his machine for a while without any problem
+
+ 16:05:33 <stgraber> - Poked a bit harder at dnsmasq in Network Manager, found one bug that we'll need to have fixed (DNS not working when using a VPN for default gateway)
+
+ 16:05:36 <stgraber> - Ifenslave update in my PPA, waiting to hear back from a customer for testing before uploading to Precise (bug 823366)
+
+ 16:05:38 <ubottu> Launchpad bug 823366 in ifenslave-2.6 (Ubuntu) "bond_primary is ignored in /etc/network/interfaces" [Undecided,Incomplete] https://launchpad.net/bugs/823366
+
+ 16:05:39 <stgraber> - Discovered that VLAN and bridging are as buggy as bonding, trying to find a solution for that which doesn't involve changing everything :) Details at: http://paste.ubuntu.com/754234/
+
+ 16:05:43 <stgraber> - Other
+
+ 16:05:45 <stgraber> - Patch pilot on Monday, mostly spent cleaning up the queue from stuff that shouldn't be on it (got rid of 20-30 items)
+
+ 16:05:49 <stgraber> - TODO
+
+ 16:05:52 <stgraber> - Figure out how to get reliable networking in 12.04 (for complex networks)
+
+ 16:05:55 <stgraber> - Look at the new ifupdown in Debian (beta2), isolate the fix for bug 876829 and SRU to Oneiric
+
+ 16:05:56 <ubottu> Launchpad bug 876829 in ifupdown (Ubuntu Precise) "Oneiric's ifupdown breaks ip aliases" [High,Triaged] https://launchpad.net/bugs/876829
+
+ 16:05:58 <stgraber> - Still need to get my iSCSI test setup online again and then look at the merge...
+
+ 16:06:01 <stgraber> (done)
+
+ 16:07:30 <jhunt> stgraber: Are QA + server team aware of your findings yet btw?
+
+ 16:07:50 <cyphermox> stgraber: have you filed a bug about the dnsmasq VPN issue?
+
+ 16:08:04 <stgraber> jhunt: gave the link to Clint and Daviey
+
+ 16:08:09 <stgraber> cyphermox: doing that now :)
+
+ 16:08:12 <jhunt> stgraber: cool.
+
+ 16:08:26 <cyphermox> stgraber: also, without issue is not quite right: I did run into connections blocking when the lifetime of the temporary address times out
+
+ 16:08:43 <barry> doko: you're up
+
+ 16:08:46 <cyphermox> but that was when I was changing from the default lifetime to something like 30 minutes
+
+ 16:09:18 <stgraber> cyphermox: bug 898224
+
+ 16:09:19 <ubottu> Launchpad bug 898224 in network-manager (Ubuntu) "Wrong dnsmasq configuration when VPN is set as default gateway" [Undecided,New] https://launchpad.net/bugs/898224
+
+ 16:10:45 <barry> i guess we'll come back to doko
+
+ 16:10:51 <barry> short week due to usa thanksgiving holiday; continuing w/python-dbus py3 porting, still fixing and debugging the stragglers in the test suite (upstream git has some similar failures), but will try to wrap up today or at least, migrate the patches to git and submit upstream.  also: helped various folks with some packaging questions and issues (launchpadlib, and another one for a new employee).  pypy discussions (packaging for
+
+ 16:10:51 <barry> debian). done.
+
+ 16:11:14 <bdmurray> holiday(s)
+
+ 16:11:14 <bdmurray> working with bug reporting kit in arsenal
+
+ 16:11:14 <bdmurray> recreation and testing of bug 885442 regarding debconf and installer logs
+
+ 16:11:16 <ubottu> Launchpad bug 885442 in debconf (Ubuntu) "Unable to dump debconf database" [Critical,Incomplete] https://launchpad.net/bugs/885442
+
+ 16:11:17 <bdmurray> work on bug reporting workflow diagram with cprofitt
+
+ 16:11:28 <bdmurray> update bug bot not to subscribe sponsors if an ubuntu-dev member added the patch
+
+ 16:11:31 <bdmurray> iso testing bug report review
+
+ 16:11:34 <bdmurray> fixed bug 887705 regarding warning about an unsupported release when upgrading to precise
+
+ 16:11:35 <ubottu> Launchpad bug 887705 in update-manager (Ubuntu) "wrong warning about unsupported Ubuntu release when upgrading to precise" [High,Fix released] https://launchpad.net/bugs/887705
+
+ 16:11:39 <bdmurray> done
+
+ 16:12:47 <barry> #topic bugs
+
+ 16:13:04 <barry> bdmurray: what have you got for us today?
+
+ 16:13:41 <bdmurray> as previously mentioned there is some iso testing going on now
+
+ 16:14:02 <bdmurray> the new qa tracker has a new report of defects too and that is at
+
+ 16:14:09 <bdmurray> http://91.189.93.73/qatracker/reports/defects/opened
+
+ 16:14:47 <bdmurray> looking at that bug 897896 seems important
+
+ 16:14:48 <ubottu> Launchpad bug 897896 in ubiquity (Ubuntu) "keyboard layout wrong choosing a different language for live session" [Undecided,New] https://launchpad.net/bugs/897896
+
+ 16:15:43 <doko> sorry, was still otp
+
+ 16:16:02 <barry> doko: no worries.  whenever you're ready
+
+ 16:16:13 <doko> - eglibc-2.15; spent too much time to track down the dynamic loader issues, without success
+
+ 16:16:13 <doko> - universe merges
+
+ 16:16:14 <doko> - bring down MIR's and component mismatches
+
+ 16:16:14 <doko> - finalized eglibc ARM multilib patch together with Steve McIntyre
+
+ 16:16:17 <doko> (done)
+
+ 16:17:06 <barry> thanks
+
+ 16:17:25 <barry> anything else on bugs?
+
+ 16:17:29 <jhunt> bdmurray: when does the qa tracker get a dns entry? :)
+
+ 16:17:47 <bdmurray> I thought stgraber said that was up to is right?
+
+ 16:17:54 <stgraber> right
+
+ 16:18:09 <stgraber> it's currently a canonistack instance, we hope to have production upgrade very soon
+
+ 16:18:28 <bdmurray> I'm also unsure about how to proceed now with bug 891711
+
+ 16:18:29 <ubottu> Launchpad bug 891711 in ubiquity (Ubuntu Precise) ""Upgrade" from 11.10 to 11.04 results in a unusable system" [High,Triaged] https://launchpad.net/bugs/891711
+
+ 16:18:59 <bdmurray> If you insert an 11.04 cd into an 11.10 system you are presented with an option to "upgrade" from 11.10 to 11.04
+
+ 16:19:10 <barry> uh, that's not a typo, right?
+
+ 16:19:19 <bdmurray> the same thing happens with 12.04 and 11.10
+
+ 16:19:24 <bdmurray> no not a typo
+
+ 16:20:20 <bdmurray> It crashes when going from 11.10 to 11.04 and works, afaict, when going from 12.04 to 11.10
+
+ 16:20:53 <bdmurray> However, I wonder if it really should appear there as an option at all
+
+ 16:21:03 <bdmurray> as it isn't tested
+
+ 16:21:22 <barry> is downgrading even a supported workflow?
+
+ 16:21:38 <stgraber> downgrading isn't supported, though IIRC the installer doesn't "downgrade" your system when you choose that
+
+ 16:21:39 <bdmurray> no, this use case wasn't envisioned
+
+ 16:21:52 <stgraber> it essentially wipes the system, keeps your home and reinstalls it
+
+ 16:22:06 <stgraber> except that some bits that are done on top of that seem to fail
+
+ 16:22:11 <bdmurray> but the old kernel is there and needs to be manually removed
+
+ 16:22:51 <stgraber> I'm still not sure we should support that use case and if not, we really should make sure it doesn't appear in the installer (will only work when 12.10 is released though)
+
+ 16:23:28 <bdmurray> stgraber: exactly, although we could SRU ubiquity
+
+ 16:23:44 <bdmurray> but its not likely to help much
+
+ 16:23:47 <stgraber> yeah, but that'd only work for the limited number of users who actually choose to upgrade ubiquity before installs
+
+ 16:24:10 <barry> agreed that it probably shouldn't be an option
+
+ 16:25:00 <bdmurray> It shouldn't be an option because it doesn't work well?
+
+ 16:25:23 <bdmurray> It seems like there is some demand for doing this
+
+ 16:25:43 <barry> it definitely shouldn't say "Upgrade 11.10 to 11.04" :)
+
+ 16:25:55 <bdmurray> well yes there is that
+
+ 16:26:07 <bdmurray> but even if it were renamed should it should appear at all?
+
+ 16:27:01 <jhunt> if it's allowable, surely there's an opportunity for us to understand why they are downgrading?
+
+ 16:27:26 <barry> i personally think not.  even if it's a workflow that some folks legitimately want, it's likely not very common, and unless it's officially supported and tested, it probably shouldn't be an option (though some documentation can exist to show people how to do it, with all the caveats)
+
+ 16:28:08 <bdmurray> But maybe this is something we should work on for 12.10...
+
+ 16:28:54 <bdmurray> Or perhaps the real thing to do is to give people a way test the next release on their hardware better
+
+ 16:29:04 <bdmurray> that seems like a better idea to me
+
+ 16:29:13 <barry> agreed
+
+ 16:29:44 <barry> though, i don't know how to translate that into an action item ;)
+
+ 16:30:13 <bdmurray> well mvo had mentioned resurrecting the aufs upgrade tester in update-manager
+
+ 16:31:00 <barry> bdmurray: do you know if there's an open bug for that? (lp is timing out for me)
+
+ 16:31:37 <bdmurray> not that I know of it was a discussion in a UDS session at UDS P
+
+ 16:32:25 <mvo> yeah, sorry, conflicting meeting
+
+ 16:32:43 <mvo> I have not actually tried it yet, but I can do that now and see how the aufs stuff goes for lucid->precise
+
+ 16:32:59 <mvo> I played with overlayfs and it looks pretty cool, but its not available yet in lucid
+
+ 16:33:16 <bdmurray> Does it generally work for oneiric->precise though?
+
+ 16:33:17 <mvo> so it will only be useful for oneiric->precise testing
+
+ 16:33:37 <mvo> well, overlayfs is not in trunk yet in u-m, but porting the existing code should be straightforward
+
+ 16:33:55 * mvo had some proof-of-concept data for this
+
+ 16:35:16 <barry> mvo: could you maybe open a bug on u-m and link a branch (even a prototype) to it?
+
+ 16:35:17 <bdmurray> Okay, so it seems like the upgrade from old release to new release should be removed from ubiquity then
+
+ 16:35:28 <bdmurray> er from new to old
+
+ 16:36:14 <mvo> barry: yes, can do. and I will test the aufs lucid->precise one now
+
+ 16:36:19 <bdmurray> I'll submit a separate bug for that and leave 891711
+
+ 16:36:30 <barry> bdmurray, mvo thanks
+
+ 16:36:36 <barry> #topic aob
+
+ 16:36:57 <barry> anything else y'all want to bring up?
+
+ 16:38:29 <barry> going once
+
+ 16:38:42 <barry> going twice
+
+ 16:39:13 <barry> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

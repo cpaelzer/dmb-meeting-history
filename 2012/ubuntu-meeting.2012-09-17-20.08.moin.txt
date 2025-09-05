@@ -1,0 +1,345 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by cjwatson at 20:08:51 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-09-17-20.08.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *action review
+
+ *nvidia/fglrx expedited SRUs (bryce)
+
+ *action review
+
+ *nvidia/fglrx expedited SRUs (bryce)
+
+ *Scan the mailing list archive for anything we missed
+''LINK:'' http://mid.gmane.org/20120827200048.GB14343@orangesquash.org.uk   (Laney, 20:51:48)
+
+ *AOB
+
+
+
+Meeting ended at 21:00:50 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cjwatson (67)
+ * pitti (27)
+ * bryceh (23)
+ * Laney (9)
+ * stgraber (4)
+ * ScottK (4)
+ * mdz (3)
+ * meetingology (3)
+ * highvoltage (2)
+
+
+
+== Full Log ==
+
+
+ 20:08:51 <cjwatson> #startmeeting
+
+ 20:08:51 <meetingology> Meeting started Mon Sep 17 20:08:51 2012 UTC.  The chair is cjwatson. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:08:51 <meetingology> 
+
+ 20:08:51 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 20:08:54 <cjwatson> I guess we have quorum
+
+ 20:09:02 <cjwatson> #topic action review
+
+ 20:09:30 <cjwatson> The last minutes I see are ancient: https://lists.ubuntu.com/archives/ubuntu-devel-announce/2012-May/000958.html
+
+ 20:09:51 <cjwatson> So I'm going to assume that we've just been quiet for that long and have no actions to review at this point; shout if that's untrue
+
+ 20:10:07 <cjwatson> #topic nvidia/fglrx expedited SRUs (bryce)
+
+ 20:10:17 <pitti> didn't we have some brainstorm review pending?
+
+ 20:10:33 <cjwatson> I'll have a look and get back to that later, then
+
+ 20:11:16 <cjwatson> #topic action review
+
+ 20:11:27 <cjwatson> <stgraber> #action stgraber to try and find all the places to update the TB meeting time to 20:00 UTC
+
+ 20:11:31 <cjwatson> now that I found the IRC logs
+
+ 20:11:34 <cjwatson> stgraber: did that happen?
+
+ 20:11:54 <stgraber> yep, fridge was updated and wiki too, not aware of any other place to change
+
+ 20:12:01 <cjwatson> OK
+
+ 20:12:37 <cjwatson> soren_: so, this brainstorm review ...
+
+ 20:12:48 <cjwatson> (async ping as he doesn't seem to be here)
+
+ 20:13:23 <cjwatson> #topic nvidia/fglrx expedited SRUs (bryce)
+
+ 20:14:01 <cjwatson> bryceh: would you like to hash this out any more here?  we don't seem to have consensus yet on the issue of unsubstantiated regressions
+
+ 20:14:06 <pitti> this was discussed on the ML for a bit already, but the fundamental stability vs. fast turnaround conflict remains
+
+ 20:14:18 <bryceh> hi
+
+ 20:14:29 <cjwatson> I'm not sure I see that as the principal conflict :)
+
+ 20:14:42 <pitti> but I think the whole point of this request was to get leniency on stability there, so I guess we should rather discuss how to get back to the "normal" driver as quickly as possible?
+
+ 20:14:43 <bryceh> cjwatson, yeah I was distracted writing a reply to that email
+
+ 20:14:53 <cjwatson> well, I did only send my reply earlier today
+
+ 20:15:29 <cjwatson> in general I'm supportive of being able to be a bit more relaxed about -updates SRUs, but I want to ensure that we aren't causing problems by doing o
+
+ 20:15:32 <cjwatson> *so
+
+ 20:15:38 * bryceh nods
+
+ 20:15:49 <mdz> yes, I understood the goal to be to offer an alternative update stream which users could opt in to, with a greater tolerance for possible regressions in favor of compatibility with newer apps
+
+ 20:16:11 <cjwatson> right, *if* users understand that that's what they're opting into
+
+ 20:16:30 <mdz> yes
+
+ 20:16:38 <mdz> a warning would be appropriate
+
+ 20:16:39 <cjwatson> my concern is that if nvidia-current is busted for a user and nvidia-current-updates works, then their perception will be "this is the one that works" and will be discombobulated when it breaks
+
+ 20:16:49 <pitti> at the time when they need it, they probably won't have much incentive to not use it
+
+ 20:17:29 <cjwatson> this would be a lot easier if we could start things off this way as of (say) quantal, with update-manager having reset people to non-updates on upgrade
+
+ 20:17:47 <cjwatson> is that a feasible thing to do, or do we really really need this for precise?
+
+ 20:17:51 <pitti> bryceh: I did understand that for -experimental we do want to get back to the "regular" driver on every dist-upgrade; is that planned for -updates as well?
+
+ 20:17:57 <bryceh> mdz, we are adding a warning for the nvidia-experimental package; currently there is no warning on nvidia-current-updates, although I think we could use the same mechanism to add one.
+
+ 20:18:54 <pitti> well, I do think that regression reports for -updates should at least hold the line, as usual for SRUs; for -experimental, being quick is the very point of the exercise, so that's where the leniency comes in, no?
+
+ 20:19:00 <bryceh> pitti, right, plan is that we're doing that for -experimental.  Whether to do that for -updates is open for discussion.
+
+ 20:19:22 <cjwatson> I'm not sure I see how the mechanism pitti proposes will achieve this
+
+ 20:19:51 <cjwatson> the proposal is that, at release time, -experimental is an empty transitional package depending on nvidia-current
+
+ 20:19:51 <pitti> cjwatson: I'm mostly concerned about enabling this for your favorite game of the day, and then forgetting about it, so that you keep having the risk for all eternity
+
+ 20:20:06 <cjwatson> and that later -experimental becomes a real package and drops the Depends
+
+ 20:20:24 <cjwatson> But that doesn't help, because everyone who had -experimental installed earlier still has it installed, transitional package or not
+
+ 20:20:39 <cjwatson> So the upgrade will turn it from transitional to real and we have the same problem
+
+ 20:20:44 <pitti> that would only work for dist-upgrades until there is a newer -experimental in the newer release, yes
+
+ 20:20:48 <pitti> so that does need u-m support
+
+ 20:21:01 <cjwatson> The only way I can see this working properly is bryceh's suggestion of changing package names for each nvidia series
+
+ 20:21:21 <cjwatson> Which is somewhat inelegant, but perhaps the best we can do?
+
+ 20:21:22 <bryceh> cjwatson, to your earlier question, yes it's strongly wanted for the LTS
+
+ 20:21:56 <pitti> we did have that in the past, and for some reason that was changed to the -current name; but yes, -NNN would ceratainly make these upgrades work with pure apt
+
+ 20:22:34 <cjwatson> -current makes more sense for "the one we want most people to use"
+
+ 20:22:39 <bryceh> yep
+
+ 20:23:23 <bryceh> one question I don't have a good opinion on, so would like advice:
+
+ 20:23:52 <cjwatson> so yes - if we can start from a clean slate, and ensure that anyone who installs the given package has seen a warning (or had to go to effort to preseed it away), then I'm moderately sanguine about some reasonable approach to handle regressions that we can't substantiate with reasonable effort
+
+ 20:24:09 <bryceh> once the beta is done and an official version is released by NVIDIA, should we update nvidia-experimental to the release version or leave it at whatever old beta driver it was on?
+
+ 20:24:33 <cjwatson> nvidia-NNN-experimental, no?
+
+ 20:24:54 <cjwatson> (or similar naming)
+
+ 20:24:54 <bryceh> or nvidia-experimental-NNN
+
+ 20:25:24 <cjwatson> there doesn't seem much point in leaving it at a beta version for the sake of it, really
+
+ 20:25:40 <cjwatson> assuming that in general official > earlier-versioned-beta ...
+
+ 20:26:02 <pitti> why do we need both "-experimental" and "-NNN"? I thought -NNN would suffice?
+
+ 20:26:05 <bryceh> cjwatson, so like if we have nvidia-experimental-123, and 123.11, 123.22, 123.33 are the beta version, with 123.44 being the official release, should we leave it to 123.33 or go to 123.44 (which would also presumably appear in nvidia-current-updates at some point)
+
+ 20:26:42 <cjwatson> is there a reason why people might want 123.33 not 123.44?
+
+ 20:26:51 <pitti> I think we should update betas to finals
+
+ 20:27:05 <pitti> chances are that some games need the fixes anyway?
+
+ 20:27:15 <bryceh> yeah that's what I'm thinking...
+
+ 20:27:17 <ScottK> Make nvidia-experimental-123 transitional and have it depend on nvidia-current-updates once the release is done.
+
+ 20:27:27 <pitti> and if we don't release beta->final to experimental due to caution, why would we do that for -updates?
+
+ 20:27:40 <cjwatson> right, I have trouble thinking of a reason why we wouldn't; although I wonder whether that should be done by depending on nvidia-current-updates (thus making it mean ">= 123") or freezing it at a particular 123 subversion
+
+ 20:27:45 <cjwatson> IYSWIM
+
+ 20:27:46 <bryceh> ok great
+
+ 20:28:21 <pitti> so why do we need the "-experimental" suffix if we already have a -NNN? am I missing something?
+
+ 20:28:41 <pitti> I think we do need the -NNN for ensuring that upgrades always reset to the stable one
+
+ 20:28:52 * bryceh ponders
+
+ 20:29:05 <cjwatson> I'm not fussed about -experimental if there's a warning saying as much
+
+ 20:29:23 <bryceh> there is some messaging value to -experimental, for people who might not read the warning but would see the package name, however technically I don't see any reason to favor that over just -NNN
+
+ 20:30:09 <bryceh> if it is -NNN then people may expect us to update it with post-release updates of the driver
+
+ 20:30:25 <bryceh> whereas I'd sort of prefer to be done with the package once the beta is over
+
+ 20:30:56 <cjwatson> compare gcc-snapshot
+
+ 20:31:05 <cjwatson> different audience there of course
+
+ 20:31:35 <pitti> ok, if it's just for the warning effect (not for some dependency magic), I'm fine with that
+
+ 20:33:02 <bryceh> pitti, fine with that being to keep -experimental or exclude it?
+
+ 20:33:33 <pitti> bryceh: with either really; I was mostly curious for what exactly we need the -experimental suffix
+
+ 20:33:50 <pitti> actually
+
+ 20:34:00 <pitti> it's helpful to have it for ubuntu-drivers-common
+
+ 20:34:06 <bryceh> ok
+
+ 20:34:17 <pitti> it currently filters "experimental" on the package name to sort it last in the "recommended version" list
+
+ 20:34:28 <bryceh> aha, good.
+
+ 20:34:36 <cjwatson> so, is there any remaining dissent here which we need to vote on, or do you think we're good to go on this?
+
+ 20:34:41 <pitti> so that it only ever installs that if no other version supports your card
+
+ 20:35:17 <pitti> do we have consent on the SRU verification? cjwatson's last mail sums it up pretty well IMHO
+
+ 20:38:27 <cjwatson> ScottK: does this discussion meet the concerns you expressed on the list - that is, weaken handling of hard-to-substantiate regressions (but don't ignore them entirely) for nvidia/fglrx packages where users have previously been warned about potential instability?
+
+ 20:38:43 <cjwatson> (which is about the best one-sentence summary I can come up with)
+
+ 20:39:10 <ScottK> cjwatson: I'm concerned that if we make a special rule for unsubstantiated regressions for one package, it'll spread.
+
+ 20:39:24 <ScottK> I'd much rather say for this one package, a certain degree of regression is OK.
+
+ 20:40:33 <ScottK> It's a binary blob video driver, so we can't fix it anyway, it's optional, and video drivers very rarely are 100% improvement for alll hardware.
+
+ 20:41:17 <cjwatson> So you'd rather not include a rationale with the policy in case it's taken as a general example, basically?
+
+ 20:41:25 <cjwatson> I can live with that.
+
+ 20:42:26 <pitti> yeah, fine for me as well; if we say "this package will always be the latest beta driver", this states it's very reason of existance, and implicitly contains that it won't stop upgrading
+
+ 20:43:19 <cjwatson> Or "the latest beta driver in series NNN" or whatever.
+
+ 20:43:31 <cjwatson> I think I'm happy to leave that part up to the teams dealing with it.
+
+ 20:44:37 <bryceh> this all sounds great :-)
+
+ 20:48:42 <cjwatson> OK, let's move on
+
+ 20:48:54 <cjwatson> #topic Scan the mailing list archive for anything we missed
+
+ 20:49:28 <cjwatson> Edubuntu Sponsorship Process
+
+ 20:49:45 <cjwatson> Has a couple of +1s although I concur with Mark's comment that this is more a matter for trademark@
+
+ 20:50:03 <cjwatson> highvoltage: ^- if you feel this needs more, please follow up
+
+ 20:50:19 <cjwatson> Extension of term lengths - done
+
+ 20:50:46 <cjwatson> And I don't see anything else of any note
+
+ 20:50:51 <pitti> neither do I
+
+ 20:50:58 <pitti> the rest was handled by mail
+
+ 20:51:02 <Laney> transferring the kernel packageset
+
+ 20:51:08 <Laney> I didn't see any comment on that in my mail
+
+ 20:51:12 <Laney> admittedly it was tacked on to the end
+
+ 20:51:13 <cjwatson> community bugs, just the usual takes-ages-to-resolve
+
+ 20:51:16 <cjwatson> Laney: URL?
+
+ 20:51:31 <highvoltage> cjwatson: ah, it's been handled by mail, thanks
+
+ 20:51:48 <Laney> http://mid.gmane.org/20120827200048.GB14343@orangesquash.org.uk
+
+ 20:51:50 <Laney> if that works
+
+ 20:51:51 <highvoltage> (at least, I believe so)
+
+ 20:52:43 <stgraber> Laney: well, we first need a way of actually doing that ;)
+
+ 20:52:55 <Laney> that'll be landed soon
+
+ 20:53:00 <Laney> if changing owner is a part of that branch
+
+ 20:53:39 <stgraber> not sure what's in the branch, ideally we'd need to have the delete function mapped and make all the attributes read/write
+
+ 20:53:45 <Laney> so, if you could agree it then someone can JFDI when it becomes possible
+
+ 20:53:56 <Laney> if this is in that branch then great, otherwise SMOP
+
+ 20:55:38 <cjwatson> Makes sense to me for DMB to own the kernel set
+
+ 20:56:00 <cjwatson> Once possible
+
+ 20:56:13 <cjwatson> If it's urgent for some reason we could try to arrange for manual SQL, but I'd really rather not
+
+ 20:56:45 <stgraber> nah, not urgent. I'll do any update the DMB needs to do to it as I have both DMB and TB hats.
+
+ 20:56:55 <cjwatson> OK
+
+ 20:56:56 <cjwatson> #topic AOB
+
+ 20:57:02 <cjwatson> anything else?  we have three minutes
+
+ 20:57:39 <bryceh> cjwatson, regarding the nvidia proposals, did the discussion above qualify as a vote or does a formal vote still need to be held?
+
+ 20:58:05 <cjwatson> AFAICT there was consensus and therefore no need for a vote
+
+ 20:58:11 <bryceh> awesome, thanks.
+
+ 20:58:20 <pitti> *agree*
+
+ 21:00:50 <cjwatson> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

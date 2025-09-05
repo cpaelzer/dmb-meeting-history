@@ -1,0 +1,648 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:02:26 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-05-23-15.02.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+
+ *Blueprints
+
+ *AOB
+
+
+
+Meeting ended at 15:40:37 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (73)
+ * cjwatson (43)
+ * ogra_ (35)
+ * stgraber (29)
+ * xnox (28)
+ * bdmurray (22)
+ * infinity (17)
+ * ubottu (14)
+ * jodh (13)
+ * barry (11)
+ * jdstrand (5)
+ * meetingology` (3)
+ * mvo (1)
+
+
+
+== Full Log ==
+
+
+ 15:02:26 <slangasek> #startmeeting
+
+ 15:02:26 <meetingology`> Meeting started Wed May 23 15:02:26 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:02:26 <meetingology`> 
+
+ 15:02:26 <meetingology`> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:02:33 <slangasek> [TOPIC] lightning round
+
+ 15:02:37 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox)
+
+ 15:02:40 <slangasek> barry jodh infinity xnox ev cjwatson bdmurray ogra slangasek stgraber doko
+
+ 15:02:48 * barry wins!
+
+ 15:02:51 <barry> syncs: twisted, python-testtools, python-defer, subunit, dbus-python. reviewed py3 branch for testresource.  started working on bug 1000801 (lazr.restfulclient port). started porting wsgi-intercept. reviewed glatzor's py3 branch for software-properties.  patch pilot: reviewed xnox's python-couchdb merge, bkerensa's fix for bug 962974, takluyver's py3 python-tz branch (merged & uploaded), bug 1002861 (sync'd canto). dmb meeting.  todo:
+
+ 15:02:51 <barry> return to porting the lazr.restfulclient stack.  done.
+
+ 15:02:53 <slangasek> er, wait
+
+ 15:02:53 <ubottu> Launchpad bug 1000801 in lazr.restfulclient "Add support for Python 3" [High,New] https://launchpad.net/bugs/1000801
+
+ 15:02:54 <ubottu> Launchpad bug 962974 in landscape-client (Ubuntu) ""Management Service" is gratuitously vague" [Low,Opinion] https://launchpad.net/bugs/962974
+
+ 15:02:55 <ubottu> Launchpad bug 1002861 in canto (Debian) "Sync canto 0.7.10-3 (universe) from Debian unstable (main)" [Unknown,New] https://launchpad.net/bugs/1002861
+
+ 15:02:56 <slangasek> stokachu: are you here?
+
+ 15:03:07 <barry> too late :)
+
+ 15:03:08 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:03:10 <slangasek> jodh bdmurray ev xnox stgraber doko ogra infinity stokachu barry slangasek cjwatson
+
+ 15:03:13 <slangasek> new order ;)
+
+ 15:03:15 * barry loses
+
+ 15:03:17 <slangasek> barry: you'll just have to go twice ;)
+
+ 15:03:20 <jodh> * [misc/planning]: fleshed out work items (and sizings) for 7 blueprints.
+
+ 15:03:20 <jodh> * [boot/upstart]:
+
+ 15:03:20 <jodh> - wrote spec for stateful re-exec (https://wiki.ubuntu.com/FoundationsTeam/Specs/QuantalUpstartStatefulReexec)
+
+ 15:03:20 <jodh> - evaluated a number of JSON libraries.
+
+ 15:03:23 <jodh> - wrote a basic JSON test prog to validate a fragment of the expected
+
+ 15:03:26 <jodh> JSON schema.
+
+ 15:03:29 <jodh> - started work on stateful re-exec.
+
+ 15:03:32 <jodh> - NIH blog post.
+
+ 15:03:35 <jodh> - drafted an Upstart blog post on logging.
+
+ 15:03:39 <jodh> ㄆ
+
+ 15:03:55 * infinity wakes up.
+
+ 15:04:04 <bdmurray> modified apport to set importance of python tracebacks to Medium
+
+ 15:04:05 <bdmurray> modified apport to carry over release tags from duplicates to the master bug
+
+ 15:04:07 <bdmurray> wrote and ran launchpadlib code to copy tags over from duplicate apport-crash bug reports
+
+ 15:04:10 <bdmurray> apport branch to block 'not a debian format' archive bug reporting
+
+ 15:04:13 <bdmurray> put checks for corrupt packages for package install failures in apport instead of having apt check
+
+ 15:04:16 <bdmurray> update-manager merge for the fix to bug 999890
+
+ 15:04:17 <ubottu> Launchpad bug 999890 in update-manager (Ubuntu Precise) "does not block follow up errors from earlier reports" [High,Triaged] https://launchpad.net/bugs/999890
+
+ 15:04:18 <barry> slangasek: oh, i get it: new order <- joy division <- warsaw
+
+ 15:04:19 <bdmurray> wrote lplib code to delete update-manager clone attachments due to security issue
+
+ 15:04:22 <bdmurray> modified bug bot to remove bad attachments from update-manager reported bugs
+
+ 15:04:24 <slangasek> hah
+
+ 15:04:25 <bdmurray> modified bug bot to write to a log file for easier auditing of work done
+
+ 15:04:27 <bdmurray> modified search-bugs in bugpatterns to show count of duplicates for the master bug
+
+ 15:04:36 <bdmurray> modified lp-grab-attachments to have a --descriptions option
+
+ 15:04:36 <bdmurray> updating firefox-lp-improvements with the new version of lp_work_item_editor
+
+ 15:04:39 <bdmurray> arsenal branch to create a report of bug task with the most duplicates
+
+ 15:04:41 <mvo> \o/
+
+ 15:04:42 <bdmurray> wrote a bugpattern for ubiquity bug 998492
+
+ 15:04:43 <ubottu> Launchpad bug 998492 in ubiquity (Ubuntu Precise) "Fails to detect package download errors on architectures other than amd64" [High,In progress] https://launchpad.net/bugs/998492
+
+ 15:04:44 <bdmurray> added a11y opportunity to harvest-data
+
+ 15:04:45 <bdmurray> moved harvest opportunity creation scripts from ubuntu-qa-tools to harvest-data
+
+ 15:04:48 <bdmurray> review of package install failures due to /etc/default/grub modifications gone bad
+
+ 15:05:07 <bdmurray> done‼
+
+ 15:05:45 <infinity> bdmurray: That seemed out of order. :P
+
+ 15:06:00 <infinity> - worked on organising and tidying specs
+
+ 15:06:00 <infinity> - spent a lot of time looking into armel/armhf toolchain woes
+
+ 15:06:00 <infinity> - spent even more time looking into nscd/netgroups bugs
+
+ 15:06:01 <infinity> ...
+
+ 15:06:10 <infinity> ^-- Remarkably short this week.
+
+ 15:06:26 <bdmurray> infinity: I was following the new order
+
+ 15:06:42 <xnox> infinity: you are out of order =)
+
+ 15:06:46 <infinity> bdmurray: Oh, I completely missed the new new order.
+
+ 15:06:50 <ogra_> infinity, i added a WI for you to https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-drop-preinst-images
+
+ 15:07:02 <ogra_> (just for tracking purposes)
+
+ 15:07:34 * infinity isn't all here today.
+
+ 15:08:18 * xnox looks for ev
+
+ 15:08:44 <ogra_> xnox, just move :)
+
+ 15:08:44 <slangasek> ev:
+
+ 15:08:53 <xnox> software-raid:
+
+ 15:08:54 <xnox> * collaborating with kees on https://wiki.ubuntu.com/ReliableRaid/History
+
+ 15:08:54 <xnox> * already from above, prepared some udev fixes for mdadm bug 957494 bug 968074 bug 1002357, pending sponsorship
+
+ 15:08:54 <xnox> * establishing access to bare metal machines in the QA lab
+
+ 15:08:55 <xnox> * ordered external quad HDD housing for RAID testing, being shipped from china
+
+ 15:08:55 <xnox> * next step to establish RAID Architecture Specification
+
+ 15:08:55 <xnox> ubiquity-lvm-luks:
+
+ 15:08:55 <xnox> * added workitems to the blueprint
+
+ 15:08:56 <xnox> * discussing requirements/roadmap/first steps with stakeholders
+
+ 15:08:56 <xnox> * next step to start building/modifying ubiquity
+
+ 15:08:56 <xnox> python-versions:
+
+ 15:08:57 <xnox> * tracker deployed at http://people.canonical.com/~ubuntu-archive/transitions/onlypy3oncd.html
+
+ 15:08:57 <xnox> * next step finish up local py3 branch for apparmor
+
+ 15:08:57 <ubottu> Launchpad bug 957494 in mdadm (Ubuntu Precise) "Missing added utility 'mdmon'" [Undecided,New] https://launchpad.net/bugs/957494
+
+ 15:09:17 <xnox> bug 968074
+
+ 15:09:19 <barry> xnox: thanks for the tracker!
+
+ 15:09:24 <xnox> bug 1002357
+
+ 15:09:37 <jdstrand> xnox: you are doing the python3 porting for apparmor?
+
+ 15:09:52 <slangasek> ev: you're not here
+
+ 15:09:52 <slangasek> xnox:
+
+ 15:10:24 <xnox> jdstrand: well, i did a little work (there isn't much tbh) spotted a few things that were not bi-lingual
+
+ 15:10:32 <xnox> py2/py3
+
+ 15:10:44 <xnox> jdstrand: are you doing it as well?
+
+ 15:10:46 <jdstrand> xnox: ok, feel free to takl to me after the meeting
+
+ 15:10:50 <xnox> ok
+
+ 15:10:58 <jdstrand> xnox: we have work items for it, yes
+
+ 15:11:24 <slangasek> xnox: did you give up on getting access to the lab machines for HD testing, then?
+
+ 15:11:26 <jdstrand> xnox: I might also mention that ufw is actively being ported
+
+ 15:11:46 <barry> jdstrand: nice
+
+ 15:12:02 * jdstrand has a work item for that
+
+ 15:12:11 <xnox> slangasek: I got VPN today, but don't have access to any machines behind the VPN yet. I still one both. Lab for automatic, local for troubleshooting/personal dogfooding
+
+ 15:12:27 <slangasek> xnox: ok
+
+ 15:12:30 <xnox> s/one/want/
+
+ 15:13:36 <slangasek> stgraber:
+
+ 15:13:47 <stgraber> Short week, was off on Monday:
+
+ 15:13:47 <stgraber> - Networking
+
+ 15:13:47 <stgraber> - Spent some time testing candidates SRU for an IPv6 bug in Network Manager
+
+ 15:13:49 <stgraber> - SRU
+
+ 15:13:52 <stgraber> - Verification testing of nagios-nrpe and lxc
+
+ 15:13:54 <stgraber> - Started preparing the next lxc SRU
+
+ 15:13:57 <stgraber> - Containers
+
+ 15:13:59 <stgraber> - Reworked the lxc-ubuntu template to be much easier to maintain
+
+ 15:14:02 <slangasek> (then no doko, so ogra_ next)
+
+ 15:14:02 <stgraber> - Worked with Serge on API design for liblxc, worked on the initial structure of the python binding
+
+ 15:14:05 <stgraber> - Fixed some races in lxc-start-ephemeral, made it consistently call sudo and dropped the separate
+
+ 15:14:08 <stgraber> and complex lxc-ip for a simple call to the new "ip netns" instead
+
+ 15:14:11 <stgraber> - ISO tracker
+
+ 15:14:13 <stgraber> - Continued the work to get qa-q-isotracker-testcases implemented, all of the backend work is done
+
+ 15:14:16 <stgraber> and most of the frontend work nears completion, there's some admin UI work left and API update
+
+ 15:14:19 <stgraber> - Migration code works fine, result can be seen at http://iso.qa.dev.stgraber.org
+
+ 15:14:22 <stgraber> If you don't see anything, that's fine, the idea was not to loose any history data and have the new cool
+
+ 15:14:25 <stgraber> stuff show up only for the new products.
+
+ 15:14:28 <stgraber> - Other
+
+ 15:14:30 <stgraber> - Drafted and sent all my specs for review
+
+ 15:14:33 <stgraber> - Patch pilot on Friday
+
+ 15:14:35 <stgraber> - TODO this week
+
+ 15:14:38 <stgraber> - Push an LXC SRU, cherry-picking the important fixes from the recent quantal uploads
+
+ 15:14:41 <stgraber> - Get enough of the ISO tracker work done so that QA can test it and work on smaller changes
+
+ 15:14:44 <stgraber> (DONE)
+
+ 15:14:52 <ogra_> phew
+
+ 15:14:56 <ogra_> done:
+
+ 15:14:56 <ogra_> * ascension day on thu.
+
+ 15:14:56 <ogra_> * filled WIs on foundations-q-embedded-rootfs, foundations-q-hwpack-integration and added two items to foundations-q-drop-preinst-images
+
+ 15:14:56 <ogra_> (for tracking purpose only)
+
+ 15:14:56 <ogra_> * finally MoM is back, worked on merges
+
+ 15:14:58 <ogra_> * started looking into the gcc-4.7 FTBFS list on debian (on request from doko)
+
+ 15:15:00 <ogra_> todo:
+
+ 15:15:02 <ogra_> * more merges
+
+ 15:15:06 <ogra_> * more FTBFS
+
+ 15:15:08 <ogra_> * start looking into the armhf image situation in preparation for A1
+
+ 15:15:10 <ogra_> (fells so small to go after stgraber)
+
+ 15:15:12 <ogra_> ..
+
+ 15:16:11 <stgraber> ogra_: you're just better at summarizing it ;)
+
+ 15:16:17 <ogra_> haha
+
+ 15:16:45 <slangasek> stokachu: here?
+
+ 15:16:48 <slangasek> stokachu: no worries if not
+
+ 15:17:07 * xnox the new new order is broken, we need an SRU
+
+ 15:17:10 <infinity> Yeah, I have to figure out how to expand more too. :P
+
+ 15:17:22 <slangasek> looks like that makes it my turn
+
+ 15:17:23 <infinity> Or just mention every single AA, SRU, etc task.
+
+ 15:17:30 <ogra_> lets hire a ghostwriter ;)
+
+ 15:17:35 <slangasek> * fixing up update-notifier SRU, apparently our translators are too efficient and translate things that shouldn't be (bug #1003100)
+
+ 15:17:37 <ubottu> Launchpad bug 1003100 in update-notifier (Ubuntu Quantal) "package-data-downloader: KeyError: 'paquetes'" [High,Fix committed] https://launchpad.net/bugs/1003100
+
+ 15:17:38 <slangasek> * pushed a bug report to plymouth in Debian, requesting a backport for an API mountall needs
+
+ 15:17:41 <slangasek> * mountall bug triage in preparation for uploading to Debian
+
+ 15:17:42 <slangasek> * SRU processing generally
+
+ 15:17:44 <slangasek> * sponsored sudo merge, and uploaded pkexec (bug #982684)
+
+ 15:17:46 <ubottu> Launchpad bug 982684 in sudo (Ubuntu Quantal) "sudo, pkexec don't apply global environment settings from /etc/environment" [Medium,In progress] https://launchpad.net/bugs/982684
+
+ 15:17:47 <slangasek> * ia32-libs SRU for bug #1000541
+
+ 15:17:48 <ubottu> Launchpad bug 1000541 in ia32-libs (Ubuntu Quantal) "ia32-libs-multiarch depends on gstreamer0.10-fluendo-mp3, causing problems when installing packages from partner" [Medium,Fix released] https://launchpad.net/bugs/1000541
+
+ 15:17:48 <slangasek> cjwatson:
+
+ 15:17:51 <slangasek> * getting things organized for DebConf
+
+ 15:17:53 <slangasek> (done)
+
+ 15:18:01 <cjwatson> Uploaded ubiquity Python 3 port.  Fixed some resulting breakage (decoding Unicode at wrong point).
+
+ 15:18:04 <cjwatson> Landed per-packageset build scoring.
+
+ 15:18:07 <cjwatson> Started work on allowing per-pocket archive permissions.
+
+ 15:18:10 <cjwatson> Verified dh-make SRU.
+
+ 15:18:12 <cjwatson> Uploaded ubuntu-keyring with new archive and cdimage signing keys.  Needs SRUs.
+
+ 15:18:15 <cjwatson> Resurrected merges.ubuntu.com, with help from IS.
+
+ 15:18:18 <cjwatson> Lots of merges.
+
+ 15:18:20 <cjwatson> Fixed stale files being left behind in ftpmaster's germinate output directory.
+
+ 15:18:23 <cjwatson> Arranged for buildd admins to be able to adjust per-archive build scoring (pending deployment).
+
+ 15:18:26 <cjwatson> Moved Ubuntu-specific publishing hooks out of Launchpad, in preparation for upgrading them to use the new archive signing key for >=quantal.
+
+ 15:18:30 <cjwatson> Made a couple of live-installer improvements requested by the server team.
+
+ 15:18:32 <cjwatson> Various adjustments to cope with recent kernel flavour renamings.
+
+ 15:18:35 <cjwatson> Removed "Essential: yes" from python-minimal.
+
+ 15:18:37 <cjwatson> Merged xdeb staged-bootstrap patch.
+
+ 15:18:40 <cjwatson> Opened main vs. universe discussion with kubuntu-devel (https://lists.ubuntu.com/archives/kubuntu-devel/2012-May/006080.html).
+
+ 15:18:43 <cjwatson> Gave Daviey some basic archive admin training.
+
+ 15:18:45 <cjwatson> ☕
+
+ 15:19:05 <ogra_> is that a coffepot or something else that generates steam ?
+
+ 15:19:15 <cjwatson> U+2615 HOT BEVERAGE
+
+ 15:19:19 <ogra_> ah
+
+ 15:19:45 <ogra_> so not what my initial thought was then :)
+
+ 15:19:54 * xnox ogra_: there is scribe team for ghostwritting ;-) hot beverage! I want an iced tea ;-)
+
+ 15:20:10 <cjwatson> infinity: FYI the per-archive scoring will basically be:
+
+ 15:20:13 <cjwatson> archive = whatever
+
+ 15:20:40 <cjwatson> archive.relative_build_score  # fetch attribute to work around bug 662740
+
+ 15:20:40 <infinity> cjwatson: I was actually more interested in the bullet point about finally dropping python-minimal out of Essential. \o/
+
+ 15:20:41 <ubottu> Launchpad bug 662740 in lazr.restfulclient "Setting an attribute on a shim object without first reading an attribute causes a crash" [Low,Triaged] https://launchpad.net/bugs/662740
+
+ 15:20:47 <cjwatson> archive.relative_build_score = whatever
+
+ 15:20:49 <cjwatson> archive.lp_save()
+
+ 15:21:13 <cjwatson> infinity: it's still in prio required though ;)
+
+ 15:21:20 <infinity> Oh.
+
+ 15:21:25 <infinity> Less excited.
+
+ 15:21:45 <slangasek> ogra_: pile of poo is a different unicode character
+
+ 15:21:46 <cjwatson> Though I guess dpkg won't complain if you remove it.
+
+ 15:22:11 <ogra_> slangasek, heh, yeah, but its small enough to misread it in my xchat :)
+
+ 15:22:20 <slangasek> bug #820034
+
+ 15:22:21 <ubottu> Launchpad bug 820034 in Ubuntu Font Family "Expansion: Miscellaneous Symbols and Pictographs U+1F4A9" [Wishlist,Triaged] https://launchpad.net/bugs/820034
+
+ 15:23:03 <slangasek> any more questions about any of the above?
+
+ 15:23:04 <ogra_> *grin*
+
+ 15:23:39 <slangasek> [TOPIC] Bugs
+
+ 15:23:46 * ogra_ likes the elegant aspect in that bug :)
+
+ 15:24:27 <slangasek> bdmurray: anything showing up yet to worry about for 12.10?
+
+ 15:24:40 <bdmurray> slangasek: no not yet
+
+ 15:25:15 <slangasek> there are a few bugs jibel's been escalating to us based on the auto-tests... I need to pin down this debootstrap one today
+
+ 15:25:24 <cjwatson> I'm about to look at bug 1003443
+
+ 15:25:25 <ubottu> Launchpad bug 1003443 in ubiquity (Ubuntu Quantal) "Ubuntu Quantal Desktop 21120523 failed to install" [Critical,New] https://launchpad.net/bugs/1003443
+
+ 15:25:34 * slangasek nods
+
+ 15:25:52 <cjwatson> May be an HD fault as the error suggests, but might as well check
+
+ 15:26:01 <slangasek> right
+
+ 15:26:09 <cjwatson> And I'm just fixing bug 1003440 now
+
+ 15:26:11 <ubottu> Launchpad bug 1003440 in ubuntu-meta (Ubuntu Quantal) "Unicode characters in language list" [Medium,Triaged] https://launchpad.net/bugs/1003440
+
+ 15:26:18 <slangasek> the debootstrap bug is bug #1001460
+
+ 15:26:19 <ubottu> Launchpad bug 1001460 in sysvinit (Ubuntu Quantal) "preinst fails in d-i" [Critical,Triaged] https://launchpad.net/bugs/1001460
+
+ 15:26:34 <slangasek> which I still have no idea how that's happening :P
+
+ 15:26:50 <cjwatson> Have you had a chance to compare against a /var/log/bootstrap.log for precise?
+
+ 15:26:53 <slangasek> (hints accepted, if someone knows)
+
+ 15:27:00 <slangasek> cjwatson: hmm, no, good idea
+
+ 15:27:38 <cjwatson> The one I have to hand shows makedev successfully running insserv, so not just the set +e => -e thing I pointed out
+
+ 15:27:46 <cjwatson> But that dates from 2011-12-20
+
+ 15:27:59 <cjwatson> Aha
+
+ 15:27:59 <slangasek> successfully *running* insserv?
+
+ 15:28:08 <cjwatson> Here's one from 2012-03-20:
+
+ 15:28:14 <cjwatson> Selecting previously unselected package makedev.
+
+ 15:28:14 <cjwatson> Unpacking makedev (from .../makedev_2.3.1-89ubuntu2_all.deb) ...
+
+ 15:28:14 <cjwatson> update-rc.d: using dependency based boot sequencing
+
+ 15:28:14 <cjwatson> Can't exec "insserv": No such file or directory at /usr/sbin/update-rc.d line 402.
+
+ 15:28:17 <cjwatson> update-rc.d: error: insserv rejected the script header
+
+ 15:28:21 <slangasek> hmm
+
+ 15:28:28 <cjwatson> So this was happening in precise too and it's just the -e change
+
+ 15:28:31 <slangasek> ah
+
+ 15:28:37 <slangasek> ok, thanks
+
+ 15:28:39 <ogra_> didnt stokachu fix that in latest insserv
+
+ 15:28:40 <cjwatson> There's proximate cause for you, not so much with the root cause
+
+ 15:28:42 <slangasek> I'll fix sysvinit then :)
+
+ 15:28:56 <slangasek> ogra_: what he fixed was to make insserv disappear from the path because third-parties mistook it for an interface
+
+ 15:29:01 <ogra_> ah
+
+ 15:29:21 * ogra_ just remembered something update-rc.d from precise
+
+ 15:29:28 <ogra_> +related
+
+ 15:29:55 <slangasek> so anyway, yeah, I should be able to work it out from there - thanks cjwatson
+
+ 15:30:01 <infinity> Robbie seems to have some valid points on the bug ~6h ago.
+
+ 15:30:18 <infinity> Robie, even.  Silly people and their lack of Bs.
+
+ 15:30:30 <slangasek> bdmurray: anything on the 12.04.1 front?
+
+ 15:30:46 <slangasek> stgraber: or anything you know about for 12.04.1 that you need help with?
+
+ 15:30:48 <cjwatson> There are a lot of these kinds of loops in the base system
+
+ 15:31:05 <bdmurray> slangasek: not much their either yet
+
+ 15:31:07 <cjwatson> But yeah, possibly
+
+ 15:31:27 <stgraber> slangasek: not at this time. I've been looking at the pending SRUs, trying to get them through quickly, but most of my time is currently going on trying to have the iso tracker work done ASAP
+
+ 15:31:35 <stgraber> (so I can then focus more on 12.04.1)
+
+ 15:31:38 <slangasek> ok
+
+ 15:32:06 <slangasek> (I guess that includes the "iso" tracker work that gives us a framework for SRU verifications?)
+
+ 15:34:22 <slangasek> [TOPIC] Blueprints
+
+ 15:34:47 <slangasek> not much to say on my side... but figured I'd bring up the topic in case anyone has concerns to discuss
+
+ 15:34:56 <slangasek> hopefully the drafting is all done by now
+
+ 15:35:02 <slangasek> (anyone not done with drafting?)
+
+ 15:35:08 <stgraber> slangasek: yeah
+
+ 15:35:36 <stgraber> slangasek: (that yeah applies to the part about framework for SRU verification)
+
+ 15:35:41 * slangasek nods
+
+ 15:35:49 <xnox> hardware-notifications needs drafting still on my side.
+
+ 15:35:53 * xnox sorry.
+
+ 15:36:00 <ogra_> depends where you draw the line
+
+ 15:36:07 <ogra_> i still need pretty wikipages
+
+ 15:36:15 <ogra_> Wis are there
+
+ 15:36:25 <slangasek> xnox: 'sok
+
+ 15:36:41 <jodh> I've drafted the work items, but some can't be broken down into <= 2 day chunks without spending quite some time on the design and I'm not even sure we're planning to do some of them, so...
+
+ 15:36:45 <slangasek> ogra_: WIs are a good start, as that gives us pretty graphs :)
+
+ 15:36:52 <ogra_> :)
+
+ 15:36:58 <cjwatson> with the exception of the server installer bits, I think I'm pretty much done
+
+ 15:37:03 <slangasek> ok
+
+ 15:37:25 <slangasek> sounds like we're in pretty good shape overall then
+
+ 15:38:09 <slangasek> jodh: that's still ok for this point in the cycle, don't worry about it - and yes, we'll drill down into the question of which ones to do
+
+ 15:38:20 <slangasek> [TOPIC] AOB
+
+ 15:38:28 <jodh> slangasek: ok, thanks!
+
+ 15:38:28 <slangasek> Anything else to discuss?
+
+ 15:38:39 <bdmurray> I'm out next monday
+
+ 15:38:50 <barry> next monday is a usa holiday
+
+ 15:38:52 <slangasek> yep
+
+ 15:38:53 <jodh> should we discuss the "on hold" music for next time? ;)
+
+ 15:38:53 <ogra_> arent most of us ?
+
+ 15:38:57 <slangasek> so I'm out too next Monday
+
+ 15:39:07 <ogra_> german holiday too
+
+ 15:39:12 <slangasek> !
+
+ 15:39:17 <slangasek> why does Germany get TWO holidays in May
+
+ 15:39:19 <infinity> I'm in Hong Kong next week.
+
+ 15:39:23 <slangasek> so not fair
+
+ 15:39:27 <ogra_> slangasek, merkel
+
+ 15:39:31 <slangasek> haha
+
+ 15:39:53 * xnox uk has Queens jubilee the week after a believe or something
+
+ 15:40:00 * barry fondly remembers mlk day and presidents day :)
+
+ 15:40:16 <slangasek> barry: I remember them being in a crappy season ;)
+
+ 15:40:21 <barry> :-D
+
+ 15:40:37 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

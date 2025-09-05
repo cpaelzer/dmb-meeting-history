@@ -1,0 +1,720 @@
+#title #ubuntu-meeting: ubuntu-server-team
+
+Meeting started by roaksoax at 16:01:39 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-03-06-16.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Review ACTION points from previous meeting
+
+ *Precise Development
+''LINK:'' http://status.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html   (roaksoax, 16:03:18)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-openvswitch-mir   (Daviey, 16:30:06)
+''LINK:'' https://bugs.launchpad.net/~ubuntu-mir/+subscribedbugs .. looks like about 30+ pending review  (SpamapS, 16:32:04)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-ceph   (Daviey, 16:32:09)
+''LINK:'' https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-cloudutils   (Daviey, 16:33:29)
+
+ *Ubuntu Server Team Events
+''LINK:'' http://charmschoolsv.eventbrite.com/   (SpamapS, 16:38:46)
+''LINK:'' http://cloud.ubuntu.com/2012/02/juju-charm-school-webinar-march-8th/   (SpamapS, 16:40:03)
+''LINK:'' http://www.brighttalk.com/webcast/6793/41933   (SpamapS, 16:40:11)
+
+ *Weekly Updates & Questions for the QA Team (hggdh)
+
+ *Weekly Updates & Questions for the Kernel Team (smb)
+
+ *Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ *Open Discussion
+''ACTION:'' add subtopics for release-bugs/BP;s under precise/current development  (roaksoax, 16:49:28)
+
+ *Zentyal Packages (http://pad.lv/928501) - SpamapS
+''LINK:'' https://launchpad.net/~jacalvo/+archive/zentyal-precise/   (SpamapS, 16:51:37)
+
+ *Announce next meeting date and time
+
+
+
+Meeting ended at 16:57:17 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * add subtopics for release-bugs/BP;s under precise/current development
+
+
+
+== People present (lines said) ==
+
+ * roaksoax (92)
+ * Daviey (78)
+ * SpamapS (51)
+ * ubottu (22)
+ * smoser (11)
+ * hggdh (8)
+ * zul (8)
+ * smb (7)
+ * adam_g (6)
+ * rbasak (6)
+ * justinlw (5)
+ * ScottK (5)
+ * meetingology (4)
+ * robbiew (4)
+ * arosales (3)
+ * jamespage (3)
+ * Ursinha (2)
+ * utlemming (1)
+ * highvoltage (1)
+
+
+
+== Full Log ==
+
+
+ 16:01:39 <roaksoax> #startmeeting ubuntu-server-team
+
+ 16:01:39 <meetingology> Meeting started Tue Mar  6 16:01:39 2012 UTC.  The chair is roaksoax. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01:39 <meetingology> 
+
+ 16:01:39 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 16:01:46 <roaksoax> [TOPIC] Review ACTION points from previous meeting
+
+ 16:01:57 <roaksoax> there're no previous actions
+
+ 16:02:01 <roaksoax> according to the wikipage
+
+ 16:02:05 <roaksoax> so let's move on
+
+ 16:02:06 <highvoltage> czajkowski: thanks
+
+ 16:02:15 <roaksoax> [TOPIC] Precise Development
+
+ 16:02:19 <roaksoax> Daviey: you are up
+
+ 16:02:37 <Daviey> roaksoax: fancy driving it yourself?
+
+ 16:03:00 <roaksoax> Daviey: sure
+
+ 16:03:05 <rbasak> I think this topic should be split. There's quite a lot in it.
+
+ 16:03:10 <roaksoax> so let's go thru the release bugs!
+
+ 16:03:17 <zul> yaay
+
+ 16:03:18 <roaksoax> http://status.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html
+
+ 16:03:29 <Daviey> rbasak: sure, make a proposal at AOB
+
+ 16:03:41 <roaksoax> bug #924739 -- adam_g any updates?
+
+ 16:03:43 <ubottu> Launchpad bug 924739 in squid3 (Ubuntu Precise) "after upgrade from oneiric to precise, previous squid config unused, cannot be used when relocated" [Critical,Triaged] https://launchpad.net/bugs/924739
+
+ 16:04:00 <roaksoax> adam_g: has the newer version that got merged from Debian fixed anything?
+
+ 16:04:21 <adam_g> roaksoax: there is not going to be a fix in debian as far as i can tell, i have some direction on possible solutions
+
+ 16:04:49 <justinlw> o/
+
+ 16:05:10 <adam_g> roaksoax: its not going to be seamless in any case, but we can try to make it obvious to users whats happening when we transition their proxy
+
+ 16:05:19 <Daviey> sounds great!
+
+ 16:05:26 <Daviey> well, "ok"
+
+ 16:05:55 <adam_g> i added some notes to the bug about possible routes we can take, anyone interested should weigh in
+
+ 16:06:05 <roaksoax> adam_g: alright then, I guess once we release backports are gonna be the way to go here until everything is supported
+
+ 16:06:30 <Daviey> next?
+
+ 16:06:35 <roaksoax> so let's move on bug #883988
+
+ 16:06:37 <ubottu> Launchpad bug 883988 in glance (Ubuntu Precise) "db migration failing when upgrading glance - trying to create existing tables" [High,Confirmed] https://launchpad.net/bugs/883988
+
+ 16:07:03 <roaksoax> adam_g / zul any of you taking care of it?
+
+ 16:07:04 <adam_g> roaksoax: for this one upstream has deferred it to their next cycle, best solution IMHO is to carry a patch to disable that autocreation of tables, which is what the other openstack components do already
+
+ 16:07:28 <roaksoax> adam_g: would you take care of it then?
+
+ 16:07:42 <Daviey> adam_g: your plan sounds sane... but we'll need a debconf warning i think
+
+ 16:07:49 <adam_g> roaksoax: yes, ill import the patch that was already proposed to do that and include it in our packaging this week
+
+ 16:08:07 <roaksoax> adam_g: awesome!
+
+ 16:08:17 <roaksoax> bug #893926
+
+ 16:08:19 <ubottu> Launchpad bug 893926 in eucalyptus (Ubuntu) "Contains traces of UEC" [High,Confirmed] https://launchpad.net/bugs/893926
+
+ 16:08:40 <Daviey> No progress.
+
+ 16:09:02 <roaksoax> who's taking care of it/who will, are you Daviey ?
+
+ 16:09:12 <Daviey> roaksoax: I hoped upstream were going to TBH.
+
+ 16:09:27 <roaksoax> Daviey: lets not get our hopes up :)
+
+ 16:09:31 <Daviey> roaksoax: We don't need to panic about it right now
+
+ 16:09:41 <roaksoax> indeed. let's move on then  bug #923681
+
+ 16:09:43 <ubottu> Launchpad bug 923681 in debian-installer (Ubuntu) "Server install fails when selecting everything but 'VM host' & 'Manual selection' from tasksel" [High,New] https://launchpad.net/bugs/923681
+
+ 16:09:50 <roaksoax> zul: any updates?
+
+ 16:09:57 <Daviey> isn't that fixed zul ?
+
+ 16:10:17 <zul> Daviey: yeah its fixed
+
+ 16:10:29 <Daviey> zul: update the state? :)
+
+ 16:10:57 <roaksoax> alright then. Moving on bug #925024
+
+ 16:10:58 <ubottu> Launchpad bug 925024 in lxc (Ubuntu) "apparmor makes it impossible to install postgresql-common on Precise" [High,Confirmed] https://launchpad.net/bugs/925024
+
+ 16:11:00 <zul> done
+
+ 16:11:17 <roaksoax> serge is not around apparently
+
+ 16:11:28 <roaksoax> so let's move on
+
+ 16:11:41 <roaksoax> bug  #850443
+
+ 16:11:43 <ubottu> Launchpad bug 850443 in python-eventlet (Ubuntu) "Nova API does not listen on IPv6" [High,Triaged] https://launchpad.net/bugs/850443
+
+ 16:11:51 <Daviey> Blocked on upstream progress
+
+ 16:11:58 <roaksoax> alrigh, bug #928990
+
+ 16:11:59 <ubottu> Launchpad bug 928990 in cloud-init (Ubuntu) "fsck / dirty filesystem on instance is death" [High,Triaged] https://launchpad.net/bugs/928990
+
+ 16:12:00 <ScottK> Someone really ought to have a look at amavisd-new.
+
+ 16:12:11 <roaksoax> smoser: ^^?
+
+ 16:12:32 <smoser> roaksoax, no progress htere.
+
+ 16:12:41 <roaksoax> alright. bug #929780
+
+ 16:12:42 <Daviey> ScottK: can you point bugs at the end of this section for 'other pertinent bugs" ?
+
+ 16:12:43 <ubottu> Launchpad bug 929780 in nova (Ubuntu) "console.ring files should not be world readable" [High,New] https://launchpad.net/bugs/929780
+
+ 16:12:57 <zul> i need to update that bug as well
+
+ 16:13:09 <Daviey> didn't we question the validity of that?
+
+ 16:13:14 <ScottK> OK
+
+ 16:13:32 <roaksoax> awesome. bug #875262
+
+ 16:13:34 <ubottu> Launchpad bug 875262 in php5 (Ubuntu Oneiric) "PHP Startup: Unable to load dynamic library '/usr/lib/php5/20090626+lfs/sqlite.so'" [High,Confirmed] https://launchpad.net/bugs/875262
+
+ 16:13:48 <roaksoax> koolhead17 is not around, so I guess we will need to catch up with him
+
+ 16:13:56 <Daviey> SpamapS is assisting
+
+ 16:14:17 <roaksoax> alright, bug #880339
+
+ 16:14:19 <ubottu> Launchpad bug 880339 in mysql-5.1 (Ubuntu Precise) "AppArmor profile needs update" [Medium,Incomplete] https://launchpad.net/bugs/880339
+
+ 16:14:40 <roaksoax> I have tried to reproduce this bug again for the fourth time with no luck. waiting for a response for the person who filled it. Otherwise, will mark it as invalid
+
+ 16:14:49 <roaksoax> bug #907197
+
+ 16:14:51 <ubottu> Launchpad bug 907197 in nova (Ubuntu) "ip address can't be injected into the instance when using lxc " [Medium,New] https://launchpad.net/bugs/907197
+
+ 16:14:59 <Daviey> super
+
+ 16:15:05 <roaksoax> zul / adam_g ^^
+
+ 16:15:19 <zul> still pending
+
+ 16:15:34 <Daviey> zul: can we have news on it by EoW?
+
+ 16:15:41 <zul> Daviey: sure
+
+ 16:15:51 <roaksoax> ok then! bug #918791
+
+ 16:15:53 <ubottu> Launchpad bug 918791 in qemu-kvm (Ubuntu Precise) "qemu-kvm dies when using vmvga driver and unity in the guest" [Medium,Confirmed] https://launchpad.net/bugs/918791
+
+ 16:16:04 <roaksoax> hallyn not here
+
+ 16:16:08 <justinlw> talked w/serge about this
+
+ 16:16:23 <roaksoax> justinlw: any updates you'd care to share with us?
+
+ 16:16:29 <justinlw> there is a patch ... of sorts... I don't think it's a fix, per se, but
+
+ 16:16:37 <justinlw> I'm going to try it out.
+
+ 16:16:47 <Daviey> sounds like it is progressing
+
+ 16:17:08 <roaksoax> indeed. Let;'s move on then. bug #924375
+
+ 16:17:09 <ubottu> Launchpad bug 924375 in cloud-init (Ubuntu) "cloud-init should allow pre-seeding of ec2 datasource:Ec2:metadata_urls" [Medium,New] https://launchpad.net/bugs/924375
+
+ 16:17:12 <roaksoax> smoser: ?
+
+ 16:17:28 <smoser> i'll take that off the tracking list.
+
+ 16:17:31 <smoser> or change it.
+
+ 16:17:43 <Daviey> smoser: not required now?
+
+ 16:17:59 <smoser> bug 942061 is more rlevant here.
+
+ 16:18:00 <ubottu> Launchpad bug 942061 in cloud-init (Ubuntu) "need support for maas" [High,Triaged] https://launchpad.net/bugs/942061
+
+ 16:18:28 <roaksoax> Alright, we need to add it as a release bug. thank you! bug #925024
+
+ 16:18:29 <ubottu> Launchpad bug 925024 in lxc (Ubuntu) "apparmor makes it impossible to install postgresql-common on Precise" [High,Confirmed] https://launchpad.net/bugs/925024
+
+ 16:18:50 <roaksoax> err is duplicated in the list
+
+ 16:18:59 <roaksoax> bug #928378
+
+ 16:19:00 <ubottu> Launchpad bug 928378 in glance (Ubuntu) "glance client should be separate from server" [Medium,New] https://launchpad.net/bugs/928378
+
+ 16:19:11 <roaksoax> zul / adam_g ?
+
+ 16:19:32 <zul> pending
+
+ 16:19:40 <roaksoax> and I guess bug #901881 is related too
+
+ 16:19:41 <ubottu> Launchpad bug 901881 in glance (Ubuntu) "nova and glance should depend on python-keystone" [Low,New] https://launchpad.net/bugs/901881
+
+ 16:20:00 <roaksoax> bug #887186
+
+ 16:20:01 <ubottu> Launchpad bug 887186 in orchestra (Ubuntu) "squid proxy big and small buckets not functioning correctly" [Undecided,Confirmed] https://launchpad.net/bugs/887186
+
+ 16:20:26 <roaksoax> Not a worry just yet for orchestra, as we are changing just squid to squid-deb-proxy for MaaS
+
+ 16:20:39 <roaksoax> I'll update accordingly
+
+ 16:20:43 <Daviey> roaksoax: dropping tracking of it
+
+ 16:21:06 <roaksoax> but this should also not longer be an issue withsquid in precise anymore
+
+ 16:21:15 <Daviey> cool
+
+ 16:21:17 <roaksoax> bug #928501
+
+ 16:21:18 <ubottu> Launchpad bug 928501 in ebox (Ubuntu) "Precise will ship totally broken ebox packages" [Undecided,Confirmed] https://launchpad.net/bugs/928501
+
+ 16:21:29 <roaksoax> SpamapS: any updates?
+
+ 16:21:35 <Daviey> jamespage: Were you looking at that aswell?
+
+ 16:21:46 <jamespage> Daviey: no but I can help out if need be
+
+ 16:22:06 <Daviey> jamespage: ah, confusing it with another.
+
+ 16:22:07 <SpamapS> Yes I will discuss it later in the meeting
+
+ 16:22:10 <jamespage> I dealt with resara server
+
+ 16:22:14 <Daviey> ah yes
+
+ 16:22:31 <roaksoax> awesome then. Last bug is duplicated so won't touch it
+
+ 16:22:38 <Daviey> super
+
+ 16:22:46 <SpamapS> blueprints?
+
+ 16:22:47 <roaksoax> ScottK: what's the bug number for the issue you want us to keep track of?
+
+ 16:23:00 <ScottK> Bug 930916
+
+ 16:23:02 <ubottu> Launchpad bug 930916 in amavisd-new (Ubuntu) "amavis start-stop script fails to stop amavisd" [High,Confirmed] https://launchpad.net/bugs/930916
+
+ 16:23:13 <ScottK> In general though I think the package needs checking over.
+
+ 16:23:38 <Daviey> nice catch SpamapS
+
+ 16:23:41 <ScottK> I don't think the postfix-amavis stuff is working, but have no time to look into it.
+
+ 16:23:45 <roaksoax> does anyone care to work on it?
+
+ 16:24:01 <roaksoax> this seems that it
+
+ 16:24:17 <Daviey> I wonder if Ivoks has capacity, he has history in that stack
+
+ 16:24:30 <roaksoax> it seems that a fix has been release in Debian, but yet, we would still need the package review
+
+ 16:24:33 <Daviey> Any other issues that should be tracked?
+
+ 16:24:51 <robbiew> chef and ohai are broken...we might need to punt them :/
+
+ 16:25:21 <Daviey> :(
+
+ 16:25:23 <SpamapS> Unless somebody wants to step up and fix them .. like.. now
+
+ 16:25:35 <Daviey> roaksoax: Want to go over blueprints?
+
+ 16:25:44 <roaksoax> Daviey: sure
+
+ 16:25:55 * robbiew has sent mail to maintainers..waiting on response...will keep tabs on it
+
+ 16:26:06 <SpamapS> robbiew: should we tag that one with the release tag?
+
+ 16:26:10 <Daviey> SpamapS: https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-juju-charm-testing is that still progressing?
+
+ 16:26:29 <SpamapS> Daviey: actually yes. Just slowly. :-P
+
+ 16:26:39 <Daviey> SpamapS: likely to make releae?
+
+ 16:26:51 <Daviey> (nothing there is release schedule tied, is it?)
+
+ 16:26:57 <SpamapS> Daviey: there's really nothing left to put in the release of Ubuntu. Its documentation and test writing.
+
+ 16:27:07 <Daviey> right
+
+ 16:27:09 <Daviey> super!
+
+ 16:27:13 <Daviey> adam_g: https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-openstack-charms ?
+
+ 16:27:22 <SpamapS> Daviey: I'm more worried about the juju enhancements than the testing stuff.
+
+ 16:27:32 <SpamapS> But that does seem to be trickling into juju trunk.
+
+ 16:27:57 <adam_g> Daviey: i'd like to get to the swift charms rewrite this cycel for sure, but thinking the others may need to wait (and are not tied to release schedule anyway)
+
+ 16:28:05 <Daviey> SpamapS: right!
+
+ 16:28:29 <Daviey> SpamapS: I know robbiew is aware of Subordinate and Constraint seemingly not ready yet.
+
+ 16:28:35 <Daviey> Do you know the status of that?
+
+ 16:28:45 <robbiew> SpamapS: no specific bug yet to tag...just anecdotal information...will get that resolved though ;)
+
+ 16:29:05 <Daviey> adam_g: ssl migration would be nice..
+
+ 16:29:05 <robbiew> Daviey: ack...I believe it's in review still
+
+ 16:29:42 <Daviey> cool
+
+ 16:29:53 <Daviey> zul: do we still neen openvswitch in main?
+
+ 16:30:06 <Daviey> https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-openvswitch-mir
+
+ 16:30:25 <zul> Daviey: yeah there some bits in openstack that use it, but i dont think its a priority
+
+ 16:30:28 <SpamapS> Do we need to look at supplementing the MIR team? Would they accept one of us to help with their backlog?
+
+ 16:30:55 <Daviey> roaksoax: Do you want to speak with aquette about deferring some (most?) of https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-cloud-power-management ?
+
+ 16:31:06 <roaksoax> Daviey: will sure do
+
+ 16:31:09 <Daviey> SpamapS: I've already tried to make progress there.
+
+ 16:31:48 <Daviey> I think https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-kronos is going to be frozen at current state
+
+ 16:32:00 <Daviey> SpamapS: CEPH status?
+
+ 16:32:04 <SpamapS> https://bugs.launchpad.net/~ubuntu-mir/+subscribedbugs .. looks like about 30+ pending review
+
+ 16:32:08 <SpamapS> Daviey: waiting on MIR
+
+ 16:32:09 <Daviey> https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-ceph
+
+ 16:32:39 <Daviey> Any other blueprint questions?
+
+ 16:32:55 <SpamapS> servercloud-p-cloudutils
+
+ 16:33:29 <Daviey> https://blueprints.launchpad.net/ubuntu/+spec/servercloud-p-cloudutils
+
+ 16:33:40 <SpamapS> Medium.. a few TODO's left.. seems a candidate for postponing
+
+ 16:33:44 <Daviey> Hmm
+
+ 16:33:52 <Daviey> I'm not sure it's tied to release that?
+
+ 16:34:04 <SpamapS> ubuntu-cloudimg-query ships in Ubuntu
+
+ 16:34:13 <Daviey> It's mostly implementing API infra, server side?
+
+ 16:34:29 <Daviey> SpamapS: right, but that can still work with v1 API
+
+ 16:34:33 <Daviey> utlemming / smoser ?
+
+ 16:35:21 <Daviey> SpamapS: What is the status of PHP?
+
+ 16:35:27 <smoser> at the moment it would appear that ubuntu-cloudimg-query will ship without query2 support.
+
+ 16:35:39 <smoser> which is not ideal, but it is functional.
+
+ 16:35:46 <SpamapS> Daviey: ugh
+
+ 16:35:48 <Daviey> works for me.
+
+ 16:35:52 <smoser> the /query interface isnt going away.
+
+ 16:36:00 <SpamapS> Daviey: so, basically *everybody* wants us to ship PHP 5.4.0
+
+ 16:36:16 <SpamapS> Daviey: but we have been firm at sticking with Suhosin .. which is not available yet for 5.4.0
+
+ 16:36:16 <Daviey> SpamapS: I found on the internets that you were investigating it again
+
+ 16:36:41 <SpamapS> Daviey: Debian dropped Suhosin, but our security team would prefer that we don't.
+
+ 16:36:48 <Daviey> SpamapS: Is it significant work to port it?
+
+ 16:37:00 <SpamapS> Daviey: so, I'm emailing the Suhosin maintainers asking them for a status update. It was promised 2 months ago.
+
+ 16:37:01 <Daviey> SpamapS: Have a bug as to where/why Debian dropped it?
+
+ 16:37:12 <SpamapS> Daviey: I can dig it out. Its in the changelog of 5.3.10
+
+ 16:37:18 <Daviey> ah, ok, thanks
+
+ 16:37:44 * Daviey passes the steering wheel back to the chair.
+
+ 16:37:56 <roaksoax> alright then. Should we move on then?
+
+ 16:38:07 <roaksoax> [TOPIC] Ubuntu Server Team Events
+
+ 16:38:29 <SpamapS> negronjl is hosting a charm school next Monday, and it looks like I'll be joining him
+
+ 16:38:46 <SpamapS> http://charmschoolsv.eventbrite.com/
+
+ 16:38:49 <roaksoax> awesome!
+
+ 16:38:56 <SpamapS> At the Santa Clara Hilton
+
+ 16:39:07 <SpamapS> spread the word to all your silicon valley friends. :)
+
+ 16:39:23 <arosales> SpamapS: you and jcastro are also hosting a webinar on Thursday (March 8th), correct?
+
+ 16:39:46 <SpamapS> YES
+
+ 16:39:58 <roaksoax> right on!
+
+ 16:40:03 <SpamapS> http://cloud.ubuntu.com/2012/02/juju-charm-school-webinar-march-8th/
+
+ 16:40:11 <SpamapS> http://www.brighttalk.com/webcast/6793/41933
+
+ 16:40:29 <roaksoax> awesome then. So I guess no more upcoming events. Let's move on
+
+ 16:40:32 <roaksoax> [TOPIC] Weekly Updates & Questions for the QA Team (hggdh)
+
+ 16:40:35 <roaksoax> hggdh: you are up
+
+ 16:40:43 <hggdh> hi
+
+ 16:40:50 <hggdh> nothing here for the week
+
+ 16:40:53 <hggdh> ..
+
+ 16:40:57 <hggdh> oh
+
+ 16:41:25 <roaksoax> hggdh: you remembered something you'd like to share?
+
+ 16:41:25 <hggdh> I got an email from Sean asking about the UEC machines; I answered & copied Daviey
+
+ 16:41:26 <hggdh> ..
+
+ 16:41:47 <roaksoax> alright
+
+ 16:41:49 * hggdh just wanted to make sure this is known
+
+ 16:42:00 * Daviey hasn't read this?
+
+ 16:42:21 <hggdh> you were copied in my reply... routed to /dev/null? ;-)
+
+ 16:42:22 <Daviey> ah, i see it
+
+ 16:42:32 <roaksoax> alright then. Let's move on
+
+ 16:42:35 <roaksoax> [TOPIC] Weekly Updates & Questions for the Kernel Team (smb)
+
+ 16:42:36 <Daviey> nah, in my Boring folder :)
+
+ 16:42:45 <roaksoax> smb: ^^
+
+ 16:42:47 <smb> There is bug 944923 which I could use utlemming's help in trying to gather ec2 info. At least this seemed to be there even with a natty kernel (just without lockup warnings) and I cannot see it in any of my local setups. Then since the upgrade from oneiric to precise on my orchestra box seemed to have gone not that well, I wanted to do some clean install upgrades in Xen VMs, which brought up another issue. It seems pxeboot does not work with
+
+ 16:42:47 <smb> the e1000 emulation. Still digging there but it seems the ipxe rom we have has no pci id info.
+
+ 16:42:49 <ubottu> Launchpad bug 944923 in linux (Ubuntu) "[EC2:cg1.4xlarge] CPU#0 stuck for 23s! [migration/0:6] __do_softirq+0x60/0x210" [Low,Triaged] https://launchpad.net/bugs/944923
+
+ 16:43:04 <smb> ..
+
+ 16:43:21 <roaksoax> utlemming: ^^
+
+ 16:43:36 <utlemming> smb: sure...lets sync up after
+
+ 16:43:42 <smb> utlemming, ack
+
+ 16:43:54 <roaksoax> alright, unless there's something else you'd like to brin up smb, then we can move on
+
+ 16:44:02 <smb> nope
+
+ 16:44:04 <roaksoax> [TOPIC] Weekly Updates & Questions regarding Ubuntu ARM Server (rbasak)
+
+ 16:44:15 <roaksoax> rbasak: you are next
+
+ 16:44:17 <rbasak> openmpi1.5 packages are now in the archive, alongside openmpi (1.4). Testing from stakeholders would be appreciated, especially as the test suite is not open source.
+
+ 16:44:17 <rbasak> Nothing else to report.
+
+ 16:44:19 <smoser> wait, there was one other thing smb said
+
+ 16:44:25 <smoser> for hallyn
+
+ 16:44:34 <smoser> e1000 emulation and pxe boot
+
+ 16:44:43 <smoser> smb, please open a bug on that.
+
+ 16:44:58 <smb> smoser, sure
+
+ 16:45:10 <smb> smoser, Right now debugging the build
+
+ 16:45:24 <Daviey> rbasak: so, you have versioned rdepends aswell?
+
+ 16:45:25 <roaksoax> awesome, let's move on
+
+ 16:45:40 <rbasak> Daviey: no, we made the decision not to do that
+
+ 16:46:23 <roaksoax> [TOPIC] Open Discussion
+
+ 16:46:24 <rbasak> Daviey: so all rdepends remain linked against openmpi
+
+ 16:46:37 <rbasak> I think going over http://status.qa.ubuntu.com/reports/ubuntu-server/release-bugs.html should be split into a separate topic. It tends to take the bulk of the meeting so it would make sense to have it separated so that other things associated with the release timetable (FFes etc) can be covered without forgetting anything.
+
+ 16:47:37 <roaksoax> does someone agree/disagree? Daviey ^^?
+
+ 16:48:19 <arosales> seems it should at least be a subtopic under precise/current development
+
+ 16:48:41 <arosales> along with that it would be nice to have a sub-topic for essential or near milestone blueprints
+
+ 16:48:42 <roaksoax> I'd say so too
+
+ 16:48:52 <SpamapS> roaksoax: you skipped my section
+
+ 16:49:15 <SpamapS> Zentyal Packages (http://pad.lv/928501) - SpamapS
+
+ 16:49:17 <ubottu> Launchpad bug 928501 in ebox (Ubuntu) "Precise will ship totally broken ebox packages" [Undecided,Confirmed]
+
+ 16:49:28 <roaksoax> [action] add subtopics for release-bugs/BP;s under precise/current development
+
+ 16:49:28 * meetingology add subtopics for release-bugs/BP;s under precise/current development
+
+ 16:49:44 <roaksoax> SpamapS: sorry about that, was going over the pastable commands
+
+ 16:49:49 <roaksoax> [topic] Zentyal Packages (http://pad.lv/928501) - SpamapS
+
+ 16:49:57 <SpamapS> So anyway, this item has been at the top of the sponsorship queue for a few weeks now
+
+ 16:50:02 <SpamapS> We need to break it up
+
+ 16:50:24 <SpamapS> We should all have patch pilot days coming up..
+
+ 16:50:25 <Daviey> SpamapS: they still need multiple src packages?
+
+ 16:50:32 <SpamapS> Daviey: aye
+
+ 16:50:56 <SpamapS> We need to review them, one by one, until they're done.
+
+ 16:51:03 <Daviey> *awesome*
+
+ 16:51:10 <Daviey> SpamapS: How many are there?
+
+ 16:51:14 <SpamapS> if they miss NEW for precise, so be it, but Zentyal has been good to us, and we need to do what we can to help get their stuff into Ubuntu
+
+ 16:51:18 <SpamapS> Daviey: 13 I think
+
+ 16:51:37 <SpamapS> https://launchpad.net/~jacalvo/+archive/zentyal-precise/
+
+ 16:51:38 <Daviey> SpamapS: perfect, fancy assigning one to each member of the team?
+
+ 16:51:42 <SpamapS> 16
+
+ 16:52:21 <SpamapS> Daviey: I'd like to allow people to assign them to themselves..
+
+ 16:52:35 <SpamapS> Daviey: since some may feel more comfortable with ntp, openvpn, or squid, than others
+
+ 16:52:35 <jamespage> SpamapS, I'll pickup a few
+
+ 16:52:42 <Daviey> SpamapS: lets just progress it, it's easier to have someone co-ordinate it
+
+ 16:52:58 <SpamapS> So yeah, please focus your sponsorship efforts on that bug, and make it clear what you are going to review, so others don't duplicate the work.
+
+ 16:53:06 <Daviey> SpamapS: Really, anyone should be able to turn their hand to any of the technologies it uses.
+
+ 16:53:19 <Daviey> If they can't, we have problems. :)
+
+ 16:53:31 <SpamapS> indeed
+
+ 16:54:02 <SpamapS> We'll check back in on the progress next week.
+
+ 16:54:09 <SpamapS> that is all, thanks!
+
+ 16:54:24 <roaksoax> awesome then!
+
+ 16:54:31 <roaksoax> [topic] Announce next meeting date and time
+
+ 16:54:37 <roaksoax> SO daylight saving starts Sunday
+
+ 16:54:57 * justinlw will be on PDT instead of MDT
+
+ 16:54:58 <SpamapS> in the US
+
+ 16:55:07 <Daviey> So, we are keeping the same UTC time?
+
+ 16:55:10 <roaksoax> for US timezones. Which means that meeting for us will be one more hour
+
+ 16:55:13 <Daviey> SpamapS: that makes life easier for you?
+
+ 16:55:16 <SpamapS> keep it
+
+ 16:55:18 <SpamapS> do not move it
+
+ 16:55:27 <SpamapS> I will actually be able to attend the first 15 min
+
+ 16:55:50 <Daviey> So.. keep the same UTC time.
+
+ 16:55:55 <roaksoax> ok so we can keep the same UTC time
+
+ 16:55:57 <Daviey> So nothing changes for admin.
+
+ 16:56:08 <roaksoax> agreed then. SpamapS So you won't be chairing next week either?
+
+ 16:56:26 <Daviey> SpamapS is chairing for the next 6 months.
+
+ 16:56:30 <SpamapS> precisely
+
+ 16:56:33 <Ursinha> lol
+
+ 16:56:34 <SpamapS> ;-/
+
+ 16:56:38 <roaksoax> lol
+
+ 16:56:56 <roaksoax> then i ugess Daviey will be chairing if SpamapS can't make it
+
+ 16:56:58 <Ursinha> if no one volunteers I can do that
+
+ 16:57:03 <SpamapS> I can make it
+
+ 16:57:11 <roaksoax> awesome then!
+
+ 16:57:14 <roaksoax> thanks all for attending
+
+ 16:57:17 <roaksoax> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

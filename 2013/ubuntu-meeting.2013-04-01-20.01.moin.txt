@@ -1,0 +1,432 @@
+#title #ubuntu-meeting: Technical Board
+
+Meeting started by soren at 20:01:44 UTC.  The full logs are available
+at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-04-01-20.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *Action review
+
+ *MRE for Xserver
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-March/001559.html   (soren, 20:09:09)
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-March/001559.html   (soren, 20:09:23)
+
+ *PArts of Mark's proposal that were missed in the last meeting
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html   (ScottK, 20:28:17)
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html   (soren, 20:28:20)
+''LINK:'' https://lists.ubuntu.com/archives/technical-board/2013-March/001553.html   (soren, 20:30:36)
+
+ *Scan the mailing list archive for anything we missed (standing item)
+
+ *Check up on community bugs (standing item)
+
+ *Select a chair for the next meeting
+
+
+
+Meeting ended at 20:53:09 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * soren (102)
+ * ScottK (32)
+ * stgraber (21)
+ * bryce (17)
+ * mdz (10)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 20:01:44 <soren> #startmeeting Technical Board
+
+ 20:01:44 <meetingology> Meeting started Mon Apr  1 20:01:44 2013 UTC.  The chair is soren. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 20:01:44 <meetingology> 
+
+ 20:01:44 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 20:01:47 <soren> Sorry I
+
+ 20:01:55 <stgraber> hi soren!
+
+ 20:01:56 <soren> m late. Massive technology fail at my house right now.
+
+ 20:02:07 <soren> One internet connection, luckily I had backup.
+
+ 20:02:13 <soren> Bluetooth keyboard dead.
+
+ 20:02:17 <soren> Luckily, I have a backup.
+
+ 20:02:29 <soren> There's a pattern there somewhere.
+
+ 20:02:31 <soren> Anyway.
+
+ 20:02:32 <stgraber> well, let's hope it won't get any worse during the meeting then ;)
+
+ 20:02:32 <soren> Welcome.
+
+ 20:02:55 <soren> cjwatson, mdz, kees: ?
+
+ 20:03:06 <stgraber> looks like pitti is off IRC today
+
+ 20:03:20 <soren> Yeah.
+
+ 20:03:52 <soren> Sorry, don't have all my bookmarks on this backup laptop, so digging around a bit.
+
+ 20:04:11 <soren> #topic Action review
+
+ 20:04:49 <soren> wait for it..
+
+ 20:05:22 <soren> I don't see any action items in the minutes?
+
+ 20:05:43 <soren> Moving on.
+
+ 20:05:53 <soren> #topic MRE for Xserver
+
+ 20:06:03 <soren> Who's representing?
+
+ 20:06:18 <ScottK> soren: Review of Mark's release reorg proposal didn't get finished last time.
+
+ 20:06:46 <soren> ScottK: Alright, let's talk about that next.
+
+ 20:07:09 <soren> Just pinged bryce in #ubuntu-devel.
+
+ 20:07:41 <soren> I guess we can talk about the missing points from Mark's proposal until Bryce turns up.
+
+ 20:07:44 <soren> Oh.
+
+ 20:07:52 <soren> bryce: Hi :)
+
+ 20:07:56 <bryce> was just wondering about this
+
+ 20:07:58 <bryce> hi soren
+
+ 20:08:27 <soren> bryce: So we were just starting on this topic now.
+
+ 20:09:07 <mdz> soren, here
+
+ 20:09:09 <soren> https://lists.ubuntu.com/archives/technical-board/2013-March/001559.html
+
+ 20:09:23 <soren> #link https://lists.ubuntu.com/archives/technical-board/2013-March/001559.html
+
+ 20:09:38 <soren> Has everyone had a chance to read it?
+
+ 20:10:00 <soren> I've read it, but I must say I feel limimited by my ignorance of how all these things fit together.
+
+ 20:10:39 <bryce> soren, happy to answer questions
+
+ 20:10:40 <soren> Does anyone feel sufficiently informed to be able to ask intelligent questions? :)
+
+ 20:10:42 <stgraber> I just did and I personally think it's entirely reasonable
+
+ 20:11:13 <stgraber> bryce: do I remember correctly that you also run some kind of tests against the cert lab?
+
+ 20:12:32 <bryce> we've been doing SRUs of xserver patches for years, and have found the upstream microreleases themselves to be well done now (better than some years ago).  The one reason we hadn't requested MRE in the past was due to lack of test frameworks, but over the last couple years that's been fixed.
+
+ 20:12:58 <bryce> stgraber, not me personally.  there are tests that could be run, but don't know if the cert lab runs them.
+
+ 20:13:17 <bryce> stgraber, we do run the tests locally on our own hardware though.
+
+ 20:13:59 <stgraber> bryce: ah, that may have been that. I remember that for mesa at least you said you'd pretty good coverage of the various vendors to do hardware testing before actually pushing an SRU
+
+ 20:14:13 <bryce> yep
+
+ 20:15:03 <soren> I'm not entirely sure I understand the scope of this request.
+
+ 20:15:05 <bryce> and our proposal is to handle the xserver testing the same way as we're doing with mesa, since that process seems to be working out quite well
+
+ 20:15:22 <soren> The title says "xserver", but is it really all the various xserver-xorg-video-* drivers, too?
+
+ 20:15:22 <stgraber> bryce: do you have a list of source packages that'd be covered by that MRE?
+
+ 20:15:38 <bryce> soren, no just the xorg-server package
+
+ 20:16:00 <soren> Hm. Ok.
+
+ 20:16:05 <bryce> stgraber, this is only for one source package - 'xorg-server'
+
+ 20:16:21 <stgraber> k
+
+ 20:16:33 <soren> I'm a bit puzzled.
+
+ 20:16:40 <bryce> since it's just micro releases, those are just bug fixes so never any impacts on any other source packages.
+
+ 20:16:41 <soren> So these aren't drivers at all.
+
+ 20:16:48 <bryce> nope, just the server
+
+ 20:17:06 <soren> Ok.
+
+ 20:17:18 <soren> Well, in that case: Sure, no problem at all.
+
+ 20:17:42 <bryce> frankly the X drivers don't really have much "interesting" code left in them.  We rarely SRU X driver fixes any more.
+
+ 20:18:01 <bryce> the "interesting" driver code is now included in the kernel, so those fixes are already taken care of by the normal kernel processes
+
+ 20:18:06 <soren> Are those things mostly in the kernel, then?
+
+ 20:18:14 <soren> Or this "mesa" thing that everyone talks about?
+
+ 20:18:16 <soren> :)
+
+ 20:19:05 <bryce> ah, tldr version is, there's really 3 drivers for graphics - one in the kernel (drm kms), one in mesa (the 3D stuff), and one in X (the 2D 'DRI' drivers)
+
+ 20:19:43 <bryce> these days it's the 3D drivers and kernel drivers where all the interesting bugs are.  The 2D X bits tend to be fairly boring and stable.
+
+ 20:20:03 <soren> I see.
+
+ 20:20:08 <soren> Cool, thanks for clarifying.
+
+ 20:20:13 <soren> Well, that clears up all my concerns, really.
+
+ 20:20:16 <soren> If it
+
+ 20:20:26 <soren> 's just xserver itself, I'm cool with it.
+
+ 20:20:58 <soren> Anyone else?
+
+ 20:21:12 <stgraber> I'm perfectly fine with the current proposal
+
+ 20:21:19 <stgraber> mdz, cjwatson, kees: ^
+
+ 20:21:21 <mdz> sounds more than reasonable
+
+ 20:21:48 <soren> I'll give them a minute to weigh in.
+
+ 20:22:22 <soren> Alright, sold.
+
+ 20:22:36 <soren> Does anyone want to do the honours of updating the wiki?
+
+ 20:22:55 <soren> Otherwise I'll do it as part of doing the minutes.
+
+ 20:23:06 <soren> bryce: Thanks for your time!
+
+ 20:23:27 <bryce> soren, thank you!  :-)
+
+ 20:23:34 <soren> #topic PArts of Mark's proposal that were missed in the last meeting
+
+ 20:23:40 <mdz> soren, I'lldo it
+
+ 20:23:42 <soren> ScottK: Care to elaborate.
+
+ 20:23:46 <soren> mdz: Thanks very much!
+
+ 20:24:00 <ScottK> We covered support period for regular releases.
+
+ 20:24:12 <ScottK> We covered terminology (regular/LTS)
+
+ 20:24:15 <mdz> soren, oh, hmm, it ought to have a link to the minutes in there, so it's probably better if you do it after you've posted them
+
+ 20:24:33 <soren> mdz: Ah, good point.
+
+ 20:24:40 <soren> mdz: Thanks for trying :)
+
+ 20:25:00 <stgraber> ScottK: and we covered the "devel" symlink to current dev release too
+
+ 20:25:05 <ScottK> Yes.
+
+ 20:25:09 <ScottK> Still typing.
+
+ 20:25:20 * stgraber waits
+
+ 20:25:25 <ScottK> We also considered the discussion about kernel updates as ~ what we do now.
+
+ 20:25:57 <ScottK> I think there was informal consensus that the rapid moving stuff he refers to should either be done through backports if appropriate ofr PPAs.
+
+ 20:26:03 <ScottK> No new "rules" needed.
+
+ 20:26:34 <ScottK> I think the significant point of action that remained was on the point about updates to libraries in an LTS if the API is "stable"
+
+ 20:26:46 <ScottK> err
+
+ 20:26:49 <ScottK> required upgrades to newer versions of platform components,  ...
+
+ 20:26:56 <ScottK> That's how it starts.
+
+ 20:27:37 <ScottK> I think that's the one point remaining that would require a policy change to execute.
+
+ 20:27:57 <soren> do you happen to have a link handy to the entire thing?
+
+ 20:28:04 <ScottK> Sure
+
+ 20:28:17 <ScottK> https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html
+
+ 20:28:20 <soren> #link https://lists.ubuntu.com/archives/technical-board/2013-March/001527.html
+
+ 20:29:24 <mdz> yes, I believe we covered #2 and #3 and did not start on #1
+
+ 20:29:45 <mdz> (in the previous meeting)
+
+ 20:29:47 <stgraber> so on principle I'm not completely opposed to the proposal of updating to newer versions of core components provided they don't change API or the way user interact with those, for example changing a command line tool and causing options to get renammed/removed/changed isn't acceptable to me
+
+ 20:29:57 <soren> ScottK: Thanks for the introduction to the topic.
+
+ 20:30:03 <mdz> as ScottK says, it seems like the first point under #1 doesn't require a policy change
+
+ 20:30:19 <ScottK> We did discuss this in Kubuntu and came to this position: https://lists.ubuntu.com/archives/technical-board/2013-March/001553.html
+
+ 20:30:27 <stgraber> and I personally think that the Unity example in the e-mail is a rather bad one as at least for me Unity isn't associated with stable API and no change visible to the user ;)
+
+ 20:30:28 <mdz> stgraber, I agree in principle, though I'd be a bit concerned about the practicality of auditing interfaces
+
+ 20:30:36 <soren> #link https://lists.ubuntu.com/archives/technical-board/2013-March/001553.html
+
+ 20:31:19 <ScottK> I am particularly concerned about this point since base on our experience with Qt4 in Kubuntu, we are pretty dead certain that post-release updates to Qt (4 or 5) are a REALLY bad idea.
+
+ 20:31:38 <soren> Auditing interfaces as well as defining which interfaces are considered "key".
+
+ 20:32:00 <ScottK> It's not just the interfaces that need to be stable.  It's the behavior behind the interfaces.
+
+ 20:32:35 <mdz> that's part of the interface, as I'm using the term
+
+ 20:32:36 <ScottK> Updating core components seems to me to be approximately the oppposite of what one would want to in an LTS.
+
+ 20:32:59 <ScottK> After all, people use LTS instead of the regular release because they want stability and consistency.
+
+ 20:33:28 <soren> Well, sort of.
+
+ 20:33:47 <stgraber> I also have the feeling that allowing this and having the SRU team do the very close auditing required by such things would in practice be more time consuming than cherry-picking the fixes and getting explicit approval for absolutely required API additions
+
+ 20:34:09 <soren> It's not uncommon to have LTS users ask for new versions of things. They expect it to t be longlived more than strictly consistent.
+
+ 20:34:30 <soren> We've traditionally considered this view to be ultimately incoherent.
+
+ 20:35:01 <soren> But it's certainly not an uncommon view, there is /some/ divergence in what people expect of an LTS.
+
+ 20:35:02 <ScottK> soren: Right.  They often want the thing they want to be new and everything else to be stable.
+
+ 20:35:18 <soren> ScottK: Spot on.
+
+ 20:35:47 <stgraber> right, wanting LTS and wanting the latest version of the system doesn't quite work ;) leaf packages can be backported and we should try and encourage that. For specific self-contained stacks, PPAs also work rather well, but getting newer versions of core/heavily-shared components is very risky business
+
+ 20:36:11 <soren> Indeed.
+
+ 20:37:01 <soren> I wonder if there would be a useful way to grant an extended MRE for certain things.
+
+ 20:37:18 <soren> Like unity as in Mark's example.
+
+ 20:37:42 <soren> "Extended MRE" == and MRE that isn't limited to micro releases.
+
+ 20:37:44 <ScottK> In Kubuntu we generally backport KDE major releases to previous releases in a PPA.  It's quite popular, but it also frequently comes with regressions.
+
+ 20:38:04 * ScottK would never do it in the Ubuntu archive.
+
+ 20:38:19 <ScottK> soren: Such an exception exists for clamav, so it's been done before.
+
+ 20:38:31 <ScottK> That is a pretty unusual case though.
+
+ 20:38:32 <soren> When applying for such an exception, the APIs would need to be specified in the request.
+
+ 20:39:05 <soren> And ideally some sort of external API test suite should be provided that would help us verify that the API indeed doesn't change.
+
+ 20:39:17 <ScottK> The clamav one was more about regression testing to validate consistency of behavior.
+
+ 20:40:32 <soren> ScottK: clamav was special in many ways. The exception was granted not because of someone's desire for newer, cooler stuff, but simply out of necessity since new databases woudln't work with older clamavs.
+
+ 20:40:51 <ScottK> Agreed.
+
+ 20:40:59 <soren> So while the technicalities might be related, the motivation was entirely different.
+
+ 20:41:21 <ScottK> Some exceptions you grant because upstream is sane.  Sometimes it's the opposite.
+
+ 20:41:29 <soren> *g*
+
+ 20:42:17 <soren> I feel that this is something that we must consider on a case-by-case basis at the TB level.
+
+ 20:42:41 <soren> Perhaps Unity would be a good guinea pig (if we're willing to entertain the concept at all).
+
+ 20:43:52 <soren> Does anyone feel qualified and motivated to write up a more specific proposal?
+
+ 20:43:53 <ScottK> Personally, I'm deeply concerned that someone will think this is going to be a wonderful approach for Qt5 in 14.04 and I'm pretty sure it won't.
+
+ 20:44:47 <soren> ScottK: I'm confident your opinion on that subject will have an impact on any decision on the subject.
+
+ 20:44:48 <ScottK> If I had a vote, I'd vote for maintaining the current policy - in the Unity case, the safe performance patches have already be backported vai SRU.
+
+ 20:45:14 <ScottK> I'd suggest to defer deciding on it until there's an actual case that needs it.
+
+ 20:45:28 <soren> The proposal as given in Marks e-mail is too vague for us to vote on it.
+
+ 20:45:29 <ScottK> Then the TB can evaluate that and see what they think both about it and a more general policy.
+
+ 20:46:50 <soren> I'm cool with that. It seems like we're generally willing to at least consider it, so if anyone wants to pursue it for a particular component, they should be encouraged to propose it.
+
+ 20:47:51 <soren> Does anyone else have anything to say on this subject?
+
+ 20:48:28 <soren> Guess not.
+
+ 20:48:29 <stgraber> nope. I'm always happy to discuss specific exceptions to our policies and I agree that for this, it's probably best to wait until someone actually need it before we go ahead and discuss changing policies.
+
+ 20:49:01 <soren> Excellent.
+
+ 20:49:02 <soren> Moving on.
+
+ 20:49:05 <soren> #topic Scan the mailing list archive for anything we missed (standing item)
+
+ 20:49:10 * soren does so
+
+ 20:49:28 <soren> I don't see anything.
+
+ 20:49:41 <soren> #topic Check up on community bugs (standing item)
+
+ 20:49:49 <soren> None.
+
+ 20:49:50 <soren> Yay.
+
+ 20:50:01 <soren> #topic Select a chair for the next meeting
+
+ 20:50:30 <soren> I've completely lost track of the order
+
+ 20:50:38 <mdz> I believe stgraber is next
+
+ 20:50:46 <stgraber> yep
+
+ 20:50:51 <soren> stgraber: You're next according to my alphabet, but you seem to have been chairing a lot recently :)
+
+ 20:51:27 <soren> Alright.
+
+ 20:51:34 <stgraber> soren: I think I only chaired once in January so far, so I don't mind chairing the next one if that gets us back in alphabetical order ;)
+
+ 20:51:41 <soren> Cool :)
+
+ 20:51:46 <stgraber> and TB meetings are way easier to chair than DMB ;)
+
+ 20:52:03 <soren> Err... What's the meetbot magic to denote decisions?
+
+ 20:52:14 <stgraber> #agreed?
+
+ 20:52:21 <soren> Yes! That!
+
+ 20:52:27 <soren> #agreed stgraber to chair next meeting
+
+ 20:52:30 <soren> stgraber: Thanks :)
+
+ 20:52:39 <soren> Any other business?
+
+ 20:53:04 <soren> Alright, thanks for showing up everyone.
+
+ 20:53:09 <soren> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

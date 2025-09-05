@@ -1,0 +1,414 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status, 15 Sep at 14:30 &mdash; 14:57 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-09-15-14.30.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Review of previous action items ===
+The discussion about "Review of previous action items" started at 14:32.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/probert/+bug/1890301 
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.groovy/_germinate_output 
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/extra-germinate-output 
+  * ''LINK:'' https://code.launchpad.net/~paelzer/germinate/+git/germinate/+merge/390466 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/germinate/+bug/1895011 
+
+=== current component mismatches ===
+The discussion about "current component mismatches" started at 14:36.
+
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg 
+  * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg 
+
+=== New MIRs ===
+The discussion about "New MIRs" started at 14:40.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/raspberrypi-userland/+bug/1895133 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/rpi-eeprom/+bug/1895137 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/ostree/+bug/1892454 
+
+=== Incomplete bugs / questions ===
+The discussion about "Incomplete bugs / questions" started at 14:44.
+
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/google-guest-agent/+bug/1891929 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/golang-golang-x-oauth2/+bug/1894731 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/pcsc-lite/+bug/1892559 
+  * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/pcsc-lite/+bug/1892559/comments/7 + https://bugs.launchpad.net/ubuntu/+source/pcsc-lite/+bug/1892559/comments/9
+
+=== Any other business? ===
+The discussion about "Any other business?" started at 14:55.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (124)
+ * didrocks (16)
+ * sarnold (9)
+ * ubottu (9)
+ * doko_ (5)
+ * meetingology (3)
+ * didrocks999 (2)
+ * rbalint (1)
+
+
+
+== Full Log ==
+
+
+ 14:30 <cpaelzer> #startmeeting Weekly Main Inclusion Requests status
+
+ 14:30 <meetingology> Meeting started Tue Sep 15 14:30:17 2020 UTC.  The chair is cpaelzer. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 14:30 <meetingology> 
+
+ 14:30 <meetingology> Available commands: action commands idea info link nick
+
+ 14:30 <cpaelzer> ping to ddstreet (excused today) doko_ didrocks999 jamespage sarnold
+
+ 14:31 <sarnold> good morning
+
+ 14:32 <cpaelzer> hi sarnold
+
+ 14:32 <cpaelzer> let us get started and hope the others will join or already read
+
+ 14:32 <cpaelzer> #topic Review of previous action items
+
+ 14:33 <cpaelzer> I have had an action a few weeks ago that is partially resolved
+
+ 14:33 <cpaelzer> I wanted to look into some of the germinate for some false-positives
+
+ 14:33 <cpaelzer> ddstreet has taken one into a bug for probert back then
+
+ 14:33 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/+source/probert/+bug/1890301
+
+ 14:33 <ubottu> Launchpad bug 1890301 in probert (Ubuntu Groovy) "component mismatch with probert-network" [Low,Fix committed]
+
+ 14:33 <cpaelzer> I ahve four updates to that
+
+ 14:34 <cpaelzer> #1
+
+ 14:34 <cpaelzer> The usual output of germinate was i386 only (very misleading)
+
+ 14:34 <cpaelzer> #link  https://people.canonical.com/~ubuntu-archive/germinate-output/ubuntu.groovy/_germinate_output
+
+ 14:34 <cpaelzer> now this is running amd64 (thanks cjwatson)
+
+ 14:34 <cpaelzer> #2
+
+ 14:34 <cpaelzer> Furthermore the real truth is neither of these architectures, but the superset of all combined.
+
+ 14:34 <cpaelzer> Thanks to Laney we now have the germinate log of all of them at:
+
+ 14:34 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/extra-germinate-output
+
+ 14:34 <cpaelzer> With that we finally could explain probert-network.
+
+ 14:34 <cpaelzer> It had "probert-storage | probert" and the former isn't on i386
+
+ 14:34 <cpaelzer> So it selected the latter, but at the same time - on i386 - there is no probert-network.
+
+ 14:34 <cpaelzer> paride will fix up the seeds (thanks) for probert to have them do what we want
+
+ 14:34 <cpaelzer> ddstreet: so the bug will be fixed soon and also is finally fully understood
+
+ 14:34 <cpaelzer> and finally
+
+ 14:34 <sarnold> oh nice!
+
+ 14:34 <didrocks999> yeah, this all combined thing is always puzzling
+
+ 14:34 <cpaelzer> #3
+
+ 14:34 <cpaelzer> Germinate output was non reproducible
+
+ 14:34 <cpaelzer> Also it did not include architecture on the log messages which was misleading
+
+ 14:34 <cpaelzer> Once the following lands this will be good as well:
+
+ 14:34 <cpaelzer> #link https://code.launchpad.net/~paelzer/germinate/+git/germinate/+merge/390466
+
+ 14:35 <cpaelzer> so a few MPs to land and things will be even better
+
+ 14:35 <cpaelzer> finally one bug I had to file which is in germinate
+
+ 14:35 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/germinate/+bug/1895011
+
+ 14:35 <ubottu> Launchpad bug 1895011 in germinate (Ubuntu) "virtual-packages do not pick a seeded package (ordering dependent)" [Undecided,New]
+
+ 14:35 <cpaelzer> that is what e.g. shows esmtp for now
+
+ 14:35 <cpaelzer> overall major steps forward
+
+ 14:35 <doko_> hi
+
+ 14:35 <cpaelzer> just wanted to keep you updated on the progress we made
+
+ 14:35 <cpaelzer> hi doko_
+
+ 14:36 <cpaelzer> I don't remember other open action items (other than assigned reviews)
+
+ 14:36 <cpaelzer> let us look at mismatches first as usual
+
+ 14:36 <cpaelzer> #topic current component mismatches
+
+ 14:36 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 14:36 <cpaelzer> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 14:36 <didrocks999> there is still gnome-software, but we’ll give a seed fix a try for this beforehand
+
+ 14:36 <cpaelzer> doko_: we have kept the lintian ->*perl* cases for you as usually you take them - would you this time as well?
+
+ 14:37 <cpaelzer> thanks didrocks999 for an update on that one
+
+ 14:37 <cpaelzer> esmtp I just mentioned to be a known fale positive
+
+ 14:37 <doko_> that's a big effort keeping it open for a few weeks ;p
+
+ 14:37 <cpaelzer> pi-bluetooth from raspi-common-seed - probably for waveform
+
+ 14:37 <cpaelzer> hehe
+
+ 14:38 <doko_> ok, will look at those
+
+ 14:38 <cpaelzer> doko_: can you check with waveform in the foundations meeting what the plan on this one (pi-bluetooth) is and let us know next week?
+
+ 14:38 <cpaelzer> the other two there have open MIRs we get to later
+
+ 14:38 <doko_> ok
+
+ 14:38 <cpaelzer> ipp, octavia, sqlalchemy, .. all known in progress
+
+ 14:38 <cpaelzer> as is shim-canonical
+
+ 14:39 <cpaelzer> didrocks: I guess you still couldn't agree with the kernel team for khronos-opencl?
+
+ 14:39 <didrocks> cpaelzer: didn’t hear from the management, despite several pings…
+
+ 14:39 <didrocks> kind of helpless, I’ll ping apw directly on this
+
+ 14:39 <cpaelzer> ok
+
+ 14:39 <cpaelzer> also google-guest is in mismatches-proposed that will be a topic later on when we talk about new&incomplete bugs
+
+ 14:40 <cpaelzer> ok that was mismatches, no further assignments out of those
+
+ 14:40 <cpaelzer> #topic New MIRs
+
+ 14:40 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 14:40 <cpaelzer> Thee to assign people to
+
+ 14:40 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/raspberrypi-userland/+bug/1895133
+
+ 14:40 <ubottu> Launchpad bug 1895133 in raspberrypi-userland (Ubuntu) "[MIR] libraspberrypi-bin libraspberrypi0" [Undecided,New]
+
+ 14:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/rpi-eeprom/+bug/1895137
+
+ 14:41 <ubottu> Launchpad bug 1895137 in rpi-eeprom (Ubuntu) "[MIR] rpi-eeprom" [Undecided,New]
+
+ 14:41 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/ostree/+bug/1892454
+
+ 14:41 <ubottu> Launchpad bug 1892454 in ostree (Ubuntu) "[MIR] libostree-1-1" [Medium,New]
+
+ 14:41 <cpaelzer> didrocks: the latter you looked at already
+
+ 14:41 <cpaelzer> that we set back to new and is from desktop'ish scope
+
+ 14:41 <cpaelzer> would you look at that (again)?
+
+ 14:41 <didrocks> cpaelzer: I pinged Robert to get the right team subscribed before looking at the MIR, the status was reverted without subcription :/
+
+ 14:41 * didrocks will handle it
+
+ 14:41 <cpaelzer> thanks
+
+ 14:42 <cpaelzer> rpi-eeprom I'd take - eeproms are always messy in some way and will be interesting
+
+ 14:42 <cpaelzer> raspberrypi-userland anyone?
+
+ 14:42 <cpaelzer> ddstreet: isn't here today so he can't say yes/no but I know he has one assignment left of those last week
+
+ 14:42 <cpaelzer> and will get to it once back
+
+ 14:43 <cpaelzer> doko_: and me already got tasks today
+
+ 14:43 <doko_> ok, I'll take it
+
+ 14:43 <cpaelzer> I know sarnold got some security reviews for google-agent which is  a topic to come
+
+ 14:43 <cpaelzer> ...
+
+ 14:43 <cpaelzer> really, ok
+
+ 14:43 <didrocks> I can have a look if you want
+
+ 14:43 <cpaelzer> I was trying to force jamespage to say yes
+
+ 14:43 <didrocks> ahah :)
+
+ 14:43 <cpaelzer> doko_: is the winner this time
+
+ 14:44 <cpaelzer> there will be more work didrocks :-)
+
+ 14:44 <didrocks> noooooooooooooooooo
+
+ 14:44 <didrocks> :)
+
+ 14:44 <sarnold> there is *always* more work :)
+
+ 14:44 <cpaelzer> doko_: I assigned you and me accordingly
+
+ 14:44 <cpaelzer> true sarnold
+
+ 14:44 <cpaelzer> ok that seems to be the new queue
+
+ 14:44 <cpaelzer> #topic Incomplete bugs / questions
+
+ 14:44 <cpaelzer> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 14:45 <cpaelzer> two big blocks
+
+ 14:45 <cpaelzer> block #1 is
+
+ 14:45 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/google-guest-agent/+bug/1891929
+
+ 14:45 <ubottu> Launchpad bug 1891929 in google-guest-agent (Ubuntu) "[MIR] google-guest-agent" [Undecided,Incomplete]
+
+ 14:45 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/golang-golang-x-oauth2/+bug/1894731
+
+ 14:45 <ubottu> Launchpad bug 1894731 in golang-google-protobuf (Ubuntu) "[MIR] golang-*, Go build dependencies of google-guest-agent" [Undecided,Incomplete]
+
+ 14:45 <cpaelzer> first of all I really want to thank all of you for helping to churn through so many review tasks so quickly
+
+ 14:46 <cpaelzer> didrocks: ddstreet: in particular - thanks
+
+ 14:46 <cpaelzer> this case is now blocked on the following
+
+ 14:46 <cpaelzer> 7 are done for MIR - 5 of those on security now
+
+ 14:47 <cpaelzer> another 5 were parially reviewed but identified work for the foundations team and rbalint is aware of them
+
+ 14:47 <cpaelzer> the decisions if/how to handle these might be anywhere from
+
+ 14:47 <cpaelzer> a) cut down the current dependencies a bit
+
+ 14:47 <cpaelzer> to
+
+ 14:47 <cpaelzer> b) add another 20 tasks
+
+ 14:47 <cpaelzer> to c) stop the MIR entirely
+
+ 14:47 <didrocks> I think none of the 3 are tempting :p
+
+ 14:48 <didrocks> also, I bet upstream is testing with different versions of those libs than the archive
+
+ 14:48 <cpaelzer> we will close out the remaining assigned tasks which is 1x ddstreet
+
+ 14:48 <cpaelzer> didrocks: I have brought up the concern of testing across a different set of versions in my reviews and in feedback to the future owners of this stack
+
+ 14:49 <cpaelzer> we will not proactively burst through the other 20 packages unless rbalint / foundations asks us for it
+
+ 14:49 <cpaelzer> so for now we wait on their feedback
+
+ 14:49 <didrocks> agreed
+
+ 14:49 <cpaelzer> but as I said rbalint is aware, but I wanted to make sure you are all as well
+
+ 14:49 <didrocks> just for completleness, I think there is a d) (or you accounted that in a) ) which is vendoring
+
+ 14:49 <cpaelzer> yes
+
+ 14:49 <cpaelzer> the permanent go-curse
+
+ 14:49 <didrocks> yep :)
+
+ 14:50 <cpaelzer> second context to mention here is
+
+ 14:50 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/pcsc-lite/+bug/1892559
+
+ 14:50 <ubottu> Launchpad bug 1892559 in pcsc-lite (Ubuntu) "[MIR] ccid libpam-pkcs1 libpcsc-perl opensc pcsc-tools pcsc-lite" [Undecided,Incomplete]
+
+ 14:50 <cpaelzer> opened by sarnold
+
+ 14:50 <cpaelzer> afaics security tries to reduce the number of required packages before going further - is that correct sarnold?
+
+ 14:50 <rbalint> thank you all for the work already done on the MIRs around google-guest-agent
+
+ 14:51 <cpaelzer> yw rbalint
+
+ 14:51 <cpaelzer> rbalint: just to be sure - you are ok that we go back from panic-mode to wait-for-feedback-mode on this one right?
+
+ 14:51 <sarnold> cpaelzer: I believe pcsc-tools and libpcsc-perl were removed, which helps quite a lot :)
+
+ 14:51 <cpaelzer> yes they were
+
+ 14:52 <cpaelzer> sarnold: pcsc-lite would need to be fulyl evaluated
+
+ 14:52 <cpaelzer> sarnold: it was in main without actual inspection in the far past
+
+ 14:52 <cpaelzer> I asked if you could take a look and if you agree add that properly
+
+ 14:53 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/pcsc-lite/+bug/1892559/comments/7 + https://bugs.launchpad.net/ubuntu/+source/pcsc-lite/+bug/1892559/comments/9
+
+ 14:53 <ubottu> Launchpad bug 1892559 in pcsc-lite (Ubuntu) "[MIR] ccid libpam-pkcs1 libpcsc-perl opensc pcsc-tools pcsc-lite" [Undecided,Incomplete]
+
+ 14:53 <cpaelzer> joy said you need it in comment #12
+
+ 14:53 <cpaelzer> so I think we should add it properly
+
+ 14:53 <sarnold> what does "add it properly" mean?
+
+ 14:54 <cpaelzer> means: do the pre-checks as when filing a MIR task and if all looks sane set the task back to new
+
+ 14:54 <sarnold> cpaelzer: aha! then I think I missed the 'set it back to new' then :)
+
+ 14:54 <sarnold> cpaelzer: I added the prechceks to the description in comment #3
+
+ 14:55 <cpaelzer> indeed
+
+ 14:55 <cpaelzer> let us set it back then and I'll assign myself to get you going there
+
+ 14:55 <sarnold> thanks
+
+ 14:55 <cpaelzer> ok that is it on incompletes
+
+ 14:55 <cpaelzer> #topic Any other business?
+
+ 14:56 <cpaelzer> that already was a lot of content
+
+ 14:56 <didrocks> that’s enough for me (FYI, ostree/libflatpak is definitively in the TODO list now for me)
+
+ 14:56 <cpaelzer> but a) this is the phase of the cycle it always is and b) I'm happy to see that the MIR team seems to work effectively (looking back people didn't always have the impression)
+
+ 14:56 <cpaelzer> yeah didrocks
+
+ 14:57 <didrocks> thanks for coordinating this effectively cpaelzer :)
+
+ 14:57 <sarnold> yes :)
+
+ 14:57 <cpaelzer> ok it seems we all hav ework :-) see you next week then
+
+ 14:57 <didrocks> see you!
+
+ 14:57 <cpaelzer> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

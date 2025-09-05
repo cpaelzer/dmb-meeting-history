@@ -1,0 +1,355 @@
+#title #ubuntu-meeting: ARB meeting
+
+Meeting started by stgraber at 18:25:03 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-01-27-18.25.log.html
+.
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/AppReviewBoard/Agenda   (stgraber, 18:25:37)
+ *Apps which modify system settings (ubuntu-tweak, grub-customizer) -- AndrewMitchell
+''LINK:'' https://wiki.ubuntu.com/AppReviewBoard/Review has some of our other rules, PostReleaseApps/SecurityChecklist has a whole lot more  (ajmitch, 18:28:42)
+''ACTION:'' ajmitch to reply to grub-customizer and have the packaging process continue in Debian  (stgraber, 18:40:32)
+''ACTION:'' ajmitch to work on AppReviewBoard/Review/Guidelines (basic list of guidelines for app going to extras.u.c and some canned responses)  (stgraber, 18:40:58)
+
+ *Complexity criteria of app submissions
+''ACTION:'' wendar to update AppReviewBoard/Review/Guidelines to include a note on bundling libraries and complexity (review time) criteria  (stgraber, 18:57:06)
+
+ *General status of the ARB queue
+''LINK:'' https://lists.ubuntu.com/archives/app-review-board/2012-January/000274.html   (ajmitch, 19:01:27)
+''LINK:'' https://lists.ubuntu.com/archives/app-review-board/2012-January/000314.html   (ajmitch, 19:02:12)
+''ACTION:'' highvoltage to make sure Daniel and Michael's review have been sent through MyApps  (stgraber, 19:04:48)
+
+ *Chair for next meeting
+''ACTION:'' highvoltage to chair the next ARB meeting  (stgraber, 19:08:10)
+
+ *AOB
+
+
+
+Meeting ended at 19:09:42 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * ajmitch to reply to grub-customizer and have the packaging process continue in Debian
+ * ajmitch to work on AppReviewBoard/Review/Guidelines (basic list of guidelines for app going to extras.u.c and some canned responses)
+ * wendar to update AppReviewBoard/Review/Guidelines to include a note on bundling libraries and complexity (review time) criteria
+ * highvoltage to make sure Daniel and Michael's review have been sent through MyApps
+ * highvoltage to chair the next ARB meeting
+
+
+
+== Action items, by person ==
+
+ * ajmitch
+ ** ajmitch to reply to grub-customizer and have the packaging process continue in Debian
+ ** ajmitch to work on AppReviewBoard/Review/Guidelines (basic list of guidelines for app going to extras.u.c and some canned responses)
+ * highvoltage
+ ** highvoltage to make sure Daniel and Michael's review have been sent through MyApps
+ ** highvoltage to chair the next ARB meeting
+ * wendar
+ ** wendar to update AppReviewBoard/Review/Guidelines to include a note on bundling libraries and complexity (review time) criteria
+
+
+
+== People present (lines said) ==
+
+ * stgraber (52)
+ * ajmitch (42)
+ * wendar (24)
+ * highvoltage (9)
+ * meetingology` (8)
+ * Pendulum (2)
+
+
+
+== Full Log ==
+
+
+ 18:25:03 <stgraber> #startmeeting ARB meeting
+
+ 18:25:03 <meetingology`> Meeting started Fri Jan 27 18:25:03 2012 UTC.  The chair is stgraber. Information about MeetBot at http://wiki.ubuntu.com/AlanBell/mootbot.
+
+ 18:25:03 <meetingology`> 
+
+ 18:25:03 <meetingology`> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 18:25:20 <stgraber> sorry if I'm a bit distracted, I'm being poked on a few channels at the moment ;)
+
+ 18:25:37 <stgraber> #link https://wiki.ubuntu.com/AppReviewBoard/Agenda
+
+ 18:25:55 <ajmitch> it's ok, I'm still trying to wake up :)
+
+ 18:25:57 <stgraber> #topic Apps which modify system settings (ubuntu-tweak, grub-customizer) -- AndrewMitchell
+
+ 18:26:57 <ajmitch> we had a brief discussion about this one in #ubuntu-arb yesterday, that we have some submissions which fiddle with the system (installing packages, touching files in /etc)
+
+ 18:28:01 <ajmitch> currently we have a general policy that such things aren't allowed, but there's no definitive place we can point people at for what's acceptable
+
+ 18:28:15 <wendar> that's true
+
+ 18:28:26 <wendar> there's the early documents, but it's not a clear list
+
+ 18:28:36 <wendar> it would be better to have one page
+
+ 18:28:39 <stgraber> right, I think we should go with a whitelist on that rather than a blacklist
+
+ 18:28:42 <ajmitch> https://wiki.ubuntu.com/AppReviewBoard/Review has some of our other rules, PostReleaseApps/SecurityChecklist has a whole lot more
+
+ 18:29:24 <wendar> stgraber: I like that, it has a more positive tone
+
+ 18:29:27 <stgraber> along the lines of is allowed to write to an app specific directory in the user's home directory and can use gconf/gsettings to affect desktop settings if that's the result of a user's direct action in the UI and is revertable
+
+ 18:29:28 <ajmitch> I'd like to be able to reject those apps with a good response, and get information on developer.ubuntu.com linking to what we'll accept
+
+ 18:30:19 <highvoltage> stgraber: pong
+
+ 18:30:26 <stgraber> I don't want an app that starts messing in gconf/gsettings when it opens without it being a visible opt-in switch
+
+ 18:30:54 <ajmitch> alright
+
+ 18:31:23 <ajmitch> you've probably seen that there's a fair discussion on ubuntu-desktop about ccsm & related apps
+
+ 18:31:42 <wendar> indeed
+
+ 18:32:45 <stgraber> indeed and I'm not necessarily against apps like that in extras, but they shouldn't do anything by default, make it clear to the user about what will be changed when they click something and ensure that reverting the change works
+
+ 18:33:04 <stgraber> (so effectively, that'd be a no-go for ccsm as the part about reverting changes doesn't seem to work too well ;))
+
+ 18:33:09 <ajmitch> unfortunately ubuntu-tweak is a bit of a kitchen sink, it adds/removes packages & manages PPAs as well
+
+ 18:33:36 <stgraber> right, ubuntu-tweak is a clear no-go if only for its use of gksudo, touching /etc and adding repositories
+
+ 18:34:02 <stgraber> we don't even allow packages in the archive to add PPAs (well, except the packaging tools themselves) :)
+
+ 18:34:08 <highvoltage> stgraber: so is ccsm being dropped from the archive?
+
+ 18:34:24 <ajmitch> highvoltage: as it stands, it's likely
+
+ 18:35:01 <Pendulum> Before you drop it can someone see how much work it's going to be to make the screen magnifier accessible in other ways? (including the options to set type of zoom and level of zoom)
+
+ 18:35:04 <ajmitch> grub-customizer has an open debian ITP, so probably better to help the author get it in there
+
+ 18:35:35 <stgraber> highvoltage, Pendulum: it might get dropped, anyway, that's not a discussion for the ARB to have, please discuss it on the mailing lists :)
+
+ 18:35:38 <ajmitch> Pendulum: we're not the ones dropping it, we're trying to sort out what's acceptable for extras.ubuntu.com
+
+ 18:35:51 <Pendulum> ajmitch: okay, couldn't tell who was making the final decision. Sorry!
+
+ 18:36:18 <wendar> ajmitch: yes, agreed grub-customizer is better through the Debian process
+
+ 18:36:32 <stgraber> ajmitch: right, I don't believe grub-customizer would be suitable for the ARB, so we should indeed drop it and help get it in Debian
+
+ 18:36:42 <ajmitch> ok, I'll try & put aside some time for that & tell them in the rejection email :)
+
+ 18:37:31 <ajmitch> so as a general rule, the AppReviewBoard/Review page is a good place to put the guidelines about what an app can do?
+
+ 18:38:27 <wendar> ajmitch: It might be worth creating a simple AppReviewBoard/Review/Guidelines page
+
+ 18:38:36 <ajmitch> alright
+
+ 18:38:37 <wendar> that's just a list of "what we accept"
+
+ 18:39:25 <ajmitch> I can add that, and a canned response on the Responses page
+
+ 18:39:48 <stgraber> that'd be grat, thanks
+
+ 18:39:52 <stgraber> *great
+
+ 18:40:13 <wendar> awesome, thanks!
+
+ 18:40:32 <stgraber> #action ajmitch to reply to grub-customizer and have the packaging process continue in Debian
+
+ 18:40:32 * meetingology` ajmitch to reply to grub-customizer and have the packaging process continue in Debian
+
+ 18:40:56 <ajmitch> stgraber: thanks, you're quicker than I am :)
+
+ 18:40:58 <stgraber> #action ajmitch to work on AppReviewBoard/Review/Guidelines (basic list of guidelines for app going to extras.u.c and some canned responses)
+
+ 18:40:58 * meetingology` ajmitch to work on AppReviewBoard/Review/Guidelines (basic list of guidelines for app going to extras.u.c and some canned responses)
+
+ 18:41:37 <stgraber> I guess based on that page we can then go through the queue and do some mass rejection? (not sure how many we have but at least ubuntu-tweak should be rejected)
+
+ 18:41:56 <ajmitch> there shouldn't be too many
+
+ 18:42:40 <stgraber> good
+
+ 18:42:47 <stgraber> #topic Complexity criteria of app submissions
+
+ 18:43:06 <stgraber> so to quote what I said yesterday on IRC
+
+ 18:43:28 <stgraber> 23:46 < stgraber> 15:41 <stgraber> I believe they are basically "no bundled libraries" (which gets us rid of 99% of the java stuff) and "no more code than a human can reasonably  read and  understand in an hour"
+
+ 18:43:46 <stgraber> (yeah, I've been copy/pasting that one a few times ;))
+
+ 18:44:09 <wendar> no bundled libraries at all?
+
+ 18:44:11 <ajmitch> we did allow bundling some libraries if necessary, last time we sorted out rules
+
+ 18:44:26 <ajmitch> just not bundling updated copies of what's in the archive
+
+ 18:44:32 <wendar> like, if a python game uses a couple of self-written objects for data?
+
+ 18:44:37 <wendar> ah, yes agreed
+
+ 18:44:39 <ajmitch> certainly not bundling .jar files though :)
+
+ 18:44:44 <highvoltage> that sounds very nice, especially for the arb reviewers, but wouldn't that make it hard to ship games?
+
+ 18:45:03 <stgraber> if the "library"/"module" is part of the upstream code, fine
+
+ 18:45:25 <stgraber> I just don't want to have apps containing bundled external libraries in their code
+
+ 18:45:27 <highvoltage> (actually, scratch that, I was thinking of things like Oil Rush, but that's not even an ARB app in the first place)
+
+ 18:45:36 <stgraber> because it becomes a security/bugfix/legal nightmare pretty quickly
+
+ 18:45:47 <wendar> yup, we don't want to be maintaining that
+
+ 18:47:05 <stgraber> not sure how we want to word it in the guidelines, but the idea is that we'd reject anything that bundles libraries/modules/whatever that can be found as a separate entity (so outside of the upstream project)
+
+ 18:47:41 <wendar> We can word it mostly positively
+
+ 18:49:00 <wendar> You can include any libraries that are part of your app, for example...
+
+ 18:50:04 <stgraber> yeah, we should try to be a bit positive about it (though it's a bit difficult to make that kind of criteria positive ;)).
+
+ 18:50:13 <wendar> If your app depends on external libraries, please make sure that your app runs on the current versions shipped in Ubuntu.
+
+ 18:50:27 <ajmitch> it's also hard to make "your source is too big" positive :)
+
+ 18:50:41 <wendar> (that implies a negative, but states it as a positive)
+
+ 18:50:43 <stgraber> I'm sure we'd have submissions arguing on the "are part of your app" part saying that their upstream "source" tarball contains all these .jar and so it's "part of their app" :)
+
+ 18:51:06 <stgraber> wendar: +1 for that one
+
+ 18:51:08 <ajmitch> stgraber: fine, but we also have requirements that the app be buildable from source, afaik
+
+ 18:51:39 <stgraber> ajmitch: indeed, which is why we should have rejected all of these with bundled .jar a long time ago
+
+ 18:51:40 <ajmitch> the page links to the licensing policy which requires full source
+
+ 18:52:02 <ajmitch> yeah, I should have rejected those that I've seen, sorry
+
+ 18:52:46 <wendar> ajmitch: How about something like "Our focus is on lightweight apps. To give you a general idea, we're looking for the kind of apps that could be reviewed in about an hour reading through the code."
+
+ 18:53:03 <ajmitch> wendar: that sounds good
+
+ 18:53:15 <stgraber> wendar: that in addition to the "If your app depends on external libraries, please make sure that your app runs on the current versions shipped in Ubuntu." would be great
+
+ 18:53:22 <ajmitch> an hour might be a little too lightweight, but it's a start
+
+ 18:53:42 <wendar> yeah, I could see spending a couple of hours
+
+ 18:53:52 <wendar> it's just to give them a rough guideline
+
+ 18:54:12 <stgraber> with review here meaning just scanning through the code and figuring out what the app does, in that hour I didn't count licensing review or any actual testing of the app and packaging
+
+ 18:54:16 <wendar> (and programmers always underestimate, so if we say one hour, we'll probably get 5)
+
+ 18:55:11 <ajmitch> There's an empty page at https://wiki.ubuntu.com/AppReviewBoard/Review/Guidelines if you want to put them there
+
+ 18:55:32 <stgraber> wendar: can you add these two to the guidelines?
+
+ 18:55:52 <wendar> yes, will do
+
+ 18:57:06 <stgraber> #action wendar to update AppReviewBoard/Review/Guidelines to include a note on bundling libraries and complexity (review time) criteria
+
+ 18:57:06 * meetingology` wendar to update AppReviewBoard/Review/Guidelines to include a note on bundling libraries and complexity (review time) criteria
+
+ 18:57:21 <stgraber> #topic General status of the ARB queue
+
+ 18:57:59 <stgraber> so the queue still looks pretty long
+
+ 18:58:35 <ajmitch> it seems like the budapest sprint knocked a few off the list, and you've done a good job with getting some lenses in
+
+ 18:59:03 <ajmitch> I'm trying to find spare time to focus on 1 or 2 apps at a time & try & get them through
+
+ 18:59:11 <highvoltage> if there's something I should/could look at let me know
+
+ 18:59:28 <ajmitch> highvoltage: 'all of the above'? :)
+
+ 18:59:55 <stgraber> I'm not sure all the changes that were listed on the mailing list by non ARB members have been applied to the queue (these from Daniel and Michael), would be good to make sure they didn't do these reviews for nothing
+
+ 19:00:11 <ajmitch> the myapps page looks to be sorted by submission date (or ID) now
+
+ 19:00:51 <stgraber> ajmitch: seems to be by ID
+
+ 19:01:27 <ajmitch> https://lists.ubuntu.com/archives/app-review-board/2012-January/000274.html
+
+ 19:01:36 <ajmitch> ^ dholbach's reviews
+
+ 19:01:43 <wendar> which would end up being by submission date, since they're auto-incrementing
+
+ 19:02:12 <ajmitch> https://lists.ubuntu.com/archives/app-review-board/2012-January/000314.html
+
+ 19:02:18 <ajmitch> ^ mvo's reviews
+
+ 19:03:02 <stgraber> wendar: right, by initial submission date, not by last submission (which is shown as the Since. column)
+
+ 19:03:55 <ajmitch> doesn't really matter about the particulars of the sorting, I was more suggesting we work from the top down, to get the oldest ones moving
+
+ 19:04:01 <stgraber> highvoltage: can you look at these two e-mails and make sure the changes have been sent through myapps?
+
+ 19:04:17 <highvoltage> stgraber: ok, I can do so tomorrow
+
+ 19:04:48 <stgraber> #action highvoltage to make sure Daniel and Michael's review have been sent through MyApps
+
+ 19:04:48 * meetingology` highvoltage to make sure Daniel and Michael's review have been sent through MyApps
+
+ 19:04:51 <wendar> stgraber: aye, I guess last submission could be useful for watching what's been updated
+
+ 19:05:13 <stgraber> wendar: indeed
+
+ 19:05:56 <stgraber> anything else about the queue?
+
+ 19:06:18 * ajmitch has nothing more to add at the moment
+
+ 19:06:24 <stgraber> Just a quick reminder to not touch the PendingQA ones, hopefully these will be moved to published soon (still waiting for the updated software-center)
+
+ 19:06:27 <ajmitch> voting on the list seems to be a good way to do it
+
+ 19:07:16 <stgraber> at the moment we need to use some hybrid MyApps/package metadata hack to get things to show up on the software-center, so before uploading a package to extras.ubuntu.com, please let me know and I'll make sure everything is right
+
+ 19:07:21 <stgraber> #topic Chair for next meeting
+
+ 19:07:25 <ajmitch> ok
+
+ 19:07:27 <stgraber> any volunteer?
+
+ 19:08:01 <highvoltage> ok I'll bite
+
+ 19:08:08 * ajmitch can do it, with sufficient caffeine
+
+ 19:08:10 <stgraber> #action highvoltage to chair the next ARB meeting
+
+ 19:08:10 * meetingology` highvoltage to chair the next ARB meeting
+
+ 19:08:22 <stgraber> #topic AOB
+
+ 19:08:25 <stgraber> anything else?
+
+ 19:08:36 <ajmitch> none from me
+
+ 19:09:04 <highvoltage> nope, exhausted busy conferencing :)
+
+ 19:09:05 <ajmitch> just a general note that filing bugs on developer-portal can be useful if there are things that annoy you about myapps
+
+ 19:09:14 <highvoltage> (or from too much pizza)
+
+ 19:09:42 <stgraber> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/AlanBell/mootbot)

@@ -1,0 +1,524 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 29 Oct at 15:03 &mdash; 15:36 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2015/ubuntu-meeting.2015-10-29-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+  * ''LINK:'' https://wiki.ubuntu.com/chiluk 
+
+=== Sprint, UOS planning ===
+The discussion about "Sprint, UOS planning" started at 15:18.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:28.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (41)
+ * pitti (31)
+ * robru (23)
+ * cyphermox (22)
+ * ubottu (19)
+ * tdaitx (17)
+ * sil2100 (17)
+ * chiluk (13)
+ * caribou (13)
+ * barry (13)
+ * doko (12)
+ * bdmurray (9)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:03 <slangasek> #startmeeting
+
+ 15:03 <meetingology> Meeting started Thu Oct 29 15:03:11 2015 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: action commands idea info link nick
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:03 <chiluk> o/
+
+ 15:03 <slangasek> $ echo $(shuf -e barry doko bdmurray slangasek caribou infinity sil2100 robru cyphermox pitti tdaitx)
+
+ 15:03 <slangasek> cyphermox caribou doko bdmurray slangasek barry tdaitx infinity sil2100 pitti robru
+
+ 15:03 <cyphermox> yay!
+
+ 15:03 <cyphermox> - last week: release sprint
+
+ 15:03 <cyphermox> - much fixing of last-minute issues: udisks2/polkit, localechooser, console-setup
+
+ 15:03 <cyphermox> - some fun package removal selections debugging with Laney in ubiquity
+
+ 15:03 <cyphermox> - fixing boot device selection issues on ppc64el
+
+ 15:04 <cyphermox> - fwupdate snapshot + fixing some bugs in the snapshot
+
+ 15:04 <cyphermox> - got slightly hindered by binutils bugs earlier this week
+
+ 15:04 <cyphermox> - merging d-i components: iso-scan, choose-mirror, cdrom-detect...
+
+ 15:04 <cyphermox> - updated syslinux-themes-ubuntu to add xenial.
+
+ 15:04 <sil2100> o/ Sorry for being late
+
+ 15:04 <cyphermox> - started merging apt-setup
+
+ 15:04 <cyphermox> - sponsoring grub2 fix for arm* for dannf.
+
+ 15:04 <cyphermox> - completing the multipath-tools update + SRU for upgrades from < wily
+
+ 15:04 <cyphermox> - lots of testing since this means changing /etc/fstab
+
+ 15:04 <cyphermox> - investigating netcfg changes for bug LP: #1452202
+
+ 15:04 <ubottu> Launchpad bug 1452202 in debian-installer (Ubuntu) "ubuntu preseed install fails to set a hostname" [Medium,Triaged] https://launchpad.net/bugs/1452202
+
+ 15:04 <cyphermox> - ipmitool SRU for bug LP: #1509896
+
+ 15:04 <ubottu> Launchpad bug 1509896 in ipmitool (Ubuntu) "IPMI USB SCSI endpoint discovery can fail on OpenPower machines" [Medium,Fix released] https://launchpad.net/bugs/1509896
+
+ 15:04 <cyphermox> - digging into lvm2 cyclic dependency (bug LP: #1497688)
+
+ 15:04 <ubottu> Launchpad bug 1497688 in lvm2 (Ubuntu) "dmsetup and libdevmapper1.02.1 fail to install, depend on each other" [High,Confirmed] https://launchpad.net/bugs/1497688
+
+ 15:04 <cyphermox> (done)
+
+ 15:04 <sil2100> (DST again)
+
+ 15:04 <caribou> Bugfix :
+
+ 15:04 <caribou> - Precise SAN/LVM boot hang Most probably a config issue
+
+ 15:04 <caribou> Knowledge transfer :
+
+ 15:04 <caribou> Blog post on Kdump-tools modification - Need to talk to Debian kernel team about applying upstream
+
+ 15:04 <caribou> Blog post on crashdump charm
+
+ 15:05 <caribou> Z series reading & training
+
+ 15:05 <caribou> (done)
+
+ 15:05 <slangasek> doko:
+
+ 15:06 <chiluk> slick caribou re: crashdump charm ..
+
+ 15:07 <slangasek> bdrung:
+
+ 15:07 <slangasek> eh
+
+ 15:07 <slangasek> bdmurray:
+
+ 15:07 * slangasek kicks his irc client that isn't even alphabetical
+
+ 15:07 <doko> ohh, moved an hour early?
+
+ 15:07 <bdmurray> updated LP: #1505818 regarding successful retrace after SAS removal                                                                                                    updated daisy, errors for xenial                                                                                                                                       created apport-test-crashes for xenial
+
+ 15:07 <ubottu> Launchpad bug 1505818 in Daisy "Need a method to ask for a core file for a failed to retrace crash" [Medium,New] https://launchpad.net/bugs/1505818
+
+ 15:07 <slangasek> doko: yes, we're in the middle of the DST dance now
+
+ 15:08 <bdmurray> investigation into software-center debconf issue (LP: #1389582)                                                                                                        reported / tested ubuntu-release-upgrader bug LP: #1506971                                                                                                             research into / fixing of ubuntu-release-upgrader bug LP: #1509305
+
+ 15:08 <ubottu> Launchpad bug 1389582 in software-center (Ubuntu) "software-center misses a dependency on libgtk2-perl" [High,Confirmed] https://launchpad.net/bugs/1389582
+
+ 15:08 <ubottu> Launchpad bug 1506971 in ubuntu-release-upgrader (Ubuntu) "ubuntu-release-upgrader apport_crash code should filter out dpkg returning 1" [High,Triaged] https://launchpad.net/bugs/1506971
+
+ 15:08 <ubottu> Launchpad bug 1509305 in ubuntu-release-upgrader (Ubuntu Wily) "new kernel removed after upgrade if linux meta package not installed" [High,Fix released] https://launchpad.net/bugs/1509305
+
+ 15:08 * doko is writing the summary
+
+ 15:08 <bdmurray> W SRU verification of bug LP: #1504897                                                                                                                                 T SRU verification of apport bug LP: 1336462                                                                                                                           P, T, V SRU of apport bug LP: #1500450
+
+ 15:08 <ubottu> Launchpad bug 1504897 in ubuntu-release-upgrader (Ubuntu Xenial) "packages with only upstart+systemd without sysvinit fail to upgrade with do-release-upgrade: upgrade tarballs ship obsolete invoke-rc.d" [High,Fix released] https://launchpad.net/bugs/1504897
+
+ 15:08 <ubottu> Launchpad bug 1336462 in apport (Ubuntu Trusty) "Make apport collect some Power information" [Undecided,Fix released] https://launchpad.net/bugs/1336462
+
+ 15:08 <ubottu> Launchpad bug 1500450 in apport (Ubuntu Vivid) "/usr/share/apport/package_hook:FileExistsError:/usr/share/apport/package_hook@64:make_report_file" [High,Fix released] https://launchpad.net/bugs/1500450
+
+ 15:08 <bdmurray> investigation into / fixing of LP: #1506169
+
+ 15:08 <ubottu> Launchpad bug 1506169 in software-properties (Ubuntu Wily) "if linux metapackage is installed software properties will uninstall it" [High,Fix committed] https://launchpad.net/bugs/1506169
+
+ 15:08 <bdmurray> updated meta-release-proposed for Wily                                                                                                                                 setup rls-x- and other xenial reports                                                                                                                                  uploaded new ubuntu-release-upgrader for xenial
+
+ 15:09 <bdmurray> ✔ done
+
+ 15:09 <slangasek> doko: do you need more time to write? should we get you at the end?
+
+ 15:09 * barry gets to dance the dst-jig sunday morning
+
+ 15:09 <slangasek> * archive is open; clearing merge backlog
+
+ 15:09 <slangasek> * fielding customer questions about openjdk support
+
+ 15:09 <slangasek> * working on our secureboot story for fwupdate
+
+ 15:09 <slangasek> * assisting with partner questions about cryptsetup and snappy
+
+ 15:09 <slangasek> * s390x planning
+
+ 15:09 <slangasek> * discussion on maas 1.8 SRU
+
+ 15:09 <slangasek> (done)
+
+ 15:10 <barry> debugging, reporting, testing issues related to bogus egg-info leaking into python3.5 versioned path in python3-* binary packages.  fixed now in dh-python git, verified this fixes affected packages with workarounds removed.  prep affected packages for uploads to remove workarounds once new dh-python hits archive.
+
+ 15:10 <barry> started looking at python-coverage 4.0.1, discuss with maintainer.
+
+ 15:10 <sil2100> When is my turn?
+
+ 15:10 <barry> zope-interface 4.1.3-1; debian bug #802415; python-cachecontrol 0.11.5-1.1 (nmu->git); debian bug #802130; numpydoc 0.5-1 and 0.5-2 reviewed and sponsored; zope.event 4.1.0-1; debian bug #802113 & zope.i18n 4.0.1-3; debian bug #802130 & chameleon 2.24-1
+
+ 15:10 <ubottu> Debian bug 802415 in src:zope.schema "zope.schema: FTBFS: Missing build-dep on zope.interface(?)" [Serious,Fixed] http://bugs.debian.org/802415
+
+ 15:10 <ubottu> Debian bug 802130 in src:python-chameleon "python-chameleon: FTBFS: KeyError: '__wrapped__'" [Serious,Fixed] http://bugs.debian.org/802130
+
+ 15:10 <ubottu> Debian bug 802113 in src:zope.i18n "zope.i18n: FTBFS: Tries to download zope.testing from pypy" [Serious,Fixed] http://bugs.debian.org/802113
+
+ 15:10 <slangasek> sil2100: after tdaitx
+
+ 15:10 <barry> LP: #1510558
+
+ 15:10 <ubottu> Launchpad bug 1510558 in software-properties (Ubuntu) "ppa shortcut handler exception stops shortcut resolution" [High,Fix released] https://launchpad.net/bugs/1510558
+
+ 15:10 <barry> review of robru cupstream2distro branch
+
+ 15:10 <barry> working with other python.org sysadmins to move mail.python.org after catastrophic failure of 15+ year old machine.
+
+ 15:10 <barry> reviewing xenial-proposed promotion failures
+
+ 15:10 <barry> --done--
+
+ 15:10 <tdaitx> Current/Past
+
+ 15:10 <tdaitx> - Backported 8u65 security patches to openjdk-7-7u85-2.6.1 for Wily;
+
+ 15:10 <tdaitx> backported one changeset from JDK8 and one non security 8u65 patch as well; provided backports to Vivid, Trusty, and Precise
+
+ 15:10 <tdaitx> - Tested IcedTea 2.6.2 pre02 release; so far only xrender patch had to be removed (as it was upstreamed); sent arm64 zero build issue upstream, fixed right away
+
+ 15:10 <tdaitx> - Tested and provided IcedTea 2.6.2 debdiff; based on 7u85-2.6.1-5, doko based it on 7u85-2.6.1-6 and fixed the debian dir permissions (sorry about that and thanks!)
+
+ 15:10 <tdaitx> - Started backporting 7u91 patches to OpenJDK 6; investigating a few additional failures compared to the last build
+
+ 15:10 <tdaitx> - Tested IcedTea 1.13.9 pre release, alles gut; reported back to IcedTea devs
+
+ 15:10 <tdaitx> -
+
+ 15:10 <tdaitx> Next steps
+
+ 15:10 <tdaitx> - pack IcedTea 1.13.9, provide backports for all supported series
+
+ 15:10 <tdaitx> - verify OpenJDK 6 TLS patch (LP: #1482924)
+
+ 15:10 <tdaitx> - get back to TCK and schedule a whole load of tests
+
+ 15:10 <ubottu> Launchpad bug 1482924 in openjdk-7 (Ubuntu) "Regressions due to USN-2696-1" [Undecided,New] https://launchpad.net/bugs/1482924
+
+ 15:10 <tdaitx> - enjoy the sprint
+
+ 15:11 <tdaitx> Waiting/On hold
+
+ 15:11 <tdaitx> - waiting OCA to submit webrevs for 7093640 backport (set TLS 1.1 as default for JDK 6 and TLS 1.2 as default for JDK 7); not blocking anything for now, just waiting
+
+ 15:11 <tdaitx> (done)
+
+ 15:11 <sil2100> - Landing team work, silo coordination, preparing landing e-mails
+
+ 15:11 <sil2100> - RTM Status meetings
+
+ 15:11 <sil2100> - appmenu-qt5:
+
+ 15:11 <sil2100> * More investigation on the shortcut bug, multiple Qt rebuilds
+
+ 15:11 <sil2100> - +1-maintenance:
+
+ 15:11 <sil2100> * Various no-change rebuilds for the ocaml transition
+
+ 15:11 <sil2100> - Preparing for some seed additions, fixing language fonts
+
+ 15:11 <sil2100> - system-image:
+
+ 15:11 <sil2100> * Preparing basic tagging functionality to support OTA notations in system-settings
+
+ 15:11 <sil2100> * Preparing krillin for a test-flash (battling ubuntu-device-flash)
+
+ 15:11 <sil2100> * Exporting local system-image server for QA testing
+
+ 15:11 <sil2100> - Flight preparations
+
+ 15:11 <sil2100> - Working hours moved more to the evening due looking for an apartment to buy
+
+ 15:11 <sil2100> (done)
+
+ 15:11 <pitti> release engineering:
+
+ 15:11 <pitti> - help with ISO testing, archive maintenance etc. for wily
+
+ 15:11 <pitti> - set up autopkgtest, apport retracers, ddebs for xenial
+
+ 15:11 <pitti> autopkgtest:
+
+ 15:11 <pitti> - set up autopkgtesting for ppc64el in ScalingStack; lots of problems and RTs, ongoing
+
+ 15:11 <pitti> - adjust kernel package installation to work around linux-meta inconsistency on precise
+
+ 15:11 <pitti> - draft https://blueprints.launchpad.net/ubuntu/+spec/foundations-x-proposed-migragion
+
+ 15:12 <pitti> systemd:
+
+ 15:12 <pitti> - continue to debug boot race condition (https://github.com/systemd/systemd/issues/1505)
+
+ 15:12 <pitti> - investigate networkd regression in trunk (https://github.com/systemd/systemd/issues/1645)
+
+ 15:12 <pitti> misc:
+
+ 15:12 <pitti> - Fix a lot of broken upgrades due to ubuntu-release-upgrader bug (#1504897)
+
+ 15:12 <pitti> - apport security fix (#1507480), fix test suite failures
+
+ 15:12 <pitti> - fix test regressions in apt-clone, click-apparmor, gexiv2, python-astropy, ubuntu-drivers-common
+
+ 15:12 <pitti> - fix FTBFS of gnucash, sleuthkit, python-apt
+
+ 15:12 <pitti> - merges: gnome-color-manager, init-system-helpers, openimageio, openvpn, systemd, util-linux, debhelper
+
+ 15:12 <pitti> - investigate juju lxc container build bug (#1509747)
+
+ 15:12 <pitti> - wpasupplicant:  Add workaround for wifi failure after resuming (#1422143)
+
+ 15:12 <pitti> - prepare systemd.conf talk
+
+ 15:12 <pitti> - Help Chipaca with snappy network config unit
+
+ 15:12 <pitti> - Help stgraber with lxcfs regression
+
+ 15:12 <pitti> EOT
+
+ 15:12 <robru> lp:cupstream2distro
+
+ 15:12 <robru> - fix bug generating version numbers for packages that were previously reverted
+
+ 15:12 <robru> - refactor publish job bringing it inline with "phase" mechanism used by other jobs
+
+ 15:12 <robru> - re-report silo dirty statuses (if any) after silo build completes
+
+ 15:12 <robru> - detect new commits when deciding which packages to build
+
+ 15:12 <robru> - scan all silos for new commits every 15 minutes, marking dirty if commits found
+
+ 15:12 <robru> - fix unhandled traceback when request has invalid sync source set
+
+ 15:12 <robru> - enable xenial & prevent publishing wily-based dual silos.
+
+ 15:12 <robru> - improve accuracy when checking that dest archive has a release not in project trunk
+
+ 15:12 <robru> - Switch to simpler file format for storing important version numbers on disk; rip out a bunch of parsing logic for the old format
+
+ 15:12 <robru> - write branch revids later during build so that train doesn't accidentally consider revids built when build fails (more accurate detection of which packages require building in build job)
+
+ 15:12 <robru> - ton of pep8 cleanups as wily version of pep8 is now more strict than previous versions
+
+ 15:12 <robru> - begun implementing some amqp logic necessary for submitting autopkgtest requests against silo PPAs
+
+ 15:12 <robru> - overhaul of silo locking to prevent different jobs from running in the same silo simultaneously.
+
+ 15:12 <robru> lp:bileto
+
+ 15:12 <robru> - automatically detect & reconnect to db when connection drops (fortunately this wasn't a problem in production but staging went totally crazy dropping connections constantly)
+
+ 15:12 <robru> - switch default series to xenial+vivid
+
+ 15:12 <robru> - fix link to excuses page for xenial+vivid silos
+
+ 15:12 <robru> lp:phablet-tools
+
+ 15:12 <robru> - drastic overhaul of citrain tool to allow installing deps from overlay & archive if silos explicitly require it, but otherwise ignoring updates from those places.
+
+ 15:12 <robru> lp:canonical-mojo-specs
+
+ 15:12 <robru> - change jenkins/0 unit ephemeral disk from 10gb to 30gb so the next deploy won't have so many disk issues constantly
+
+ 15:12 <robru> (done)
+
+ 15:15 <doko> - xenial opening activities
+
+ 15:15 <doko> - got Python 3.5 as the default
+
+ 15:15 <doko> - giflib5 transition
+
+ 15:15 <doko> - openjdk-7 review and uploads
+
+ 15:15 <doko> - tracking, forwarding, fixing binutils issues
+
+ 15:15 <doko> - xenial development announce mail
+
+ 15:15 <doko> - some work on outstanding SRUs
+
+ 15:15 <doko> - first merges for xenial
+
+ 15:15 <doko> - trying to point out some work needing transitions on +1-maintenance
+
+ 15:15 <doko> (done)
+
+ 15:15 <slangasek> chiluk: anything you want to report on?
+
+ 15:16 <chiluk> just wanted to announce my ucd application
+
+ 15:16 <chiluk> https://wiki.ubuntu.com/chiluk
+
+ 15:16 <slangasek> \o/
+
+ 15:16 <cyphermox> cool.
+
+ 15:16 <chiluk> I'd appreciate any and all comments/ support
+
+ 15:17 <tdaitx> nice =)
+
+ 15:17 <chiluk> also I'm still working on the trusty backport for https://bugs.launchpad.net/ubuntu/+source/coreutils/+bug/1432871
+
+ 15:17 <ubottu> Launchpad bug 1432871 in coreutils (Ubuntu Vivid) "`df` shows bind mounts instead of real mounts." [Undecided,In progress]
+
+ 15:17 <chiluk> Hopefully I"ll have that completed today.  Vivid and wily seem to not have issue.
+
+ 15:18 <chiluk> thanks slangasek
+
+ 15:18 <chiluk> done
+
+ 15:18 <slangasek> great
+
+ 15:18 <slangasek> [TOPIC] Sprint, UOS planning
+
+ 15:19 <slangasek> UOS and the sprint, both coming up next week
+
+ 15:19 <slangasek> if there's anything you expect to be talking to other people about at either event next week, please make sure you get it submitted to the corresponding schedule
+
+ 15:20 <slangasek> e.g. http://summit.ubuntu.com/uos-1511/create_meeting/ or just create and target a blueprint in launchpad
+
+ 15:21 <slangasek> and for the sprint schedule, https://docs.google.com/document/d/1rTTErfbJmBWM91uUvs0dmILcJujxskTf_ULSoGpxkYo/edit
+
+ 15:22 <slangasek> agenda, rather
+
+ 15:22 <slangasek> there is actually a schedule as well; meetings are being scheduled on the Client Track calendar
+
+ 15:22 <chiluk> slangasek can you expound on the maas 1.8 discussions?  Is it just SRU issues?
+
+ 15:22 <slangasek> if anyone doesn't have access to that let me know
+
+ 15:22 <caribou> cyphermox: can we spare some time to look over BUG #1491894
+
+ 15:22 <ubottu> bug 1491894 in grub2 (Ubuntu Trusty) "lucid to precise to trusty upgrade may leave system unbootable" [High,In progress] https://launchpad.net/bugs/1491894
+
+ 15:22 <cyphermox> caribou: yep
+
+ 15:23 <caribou> cyphermox: I'll add it to the schedule just to remember
+
+ 15:23 <cyphermox> cool.
+
+ 15:24 <slangasek> chiluk: just about the fact that we don't actually have an exception on the books for maas yet for SRUs; infinity let the 1.7 version through provisionally, and the plan was to revisit that for the next one and see how it had gone, but infinity is on vacation this week so I got drawn into it - it'll have to wait for infinity to come back with his context
+
+ 15:24 <chiluk> I figured as much
+
+ 15:25 <chiluk> fyi I'm a big fan of 1.8 over 1.7...
+
+ 15:25 <chiluk> but the process needs to be followed.
+
+ 15:25 <slangasek> yep :)
+
+ 15:26 <cyphermox> caribou: you adding our agenda item or should I do it?
+
+ 15:26 <caribou> cyphermox: go ahead, I don't have edit rights
+
+ 15:26 <cyphermox> ok
+
+ 15:28 <slangasek> [TOPIC] AOB
+
+ 15:28 <slangasek> anything else?
+
+ 15:28 <caribou> yes, what is the official support status of Wubi on Trusty ?
+
+ 15:28 <bdmurray> o/
+
+ 15:28 <caribou> can we still propose SRUs for it ?
+
+ 15:28 <barry> slangasek: do you know if we're going to have desktop representation at the sprint?
+
+ 15:29 <slangasek> caribou: as far as I recall, wubi was supported in trusty only to the extent that it was needed for the autorun.exe
+
+ 15:29 <slangasek> barry: no one coming to the sprint, no
+
+ 15:29 <caribou> slangasek: ok
+
+ 15:29 <barry> slangasek: ok
+
+ 15:29 <slangasek> bdmurray: ?
+
+ 15:29 <bdmurray> I could use help verifying bug 1506169 as its hardware specific. Or pitti if you know some way to fake the hardware...
+
+ 15:29 <ubottu> bug 1506169 in software-properties (Ubuntu Wily) "if linux metapackage is installed software properties will uninstall it" [High,Fix committed] https://launchpad.net/bugs/1506169
+
+ 15:29 <pitti> desktop just had a sprint in London; indeed a bit sad that we are now so separated :/
+
+ 15:30 <barry> pitti: yeah, and we do need input from desktop re: python3-only efforts
+
+ 15:30 <pitti> bdmurray: if you run software-properties-gtk under /usr/share/ubuntu-drivers-common/fake-devices-wrapper you should have an nvidia and an amd card, and a broadcom wifi
+
+ 15:30 <pitti> bdmurray: but that only affects the one program you run under it, not a whole dist-upgrade
+
+ 15:31 <pitti> but in fact it seems that ths should suffice for this bug?
+
+ 15:31 <bdmurray> pitti: yes it should, thanks!
+
+ 15:31 <pitti> barry: the wrapper script quite short, you can of course  kick out the aticard and bcmwifi bits
+
+ 15:32 <barry> bdmurray ^^ :)
+
+ 15:33 <pitti> err, thanks barry :)
+
+ 15:33 <slangasek> (at least that tab complete was alphabetical ;)
+
+ 15:34 <pitti> slangasek: it's not; it's "who spoke last"
+
+ 15:34 <slangasek> pitti: I know
+
+ 15:34 <pitti> which DTRT in most cases, but if someone else speask in between it breaks muscle memory :)
+
+ 15:34 <slangasek> ok, anything else?
+
+ 15:36 <pitti> we need to practice saying "howdy y'all" again!
+
+ 15:36 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

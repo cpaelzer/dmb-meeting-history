@@ -1,0 +1,333 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by waveform, 20 Jul at 15:07 &mdash; 15:54 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-07-20-15.07.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by waveform at 15:07.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-20-jul-2023/37111/10   (waveform, 15:07)
+
+=== Release incoming bugs ===
+
+Discussion started by waveform at 15:16.
+
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (waveform, 15:16)
+ * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs   (waveform, 15:22)
+
+=== Team proposed-migration report ===
+
+Discussion started by waveform at 15:29.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (waveform, 15:29)
+
+=== AOB ===
+
+Discussion started by waveform at 15:49.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (54)
+ * waveform (36)
+ * slyon (13)
+ * schopin (7)
+ * bdmurray (6)
+ * ginggs (5)
+ * bdrung (3)
+ * zhsj (3)
+ * pushkarnk (3)
+ * meetingology (2)
+ * adrien (2)
+ * liushuyu (2)
+ * dbungert (1)
+
+
+
+== Full log ==
+
+
+ 15:07 <waveform> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:07 <meetingology> Meeting started at 15:07:09 UTC.  The chair is waveform.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:07 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:07 <waveform> #topic Lightning rounds
+
+ 15:07 <waveform> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-20-jul-2023/37111/10
+
+ 15:07 <waveform> we'll have the usual wait for everyone to read status...
+
+ 15:08 <slyon> schopin: did you share your "Rust code in main" docs somewhere already (besides the status report)?
+
+ 15:10 <schopin> slyon: not yet, no. Haven't found the time :)
+
+ 15:11 <schopin> I guess I'll just shoot an email to ubuntu-devel@ with a link :)
+
+ 15:11 <bdmurray> bdrung: How is the bugpattern work going?
+
+ 15:11 <slyon> schopin: OK. I think it might make sense to somehow integrate it into the MIR README.md in the relevant (Rust) section: https://github.com/canonical/ubuntu-mir (through a PR)
+
+ 15:12 <bdrung> bdmurray, i wrote 3 working bug pattern. Two for ancient bugs. One bug pattern should be added since it can happen in the future. I am waiting for the git transition to submit it.
+
+ 15:14 <schopin> slyon: I'm not so sure. The way I see that repo its contents are meant to be fairly stable (and thus should evolve slowly), whereas that doc needs to be updated to reflect technical details that might change fairly quickly.
+
+ 15:15 <waveform> okay, enough reading time for everyone?
+
+ 15:15 <slyon> Sure. I didn't mean to integrate the contents, but rather a link to that wiki page, for reference.
+
+ 15:15 <schopin> Oh. Right. Yeah that makes sense :)
+
+ 15:16 <waveform> speak now, or it's time for incoming bugs!
+
+ 15:16 <waveform> okay...
+
+ 15:16 <waveform> #topic Release incoming bugs
+
+ 15:16 <waveform> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 15:17 <waveform> a few for foundations today, starting with LP: #2028213
+
+ 15:17 <vorlon> yes take it
+
+ 15:17 <vorlon> mwhudson is already working on it, I think
+
+ 15:17 <waveform> okay
+
+ 15:17 <waveform> next up, LP: #2026637
+
+ 15:18 <vorlon> eh
+
+ 15:19 <vorlon> I'm not sure there is any work to be done in the release-upgrader (this is an upgrade within the mantic series with apt) but it makes sense for us to take the bug and follow through
+
+ 15:19 <waveform> ok
+
+ 15:20 <waveform> next, LP: #2026826
+
+ 15:20 <slyon> ^ that's resolved in -proposed
+
+ 15:21 <waveform> ok, leaving the tag for now
+
+ 15:21 <waveform> next, LP: #2028054
+
+ 15:21 <slyon> ^ that will (probably) be resolved by the desktop team demoting the whole printing stack
+
+ 15:21 <slyon> (it's moving into a snap)
+
+ 15:21 <slyon> So probably nothing to do for us and we can drop the tag
+
+ 15:21 <waveform> ok
+
+ 15:22 <waveform> finally, LP: #2028079
+
+ 15:22 <vorlon> (why was that on our queue at all?)
+
+ 15:22 <vorlon> needs to install printing snaps> yes please take it
+
+ 15:22 <waveform> ok
+
+ 15:22 <vorlon> I'm not sure if we've previously done that in the release upgrader vs a transitional package?  but yes it's critical to get right on upgrade :)
+
+ 15:22 <waveform> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ll-incoming-bug-tasks.html#foundations-bugs
+
+ 15:23 <slyon> vorlon: the python-rlpycairo MIR was on our queue, because it's a python-reportlab dependency, which we own
+
+ 15:23 <vorlon> slyon: got it
+
+ 15:23 <waveform> only one in lunar, LP: #2027847
+
+ 15:24 <bdmurray> that username
+
+ 15:24 <adrien> I had to check it wasn't a new account (since 2005!)
+
+ 15:25 <vorlon> I disagree with the proposed action but it's appropriate for us to take
+
+ 15:25 <vorlon> and follow through on
+
+ 15:25 <dbungert> For new installs I believe we have this solved, in terms of allocating more space
+
+ 15:25 <vorlon> I think it's a wontfix for u-r-u
+
+ 15:25 <vorlon> because they did NOT run out of space in the middle of a release upgrade
+
+ 15:25 <vorlon> so preventing them from upgrading would not have been an improvement
+
+ 15:26 <adrien> should we switch compression based on hints such as available space?
+
+ 15:27 <vorlon> no, but the user can do so
+
+ 15:27 <vorlon> but also, precompressed firmware and kernel modules!
+
+ 15:29 <waveform> okay, nothing in jammy of focal for us this week
+
+ 15:29 <waveform> #topic Team proposed-migration report
+
+ 15:29 <waveform> over to vorlon?
+
+ 15:29 <waveform> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:30 <vorlon> python3-defaults has just been accepted \o/
+
+ 15:30 <vorlon> setuptools, I guess these were divvied up last week
+
+ 15:30 <vorlon> there was a question from zhsj about waiting for the maintainer's fix to get through NEW, but the intent is to get these packages moved through -proposed weekly
+
+ 15:31 <vorlon> thoughts here?  IMHO we should carry a delta on those packages as necessary in the short term to unblock setuptools
+
+ 15:32 <slyon> I agree. Especially for small fixes like those.
+
+ 15:32 <slyon> Once the fix landed in Debian we can sync it back
+
+ 15:32 <ginggs> agree, fix in ubuntu first
+
+ 15:33 <waveform> okay, just checking the logs but so far it looks like all setuptools related were given out last week
+
+ 15:33 <vorlon> ok, then folks with assignments from last week related to setuptools should follow through and not wait on Debian NEW (cc: zhsj)
+
+ 15:33 <schopin> I tend to disagree, up 'til those packages are the remaining blockers. FTR that package has cleared NEW (including in Ubuntu)
+
+ 15:33 <vorlon> do we need to re-state the setuptools assignments or does everyone know them?
+
+ 15:33 <zhsj> ack (though the NEW has been accepted)
+
+ 15:34 <vorlon> ok - regardless, the expectation is that these get resolved before next Thursday
+
+ 15:34 <pushkarnk> vorlon: ack
+
+ 15:34 <vorlon> if you're confident that waiting for the Debian maintainer achieves this, so be it
+
+ 15:35 <vorlon> then it looks like we only made it halfway through the pillow revdeps last week
+
+ 15:36 <vorlon> so I'm going to go down the line and assigning one to everybody
+
+ 15:36 <vorlon> (in addition to any carry-overs)
+
+ 15:36 <vorlon> pillow vs gavodachs: adrien
+
+ 15:36 <vorlon> pillow vs imgp: bdrung
+
+ 15:37 <vorlon> pillow vs lazygal: bdmurray
+
+ 15:37 <vorlon> pillow vs pilkit: dbungert
+
+ 15:37 <vorlon> pillow vs pycoast: danilogondolfo
+
+ 15:37 <vorlon> pillow vs python-wordcloud: waveform
+
+ 15:37 <vorlon> tpm2-tss: dviererbe
+
+ 15:38 <waveform> ack
+
+ 15:38 <vorlon> libwww-perl: me (circling back around on the MIR)
+
+ 15:38 <bdmurray> I'd be offended but that assignment seems random
+
+ 15:38 <vorlon> heh
+
+ 15:38 <vorlon> germinate vs livecd-rootfs: ginggs
+
+ 15:38 <ginggs> ack
+
+ 15:39 <vorlon> adduser migrated
+
+ 15:39 <vorlon> apt: juliank (:P)
+
+ 15:40 <vorlon> hmm maybe dgit regressed, doing a baseline retest
+
+ 15:40 <ginggs> dgit has plenty of autopkgtests, so probably infra
+
+ 15:40 <vorlon> ah
+
+ 15:40 <ginggs> so the baseline is likely to fail
+
+ 15:40 <vorlon> it was amd64 though
+
+ 15:40 <ginggs> so all good :)
+
+ 15:40 <vorlon> well, anyway
+
+ 15:41 <vorlon> fakeroot (FTBFS on armhf): slyon
+
+ 15:41 <slyon> ack
+
+ 15:41 <vorlon> pcre2: mateus-morais
+
+ 15:43 <vorlon> dbus: ogayot
+
+ 15:44 <vorlon> glib2.0 has other blockers but let's let the Desktop Team drive those
+
+ 15:45 <vorlon> casper vs systemd: pushkarnk
+
+ 15:45 <pushkarnk> ack
+
+ 15:45 <vorlon> initramfs-tools vs systemd: schopin
+
+ 15:45 <schopin> ack
+
+ 15:46 <vorlon> ayatana-indicator-session vs systemd: liushuyu
+
+ 15:46 <liushuyu> vorlon: okay
+
+ 15:46 <vorlon> and dbus vs systemd: zhsj
+
+ 15:46 <vorlon> and that'll be enough for this week
+
+ 15:46 <zhsj> ack
+
+ 15:46 <bdrung> initramfs-tools vs systemd is interesting: qemu-system-x86_64: ../../util/cacheflush.c:212: init_cache_info: Assertion `(isize & (isize - 1)) == 0' failed.
+
+ 15:47 <slyon> pushkarnk, schopin, liushuyu, zhsj: I triggered plenty of systemd tests earlier today. So check the queues first ;-)
+
+ 15:47 <vorlon> everyone else who isn't at the meeting right now lucks out and doesn't get one from me this week
+
+ 15:47 <schopin> slyon: always :)
+
+ 15:47 <liushuyu> slyon: understood
+
+ 15:47 <pushkarnk> slyon: sure
+
+ 15:48 <zhsj> yeah, already see that dbus vs systemd is infra issue :P
+
+ 15:48 <vorlon> bdrung: back to you
+
+ 15:49 <waveform> or me even :)
+
+ 15:49 <waveform> #topic AOB
+
+ 15:49 <slyon> I'll be out next Thu+Fri
+
+ 15:50 <waveform> I'm not going to be around for much of tomorrow afternoon (medical jabby things), but I'll make it up in the evening
+
+ 15:51 <waveform> any other notices?
+
+ 15:51 <waveform> going once...
+
+ 15:51 <waveform> going twice...
+
+ 15:51 <bdmurray> Kinetic
+
+ 15:51 <vorlon> I'm out next week after Monday
+
+ 15:51 <bdmurray> It'd EoL day
+
+ 15:52 <bdrung> so no kinetic SRUs any more!
+
+ 15:52 <waveform> \o/
+
+ 15:52 <bdmurray> no kinetic autopkgtests!
+
+ 15:54 <waveform> okay, going thrice for any more notices?
+
+ 15:54 <waveform> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

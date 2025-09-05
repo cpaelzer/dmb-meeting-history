@@ -1,0 +1,211 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 31 Mar at 16:36 &mdash; 17:03 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-03-31-16.36.log.html]]
+
+
+
+== Meeting summary ==
+
+''LINK:'' https://wiki.ubuntu.com/SecurityTeam/Meeting 
+=== Weekly stand-up report ===
+The discussion about "Weekly stand-up report" started at 16:37.
+
+
+=== Highlighted packages ===
+The discussion about "Highlighted packages" started at 16:59.
+
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ibm-3270.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/lxsession.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/davfs2.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/claws-mail.html 
+  * ''LINK:'' http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-will-paginate.html 
+
+=== Miscellaneous and Questions ===
+The discussion about "Miscellaneous and Questions" started at 17:00.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jdstrand (32)
+ * tyhicks (9)
+ * mdeslaur (8)
+ * sbeattie (8)
+ * sarnold (6)
+ * jjohansen (5)
+ * chrisccoulson (4)
+ * meetingology (3)
+ * cprofitt (1)
+
+
+
+== Full Log ==
+
+
+ 16:36 <jdstrand> #startmeeting
+
+ 16:36 <meetingology> Meeting started Mon Mar 31 16:36:54 2014 UTC.  The chair is jdstrand. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:36 <meetingology> 
+
+ 16:36 <meetingology> Available commands: action commands idea info link nick
+
+ 16:36 <jdstrand> The meeting agenda can be found at:
+
+ 16:36 <jdstrand> [LINK] https://wiki.ubuntu.com/SecurityTeam/Meeting
+
+ 16:37 <jdstrand> [TOPIC] Weekly stand-up report
+
+ 16:37 <jdstrand> I'll go first
+
+ 16:37 <jdstrand> last week was pretty busy helping get oxide in the archive (it is), it's MIR done (it is accepted) and landed on touch/desktop (in progress (others are handling this)).
+
+ 16:37 <jdstrand> Also did a lot of testing surrounding !AppArmor signals and ptrace FFe. Testing shows it is in really good shape.
+
+ 16:37 <jdstrand> Took a hard look at golang and commented in MIR to help remove potential impasse
+
+ 16:38 <jdstrand> for this week, I plan to help jjohansen and tyhicks land !AppArmor signals and ptrace FFe
+
+ 16:38 <jdstrand> the kernel bits are all in flight and I don't expect any issues there
+
+ 16:38 * mdeslaur chuckles at wiki "!AppArmor" syntax :)
+
+ 16:38 <jdstrand> heh
+
+ 16:38 <jdstrand> sorry
+
+ 16:39 <jdstrand> there is also an openjdk-6 upstream regression that is prepared and gotten extensive community testing that I will be pushing out
+
+ 16:39 <cprofitt> no, problem I was able to follow it
+
+ 16:39 <jdstrand> I still have embargoed issues I am working on
+
+ 16:40 <jdstrand> and updates as I have time
+
+ 16:40 <jdstrand> mdeslaur: you're up
+
+ 16:41 <mdeslaur> I'm in the happy place this week
+
+ 16:41 <mdeslaur> I am patch piloting on friday
+
+ 16:41 <mdeslaur> I am currently working on curl updates
+
+ 16:41 <mdeslaur> and am continuing going down the list
+
+ 16:41 <mdeslaur> that's pretty much it from me
+
+ 16:41 <mdeslaur> sbeattie: you're up
+
+ 16:41 * sbeattie is on apparmor again this week
+
+ 16:42 <sbeattie> Pretty much focused on testing & reviewing in support of landing the ptrace/signal mediation FFe for apparmor
+
+ 16:42 <jdstrand> sbeattie: what is left with the testing beyond what jjohansen implemented?
+
+ 16:43 <sbeattie> signal tests need expansion
+
+ 16:43 <jjohansen> ptrace tests could also use a pass through to make sure a combination wasn't missed
+
+ 16:43 <sbeattie> Yeah, was just going to say I wanted to review the ptrace tests for completeness
+
+ 16:44 <jdstrand> since the kernel seems to be under control for landing, I wondered if perhaps sbeattie would have time to help tyhicks with the distro policy verification/changes
+
+ 16:44 <jjohansen> and testing on the parser language side needs to be worked on as well
+
+ 16:44 <jdstrand> but I don't know what is left with the testing improvements, so I'll just put that out there and leave it at that
+
+ 16:45 <tyhicks> FWIW, I think there is quite a bit of value in expanding the signals testing and reviewing the ptrace test
+
+ 16:45 <sbeattie> jdstrand: eh, I can probably put some time into it as well.
+
+ 16:46 <sbeattie> tyhicks: okay
+
+ 16:46 <sbeattie> anyway, that's the plan for me this week
+
+ 16:46 <sbeattie> tyhicks: you're up
+
+ 16:46 <jdstrand> again, I tossed it out there as a conversation point-- feel free to prioritize on whateve makes sense to land this in a well-tested manner
+
+ 16:47 <tyhicks> my focus will be on landing the apparmor userspace ffe
+
+ 16:47 <mdeslaur> ok, well, sbeattie and tyhicks please determine amongst yourselves the best course of action
+
+ 16:47 * tyhicks nods
+
+ 16:47 <tyhicks> I'll be testing our existing, shipped profiles
+
+ 16:48 <tyhicks> and making adjustments, as needed
+
+ 16:48 <tyhicks> then I'll look into adding support to aa.py for file, pivot_root, signal, and ptrace rules
+
+ 16:48 <tyhicks> and that'll be followed up with the upload
+
+ 16:48 <tyhicks> that's it for me
+
+ 16:48 <tyhicks> jjohansen: you're up
+
+ 16:50 <jjohansen> I'm working on landing the apparmor FFe this week too. Mostly working with testing and what ever is needed to support tyhicks, sbeattie, and jdstrand.
+
+ 16:51 <jjohansen> If there is time the backport patches need to be updated so that the kernel sync that is part of the FFe can be done for touch. So that post FFe the work need to update touch can begin
+
+ 16:52 <jjohansen> that is it for me sarnold your up
+
+ 16:53 <sarnold> i'm on triage this week
+
+ 16:54 <sarnold> I'm finishing the juju-core MIR today if it goes as expected
+
+ 16:54 <sarnold> that leaves the glusterfs MIR this week
+
+ 16:54 <sarnold> I suspect this week I'll also upgrade my laptop to trusty to add my own dogfooding before release
+
+ 16:55 <sarnold> thanks to those who went before me and already filed a bunch of bugs :)
+
+ 16:55 <sarnold> I think that's it for me, chrisccoulson?
+
+ 16:56 <chrisccoulson> this week, i'm finishing off https://code.launchpad.net/~chrisccoulson/oxide/window-opening, which adds support for creating new webviews with window.open()
+
+ 16:57 <chrisccoulson> i'm also going to fix up the remaining issues on https://code.launchpad.net/~zaspire/oxide/lp_1259219/+merge/212330 (needed for webapps), as maxim is away this week and there's still some work to do on that
+
+ 16:57 <chrisccoulson> and then more code reviews (i got some of those done last week)
+
+ 16:57 <chrisccoulson> i think that's me done
+
+ 16:59 <jdstrand> [TOPIC] Highlighted packages
+
+ 16:59 <jdstrand> The Ubuntu Security team will highlight some community-supported packages that might be good candidates for updating and or triaging. If you would like to help Ubuntu and not sure where to start, this is a great way to do so.
+
+ 16:59 <jdstrand> See https://wiki.ubuntu.com/SecurityTeam/UpdateProcedures for details and if you have any questions, feel free to ask in #ubuntu-security. To find out other ways of helping out, please see https://wiki.ubuntu.com/SecurityTeam/GettingInvolved.
+
+ 17:00 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ibm-3270.html
+
+ 17:00 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/lxsession.html
+
+ 17:00 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/davfs2.html
+
+ 17:00 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/claws-mail.html
+
+ 17:00 <jdstrand> http://people.canonical.com/~ubuntu-security/cve/pkg/ruby-will-paginate.html
+
+ 17:00 <jdstrand> [TOPIC] Miscellaneous and Questions
+
+ 17:00 <jdstrand> Does anyone have any other questions or items to discuss?
+
+ 17:03 <jdstrand> mdeslaur, sbeattie, tyhicks, jjohansen, sarnold, ChrisCoulson: thanks!
+
+ 17:03 <jdstrand> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

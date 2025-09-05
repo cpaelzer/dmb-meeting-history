@@ -1,0 +1,290 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 19 Dec at 16:01 &mdash; 16:27 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2019/ubuntu-meeting.2019-12-19-16.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 16:01.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 16:08.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html 
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html 
+
+=== AOB ===
+The discussion about "AOB" started at 16:25.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (51)
+ * rbalint (14)
+ * ubottu (12)
+ * juliank (10)
+ * doko (8)
+ * waveform (8)
+ * xnox (6)
+ * cyphermox (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 16:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started Thu Dec 19 16:01:24 2019 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 16:01 <meetingology> 
+
+ 16:01 <meetingology> Available commands: action commands idea info link nick
+
+ 16:01 <bdmurray> #topic Lightning rounds
+
+ 16:01 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity cyphermox mwhudson juliank waveform)
+
+ 16:02 <bdmurray> waveform vorlon xnox mwhudson infinity cyphermox rbalint sil2100 juliank doko bdmurray tdaitx
+
+ 16:02 <bdmurray> waveform: !
+
+ 16:02 <waveform> * Bionic Pi4 SRUs:
+
+ 16:02 <waveform> * flash-kernel, LP: #1847587
+
+ 16:02 <waveform> * u-boot, LP: #1846329
+
+ 16:02 <waveform> * linux-firmware-raspi2, LP: #1847163
+
+ 16:02 <waveform> * Test packages available in https://launchpad.net/~waveform/+archive/ubuntu/pi4/+packages (now with kernel too); still a couple of tweaks to go
+
+ 16:02 <waveform> * Investigating bluetooth issue on Pi3+ for Core18 (dual HCI adapters appearing; erroneous one for SDIO + apparmor profile issue)
+
+ 16:02 <ubottu> Launchpad bug 1847587 in flash-kernel (Ubuntu Bionic) "Add entries for Pi 4" [Undecided,New] https://launchpad.net/bugs/1847587
+
+ 16:02 <ubottu> Launchpad bug 1846329 in u-boot (Ubuntu Bionic) "[FFe] 2019.07 to support Pi4 boot" [Undecided,New] https://launchpad.net/bugs/1846329
+
+ 16:02 <waveform> * Writing tests for pictl configuration tool
+
+ 16:02 <ubottu> Launchpad bug 1847163 in linux-firmware-raspi2 (Ubuntu Bionic) "[FFe] Firmware bump for Pi 4 boot support" [Undecided,Confirmed] https://launchpad.net/bugs/1847163
+
+ 16:02 <waveform> (done)
+
+ 16:02 <bdmurray> vorlon is out
+
+ 16:02 <bdmurray> xnox:
+
+ 16:03 <xnox> * uc20 work - builds/installs/reboots/snaps usable
+
+ 16:03 <xnox> * oem work discussion
+
+ 16:03 <xnox> * troubleshooting subiquity failures
+
+ 16:03 <xnox> done
+
+ 16:03 <bdmurray> mwhudson is in bed
+
+ 16:03 <bdmurray> infinity is out
+
+ 16:03 <bdmurray> cyphermox:
+
+ 16:03 <cyphermox> okay then
+
+ 16:04 <cyphermox> handing off stuff
+
+ 16:04 <cyphermox> finishing prep for NM plugin -- netplan PR is ready (in review)
+
+ 16:04 <cyphermox> testing SRU for unicode-data: looks regressy, I'm not sure (we should have more eyes on it)
+
+ 16:04 <cyphermox> (done)
+
+ 16:04 <rbalint> SRUs (thanks a lot to sil2100 and bdmurray for the many reviews and releases!):
+
+ 16:04 <bdmurray> cyphermox: what type of eyes?
+
+ 16:04 <rbalint> - landed and verified binutils and gzip LP: #1843479
+
+ 16:04 <ubottu> Launchpad bug 1843479 in binutils "gzip in Ubuntu Eoan results in Exec format error on WSL1" [Medium,Confirmed] https://launchpad.net/bugs/1843479
+
+ 16:05 <rbalint> - verified pam, base-files, ubuntu-release-upgrader, update-notifier, update-motd, wslu, landscape, landscape-client
+
+ 16:05 <rbalint> - consulted people around to get gce-compute-image-packages marked as verified and released
+
+ 16:05 <rbalint> * systemd
+
+ 16:05 <rbalint> - landed 244 in Focal
+
+ 16:05 <rbalint> - 244.1 is already in focal-proposed, set for landing in next days
+
+ 16:05 <rbalint> * uploads via Debian: waylandpp
+
+ 16:05 <rbalint> * poking packages in focal-proposed to migrate
+
+ 16:05 <rbalint> (done)
+
+ 16:05 <bdmurray> sil2100 said he might not make it and he isn't in the channel
+
+ 16:05 <bdmurray> juliank:
+
+ 16:05 <juliank> * Fix llvm-9-tools Breaks/Replaces libclang-common-9-dev (<< 1:9.0.1~+rc2) (debian bug 946473)
+
+ 16:05 <ubottu> Debian bug 946473 in llvm-9-tools "llvm-9-tools: missing Breaks+Replaces: libclang-common-9-dev (<< 1:9.0.1~+rc2)" [Serious,Fixed] http://bugs.debian.org/946473
+
+ 16:05 <juliank> * uploaded ubiquity 20.04.4
+
+ 16:05 <juliank> * fixed my poppler messups
+
+ 16:05 <juliank> * series of python-apt debugging and bug fixes to get u-u to build again
+
+ 16:05 <juliank> * reviewed old bugs / trello cards
+
+ 16:05 <juliank> * reviewed mwhudon's livecd-rootfs merge proposals
+
+ 16:05 <juliank> * played a small bit with zfs
+
+ 16:06 <juliank> * cleaned up my lxd container setup
+
+ 16:06 <juliank> (done)
+
+ 16:06 <bdmurray> doko:
+
+ 16:07 <bdmurray> I'll go ahead and go
+
+ 16:07 <bdmurray> subscribed kernel-packages to l-r-m packages
+
+ 16:07 <bdmurray> emailed ubuntu-server mailing list re subiquity and 20.04
+
+ 16:07 <bdmurray> investigation into LP: #1856862, LP: #1848064
+
+ 16:07 <bdmurray> special SRU reviews
+
+ 16:07 <bdmurray> ✔ done
+
+ 16:07 <ubottu> Launchpad bug 1856862 in ubuntu-release-upgrader (Ubuntu) "Upgrade to focal fails with AttributeError: 'NoneType' object has no attribute 'section' in in DistUpgradeCache.py line 942 when default snap packages are not installed" [High,Fix committed] https://launchpad.net/bugs/1856862
+
+ 16:07 <ubottu> Launchpad bug 1848064 in apport (Ubuntu Eoan) "/usr/share/apport/whoopsie-upload-all:PermissionError:/usr/share/apport/whoopsie-upload-all@168:collect_info:process_report" [High,Confirmed] https://launchpad.net/bugs/1848064
+
+ 16:07 <bdmurray> tdaitx is out
+
+ 16:07 <doko> oops
+
+ 16:07 <bdmurray> doko your turn again
+
+ 16:07 <doko> python2 no-change uploads
+
+ 16:08 <doko> and still fighting with a consitent gcc-10 build, to start the test rebuilds
+
+ 16:08 <doko> pythonX.Y releases
+
+ 16:08 <doko> (done)
+
+ 16:08 <bdmurray> #topic Release incoming bugs
+
+ 16:09 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html
+
+ 16:09 <bdmurray> bug 1856862
+
+ 16:09 <ubottu> bug 1856862 in ubuntu-release-upgrader (Ubuntu) "Upgrade to focal fails with AttributeError: 'NoneType' object has no attribute 'section' in in DistUpgradeCache.py line 942 when default snap packages are not installed" [High,Fix committed] https://launchpad.net/bugs/1856862
+
+ 16:09 <bdmurray> oh, he's fixing it too
+
+ 16:09 <bdmurray> I'll card it and review his MP
+
+ 16:10 <bdmurray> bug 1856996
+
+ 16:10 <ubottu> bug 1856996 in ubuntu-release-upgrader (Ubuntu) "default set of snap packages are reinstalled during release upgrade" [High,In progress] https://launchpad.net/bugs/1856996
+
+ 16:10 <bdmurray> I'll also review that and card it
+
+ 16:10 <bdmurray> bug 1856993
+
+ 16:10 <ubottu> bug 1856993 in gcc-9 (Ubuntu) "The focal-proposed gcc-9 version makes pocl build to fail" [Undecided,New] https://launchpad.net/bugs/1856993
+
+ 16:11 <bdmurray> doko: is that worth taking?
+
+ 16:13 <bdmurray> lets come back to that
+
+ 16:13 <doko> bdmurray: I won't have time to work n that until next year
+
+ 16:14 <bdmurray> doko: that's fine but should we card it?
+
+ 16:14 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ee-incoming-bug-tasks.html
+
+ 16:14 <bdmurray> bug 1856045 is new
+
+ 16:14 <ubottu> bug 1856045 in libcap2 (Ubuntu) "capabilities set with setcap are not honoured" [Undecided,New] https://launchpad.net/bugs/1856045
+
+ 16:15 <rbalint> bdmurray, this is ugly and can break many things
+
+ 16:16 <rbalint> i think we should take it, to check what is going on
+
+ 16:16 <bdmurray> okay, let's take it and it to the backlog
+
+ 16:16 <bdmurray> although if somebody wants to confirm the reporter's statement that would be good
+
+ 16:17 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-bb-incoming-bug-tasks.html
+
+ 16:17 <bdmurray> bug 1856560 was brought to us by some bloke who is rather odd
+
+ 16:17 <ubottu> bug 1856560 in util-linux (Ubuntu) "ds-identify - stuck in uninterruptible sleep state" [Undecided,New] https://launchpad.net/bugs/1856560
+
+ 16:18 <xnox> i did comment on it
+
+ 16:18 <bdmurray> xnox: should we wait to hear from them before taking it?
+
+ 16:20 <bdmurray> xnox is asking for a test case and we'll wait on that
+
+ 16:21 <bdmurray> Should we look at proposed migration given how much time we have left at work?
+
+ 16:21 <bdmurray> I'd vote for skipping.
+
+ 16:22 <rbalint> +1 for skipping
+
+ 16:23 <bdmurray> alright skipping that
+
+ 16:25 <bdmurray> #topic AOB
+
+ 16:25 <bdmurray> Anything else?
+
+ 16:26 <juliank> I'm out tomorrow
+
+ 16:26 <doko> me too
+
+ 16:26 <bdmurray> I'm here tomorrow
+
+ 16:26 <bdmurray> Okay, let's wrap it up.
+
+ 16:27 <bdmurray> bye cyphermox!
+
+ 16:27 <rbalint> o/ :-(
+
+ 16:27 <xnox> end of the decade
+
+ 16:27 <bdmurray> 🍺
+
+ 16:27 <doko> no, the decade ends in about a year
+
+ 16:27 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

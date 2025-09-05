@@ -1,0 +1,376 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Main Inclusion Requests status meeting, started by sarnold, 25 Mar at 15:33 &mdash; 16:13 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2025/ubuntu-meeting.2025-03-25-15.33.log.html
+
+
+
+== Meeting summary ==
+
+=== current component mismatches ===
+
+Discussion started by sarnold at 15:33.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (sarnold, 15:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches.svg   (sarnold, 15:33)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg   (sarnold, 15:34)
+
+=== New MIRs ===
+
+Discussion started by sarnold at 15:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir   (sarnold, 15:39)
+
+=== Incomplete bugs / questions ===
+
+Discussion started by sarnold at 15:39.
+
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir   (sarnold, 15:39)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/glycin/+bug/2093182   (sarnold, 15:40)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/glycin/+bug/2093182 is back to desktop but OK'ish  (cpaelzer, 15:40)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/rust-sequoia-sqv/+bug/2089690   (sarnold, 15:41)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libsass-python/+bug/2095581 was waiting on https://bugs.launchpad.net/ubuntu/+source/libsass/+bug/2095582 -- and nico finished that up just before leaving ..  (sarnold, 15:42)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/pulls   (cpaelzer, 15:42)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues   (cpaelzer, 15:42)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libsass-python/+bug/2095581 is fine  (cpaelzer, 15:46)
+ * ''LINK:'' https://bugs.launchpad.net/ubuntu/+source/libsass/+bug/2095582   (cpaelzer, 15:46)
+ * ''LINK:'' https://github.com/canonical/ubuntu-mir/issues/83   (sarnold, 15:52)
+
+=== MIR related Security Review Queue ===
+
+Discussion started by sarnold at 16:03.
+
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (sarnold, 16:03)
+ * ''LINK:'' https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir   (sarnold, 16:03)
+ * ''LINK:'' https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594   (sarnold, 16:03)
+ * ''LINK:'' https://warthogs.atlassian.net/browse/SEC-6022   (sarnold, 16:06)
+
+=== Any other business? ===
+
+Discussion started by sarnold at 16:07.
+
+
+
+
+== People present (lines said) ==
+
+ * cpaelzer (77)
+ * sarnold (57)
+ * jbicha (7)
+ * mylesjp (6)
+ * meetingology (2)
+ * seb128 (2)
+ * slyon (1)
+
+
+
+== Full log ==
+
+
+ 15:33 <sarnold> #startmeeting Weekly Main Inclusion Requests status
+
+ 15:33 <meetingology> Meeting started at 15:33:45 UTC.  The chair is sarnold.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:33 <sarnold> Ping for MIR meeting - didrocks joalif slyon sarnold cpaelzer jamespage pushkarnk ( dviererbe )
+
+ 15:33 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:33 <sarnold> #topic current component mismatches
+
+ 15:33 <sarnold> Mission: Identify required actions and spread the load among the teams
+
+ 15:33 <sarnold> #link https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:33 <sarnold> #link https://people.canonical.com/~ubuntu-archive/component-mismatches.svg
+
+ 15:34 <sarnold> in mismatches, esmtp and xterm both feel familiar, lets skip /.
+
+ 15:34 <sarnold> proposed has some intel driver things
+
+ 15:34 <sarnold> hey slyon
+
+ 15:34 <sarnold> https://people.canonical.com/~ubuntu-archive/component-mismatches-proposed.svg
+
+ 15:34 <cpaelzer> uh, here as well ( a bit) - sorry timezone madness
+
+ 15:34 <cpaelzer> thanks sarnold
+
+ 15:35 <sarnold> daylight stupid time
+
+ 15:35 <slyon> o/ (sorry having a meeting conflict)
+
+ 15:35 <sarnold> libva -> intel-media-driver, from desktop, hopefully jbicha / seb128 can be on top of this
+
+ 15:35 <cpaelzer> libva is an open case, drivfen by desktop
+
+ 15:35 <cpaelzer> so yes, desktop is on this
+
+ 15:36 <seb128> we are actively working on it
+
+ 15:36 <cpaelzer> I wasn't aware of the right side of this tree though
+
+ 15:36 <sarnold> pcs -> ruby-rackup and ruby-rack -> ruby-rack-session are likely on server team, is that one for jchittum?
+
+ 15:36 <cpaelzer> that is for us indeed
+
+ 15:36 <cpaelzer> we looked at it
+
+ 15:37 <cpaelzer> we would either need to move too much into the future (not happeneing so late)
+
+ 15:37 <sarnold> and as usual, the kernel does kernel things, I hope apw and team are on top of the linux-realtime and linux-signed-realtime
+
+ 15:37 <seb128> (https://bugs.launchpad.net/ubuntu/+source/libva/+bug/2104050)
+
+ 15:37 <cpaelzer> or we need to remove what is in proposed
+
+ 15:37 <cpaelzer> the removal is what will happen soon
+
+ 15:37 <sarnold> cpaelzer: ack, thanks
+
+ 15:37 <sarnold> "newer versions require libva2" I thuoght we just put work into libva? heh
+
+ 15:39 <sarnold> well, I think all from this graph is moving
+
+ 15:39 <sarnold> #topic New MIRs
+
+ 15:39 <sarnold> Mission: ensure to assign all incoming reviews for fast processing
+
+ 15:39 <sarnold> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=NEW&field.status%3Alist=CONFIRMED&assignee_option=none&field.assignee=&field.subscriber=ubuntu-mir
+
+ 15:39 <sarnold> empty? or broken? heh
+
+ 15:39 <sarnold> #topic Incomplete bugs / questions
+
+ 15:39 <sarnold> Mission: Identify required actions and spread the load among the teams
+
+ 15:39 <sarnold> #link https://bugs.launchpad.net/ubuntu/?field.searchtext=&orderby=-date_last_updated&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.subscriber=ubuntu-mir
+
+ 15:39 <cpaelzer> empty
+
+ 15:39 <cpaelzer> if not in this phase of the cycle then when could it be empty
+
+ 15:40 <sarnold> https://bugs.launchpad.net/ubuntu/+source/glycin/+bug/2093182
+
+ 15:40 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/glycin/+bug/2093182 is back to desktop but OK'ish
+
+ 15:41 <sarnold> https://bugs.launchpad.net/ubuntu/+source/rust-sequoia-sqv/+bug/2089690
+
+ 15:41 <cpaelzer> all others are older or expires
+
+ 15:41 <sarnold> the recent change is expires, odd, I haven't seen that in ages
+
+ 15:41 <cpaelzer> because we got better and let rarley something expire
+
+ 15:42 <cpaelzer> I think we can go on with the agenda
+
+ 15:42 <cpaelzer> does it work if I paste it ... ?
+
+ 15:42 <sarnold> https://bugs.launchpad.net/ubuntu/+source/libsass-python/+bug/2095581 was waiting on https://bugs.launchpad.net/ubuntu/+source/libsass/+bug/2095582 -- and nico finished that up just before leaving ..
+
+ 15:42 <cpaelzer> #topic Process/Documentation improvements
+
+ 15:42 <cpaelzer> Mission: Review pending process/documentation pull-requests or issues
+
+ 15:42 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/pulls
+
+ 15:42 <cpaelzer> #link https://github.com/canonical/ubuntu-mir/issues
+
+ 15:43 <cpaelzer> and a closing yes to the libsass case, thanks sarnold
+
+ 15:43 <sarnold> oh hah I didn't notice the spelling fix needed for https://github.com/canonical/ubuntu-mir/pull/81
+
+ 15:43 <cpaelzer> od to open an md file on libsass ...
+
+ 15:45 <mylesjp> is there anything else from the openstack side needed for libsass? We're just blocked on Horizon until libsass and python-libsass are promoted.
+
+ 15:45 <sarnold> aye, but I wasn't going to harrass him about that on his final day here, heh
+
+ 15:45 <cpaelzer> makes sense sarnold
+
+ 15:45 <cpaelzer> hi mylesjp, I was just trying to read through to make that decision
+
+ 15:46 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libsass-python/+bug/2095581 is fine
+
+ 15:46 <cpaelzer> https://bugs.launchpad.net/ubuntu/+source/libsass/+bug/2095582
+
+ 15:46 <cpaelzer> is "Security team ACK for promoting libsass to main, with the considerations described in the paragraph above."
+
+ 15:46 <cpaelzer> I need to find what the ask was
+
+ 15:47 <cpaelzer> "In summary, for a package that hasn't been maintained in 2 years it seems to be in pretty good shape and, with the use case intended by openstack, it poses minimal risks. It should be noted that if the libsass API was exposed to untrusted input via custom themes or similar functionality served to users, crashes would be quite easy to occur given the nature of the library. Programs that use this library should take reasonable precautions when
+
+ 15:47 <cpaelzer> using it."
+
+ 15:47 <cpaelzer> mylesjp: is this in the openstack usage parsing only our own, or user controlled input?
+
+ 15:47 <sarnold> aka "don't build the next squarespace with this"
+
+ 15:47 <mylesjp> I believe only our own
+
+ 15:48 <cpaelzer> can you state that on the bug please mylesjp?
+
+ 15:48 <cpaelzer> then I should be able to promote both tomorrow
+
+ 15:48 <mylesjp> Yep I'll confirm that.
+
+ 15:48 <mylesjp> thanks
+
+ 15:48 <cpaelzer> sarnold: thanks for fixing the typo
+
+ 15:48 <cpaelzer> I'm on https://github.com/canonical/ubuntu-mir/pull/81/files now
+
+ 15:48 <cpaelzer> makes sense, merging
+
+ 15:49 <cpaelzer> there also is this : https://github.com/canonical/ubuntu-mir/pull/82
+
+ 15:49 <cpaelzer> IMHO this makes sense
+
+ 15:49 <cpaelzer> as Simon said, the rules were good on this
+
+ 15:49 <cpaelzer> but the TODO forces them to state which way they think they want to go
+
+ 15:49 <cpaelzer> any objection to it?
+
+ 15:50 <sarnold> none here
+
+ 15:50 <cpaelzer> I only think this should be TODO, TODO-A, TODO-B
+
+ 15:50 <cpaelzer> not TODO-A, TODO-A, TODO-B
+
+ 15:52 <cpaelzer> added a review
+
+ 15:52 <cpaelzer> and a proposed change
+
+ 15:52 <cpaelzer> I think we are good
+
+ 15:52 <cpaelzer> all else is in draft
+
+ 15:52 <cpaelzer> time to jump to the security queue?
+
+ 15:52 <sarnold> https://github.com/canonical/ubuntu-mir/issues/83
+
+ 15:53 <sarnold> this is a bug report
+
+ 15:53 <cpaelzer> oh
+
+ 15:53 <cpaelzer> how could I miss that
+
+ 15:54 <cpaelzer> This needs someone to dive into it
+
+ 15:54 <cpaelzer> i'd love to but I can't right now :-/
+
+ 15:55 <cpaelzer> open for debug-volunteers
+
+ 15:55 <cpaelzer> poor launchpad is so hammered with things, I can't even get the source to have a look
+
+ 15:56 <sarnold> poor little guy :(
+
+ 15:59 <cpaelzer> I gave jbicha an acknowledgement so he does not think we ignore him
+
+ 15:59 <cpaelzer> but I can't see an immediate "you debug this" I could assign it to
+
+ 15:59 <cpaelzer> :-/
+
+ 15:59 <cpaelzer> let us go on with the agenda for today
+
+ 15:59 <jbicha> I'm not expecting immediate action on that bug at all
+
+ 15:59 <cpaelzer> bu tyou'd deserve it *sigh*
+
+ 16:00 <cpaelzer> but we can't as of right now AFAICS
+
+ 16:00 <jbicha> we can add it to the quirky(??) todo list :)
+
+ 16:00 <cpaelzer> sarnold: time is up and also time for security queue
+
+ 16:00 <sarnold> heh, yeah :/
+
+ 16:01 <sarnold> rodrigo spotted some stale crates in the rust-hwlib
+
+ 16:01 <sarnold> I know there is some progress on other MIRs recently that is stuck on me to provide feedback before we post
+
+ 16:01 <sarnold> alas it's been busy lately
+
+ 16:03 <sarnold> #topic MIR related Security Review Queue
+
+ 16:03 <sarnold> Mission: Check on progress, do deadlines seem doable?
+
+ 16:03 <sarnold> Some clients can only work with one, some with the other escaping - the URLs point to the same place.
+
+ 16:03 <sarnold> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=%5BMIR%5D&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 16:03 <sarnold> #link https://bugs.launchpad.net/~ubuntu-security/+bugs?field.searchtext=[MIR]&assignee_option=choose&field.assignee=ubuntu-security&field.bug_reporter=&field.bug_commenter=&field.subscriber=ubuntu-mir
+
+ 16:03 <sarnold> Internal link
+
+ 16:03 <sarnold> - ensure your teams items are prioritized among each other as you'd expect
+
+ 16:03 <sarnold> - ensure community requests do not get stomped by teams calling for favors too much
+
+ 16:03 <sarnold> #link https://warthogs.atlassian.net/jira/software/c/projects/SEC/boards/594
+
+ 16:03 <sarnold> the jira board is pleasingly well sorted
+
+ 16:04 <sarnold> oh looks like we got nghttp3 on our list
+
+ 16:05 <sarnold> heh lp-to-jira is taking an eternity
+
+ 16:05 <cpaelzer> yep
+
+ 16:05 <cpaelzer> there always is one more
+
+ 16:06 <sarnold> I wish I felt better about the path forward for http3 support in openssl3 vs curl (3?) vs all the servers ..
+
+ 16:06 <sarnold> https://warthogs.atlassian.net/browse/SEC-6022
+
+ 16:07 <sarnold> #topic Any other business?
+
+ 16:07 <mylesjp> all good on my end
+
+ 16:07 <jbicha> cpaelzer: could you review bug 2104050 to confirm that it is good to go, pending FFe approval then AA promotion?
+
+ 16:07 <jbicha> I meant bug 2097800
+
+ 16:08 <cpaelzer> mylesjp: please make sure subscriptions by the team are in place
+
+ 16:08 <mylesjp> will do, thanks
+
+ 16:08 <cpaelzer> that is the most common case something otherwise ready can#t be promoted
+
+ 16:08 <cpaelzer> I'll check tomorrow and then do it
+
+ 16:08 <cpaelzer> jbicha: looking ...
+
+ 16:09 <jbicha> cpaelzer: you can check after the meeting
+
+ 16:09 <cpaelzer> there is no time other than minimal sleep between now and my thu morning
+
+ 16:10 <cpaelzer> and thu morning was already meant for 360, hiring, spec and copydocs for the release
+
+ 16:10 <sarnold> heh, i'm pretty familiar with the idea of either something gets done now or it gets added to a queue that doesn't seem to shrink ..
+
+ 16:10 <cpaelzer> I'll queue you up, but want to give no hard promises :-/
+
+ 16:11 <cpaelzer> jbicha: give me the TL;DR to motivate this - I assume your upload prepped for after beta resolves the findings I had?
+
+ 16:11 <cpaelzer> I see Daniel explained some of my already
+
+ 16:11 <cpaelzer> yeah I just need more than seconds while in two meetings to see
+
+ 16:11 <cpaelzer> If you are confident all asks have been resolved I likely will come to the same conclusion
+
+ 16:12 <cpaelzer> Will try to start earlier tomorrow
+
+ 16:12 <cpaelzer> sorry jbicha , ... those are these days ...
+
+ 16:12 <sarnold> anything else?
+
+ 16:12 <jbicha> I'm sorry for contributing to the overload, I only pinged you in particular since you had done the initial review
+
+ 16:13 <jbicha> nothing else from me
+
+ 16:13 <sarnold> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

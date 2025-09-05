@@ -1,0 +1,736 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 16 Oct at 15:06 &mdash; 16:03 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2014/ubuntu-meeting.2014-10-16-15.06.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:07.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:27.
+
+
+=== git-dpm ===
+The discussion about "git-dpm" started at 15:30.
+
+  * ''LINK:'' http://anonscm.debian.org/cgit/python-modules/packages/pycurl.git/ 
+  * ''LINK:'' http://anonscm.debian.org/cgit/users/barry/import-dscs.git/ 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * barry (115)
+ * slangasek (56)
+ * cjwatson (43)
+ * mvo (30)
+ * doko (20)
+ * bdmurray (19)
+ * sil2100 (18)
+ * Caribou (13)
+ * ubottu (10)
+ * jodh (6)
+ * bhuey (6)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:06 <slangasek> #startmeeting
+
+ 15:06 <meetingology> Meeting started Thu Oct 16 15:06:47 2014 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:06 <meetingology> 
+
+ 15:06 <meetingology> Available commands: action commands idea info link nick
+
+ 15:07 <slangasek> [TOPIC] Lightning round
+
+ 15:07 <slangasek> $ echo $(shuf -e barry doko stgraber jodh bdmurray slangasek cjwatson caribou infinity mvo bhuey sil2100 robru)
+
+ 15:07 <slangasek> jodh infinity mvo stgraber caribou bdmurray doko cjwatson slangasek sil2100 bhuey barry robru
+
+ 15:07 <slangasek> jodh: you're up! :)
+
+ 15:07 <jodh> * system-image:
+
+ 15:07 <jodh> - Created an ubuntu-core-upgrader package.
+
+ 15:07 <jodh> - Writing documentation.
+
+ 15:07 <jodh> - Debugging mount issues.
+
+ 15:07 <jodh> - Currently improving upgrader.
+
+ 15:08 <jodh> ᧠
+
+ 15:09 <slangasek> PAHTAMASAT - ephemeris data for amateur satellites
+
+ 15:09 <slangasek> no infinity today (Plumbing)
+
+ 15:09 <slangasek> mvo:
+
+ 15:09 <mvo> apt:
+
+ 15:09 <mvo> - work on privsep code and backwards compatbility
+
+ 15:09 <mvo> - work on experimental branch
+
+ 15:09 <mvo> click:
+
+ 15:09 <mvo> - Address review comments for lp:~mvo/click/repository
+
+ 15:09 <mvo> - Debug vala dbus releated crash
+
+ 15:09 <mvo> - Improve table output for updates, add click update --machine-readable
+
+ 15:09 <mvo> - Look at bulk query interface to find updates
+
+ 15:09 <mvo> - Test sso+acquire branch with latest public.apps.ubuntu.com - success
+
+ 15:10 <mvo> - Work on lp:~mvo/click/sso+acquire - click update, install works now (with sso
+
+ 15:10 <mvo> )
+
+ 15:10 <mvo> - fix click user-hook systemd job
+
+ 15:10 <mvo> misc:
+
+ 15:10 <mvo> - travel preparing
+
+ 15:10 <mvo> system-image:
+
+ 15:10 <mvo> - lots of work on this (gtimelog has 25 items for it this week :)
+
+ 15:10 <mvo> - image very usable at this point
+
+ 15:10 <mvo> utopic:
+
+ 15:10 <mvo> - ddtp-update
+
+ 15:10 <mvo> - command-not-found update
+
+ 15:10 <mvo> - app-install-data update
+
+ 15:10 <mvo> - upgrade test
+
+ 15:10 <mvo> - Debug/fix spectacular postinst upgrade failure during trusty->utopic (#1381570)
+
+ 15:10 <mvo> (done)
+
+ 15:11 <Caribou> stgraber: around ?
+
+ 15:12 <bdmurray> Caribou: I don't think so
+
+ 15:12 <Caribou> ok, I'll go ahead, he can always catch up
+
+ 15:12 <Caribou> * Completed Python training in Paris
+
+ 15:12 <Caribou> * sosreport 3.2 released on Debian
+
+ 15:13 <Caribou> * First set of tests on networked kdump tools at run-level S
+
+ 15:13 <Caribou> * Working on makedumpfile/kdump-tools test environment
+
+ 15:13 <Caribou> * Need to ramp up on systemd
+
+ 15:13 <Caribou> (done)
+
+ 15:13 <bdmurray> tested updated of daisy to revision 542
+
+ 15:13 <bdmurray> r545 daisy/submit.py: don't try to insert into systemoopshashes if system_token is missing, keep a metric of missing_system_tokens and whoopsie versions
+
+ 15:13 <bdmurray> submitted RT 75776 regarding update of daisy to r545                                                                                                  updated daisy code to resolve a KeyError trying to find HTTP_X_WHOOPSIE_VERION r546
+
+ 15:13 <barry> Caribou: python 3 right? :)
+
+ 15:13 <bdmurray> r547 - daisy/submit.py: increment a counter for duplicate reports and a counter for duplicate reports including the whoopsie version
+
+ 15:13 <bdmurray> submitted RT to have daisy updated to revision 547
+
+ 15:13 <bdmurray> reviewed daisy log files for duplicate core submissions (numbers are much much lower)
+
+ 15:13 <doko> why train Python in Paris? ;)
+
+ 15:13 <bdmurray> irc discussion regarding retracer backlog and declaring bankruptcy
+
+ 15:14 <bdmurray> submitted RT 75838 regarding declaring retracer queue bankruptcy
+
+ 15:14 <bdmurray> research into packages using /etc/os-release to resolve LP: #1362496
+
+ 15:14 <bdmurray> merged xnox's whoopsie changes fixing LP: #1339916 regarding system identifier
+
+ 15:14 <ubottu> Launchpad bug 1362496 in base-files (Ubuntu-rtm 14.09) "LSB release and /etc/os-release still say "Utopic", needs to be RTM" [High,Fix released] https://launchpad.net/bugs/1362496
+
+ 15:14 <bdmurray> upload whoopsie to utopic
+
+ 15:14 <ubottu> Launchpad bug 1339916 in whoopsie (Ubuntu RTM) "SystemIdentifier can change between reboots" [Undecided,New] https://launchpad.net/bugs/1339916
+
+ 15:14 <Caribou> barry: unfortunately not but I stayed attentive to the differences
+
+ 15:14 <bdmurray> updated / uploaded lxc-android-config to make /var/lib/whoopsie writable
+
+ 15:14 <bdmurray> submitted apport merge proposal fixing LP: #1345569
+
+ 15:14 <bdmurray> uploaded apport to utopic fixing LP: #1345569
+
+ 15:14 <bdmurray> investigation into whoopsie test failure (callback-triggered-once)
+
+ 15:14 <bdmurray> reported glib2.0 bug LP: #1381804 regarding whoopsie test failure
+
+ 15:14 <ubottu> Launchpad bug 1345569 in apport (Ubuntu) "recoverable_problem crashed with ValueError in add_proc_info(): invalid process" [High,Fix released] https://launchpad.net/bugs/1345569
+
+ 15:14 <ubottu> Launchpad bug 1381804 in whoopsie (Ubuntu) "whoopsie test failure since glib2.0 2.41.2-1 uploaded" [High,Fix released] https://launchpad.net/bugs/1381804
+
+ 15:14 <Caribou> doko: because I live near Paris & needed python training :)
+
+ 15:14 <bdmurray> ✔ done
+
+ 15:14 <doko> heh
+
+ 15:14 <doko> - Python 3.4.2 prepared for the trusty SRU
+
+ 15:14 <doko> - a lot of binutils fixes
+
+ 15:14 <doko> - slof ftbfs fix
+
+ 15:14 <doko> - keyutils ftbfs fix
+
+ 15:14 <doko> - crash ftbfs fix
+
+ 15:14 <doko> - flask ftbfs fix
+
+ 15:15 <doko> - refit ftbfs fix
+
+ 15:15 <doko> - wagon2 ftbfs fix
+
+ 15:15 <doko> - libaio ftbfs fix
+
+ 15:15 <doko> - libunwind ftbfs fix
+
+ 15:15 <doko> - openjdk-6 security update (utopic, trusty, precise, lucid)
+
+ 15:15 <doko> - openjdk-8 update (still needs the aarch64 hotspot security updates)
+
+ 15:15 <doko> - gcc-4.9.2 (something before the release candidate)
+
+ 15:15 <doko> - binutils 2.25 branch
+
+ 15:15 <doko> - cross toolchain updates
+
+ 15:15 <doko> - the usual pestering about ftbfs, MIR, ...
+
+ 15:15 <doko> - some syncs, removals, component overrides
+
+ 15:15 <doko> (done)
+
+ 15:16 <cjwatson> Upgraded utopic to Perl 5.20.1.
+
+ 15:16 <cjwatson> Dragged in on Saturday for a weekend broken-images panic following Friday night's Mir landing.
+
+ 15:16 <cjwatson> Did a good part of the work to move a number of click packages from the ubuntu-touch rootfs into the custom tarball, which was an RTM blocker.
+
+ 15:16 <cjwatson> Spent a considerable amount of time analysing and thinking about the terrible bug 1265192.  This resulted in four changes which I think cover all the bases:
+
+ 15:16 <ubottu> bug 1265192 in ubiquity (Ubuntu Trusty) "Install/reinstall wipes out all/other partitions" [Critical,Triaged] https://launchpad.net/bugs/1265192
+
+ 15:16 <cjwatson> - Exclude free space from count of deleted partitions.
+
+ 15:16 <cjwatson> - Describe use_device consistently, avoiding language that is ambiguous in the event that OS detection gets it wrong.
+
+ 15:16 <cjwatson> - Offer separate replace option even if we believe that the disk only contains Ubuntu.
+
+ 15:16 <cjwatson> - Always show a confirmation dialog before committing partitioning changes.
+
+ 15:16 <cjwatson> Fixed (again) GRUB installation on PowerKVM, which lacks nvram.
+
+ 15:16 <cjwatson> Failed to finish native-dbus branch, but belatedly pushed a first draft so that Michael could have a look.
+
+ 15:16 <cjwatson> Various +1 maintenance work (mostly removals) in an attempt to prepare for release.
+
+ 15:16 <cjwatson> Off tomorrow to try to get my head together a bit before the sprint.
+
+ 15:16 <cjwatson> ..
+
+ 15:17 <mvo> native-dbus branch \o/
+
+ 15:18 <sil2100> slangasek: your turn o/
+
+ 15:18 <slangasek> bdmurray: regarding /var/lib/whoopsie, it was noticed yesterday that this fix isn't on ubuntu-rtm/14.09 yet, and it rather ought to be - we can't sync lxc-android-config because there's an earlier upload on utopic from stgraber that bumps an lxc dependency.  We should talk about getting this landed
+
+ 15:19 * slangasek nods
+
+ 15:19 <slangasek> * short week, due to eating Canadian turkey and Canadian stuffing on Monday
+
+ 15:19 <bdmurray> slangasek: okay and also getting the new whoopsie there
+
+ 15:19 <slangasek> * worked through a system-image server bug where it could not import deltas for images that dropped files with non-ascii filenames
+
+ 15:19 <slangasek> * still working on embargoed security update which is awaiting vendor signatures
+
+ 15:19 <slangasek> * with Colin and cwayne, finished splitting click core apps out of the rootfs... landed at the very last minute for our phone image release
+
+ 15:19 <slangasek> * helped shepherding of landings and image prep yesterday to get our RTM milestone out (still being validated)
+
+ 15:19 <slangasek> * internal list discussions around daisy data and how to use it to drive RTm
+
+ 15:19 <slangasek> (done)
+
+ 15:19 <slangasek> bdmurray: yep
+
+ 15:19 <slangasek> sil2100: your turn :)
+
+ 15:19 <sil2100> slangasek, cjwatson: really good work with the click-app split o/
+
+ 15:20 <slangasek> the good work was all cjwatson's
+
+ 15:20 <sil2100> Works like a charm so far
+
+ 15:20 <sil2100> - Landing team work, preparing landing e-mails
+
+ 15:20 <sil2100> - CI Train maintenance and features:
+
+ 15:20 <sil2100> * Fix problems with jobs succeeding on failure
+
+ 15:20 <sil2100> * Fix problem with source package extraction, often seen in sync silos
+
+ 15:20 <sil2100> * Handle errors during package builds more gracefully
+
+ 15:20 <sil2100> * Preparing additions to the dual-landing functionality (not enabled yet)
+
+ 15:20 <sil2100> - Coordination of many key landings for image promotion for ubuntu-rtm
+
+ 15:20 <sil2100> - Preparing silo for the qtmir cherry-pick of unity8 lifecycle fixes
+
+ 15:20 <sil2100> - Preparing and testing silo with the indicator-sound fix
+
+ 15:20 <sil2100> - Writing a lot of announcements
+
+ 15:20 <sil2100> - Pushing on fixes, keeping management up-to-date
+
+ 15:20 <sil2100> - Preparations for travel
+
+ 15:20 <sil2100> - Attending many meetings regarding our promotion plans for ubuntu-rtm
+
+ 15:20 <sil2100> (done)
+
+ 15:21 <bhuey> This week
+
+ 15:21 <bhuey> -built icedtea prelease packages for the next security release. Work with Matthias to work around tarball problems
+
+ 15:21 <bhuey> -wrote scripts to support easier analysis of jtreg test log. This is to replace the diff -u method I've been using and reporting
+
+ 15:21 <bhuey> -commit the jtreg work directory to my ppa
+
+ 15:21 <bhuey> -post jtregs result for utopic/trusty/precise
+
+ 15:21 <bhuey> (done)
+
+ 15:22 <barry> system-image: LP: #1373467 (on hold for...) LP: #1374459 (in progress)
+
+ 15:22 <ubottu> Launchpad bug 1373467 in Ubuntu system image "Support config.d directory" [High,In progress] https://launchpad.net/bugs/1373467
+
+ 15:22 <ubottu> Launchpad bug 1374459 in Ubuntu system image "Support alternative downloaders" [Low,Triaged] https://launchpad.net/bugs/1374459
+
+ 15:22 <barry> debuntu: LP: #1295833; LP: #1380814; upstream pycurl issue #210 (debug callback UnicodeDecodeError on Python 3) - uploaded fix to Ubuntu.  nose2_0.4.7-2ubuntu1 (remove unused tox B-D) and nose2_0.5.0-1 to Debian.  LP: #1381564 (pyparsing 2.0.3+dfsg1-1 to Debian, awaiting landing for syncpackage to Utopic).
+
+ 15:22 <ubottu> Launchpad bug 1295833 in Bazaar Fast Import "Import error in exporter.py - fastimport.helpers" [Critical,Fix committed] https://launchpad.net/bugs/1295833
+
+ 15:22 <ubottu> Launchpad bug 1380814 in tox (Ubuntu) "[FFE] tox 1.8.0-1" [Wishlist,Fix released] https://launchpad.net/bugs/1380814
+
+ 15:22 <ubottu> Launchpad bug 1381564 in pyparsing (Ubuntu) "pyparsing ParseResults.pop() fails with NameError: global name 'index' is not defined" [Medium,Fix released] https://launchpad.net/bugs/1381564
+
+ 15:22 <barry> other: lots of trainguarding; citrain conference call
+
+ 15:22 <barry> --done--
+
+ 15:23 <slangasek> robru: around?
+
+ 15:24 <slangasek> any questions over people's status?
+
+ 15:24 <slangasek> mvo: chsh> eew
+
+ 15:25 <mvo> slangasek: exactly, exploded really deep in the dependency chain, no fun
+
+ 15:25 <mvo> but fixed now, glad I found this before the release
+
+ 15:25 * slangasek nods
+
+ 15:26 <slangasek> how old is "older", btw?  Should this have been caught by precise->trusty->utopic upgrades?
+
+ 15:26 <cjwatson> Fixed except that there's a systemd autopkgtest failure in the way, I think
+
+ 15:27 <cjwatson> Oh, possibly that's done.  Not sure, the bug isn't closed at any rate
+
+ 15:27 <slangasek> [TOPIC] AOB
+
+ 15:28 <slangasek> anything else we should cover today?
+
+ 15:28 <slangasek> (before barry gives us a brief presentation)
+
+ 15:29 <mvo> slangasek: I couldn't figure out when this changed, I don't know for sure, I can dig into it, I'm also puzzled that the precise->trusty->utopic has not found it
+
+ 15:29 <slangasek> mvo: ok.  fwiw I just checked my laptop, which has a uuidd user with /bin/false and a /var/log/installer that says it was installed with lucid
+
+ 15:30 <slangasek> [TOPIC] git-dpm
+
+ 15:30 * slangasek hands the mic to barry
+
+ 15:30 <barry> thanks
+
+ 15:30 <sil2100> \o/
+
+ 15:30 <barry> okay, so quick backstory:
+
+ 15:30 <mvo> slangasek: strange, just logged into a precise chroot and there my libuuid user has /bin/sh
+
+ 15:30 <mvo> slangasek:  I will ask jibel about it
+
+ 15:30 <barry> debian-python team uses svn to manage all team packages.  the svn repos are debian/ only, i.e. not source-full
+
+ 15:31 <barry> svn is pretty creaky these days so lots of folks want to use something more modern and distributed-y
+
+ 15:31 <barry> git being the obvious choice
+
+ 15:31 <barry> lots of open questions about a migration of team packages to git, and we did some experimentation with the options before debconf, and then had a meeting at debconf
+
+ 15:32 <barry> when managing packages with git, first you have... git!
+
+ 15:32 <barry> a lot of your package management can just be done with git commands
+
+ 15:32 <barry> and git-buildpackage serves the same purpose as svn-buildpackage, which the debian-python team is quite familiar with
+
+ 15:33 <barry> i.e. use that to build source packages and binary packages, etc.
+
+ 15:33 <barry> tag for release
+
+ 15:33 <barry> the tricky part comes in when you want to do patch management
+
+ 15:33 <barry> you want a good interface with quilt since that's still the way you generally do patches against upstream in debuntu
+
+ 15:34 <barry> there are two common choices here:
+
+ 15:34 <barry> git pq
+
+ 15:34 <barry> git-dpm
+
+ 15:34 <barry> my first experience with git-dpm was with the six package, which cjwatson maintains in debian.  it was quite nice
+
+ 15:34 <barry> so i did some small conversions to both tools and found git-dpm to be so much simpler to use and teach
+
+ 15:35 <barry> man git-dpm for lots of good details
+
+ 15:35 <barry> (there's also dgit which is roughly equivalent to udd+bzr but we'll ignore that for now)
+
+ 15:35 <barry> so, git-dpm
+
+ 15:35 <slangasek> there's a third one that people keep going on about but isn't in Debian yet, right?  git-cherrysoda or something?
+
+ 15:35 <barry> you can use it to manage your branches, and we are recommending *source full* repos
+
+ 15:36 <barry> git-cherrypick but i don't even think it's in the archive yet
+
+ 15:36 <barry> or wasn't last time i looked
+
+ 15:36 * slangasek nods
+
+ 15:36 <barry> git-dpm has some very simple and well documented workflows for importing new upstream releases
+
+ 15:36 <barry> (although i have some suggestions for improvements)
+
+ 15:36 <barry> and let's say you need to add a quilt patch
+
+ 15:37 <barry> git-dpm checkout-patches
+
+ 15:37 <cjwatson> git-debcherry I think it is
+
+ 15:37 <cjwatson> I still have the PDF queued up to look at ...
+
+ 15:37 <barry> that puts you in a 'patched' branch, with only upstream source in your working tree (no debian/)
+
+ 15:37 <slangasek> (git-stonefruit)
+
+ 15:37 <barry> cjwatson: yeah
+
+ 15:38 <barry> in the patched branch, you just edit the files as needed to fix whatever bug you need, then git commit as usual
+
+ 15:38 <barry> when you're happy with your changes:
+
+ 15:38 <barry> git-dpm update-patches
+
+ 15:38 <barry> and now you're back in the master branch
+
+ 15:38 <barry> oh yeah, 'master' is usually what's targeted for unstable, but of course you have other options
+
+ 15:38 <barry> anyway
+
+ 15:38 <barry> update-patches converts your 'patched' branch commits to quilt patches
+
+ 15:38 <barry> it's all rather seamless and nice
+
+ 15:39 <barry> though it is important to remember a few issues
+
+ 15:39 <barry> 1) your commit message is used in the patch name
+
+ 15:39 <barry> e.g. 0001-fix-the-dumb-thing-that-upstream-broke.patch
+
+ 15:39 <barry> 2) each commit gets turned into a quilt patch
+
+ 15:40 <barry> the latter means that in your 'patched' branch, it's helpful to sometimes do 'git rebase -i master' to squash commits, etc.
+
+ 15:40 <barry> there are ways to control the q/patch name, and dep-8 headers are preserved, etc.
+
+ 15:40 <slangasek> so is each patch always a single commit?
+
+ 15:40 <barry> so it's really very nice
+
+ 15:40 <cjwatson> 1) is fixed by using Patch-Name: in your commit message ... ah, yes, that
+
+ 15:40 <barry> slangasek: each commit in 'patched' turns into a quilt patch file
+
+ 15:40 <barry> cjwatson: yep
+
+ 15:41 <barry> but it handles refreshing your patches and such
+
+ 15:41 <slangasek> so that implies that each patch winds up rebased each time?
+
+ 15:41 <cjwatson> to evolve a patch over time, you tend to use rebasey workflows on the 'patched' branch, and then git-dpm merges patched into master
+
+ 15:41 <barry> yes, i think so
+
+ 15:41 <cjwatson> so you rebase, but the history is preserved by way of the tip merge
+
+ 15:41 <barry> yep.  it's actually the first example of git rebase that i like :)
+
+ 15:41 <slangasek> ok
+
+ 15:41 <slangasek> that's what I was worried about - if someone screws up the rebase, is there a record :)
+
+ 15:42 <slangasek> s/if someone screws up/if I screw up/
+
+ 15:42 <barry> oh yes, the 'patched' branch is temporary and local.  unlike with git pq, it does not get preserved.  git update-patches deletes it
+
+ 15:42 <barry> slangasek: not sure, but i found it difficult to both screw up the rebase *and* get back on the master branch to build your package
+
+ 15:43 <barry> so let's see...
+
+ 15:43 <barry> oh yes
+
+ 15:43 <slangasek> I mean screw up at a higher level (semantic failures rather than mechanical ones)
+
+ 15:43 <barry> slangasek: not sure actually
+
+ 15:43 <Caribou> barry: one thing I noticed is *not* to "rebase -i" on the master branch; I've seen quilt patch disapear that way
+
+ 15:44 <barry> Caribou: sure, though sometimes you do want to rebase away a quilt patch.  i've used it to squash commits so i have the right number of quilt patches
+
+ 15:44 <cjwatson> slangasek: it's certainly preserved.  (git offers many ways to blow off your own foot, but a number of ways to stitch it back on as well.)
+
+ 15:44 <barry> :)
+
+ 15:45 <cjwatson> slangasek: what I find myself doing is amending early and often
+
+ 15:45 * slangasek nods
+
+ 15:45 <Caribou> barry: indeed, rebasing while in the "git-dpm checkout-patched" mode is fine
+
+ 15:45 <cjwatson> slangasek: so I do the rebase in a sketchy way, test to see if it works, if it doesn't then try again and git-dpm update-patches --amend, and only push anywhere once I'm happy
+
+ 15:46 <barry> yep, amend is great for working out the final details of a patch
+
+ 15:46 <barry> so, quick example with what sealed the deal for me and git-dpm
+
+ 15:46 <barry> http://anonscm.debian.org/cgit/python-modules/packages/pycurl.git/
+
+ 15:46 <slangasek> "test to see if it works" - that involves jumping back out to the master branch so you can do a package build?
+
+ 15:46 <cjwatson> rebasing the master branch is a good way to get very confused, although if you've pushed somewhere you can at least get it back from that, and there's always the reflog too
+
+ 15:46 <cjwatson> slangasek: right, update-patches but don't push
+
+ 15:46 * slangasek nods
+
+ 15:47 <barry> pycurl has ubuntu deltas which we need to preserve because of cross-pocket dependency constraints debian does not have
+
+ 15:47 <barry> so, i built the debian version, tagged it and uploaded
+
+ 15:47 <barry> then i created an 'ubuntu' branch
+
+ 15:47 <barry> and made the ubuntu deltas there
+
+ 15:48 <barry> i even tested some quilt patches, so `git-dpm checkout-patched` created ubuntu-patched (i.e. against ubuntu branch not master)
+
+ 15:48 <barry> that was nice
+
+ 15:48 <barry> anyway
+
+ 15:48 <barry> once ubuntu version was ready, i made commits to the ubuntu branch, tagged it there with ubuntu/7.19.5-2ubuntu1 and created teh source package for upload to utopic
+
+ 15:48 <barry> then i had a new upstream version
+
+ 15:48 <barry> i did the debian twiddling as normal
+
+ 15:49 <barry> and uploaded
+
+ 15:49 <barry> switched to the ubuntu branch, merged in the master branch changes, updated the delta, and commited to the ubuntu branch
+
+ 15:49 <barry> i was shocked how easy it was
+
+ 15:49 <barry> neither bzr nor svn workflows can touch it
+
+ 15:50 <barry> one last thing
+
+ 15:50 <barry> this is a tool i wrote to import debian package releases into git:
+
+ 15:50 <barry> http://anonscm.debian.org/cgit/users/barry/import-dscs.git/
+
+ 15:50 <barry> had some nice ipmrovements by tumbleweed
+
+ 15:51 <barry> and while debian-python is still in limited experimental phase, i cringe when i have to go back to svn ;)
+
+ 15:51 <barry> i think that's all i have.  any other questions?
+
+ 15:51 <cjwatson> I haven't myself tried doing this with anything that has an Ubuntu delta, so I'm pleased to find out that that generally seems to work.  It will be interesting to see how robust that is across non-trivial changes
+
+ 15:51 <barry> oh, i did recommend d-python team switch to git-dpm, but we don't have an eta yet for mass conversion
+
+ 15:52 <barry> yep
+
+ 15:52 <cjwatson> I'm not sure how the merge workflow would work (we wouldn't want it to accidentally serialise the patched branch onto master, for instance)
+
+ 15:52 <slangasek> how about a tool to import udd branches into git-dpm? ;)
+
+ 15:52 <barry> slangasek: frankly, i would just recommend making our lives simple and import-dscs but that does lose history
+
+ 15:53 <cjwatson> One thing I'd add, if you're converting non-trivial repository history into git (patch helpers or not), I can thoroughly recommend http://www.catb.org/~esr/reposurgeon/
+
+ 15:53 <barry> for debian-python, i really don't care about the svn history ;)
+
+ 15:53 <barry> *preserving
+
+ 15:53 <cjwatson> It's basically a domain-specific language for repository conversions
+
+ 15:53 <slangasek> barry: right; I'm rather attached to my detailed histories
+
+ 15:53 <slangasek> actually, maybe that's more the case for other people's packages than my own, since I write changelog entries ;-)
+
+ 15:53 <cjwatson> I converted a ton of my history using it and have been very happy with the results I managed to get, such as the Debian openssh packaging that has been through cvs (with ill-advised vendor branch) -> svn -> bzr -> git
+
+ 15:53 <barry> cjwatson: yes, have you actually run reposurgeon?  esr says it needs a "beefy machine and lots of time" (that's for the emacs repo, which has crazy multi-vcs gobbledegook)
+
+ 15:54 * slangasek bookmarks reposurgeon
+
+ 15:54 <cjwatson> yes I have.  It took a while for grub2 I think but not so bad that I wasn't able to iterate a number of times on it
+
+ 15:54 <barry> cjwatson: cool.  i have upstreams that i want to convert to git eventually and reposurgeon is tops on my list for that
+
+ 15:55 <cjwatson> so for openssh I had a config file that looked like http://paste.ubuntu.com/8574593/
+
+ 15:55 <cjwatson> specifically this allowed me to stitch the packaging history into the same commit graph as the upstream history, which is awesome
+
+ 15:56 <barry> i've followed the discussion on emacs-devel.  seems esr has done an impressive amount of work on reposurgeon
+
+ 15:56 <slangasek> cool
+
+ 15:56 * barry hands the mic back to slangasek
+
+ 15:56 <slangasek> ok, 4 minutes left
+
+ 15:56 <slangasek> any questions for barry?
+
+ 15:56 <cjwatson> I think that the only sane way to do this involves stitching in upstream history (assuming you have it), but that's really hard to do without a DSL
+
+ 15:57 <slangasek> ("can we have this in Launchpad tomorrow")
+
+ 15:57 <cjwatson> barry: what're the opinions looking like in the rest of the d-python team?
+
+ 15:57 <barry> cjwatson: i've only had limited feedback. ScottK was +1 ;)
+
+ 15:57 <barry> no -1
+
+ 15:58 <barry> there are some edge questions, such as wither upstream's repo should be remoted in, whether source full repos shoudl be used, that kind of thing
+
+ 15:58 <barry> no one advocating for sticking with svn or using git pq
+
+ 15:58 <barry> some people don't want to use pristine-tar
+
+ 15:58 <barry> which i don't agree with
+
+ 15:58 <barry> i.e. if upstream uses tarball releases, we should use pristine-tar workflows
+
+ 15:59 <barry> and all pypi packages are still tarball based
+
+ 15:59 <cjwatson> git-dpm at least makes that easy to do
+
+ 15:59 <barry> yep!
+
+ 15:59 <slangasek> those aren't edge questions, those are lunatic fringe questions ;-P
+
+ 15:59 <barry> though i want a --uscan option :)
+
+ 15:59 <barry> slangasek: :D
+
+ 15:59 <cjwatson> (git-dpm import-new-upstream -p UPSTREAM-COMMIT --ptc)
+
+ 15:59 <slangasek> "should source ful repos be used" - yes, always
+
+ 15:59 <barry> slangasek: yep
+
+ 15:59 <cjwatson> remoting in upstream's repo can be a bit trickier if it's non-git
+
+ 16:00 <cjwatson> iirc you had some trouble with the hg setup in six
+
+ 16:00 <barry> yep
+
+ 16:00 <barry> though i don't recall the details
+
+ 16:00 <cjwatson> I think it required starting by cloning from upstream with git-hg and then remoting in the Debian branch, which isn't ideal
+
+ 16:00 <barry> i'm personally not a big fan of remoting in upstream, but i ack that it can make cherrypicking fixes a little easier
+
+ 16:01 <cjwatson> it also lets you use git blame/log/etc.
+
+ 16:01 <barry> i'd rather just grab the patch from an upstream clone or github
+
+ 16:01 <barry> yeah
+
+ 16:01 <barry> the *main* thing is - don't send irc and email notifications to d-python team for upstream commits!
+
+ 16:01 <cjwatson> haha
+
+ 16:01 <slangasek> yeah, has that been fixed yet? :)
+
+ 16:01 <barry> i think so
+
+ 16:01 <cjwatson> anyway, thanks for the talk, I'm really glad to see others using this
+
+ 16:02 <barry> it's a life changer frankly
+
+ 16:02 <Caribou> cjwatson: barry: seeing you using it convinced me to use it for my two projects
+
+ 16:02 <barry> and i don't even hate git anymore :)
+
+ 16:03 <slangasek> thanks, barry :)
+
+ 16:03 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

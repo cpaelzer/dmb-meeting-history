@@ -1,0 +1,303 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 07 Dec at 16:01 &mdash; 16:52 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2023/ubuntu-meeting.2023-12-07-16.01.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:01.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-07-december-2023/   (juliank, 16:01)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:10.
+
+ * ''LINK:'' https://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:11)
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:20)
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:21)
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:22)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:30.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:30)
+
+=== AOB ===
+
+Discussion started by juliank at 16:49.
+
+
+
+
+== People present (lines said) ==
+
+ * juliank (72)
+ * schopin (7)
+ * bdrung (5)
+ * bdmurray (5)
+ * slyon (5)
+ * ravikant_ (3)
+ * adrien (3)
+ * upils (3)
+ * meetingology (2)
+ * waveform (2)
+ * adrien_web (2)
+ * mkukri (2)
+ * dviererbe (1)
+ * danilogondolfo (1)
+ * dbungert (1)
+ * xypron (1)
+ * zhsj (1)
+ * mateus-morais (1)
+ * ogayot (1)
+
+
+
+== Full log ==
+
+
+ 16:01 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:01 <meetingology> Meeting started at 16:01:44 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:01 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:01 <juliank> #topic Lightning rounds
+
+ 16:01 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-07-december-2023/
+
+ 16:02 <ravikant_> o/
+
+ 16:03 <dviererbe> o/
+
+ 16:09 <bdrung> adrien, can you link the openssl discussion from your discource post?
+
+ 16:10 <juliank> #topic Release incoming bugs
+
+ 16:10 <bdmurray> I was still reading
+
+ 16:10 <bdmurray> too many people on the team
+
+ 16:11 <juliank> Reading is time bound to 10 minutes!
+
+ 16:11 <juliank> #link https://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 16:11 <juliank> It seems we do not acutally have https right now
+
+ 16:11 <schopin> bdmurray: and think if we all wrote as lengthy posts as yours!
+
+ 16:12 <juliank> lots of old bugs
+
+ 16:12 <juliank> bug 1831747
+
+ 16:13 <bdrung> yes, we should tag that one.
+
+ 16:13 <adrien> bdrung: done
+
+ 16:13 <juliank> bug 1969394
+
+ 16:13 <juliank> hmm that is still desktop design work
+
+ 16:16 <juliank> bug 2043713
+
+ 16:16 <juliank> what's the status there?
+
+ 16:16 <adrien> bdmurray: not too many people: people being too productive
+
+ 16:18 <juliank> bug 2015538 I don't know we probably should move it to oo
+
+ 16:18 <slyon> We still want to get dbus-broker landed, but are looking for someone with the resources to implement the missing bits and pieces (dbus-run-session). Nothing to do for us right now.
+
+ 16:18 <slyon> I guess we could probably remove the tag
+
+ 16:20 <juliank> bug 2017401 I still need to sync on that
+
+ 16:20 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 16:20 <juliank> oh empty
+
+ 16:21 <juliank> oh I forgot mm, didn't I
+
+ 16:21 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-mm-incoming-bug-tasks.html#foundations-bugs
+
+ 16:21 <juliank> both bugs there are actually for desktop, and co-owned things
+
+ 16:21 <juliank> bug 2041518
+
+ 16:21 <juliank> bug 2041831
+
+ 16:21 <juliank> (jftr)
+
+ 16:22 <juliank> OK jumping back to LTSses
+
+ 16:22 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 16:22 <juliank> bug 2044104
+
+ 16:22 <juliank> schopin:
+
+ 16:23 <schopin> Yeah I need opinions from the people on the team that know things about initramfs :)
+
+ 16:24 * bdrung hides.
+
+ 16:24 <juliank> We don't know what all the acronyms mean
+
+ 16:24 <schopin> Basically zdev adds some udev rules, but might not want to ship them depending on some settings.
+
+ 16:25 <schopin> Either we provide an escape hatch from our initrd script that currently ships all the installed udev rules into the initrd, or we modify the s390-tools packaging to remove the offending rules after the fact (dunno how that would work, though)
+
+ 16:26 <juliank> I do not believe the skip every rule with 41 is a good idea tbh
+
+ 16:28 <schopin> I think we should tag this and find a volunteer to look into it.
+
+ 16:29 <slyon> +1
+
+ 16:29 <bdrung> +1 (i can assist on the initramfs-tools side)
+
+ 16:29 <schopin> bdrung: sounds like you're volunteering to take that card :P
+
+ 16:30 <juliank> #topic Team proposed-migration report
+
+ 16:30 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:31 <juliank> libauthen-sasl-perl is with waveform still I think
+
+ 16:31 <waveform> that one's just waiting on an AA to kill it, feel free to give me another
+
+ 16:31 <juliank> libio-prompter-perl is with danilogondolfo still I think
+
+ 16:31 <juliank> waveform: ack
+
+ 16:31 <danilogondolfo> yes
+
+ 16:31 <juliank> libuv1 is with ginggs
+
+ 16:32 <juliank> We'll skip python3-defaults stuff
+
+ 16:32 <juliank> pillow broken by python-svg.path/6.3-1: bdrung
+
+ 16:33 <bdrung> okay
+
+ 16:33 <juliank> efibootmgr mkukri
+
+ 16:33 <adrien> I'm unable to take on anything because of armhf time_t which is on a very tight deadline now
+
+ 16:33 <slyon> I cannot take anything, as I'll be out for the next couple of weeks
+
+ 16:33 <juliank> libcgi-pm-perl:  cpete
+
+ 16:33 <juliank> apt: juliank
+
+ 16:34 <juliank> libffi: dbungert
+
+ 16:34 <dbungert> ack
+
+ 16:34 <juliank> gcc-13-cross: doko
+
+ 16:35 <juliank> libfido2: waveform
+
+ 16:35 <waveform> ack
+
+ 16:35 <upils> I can take psycopg2
+
+ 16:35 <juliank> psycopg2 upils
+
+ 16:36 <ravikant_> isnt psychopg2 armhf?
+
+ 16:36 <upils> oh right -_-
+
+ 16:36 <schopin> could be why upils volunteered ;)
+
+ 16:37 <ravikant_> yes, Error: websocket: bad handshake
+
+ 16:37 <juliank> ok so psychopg2 and sqlite3 I guess are just retries bdmurray will retry
+
+ 16:38 <adrien_web> abi-compliance-checker is OOM'ing my machine (10
+
+ 16:38 <juliank> systemd: enr0n (probably just retry too)
+
+ 16:38 <adrien_web> G times four)
+
+ 16:38 <juliank> bash is also infra issues really but ...
+
+ 16:39 <juliank> bash: upils might want to retry those
+
+ 16:39 <juliank> OK let's skip everything with armhf only
+
+ 16:40 <juliank> libfile-fcntllock-perl blocking perl: schopin by personal request
+
+ 16:40 <juliank> skipping over the big Perl section
+
+ 16:40 <bdmurray> sbuild looks legit
+
+ 16:41 <juliank> sbuild blocking perl: upils
+
+ 16:41 <juliank> (finally)
+
+ 16:41 <juliank> distro-info-data I'd say bdrung wants to also look at this but really utkarsh uploaded that so mmh
+
+ 16:42 <juliank> oof
+
+ 16:42 <juliank> just armhf
+
+ 16:42 <upils> ack
+
+ 16:42 <bdmurray> zlib also has some non-armhf failures
+
+ 16:42 <mkukri> coreutils blocked by initramfs-tools on amd64? or is that a known thing?
+
+ 16:42 <juliank> zlib vs booth/1.0-237-gdd88847-4ubuntu3: xypron
+
+ 16:43 <juliank> zlib vs burp: slyon
+
+ 16:43 <xypron> ok
+
+ 16:43 <zhsj> juliank: slyon is out next week, i can take zlib vs burp
+
+ 16:43 <juliank> zlib vs burp: zhsj (reassigned from slyon)
+
+ 16:44 <juliank> zlib vs mdtraj: mateus-morais
+
+ 16:44 <mateus-morais> juliank: ack
+
+ 16:44 <juliank> zlib vs ruby-nokogiri ogayot
+
+ 16:44 <ogayot> juliank: ack
+
+ 16:45 <juliank> zlib vs suricata: liushuyu
+
+ 16:45 <bdmurray> git
+
+ 16:46 <juliank> git vs dumb-jump-el/0.5.4-2: pushkar (don't know nick)
+
+ 16:46 <juliank> git vs git-filter-repo: vpa1977
+
+ 16:46 <juliank> never mind
+
+ 16:48 <juliank> coreutils / initramfs-tools  with bdmurray and Skia
+
+ 16:48 <juliank> And I think that's a wrap on that bit
+
+ 16:49 <juliank> sil2100 might want to pick up an item if he has time
+
+ 16:49 <juliank> #topic AOB
+
+ 16:50 <juliank> I planned to take a day off before the break but I think it's not going to happen, lol
+
+ 16:50 <slyon> I'll be EOY after this meeting. Have a nice break :)
+
+ 16:50 <juliank> I'll be taking a 3 week break though, I'll only be back on Jan 8 I think it is
+
+ 16:51 <mkukri> im gone from the 13th, and back on jan 3rd
+
+ 16:52 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

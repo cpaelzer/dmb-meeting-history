@@ -1,0 +1,737 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by bdmurray, 17 Mar at 15:00 &mdash; 15:46 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-03-17-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning Round ===
+
+Discussion started by bdmurray at 15:00.
+
+
+=== Release Incoming Bugs ===
+
+Discussion started by bdmurray at 15:11.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html   (bdmurray, 15:12)
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (schopin, 15:28)
+ * ''LINK:'' https://discourse.ubuntu.com/t/openssl-3-0-transition-plans/24453   (schopin, 15:36)
+
+=== AOB ===
+
+Discussion started by bdmurray at 15:40.
+
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (77)
+ * ubottu (45)
+ * jawn-smith (38)
+ * sil2100 (28)
+ * slyon (25)
+ * enr0n (23)
+ * schopin (22)
+ * doko (20)
+ * juliank (16)
+ * ogayot (12)
+ * waveform (9)
+ * dbungert (7)
+ * alexghiti (6)
+ * xypron (5)
+ * ddstreet (4)
+ * meetingology (2)
+ * mclemenceau (1)
+
+
+
+== Full log ==
+
+
+ 15:00 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:08 UTC.  The chair is bdmurray.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:00 <mclemenceau> o/
+
+ 15:00 <bdmurray> #topic Lightning Round
+
+ 15:00 <sil2100> o/
+
+ 15:00 <doko> already?
+
+ 15:00 <bdmurray> doing the shuffle
+
+ 15:00 <bdmurray> doko: times changed here
+
+ 15:00 <bdmurray> dbungert slyon ginggs xypron mwhudson doko vorlon ogayot alexghiti bdmurray juliank waveform enr0n schopin sil2100 jawn-smith
+
+ 15:01 <dbungert> * subiquity - setup of stable branches for both subiquity and probert,
+
+ 15:01 <dbungert> Update api test for compatibility with v2 curtin actions, fix probert for
+
+ 15:01 <dbungert> python 3.10 (LP: #1964571) and point core22 console-conf to that, fix offsets
+
+ 15:01 <dbungert> generation for fresh partition tables, work in progress on more partitioning,
+
+ 15:01 <ubottu> Launchpad bug 1964571 in subiquity "console-conf crashes on UC22 with latest snaps in edge" [Undecided, Fix Committed] https://launchpad.net/bugs/1964571
+
+ 15:01 <dbungert> * subiquity vs risc-v - workaround a command timeout, move builds along,
+
+ 15:01 <dbungert> log analysis of issues
+
+ 15:01 <dbungert> (done)
+
+ 15:01 <slyon> - Discussions around network-online.target spec
+
+ 15:01 <slyon> - systemd v249.11 bugfix release
+
+ 15:01 <slyon> - some proposed-migration for systemd
+
+ 15:01 <slyon> - some bug grooming & triage for systemd & netplan
+
+ 15:01 <slyon> - explaining some systemd/SRU things to enr0n
+
+ 15:01 <slyon> - Prepare systemd fix for HP Omen 15/17 calculator key, LP: #1929345
+
+ 15:01 <ubottu> Launchpad bug 1929345 in systemd (Ubuntu) "Pressing calculator key generates infinitely many key-press key-release events" [Medium, Triaged] https://launchpad.net/bugs/1929345
+
+ 15:01 <slyon> === Netplan ===
+
+ 15:01 <slyon> - discussions around symbol versioning for libnetplan
+
+ 15:01 <slyon> - multi-driver matching compat for SRUs, LP: #1918421
+
+ 15:01 <slyon> - v0.104 SRUs (Impish/Focal), LP: #1964481
+
+ 15:01 <slyon> - reviewed https://github.com/canonical/netplan/pull/261
+
+ 15:01 <slyon> - review & merged https://github.com/canonical/netplan/pull/267
+
+ 15:01 <slyon> - working on meson+ninja buildsystem support
+
+ 15:01 <slyon> (done)
+
+ 15:01 <ubottu> Launchpad bug 1918421 in netplan.io (Ubuntu Jammy) "netplan does not match multiple driver specifications" [Undecided, Fix Released] https://launchpad.net/bugs/1918421
+
+ 15:01 <ubottu> Launchpad bug 1964481 in netplan.io (Ubuntu Impish) "[SRU] Update to netplan.io 0.104" [Undecided, Fix Committed] https://launchpad.net/bugs/1964481
+
+ 15:01 <ubottu> Pull 261 in canonical/netplan "[WIP] Add support for gretap/ip6gretap OVS tunnels" [Open]
+
+ 15:01 <ubottu> Pull 267 in canonical/netplan "Makefile: fix parallel build failure" [Merged]
+
+ 15:01 <bdmurray> graham is out
+
+ 15:01 <bdmurray> xypron:
+
+ 15:02 <bdmurray> doko: ?
+
+ 15:03 <doko> I'll need a bit, going later
+
+ 15:03 <bdmurray> ogayot:
+
+ 15:03 <ogayot> * subiquity:
+
+ 15:03 <ogayot> * rebranded ubuntu advantage -> ubuntu pro
+
+ 15:03 <ogayot> * added compatibility layer for autoinstall keys
+
+ 15:03 <ogayot> * implemented HTTP 409 responses to report server side tasks cancelled (to be reviewed later)
+
+ 15:03 <ogayot> * investigated failures on riscv64
+
+ 15:03 <ogayot> * fixed crash when Ubuntu Pro token expiration uses RFC3339 format
+
+ 15:03 <ogayot> * more discussions on Ubuntu Pro design with UX team
+
+ 15:03 <ogayot> * discussed third-party drivers design updates with UX team
+
+ 15:03 <ogayot> * more investigation on bug 1962205 - reproduced on riscv64 by xypron
+
+ 15:03 <ubottu> Bug 1962205 in subiquity "Client side crash after receiving PROBING storage response status" [Medium, New] https://launchpad.net/bugs/1962205
+
+ 15:03 <ogayot> * working on prerequisites to merge third-party drivers to jammy
+
+ 15:03 <ogayot> * done ☑
+
+ 15:03 <alexghiti> Live-installer on Unmatched board failure (can be caused by a kernel bug, investigating)
+
+ 15:03 <alexghiti> UEFI image on VisionFive
+
+ 15:03 <alexghiti> -  patch for grub is necessary as the kernel can’t boot from the dtb in the factory uboot
+
+ 15:03 <alexghiti> - rebase VisionFive patches on top of Ubuntu unstable 5.17 branch
+
+ 15:03 <alexghiti> Netdata fix riscv64 package sponsored by @schopin
+
+ 15:03 <alexghiti> (done)
+
+ 15:04 <xypron> I have concentrated on testing riscv installer image.
+
+ 15:04 <xypron> detected multiple issues in subiquity
+
+ 15:04 <xypron> and curtin.
+
+ 15:05 <xypron> upgraded in nezha-boot0 in a ppa to support more boards
+
+ 15:05 <xypron> <done />
+
+ 15:05 <bdmurray> updated the errors code to include changes necessary for 18.04
+
+ 15:05 <bdmurray> added riscv64 to the drop list of arches for the Error Tracker
+
+ 15:05 <bdmurray> further digging into removing tasksel from Ubuntu
+
+ 15:05 <bdmurray> finished update of manifest contacts in the ISO tracker database
+
+ 15:05 <bdmurray> investigation into ISO tracker settings for sil2100
+
+ 15:05 <bdmurray> uploaded apport fix for LP: #1964405
+
+ 15:05 <bdmurray> uploaded the packagekit patch in LP: #1963904
+
+ 15:05 <bdmurray> inclusive naming update for ubuntu-release-upgrader
+
+ 15:05 <ubottu> Launchpad bug 1964405 in apport (Ubuntu) "ubuntu-bug doesn't launch browser to upload collected information automagically to Launchpad" [High, Fix Released] https://launchpad.net/bugs/1964405
+
+ 15:05 <ubottu> Launchpad bug 1963904 in packagekit (Ubuntu Jammy) "/usr/libexec/packagekitd:11:__strcmp_avx2:AptCacheFile::resolvePkgID:AptIntf::resolvePackageIds:backend_get_details_thread:pk_backend_job_thread_setup" [High, Fix Released] https://launchpad.net/bugs/1963904
+
+ 15:05 <bdmurray> uploaded ubuntu-release-upgrader with deb2snap changes LP: #1964443
+
+ 15:05 <bdmurray> added Ubuntu Studio to the deb2snap transition for firefox
+
+ 15:05 <bdmurray> sponsored ranger package for dbungert
+
+ 15:05 <bdmurray> sponsored zlib patch for LP: #1961427
+
+ 15:05 <ubottu> Launchpad bug 1964443 in ubuntu-release-upgrader (Ubuntu Jammy) "Firefox no longer installed following Kubuntu upgrade 21.10->22.04" [High, Fix Released] https://launchpad.net/bugs/1964443
+
+ 15:05 <ubottu> Launchpad bug 1961427 in zlib (Ubuntu Jammy) "zlib: compressBound() returns an incorrect result on z15" [High, In Progress] https://launchpad.net/bugs/1961427
+
+ 15:05 <bdmurray> preparing for and conducting interviews
+
+ 15:05 <bdmurray> administrative work
+
+ 15:05 <bdmurray> ✔ done
+
+ 15:05 <juliank> * redid grub2 focal SRU paperwork, it ready now
+
+ 15:05 <juliank> * uploaded initramfs-tools with zstd -1, lz4 -2 changes agreed upon
+
+ 15:05 <juliank> * uploaded nullboot to jammy, filed MIR
+
+ 15:06 <juliank> * apt 2.4.2 fixes Debian reportbug bugscript regression, two translation updates
+
+ 15:06 <juliank> * got paride access to autopkgtest cloud
+
+ 15:06 <juliank> (done)
+
+ 15:06 <bdmurray> WaVeR:
+
+ 15:06 <bdmurray> waveform:
+
+ 15:06 <waveform> * u-boot merge done \o/ (LP: #1964365)
+
+ 15:06 <waveform> * Investigated reports of eth+wifi failure on Core 20
+
+ 15:06 <waveform> * Trawled the flash-kernel bug history and cleaned up a few bits (LP: #1794841, LP: #1928314, LP: #1962309, LP: #1893491)
+
+ 15:06 <waveform> * Worked on speeding up flash-kernel (LP: #1965129)
+
+ 15:06 <waveform> * Worked on rpi-imager snap customization (missing auto-connections)
+
+ 15:06 <waveform> * Worked on netboot of Ubuntu on Pi images
+
+ 15:06 <ubottu> Launchpad bug 1964365 in u-boot (Ubuntu) "[FFe] Please merge u-boot 2022.01+dfsg-2 from Debian unstable." [Undecided, Fix Released] https://launchpad.net/bugs/1964365
+
+ 15:06 <waveform> * Pi meetings
+
+ 15:06 <ubottu> Launchpad bug 1794841 in flash-kernel (Ubuntu) "flash-kernel still using u-boot for Raspberry Pi" [Undecided, Fix Released] https://launchpad.net/bugs/1794841
+
+ 15:06 <waveform> (done)
+
+ 15:06 <ubottu> Launchpad bug 1928314 in flash-kernel (Ubuntu) "Wrong DTB chosen for Raspberry Pi Compute Module 4 (all.db)" [Undecided, Confirmed] https://launchpad.net/bugs/1928314
+
+ 15:06 <ubottu> Launchpad bug 1928314 in flash-kernel (Ubuntu) "Wrong DTB chosen for Raspberry Pi Compute Module 4 (all.db)" [Undecided, Confirmed] [duplicate: 1962309] https://launchpad.net/bugs/1928314
+
+ 15:06 <ubottu> Launchpad bug 1893491 in flash-kernel (Ubuntu) "groovy arm64 raspi: Unsupported platform. dpkg: error processing package flash-kernel (--configure):" [Undecided, Fix Released] https://launchpad.net/bugs/1893491
+
+ 15:06 <ubottu> Launchpad bug 1965129 in flash-kernel (Ubuntu) "flash-kernel is extremely slow on raspi" [Undecided, New] https://launchpad.net/bugs/1965129
+
+ 15:07 <bdmurray> enr0n:
+
+ 15:07 <enr0n> * python3-reportlab FTBFS (Debian bug 1006763)
+
+ 15:07 <enr0n> - vorlon uploaded 3.6.7-1ubuntu1
+
+ 15:07 <enr0n> - doko uploaded 3.6.8-1 to Debian, which has since
+
+ 15:07 <enr0n> synced to -release
+
+ 15:07 <enr0n> * u-r-u fixed LP: #1964443
+
+ 15:07 <ubottu> Debian bug 1006763 in python-reportlab "python-reportlab: fails to build with python3.10" [Serious, Open] https://bugs.debian.org/1006763
+
+ 15:07 <ubottu> Launchpad bug 1964443 in ubuntu-release-upgrader (Ubuntu Jammy) "Firefox no longer installed following Kubuntu upgrade 21.10->22.04" [High, Fix Released] https://launchpad.net/bugs/1964443
+
+ 15:07 <enr0n> - Bug was for Kubuntu, but we also added firefox deb2snap entries for other
+
+ 15:07 <enr0n> flavors that are shipping the snap in jammy
+
+ 15:07 <enr0n> * Followed up with reporter on LP: #1961432, waiting to hear back
+
+ 15:07 <ubottu> Launchpad bug 1961432 in ubuntu-release-upgrader (Ubuntu Jammy) "Upgrading from 21.10 to 22.04 fails to upgrade snap core18" [High, New] https://launchpad.net/bugs/1961432
+
+ 15:07 <enr0n> - Added core20 to deb2snap in any case
+
+ 15:07 <enr0n> * +1 maintenance this week
+
+ 15:07 <enr0n> - Fixed the following packages, and waiting for sponsors on each
+
+ 15:07 <enr0n> * golang-github-valyala-fasthttp autopkgtest regression on s390x (LP: #1965134)
+
+ 15:07 <ubottu> Launchpad bug 1965134 in golang-github-valyala-fasthttp (Ubuntu) "golang-github-valyala-fasthttp 1:1.31.0-3: autopkgtest regression on s390x" [Undecided, New] https://launchpad.net/bugs/1965134
+
+ 15:07 <enr0n> * python-pecan FTBFS (LP: #1965132)
+
+ 15:07 <ubottu> Launchpad bug 1965132 in python-pecan (Ubuntu) "python-pecan: FTFBS: build tests are failing on python 3.10" [Undecided, New] https://launchpad.net/bugs/1965132
+
+ 15:07 <enr0n> * nfstrace FTBFS (LP: #1965155)
+
+ 15:07 <ubottu> Launchpad bug 1965155 in nfstrace (Ubuntu) "nfstrace: FTBFS: header_window.cpp:77:82: error: format ‘%d’ expects argument of type ‘int’, but argument 5 has type ‘time_t’ {aka ‘long int’} [-Werror=format=]" [Undecided, New] https://launchpad.net/bugs/1965155
+
+ 15:07 <enr0n> * mit-scheme FTBFS (LP: #1965163)
+
+ 15:07 <ubottu> Launchpad bug 1965163 in mit-scheme (Ubuntu) "mit-scheme: FTBFS with OpenSSL 3.0" [Undecided, New] https://launchpad.net/bugs/1965163
+
+ 15:07 <enr0n> * pktstat FTBFS (LP: #1965174)
+
+ 15:07 <ubottu> Launchpad bug 1965174 in pktstat (Ubuntu) "pktstat FTBFS: error: format not a string literal and no format arguments [-Werror=format-security]" [Undecided, New] https://launchpad.net/bugs/1965174
+
+ 15:07 <enr0n> - Investigating the entanglement of python-uvicorn, python-pytest-asyncio, pytest-mock
+
+ 15:07 <enr0n> - Looked into pyparsing FTBFS (LP: #1964782)
+
+ 15:07 <ubottu> Launchpad bug 1964782 in pyparsing (Ubuntu) "pyparsing: FTBFS: dh_auto_test: error: pybuild --test -i python{version} -p '3.10 3.9' returned exit code 13" [Undecided, New] https://launchpad.net/bugs/1964782
+
+ 15:07 <enr0n> * Leaving alone for now due to new 'railroad' dependency having no Debian package
+
+ 15:07 <enr0n> - Looked into python-b2sdk FTBFS (LP: #1964973)
+
+ 15:07 <ubottu> Launchpad bug 1964973 in python-b2sdk (Debian) "python-b2sdk: FTBFS: dh_auto_test: error: pybuild --test --test-pytest -i python{version} -p '3.10 3.9' returned exit code 13" [Unknown, Confirmed] https://launchpad.net/bugs/1964973
+
+ 15:07 <enr0n> * Needs a newer version of python3-logfury, have yet to look into packaging
+
+ 15:07 <enr0n> this new version
+
+ 15:08 <enr0n> (done)
+
+ 15:08 <schopin> * Rust: Ongoing work on addressing the vendoring sources concerns from the security team for the rustc MIR.
+
+ 15:08 <schopin> * OpenSSL:
+
+ 15:08 <schopin> - Currently packaging OpenSSL 3.0.2 for Jammy (LP: #1965141), trying to figure out some issues with the test suite.
+
+ 15:08 <ubottu> Launchpad bug 1965141 in openssl (Ubuntu) "openssl: package the new bugfix release 3.0.2" [Undecided, New] https://launchpad.net/bugs/1965141
+
+ 15:08 <schopin> - Uploaded a fix for serf (LP: #1956040)
+
+ 15:08 <ubottu> Launchpad bug 1956040 in serf (Ubuntu) "Malformed TLS handshake with OpenSSL 3.0 (breaks subversion)" [Undecided, Fix Released] https://launchpad.net/bugs/1956040
+
+ 15:08 <schopin> - Worked with athos on a fix for php-dapphp-radius (LP: #1964514)
+
+ 15:08 <ubottu> Launchpad bug 1964514 in php-dapphp-radius (Ubuntu) "FTBFS - test failures due to disabled openssl 3 legacy providers" [Undecided, Confirmed] https://launchpad.net/bugs/1964514
+
+ 15:08 <schopin> - Sponsored alexghiti's fix for netdata riscv64 build to get an libssl3-linked version to the release pocket (LP: #1962837)
+
+ 15:08 <ubottu> Launchpad bug 1962837 in netdata (Ubuntu) "netdata: FTBFS on riscv64" [Undecided, Fix Released] https://launchpad.net/bugs/1962837
+
+ 15:08 <schopin> * Netplan:
+
+ 15:08 <schopin> - Rebased the YAML consolidation branch dedicated to the `set` command
+
+ 15:08 <schopin> - Discussed the new API scheme with slyon to address some newly identified shortcomings
+
+ 15:08 <schopin> * Other distro work:
+
+ 15:08 <schopin> - Sponsored php-symfony-polyfill for athos (LP: #1964709)
+
+ 15:08 <ubottu> Launchpad bug 1964709 in php-symfony-polyfill (Debian) "1.24.0-1ubuntu1 FTBFS: PHP 8.1 and libicu changes" [Unknown, New] https://launchpad.net/bugs/1964709
+
+ 15:08 <schopin> - Patched tinyssh to work with SSH 8.9 (LP: #1964585)
+
+ 15:08 <ubottu> Launchpad bug 1964585 in tinyssh (Ubuntu) "tinyssh: tests fail after OpenSSH upgrade from 8.8 to 8.9" [Undecided, Fix Released] https://launchpad.net/bugs/1964585
+
+ 15:08 <schopin> ✓ done
+
+ 15:08 <sil2100> * Partially sick on Monday
+
+ 15:08 <sil2100> * SRU reviews and releases
+
+ 15:08 <sil2100> - Spent some time on the big netplan.io SRU review
+
+ 15:08 <sil2100> * FFe reviews
+
+ 15:08 <sil2100> * NEW reviews (nullboot, some ignition-* packages)
+
+ 15:08 <sil2100> * Discussed subiquity release-management ideas
+
+ 15:08 <sil2100> * WSL isotracker support
+
+ 15:08 <sil2100> - Iterating on the new isotracker user, sending over the credentials
+
+ 15:08 <sil2100> - Poking for merging of the WSL notify-isotracker changes
+
+ 15:08 <sil2100> * HWE meeting
+
+ 15:08 <sil2100> * Released new core18 to stable
+
+ 15:08 <sil2100> * A lot of work on the new ubuntu-image design
+
+ 15:08 <sil2100> - Lots of discussions with Steve, William and other teams
+
+ 15:09 <sil2100> * RISC-V live installer
+
+ 15:09 <sil2100> - Experimented with livefs-editor to help with injecting subiquity
+
+ 15:09 <sil2100> - Reviewed a related livefs-editor PR from Michael
+
+ 15:09 <sil2100> - Some clean up of debian-cd changes to build the images on infra
+
+ 15:09 <sil2100> - Various debugging
+
+ 15:09 <sil2100> * Preparing new test images for intel-iotg
+
+ 15:09 <sil2100> * Started working on some new UC20 test images for intel-iotg
+
+ 15:09 <sil2100> * Other stuff
+
+ 15:09 <sil2100> (done)
+
+ 15:09 <jawn-smith> * ubuntu-image:
+
+ 15:09 <jawn-smith> * Updating PR per sil2100's feedback
+
+ 15:09 <jawn-smith> * Working on classic image redesign spec
+
+ 15:09 <jawn-smith> * Discussion about gadget package vs gadget file tree under git control
+
+ 15:09 <jawn-smith> * Raspberry Pi:
+
+ 15:09 <jawn-smith> * piboot UC22 testing
+
+ 15:09 <jawn-smith> * Rebuilding kernel and snapd snaps with piboot changes
+
+ 15:09 <jawn-smith> * Preparing config.txt changes for piboot
+
+ 15:09 <jawn-smith> * RISC-V:
+
+ 15:09 <jawn-smith> * Troubleshooting the installer image. Fixed one of the bugs in curtin
+
+ 15:09 <jawn-smith> * Go 1.18 transition
+
+ 15:09 <jawn-smith> * Packaged in Debian and Ubuntu
+
+ 15:09 <jawn-smith> * Test rebuilds done against the released version of Go 1.18
+
+ 15:09 <jawn-smith> * Fixed and uploaded many packages for which Go 1.18 complained about unused variables
+
+ 15:09 <jawn-smith> * Submitted upstream bugs for any projects using SHA1 signed certificates in test cases
+
+ 15:09 <jawn-smith> * Started discussion with security team about how to handle SHA1 certificates in test cases
+
+ 15:09 <jawn-smith> * Wrote information for all failing packages in bug 1964270
+
+ 15:09 <ubottu> Bug 1964270 in golang-defaults (Ubuntu) "Feature Freeze Exception: Update golang-defaults to 1.18" [Undecided, New] https://launchpad.net/bugs/1964270
+
+ 15:09 <jawn-smith> [done]
+
+ 15:10 <bdmurray> Any questions on status?
+
+ 15:10 <doko> - some +1 work on Wed - Sat
+
+ 15:10 <doko> - tbb / onetbb update, to restore numba
+
+ 15:10 <doko> - binutils 2.38 updates for various targets
+
+ 15:10 <doko> - python 3.10.3 updates and distutils/setuptools fixes
+
+ 15:10 <doko> - GCC 12 update
+
+ 15:10 <doko> - LLVM 14 as the default
+
+ 15:10 <doko> - helping Graham with the python3.10-only uploads
+
+ 15:10 <doko> - doing python 3.10 performance testing on various architectures
+
+ 15:10 <doko> (done)
+
+ 15:11 <bdmurray> #topic Release Incoming Bugs
+
+ 15:12 <bdmurray> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html
+
+ 15:12 <bdmurray> bug 1923052 still needs testing / we are waiting to hear back from the reporter
+
+ 15:12 <ubottu> Bug 1923052 in ubiquity (Ubuntu) "screen reader does not read ubiquity window" [High, Incomplete] https://launchpad.net/bugs/1923052
+
+ 15:12 <bdmurray> bug 1958720 is with the server team
+
+ 15:13 <ubottu> Bug 1958720 in pyyaml (Ubuntu) "python3-yaml and python3-six are not co-installable with python-is-python2 in jammy" [High, Incomplete] https://launchpad.net/bugs/1958720
+
+ 15:13 <bdmurray> bug 1962751 have you tested that sil2100?
+
+ 15:13 <ubottu> Bug 1962751 in ubiquity (Ubuntu) "nvidia drivers not installed automatically" [High, Incomplete] https://launchpad.net/bugs/1962751
+
+ 15:13 <sil2100> ...no, let me fetch my laptop in a moment
+
+ 15:13 <bdmurray> bug 1745648
+
+ 15:13 <ubottu> Bug 1745648 in netplan.io (Ubuntu) "netplan renders bond lacp-rate as a timevalue should be 'fast' or 'slow'" [High, Triaged] https://launchpad.net/bugs/1745648
+
+ 15:14 <slyon> that's a very old bug about input validation. I lowered it from Critical to High, but I guess it should be fixed eventually, should be easy
+
+ 15:15 <bdmurray> Does eventually mean for 22.04 or 22.10?
+
+ 15:15 <slyon> 22.10 should be good enough
+
+ 15:16 <bdmurray> So we can change the tags to rls-kk
+
+ 15:16 <bdmurray> bug 1947588
+
+ 15:16 <slyon> wfm
+
+ 15:16 <ubottu> Bug 1947588 in openssl (Ubuntu Jammy) "Infinite Loop in OpenSSL s_server" [Medium, Confirmed] https://launchpad.net/bugs/1947588
+
+ 15:16 <bdmurray> schopin: Did you dig into this at all?
+
+ 15:16 <schopin> sadly no.
+
+ 15:17 <bdmurray> Would a card help?
+
+ 15:17 <schopin> Not really, it's on my private pile already
+
+ 15:18 <bdmurray> Okay
+
+ 15:18 <bdmurray> bug 1618522
+
+ 15:18 <ubottu> Bug 1618522 in netplan.io (Ubuntu) "netplan does not generates .network files just for ethernet" [Medium, Triaged] https://launchpad.net/bugs/1618522
+
+ 15:18 <slyon> that's another bug which should be easy to fix nowadays
+
+ 15:18 <bdmurray> That seems like something we could punt down the line
+
+ 15:18 <slyon> bug I guess we can move it to rls-kk
+
+ 15:18 <slyon> (it as been as-is for >5y)
+
+ 15:18 <bdmurray> Okay, I'll do that then
+
+ 15:19 <bdmurray> bug 1962454 would still be nice to do but not worth carding
+
+ 15:19 <ubottu> Bug 1962454 in apport (Ubuntu) "Oops pages show wrong time window in JournalErrors" [Low, Triaged] https://launchpad.net/bugs/1962454
+
+ 15:19 <bdmurray> ubug 1965180
+
+ 15:20 <bdmurray> bug 1965180
+
+ 15:20 <ubottu> Bug 1965180 in software-properties (Ubuntu) "apt-add-repository requires --login for private repos, breaking automated workflows" [Undecided, New] https://launchpad.net/bugs/1965180
+
+ 15:20 <juliank> needs fixing
+
+ 15:21 <juliank> probably comes from ddstreet's refactoring?
+
+ 15:21 <ddstreet> does, yeah
+
+ 15:21 <bdmurray> Is that something you'll fix ddstreet or should we take it?
+
+ 15:21 <ddstreet> if you're already on it, go for it
+
+ 15:22 <ddstreet> i can work on it soon if not
+
+ 15:22 <juliank> we are deciding whether to put it i nthe backlog here :)
+
+ 15:22 <bdmurray> We are making a choice about taking it on, which I guess we'll do as a backstop.
+
+ 15:22 <ddstreet> yep sounds good
+
+ 15:23 <bdmurray> bug 1965293
+
+ 15:23 <ubottu> Bug 1965293 in linux (Ubuntu Impish) "systemd/248.3-1ubuntu8.2 ADT test failure (tests-in-lxd) with linux/5.13.0-37.42" [Undecided, Incomplete] https://launchpad.net/bugs/1965293
+
+ 15:23 <slyon> this was created today. systemd autopkgtests seem to have regressed in release on Impish and Focal.
+
+ 15:23 <slyon> we should card & investigate this.
+
+ 15:23 <bdmurray> That sounds like High to me
+
+ 15:24 <slyon> ack
+
+ 15:25 <bdmurray> The tasksel bugs need to be rethought as removing the package isn't easy but let's move those down to rls-kk
+
+ 15:25 <bdmurray> bug 1964923
+
+ 15:25 <ubottu> Bug 1964923 in ubuntu-drivers-common (Ubuntu) "list-oem-metapackages crashed with AttributeError in packages_for_modalias(): 'Cache' object has no attribute 'packages'" [High, Confirmed] https://launchpad.net/bugs/1964923
+
+ 15:26 <bdmurray> The crash is actually in ubuntu-drivers-common so we should ping tseliot about it
+
+ 15:26 <juliank> this
+
+ 15:26 <juliank> this needs fixing in update-notifier
+
+ 15:26 <bdmurray> Or juliank you were talking about some changes recently made is this a result of that?
+
+ 15:26 <juliank> yeah presumably regression from u-d-c switching to apt_pkg
+
+ 15:27 <juliank> we have software-properties changes to accomodate that, u-n needs similar ones presumably
+
+ 15:27 <bdmurray> Okay, so let's target and card that
+
+ 15:27 <juliank> (oh I forgot  Ireviewed those in my status :D)
+
+ 15:27 <bdmurray> We should all use "some stuff" in our status
+
+ 15:27 <bdmurray> that's it for rls-jj
+
+ 15:27 <bdmurray> rls-ii is empty
+
+ 15:28 <bdmurray> rls-ff has the /boot bug
+
+ 15:28 <bdmurray> I guess I'll reply to the email thread again
+
+ 15:28 <bdmurray> proposed migration jawn-smith
+
+ 15:28 <jawn-smith> o/
+
+ 15:28 <schopin> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:29 <jawn-smith> first up is pygments and that was ginggs
+
+ 15:29 <jawn-smith> ginggs is out, so we'll wait on that for now
+
+ 15:29 <doko> on vacation this week
+
+ 15:29 <jawn-smith> next up is binutils
+
+ 15:29 <jawn-smith> alexghiti: is actually going to take a look at pygments
+
+ 15:30 <jawn-smith> any binutils experts?
+
+ 15:30 <doko> yes, but no crash expert ;p
+
+ 15:31 <jawn-smith> doko: crash vs binutils, thanks!
+
+ 15:31 <jawn-smith> systemd: slyon ?
+
+ 15:31 <slyon> ack
+
+ 15:31 <jawn-smith> alright, all that's left to look at is zlib
+
+ 15:31 <jawn-smith> any volunteers to look at zlib regressions before people get voluntold?
+
+ 15:31 <bdmurray> I'm going to look at zlib a bit since I uploaded it
+
+ 15:32 <bdmurray> But I think fheimes should too
+
+ 15:32 <jawn-smith> some of these are covered already: crash and systemd
+
+ 15:32 <bdmurray> slyon: Is the binutils task in bug 1940505 still valid?
+
+ 15:32 <ubottu> Bug 1940505 in binutils (Ubuntu) "monero FTBFS on riscv64" [Undecided, New] https://launchpad.net/bugs/1940505
+
+ 15:32 <slyon> bdmurray: most probably not
+
+ 15:33 <jawn-smith> bdmurray: is going to look at all of the zlib regressions in theory
+
+ 15:33 <jawn-smith> I'm guessing quite a few of these just need retries
+
+ 15:33 <jawn-smith> so between fheimes and bdmurray we'll consider zlib covered
+
+ 15:34 <jawn-smith> python3.10 only has one regression so far
+
+ 15:34 <jawn-smith> anyone eager to look at gnudatalanguage vs python3.10?
+
+ 15:34 <jawn-smith> we'll just retry that test once autopkgtest queues are settled down
+
+ 15:35 <jawn-smith> and then if it still fails we'll just assign it to waveform
+
+ 15:35 <jawn-smith> python + arm64 = waveform
+
+ 15:35 <waveform> who's off next week ;)
+
+ 15:35 <jawn-smith> and that's it for proposed migration. Back to you bdmurray
+
+ 15:36 <bdmurray> schopin: What is the status of the openssl transition?
+
+ 15:36 <schopin> https://discourse.ubuntu.com/t/openssl-3-0-transition-plans/24453
+
+ 15:36 <juliank> I wanna say this transition worked very smoothly from my limited sight into it :)
+
+ 15:37 <bdmurray> So there are like 8 packages needing work?
+
+ 15:37 <schopin> Besides the couple of NBS packages remaining, there's a handful of packages currently in the release pocket that are buggy with openssl 3.0
+
+ 15:37 <schopin> I'm a tiny bit worried about the Ruby ones
+
+ 15:38 <doko> are we able to remove these?
+
+ 15:38 <schopin> I doubt it. ruby-net-ssh is kinda important :)
+
+ 15:39 <bdmurray> Okay, well let's try and help out with these
+
+ 15:40 <schopin> I'll prepare the list of rdeps for each package, just in case.
+
+ 15:40 <bdmurray> enr0n it might be something for you to look at during +1
+
+ 15:40 <bdmurray> #topic AOB
+
+ 15:40 <juliank> I'm out tomorrow
+
+ 15:40 <schopin> So am I.
+
+ 15:40 <doko> POWER9
+
+ 15:40 <ogayot> So will I
+
+ 15:41 <bdmurray> I've an errand tomorrow morning so will be out half the day
+
+ 15:41 <bdmurray> doko ?
+
+ 15:41 <doko> we raised the baseline in December, so we should do no-change uploads for all packages in main which were not uploaded since the baseline change.
+
+ 15:41 <doko> any volunteers for that?
+
+ 15:42 <sil2100> ...is that something I could do during my +1? Or rather outside of the +1 focus?
+
+ 15:42 <bdmurray> all packages doesn't sound foundations exclusive
+
+ 15:43 <doko> sure, anybody could do that, just not all at once
+
+ 15:43 <bdmurray> So I'd say yes
+
+ 15:43 <sil2100> I could tackle that next week then
+
+ 15:44 <doko> just before the beta?
+
+ 15:44 <bdmurray> The beta is in 2 weeks
+
+ 15:44 <doko> ahh, ok
+
+ 15:44 <sil2100> If someone wants to start the work this week, sure
+
+ 15:44 <sil2100> I can continue on Monday
+
+ 15:45 <bdmurray> Alright I think that covers everything
+
+ 15:46 <bdmurray> thanks everybody
+
+ 15:46 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

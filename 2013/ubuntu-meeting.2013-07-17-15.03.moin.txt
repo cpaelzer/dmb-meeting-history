@@ -1,0 +1,702 @@
+== Meeting information ==
+ * #ubuntu-meeting Meeting, 17 Jul at 15:03 &mdash; 16:06 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2013/ubuntu-meeting.2013-07-17-15.03.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning round ===
+The discussion about "Lightning round" started at 15:03.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:23.
+
+
+=== upstart and android ===
+The discussion about "upstart and android" started at 15:27.
+
+
+
+
+== Vote results ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * jodh (64)
+ * slangasek (62)
+ * stgraber (45)
+ * xnox (27)
+ * rsalveti (22)
+ * bdmurray (22)
+ * ubottu (21)
+ * ev (20)
+ * cjwatson (11)
+ * stokachu (9)
+ * doko (6)
+ * barry (5)
+ * ogra_ (5)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:03 <slangasek> #startmeeting
+
+ 15:03 <meetingology> Meeting started Wed Jul 17 15:03:42 2013 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:03 <meetingology> 
+
+ 15:03 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:03 <slangasek> [TOPIC] Lightning round
+
+ 15:04 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek cjwatson xnox stokachu)
+
+ 15:04 <slangasek> stgraber slangasek doko stokachu xnox jodh barry ev cjwatson bdmurray
+
+ 15:04 <slangasek> stgraber: you're up :)
+
+ 15:06 * stgraber waves
+
+ 15:06 <stgraber> slangasek: sorry, just finished typing :)
+
+ 15:06 <stgraber> Blueprint-related work:
+
+ 15:06 <stgraber> - Image based updates (BLUEPRINT: foundations-1305-image-based-updates)
+
+ 15:06 <stgraber> - Landed a new version of the upgrader, that's now feature complete (does GPG checking)
+
+ 15:06 <stgraber> - Worked on some code to make mark-current add a stamp file in the cdimage build directories for import-cdimage to parse
+
+ 15:06 <stgraber> - Added code to generate a system-image configuration file at boot time
+
+ 15:06 <stgraber> - Fixed a few subtile bugs in import-cdimage causing broken upgrade paths when some files are identical to the previous build
+
+ 15:06 <stgraber> - Did a test backport and raised RT to get pxz and android-tools in precise-cat
+
+ 15:06 <stgraber> Other work:
+
+ 15:06 <stgraber> - LXC
+
+ 15:06 <stgraber> - Linux Plumbers mini-conference preparation
+
+ 15:06 <stgraber> - Some tweaks to lxc-start-ephemeral and the python binding
+
+ 15:06 <stgraber> - Poked the security team about the MIR
+
+ 15:06 <stgraber> - Usual code reviews
+
+ 15:06 <stgraber> - Network
+
+ 15:06 <stgraber> - Uploaded a new openvpn now that we have iproute2
+
+ 15:07 <stgraber> - Helped doko figure out why isc-dhcp was broken after his merge
+
+ 15:07 <stgraber> - Other
+
+ 15:07 <stgraber> - Some shim testing
+
+ 15:07 <stgraber> 
+
+ 15:07 <stgraber> TODO:
+
+ 15:07 <stgraber> - THIS WEEK: Get all UEFI systems to install and boot shim-signed (even when not running under secureboot)
+
+ 15:07 <stgraber> - THIS WEEK: Figure out the needed changes to run the phablet test suite on readonly images
+
+ 15:07 <stgraber> - THIS WEEK: Add an option to phablet-flash to bootstrap an image based system
+
+ 15:07 <stgraber> - THIS WEEK: Land the mark-current change on cdimage and apply matching change to import-cdimage
+
+ 15:07 <stgraber> - THIS WEEK: Update pack-system to include the recovery partition image (not ideal but better than not updating it at all)
+
+ 15:07 <stgraber> 
+
+ 15:07 <stgraber> TRAVEL/VACATION:
+
+ 15:07 <stgraber> - NEXT WEEK: I'll be in London all week for the release engineering sprint
+
+ 15:07 <stgraber> - WEEK AFTER: I'll be on vacation, only working on the 2nd of August (Friday)
+
+ 15:07 <stgraber> - WEEK AFTER that: I'll be on vacation Monday-Wednesday, working on Thursday (8th) and Friday (9th)
+
+ 15:07 <stgraber> - WEEK AFTER that: I'll be at Debconf2013 all week
+
+ 15:07 <stgraber> - => back to normal on the 21st of August
+
+ 15:07 <stgraber> - => as a result of all that, I'll be missing the next 4 team meetings
+
+ 15:07 <stgraber> 
+
+ 15:07 <stgraber> (DONE)
+
+ 15:07 <ev> oh hai (pickup time got moved)
+
+ 15:09 <slangasek> stgraber: is your android-tools precise-cat backport any different from the one in the ubuntu sdk ppa (besides version #)?
+
+ 15:10 <stgraber> slangasek: probably not, I asked IS for a clean backport from precise (I tested it with backportpackage)
+
+ 15:10 <slangasek> ev: hey there!
+
+ 15:10 <stgraber> slangasek: I really just need simg2img on nusakan (currently using a local copy which isn't ideal)
+
+ 15:10 <slangasek> stgraber: right
+
+ 15:10 <slangasek> * prep for client sprint on IoM (in two weeks)
+
+ 15:10 <slangasek> * lots of internal meetings
+
+ 15:10 <slangasek> * following up on arm64 bootstrap
+
+ 15:10 <slangasek> * broke unity builds over the weekend by getting rid of unity-common; this led to a renewed discussion about getting all our Ubuntu Touch packages out of ppas and into the archive, the deadline is now end of month
+
+ 15:10 <slangasek> * still working on parted this week
+
+ 15:10 <slangasek> * still working on shim in the lead-up to 12.04.3
+
+ 15:10 <slangasek> (done)
+
+ 15:10 <slangasek> doko: your turn
+
+ 15:11 <xnox> stgraber: pxz currently segfaults for me on android.tar  bug 1199895, which is simply possibly bug 1096782
+
+ 15:11 <ubottu> bug 1199895 in pxz (Ubuntu) "pxz crashed with SIGSEGV in _IO_vsnprintf()" [Undecided,New] https://launchpad.net/bugs/1199895
+
+ 15:11 <ubottu> bug 1096782 in pxz (Ubuntu) "pxz do not handle >4GB size files" [Undecided,New] https://launchpad.net/bugs/1096782
+
+ 15:11 <xnox> would we be affected?
+
+ 15:11 <doko> - Linaro Connect last week
+
+ 15:11 <doko> - gcc-4.7 C++11 bug fix backported
+
+ 15:11 <doko> - gcc-4.7 Linaro release and upload
+
+ 15:11 <doko> - still trying to sort out network setup for the arm64 bootstrap
+
+ 15:11 <doko> - arm64 bootstrap, starting with languages, ruby, lua done, working on php, guile
+
+ 15:11 <doko> (done)
+
+ 15:12 <stokachu> just one bug this week: bug 1199037 - spent the better part of the week learning juju and deploying some internal applications
+
+ 15:12 <ubottu> bug 1199037 in python-eventlet (Ubuntu Raring) "backport eventlet exception context fix" [Undecided,In progress] https://launchpad.net/bugs/1199037
+
+ 15:12 <stokachu> done
+
+ 15:12 <stgraber> xnox: ah, haven't had any problem with my delta or rootfs tarballs so far
+
+ 15:13 <stgraber> xnox: I'm certainly not affected by the >4GB one, not sure about the other
+
+ 15:14 <xnox> bah, me!
+
+ 15:14 <xnox> * upstart code review
+
+ 15:14 <xnox> * upstart 1.9.1 upload into saucy
+
+ 15:14 <xnox> * sru on hold, pending resolution of bug 1199778
+
+ 15:14 <xnox> * android build:
+
+ 15:14 <xnox> - <<100MB source package now (dropped chromium, multiple copies of
+
+ 15:14 <xnox> stdc++ libraries, all prebuilt binaries, tools and not-needed files.
+
+ 15:14 <ubottu> bug 1199778 in upstart (Ubuntu) "upstart crashes if re-exec'ed with active chroot sessions" [High,In progress] https://launchpad.net/bugs/1199778
+
+ 15:14 <xnox> - split out vendor blobs into a separate src&binary package (it's
+
+ 15:14 <xnox> not going to change)
+
+ 15:14 <xnox> - should be relatively straight forward to make a copyright file for
+
+ 15:14 <xnox> and upload into the archive. Will need security team review of
+
+ 15:14 <xnox> embedded copies of code and if/which need CVE tracking (agreed with
+
+ 15:14 <xnox> security team)
+
+ 15:14 <xnox> - refresh toolchain against doko's gcc-4.7 upload, dropped binutils patches.
+
+ 15:14 <xnox> * Plumbers/LinuxCon upstart talk accepted by james and myself. \o/
+
+ 15:14 <xnox> * this week:
+
+ 15:14 <xnox> - push out updated upstart SRU
+
+ 15:14 <xnox> - finish up with android build and upload into the archive
+
+ 15:14 <xnox> - thus moving on to QML/OOBE app for next week
+
+ 15:14 <xnox> ..
+
+ 15:14 <jodh> * foundations-1305-upstart-app-launching:
+
+ 15:14 <jodh> - libupstart now in the archive.
+
+ 15:14 <jodh> * foundations-1305-upstart-work-items:
+
+ 15:14 <jodh> - upstart-dconf-bridge: Progress on reacting to jobs being
+
+ 15:14 <jodh> added/removed (slow as we have to use GDBusProxy rather than the
+
+ 15:14 <jodh> usual NIH routines).
+
+ 15:14 <jodh> * upstart
+
+ 15:15 <jodh> - Spent last few days working on the best fix for bug 1199778.
+
+ 15:15 <jodh> - Wrote 2 new tests and resubmitted the MP:
+
+ 15:15 <jodh> https://code.launchpad.net/~jamesodhunt/upstart/bug-1199778/+merge/174138
+
+ 15:15 <jodh> - "Android event bridge" (more details to follow at the end of the meeting).
+
+ 15:15 <jodh> - worked on the host side (currently called upstart-text-bridge, but
+
+ 15:15 <jodh> really needs a better name! :-)
+
+ 15:15 <jodh> - Started to look at the Android side (which will be heavily
+
+ 15:15 <jodh> influenced by 'watchprops').
+
+ 15:15 <jodh> * TODO
+
+ 15:15 <jodh> - Aside from the unfinished items above, work on getting some
+
+ 15:15 <jodh> DEP-8 integration tests running for Upstart (which will result in
+
+ 15:15 <jodh> the python module getting merged for Upstart testing only).
+
+ 15:15 <jodh> ༀ
+
+ 15:15 <barry> image updater: LP: #1199498, LP: #1199488, LP: #1199981, LP: #1199986, LP: #1199982, LP: #1195420, LP: #1195479, LP: #1200981.  meetings.  upload versions 0.3-0.6
+
+ 15:15 <ubottu> Launchpad bug 1199498 in Ubuntu system image "Update client for updated ubuntu_command format" [High,Fix released] https://launchpad.net/bugs/1199498
+
+ 15:15 <ubottu> Launchpad bug 1199488 in Ubuntu system image "Include the archive-master keyring in system-image-common" [High,Fix released] https://launchpad.net/bugs/1199488
+
+ 15:15 <ubottu> Launchpad bug 1199981 in Ubuntu system image "Reboot class is missing reboot() method override" [Critical,Fix released] https://launchpad.net/bugs/1199981
+
+ 15:15 <ubottu> Launchpad bug 1199986 in Ubuntu system image "Fix ubuntu_command file ordering" [Critical,Fix released] https://launchpad.net/bugs/1199986
+
+ 15:15 <ubottu> Launchpad bug 1199982 in Ubuntu system image "/var/lib/system-image must be present in packaging" [Critical,Fix released] https://launchpad.net/bugs/1199982
+
+ 15:16 <barry> d/l service: discussions/status with mandel.  need to do more on this asap, with click package and upgrader client integration.
+
+ 15:16 <barry> other: work to eliminate configparser as configglue dep.  discussions w/configparser upstream about various problems we encountered.  tox 1.5.0 (debian bug 702009), codespeak-lib 1.4.15 (with pull request in debian to re-enable dep8 tests, and debian bug 678398).  python bug 18440 (hash() truncates __hash__() to machine bit width).  syncpackage codespeak-lib (failed).  syncpackage tox.
+
+ 15:16 <ubottu> Debian bug 702009 in tox "tox: Upgrade tox to 1.4.3" [Normal,Fixed] http://bugs.debian.org/702009
+
+ 15:16 <ubottu> Debian bug 678398 in codespeak-lib "codespeak-lib: Enable test suite (as DEP-8 tests)" [Normal,Open] http://bugs.debian.org/678398
+
+ 15:16 <ubottu> bug 18440 in xorg (Ubuntu) "xserver-xorg 6.8.2-32: xv is corrupted for some video sizes" [Medium,Fix released] https://launchpad.net/bugs/18440
+
+ 15:16 <barry> this week: working furiously on LP: #1192585, leading to work on minimal ui.
+
+ 15:16 <ubottu> Launchpad bug 1192585 in Ubuntu system image "Add a dbus API" [High,In progress] https://launchpad.net/bugs/1192585
+
+ 15:16 <barry> 𝄢
+
+ 15:16 <slangasek> jodh: why "text" bridge? :)
+
+ 15:17 <ev> I guess I'll paste here again so the logs have it
+
+ 15:17 <ev> This week has again been focused on the Cassandra move into Prodstack.
+
+ 15:17 <ev> We've finally gotten past the hurdles around the initial repair of
+
+ 15:17 <ev> etcassandra/0 and are currently up to etcassandra/3 (we need a minimum
+
+ 15:17 <ev> of six nodes built to have at least one copy of all the data).
+
+ 15:17 <ev> James Troup and I had some very productive discussions with the folk
+
+ 15:17 <ev> at DataStax and Acunu for a support contract, and possibly to have
+
+ 15:17 <ev> Acunu Analytics handle top-k for errors.ubuntu.com.
+
+ 15:17 <ev> I'm exercising Analytics in canonistack as preparation for getting it
+
+ 15:17 <ev> turned on in production to demo it with real world data. More on that
+
+ 15:17 <ev> soon.
+
+ 15:17 <ev> I've also been working on getting automatic error reporting set for
+
+ 15:17 <ev> the server and mobile (building the settings UI, teaching apport to be
+
+ 15:17 <ev> quiet, etc). I'm going to be optimistic and say that we'll have
+
+ 15:17 <ev> automatic error reporting turned on for the phone by the end of the
+
+ 15:17 <ev> week.
+
+ 15:17 <ev> While waiting for g++ to melt my CPU, I've been porting our pyjuju
+
+ 15:17 <ev> deployment code over to gojuju.
+
+ 15:17 <ev> done
+
+ 15:17 <cjwatson> foundations-1305-click-package:
+
+ 15:17 <cjwatson> - Wrote a PackageKit plugin for click.
+
+ 15:17 <cjwatson> - Added a "click list" command, hooked into PK.
+
+ 15:17 <cjwatson> - Some work to make things build on precise.
+
+ 15:17 <cjwatson> - Refactoring hooks design to meet needs of AppArmor and desktop file handling.  Aiming to finish this by end of week.
+
+ 15:17 <cjwatson> - Preparation for demo at end of month.
+
+ 15:17 <cjwatson> Yet more Apache 2.4 / PHP 5.5 transition madness.
+
+ 15:17 <cjwatson> Made net-retriever's deduplication code lots faster for large Packages files (bug 1067934).
+
+ 15:17 <ubottu> bug 1067934 in net-retriever (Ubuntu Raring) "spends 10+ minutes deduplicating Package lists" [High,In progress] https://launchpad.net/bugs/1067934
+
+ 15:18 <jodh> slangasek: just "because" :) As I say, better names welcome. I don't want to call it the upstart-android-bridge though.
+
+ 15:18 <cjwatson> Filed RT#63122 for a new host for offloaded archive jobs.
+
+ 15:18 <cjwatson> ..
+
+ 15:18 <bdmurray> submitted RT #63071 regarding updating errors and daisy
+
+ 15:18 <bdmurray> tested deployment of new version of errors and daisy
+
+ 15:18 <bdmurray> resolved an OOPS in errors (writing to bugtocrashsignature) when creating a bug in Launchpad
+
+ 15:18 <bdmurray> tested update-notifier crash notification change (using MATCH instead of FILE)
+
+ 15:18 <bdmurray> uploaded update-notifier to saucy with a new version of the crash notification
+
+ 15:18 <bdmurray> uploaded update-notifier fixing LP: #1200044
+
+ 15:18 <ubottu> Launchpad bug 1200044 in update-notifier (Ubuntu) "update-motd-updates-available wastes 1 second on every login by forking hundreds of /usr/bin/stat" [Medium,Fix released] https://launchpad.net/bugs/1200044
+
+ 15:19 <bdmurray> investigation into and fix for bug LP: #1200135
+
+ 15:19 <bdmurray> uploaded R SRU of fix for bug LP: #1199157 (verified it too)
+
+ 15:19 <bdmurray> modified ubuntu-release-upgrader not to use GObject.threads_init()
+
+ 15:19 <bdmurray> SRU verification of LP: #1078697
+
+ 15:19 <bdmurray> research into sessioninstaller / dbus-python LP: #771404
+
+ 15:19 <ubottu> Launchpad bug 1200135 in ubuntu-release-upgrader (Ubuntu) "Raring to saucy upgrade fails with "AttributeError: Values instance has no attribute 'devel_release'"" [High,Fix released] https://launchpad.net/bugs/1200135
+
+ 15:19 <ubottu> Launchpad bug 1199157 in ubuntu-release-upgrader (Ubuntu Raring) "proposed should be disabled on upgrade to development release" [Medium,Fix committed] https://launchpad.net/bugs/1199157
+
+ 15:19 <ubottu> Launchpad bug 1078697 in apt (Ubuntu Lucid) "Ubuntu archive is missing SHA-1/SHA-256 hashes for some packages" [High,Triaged] https://launchpad.net/bugs/1078697
+
+ 15:19 <ubottu> Launchpad bug 771404 in dbus-python (Ubuntu) "aptd crashed with UnicodeEncodeError in _method_reply_error(): 'ascii' codec can't encode characters in position 20-28: ordinal not in range(128)" [Medium,Confirmed] https://launchpad.net/bugs/771404
+
+ 15:19 <bdmurray> modified bugbot to subscribe me to regression bugs (from proposed) w/o an SRU bug
+
+ 15:19 <bdmurray> package to team mapping work
+
+ 15:19 <bdmurray> created a csv file of the package to team mapping for the current teams we are using in LP
+
+ 15:19 <bdmurray> review of packages added to seeds in raring
+
+ 15:19 <bdmurray> ␗
+
+ 15:19 <bdmurray> wrote a tool to query the archive to find unsubscribed packages
+
+ 15:19 <cjwatson> Oh, I forgot to mention, I also got the fix for bug 1192286 verified - it's awaiting the next nodowntime deployment now
+
+ 15:19 <ubottu> bug 1192286 in Launchpad itself "Allow phased update percentage to be set when copying a package" [High,Fix committed] https://launchpad.net/bugs/1192286
+
+ 15:20 <bdmurray> cjwatson: thanks!
+
+ 15:22 <bdmurray> I'm done if that was not clear
+
+ 15:23 <slangasek> \o/
+
+ 15:23 <slangasek> [TOPIC] AOB
+
+ 15:23 <slangasek> anything else?
+
+ 15:23 <stokachu> could i get an ack on bug 1199037
+
+ 15:23 <xnox> jodh: bionic-upstart-bridge (on android side) upstart-bionic-bridge (on host/ubuntu side)
+
+ 15:23 <ubottu> bug 1199037 in python-eventlet (Ubuntu Raring) "backport eventlet exception context fix" [Undecided,In progress] https://launchpad.net/bugs/1199037
+
+ 15:23 <stokachu> could i please*
+
+ 15:24 <slangasek> stokachu: "ack" :-)
+
+ 15:24 <stokachu> slangasek: thank you! :D
+
+ 15:24 <slangasek> stokachu: is it waiting for sponsorship or SRU queue approval?
+
+ 15:24 <jodh> xnox: I'd rather not make any reference to android/bionic on the host side as the bridge is generic.
+
+ 15:24 <stokachu> slangasek: theyve linked the related branch and i dont believe its been uploaded yet
+
+ 15:24 <bdmurray> I'll be on holiday from the 22nd to the 31st.
+
+ 15:25 <bdmurray> stokachu: it looks to me like it needed some minor fixing
+
+ 15:25 <slangasek> bdmurray: can you follow up on it?
+
+ 15:26 <stokachu> bdmurray: would you mind commenting and ill work with the engineer to get it in shape
+
+ 15:26 <stokachu> i need to write a lint tool or something for these outside requests
+
+ 15:26 <bdmurray> sure, I'll comment and watch for fixes
+
+ 15:26 <stokachu> bdmurray: thanks man i appreciate it
+
+ 15:27 <slangasek> [TOPIC] upstart and android
+
+ 15:28 <slangasek> so today's in-depth topic is the upstart android bridge jodh is working on
+
+ 15:28 <slangasek> timely and topical!
+
+ 15:28 * slangasek yields the floor to jodh
+
+ 15:28 <jodh> slangasek: thanks.
+
+ 15:28 <jodh> you may have noticed that as of Monday the touch images are now running a Session Init.
+
+ 15:29 <jodh> All the android bits are now running in the android lxc container.
+
+ 15:29 <jodh> The issue this bridge is trying to solve though is that upstart services on the host side (ubuntu) need to know when specific android services in the container are "ready".
+
+ 15:30 <jodh> I outlined this in a post recently to ubuntu-devel: https://lists.ubuntu.com/archives/ubuntu-devel/2013-July/037469.html
+
+ 15:30 <jodh> Currently, some of the session jobs are using heuristics (ahem) to determine when certain android services are available but they are not reliable.
+
+ 15:30 <slangasek> heuristics like "sleep", I believe ;)
+
+ 15:30 <jodh> slangasek: right :(
+
+ 15:31 <slangasek> and I think the ofono job is also respawning messily when the rild socket comes and goes
+
+ 15:31 <jodh> so what this bridge needs to do is somehow detect when android services are ready and create an upstart event that jobs on the host side (potentially system and session I think?) can make use of.
+
+ 15:31 <jodh> slangasek and I are not terribly happy with the design as it stands so if anyone knows a better way speak up.
+
+ 15:32 <jodh> The plan currently though is to:
+
+ 15:32 <jodh> - create an *android* service that runs in early android boot (that is to say some time after the lxc container starts).
+
+ 15:33 <jodh> this service will run before any other android service and will "hook" into the service manager facility provided by android init (basically a block of shared-memory it updates when things change).
+
+ 15:33 <jodh> this service will also attempt to connect to an already-running bridge on the host side and squirt name=value pairs over the wire.
+
+ 15:33 <jodh> the bridge on the host side will then emit upstart events like 'android-service $name=$value'.
+
+ 15:34 <slangasek> so from what rsalveti had said, I thought the plan on the android side was simpler than that... I thought they were modifying android init to dump the android service states over a socket
+
+ 15:34 * rsalveti checks backlog
+
+ 15:34 <jodh> well, that was the original idea, but we don't need to modify androids init as it already provides this shared-memory facility (used by getprops/watchprops/etc).
+
+ 15:35 <rsalveti> slangasek: yeah, the additional service will be quite small, so don't need to change the init itself
+
+ 15:35 <slangasek> ok
+
+ 15:35 <jodh> so, on the host side, jobs should eventually be able to specify things like:
+
+ 15:35 <stgraber> jodh: I'm assuming the actual exchange between host and container is a socket created by the bridge on the host that's bind-mounted into the container?
+
+ 15:35 <rsalveti> but it'll be called when starting init
+
+ 15:35 <jodh> start on :sys:android-property init.svc.ueventd=running
+
+ 15:35 <jodh> when the ueventd (androids version of udev) daemon is running.
+
+ 15:36 <slangasek> why would it be bind mounted instead of using an abstract socket?
+
+ 15:36 <jodh> stgraber: yes, the host side will create the socket. I might need your help on the bind-mounting of it though :)
+
+ 15:36 <slangasek> you shouldn't need to bind mount anything
+
+ 15:36 <stgraber> slangasek: we tend to prefer bind-mounts of real socket vs abstract socket because if we ever choose to use a separate netns for the container, access to abstract sockets won't be possible (as they'd live in different namespaces)
+
+ 15:36 <jodh> we could use a real socket but security might be a concern.
+
+ 15:37 <rsalveti> yeah
+
+ 15:37 <stgraber> slangasek: the kernel has explicit logic in it for bind-mounted sockets to be accessible across namespaces so it's the preferred way of doing things
+
+ 15:37 <slangasek> stgraber: I can see that being desirable for containers generally, but we're already relying on abstract sockets for Touch
+
+ 15:38 <slangasek> and upstart makes heavy use of abstract sockets throughout - so I don't see the advantage of bind mounting
+
+ 15:38 <stgraber> slangasek: ok, I guess if we already really on access to Android abstract sockets from Ubuntu, then it won't make things much worse (and it's not terribly likely we'll turn on the netns for the Android container any time soon anyway)
+
+ 15:38 <rsalveti> jodh: do you know when you'll get enough time to start the implementation there? just so I can sync it with some other changes I'm doing in the android side
+
+ 15:40 <jodh> rsalveti: I need to discuss with slangasek before committing to timings. As mentioned, I've got a basic bridge on the host side and have been sniffing around bionic (somewhat misnamed perhaps? :-) to see how much effort it will be for me to write the android side. Oh and learning the Android.mk bits.
+
+ 15:40 <slangasek> rsalveti: so I've asked jodh to address autopkgtest of upstart first before doing any more feature work; I'd assume that puts the android bridge at least 2 weeks out
+
+ 15:40 <rsalveti> slangasek: jodh: right, ok, as this will be a major improvement :-) should fix all the races we're having in there
+
+ 15:41 <slangasek> jodh: so what are the bits of the design that you're not happy with currently?
+
+ 15:42 <slangasek> rsalveti: and the plan is still to make ueventd a "run-once" service in the android container?
+
+ 15:42 <jodh> well, I was hoping we could somehow make the android service manager accessible to the host to allow a single application to handle the injection of the events.
+
+ 15:42 <rsalveti> jodh: I can set up the git repo and a stub in there (with a stub .c/Android.mk) if that helps you
+
+ 15:42 <jodh> rsalveti: great - thanks!
+
+ 15:42 <rsalveti> slangasek: yes
+
+ 15:42 <rsalveti> slangasek: we'll get a init.svc.ueventd stopped
+
+ 15:43 <slangasek> jodh: ah, so you don't like having to run a daemon both in the host and in the container?
+
+ 15:43 <slangasek> rsalveti: right :)
+
+ 15:43 <jodh> rsalveti: btw - do we have any facility (like androgenizer) to handle autoconf packages in bionic land?
+
+ 15:43 <slangasek> I guess the problem with trying to do it outside the container is that it would be racy trying to start listening for events inside the container
+
+ 15:43 <jodh> rsalveti: autotools I mean
+
+ 15:43 <rsalveti> you can manage some services via the property system as well
+
+ 15:44 <slangasek> you really need something within the container to synchronously kick things off
+
+ 15:44 <rsalveti> jodh: no :-( all pure makefiles
+
+ 15:44 <jodh> rsalveti: ack
+
+ 15:44 <ogra_> rsalveti, we should probably work out some sleeps or so to improve the races a bit, i recently start seeing ueventd acting up on maguro too
+
+ 15:44 <ogra_> that wasnt the case before we switched to upstart sessions
+
+ 15:44 <ogra_> (we got to fast)
+
+ 15:44 <rsalveti> ogra_: right, that's why I want us to have the bridge asap :-)
+
+ 15:44 <rsalveti> avoid more hacks
+
+ 15:44 <ogra_> so that we can somehow survive these two extra weeks
+
+ 15:45 <rsalveti> ogra_: sounds fine, if that really helps us
+
+ 15:45 <ogra_> dunno, i'll do some tests
+
+ 15:46 <slangasek> yeah, slowing things down with a sleep in the meantime is probably best
+
+ 15:47 <rsalveti> sleep, sed and grep, we can solve everything with those tools
+
+ 15:48 <slangasek> jodh: so I think it would be possible, and might reduce the memory usage, to have the synchronous trigger within the container be a one-shot program that connects to the host's socket with a simple "the container is ready" message
+
+ 15:48 <xnox> jodh: you should be able to simply $ apt-get install gcc-arm-linux-androideabi and do ./configure --host=arm-linux-androideabi; which will build for android user-space and link against bionic. Then just adb push your binaries and they will work.
+
+ 15:49 <jodh> one issue we have is how to tell the android service where to connect. We could hard-code that somewhere (in 2 places!) but maybe we could pass that in as an env var to the lxc container? Security team might want to get involved in this plan.
+
+ 15:49 <xnox> jodh: in terms of getting it on to the images, we have ability to fetch binaries like that without any Android.mk madness.
+
+ 15:49 <slangasek> so: host launches bridge; bridge listens on (abstract) socket; host launches container; container starts init; init runs "tell-upstart-I.m-here"; t-u-i-h connects to abstract socket and sends message; bridge receives message, connects to android init shared memory; bridge acks message to t-u-i-h; t-u-i-h exits; android init continues starting other services
+
+ 15:49 <rsalveti> xnox: but I'm hoping that the service will be small enough to be included in there by default
+
+ 15:49 <jodh> slangasek: not sure I understand - there are multiple android services that the service manager will notify us about.
+
+ 15:49 <xnox> jodh: caveats apply, that you are building against bionic with incomplete pthreads, no exceptions and partial implementation with many stubs everywhere.
+
+ 15:50 <slangasek> jodh: see above
+
+ 15:50 <rsalveti> xnox: until we do some more progress on your work and get that as default
+
+ 15:50 <xnox> jodh: or me/rsalveti other android gurus will package it later =)
+
+ 15:50 <jodh> and single-shot wouldn't handle android service restart scenarios.
+
+ 15:51 <rsalveti> jodh: an ENV var might me enough as a start
+
+ 15:52 <jodh> slangasek: I still don't understand what you've said. I believe ofono is currently the issue, but I was going for a generic solution that would inject upstart events for all android service changes.
+
+ 15:54 <slangasek> jodh: your current design requires two daemons, one inside the container and one outside the container.  But the only reason you have one inside the container is to copy state from the shared mem region to the socket, *and* to ensure synchronization of the startup so that the bridge doesn't miss service start events that happen soon after android init starts because we aren't yet listening in the right place
+
+ 15:55 <jodh> slangasek: correct.
+
+ 15:55 <slangasek> jodh: the second of these can be addressed by a synchronous callback to an upstart socket by a one-shot program, instead of a daemon.  and the first of these is unnecessary if the bridge just talks directly to the android shared mem interface.
+
+ 15:55 <slangasek> this makes it completely un-generalized, it will be an actual upstart-android-bridge at that point; but I think that's preferable
+
+ 15:56 <jodh> slangasek: the bridge on the host cannot talk to the android inits shared memory.
+
+ 15:56 <slangasek> why not?
+
+ 15:56 <jodh> because it's not actually shared memory in the conventional sense: init mmaps a file in /dev (tmpfs) then unlinks it.
+
+ 15:57 <slangasek> oh, really?
+
+ 15:57 <slangasek> so it's not using /dev/binder?
+
+ 15:57 <jodh> no
+
+ 15:57 <slangasek> oh fun
+
+ 15:57 <slangasek> then I guess I don't see a way around having two daemons
+
+ 15:57 <jodh> so, yes, we could tweak androids init to "play fair" as another option I guess, but I'd rather we didn't if possible.
+
+ 15:59 <slangasek> ok, so I guess the design holds up to scrutiny ;)
+
+ 15:59 <slangasek> unless anyone has any other ideas? :)
+
+ 16:00 <jodh> are there any security issues anyone can think of?
+
+ 16:00 <jodh> the host bridge will specify the event which stops any malicious android apps injecting random upstart events.
+
+ 16:00 <jodh> (since all they can specify is a single name=value env var for the fixed event)
+
+ 16:01 <slangasek> would android apps have access to this anyway?
+
+ 16:01 <slangasek> I'm assuming that every piece of this requires root privileges
+
+ 16:02 <rsalveti> yeah, as long we have just root-like apps setting up properties, we're good
+
+ 16:02 <jodh> I'm not sure if the android service could drop privs at some point.
+
+ 16:02 <rsalveti> because we can probably generate an event via 'setprop foo bar'
+
+ 16:03 <rsalveti> but that's something we can also block if not root
+
+ 16:03 <slangasek> yeah, it all seems fine to me
+
+ 16:03 <jodh> I was thinking the android service would only react to init.* events
+
+ 16:03 <jodh> can setprop still set those?
+
+ 16:04 <slangasek> once the code is there it might need a security review, but I don't see anything in the design that gives me security concerns
+
+ 16:04 <jodh> ok great.
+
+ 16:05 <rsalveti> jodh: I think it can, but we can also protect that if needed
+
+ 16:05 <slangasek> any other feedback for James?
+
+ 16:06 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

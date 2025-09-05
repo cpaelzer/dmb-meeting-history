@@ -1,0 +1,284 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by jawn-smith, 11 Aug at 15:00 &mdash; 15:40 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2022/ubuntu-meeting.2022-08-11-15.00.log.html
+
+
+
+== Meeting summary ==
+
+=== Release incoming bugs ===
+
+Discussion started by jawn-smith at 15:09.
+
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:09)
+ * ''LINK:'' https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs   (jawn-smith, 15:14)
+
+=== Team proposed-migration report ===
+
+Discussion started by jawn-smith at 15:20.
+
+ * ''LINK:'' https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs   (jawn-smith, 15:20)
+
+=== AOB ===
+
+Discussion started by jawn-smith at 15:31.
+
+
+
+
+== People present (lines said) ==
+
+ * jawn-smith (58)
+ * ubottu (10)
+ * schopin (9)
+ * slyon (9)
+ * bdmurray (8)
+ * juliank (5)
+ * ogayot (4)
+ * enr0n (4)
+ * dbungert (3)
+ * meetingology (2)
+ * bdrung (2)
+ * sil2100 (2)
+
+
+
+== Full log ==
+
+
+ 15:00 <jawn-smith> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:00 <meetingology> Meeting started at 15:00:47 UTC.  The chair is jawn-smith.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 15:00 <dbungert> o/
+
+ 15:00 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 15:01 <jawn-smith> The status is here: https://discourse.ubuntu.com/t/foundations-team-updates-thursday-11-august-2022/29970
+
+ 15:01 <jawn-smith> Let's all take our usual few minutes to read and ask questions
+
+ 15:02 <bdmurray> can somebody give me the tldr on bug 1983859?
+
+ 15:02 <ubottu> Bug 1983859 in tracker-miners (Ubuntu Focal) "tracker-extract crashes with SIGSYS when upgrading from 20.04 to 22.04" [High, In Progress] https://launchpad.net/bugs/1983859
+
+ 15:03 <bdrung> bdmurray, TLDR: tracker-extract crashes during upgrade from 20.04 to 22.04 (due to updated libraries)
+
+ 15:03 <schopin> bdmurray: during upgrade, glibc is upgraded before tracker-extract, seccomp is unhappy with new fstatat64 syscall
+
+ 15:04 <schopin> Fix is to update seccomp filter in the focal tracker-extract.
+
+ 15:05 <bdmurray> Okay, I'll review that today
+
+ 15:05 <schopin> sil2100: ^ (since you were planning on it as well)
+
+ 15:05 <bdmurray> It'll be a race then
+
+ 15:07 <jawn-smith> Any other questions?
+
+ 15:08 <jawn-smith> dbungert: I'll try to keep bug 1984134 in mind
+
+ 15:08 <ubottu> Bug 1984134 in hddemux (Ubuntu) "FTBFS on ppc64el" [Undecided, Confirmed] https://launchpad.net/bugs/1984134
+
+ 15:08 <dbungert> jawn-smith: appreciate it, no particular rush
+
+ 15:09 <jawn-smith> #topic Release incoming bugs
+
+ 15:09 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-kk-incoming-bug-tasks.html#foundations-bugs
+
+ 15:09 <jawn-smith> bug 1981109
+
+ 15:09 <ubottu> Bug 1981109 in modemmanager (Ubuntu) "server image pulls in ModemManager via fwupd, consumes 25MiB RAM in every container" [High, Triaged] https://launchpad.net/bugs/1981109
+
+ 15:09 <jawn-smith> Is this still with desktop? Still nothing for foundations to do?
+
+ 15:10 <bdmurray> afaik
+
+ 15:10 <jawn-smith> Okay, moving on then
+
+ 15:10 <jawn-smith> bug 1981721
+
+ 15:10 <ubottu> Bug 1981721 in netplan.io (Ubuntu) "dual port SRIOV NIC with 64 VFs per PF  is not configured with switchdev eswitch mode" [Undecided, New] https://launchpad.net/bugs/1981721
+
+ 15:10 <jawn-smith> slyon: is this still waiting for openstack input?
+
+ 15:10 <slyon> yes. no updates since last time
+
+ 15:10 <jawn-smith> Okay moving on then
+
+ 15:10 <jawn-smith> bug 1983719
+
+ 15:10 <ubottu> Bug 1983719 in ubiquity (Ubuntu) "Improve message for missing ESP on BIOS systems" [Undecided, Confirmed] https://launchpad.net/bugs/1983719
+
+ 15:12 <jawn-smith> juliank: you tagged this. Is further discussion needed to determine the fix?
+
+ 15:12 <juliank> Wording needs to be agreed upon
+
+ 15:13 <jawn-smith> Should that happen in the LP bug?
+
+ 15:14 <juliank> probably but we can card it now :)
+
+ 15:14 <jawn-smith> Okay sounds good, thanks
+
+ 15:14 <jawn-smith> That's it for kk
+
+ 15:14 <jawn-smith> #link https://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-jj-incoming-bug-tasks.html#foundations-bugs
+
+ 15:14 <jawn-smith> bug 1984171
+
+ 15:14 <ubottu> Bug 1984171 in ubiquity (Ubuntu) "ubiquity removed package that was installed; is needed later; is known to exist remotely; without network" [High, New] https://launchpad.net/bugs/1984171
+
+ 15:15 <bdmurray> so that was worked around for 22.04.1 but still needs proper sorting
+
+ 15:15 <jawn-smith> This is the late-night discussion from yesterday right?
+
+ 15:16 <juliank> yeah
+
+ 15:16 <bdmurray> I think it was Tuesday
+
+ 15:16 <jawn-smith> Okay, sounds worth carding for sure
+
+ 15:16 <schopin> it spanned multiple days :)
+
+ 15:16 <bdmurray> And scheduling for 22.10
+
+ 15:16 <juliank> it's also not really clean to solve I think
+
+ 15:17 <juliank> The package needs removing normally, unless you install nvidia...
+
+ 15:17 <jawn-smith> slyon: do you mind carding this as well? And targeting to jj and kk?
+
+ 15:17 <slyon> jawn-smith: will do!
+
+ 15:17 <jawn-smith> Thanks!
+
+ 15:17 <jawn-smith> bug 1920584
+
+ 15:17 <ubottu> Bug 1920584 in nvidia-graphics-drivers-450 (Ubuntu) "package nvidia-dkms-450 450.102.04-0ubuntu0.20.04.1 failed to install/upgrade: installed nvidia-dkms-450 package post-installation script subprocess returned error exit status 10" [Undecided, Confirmed] https://launchpad.net/bugs/1920584
+
+ 15:17 <jawn-smith> ah, wrong bug number
+
+ 15:17 <jawn-smith> ignore that
+
+ 15:17 <jawn-smith> bug 1820584
+
+ 15:17 <ubottu> Bug 1820584 in avahi (Ubuntu) "seahorse assert failure: seahorse: glib-watch.c:195: timeout_update: Assertion `!t->dead' failed." [High, Confirmed] https://launchpad.net/bugs/1820584
+
+ 15:19 <jawn-smith> Tens of thousands of crash reports sounds important
+
+ 15:19 <jawn-smith> and it's marked high, so let's card it
+
+ 15:19 <slyon> ack
+
+ 15:19 <jawn-smith> Thanks! The last bug is the netplan.io issue that's already been discussed and is waiting on openstack
+
+ 15:19 <jawn-smith> rls-ff is empty \o/
+
+ 15:20 <jawn-smith> #topic Team proposed-migration report
+
+ 15:20 <jawn-smith> #link https://people.canonical.com/~ubuntu-archive/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 15:20 <jawn-smith> ubuntu-meta is with desktop
+
+ 15:20 <jawn-smith> lintian and mutt are waiting on MIRs
+
+ 15:21 <jawn-smith> zlib was with ogayot
+
+ 15:21 <ogayot> libbio-samtools-perl is just waiting for a no-change rebuild
+
+ 15:21 <slyon> zlib currently blocked on this build to start (and pass) eventually: https://launchpad.net/ubuntu/+source/samtools-legacy/0.1.19+dfsg-5ubuntu1/+build/24268457
+
+ 15:21 <ogayot> python3.11 is new, I haven't looked at it yet
+
+ 15:21 <schopin> ogayot: you have a sponsor for this no-change rebuild?
+
+ 15:22 <slyon> schopin: I wanted to do that, after above mentioned build is ready
+
+ 15:22 <ogayot> slyon but I think he's off tomorrow so maybe I'll need your help :)
+
+ 15:22 <slyon> but I'll be out tomorrow, so feel free to pick it up
+
+ 15:22 <schopin> Sure :)
+
+ 15:23 <ogayot> and linux-lowlatency is investigated by Frank, I think he has a patch ready.
+
+ 15:23 <jawn-smith> Okay great, thanks for looking into that ogayot and slyon and schopin
+
+ 15:23 <jawn-smith> gcc-12-cross and gcc-defaults are still blocked by the LP issues
+
+ 15:24 <jawn-smith> libgd-perl seems to have been with v_orlon
+
+ 15:24 <jawn-smith> So I'll assume it's still with him for now
+
+ 15:25 <jawn-smith> libuv1 was with enr0n
+
+ 15:25 <enr0n> Yeah, I have spent some time looking into it, but no solutions yet.
+
+ 15:25 <jawn-smith> Alright I'll leave that with you then
+
+ 15:26 <jawn-smith> cryptsetup doesn't seem to have been assigned last week.
+
+ 15:26 <slyon> schopin: remember that we should run `update-maintainer` on the no-change rebuild debdiff that ogayot provided in bug #1983255
+
+ 15:26 <ubottu> Bug 1983255 in samtools-legacy (Ubuntu Jammy) "samtools-legacy misses 'Remove compressBound assertions' (PR #1258) fix" [Undecided, In Progress] https://launchpad.net/bugs/1983255
+
+ 15:26 <bdrung> cryptsetup is only blocked by a flaky systemd autopkgtest
+
+ 15:26 <jawn-smith> Ah ginggs had triggered a migration/reference/0 test
+
+ 15:27 <jawn-smith> and it failed, so that's going to be resolved
+
+ 15:27 <slyon> ack
+
+ 15:27 <jawn-smith> Is anyone looking into that flakiness?
+
+ 15:27 <dbungert> there is a card
+
+ 15:27 <jawn-smith> neat
+
+ 15:27 <enr0n> jawn-smith: yeah, Lukas and I discussed probably disabling the offending test again
+
+ 15:27 <jawn-smith> Sounds like a plan to me
+
+ 15:27 <jawn-smith> casper is with me
+
+ 15:28 <slyon> enr0n: yes I think that makes sense, and we should include it into the next upload
+
+ 15:28 <enr0n> slyon: ack
+
+ 15:28 <jawn-smith> from my investigations it appears to just be flakiness
+
+ 15:28 <jawn-smith> Thanks ginggs for triggering migration-reference tests for casper
+
+ 15:29 <jawn-smith> Alright debootstrap
+
+ 15:30 <schopin> it's migration-reference/0 failed
+
+ 15:30 <jawn-smith> Ah so nothing to do
+
+ 15:30 <jawn-smith> Everything else is 0 days old
+
+ 15:31 <jawn-smith> #topic AOB
+
+ 15:31 <schopin> bug 1868517
+
+ 15:31 <ubottu> Bug 1868517 in rust-xml-rs (Ubuntu Focal) "Stray /usr/.crates2.json file" [Undecided, New] https://launchpad.net/bugs/1868517
+
+ 15:31 <schopin> There's a bunch of packages that just need rebuild SRUs in focal
+
+ 15:31 <sil2100> "Stray" I heard is a decent game
+
+ 15:33 <bdmurray> The armhf autopkgtest workers are all down right now but I'll sort it out soon
+
+ 15:37 <jawn-smith> Monday is a holiday in most of Europe I think
+
+ 15:37 <sil2100> I'll be out Mon, Tue and Wed o/
+
+ 15:37 <enr0n> I have not requested it yet, but I am going to try and get Monday off last minute
+
+ 15:40 <jawn-smith> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

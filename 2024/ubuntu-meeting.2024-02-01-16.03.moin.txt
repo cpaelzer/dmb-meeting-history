@@ -1,0 +1,417 @@
+== Meeting information ==
+
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team meeting, started by juliank, 01 Feb at 16:03 &mdash; 16:53 UTC.
+ * Full logs at https://ubottu.com/meetingology/logs/ubuntu-meeting/2024/ubuntu-meeting.2024-02-01-16.03.log.html
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+
+Discussion started by juliank at 16:03.
+
+ * ''LINK:'' https://discourse.ubuntu.com/t/foundations-team-updates-thursday-1-february-2024/   (juliank, 16:03)
+
+=== Release incoming bugs ===
+
+Discussion started by juliank at 16:13.
+
+ * ''LINK:'' http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs   (juliank, 16:13)
+
+=== Team proposed-migration report ===
+
+Discussion started by juliank at 16:22.
+
+ * ''LINK:'' https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs   (juliank, 16:22)
+
+=== AOB ===
+
+Discussion started by juliank at 16:45.
+
+
+
+
+== People present (lines said) ==
+
+ * vorlon (75)
+ * juliank (41)
+ * adrien (9)
+ * ginggs (7)
+ * bdmurray (5)
+ * zhsj (4)
+ * upils (4)
+ * schopin (3)
+ * danilogondolfo (3)
+ * meetingology (2)
+ * mkukri (2)
+ * xypron (2)
+ * liushuyu (2)
+ * Skia (2)
+ * waveform (2)
+ * dviererbe (2)
+ * ravikant_ (2)
+ * sil2100 (1)
+ * cpete (1)
+ * dbungert (1)
+ * slyon (1)
+ * mateus-morais (1)
+ * enr0n (1)
+ * pushkarnk (1)
+
+
+
+== Full log ==
+
+
+ 16:03 <juliank> #startmeeting Weekly Ubuntu Foundations team
+
+ 16:03 <meetingology> Meeting started at 16:03:07 UTC.  The chair is juliank.  Information about MeetBot at https://wiki.ubuntu.com/meetingology
+
+ 16:03 <meetingology> Available commands: action, commands, idea, info, link, nick
+
+ 16:03 <juliank> #topic Lightning rounds
+
+ 16:03 <juliank> #link https://discourse.ubuntu.com/t/foundations-team-updates-thursday-1-february-2024/
+
+ 16:03 <zhsj> o/
+
+ 16:03 <mkukri> o/
+
+ 16:03 <bdmurray> upils: What is this about the ubuntu-image github runners?
+
+ 16:04 <xypron> \o
+
+ 16:04 <liushuyu> o/
+
+ 16:05 <upils> I added some labels on it to make sure my jobs runs on them and not the shared runners. And I need to find who is managing them to understand how they are setup to compare with shared ones (because spread is missing on the shared ones)
+
+ 16:05 <Skia> o/
+
+ 16:05 * vorlon waves
+
+ 16:06 <upils> and shared ones are used if the repo ones are already working, so sometimes, the job end up on a shared ones, missing spread
+
+ 16:06 <upils> But it looks like sergio from the snap team can help, I just need to poke him
+
+ 16:10 <schopin> bdmurray: are we still good for a glibc upload tomorrow, with all the autopkgtest db woes?
+
+ 16:11 <bdmurray> schopin: Yes, AIUI britney is checking swift directly for results now while the database is getting the spa treatment.
+
+ 16:12 <bdmurray> sil2100: correct?
+
+ 16:12 <vorlon> did that get fixed?
+
+ 16:12 <sil2100> Yes
+
+ 16:12 <vorlon> awesome
+
+ 16:12 <vorlon> \o/
+
+ 16:13 <juliank> #topic Release incoming bugs
+
+ 16:13 <juliank> #link http://reports.qa.ubuntu.com/reports/rls-mgr/rls-nn-incoming-bug-tasks.html#foundations-bugs
+
+ 16:13 <juliank> bug 2050884
+
+ 16:15 <juliank> bdmurray: is this for us or someone else I'm not sure?
+
+ 16:15 <juliank> who owns the server?
+
+ 16:15 <bdmurray> That's the desktop team
+
+ 16:15 <vorlon> Desktop Team I believe
+
+ 16:15 <juliank> we seerm to own the client though
+
+ 16:16 <juliank> no
+
+ 16:16 <juliank> oh
+
+ 16:16 <juliank> Sorry I am in the wrong list
+
+ 16:16 <juliank> bug 2051512
+
+ 16:17 <juliank> I mean we gotta take this and the next two as well
+
+ 16:17 <juliank> which are
+
+ 16:17 <juliank> bug 2051589
+
+ 16:17 <juliank> bug 2051590
+
+ 16:17 <juliank> Should fix all of them
+
+ 16:18 <juliank> I'll take ubuntu-release-upgrader as I need to fix it for deb822 python-apt ubuntu.sources support anyhow
+
+ 16:18 <juliank> I'll tag all of them
+
+ 16:18 <juliank> When do we move ubiquity to universe?
+
+ 16:18 <vorlon> when oem-config is split out of the source
+
+ 16:19 <vorlon> because we can't rely on the Ubuntu Desktop team's new first boot wizard meeting the needs of the raspi images in time for noble
+
+ 16:19 <vorlon> (I have said this needs doing but I don't know that it has been picked up into the backlog yet)
+
+ 16:20 <juliank> ok
+
+ 16:20 <juliank> bug 2051674
+
+ 16:20 <vorlon> take it
+
+ 16:20 <vorlon> you don't get usrmerge back :)
+
+ 16:20 <bdmurray> Is moving ubiquity to universe a priority such that that the team should do what vorlon says?
+
+ 16:21 <vorlon> yes
+
+ 16:21 <vorlon> flavors that are staying on ubiquity should have direct commit/upload control without being gated by Core Dev or Foundations
+
+ 16:21 <vorlon> and we should do the work for the one-time split, instead of the ongoing work of having to sponsor uploads :)
+
+ 16:22 <juliank> OK nothing else for noble or mantic, jammy, focal
+
+ 16:22 <juliank> #topic Team proposed-migration report
+
+ 16:22 <juliank> #link https://ubuntu-archive-team.ubuntu.com/proposed-migration/update_excuses_by_team.html#foundations-bugs
+
+ 16:22 <juliank> vorlon: It's starting to look _a lot_ better
+
+ 16:22 <vorlon> hurray
+
+ 16:22 <vorlon> yes it doesn't crash chromium anymore for me
+
+ 16:26 <vorlon> juliank: oh you wanted me to actually assign stuff from there, sorry
+
+ 16:26 <vorlon> (was still reading status!)
+
+ 16:27 <juliank> oh
+
+ 16:27 <juliank> yes
+
+ 16:27 <vorlon> so
+
+ 16:27 <vorlon> if autopkgtest results are coming in again I guess it's useful to assign
+
+ 16:27 * juliank does the classic handover banter when news goes to the weather report
+
+ 16:28 <juliank> vorlon: Well tomorrow is glibc upload
+
+ 16:28 <vorlon> adrien: the card for libxcrypt vs ruby3.1 is marked done but it shows as still blocked?
+
+ 16:28 <vorlon> by autopkgtest
+
+ 16:28 <juliank> But yes glibc is huge :)
+
+ 16:29 <vorlon> uh hang on update_excuses shows libxcrypt blocked by a lot more stuff than what's listed on the by-team report
+
+ 16:29 <vorlon> um just punt on this
+
+ 16:29 <vorlon> because I can't trust the report
+
+ 16:29 <vorlon> sorry
+
+ 16:29 <vorlon> oh wait
+
+ 16:29 <vorlon> I should also refresh update_excuses in my browser when comparing
+
+ 16:29 <adrien> vorlon: it's done, I'll update the card
+
+ 16:29 <juliank> :)
+
+ 16:30 <adrien> or at least look at why it shows up
+
+ 16:30 <vorlon> adrien: my point is the card already says it's done and there's still a failing autopkgtest on armhf
+
+ 16:30 <vorlon> (from today)
+
+ 16:30 <juliank> adrien: these all failed https://autopkgtest.ubuntu.com/packages/r/ruby3.1/noble/armhf
+
+ 16:30 <vorlon> ok so libxcrypt still with adrien
+
+ 16:30 <schopin> poor adrien cannot escape armhf
+
+ 16:30 <vorlon> libdbi-perl vs mariadb: cpete please
+
+ 16:30 <cpete> ack
+
+ 16:31 <adrien> juliank: not updated yet (armhf tests are still running)
+
+ 16:31 <vorlon> libfilesys-df-perl vs sbuild: I'll take this because I already have the horrible commandline here to set the almost-complete set of extra triggers
+
+ 16:31 <adrien> vorlon: ah, ok, it's just a matter of waiting for tests
+
+ 16:31 <vorlon> adrien: ok
+
+ 16:31 <adrien> they're still queued; I could only requeue them effectively yesterday late evening I think
+
+ 16:31 <vorlon> libxml-libxml-perl vs libimage-info-perl: dbungert please
+
+ 16:31 <dbungert> ack
+
+ 16:31 <adrien> (it was the fourth try)
+
+ 16:32 <vorlon> libcpanel-json-xs-perl vs libmonitoring-livestatus-perl: this one I also have in my shell history so will take
+
+ 16:32 <vorlon> llvm-toolchain-14 vs ppyaml: danilogondolfo please
+
+ 16:32 <danilogondolfo> vorlon, ack
+
+ 16:32 <vorlon> sorry, that's actually pyyaml in general
+
+ 16:33 <vorlon> (llvm-toolchain-14 has 4 packages w/ failing autopkgtests to sort)
+
+ 16:33 <vorlon> python-apt: juliank resolved the ftbfs from last week, now it's blocked on u-r-u autopkgtests. juliank do you want this again this week?
+
+ 16:33 <vorlon> or do you want someone else to look at u-r-u
+
+ 16:34 <vorlon> openssl i386 autopkgtest regression blocking perl, sounds like a me (generally, archive admin) thing to sort out; I'll take
+
+ 16:34 <vorlon> click autopkgtest blocking perl: waveform please
+
+ 16:34 <waveform> ack
+
+ 16:34 <vorlon> sbuild/s390x blocking perl: dviererbe please
+
+ 16:34 <ginggs> those click/unknown ones i can take
+
+ 16:35 <dviererbe> ack
+
+ 16:35 <ginggs> i can take all the perl */unknown
+
+ 16:35 <vorlon> oh ok
+
+ 16:35 <vorlon> waveform: dviererbe: ^^ I'll find others for you
+
+ 16:35 <ginggs> so click, sbuild, etc
+
+ 16:35 <juliank> vorlon: I'm doing u-r-u that's why I also took the bug
+
+ 16:35 <vorlon> waveform: psmisc vs systemd
+
+ 16:35 <waveform> okay
+
+ 16:35 <vorlon> juliank: ok
+
+ 16:35 <vorlon> dviererbe: gsasl vs libidn
+
+ 16:35 <dviererbe> ack
+
+ 16:35 <vorlon> Skia: pycountry vs iso-codes
+
+ 16:36 <vorlon> ginggs has the ones above so not giving him another immediately
+
+ 16:36 <vorlon> sbuild vs qemu: xypron
+
+ 16:36 <Skia> vorlon: ack
+
+ 16:36 <xypron> ok
+
+ 16:36 <vorlon> llvm-toolchain-14 on arm64 also blocks ncurses, so danilogondolfo please take this also
+
+ 16:37 <danilogondolfo> vorlon, ack
+
+ 16:37 <vorlon> lxml: slyon:
+
+ 16:37 <slyon> ok
+
+ 16:37 <vorlon> the rest of ncurses: mkukri
+
+ 16:37 <vorlon> libdrm: mateus-morais:
+
+ 16:37 <mateus-morais> ack
+
+ 16:37 <mkukri> vorlon: ack
+
+ 16:38 <vorlon> that takes us to python3-defaults; ginggs is there anything to say on this generally before I dole out tasks?
+
+ 16:38 <ginggs> err
+
+ 16:38 <juliank> I think some we already took as bugs
+
+ 16:38 <ginggs> backdoor-factory i'm testing a patch
+
+ 16:38 <juliank> (apport, ubiquity, u-r-u)
+
+ 16:39 <ginggs> datalad-next i triggered retries recently
+
+ 16:39 <vorlon> automake-1.16 blocking python: enr0n
+
+ 16:39 <ginggs> the rest are up for grabs
+
+ 16:39 <enr0n> vorlon: ack
+
+ 16:40 <vorlon> llvm-toolchain-15 *also* on arm64 blocking python: danilogondolfo please take this also (and if it's unrelated and too much work, let me know and we'll reassign it out)
+
+ 16:40 <vorlon> pexpect blocking python: upils
+
+ 16:40 <danilogondolfo> ack
+
+ 16:40 <upils> ack
+
+ 16:40 <vorlon> anorack vs python: pushkarnk
+
+ 16:40 <pushkarnk> ack
+
+ 16:41 <vorlon> ansible-core and ansible vs python: schopin
+
+ 16:41 <schopin> ack
+
+ 16:41 <vorlon> apprise and ariba vs python: liushuyu
+
+ 16:41 <vorlon> aubio and bdebstrap vs python: vpa1977
+
+ 16:41 <vorlon> binwalk and bookletimposer vs python: mwhudson
+
+ 16:41 <vorlon> booth and circlator vs python: zhsj
+
+ 16:42 <vorlon> cmdtest and comitup vs python: doko
+
+ 16:42 <vorlon> have I missed anyone else who's not here and I should assign some to?
+
+ 16:42 <zhsj> ack
+
+ 16:42 <vorlon> oh let's see
+
+ 16:43 <vorlon> commonmark-bkrs and crmsh vs python: bdmurray
+
+ 16:43 <ravikant_> I'll take one
+
+ 16:43 <vorlon> csound and diffoscope vs python: sil2100
+
+ 16:43 <vorlon> dipy and django-rich vs python: ravikant_
+
+ 16:43 <ravikant_> ack
+
+ 16:43 <liushuyu> ack
+
+ 16:43 <vorlon> we'll stop there
+
+ 16:43 <vorlon> juliank:
+
+ 16:45 <adrien> I don't have one but I'll be at fosdem and will take a swap day but if things go well (which seems likely right now), I'll take on some migrations next week
+
+ 16:45 <juliank> I seem to have broken IRC push notifications sorry
+
+ 16:45 <juliank> #topic AOB
+
+ 16:45 <vorlon> adrien: ack - sorry I was counting libxcrypt for you
+
+ 16:46 <adrien> guessed so; I'm assuming everything will be fine now though :P
+
+ 16:46 <adrien> AOB: FOSDEM \o/
+
+ 16:48 <zhsj> i will be on holiday for two weeks.
+
+ 16:50 <vorlon> zhsj: 恭喜发财
+
+ 16:51 <zhsj> \o/
+
+ 16:53 <juliank> I think that wraps this up
+
+ 16:53 <juliank> #endmeeting
+
+
+
+Generated by MeetBot 0.4.0 (https://wiki.ubuntu.com/meetingology)

@@ -1,0 +1,653 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:04:46 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-08-08-15.04.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+''LINK:'' https://bugzilla.mozilla.org/show_bug.cgi?id=779014   (bdmurray, 15:16:13)
+
+ *Ḃųǵṡ
+''LINK:'' http://pad.lv/977964 - if someone has time to provide feedback to my latest comment i'd appreciate it  (stokachu, 15:32:13)
+
+ *Bugs
+
+ *Blueprints
+''LINK:'' http://status.ubuntu.com/ubuntu-quantal/canonical-foundations.html   (slangasek, 15:50:11)
+''LINK:'' http://status.ubuntu.com/ubuntu-quantal/all-quantal-alpha-3.html shows some 80 WIs targeted to alpha-3 that didn't get in  (slangasek, 15:51:07)
+
+ *AOB
+
+
+
+Meeting ended at 15:58:16 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (73)
+ * cjwatson (32)
+ * ev (29)
+ * stokachu (27)
+ * ogra_ (25)
+ * stgraber (20)
+ * bdmurray (16)
+ * infinity (15)
+ * jodh (14)
+ * ubottu (14)
+ * doko (11)
+ * xnox (10)
+ * smartboyhw (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:04:46 <slangasek> #startmeeting
+
+ 15:04:46 <meetingology> Meeting started Wed Aug  8 15:04:46 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:04:46 <meetingology> 
+
+ 15:04:46 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:04:53 <slangasek> #topic lightning round
+
+ 15:04:55 <smartboyhw> Wow, what's this meeting?
+
+ 15:05:01 <ogra_> (still fighting the last remains of jetlag)
+
+ 15:05:17 <slangasek> smartboyhw: Ubuntu Foundations meeting, same one that it was last week. :)
+
+ 15:05:32 <ogra_> smartboyhw, fridge.ubuntu.com has the calendar
+
+ 15:05:59 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:06:02 <slangasek> stgraber ev cjwatson jodh barry bdmurray doko xnox infinity stokachu ogra slangasek
+
+ 15:06:08 <slangasek> whoo I win
+
+ 15:06:16 <ogra_> heh
+
+ 15:06:17 <stgraber> nope, I do :)
+
+ 15:06:23 * ogra_ has silver :)
+
+ 15:06:27 <doko> at least the monologue near the beginning ...
+
+ 15:06:27 <stgraber> for some value of win ;)
+
+ 15:06:55 <slangasek> haha
+
+ 15:07:01 <stgraber> - 12.04.1
+
+ 15:07:01 <stgraber> - 12.04.1 team meeting and minutes
+
+ 15:07:01 <stgraber> - Went through all the targeted/milestoned bugs for 12.04.1, updated status based on comments and queue status.
+
+ 15:07:04 <stgraber> - Verified a bunch of SRUs.
+
+ 15:07:06 <stgraber> - Followed wiki page on for release - 1 month and release - 3 weeks, uploading base-files.
+
+ 15:07:09 <stgraber> - Worked on getting the images to fit on a 703MB media again, still need to fix i386.
+
+ 15:07:12 <stgraber> - Fixed fglrx/fglrx-updates purge bug and uploaded by tseliot.
+
+ 15:07:15 <stgraber> - Now digging into bug 1029531
+
+ 15:07:16 <ubottu> Launchpad bug 1029531 in update-manager (Ubuntu Precise) "cdromupgrade from Lucid to Precise failed with unmet dependencies without network connection" [Critical,Confirmed] https://launchpad.net/bugs/1029531
+
+ 15:07:17 <stgraber> - Other
+
+ 15:07:20 <stgraber> - Some ARB app review, the app showdown made the ARB New queue reach 140 packages... Still 50 to review...
+
+ 15:07:23 <stgraber> - TODO this week
+
+ 15:07:25 <stgraber> - Continue the work on 12.04.1.
+
+ 15:07:28 <stgraber> (DONE)
+
+ 15:08:04 <ev> - Short week; holiday until Monday.
+
+ 15:08:05 <ev> - Got caught up on email.
+
+ 15:08:05 <ev> - Got involved in Seb's thread on ubuntu-release about removing the error
+
+ 15:08:05 <ev> tracker from Ubuntu 12.04.1.
+
+ 15:08:05 <ev> - Started implementing Matthew's design for the multiple errors dialog:
+
+ 15:08:05 <ev> https://wiki.ubuntu.com/ErrorTracker#When_there_are_multiple_simultaneous_errors
+
+ 15:08:27 <ev> I've taught apport to export a small dbus service to ensure only one
+
+ 15:08:27 <ev> instance of apport runs *until* the user presses the report button and the
+
+ 15:08:27 <ev> application window disappears, chugging away adding the gdb information to
+
+ 15:08:27 <ev> the report. GtkApplication didn't seem to make room for this concept of
+
+ 15:08:27 <ev> releasing the singleton, but if anyone thinks DBus is too heavy/racy for
+
+ 15:08:28 <ev> this and can come up with a better approach, I'm all ears.
+
+ 15:08:36 <ev> - Wrote a tool to calculate the 90 day moving count of unique users. Modified
+
+ 15:08:37 <ev> it to allow Ubuntu release specificity. This requires having a mapping of
+
+ 15:08:37 <ev> crash ID back to the system which reported it. As we only have data in the
+
+ 15:08:42 <ev> opposite direction, I've had to write a tool to create the needed mapping.
+
+ 15:08:43 <ev> This has been running in the background for a few hours. Once that's done, I
+
+ 15:08:43 <ev> should be able to reply to Steve's request for the day's crashes / 90 day
+
+ 15:08:43 <ev> unique user count calculation.
+
+ 15:08:43 <ev> - Helped webops land the new errors.ubuntu.com \o/. There was some fallout
+
+ 15:08:43 <ev> from me running a newer version of Django for development than what we have
+
+ 15:08:43 <ev> in production, but we have a deployment in progress to fix that.
+
+ 15:08:45 <ev> (done)
+
+ 15:09:53 <cjwatson> Working on a Python rewrite of cdimage, with unit tests.  Once I have it approved for release, it's reasonably far along: e.g. I have publish-daily rewritten.
+
+ 15:09:56 <cjwatson> Deployed ubuntu-archive-tools client code to automatically approve copies, saving extra error-prone manual approval steps.
+
+ 15:09:59 <cjwatson> Finished shifting security->updates auto-copies away from lp_archive@cocoplum and into ubuntu-archive@lillypilly (over the API).  We no longer have any cron jobs running as lp_archive.
+
+ 15:10:03 <cjwatson> Trying to comprehend new image build options in xorriso 1.2.4 - got advice from upstream which I've yet to digest.
+
+ 15:10:06 <cjwatson> Worked on showing LP UI audit trail for copies (bug 1032857).
+
+ 15:10:07 <cjwatson> Home internet still busted.  I'm on a mobile hotspot. :-/
+
+ 15:10:08 <ubottu> Launchpad bug 1032857 in Launchpad itself "DistributionSourcePackage:+publishinghistory should show the audit trail of copies" [Low,In progress] https://launchpad.net/bugs/1032857
+
+ 15:10:08 <cjwatson> done
+
+ 15:10:10 <cjwatson> Belatedly working on aptdaemon bug 926340.  Almost done - just took a while to remind myself of how to reproduce it reliably.
+
+ 15:10:12 <ubottu> Launchpad bug 926340 in aptdaemon (Ubuntu Precise) "aptd crashed with UnicodeDecodeError in _set_error(): 'ascii' codec can't decode byte 0xc3 in position 9: ordinal not in range(128)" [High,Triaged] https://launchpad.net/bugs/926340
+
+ 15:10:20 <jodh> * boot/upstart:
+
+ 15:10:21 <jodh> - slanagasek and I worked on a number of branches for the best fix for
+
+ 15:10:21 <jodh> bug 980917.
+
+ 15:10:21 <jodh> - lots of testing for final branch for bug 980917 (including LXC).
+
+ 15:10:22 <ubottu> Launchpad bug 980917 in upstart (Ubuntu Precise) "Failed to create pty - disabling logging for job [SRU]" [Medium,In progress] https://launchpad.net/bugs/980917
+
+ 15:10:24 <jodh> - my first archive upload for Upstart (for bug 980917).
+
+ 15:10:27 <jodh> - working on SRU-ifying bug 980917 and associated precise-proposed upload.
+
+ 15:10:30 <jodh> - stateful re-exec: ConfSource/ConfFiles/inotify watches handling.
+
+ 15:10:33 <jodh> Discussion with cjwatson. Work still ongoing.
+
+ 15:10:34 <ev> cdimage unit tests> wow, that will be awesome
+
+ 15:10:37 <jodh> - discussions with diwic and TheMuso re updated libjson0 package.
+
+ 15:10:40 <jodh> - raised debian bug 684058 on getting libjson0 version 0.10 added to
+
+ 15:10:40 <ubottu> Debian bug 684058 in libjson0 "libjson0: json-c version 0.10 is now available." [Normal,Open] http://bugs.debian.org/684058
+
+ 15:10:43 <jodh> Debian (and started looking at how to package that).
+
+ 15:10:46 <jodh> 𝀘
+
+ 15:10:49 <jodh> 
+
+ 15:10:59 <cjwatson> ev: nusakan:~cjwatson/python/ if you want a previous
+
+ 15:11:02 <cjwatson> er, a preview
+
+ 15:11:09 <ev> will have a look, thanks!
+
+ 15:11:23 <ev> oh man, I totes should've used an emoji character to end my report
+
+ 15:13:11 <ogra_> no barry ?
+
+ 15:13:35 <stokachu> try xbarry :P
+
+ 15:13:43 <slangasek> jodh: first archive upload> ah, congrats :)
+
+ 15:13:56 <jodh> slangasek: thanks very much!
+
+ 15:14:18 <slangasek> barry's on vac
+
+ 15:14:19 <slangasek> bdrung:
+
+ 15:14:20 <slangasek> sorry
+
+ 15:14:22 <slangasek> bdmurray:
+
+ 15:14:29 <bdmurray> vacation (two days)
+
+ 15:14:29 <bdmurray> test case creation for bug 818760 regarding update-manager
+
+ 15:14:29 <bdmurray> investigation into pkg origins being Ubuntu and reported apport bug 1031978
+
+ 15:14:30 <ubottu> Launchpad bug 818760 in update-manager (Ubuntu Precise) "update-manager crashed with timeout in readline(): timed out" [High,Fix committed] https://launchpad.net/bugs/818760
+
+ 15:14:32 <ubottu> Launchpad bug 1031978 in apport (Ubuntu) "indicates a package origin of Ubuntu for Ubuntu systems" [Undecided,New] https://launchpad.net/bugs/1031978
+
+ 15:14:32 <bdmurray> testing of bug 1017001
+
+ 15:14:33 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:14:38 <bdmurray> fixed xulid of firefox-lp-improvements as it was identified as malware
+
+ 15:14:38 <bdmurray> resolved an issue with arsenal not loading launchpad_config information from json files
+
+ 15:14:41 <bdmurray> reported daisy bug 1032398
+
+ 15:14:41 <ubottu> Launchpad bug 1032398 in Daisy "oops ids aren't very unique" [Undecided,New] https://launchpad.net/bugs/1032398
+
+ 15:14:43 <bdmurray> reported bug 1032822 regarding json formatting at errors.ubuntu.com
+
+ 15:14:44 <ubottu> Launchpad bug 1032822 in Errors "json data returned by API could be more readable" [Undecided,New] https://launchpad.net/bugs/1032822
+
+ 15:14:46 <bdmurray> investigation into oops reports without a DistroRelease
+
+ 15:14:46 <bdmurray> investigation into dist-upgrader-all and precise not being up to date
+
+ 15:14:46 <bdmurray> wrote code to get errors about a package from errors.ubuntu.com and present bug data about them
+
+ 15:15:00 <slangasek> malware?
+
+ 15:15:05 <bdmurray> ⌁ done ⌁
+
+ 15:15:30 <bdmurray> the extension was using the xulid of firefox and so was a piece of malware
+
+ 15:15:54 <slangasek> heh
+
+ 15:15:57 <cjwatson> which had it first?
+
+ 15:16:13 <bdmurray> https://bugzilla.mozilla.org/show_bug.cgi?id=779014
+
+ 15:16:14 <ubottu> Mozilla bug 779014 in Blocklisting "Blocklist malicious "Adobe Flash Player 12.4.0" extension" [Normal,Resolved: fixed]
+
+ 15:16:32 <ev> bdmurray: massive thanks for the errors.ubuntu.com stuff!
+
+ 15:17:55 <bdmurray> the firefox-lp-improvements extension should have had a unique id I just didn't realize that...
+
+ 15:18:19 * slangasek nods
+
+ 15:18:20 <slangasek> doko:
+
+ 15:18:42 <doko> - the 'I hate multiarch' week
+
+ 15:18:42 <doko> - got feedback for the gcc-multiarch patch from a fourth reviewer after pinging, having two valid
+
+ 15:18:42 <doko> points, and contrary points to the other reviewers. fun ...
+
+ 15:18:42 <doko> - looked at the upstream python3.3 build issue, which didn't have to do anything with the cross p
+
+ 15:18:42 <doko> atches, but with an incomplete multiarch patch.
+
+ 15:18:43 <doko> - binutils updates
+
+ 15:18:45 <doko> - openjdk updates still pending
+
+ 15:18:47 <doko> (done)
+
+ 15:19:24 <slangasek> doko: put the reviewers in a room together, and whichever ones survive, implement their recommendation? :)
+
+ 15:19:40 <doko> I would like to ...
+
+ 15:20:42 <slangasek> xnox: still here?
+
+ 15:20:44 <xnox> Bits I did today:
+
+ 15:20:44 <xnox> * did an upload of ubiquity and partman-crypto to land automatic
+
+ 15:20:44 <xnox> recipe for full-disk encrypted installation.
+
+ 15:20:44 <xnox> * confirmed removal from quantal of:
+
+ 15:20:44 <xnox> - ichtux (meta-packages / derivative)
+
+ 15:20:45 <xnox> - boost1.46
+
+ 15:20:49 <xnox> (done)
+
+ 15:20:50 <infinity> Apparently yes.
+
+ 15:21:02 <stokachu> xnox: hows that rdepends test suit coming
+
+ 15:21:02 <ogra_> quite a lot for a vacation day
+
+ 15:21:07 <infinity> - worked on SRU and AA tasks
+
+ 15:21:07 <infinity> - worked with lamont on new Panda buildds some more
+
+ 15:21:07 <infinity> - helped look into CD size issues for 12.04.1
+
+ 15:21:07 <infinity> - did a couple of merges, and a bit of +1 fixing
+
+ 15:21:07 <infinity> - worked on eglibc updates for both quantal and precise
+
+ 15:21:10 <infinity> - possibly other stuff I've forgotten in my old age
+
+ 15:21:12 <infinity> [...]
+
+ 15:21:31 <doko> 2.16 for q?
+
+ 15:21:49 <slangasek> stokachu: are you blocked on that?  I thought we managed to manual rebuilds of the revdeps for our multiarch libs?
+
+ 15:21:58 <stokachu> Customer cases took priority this week, still running rdepends on a few packages (libgnomevfs rdeps on libreoffice wtf..)
+
+ 15:22:00 <infinity> doko: That's still a maybe, but for now, just mirroring some SRU backporting.
+
+ 15:22:02 <stokachu> slangasek: yea im doing it manually
+
+ 15:22:09 <slangasek> stokachu: ah, is it still ongoing?
+
+ 15:22:16 <infinity> doko: I need to look at what aurel's done for 2.16 in Debian.
+
+ 15:22:19 <stokachu> slangasek: yea gnome-vfs takes foreverrrrr
+
+ 15:22:26 <slangasek> stokachu: note that for this purpose we *only* need test rebuilds of the direct reverse-dependencies
+
+ 15:22:37 <slangasek> so none of the level2 and above stuff identified in xnox's report...
+
+ 15:22:43 <stokachu> slangasek: im using a script stgraber sent me
+
+ 15:22:44 * xnox hides
+
+ 15:22:51 <slangasek> ok
+
+ 15:23:04 <stokachu> so stgraber does that script show only direct rdeps?
+
+ 15:23:14 <stokachu> i would love to trim this testing down
+
+ 15:23:28 <slangasek> infinity: 2.16 in Debian> you mentioned something about experimental staging... I guess any of that is still in the VCS?
+
+ 15:23:30 <stgraber> yeah, it's only direct rdeps for all binary packages built by the source
+
+ 15:23:38 <stokachu> ok cool
+
+ 15:23:45 <stgraber> you may be able to trim it down a bit by limiting the list of binary packages to only these that you care about
+
+ 15:23:53 <stokachu> slangasek: so yea libreoffice is part of the direct rdeps which takes forever
+
+ 15:23:56 <infinity> slangasek: Right, aurel committed some bits to Debian SVN, haven't had a chance to see how far he got.
+
+ 15:24:09 <slangasek> stokachu, stgraber: we only care about the ones that build-depend on libgnomevfs2-dev
+
+ 15:24:31 <stokachu> slangasek: is that for all packages i want to test?
+
+ 15:24:34 <stokachu> just -dev?
+
+ 15:24:34 <slangasek> seems to be a much shorter list
+
+ 15:24:37 <stgraber> infinity: ETA on eglibc in -proposed?
+
+ 15:24:38 <slangasek> stokachu: yeah
+
+ 15:24:54 <infinity> stgraber: "real soon".
+
+ 15:25:01 <stokachu> slangasek: awesome ill do that then... will trim the testing down big time
+
+ 15:25:02 <stgraber> infinity: before tomorrow 21:00 UTC?
+
+ 15:25:17 <infinity> stgraber: I'll try my best to hit that for you.
+
+ 15:25:32 <stokachu> lastly, doing another month of +1
+
+ 15:25:34 <stokachu> (done)
+
+ 15:25:36 <slangasek> stokachu: revised list: http://paste.ubuntu.com/1136312/
+
+ 15:25:57 <stokachu> slangasek: that is a much better list
+
+ 15:26:43 <slangasek> stokachu: sorry, didn't realize you were wasting time on other kinds of revdeps :/
+
+ 15:27:06 <stokachu> slangasek: thats cool i was merely just taking the script and running the tests didn't really dig into it
+
+ 15:27:29 <stokachu> i should have those rdeps tested today then
+
+ 15:27:36 <slangasek> stokachu: anything else from you for the lightning round?
+
+ 15:27:37 * xnox off to volleyball =) bye
+
+ 15:27:42 * slangasek waves to xnox
+
+ 15:27:47 <stokachu> slangasek: im done
+
+ 15:28:01 <ev> xnox: enjoy
+
+ 15:28:03 * ogra_ fires up the livestream ... to make sure xnox is on time at the game :)
+
+ 15:28:16 <ogra_> done:
+
+ 15:28:16 <ogra_> * QA sprint http://ograblog.wordpress.com/2012/08/06/the-bamboo-feeder-automating-continuous-arm-image-tests/ (lots of positive feedback)
+
+ 15:28:16 <ogra_> * started on flash-kernel vs live-installer fixes
+
+ 15:28:16 <ogra_> * work started on transitioning all of flash-kernel bootloader handling to use /etc/default/flash-kernel as a source for the bootloader cmdline
+
+ 15:28:17 <ogra_> * lots of jetlag
+
+ 15:28:19 <ogra_> todo:
+
+ 15:28:21 <ogra_> * finish live-installer vs flash-kernel fixing
+
+ 15:28:23 <ogra_> * finish /etc/default/flash-kernel work
+
+ 15:28:27 <ogra_> * set up a bamboo feeder locally (i brought a bunch of pandas home) to move on with script development
+
+ 15:28:30 <ogra_> * make flash-kernel upgrades work with the new bootloader handling
+
+ 15:28:32 <ogra_> * clean up spec items that wont make FF, work on the ones that will
+
+ 15:28:34 <ogra_> EOF
+
+ 15:29:18 <slangasek> bamboo feeder> heh
+
+ 15:29:22 <ogra_> :)
+
+ 15:29:50 <slangasek> * SRU processing, focused on 12.04.1 preparation
+
+ 15:29:51 <slangasek> * reviewing upstart bugfix branches - now landed in quantal!
+
+ 15:29:51 <slangasek> * discussions around how to improve the crashdb client behavior for 12.04
+
+ 15:29:53 <slangasek> * investigating EFI netboot support
+
+ 15:29:56 <slangasek> * managing secureboot insecurities
+
+ 15:29:58 <slangasek> * upcoming:
+
+ 15:30:01 <slangasek> * more helping with 12.04.1
+
+ 15:30:03 <slangasek> * doc appt. this afternoon
+
+ 15:30:06 <slangasek> (done)
+
+ 15:30:30 <slangasek> any questions?
+
+ 15:31:51 <slangasek> #topic Ḃųǵṡ
+
+ 15:32:09 * xnox there is a bug with slangasek irc client, or so it appears to
+
+ 15:32:13 <stokachu> http://pad.lv/977964 - if someone has time to provide feedback to my latest comment i'd appreciate it
+
+ 15:32:14 <ubottu> Launchpad bug 977964 in libart-lgpl (Ubuntu Precise) "Please transition libart-lgpl to multi-arch" [Medium,In progress]
+
+ 15:32:50 <slangasek> hmph, frail bot
+
+ 15:32:50 <slangasek> #topic Bugs
+
+ 15:32:50 <slangasek> right, whatever :)
+
+ 15:32:51 <slangasek> bdmurray: what's defective?
+
+ 15:33:46 <bdmurray> slangasek: I don't have anything specific today
+
+ 15:33:54 <slangasek> ok
+
+ 15:33:56 <cjwatson> stokachu: I think ScottK is saying (and I'm inclined to agree) that any changes to precise should be based on the package in precise, not based on the package in quantal - you need to extract the necessary changes rather than just backporting the quantal package
+
+ 15:34:07 <cjwatson> s/that/is that/
+
+ 15:34:52 <stokachu> cjwatson: ok
+
+ 15:35:48 * slangasek has a peek at http://reports.qa.ubuntu.com/reports/rls-mgr/rls-q-tracking-bug-tasks.html
+
+ 15:35:49 <stokachu> or should i target quantal and create a new precise bug
+
+ 15:36:05 <cjwatson> well, the changes need to go into quantal if they haven't already
+
+ 15:36:35 <cjwatson> but there's no need for a separate bug, since this one is already targeted to precise (and apparently fix-released in quantal ...)
+
+ 15:36:48 <stokachu> ok ill fix the patch and re-submit for approval
+
+ 15:36:53 <stokachu> thanks for the help
+
+ 15:37:22 <cjwatson> bearing in mind I don't know much about this package, this is just generalised sru advice
+
+ 15:38:00 <stokachu> cjwatson: understood, i think this debdiff was originally done by another team member and i never did any proper inspection on it
+
+ 15:38:19 <slangasek> hmm, bug #892370 continues to linger
+
+ 15:38:21 <ubottu> Launchpad bug 892370 in OEM Priority Project quantal "The time zone for China should default to Beijing not Shanghai (when offline)" [Medium,In progress] https://launchpad.net/bugs/892370
+
+ 15:38:22 <stokachu> cjwatson: i believe its already in quantal
+
+ 15:38:34 <stokachu> just need to specifics for precise and it'd be good to go
+
+ 15:38:44 <smartboyhw> Good bug, that 892370!
+
+ 15:40:16 <slangasek> cjwatson, stgraber, ev: any of you willing to take jmleddy's patch to tzdata and run with it?
+
+ 15:40:28 <ev> -ENOTIME
+
+ 15:42:34 <slangasek> maybe that bug is too much to digest in an IRC meeting :)
+
+ 15:42:46 <cjwatson> Even additions to tzdata should go upstream, IMO
+
+ 15:43:06 <slangasek> should we ask jmleddy to do that, then?
+
+ 15:43:24 <cjwatson> Otherwise TZ is incompatible with other systems (e.g. chroots, ssh env forwarding, etc.)
+
+ 15:43:44 * cjwatson tries to remember where the translations live
+
+ 15:44:45 <cjwatson> tzsetup maybe?
+
+ 15:46:01 <cjwatson> I'm honestly not sure at this point where that lives, and I'm not sure I can promise time to figure it out
+
+ 15:46:18 <cjwatson> Forwarding the tzdata patch upstream would be an easy way for jmleddy to move forward if he thinks that's correct
+
+ 15:46:43 <ogra_> or convince china to just flip the names of the cities ?
+
+ 15:47:28 <cjwatson> Ah, Shanghai isn't translated in tzsetup because we force CN to Shanghai rather than offering all the possible choices there
+
+ 15:47:39 <slangasek> ogra_: but then the etymology of Beijing would make no sense :)
+
+ 15:47:48 <cjwatson> So it'd have to be done in ubiquity if we were doing a translation hack
+
+ 15:47:54 <smartboyhw> But Beijing is the capital
+
+ 15:47:56 <ogra_> details :P
+
+ 15:47:58 <cjwatson> Which then wouldn't help the other affected applications, which IIRC there are some
+
+ 15:48:04 <cjwatson> smartboyhw: we weren't being serious
+
+ 15:48:34 <slangasek> cjwatson: can you follow up to the bug (or on IRC) to ask jmleddy to get this upstreamed?
+
+ 15:49:01 <smartboyhw> If you don't fix it, the Chinesee authorities won't allow Ubuntu to go into China.
+
+ 15:49:29 <cjwatson> slangasek: Done
+
+ 15:49:36 <cjwatson> smartboyhw: Please don't exaggerate
+
+ 15:49:49 <slangasek> heh
+
+ 15:49:53 <slangasek> cjwatson: thanks :)
+
+ 15:50:02 <ogra_> since we are at bugs ...
+
+ 15:50:03 <slangasek> #topic Blueprints
+
+ 15:50:07 <slangasek> ogra_: too late!
+
+ 15:50:11 <slangasek> http://status.ubuntu.com/ubuntu-quantal/canonical-foundations.html
+
+ 15:50:24 <slangasek> burndown's looking a bit rough :P
+
+ 15:50:27 <ogra_> i'll try to move along with bug 1028905 myself, but i fear i'll need some cjwatson help at some point
+
+ 15:50:28 <ubottu> Launchpad bug 1028905 in cdrom-detect (Ubuntu Quantal) "cdrom-detect in quantal omap4 hangs trying to look for install media on an extended partition" [High,Confirmed] https://launchpad.net/bugs/1028905
+
+ 15:51:07 <slangasek> http://status.ubuntu.com/ubuntu-quantal/all-quantal-alpha-3.html shows some 80 WIs targeted to alpha-3 that didn't get in
+
+ 15:52:30 <slangasek> I know 12.04.1 has pulled a lot of effort away from quantal development for this first part of the cycle, but please make it a focus for the next couple of weeks to get these back on track
+
+ 15:52:56 <slangasek> and we'll discuss one-on-one if there are things that need cutting
+
+ 15:53:31 <slangasek> questions/concerns?
+
+ 15:54:26 <slangasek> oh... 80 WIs is across all teams, our outstanding count is < 10 ;)
+
+ 15:54:46 <cjwatson> I marked my one of those done earlier
+
+ 15:54:53 <slangasek> cjwatson: groovy, thanks
+
+ 15:55:51 <slangasek> #topic AOB
+
+ 15:55:55 <slangasek> anything else?
+
+ 15:56:17 <infinity> I could use a snack.
+
+ 15:56:19 <infinity> Does that count?
+
+ 15:56:33 * ogra_ hands infinity a snickers
+
+ 15:56:37 <slangasek> only if it's a business snack
+
+ 15:57:36 * cjwatson uploads the aptdaemon SRU candidate - can that still make it?
+
+ 15:57:50 <slangasek> I think it should
+
+ 15:57:54 <stgraber> cjwatson: yes
+
+ 15:57:55 <cjwatson> (should be in the queue in ~5 mins)
+
+ 15:57:59 <cjwatson> ~3 actually
+
+ 15:58:05 <slangasek> \o/
+
+ 15:58:16 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

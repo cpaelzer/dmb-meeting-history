@@ -1,0 +1,681 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:06:01 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-04-18-15.06.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *Bugs
+''LINK:'' http://reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-packages-hottest-bugs.html   (slangasek, 15:54:46)
+
+ *AOB
+
+
+
+Meeting ended at 16:03:57 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (75)
+ * ev (48)
+ * ogra_ (41)
+ * ubottu (37)
+ * cjwatson (32)
+ * bdmurray (30)
+ * jodh (17)
+ * stgraber (15)
+ * doko (10)
+ * barry (4)
+ * meetingology (3)
+
+
+
+== Full Log ==
+
+
+ 15:06:01 <slangasek> #startmeeting
+
+ 15:06:01 <meetingology> Meeting started Wed Apr 18 15:06:01 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:06:01 <meetingology> 
+
+ 15:06:01 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:06:17 <slangasek> [TOPIC] lightning round
+
+ 15:07:19 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson)
+
+ 15:07:22 <slangasek> jodh ev stgraber doko barry cjwatson ogra infinity bdmurray slangasek
+
+ 15:07:27 <jodh> * [boot]
+
+ 15:07:28 <jodh> - plymouth: Sent a real fix for bug 553745 upstream (awaiting
+
+ 15:07:28 <jodh> feedback). Hopefully, we'll be able to close the 270 duplicate bugs
+
+ 15:07:28 <jodh> real soon now :)
+
+ 15:07:30 <ubottu> Launchpad bug 553745 in plymouth (Ubuntu Lucid) "plymouthd crashed with SIGSEGV in ply_event_loop_process_pending_events()" [High,Triaged] https://launchpad.net/bugs/553745
+
+ 15:07:31 <jodh> - lightdm: Comments on bug 969489. Needs more thought.
+
+ 15:07:31 <ubottu> Launchpad bug 969489 in lightdm (Ubuntu) "lightdm tries (and fails) to start too early?" [Undecided,Confirmed] https://launchpad.net/bugs/969489
+
+ 15:07:34 <jodh> * [doc]
+
+ 15:07:37 <jodh> - Cookbook updates (the cookbook now appears to have broken rst2pdf :()
+
+ 15:07:40 <jodh> * [misc]
+
+ 15:07:44 <jodh> - Updated https://wiki.ubuntu.com/FoundationsTeam/PreferredTechnologies
+
+ 15:07:47 <jodh> * [release]
+
+ 15:07:50 <jodh> - Lots of work on Upstart Release Notes
+
+ 15:07:53 <jodh> https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes/TechnicalOverviewUpstart
+
+ 15:07:56 <jodh> ⠕
+
+ 15:08:11 <ev> - Finished the apport branch that handles breaks/replaces in the retrace cache
+
+ 15:08:12 <ev> which I mentioned last week.
+
+ 15:08:13 <ev> - Continued to shop the crash database statistics website design around.
+
+ 15:08:13 <ev> Please give me your feedback as time allows.
+
+ 15:08:23 <ev> - Meeting with the good folks at Acunu on Friday to discuss their Acunu
+
+ 15:08:23 <ev> Anayltics project which we may use as the foundation of our metrics service.
+
+ 15:08:25 <ev> They're debating internally whether or not to open source it, with some
+
+ 15:08:26 <ev> people pushing hard for it to be open. Unfortunately it's a bit of a black
+
+ 15:08:28 <ev> box at the moment as the copy they're distributing is binary-only. I've put
+
+ 15:08:29 <ev> it up in the Canonicloud with a public IP and am working on instructions for
+
+ 15:08:31 <ev> those that want to test metrics collection against it.
+
+ 15:08:37 <ev> - Built a mean time between failures graph using sample data and the very cool
+
+ 15:08:38 <ev> nvd3 that itself builds on the even cooler d3.js:
+
+ 15:08:39 <ev> http://novus.github.com/nvd3/examples/cumulativeLine.html
+
+ 15:08:40 <ev> - Built out support in oops-repository for collecting mean time between
+
+ 15:08:42 <ev> failures in real time. Worked with webops to get this deployed.
+
+ 15:08:43 <ev> - Fought CSS to the death (and lost) attempting to get our most common
+
+ 15:08:45 <ev> problems table to use 100% of the available width, giving as little as it
+
+ 15:08:46 <ev> can to all the columns except for the signature one. Hacking around for now.
+
+ 15:08:48 <ev> - Dug at the whoopsie build failures on PPC and ARM. Traced the cause to a
+
+ 15:08:49 <ev> non-boolean function used as a glib callback. Fixed.
+
+ 15:08:51 <ev> - Changed our retracing code to use the new cached sandboxes and manage their
+
+ 15:08:52 <ev> creation and removal. This had a slight bug in that it was creating
+
+ 15:08:54 <ev> sandboxes for every single crash it retraced, quickly eating up the space on
+
+ 15:08:55 <ev> that production machine. I've fixed this and webops are working on deploying
+
+ 15:08:57 <ev> it.
+
+ 15:08:58 <ev> - Sat in on a FY11 presentation given by Rick.
+
+ 15:09:00 <ev> - Meeting with the design team to discuss an improved mockup and specification
+
+ 15:09:01 <ev> process.
+
+ 15:09:02 <ev> (done)
+
+ 15:09:19 <stgraber> Very short week, was off on Friday, Monday and Tuesday
+
+ 15:09:19 <stgraber> - ISO tracker
+
+ 15:09:19 <stgraber> - Minor bug reporting bugfix pushed to production
+
+ 15:09:19 <stgraber> - Containers
+
+ 15:09:19 <stgraber> - Minor LXC fixes
+
+ 15:09:21 <stgraber> - Installer
+
+ 15:09:24 <stgraber> - Fixed bug 966294!
+
+ 15:09:26 <ubottu> Launchpad bug 966294 in GStreamer "gstreamer hangs when accessing webcam (on specific hardware)" [Medium,New] https://launchpad.net/bugs/966294
+
+ 15:09:27 <stgraber> - Fixed some more installer bugs (bug 973794, bug 984883)
+
+ 15:09:28 <ubottu> Launchpad bug 973794 in casper (Ubuntu) "Malformed 'search' entry in /etc/resolv.conf on network install" [High,Fix released] https://launchpad.net/bugs/973794
+
+ 15:09:29 <stgraber> - Release
+
+ 15:09:29 <ubottu> Launchpad bug 984883 in ubiquity (Ubuntu) "Ubuntu Precise alternate OEM: No slideshow during end user setup" [Undecided,New] https://launchpad.net/bugs/984883
+
+ 15:09:32 <stgraber> - Code review for unapproved uploads
+
+ 15:09:33 <barry> stgraber: \o/
+
+ 15:09:34 <stgraber> - ISO testing
+
+ 15:09:36 <stgraber> - TODO this week (today/tomorrow)
+
+ 15:09:39 <stgraber> - Continue bug fixing and testing images.
+
+ 15:09:42 <stgraber> (DONE)
+
+ 15:10:41 <doko> - ARM dynamic linker path - call and updates.
+
+ 15:10:41 <doko> - python2.6 rebuilds and removals
+
+ 15:10:41 <doko> - python 2.7.3 and 3.2.3 final releases
+
+ 15:10:41 <doko> - prepared sru updates for python-defaults and gcc-4.6
+
+ 15:10:41 <doko> - prepare toolchain opening for q (gcc-4.7 ARM fixes, fixed or sent patches for all gcc-4.7
+
+ 15:10:42 <doko> ftbfs (main), work done in unstable).
+
+ 15:10:44 <doko> - Linaro gcc-4.6 and 4.7 merges
+
+ 15:10:48 <doko> - gdb Linaro update (rejected)
+
+ 15:10:50 <doko> - best guesses on bug 983981.
+
+ 15:10:52 <doko> (done)
+
+ 15:10:55 <ubottu> Launchpad bug 983981 in update-manager (Ubuntu) "Lucid -> Precise main failed to upgrade: ERROR: pycompile:Requested versions are not installed dpkg: error processing python2.7-minimal installed post-installation script returned error exit status 3" [High,New] https://launchpad.net/bugs/983981
+
+ 15:11:08 <barry> bug 975417; bug 873468; debian bug 585145; python issue 9762; unity 2d HUD testing; more python3 transition work for 12.10; done.
+
+ 15:11:15 <ev> jodh: thanks for those updates to PreferredTechnologies!
+
+ 15:11:15 <ubottu> Launchpad bug 975417 in paraview (Ubuntu) "ParaView conflicts with python-vtk, python-viper,..." [Undecided,Fix released] https://launchpad.net/bugs/975417
+
+ 15:11:16 <ubottu> Launchpad bug 873468 in update-manager (Ubuntu Precise) "Update to latest Release failed for overloaded mirrors with no descriptive error message" [High,Fix released] https://launchpad.net/bugs/873468
+
+ 15:11:17 <ubottu> Debian bug 585145 in wnpp "ITA: gtimelog -- minimal timelogging system" [Normal,Fixed] http://bugs.debian.org/585145
+
+ 15:11:36 <jodh> ev: np
+
+ 15:11:59 <jodh> ev: I feel that page could one day outgrow the cookbook :)
+
+ 15:12:09 <ev> I sure hope so :)
+
+ 15:12:27 <slangasek> jodh: 969489> I had talked with bryce and apw about that the other day; the real problem seems to be that the graphics-device-added event happens before the device is actually ready, for obscure kernel reasons, and we don't have a reliable event that things can wait on
+
+ 15:12:29 <ev> there's already lots of good pointers in there about things I was completely unaware of.
+
+ 15:12:39 <cjwatson> Some more installer translation merges.  Tweaked partman-auto to reduce risk.
+
+ 15:12:41 <barry> indeed
+
+ 15:12:42 <cjwatson> Add hd-media/non-pae installer build (bug 977568).
+
+ 15:12:44 <ubottu> Launchpad bug 977568 in debian-installer (Ubuntu) "Xubuntu nightly ISOs use the non-PAE kernel, but no hd-media image is available for that" [Undecided,Fix released] https://launchpad.net/bugs/977568
+
+ 15:12:45 <cjwatson> Spent Thursday in London, mostly helping James track down the famous plymouth crash.
+
+ 15:12:48 <cjwatson> Fixed mountall and NTFS not being friends when pass!=0 (bug 838091).
+
+ 15:12:50 <ubottu> Launchpad bug 838091 in mountall (Ubuntu Oneiric) "should not try to fsck ntfs volumes on boot" [Undecided,Confirmed] https://launchpad.net/bugs/838091
+
+ 15:12:50 <cjwatson> Fixed the last two powerpc-specific build failures in main.  Cleaned up a few other NBS and FTBFS bits and pieces.
+
+ 15:12:53 <jodh> slangasek: ugh!
+
+ 15:12:53 <cjwatson> Add manual download verification pass to ubiquity to work around apt bug 922949.
+
+ 15:12:55 <ubottu> Launchpad bug 922949 in apt (Ubuntu Precise) "installation process can crash due to an issue with one package when choosing "install updates" as part of the install" [High,Triaged] https://launchpad.net/bugs/922949
+
+ 15:12:56 <cjwatson> Disable webkit cache in installer slideshow in an attempt to work around bug 979350.  That's still outstanding and tricky, though.
+
+ 15:12:59 <ubottu> Launchpad bug 979350 in ubiquity (Ubuntu Precise) "install with encrypted home failed near the end: OSError: [Errno 12] Cannot allocate memory" [High,Confirmed] https://launchpad.net/bugs/979350
+
+ 15:12:59 <cjwatson> Holiday on Monday.
+
+ 15:13:02 <cjwatson> Miscellaneous command-not-found cleanups.
+
+ 15:13:04 <cjwatson> grub2 EFI backports to fix bug 975061.
+
+ 15:13:05 <ubottu> Launchpad bug 975061 in grub2 (Ubuntu) "grub doesn't find boot" [High,Fix released] https://launchpad.net/bugs/975061
+
+ 15:13:07 <cjwatson> Fix broken panel colour in ubiquity (bug 982883).
+
+ 15:13:08 <ubottu> Launchpad bug 982883 in ubiquity (Ubuntu) "[UIFe] Wrong color of top panel in ubiquity-dm" [High,Fix released] https://launchpad.net/bugs/982883
+
+ 15:13:09 <cjwatson> Fix broken location of kernel/initrd symlinks on powerpc (bug 958839).
+
+ 15:13:10 <ubottu> Launchpad bug 958839 in live-build (Ubuntu) "Initrd/vmlinux symbloic links not in /boot directory on PowerPC" [Medium,Fix released] https://launchpad.net/bugs/958839
+
+ 15:13:12 <cjwatson> Worked on analysing various upgrade bugs, and generally tried to clean up our rls-p-tracking list.
+
+ 15:13:15 <cjwatson> Working with dpkg upstream on bug 983187.
+
+ 15:13:16 <ubottu> Launchpad bug 983187 in dpkg (Ubuntu) "dpkg-divert: --add --rename --package shouldn't rename if owned by package" [Medium,Triaged] https://launchpad.net/bugs/983187
+
+ 15:13:17 <cjwatson> ..
+
+ 15:13:28 <ogra_> done:
+
+ 15:13:29 <ogra_> * many many hours spent on more compiz issues (actually nearly all my week, i'm in the last stages of testing it in the images,
+
+ 15:13:29 <ogra_> seems there are still minor issues with gtk-window-decorator)
+
+ 15:13:29 <ogra_> * had long discussions with linaro about possible blueprints for arm bits (summary mail to platfound ML pending)
+
+ 15:13:29 <ogra_> * tons of user support over the weekend to nail down why suddenly initramfs doesnt find /init anymore on arm (fixed by infinity)
+
+ 15:13:32 <ogra_> * did some peer reviews
+
+ 15:13:34 <ogra_> * partman-uboot will have to be either SRU or go into 12.10 proper, compiz just stole to much of my time :(
+
+ 15:13:37 <ogra_> todo:
+
+ 15:13:39 <ogra_> * finish peer reviews
+
+ 15:13:41 <ogra_> * finish ubuntu-core wikipage rewrite
+
+ 15:13:43 <ogra_> * look into fsck slowdown (sorry steve, still didnt get to it :/ )
+
+ 15:13:45 <ogra_> UDS:
+
+ 15:13:47 <ogra_> * linaro would like to:
+
+ 15:13:51 <ogra_> a) have truely embedded image possibilities and closer integration for any embedded stuff (like dev environments
+
+ 15:13:54 <ogra_> (i.e. board specific eclipse plugins) but also the opportunity to build actual embedded images (i.e. for systems
+
+ 15:13:57 <ogra_> with only 64M ram and 128M flash space)
+
+ 15:13:59 <ogra_> b) see us integrate HW-pack usage into our build system (to drop duplication, we all seem to build the same stuff)
+
+ 15:14:02 <ogra_> both should become blueprints imho.
+
+ 15:14:04 <ogra_> ..
+
+ 15:14:56 <jodh> ogra_: what was the cause of the inaccessible /init ?
+
+ 15:15:16 <ogra_> jodh, linker path breakage in initramfs-tools and d-i
+
+ 15:15:23 <ogra_> well, fsvo breakage :)
+
+ 15:15:44 <cjwatson> aka fallout from change in progress
+
+ 15:15:47 <ogra_> right
+
+ 15:16:03 <ogra_> well, i dont think adam expected that he had to touch it
+
+ 15:16:56 <ogra_> oh
+
+ 15:16:57 <ogra_> ..
+
+ 15:20:11 <slangasek> ogra_: fsck slowdown> well if people would just be happy running metacity on arm... ;)
+
+ 15:20:20 <ogra_> haha
+
+ 15:20:25 <slangasek> ogra_: please get blueprints registered for both of those topics and targeted to the sprint
+
+ 15:20:29 <ogra_> well, its not off my TODO
+
+ 15:20:35 <ogra_> yeah, will do
+
+ 15:20:56 <slangasek> bdmurray:
+
+ 15:21:05 <ogra_> fsck can well be SRUed ... sadly partman-uboot is useless as SUR until 12.04.1
+
+ 15:21:57 <bdmurray> bug triage of update-manager and ubiquity bug reports
+
+ 15:21:58 <bdmurray> uploaded an apport change to check /cdrom fullness for package install failures
+
+ 15:22:01 <bdmurray> uploaded update-manager patch in bug 945536
+
+ 15:22:03 <ubottu> Launchpad bug 945536 in update-manager (Ubuntu Precise) "Excruciatingly slow package list onscreen update" [High,Fix released] https://launchpad.net/bugs/945536
+
+ 15:22:03 <bdmurray> reported ubiquity bug 979350 regarding out of memory
+
+ 15:22:05 <ubottu> Launchpad bug 979350 in ubiquity (Ubuntu Precise) "install with encrypted home failed near the end: OSError: [Errno 12] Cannot allocate memory" [High,Confirmed] https://launchpad.net/bugs/979350
+
+ 15:22:11 <bdmurray> reported casper bug 984276 regarding installing casper on non-live systems
+
+ 15:22:12 <ubottu> Launchpad bug 984276 in casper (Ubuntu) "installing casper on a non live system causes update-initramfs to fail" [Undecided,Confirmed] https://launchpad.net/bugs/984276
+
+ 15:22:12 <slangasek> well, and also useful for people building other images out of the precise archive (i.e., OEMs)... so still worth doing even if it slips
+
+ 15:22:14 <bdmurray> consolidation of duplicates of bug 984276 and bug 902603
+
+ 15:22:16 <ubottu> Launchpad bug 902603 in dpkg (Ubuntu Oneiric) "When installing Multi-Arch: same (meta-)package for two architectures, dpkg considers one arch as completely disappeared" [High,Fix committed] https://launchpad.net/bugs/902603
+
+ 15:22:17 <bdmurray> bug triage of ubiquity bug 980676 and finding duplicates of it
+
+ 15:22:17 <ubottu> Launchpad bug 980676 in ubiquity (Ubuntu) "migration-assistant causes an install failure when encountering another OS with multiple users" [Undecided,Incomplete] https://launchpad.net/bugs/980676
+
+ 15:22:19 <bdmurray> wrote a flashplugin-nonfree bug pattern for bug 876298 (dupe cleanup too)
+
+ 15:22:20 <ubottu> Launchpad bug 876298 in update-notifier (Ubuntu) "[FFe] [MASTER] We need to better handle external payloads (Flash, msttcorefonts) not being available." [Critical,Fix released] https://launchpad.net/bugs/876298
+
+ 15:22:33 <bdmurray> added a bug pattern for bug 975320 regarding update-manager / aptdaemon
+
+ 15:22:33 <bdmurray> converted some harvest opportunities to output json data instead of csv files
+
+ 15:22:34 <ubottu> Launchpad bug 975320 in aptdaemon (Ubuntu) "update-manager crashed with Depends in _run_in_dialog(): libx264-120 but it is not installed" [Medium,Confirmed] https://launchpad.net/bugs/975320
+
+ 15:22:36 <bdmurray> wrote code to query ultimate debian database for duplicate title bugs by the same reporter
+
+ 15:24:46 <slangasek> bdmurray: done?
+
+ 15:25:07 <bdmurray> .. done ..
+
+ 15:25:24 <slangasek> * release queue reviews
+
+ 15:25:25 <slangasek> * follow through on update-notifier for the downloader changes (bug #979477, bug #979426, bug #976761)
+
+ 15:25:27 <slangasek> * fixed busybox creating directories with wrong perms on 64-bit (bug #980772)
+
+ 15:25:28 <ubottu> Launchpad bug 979477 in update-notifier (Ubuntu) "ttf-mscorefonts-installer installation popup and probable failure" [High,Fix released] https://launchpad.net/bugs/979477
+
+ 15:25:30 <ubottu> Launchpad bug 979426 in update-notifier (Ubuntu) "persistent MitM can truncate list of files passed as script command line arguments" [Medium,Fix released] https://launchpad.net/bugs/979426
+
+ 15:25:30 <slangasek> * fixed race condition in crypted swap on boot (bug #874774)
+
+ 15:25:32 <ubottu> Launchpad bug 976761 in update-notifier (Ubuntu) "package-data-downloader crashed with OSError in mark_hook_failed(): [Errno 13] Permission denied: '/var/lib/update-notifier/package-data-downloads/flashplugin-installer.failed'" [High,Fix released] https://launchpad.net/bugs/976761
+
+ 15:25:33 <slangasek> * followed through on the insserv breakage cleanup (bug #941867)
+
+ 15:25:34 <ubottu> Launchpad bug 980772 in busybox (Ubuntu Precise) "Various files and directories created with odd permissions on precise" [High,Fix released] https://launchpad.net/bugs/980772
+
+ 15:25:35 <slangasek> * killed defoma out of main
+
+ 15:25:35 <ubottu> Launchpad bug 874774 in cryptsetup (Ubuntu Oneiric) "could not mount /dev/mapper/cryptswap1" [High,Triaged] https://launchpad.net/bugs/874774
+
+ 15:25:37 <ubottu> Launchpad bug 941867 in insserv (Ubuntu Oneiric) "after upgrade to 1.14.0-2.1ubuntu0.1 0 dpkg --configure ror" [High,Fix committed] https://launchpad.net/bugs/941867
+
+ 15:25:38 <slangasek> * trimmed plymouth bug pattern to not match on precise, now that we think the bugs are fixed (so we can see any reports that they aren't)
+
+ 15:25:43 <slangasek> done
+
+ 15:27:10 <slangasek> any questions anywhere?
+
+ 15:27:34 <slangasek> [TOPIC] Bugs
+
+ 15:28:14 <bdmurray> I've tried recreating bug 978181 and bug 974402 without any luck
+
+ 15:28:16 <ubottu> Launchpad bug 978181 in ubiquity (Ubuntu) "User home not created after install" [High,New] https://launchpad.net/bugs/978181
+
+ 15:28:17 <ubottu> Launchpad bug 974402 in ubiquity (Ubuntu) "No user home directory created on clean install using btrfs" [Undecided,Confirmed] https://launchpad.net/bugs/974402
+
+ 15:28:41 <bdmurray> I don't think many people choose btrfs but it is still worrisome
+
+ 15:29:27 <slangasek> encrypted home would never prevent the directory from being created, AFAIK
+
+ 15:29:44 <slangasek> though I guess ecryptfs+btrfs could be making the filesystem explode
+
+ 15:29:48 <cjwatson> this sort of thing can happen if user-setup-apply runs into an error and bails out early
+
+ 15:31:09 <cjwatson> but that's not what's happening in 978181 at least
+
+ 15:31:23 <slangasek> I have a vague memory of seeing something else on IRC about btrfs this week
+
+ 15:31:29 <cjwatson> oh eep the @home madness
+
+ 15:31:44 <slangasek> something about problems when /home is on btrfs and you're installing over an existing system?
+
+ 15:31:54 <cjwatson> it might make a difference if you're reusing an existing @home, yes
+
+ 15:33:29 <slangasek> bdmurray: is it worth testing that?
+
+ 15:34:01 <slangasek> i.e., install, then try to install again over it
+
+ 15:34:22 <bdmurray> I'll look for more duplicates but I don't think so
+
+ 15:34:54 <slangasek> you don't think it's worth testing?
+
+ 15:35:18 <bdmurray> slangasek: I don't think its worth testing before release
+
+ 15:35:26 <slangasek> ok
+
+ 15:36:08 * slangasek asks on the bug then
+
+ 15:36:12 <slangasek> moving on
+
+ 15:36:30 <bdmurray> I previously mentioned bug 984276
+
+ 15:36:31 <ubottu> Launchpad bug 984276 in casper (Ubuntu) "installing casper on a non live system causes update-initramfs to fail" [Undecided,Confirmed] https://launchpad.net/bugs/984276
+
+ 15:37:03 <bdmurray> I was surprised by the number of people who install casper
+
+ 15:37:29 <ogra_> yeah, but there is no easy solution apart from making it uninstallable on non live fses
+
+ 15:37:47 <ogra_> i mean, if users want to shoot both their feet, who are we to stop them
+
+ 15:37:56 <slangasek> the question is why they're doing so
+
+ 15:38:02 <ogra_> indeed
+
+ 15:38:20 <slangasek> do they have a fondness for friendly ghosts, or is some web page telling them to, or...
+
+ 15:39:11 <ogra_> hmm, wasnt there another bug that was actually community reported ?
+
+ 15:39:38 <ogra_> oh, sorry, i'm blind .. just a master
+
+ 15:40:14 <bdmurray> casper shows up in software center fwiw
+
+ 15:40:16 <slangasek> bdmurray: how should we approach this to figure out where this problem is coming from?
+
+ 15:40:29 <slangasek> in software-center> doh
+
+ 15:40:48 <slangasek> bdmurray: can you open a bug report on software-center about getting that fixed?
+
+ 15:41:04 <bdmurray> slangasek: sure
+
+ 15:41:47 <ogra_> we could possibly make casper chack something like "is a bootloader configured" and make it become a no-op then
+
+ 15:41:55 <ogra_> *check
+
+ 15:41:58 <slangasek> hmm, seems to be a general problem
+
+ 15:42:02 <slangasek> 'fontconfig' also shows up in casper
+
+ 15:42:21 <bdmurray> ogra_: yes, I think something like that may help too
+
+ 15:42:40 <slangasek> ogra_: do you want to take that one?
+
+ 15:42:58 <ogra_> i can, sure ... i guess thats supposed to happen before release ? :)
+
+ 15:43:12 <ogra_> since SRUing it seems to make not much sense
+
+ 15:43:22 <slangasek> ogra_: best-effort
+
+ 15:43:25 <ogra_> k
+
+ 15:43:47 <slangasek> it still gives benefit if we get it in SRU, and it's not the highest priority issue
+
+ 15:44:03 <slangasek> btw, as far as bugs go... we have http://reports.qa.ubuntu.com/reports/kernel-bugs/reports/rls-p-tracking-bugs.html down about where we want it, and if we're taking any more bugs that it's critical to fix for .0, they'll probably be so critical that we don't even need to track them on there :-P
+
+ 15:44:10 <ogra_> yeah, with luck people with casper installed get the updated version before their system breaks :)
+
+ 15:44:29 <slangasek> so how should we be tracking bugs that are priorities but that aren't tied to .0?
+
+ 15:44:37 <slangasek> rls-p-tracking, target to precise-updates?
+
+ 15:44:45 <ogra_> ++
+
+ 15:44:46 <cjwatson> I think so
+
+ 15:44:55 <slangasek> bdmurray: ^^ does that sound good to you?
+
+ 15:46:32 <bdmurray> slangasek: both? yes that's fine
+
+ 15:46:42 <slangasek> yeah, both
+
+ 15:48:08 <slangasek> bdmurray: any other new issues popping up?
+
+ 15:48:27 <bdmurray> bug 984593 was just reported
+
+ 15:48:28 <ubottu> Launchpad bug 984593 in Wubi "Wubi upgrade from 10.04.4 to 12.04 exceptions" [Undecided,New] https://launchpad.net/bugs/984593
+
+ 15:48:56 <bdmurray> I haven't looked at it thoroughly yet
+
+ 15:50:04 <slangasek> so far I don't see anything wubi related in the bug... and the submitter broke it out into per-issue bugs for us already?
+
+ 15:50:19 <slangasek> i.e., all the issues he had look like upgrade issues, not wubi issues
+
+ 15:50:26 <bdmurray> I think they initially installed from wubi then upgraded to precise
+
+ 15:51:02 <slangasek> yep... I just don't see anything (yet) to make me think he actually had wubi-specific problems
+
+ 15:51:23 <slangasek> bug #984932 - hah
+
+ 15:51:24 <ubottu> Launchpad bug 984932 in ubiquity (Ubuntu Precise) "Ubuntu alternate OEM: main part of the panel missing during end-user configuration" [Medium,New] https://launchpad.net/bugs/984932
+
+ 15:51:28 <slangasek> cjwatson: ^^ missing image again? :)
+
+ 15:51:51 <cjwatson> hmm
+
+ 15:51:58 <slangasek> (oem-config vs. ubiquity?)
+
+ 15:52:17 <bdmurray> slangasek: okay, I'll dig into it and the related bugs more
+
+ 15:52:17 <cjwatson> different weirdness
+
+ 15:52:21 <slangasek> bdmurray: cheers
+
+ 15:52:29 <cjwatson> oem-config-gtk depends: ubiquity-frontend-gtk so I don't think it's missing image
+
+ 15:52:36 <slangasek> so does everyone have enough bugs to keep themselves feeling productive between now and release?
+
+ 15:52:41 <cjwatson> more than
+
+ 15:52:50 <slangasek> does anyone want to take some bugs from cjwatson? :P
+
+ 15:53:14 <stgraber> I'll take bug 984932
+
+ 15:53:16 <ubottu> Launchpad bug 984932 in ubiquity (Ubuntu Precise) "Ubuntu alternate OEM: main part of the panel missing during end-user configuration" [Medium,New] https://launchpad.net/bugs/984932
+
+ 15:53:23 <slangasek> stgraber: thanks
+
+ 15:53:32 <cjwatson> cool, that should be fine, just generally fielding installer things that come up in QA
+
+ 15:54:09 <slangasek> fwiw, if anyone's not finding bugs to work on, another source for them is http://reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-packages-hottest-bugs.html ... don't remember if this has been passed around to the team yet
+
+ 15:54:26 <slangasek> great report by bdmurray that shows the hottest bugs across all the foundations packages he's tracking
+
+ 15:54:41 <bdmurray> I'd hope I passed it around ;-)
+
+ 15:54:44 <cjwatson> bug 984989 needs attention (from me)
+
+ 15:54:45 <ubottu> Launchpad bug 984989 in grub-installer (Ubuntu) "grub install fails. installing from /dev/sda to /dev/sdb" [Critical,New] https://launchpad.net/bugs/984989
+
+ 15:54:46 <slangasek> [LINK] http://reports.qa.ubuntu.com/reports/foundations-bugs/foundations-bugs-packages-hottest-bugs.html
+
+ 15:55:34 <barry> computer-janitor makes me sad ;)
+
+ 15:55:36 <slangasek> but you can safely assume that any of the bugs on that graph have a significant user impact and are worth fixing
+
+ 15:55:45 <slangasek> heh
+
+ 15:56:20 <slangasek> cjwatson: rls-p-tracking?
+
+ 15:56:23 <ev> ooooh jquery
+
+ 15:56:34 <bdmurray> sssh
+
+ 15:56:39 <cjwatson> slangasek: why not, added
+
+ 15:56:40 <ev> that's going to get a shouty response
+
+ 15:56:45 <ev> bdmurray: ;)
+
+ 15:57:19 <slangasek> ev: grandfathered :P
+
+ 15:57:45 <ev> heh
+
+ 15:58:14 <slangasek> don't worry, I'll take the heat for the graph not being suitable for integrating into our webapps
+
+ 15:58:14 <ev> there's always d3.js...
+
+ 15:58:47 <bdmurray> slangasek: you'll take the heat for the heat graph? ;-)
+
+ 15:58:53 <slangasek> I will!
+
+ 15:59:05 <slangasek> bdmurray: any other bugs?
+
+ 15:59:14 <bdmurray> not that I know of yet
+
+ 15:59:16 <ev> so I've just discovered that if you download and run wubi when you have a cd in the drive, you now helpfully get the autorun menu
+
+ 15:59:32 <ev> this is probably my fault
+
+ 15:59:38 <slangasek> !!
+
+ 15:59:41 <slangasek> fix it fix it
+
+ 16:00:07 <ev> my whole day has been fixing things! Can't I just break things for a little while?
+
+ 16:00:18 <slangasek> no, break things on your own time
+
+ 16:00:28 <ev> lol, damn
+
+ 16:00:31 <slangasek> preferably in some other OS ;)
+
+ 16:00:36 <slangasek> [TOPIC] AOB
+
+ 16:00:38 <slangasek> anything else?
+
+ 16:00:54 <cjwatson> who's going to the release sprint from our team?
+
+ 16:00:58 <ev> would still appreciate your collective feedback on that email I sent
+
+ 16:01:01 <cjwatson> I believe I am
+
+ 16:01:07 <ev> o/
+
+ 16:01:08 <slangasek> infinity is
+
+ 16:01:33 <cjwatson> hm, looks like I need to ask about accom
+
+ 16:01:53 <ev> who's going to be here not from our team? Rick and Kate?
+
+ 16:02:09 <ev> and presumably andy for comedy value
+
+ 16:02:16 <slangasek> heh
+
+ 16:02:37 <cjwatson> Pete too
+
+ 16:02:45 <ev> awesome!
+
+ 16:03:57 <ev> cjwatson: skaet and I are going to block out some time at the release sprint to discuss the crashdb website design. Care to join us?
+
+ 16:03:57 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

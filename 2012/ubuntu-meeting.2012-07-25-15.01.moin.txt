@@ -1,0 +1,591 @@
+#title #ubuntu-meeting Meeting
+
+Meeting started by slangasek at 15:01:35 UTC.  The full logs are
+available at
+http://ubottu.com/meetingology/logs/ubuntu-meeting/2012/ubuntu-meeting.2012-07-25-15.01.log.html
+.
+
+
+
+== Meeting summary ==
+
+ *lightning round
+
+ *12.04.1
+
+ *Bugs
+
+ *AOB
+
+
+
+Meeting ended at 15:45:52 UTC.
+
+
+
+== Votes ==
+
+
+
+
+== Action items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * slangasek (64)
+ * stgraber (59)
+ * ubottu (39)
+ * jodh (31)
+ * xnox (30)
+ * bdmurray (23)
+ * ogra_ (13)
+ * jibel_ (3)
+ * meetingology (3)
+ * barry (2)
+
+
+
+== Full Log ==
+
+
+ 15:01:35 <slangasek> #startmeeting
+
+ 15:01:35 <meetingology> Meeting started Wed Jul 25 15:01:35 2012 UTC.  The chair is slangasek. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01:35 <meetingology> 
+
+ 15:01:35 <meetingology> Available commands: #accept #accepted #action #agree #agreed #chair #commands #endmeeting #endvote #halp #help #idea #info #link #lurk #meetingname #meetingtopic #nick #progress #rejected #replay #restrictlogs #save #startmeeting #subtopic #topic #unchair #undo #unlurk #vote #voters #votesrequired
+
+ 15:01:45 <slangasek> #topic lightning round
+
+ 15:01:50 <slangasek> $ echo $(shuf -e barry doko stgraber jodh ev bdmurray slangasek ogra infinity cjwatson xnox stokachu)
+
+ 15:01:53 <slangasek> barry slangasek infinity stgraber xnox ogra doko jodh cjwatson ev bdmurray stokachu
+
+ 15:01:58 <barry> win!
+
+ 15:02:15 <barry> bug 1020980; worked a bit on the pykde4 port for py3; mostly working on the xapian py3 port using both cython and swig.  not going so well - fighting many problems at all layers.  todo: probably time to move on.  done.
+
+ 15:02:17 <ubottu> Launchpad bug 1020980 in Software Updater "update-manager API change breaks apturl" [Undecided,New] https://launchpad.net/bugs/1020980
+
+ 15:04:20 <slangasek> * last week: lots of work on UEFI at the plugfest
+
+ 15:04:21 <slangasek> * this week: new upload of efilinux package, fixing bugs identified through UEFI interop testing; playing email catchup; A3 steering
+
+ 15:04:23 <slangasek> (done)
+
+ 15:04:37 <slangasek> no infinity, so stgraber:
+
+ 15:05:33 <stgraber> - Containers
+
+ 15:05:33 <stgraber> - updated python binding for getkeys(), made set_config_item and get_config_item more clever
+
+ 15:05:36 <stgraber> - implemented network config API (Container.network[index].key)
+
+ 15:05:39 <stgraber> - Networking
+
+ 15:05:41 <stgraber> - Submitted IPv6 testing scripts to QA
+
+ 15:05:44 <stgraber> - Found an isc-dhcp bug during alpha3 testing (apparmor preventing isc-dhcp-server from starting), fixed in time for a3
+
+ 15:05:47 <stgraber> - 12.04.1
+
+ 15:05:49 <stgraber> - 12.04.1 team meeting and minutes
+
+ 15:05:52 <stgraber> - Went through all the targeted/milestoned bugs for 12.04.1, updated status based on comments and queue status.
+
+ 15:05:55 <stgraber> - Verified a bunch of SRUs.
+
+ 15:05:57 <stgraber> - Uploaded a few more SRUs for bugs targeted to the point release (libxslt, sysvinit, krb5, resolvconf)
+
+ 15:06:00 <stgraber> - Image based system
+
+ 15:06:03 <stgraber> - Started working on a proof of concept for foundations-q-image-based-updates
+
+ 15:06:06 <stgraber> - Queuebot
+
+ 15:06:08 <stgraber> - Implemented packageset tracking in queuebot.
+
+ 15:06:11 <stgraber> - Implemented per-channel filters, allowing packageset/queue/tracker notifications for flavours to be sent to their channel.
+
+ 15:06:14 <stgraber> - Some performance and resource consumption improvements.
+
+ 15:06:16 <stgraber> - Other
+
+ 15:06:19 <stgraber> - Alpha 3
+
+ 15:06:21 <stgraber> - Bugfixes to sru-report to stop crashing on private bugs.
+
+ 15:06:24 <stgraber> - Some ARB app review, the app showdown made the ARB New queue reach 140 packages... Still 50 to review...
+
+ 15:06:27 <stgraber> - TODO this week
+
+ 15:06:29 <stgraber> - Continue the work on 12.04.1.
+
+ 15:06:32 <stgraber> - Get a working proof of concept for foundations-q-image-based-updates allowing booting from multiple wubi images with a shared /home.
+
+ 15:06:35 <stgraber> (DONE)
+
+ 15:07:30 <xnox> * re-uploaded mdadm SRU, pending re-review from slangasek
+
+ 15:07:30 <xnox> * finished LUKS encryption design with mpt
+
+ 15:07:30 <xnox> * good progress on manual RAID design with mpt (last remaining design item)
+
+ 15:07:30 <xnox> * see Ubiquity Specification linked from https://wiki.ubuntu.com/Ubiquity
+
+ 15:07:30 <xnox> * Automatic LVM support merge into Ubiquity.
+
+ 15:07:31 <xnox> * Automatic Full-Disk encryption is almost ready locally, will
+
+ 15:07:33 <xnox> make a merge proposal soon (coding/design done, testing/finding
+
+ 15:07:35 <xnox> bugs now)
+
+ 15:07:37 <xnox> * Increased available limits on HpCloud for my account.
+
+ 15:07:39 <xnox> * Created a basic juju charm for Luca's cloud-scripts for full-archive rebuilds.
+
+ 15:07:41 <xnox> * I will be running ubuntu full archive rebuild probably this weekend.
+
+ 15:07:43 <xnox> * After that the small plan is to run:
+
+ 15:07:45 <xnox> - rebuild, upload the debs into a temprorary archive & rebuild
+
+ 15:07:49 <xnox> the temporary archive using it's debs, to exercise the rebuild
+
+ 15:07:51 <xnox> code
+
+ 15:07:53 <xnox> - rebuild with clang
+
+ 15:07:55 <xnox> - rebuild with python3.3 (if available)
+
+ 15:07:57 <xnox> * Went do debconf & delivered sponsors thank you bag to England:
+
+ 15:07:58 <slangasek> xnox: yep, re-reviewing on my list for this week
+
+ 15:07:59 <xnox> - awesome talks about ARM, multi-arch, clang, d-i & partman
+
+ 15:08:01 <xnox> - good discussions about archive rebuilds with wookey,doko
+
+ 15:08:03 <xnox> - progress on mdadm SRU, thanks to slangasek and infinity
+
+ 15:08:18 <xnox> slangasek: ;-) it will make stgraber happy if it gets accepted.
+
+ 15:08:59 <stgraber> I'm sure I'm not the only one being concerned that you own 10% of the 12.04.1 bugs ;)
+
+ 15:09:05 <slangasek> heh
+
+ 15:09:14 <ogra_> .. ?
+
+ 15:09:25 <xnox> ..
+
+ 15:09:28 <ogra_> done:
+
+ 15:09:28 <ogra_> * made arm server alternate work ... (sadly the switch to squashfs broke them again)
+
+ 15:09:28 <ogra_> * dug around in netinst breakage, at least these images work fine
+
+ 15:09:28 <ogra_> * repeated image tests of all arm images i have HW for (everything but mx5)
+
+ 15:09:28 <ogra_> todo:
+
+ 15:09:28 <ogra_> * QA sprint next week
+
+ 15:09:32 <ogra_> * fix remaining image and flash-kernel issues like:
+
+ 15:09:34 <ogra_> * bug 1028905
+
+ 15:09:36 <ubottu> Launchpad bug 1028905 in cdrom-detect (Ubuntu) "cdrom-detect in quantal omap4 hangs trying to look for install media on an extended partition" [High,Confirmed] https://launchpad.net/bugs/1028905
+
+ 15:09:36 <ogra_> * bug 746137
+
+ 15:09:37 <ubottu> Launchpad bug 746137 in linux (Ubuntu Quantal) "Page allocation failure on Pandaboard and Beagle XM" [High,Incomplete] https://launchpad.net/bugs/746137
+
+ 15:09:38 <ogra_> * bug 1026780
+
+ 15:09:40 <ubottu> Launchpad bug 1026780 in flash-kernel (Ubuntu) "3.0~rc.4ubuntu4 doesn't honor bootargs from /boot/boot.script anymore" [High,New] https://launchpad.net/bugs/1026780
+
+ 15:09:54 <ogra_> ..
+
+ 15:10:28 <jodh> For infinity (if he reads the scrollback now ;)...
+
+ 15:10:28 <jodh> 
+
+ 15:10:29 <jodh> ⠡⠀⠃⠕⠕⠞⠌⠥⠏⠎⠞⠁⠗⠞⠱⠀⠎⠞⠁⠞⠑⠋⠥⠇⠀⠗⠑⠤⠑⠭⠑⠉⠱
+
+ 15:10:29 <jodh> ⠀⠀⠤⠀⠃⠇⠕⠉⠅⠑⠙⠀⠕⠃⠚⠑⠉⠞⠀⠎⠑⠗⠊⠁⠇⠊⠎⠁⠞⠊⠕⠝⠌⠙⠑⠎⠑⠗⠊⠁⠇⠊⠎⠁⠞⠊⠕⠝⠀⠝⠕⠺⠀⠔⠔⠩⠀⠙⠕⠝⠑⠨
+
+ 15:10:32 <jodh> ⠀⠀⠤⠀⠉⠁⠝⠀⠝⠕⠺⠀⠎⠑⠗⠊⠁⠇⠊⠎⠑⠀⠁⠝⠙⠀⠙⠑⠎⠑⠗⠊⠁⠇⠊⠎⠑⠀⠙⠃⠥⠎⠀⠍⠑⠎⠎⠁⠛⠑⠎⠨
+
+ 15:10:35 <jodh> ⠀⠀⠤⠀⠝⠑⠭⠞⠀⠎⠞⠁⠛⠑⠎⠱
+
+ 15:10:38 <jodh> ⠀⠀⠀⠀⠤⠀⠍⠕⠙⠊⠋⠽⠀⠑⠝⠥⠍⠀⠓⠁⠝⠙⠇⠊⠝⠛⠀⠞⠕⠀⠓⠁⠝⠙⠇⠑⠀⠑⠝⠥⠍⠀⠉⠓⠁⠝⠛⠑⠎⠨
+
+ 15:10:41 <jodh> ⠀⠀⠀⠀⠤⠀⠓⠁⠝⠙⠇⠑⠀⠏⠞⠗⠁⠉⠑⠙⠀⠚⠕⠃⠎⠨
+
+ 15:10:43 <slangasek> infinity's not on the channel... :)
+
+ 15:10:44 <jodh> ⠀⠀⠀⠀⠤⠀⠉⠕⠝⠎⠊⠙⠑⠗⠀⠗⠑⠤⠑⠭⠑⠉⠀⠎⠉⠑⠝⠁⠗⠊⠕⠎⠨
+
+ 15:10:48 <jodh> ⠀⠀⠀⠀⠤⠀⠁⠙⠙⠀⠍⠑⠞⠁⠤⠓⠑⠁⠙⠑⠗⠨
+
+ 15:10:48 <slangasek> also: ahhhwhat
+
+ 15:10:51 <jodh> ⠀⠀⠤⠀⠃⠥⠛⠀⠔⠦⠴⠔⠂⠶⠱⠀⠉⠕⠝⠞⠊⠝⠥⠊⠝⠛⠀⠊⠝⠧⠑⠎⠞⠊⠛⠁⠞⠊⠕⠝⠎⠨
+
+ 15:10:55 <jodh> ⠡⠀⠍⠊⠎⠉⠱⠀⠕⠝⠀⠓⠕⠇⠊⠙⠁⠽⠀⠞⠥⠑⠎⠙⠁⠽⠨
+
+ 15:10:58 <jodh> ᣫ
+
+ 15:10:58 <jodh> 
+
+ 15:11:01 <jodh> For those that don't do "tetris" (tm) ...
+
+ 15:11:04 <jodh> 
+
+ 15:11:07 <jodh> * boot/upstart: stateful re-exec:
+
+ 15:11:11 <jodh> - blocked object serialisation/deserialisation now 99% done.
+
+ 15:11:12 <slangasek> oh, braille
+
+ 15:11:14 <jodh> - can now serialise and deserialise dbus messages.
+
+ 15:11:17 <jodh> - next stages:
+
+ 15:11:20 <jodh> - modify enum handling to handle enum changes.
+
+ 15:11:25 <jodh> - handle ptraced jobs.
+
+ 15:11:25 <jodh> - consider re-exec scenarios.
+
+ 15:11:28 <jodh> - add meta-header.
+
+ 15:11:31 <jodh> - bug 980917: continuing investigations.
+
+ 15:11:33 <ubottu> Launchpad bug 980917 in upstart (Ubuntu Precise) "Failed to create pty - disabling logging for job" [Medium,Triaged] https://launchpad.net/bugs/980917
+
+ 15:11:35 <jodh> * misc: on holiday Tuesday.
+
+ 15:11:38 <jodh> ᣫ
+
+ 15:11:41 <jodh> 
+
+ 15:11:47 <jodh> slangasek: hence the scrollback comment ;)
+
+ 15:11:56 <slangasek> jodh: no, he's not connected to the channel
+
+ 15:12:05 <slangasek> so he won't have scrollback to see it in :)
+
+ 15:12:10 <jodh> oh well - he'll have to read it on irclogs :)
+
+ 15:12:17 <ogra_> poor boy missing all the barille fun
+
+ 15:12:27 <bdmurray> wrote a test case for SRU of bug 1006633 for precise and realized code was wrong
+
+ 15:12:29 <ubottu> Launchpad bug 1006633 in apport (Ubuntu Precise) "should collect /etc/default/grub from package install failures due to update-grub failing" [High,In progress] https://launchpad.net/bugs/1006633
+
+ 15:12:30 <bdmurray> wrote and tested a new fix for bug 1006633 for quantal and precise
+
+ 15:12:33 <bdmurray> wrote, tested and uploaded a fix for bug 1007637 regarding blocking package installation failures
+
+ 15:12:33 <ubottu> Launchpad bug 1007637 in apport (Ubuntu Precise) "ubuntu general hook should check to see if package install failure has already happened" [High,Triaged] https://launchpad.net/bugs/1007637
+
+ 15:12:36 <bdmurray> setup rls-mgr and qa team reports on cranberry as ubuntureports
+
+ 15:12:37 <bdmurray> removed code to create reports being made by arsenal from the ubuntu-reports branch
+
+ 15:12:40 <bdmurray> patch pilot
+
+ 15:12:43 <bdmurray> uploaded kerneloops that disables it due to crashers when trying to run the daemon
+
+ 15:12:46 <bdmurray> fixed gnuplot scripts that run on lillypilly and create pkgstats graphs
+
+ 15:12:57 <bdmurray> modify ultimate debian database code to mark same title bugs as duplicates
+
+ 15:13:05 <slangasek> yay test cases :)
+
+ 15:13:31 <slangasek> does "ubuntureports" mean urls are changing?
+
+ 15:14:17 <bdmurray> slangasek: no, just a different user that multiple people can su to and emails regarding cronjobs
+
+ 15:14:22 <slangasek> ok
+
+ 15:14:35 <slangasek> (done)?
+
+ 15:14:47 <bdmurray> yes, done
+
+ 15:15:04 <slangasek> stokachu: hi, anything to add this week?
+
+ 15:16:11 <slangasek> sounds like no
+
+ 15:16:13 <slangasek> moving on
+
+ 15:16:17 <slangasek> [TOPIC] 12.04.1
+
+ 15:16:25 <slangasek> stgraber: you have the floor :)
+
+ 15:16:35 <stgraber> yay!
+
+ 15:16:43 <stgraber> Full bug list can be found at: https://bugs.launchpad.net/ubuntu/precise/+bugs?field.milestone%3Alist=49926
+
+ 15:16:46 <stgraber> I went through the upload queue and updated the status of these bugs to In-progress so that I can get a better idea of what's going on.
+
+ 15:16:50 <stgraber> The biggest foundation-related SRU currently in the queue is mdadm, fixing one critical bug and 7 others but it's quite large and hasn't been reviewed yet.
+
+ 15:16:53 <stgraber> The list below is for any remaining foundation-related issue that's not marked "In progress" (waiting in unapproved) or "Fix commited" (currently in -proposed).
+
+ 15:16:57 <stgraber> We went from 33 bugs in last week's meeting down to 16 this week (granted, marking all of xnox's as in-progress helped quite a bit ;)!
+
+ 15:17:17 <stgraber> so, now to what's left to do:
+
+ 15:17:23 <stgraber> Package management: bug 1017001, bug 926340, bug 924079
+
+ 15:17:26 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:17:27 <ubottu> Launchpad bug 926340 in aptdaemon (Ubuntu Precise) "aptd crashed with UnicodeDecodeError in _set_error(): 'ascii' codec can't decode byte 0xc3 in position 9: ordinal not in range(128)" [High,Triaged] https://launchpad.net/bugs/926340
+
+ 15:17:28 <ubottu> Launchpad bug 924079 in apt (Ubuntu Precise) "do-release-upgrade fails to upgrade from Oneiric to Precise: Couldn't configure pre-depend libtinfo5 for libncurses5, probably a dependency cycle" [High,Triaged] https://launchpad.net/bugs/924079
+
+ 15:17:55 <stgraber> the first one is assigned to mvo but he's having a hard time trying to reproduce it, so not much progress was done on it
+
+ 15:18:07 * slangasek nods
+
+ 15:18:16 <stgraber> Filesystem bugs: bug 978012
+
+ 15:18:18 <ubottu> Launchpad bug 978012 in e2fsprogs (Ubuntu Precise) "Please SRU micro bug fix release of e2fsprogs 1.42.4-3ubuntu1 (main) from Quantal (main)" [High,Confirmed] https://launchpad.net/bugs/978012
+
+ 15:18:30 <stgraber> this one was in the queue last week IIRC but isn't anymore, what happened?
+
+ 15:18:33 <stgraber> xnox: ?
+
+ 15:18:40 <xnox> this one, infinity rejected the upload. and said that he will discuss it with me tomorrow.
+
+ 15:18:50 <stgraber> ok
+
+ 15:19:03 <stgraber> Installer: bug 991982 (private, assigned to me), bug 484252, bug 946406, bug 966480, bug 987411
+
+ 15:19:07 <slangasek> bdmurray: are we much closer to being able to have apt clone attachments stay around again?  probably too late to do any good for bug #1017001 in .1, but seems the shortest path to getting that fixed regardless
+
+ 15:19:08 <ubottu> Error: Launchpad bug 991982 could not be found
+
+ 15:19:09 <ubottu> Launchpad bug 484252 in usb-creator (Ubuntu Precise) "Format action wipes all partitions" [High,Triaged] https://launchpad.net/bugs/484252
+
+ 15:19:11 <ubottu> Launchpad bug 946406 in casper (Ubuntu Quantal) "suspect race condition Keyboard layout, oem-config not set on persistent USB image" [High,Incomplete] https://launchpad.net/bugs/946406
+
+ 15:19:12 <ubottu> Launchpad bug 966480 in casper (Ubuntu Precise) "The prompt asking for media removal is not shown at the end of the installation" [High,Triaged] https://launchpad.net/bugs/966480
+
+ 15:19:13 <ubottu> Launchpad bug 987411 in ubiquity-slideshow-ubuntu (Ubuntu Quantal) "layout of browser slide in Lubuntu slide show broken (german)" [Low,Triaged] https://launchpad.net/bugs/987411
+
+ 15:19:14 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:19:28 <stgraber> and bug 992061
+
+ 15:19:30 <ubottu> Launchpad bug 992061 in usb-creator (Ubuntu Precise) "USB Startup Disk Creator displays one USB device multiple times" [Undecided,New] https://launchpad.net/bugs/992061
+
+ 15:20:27 <stgraber> if we can't have bug 1017001 fixed for .1, we really should have a way to get apt-clones of these systems at least. I'm expecting quite a few of them to hit that failure as people start upgrading
+
+ 15:20:29 <ubottu> Launchpad bug 1017001 in apt (Ubuntu Quantal) "package resolvconf 1.63ubuntu14 failed to install/upgrade: ErrorMessage: pre-dependency problem - not installing resolvconf" [Critical,Confirmed] https://launchpad.net/bugs/1017001
+
+ 15:20:56 <bdmurray> slangasek: I think it is in the -proposed queue
+
+ 15:21:11 <slangasek> ah
+
+ 15:21:38 <stgraber> the casper bugs are quite racy, I spent most of Monday trying to reproduce them without much luck... asked for some more details but at this pace it seems less and less likely to be fixed for the point release
+
+ 15:21:48 <slangasek> bdmurray: apport/2.0.1-0ubuntu12?
+
+ 15:22:31 <bdmurray> slangasek: no, actually not as it needs a new apt-clone too
+
+ 15:22:42 <slangasek> bdmurray: ok
+
+ 15:22:53 <slangasek> bdmurray: can you make that a priority for this week?
+
+ 15:22:58 <bdmurray> slangasek: yes
+
+ 15:23:02 <slangasek> ta
+
+ 15:23:13 <stgraber> Boot: bug 980917
+
+ 15:23:15 <ubottu> Launchpad bug 980917 in upstart (Ubuntu Precise) "Failed to create pty - disabling logging for job" [Medium,Triaged] https://launchpad.net/bugs/980917
+
+ 15:23:21 <stgraber> Multi-arch (being worked on by stokachu and arges): bug 977947, bug 977952, bug 932860, bug 859600
+
+ 15:23:25 <ubottu> Launchpad bug 977947 in libbonobo (Ubuntu Precise) "Please transition libbonobo to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977947
+
+ 15:23:26 <ubottu> Launchpad bug 977952 in libbonoboui (Ubuntu Precise) "Please transition libbonoboui to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977952
+
+ 15:23:27 <ubottu> Launchpad bug 932860 in appmenu-gtk (Ubuntu Precise) "Broken (or missing) multiarch support" [High,Triaged] https://launchpad.net/bugs/932860
+
+ 15:23:28 <ubottu> Launchpad bug 859600 in gnome-keyring (Ubuntu Precise) "Please convert gnome-keyring to multiarch" [High,Triaged] https://launchpad.net/bugs/859600
+
+ 15:23:37 <stgraber> waiting on rdepends rebuild for these
+
+ 15:23:49 <stgraber> Other core packages: bug 523896
+
+ 15:23:50 <ubottu> Launchpad bug 523896 in shadow (Ubuntu Quantal) "useradd: cannot lock /etc/passwd; try again later." [High,Triaged] https://launchpad.net/bugs/523896
+
+ 15:24:18 <stgraber> on that list, the following bugs are currently unassigned (assigned to the team): bug 924079, bug 992061, bug 523896
+
+ 15:24:21 <ubottu> Launchpad bug 924079 in apt (Ubuntu Precise) "do-release-upgrade fails to upgrade from Oneiric to Precise: Couldn't configure pre-depend libtinfo5 for libncurses5, probably a dependency cycle" [High,Triaged] https://launchpad.net/bugs/924079
+
+ 15:24:22 <ubottu> Launchpad bug 992061 in usb-creator (Ubuntu Precise) "USB Startup Disk Creator displays one USB device multiple times" [Undecided,New] https://launchpad.net/bugs/992061
+
+ 15:24:31 <bdmurray> slangasek: actually its update-manager and apt-clone that need uploading and there is currently an update-manager in precise-proposed that needs verifying
+
+ 15:24:52 <slangasek> can anyone here help with that update-manager verification?
+
+ 15:25:05 <slangasek> stgraber: when does the freeze for .1 go into effect?  End of the month?
+
+ 15:25:52 <stgraber> slangasek: 2nd of August
+
+ 15:26:01 <slangasek> ah, a thursday freeze :)
+
+ 15:26:09 <jibel_> bdmurray, u-m bug number that need verification ?
+
+ 15:26:11 <slangasek> so we have just over a week for uploads
+
+ 15:26:21 <bdmurray> jibel_: bug 1002956
+
+ 15:26:22 <ubottu> Launchpad bug 1002956 in update-manager (Ubuntu Oneiric) "Missing ReleaseNotesViewerWebkit.py from package" [Undecided,New] https://launchpad.net/bugs/1002956
+
+ 15:26:25 <jibel_> ta
+
+ 15:26:32 <slangasek> stgraber: I think the bugs that are not yet assigned to anyone need to be un-milestoned then
+
+ 15:26:51 <bdmurray> jibel_: and bug 979661 though it has no specific test case
+
+ 15:26:52 <ubottu> Launchpad bug 979661 in update-manager (Ubuntu Precise) "oneiric to precise: debconf: unable to initialize frontend: Gnome and falls back to Dialog" [Critical,Fix committed] https://launchpad.net/bugs/979661
+
+ 15:26:54 <slangasek> I don't think it's realistic that they're going to get fixes in the next week
+
+ 15:27:12 <stgraber> jibel_: the other bug in that SRU is a race condition, so not really verifyable, regression testing is good enough for that (I'd count the test of bug 1002956 as regression testing for bug 979661)
+
+ 15:27:46 <jibel_> ok, I'll do the verification
+
+ 15:28:03 <bdmurray> jibel_: great, thanks!
+
+ 15:28:37 <stgraber> slangasek: usb-creator was fixed in quantal, I'll assign it to me to look for a cherry-pick.
+
+ 15:28:49 <slangasek> stgraber: ah, great
+
+ 15:29:08 <stgraber> slangasek: the two others, I'll bump to .2 as they seem rather annoying and at least the shadow bug has been hitting quite a lot of people
+
+ 15:29:09 <slangasek> sorry, I assumed it was not-fixed-in-quantal, like most of the ones remaining
+
+ 15:29:26 <slangasek> yes, that sounds good
+
+ 15:29:52 <slangasek> as for the rest of the bugs... if you have a .1 bug assigned to you, please get the fix in BEFORE next Thursday
+
+ 15:30:02 <slangasek> or speak up now if you think you're not going to make that deadline
+
+ 15:30:34 <xnox> slangasek: is this deadline for: upload, accepted, or copied into -updates?
+
+ 15:30:51 <stgraber> upload, ideally accepted
+
+ 15:31:02 <jodh> slangasek: no guarantees on a fix for bug 980917 at this stage. I'll keep prodding though.
+
+ 15:31:02 <slangasek> yes - and definitely not the last
+
+ 15:31:03 <ubottu> Launchpad bug 980917 in upstart (Ubuntu Precise) "Failed to create pty - disabling logging for job" [Medium,Triaged] https://launchpad.net/bugs/980917
+
+ 15:31:05 <stgraber> we have an extra couple of weeks for veriyfying the fixes and getting them to -updates after that
+
+ 15:31:18 <slangasek> jodh: understood
+
+ 15:31:49 <xnox> well. I don't know what's up with e2fsprogs. mdadm bugs should be ok.
+
+ 15:32:01 * slangasek nods
+
+ 15:32:06 <stgraber> I have two bugs that won't make it by next Thursday but that's on purpose as these will be pushed through -security at the last minute
+
+ 15:33:18 <slangasek> stgraber: anything else?
+
+ 15:34:00 <xnox> slangasek: i am guessing these deadlines are for stuff on the cd, e.g. do we have any multi-arch bugs pending from stokachu ?
+
+ 15:34:28 <slangasek> yes, these are the deadlines for images
+
+ 15:34:45 <slangasek> I think the multiarch bugs are the ones stgraber already covered
+
+ 15:34:46 <stgraber> slangasek: nope, that's it for 12.04.1
+
+ 15:35:03 <slangasek> stgraber: great, thanks for the update!
+
+ 15:35:06 <slangasek> [TOPIC] Bugs
+
+ 15:35:17 <slangasek> bdmurray: how about in quantal?
+
+ 15:35:22 <stgraber> slangasek: right, 4 multi-arch bugs are still pending, starting to wonder if they'll make it at all (still no rdepends rebuild test) ...
+
+ 15:36:01 <xnox> stgraber: hmm.. i have a cloud to do rdepends rebuild. What is needed? can be done very quickly.
+
+ 15:36:01 <bdmurray> bug 1022629 and 1024861 look like a recurrance of bug 541595
+
+ 15:36:04 <ubottu> Launchpad bug 1022629 in dpkg (Ubuntu) "package libdbusmenu-glib4 0.6.2-0ubuntu0.1 failed to install/upgrade: package libdbusmenu-glib4 is already installed and configured" [Undecided,New] https://launchpad.net/bugs/1022629
+
+ 15:36:05 <ubottu> Launchpad bug 1024861 in dpkg (Ubuntu) "package language-pack-en 1:12.04+20120618 failed to install/upgrade: package language-pack-en is already installed and configured" [Undecided,New] https://launchpad.net/bugs/1024861
+
+ 15:36:06 <ubottu> Launchpad bug 541595 in dpkg "[Master] package failed to install/upgrade: package is already installed and configured" [Undecided,New] https://launchpad.net/bugs/541595
+
+ 15:37:26 <stgraber> xnox: rdepends rebuild using the packages in bugs 977947, 977952, 932860, 859600 (so, the usual, uploading the new library, waiting for it to build+publish, then upload no-change-rebuilds of all the rdepends and check that they still all build)
+
+ 15:37:31 <ubottu> Launchpad bug 932860 in appmenu-gtk (Ubuntu Precise) "Broken (or missing) multiarch support" [High,Triaged] https://launchpad.net/bugs/932860
+
+ 15:37:33 <ubottu> Launchpad bug 977952 in libbonoboui (Ubuntu Precise) "Please transition libbonoboui to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977952
+
+ 15:37:34 <ubottu> Launchpad bug 977947 in libbonobo (Ubuntu Precise) "Please transition libbonobo to multi-arch" [Medium,Triaged] https://launchpad.net/bugs/977947
+
+ 15:37:35 <ubottu> Launchpad bug 859600 in gnome-keyring (Ubuntu Precise) "Please convert gnome-keyring to multiarch" [High,Triaged] https://launchpad.net/bugs/859600
+
+ 15:38:01 <xnox> stgraber: ok. I can do that.
+
+ 15:38:16 <slangasek> xnox: thanks :)
+
+ 15:38:26 <xnox> nice smallish rebuild test with a small amount of packages (as in, not the whole archive ;-) just a bit of it )
+
+ 15:38:36 <stgraber> xnox: cool. If you do, let arges and stokachu know so you don't end up duplicating the work :)
+
+ 15:39:26 <slangasek> bdmurray: the logs in bug #1024861 don't give much to go on
+
+ 15:39:28 <ubottu> Launchpad bug 1024861 in dpkg (Ubuntu) "package language-pack-en 1:12.04+20120618 failed to install/upgrade: package language-pack-en is already installed and configured" [Undecided,New] https://launchpad.net/bugs/1024861
+
+ 15:40:29 <slangasek> nor does bug #1022629, really
+
+ 15:40:30 <bdmurray> slangasek: what more do we need?  I suspect there are a lot of these
+
+ 15:40:30 <ubottu> Launchpad bug 1022629 in dpkg (Ubuntu) "package libdbusmenu-glib4 0.6.2-0ubuntu0.1 failed to install/upgrade: package libdbusmenu-glib4 is already installed and configured" [Undecided,New] https://launchpad.net/bugs/1022629
+
+ 15:40:41 <slangasek> bdmurray: well, the dpkg term log just looks truncated to me
+
+ 15:41:03 <slangasek> though maybe I'm just wishing it were truncated
+
+ 15:41:46 <bdmurray> well apport does truncate it to the last activity
+
+ 15:42:37 <slangasek> so I suspect that we may only be seeing logs from a "cleanup" run after some other failure
+
+ 15:42:53 <slangasek> and that we might need to know the nature of the original failure to understand the bug
+
+ 15:42:59 <bdmurray> okay, I'll ask for /var/log/apt/term.log then
+
+ 15:43:05 <slangasek> great, thanks
+
+ 15:43:36 <slangasek> anything else?
+
+ 15:44:04 <bdmurray> nope, things are getting resolved pretty quickly
+
+ 15:44:10 <slangasek> excellent :)
+
+ 15:44:16 <slangasek> [TOPIC] AOB
+
+ 15:45:17 <slangasek> going once...
+
+ 15:45:52 <slangasek> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)

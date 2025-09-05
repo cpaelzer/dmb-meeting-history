@@ -1,0 +1,552 @@
+== Meeting information ==
+ * #ubuntu-meeting: Weekly Ubuntu Foundations team, 09 Apr at 15:01 &mdash; 15:52 UTC
+ * Full logs at [[http://ubottu.com/meetingology/logs/ubuntu-meeting/2020/ubuntu-meeting.2020-04-09-15.01.log.html]]
+
+
+
+== Meeting summary ==
+
+=== Lightning rounds ===
+The discussion about "Lightning rounds" started at 15:02.
+
+
+=== Release incoming bugs ===
+The discussion about "Release incoming bugs" started at 15:11.
+
+  * ''LINK:'' http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs 
+
+=== Team proposed-migration report ===
+The discussion about "Team proposed-migration report" started at 15:34.
+
+
+=== AOB ===
+The discussion about "AOB" started at 15:40.
+
+  * ''LINK:'' https://bazaar.launchpad.net/~daisy-pluckers/error-tracker-deployment/test-crashes/files 
+  * ''LINK:'' https://www.freedesktop.org/software/systemd/man/systemd.exec.html#PrivateTmp= 
+
+
+
+== Vote results ==
+
+
+
+
+== Done items ==
+
+ * (none)
+
+
+
+== People present (lines said) ==
+
+ * bdmurray (69)
+ * vorlon (31)
+ * xnox (27)
+ * sil2100 (24)
+ * ubottu (23)
+ * juliank (14)
+ * slyon (13)
+ * rbalint (11)
+ * doko (10)
+ * waveform (10)
+ * tdaitx (8)
+ * meetingology (3)
+ * mclemenceau (1)
+
+
+
+== Full Log ==
+
+
+ 15:01 <bdmurray> #startmeeting Weekly Ubuntu Foundations team
+
+ 15:01 <meetingology> Meeting started Thu Apr  9 15:01:59 2020 UTC.  The chair is bdmurray. Information about MeetBot at http://wiki.ubuntu.com/meetingology.
+
+ 15:01 <meetingology> 
+
+ 15:01 <meetingology> Available commands: action commands idea info link nick
+
+ 15:02 <juliank> o/
+
+ 15:02 <sil2100> o/
+
+ 15:02 <bdmurray> #topic Lightning rounds
+
+ 15:02 <bdmurray> vorlon mwhudson waveform xnox rbalint sil2100 bdmurray juliank doko infinity slyon tdaitx
+
+ 15:03 <bdmurray> vorlon: ready?
+
+ 15:03 <bdmurray> let's redo that
+
+ 15:03 <bdmurray> echo $(shuf -e vorlon bdmurray xnox tdaitx doko sil2100 rbalint infinity mwhudson juliank waveform slyon)
+
+ 15:03 <bdmurray> tdaitx rbalint infinity waveform doko mwhudson vorlon bdmurray xnox sil2100 juliank slyon
+
+ 15:03 <bdmurray> tdaitx: its you!
+
+ 15:03 <sil2100> \o/
+
+ 15:04 <tdaitx> * xz-utils ftbfs
+
+ 15:04 <tdaitx> - build-arch rule uses double colon, moving to single colon "fixes" the build
+
+ 15:04 <tdaitx> - builds fine on disco, ftbfs on eoan/focal, debhelper regression (?) seems to be the cause
+
+ 15:04 <tdaitx> * test results in openjdk-11-jdk package seem to prevent work on reproducible builds
+
+ 15:04 <tdaitx> - testing if the work to split stable-ish and flaky tests might help get rid of those files
+
+ 15:04 <tdaitx> * intel 7265 keeps failing, kernel/intel knows
+
+ 15:04 <tdaitx> - moved to an external rtl8812au, using aircrack-ng's dkms repo as rtl8812au-dkms package does not work properly (way too old?)
+
+ 15:04 <tdaitx> (done)
+
+ 15:04 <rbalint> * landed systemd 245.4 splitting off systemd-timesynd to a separate binary package
+
+ 15:04 <rbalint> * systemd bugs gardening
+
+ 15:04 <rbalint> * partner work
+
+ 15:04 <rbalint> * unattended-upgrades bugs gardening
+
+ 15:04 <rbalint> * uploads via Debian: ecb, unattended-upgrades 2.2
+
+ 15:04 <rbalint> * proposed-migration work
+
+ 15:04 <rbalint> (done)
+
+ 15:04 <bdmurray> infinity is not here
+
+ 15:04 <bdmurray> waveform:
+
+ 15:04 <waveform> * Worked on uc20 boot sequence ... "It's alive!" \o/
+
+ 15:04 <waveform> * Submitted bug for merging uc20 and classic boot sequences (LP: #1871831)
+
+ 15:04 <waveform> * Tested beta (and post-beta) images on a variety of Pis (discovered re-emergence of USB issue on 4Gb Pi4 arm64, rapidly fixed by kernel team!)
+
+ 15:04 <waveform> * Answered MIR queries for u-boot-rpi (LP: #1869792) (now pending security review)
+
+ 15:04 <waveform> * Submitted MIR for linux-raspi (LP: #1871835)
+
+ 15:04 <ubottu> Launchpad bug 1871831 in flash-kernel (Ubuntu) "Merge Core and Classic bootscripts" [Undecided,New] https://launchpad.net/bugs/1871831
+
+ 15:04 <ubottu> Launchpad bug 1869792 in u-boot (Ubuntu) "[MIR] u-boot-rpi" [Undecided,New] https://launchpad.net/bugs/1869792
+
+ 15:04 <waveform> * Tested new systemd releases related to DHCP4 issue on Pi3s (LP: #1870410)
+
+ 15:04 <ubottu> Launchpad bug 1871835 in linux-raspi (Ubuntu) "[MIR] linux-raspi" [Undecided,New] https://launchpad.net/bugs/1871835
+
+ 15:05 <waveform> * Submitted logs for cloud-init wifi configuration issue (LP: #1870346)
+
+ 15:05 <ubottu> Launchpad bug 1870410 in systemd (Ubuntu Focal) "wireless does not work on boot on RPi 3s" [Undecided,Fix released] https://launchpad.net/bugs/1870410
+
+ 15:05 <ubottu> Launchpad bug 1870346 in cloud-init (Ubuntu) "Wifi configuration" [Wishlist,New] https://launchpad.net/bugs/1870346
+
+ 15:05 <waveform> * Investigating alternative boot methods on our Pi images: USB boot (u-boot USB MSD blocking), and NOOBS currently (u-boot script needs refinement)
+
+ 15:05 <waveform> * Set up pi to host blog, wrote another cloud-init blog post and answered a few pi forum posts
+
+ 15:05 <waveform> (done)
+
+ 15:05 <doko> - gcc-9, gcc-10 updates
+
+ 15:05 <doko> - hopefully the last round of unversioned python fixes
+
+ 15:05 <doko> - various riscv64 ftbfs fixes
+
+ 15:05 <doko> - some package removals for s390x, investigating link failures and symbols files issues
+
+ 15:05 <doko> - openjdk sync
+
+ 15:05 <doko> - python 2.7.18 release candidate
+
+ 15:05 <doko> (done)
+
+ 15:05 <bdmurray> vorlon:
+
+ 15:06 <vorlon> * miscellaneous riscv64 architecture shepherding
+
+ 15:06 <vorlon> * includes working around strange britney behavior that looks like a bug, it objects to essential packages becoming installable...
+
+ 15:06 <vorlon> * machine upgrades to 20.04 beta, finding and bugs in debconf handling (LP: #1871530)
+
+ 15:06 <ubottu> Launchpad bug 1871530 in ubuntu-release-upgrader (Ubuntu Focal) "on upgrade from eoan to focal, update-manager puts debconf prompts to the terminal instead of using the gnome frontend" [Medium,Fix released] https://launchpad.net/bugs/1871530
+
+ 15:06 <vorlon> * freeze queue reviews
+
+ 15:06 <vorlon> * netplan schema reviews
+
+ 15:06 <vorlon> * grub resilient-boot code reviews
+
+ 15:06 <vorlon> (done)
+
+ 15:06 <xnox> vorlon:  do we know why somethings not migrating? e.g. boost1.67
+
+ 15:06 <xnox> it is installable
+
+ 15:06 <bdmurray> investigation into retracing issues of focal crashes
+
+ 15:06 <bdmurray> reported bug regarding release notes link not working
+
+ 15:06 <bdmurray> https://github.com/canonical-web-and-design/ubuntu.com/issues/7129
+
+ 15:06 <bdmurray> reported, tested wireless RPi bug LP: #1870410
+
+ 15:06 <bdmurray> sponsored ubiquity-slideshow-ubuntu for Wimpress
+
+ 15:06 <ubottu> Launchpad bug 1870410 in systemd (Ubuntu Focal) "wireless does not work on boot on RPi 3s" [Undecided,Fix released] https://launchpad.net/bugs/1870410
+
+ 15:07 <bdmurray> uploaded ubuntu-release-upgrader fixing LP: #1848629
+
+ 15:07 <bdmurray> upladed u-r-u with addition of ddebs.ubuntu.com to mirrors
+
+ 15:07 <bdmurray> further Raspberry reg domain testing LP: #1862760
+
+ 15:07 <bdmurray> uploaded a more tasteful command-not-found
+
+ 15:07 <bdmurray> uploaded update-manager fixing LP: #1845690
+
+ 15:07 <ubottu> Launchpad bug 1848629 in ubuntu-release-upgrader (Ubuntu) "check-new-release-gtk exits with PyGIWarning:GTK" [Medium,Fix released] https://launchpad.net/bugs/1848629
+
+ 15:07 <ubottu> Launchpad bug 1862760 in linux-firmware-raspi2 (Ubuntu Focal) "Unreliable 802.11ac connection on our raspi images" [Undecided,Triaged] https://launchpad.net/bugs/1862760
+
+ 15:07 <ubottu> Launchpad bug 1845690 in update-manager (Ubuntu Bionic) "Do not offer an upgrade from i386 systems" [High,Triaged] https://launchpad.net/bugs/1845690
+
+ 15:07 <bdmurray> sponsored update-manager missing translation fix
+
+ 15:07 <bdmurray> uploaded apport w/ support for casper-md5check LP: #1870408
+
+ 15:07 <bdmurray> modified ubuntu-security-status to list some package names
+
+ 15:07 <ubottu> Launchpad bug 1870408 in apport (Ubuntu) "casper-md5check should leave a breadcrumb which apport, ubiquity, subiquity could use" [High,In progress] https://launchpad.net/bugs/1870408
+
+ 15:07 <bdmurray> ✔ done
+
+ 15:07 <bdmurray> xnox:
+
+ 15:08 <xnox> UC20 respins for Pi, it seems to boot to install mode, but not run mode
+
+ 15:08 <xnox> initramfs-tools fixing vlan bugs from eoan that were unnoticed
+
+ 15:08 <xnox> debugging multipath nvme causing installer crashes
+
+ 15:08 <xnox> openssl 1.1.1f merge uploaded (catch up snapshot to final)
+
+ 15:08 <xnox> debian-cd merge proposals
+
+ 15:08 <xnox> ubuntu-archive-scripts merge proposals
+
+ 15:08 <xnox> casper updates
+
+ 15:08 <xnox> apport updates
+
+ 15:08 <xnox> consoleconf updates
+
+ 15:08 <xnox> subiquity / livecd-rootfs fix
+
+ 15:08 <xnox> and valgrind
+
+ 15:08 <xnox> done
+
+ 15:08 <bdmurray> sil2100:
+
+ 15:09 <sil2100> Skip me for now
+
+ 15:09 <bdmurray> juliank:
+
+ 15:09 <juliank> * investigated the ubuntustudio-live ubiquity plugin failure (LP: #1851346)
+
+ 15:09 <ubottu> Launchpad bug 1851346 in ubuntustudio-meta (Ubuntu Focal) "Ubuntu Studio 19.10 Installer Causes Wanted Programs to be Removed" [Undecided,Fix released] https://launchpad.net/bugs/1851346
+
+ 15:09 <juliank> * some more human report files for https://magenta.jak-linux.org/ubuntu-archive/distcheck/ - for all source packages, not just python related ones
+
+ 15:09 <juliank> * set timeout in separate mokutil invocation (LP: #1869187)
+
+ 15:09 <ubottu> Launchpad bug 1869187 in shim-signed (Ubuntu Focal) "mokutil ignores timeout parameter" [High,Triaged] https://launchpad.net/bugs/1869187
+
+ 15:09 <juliank> * apt 2.0.2, including LP: #1825000 change
+
+ 15:09 <ubottu> Launchpad bug 1825000 in apt (Ubuntu) "Add ability for mirrors to distinguish interactive and non-interactive apt runs" [High,In progress] https://launchpad.net/bugs/1825000
+
+ 15:09 <juliank> ^ in unapproved
+
+ 15:09 <juliank> * python-apt 2.0.0
+
+ 15:09 <juliank> ^ in unapproved
+
+ 15:09 <juliank> * finished resilient boot update for grub2; follow up changes in grub2-signed, shim-signed (LP: #1871821)
+
+ 15:09 <ubottu> Launchpad bug 1871821 in shim-signed (Ubuntu) "[FFe] Resilient boot" [Undecided,Fix committed] https://launchpad.net/bugs/1871821
+
+ 15:09 <juliank> ^ in unapproved
+
+ 15:09 <juliank> (done)
+
+ 15:09 <bdmurray> slyon:
+
+ 15:09 <slyon> * next week will be short, starting on Tuesday
+
+ 15:09 <slyon> * finalized and merged netplan WiFi features (bssid/band/channel)
+
+ 15:09 <slyon> * implemented and merged netplan WakeOnWLan feature
+
+ 15:09 <slyon> * prepared pull request for netplan bridge[-ports].vlans features
+
+ 15:09 <slyon> * reviewed netplan SR-IOV pull request
+
+ 15:09 <slyon> * finalized and merged netplan IPv6 address-generation feature
+
+ 15:09 <slyon> -> Discussed this with systemd-networkd devs: It's not fully implemented.
+
+ 15:09 <slyon> -> NetworkManager only.
+
+ 15:09 <slyon> * continued working on netplan's NetworkManager read/write plugin
+
+ 15:09 <slyon> -> Discussed this with NM devs: They have concerns about the feasibility.
+
+ 15:09 <slyon> -> Needs lots of maintenance and must support all NM settings, to not break UX.
+
+ 15:09 <slyon> (done)
+
+ 15:10 <bdmurray> sil2100:
+
+ 15:10 <sil2100> - SRU reviews and releases
+
+ 15:10 <sil2100> - We released 20.04 Beta last week, yay!
+
+ 15:10 <sil2100> - Release team work:
+
+ 15:10 <sil2100> * Queue reviews
+
+ 15:10 <sil2100> * FFe reviews
+
+ 15:10 <sil2100> * Beta retrospective
+
+ 15:10 <sil2100> - netplan:
+
+ 15:10 <sil2100> * Reviewed WiFi bssid/band/channel PR for Lukas, merged
+
+ 15:10 <sil2100> * Reviewed wakeonwlan PR for Lukas, merged!
+
+ 15:10 <sil2100> * Reviewed community fix for missing Require= in service units, merged
+
+ 15:10 <sil2100> * Finalized SR-IOV branch, prepared PR, got feedback from Lukas
+
+ 15:10 <sil2100> * Battled with local machines and a broken SR-IOV Intel NIC, sent to get a working replacement
+
+ 15:10 <sil2100> * Started testing on a remote machine with an SR-IOV card attached (thanks James!)
+
+ 15:10 <sil2100> * PPA test builds
+
+ 15:10 <sil2100> * Started looking at OpenVSwitch implementation
+
+ 15:10 <sil2100> - Uploading fixed livecd-rootfs for the raspi kernel flavoUr rename
+
+ 15:10 <sil2100> - Refreshing uc18 images for raspi, send for testing
+
+ 15:10 <sil2100> - Looked into some cdimage strangeness
+
+ 15:10 <sil2100> (done)
+
+ 15:11 <bdmurray> #topic Release incoming bugs
+
+ 15:11 <bdmurray> #link http://reqorts.qa.ubuntu.com/reports/rls-mgr/rls-ff-incoming-bug-tasks.html#foundations-bugs
+
+ 15:12 <bdmurray> bug 1871610
+
+ 15:12 <ubottu> bug 1871610 in sphinx (Ubuntu) "autopkgtest: jstest in sphinx-doc test times out" [Undecided,Fix committed] https://launchpad.net/bugs/1871610
+
+ 15:13 <bdmurray> Does anybody remember why we are subscribed to that?
+
+ 15:13 <xnox> hm
+
+ 15:13 <xnox> because everything in the archive uses sphinx to build all the docs?
+
+ 15:13 <xnox> (we seed docs into main by default as a glob include)
+
+ 15:13 <doko> sphinx saw a fix, python-babel and python-docutils migrated
+
+ 15:13 <bdmurray> ah, sure
+
+ 15:13 <bdmurray> bug 1871538
+
+ 15:13 <ubottu> bug 1871538 in dbus (Ubuntu) "dbus timeout-ed during an upgrade, taking services down including gdm" [High,Incomplete] https://launchpad.net/bugs/1871538
+
+ 15:14 <bdmurray> it looks like the desktop team is on that
+
+ 15:15 <bdmurray> bug 1871523
+
+ 15:15 <ubottu> bug 1871523 in OEM Priority Project "linux-modules-5.4.0-1002-oem installed after installing focal beta" [Low,New] https://launchpad.net/bugs/1871523
+
+ 15:16 <bdmurray> we'll take that
+
+ 15:16 <bdmurray> bug 1871268
+
+ 15:16 <ubottu> bug 1871268 in ubiquity (Ubuntu) "Installation fails with Could not configure 'libc6:i386'. , E:Could not perform immediate configuration on 'libgcc-s1:i386'" [Critical,Confirmed] https://launchpad.net/bugs/1871268
+
+ 15:18 <bdmurray> targetting and carding that too
+
+ 15:18 <juliank> yikes
+
+ 15:19 <bdmurray> bug 1871149
+
+ 15:19 <ubottu> bug 1871149 in python-apt (Ubuntu) "False apt_pkg.CacheMismatchError" [Undecided,Incomplete] https://launchpad.net/bugs/1871149
+
+ 15:19 <juliank> no idea
+
+ 15:19 <bdmurray> that's already incomplete so fine
+
+ 15:19 <rbalint> bdmurray,sorry, removed the tag
+
+ 15:20 <bdmurray> bug 1870579
+
+ 15:20 <ubottu> bug 1870579 in ubiquity (Ubuntu) "System can't find OS to boot after install with UEFI alongside Windows 10" [Undecided,New] https://launchpad.net/bugs/1870579
+
+ 15:20 <juliank> bad uefi?
+
+ 15:21 <bdmurray> How could we check that?
+
+ 15:22 <bdmurray> xnox: can you add details on how to test that for mclemenceau?
+
+ 15:25 <xnox> hello
+
+ 15:26 <xnox> from the othersie
+
+ 15:26 <bdmurray> bug 1869538
+
+ 15:26 <ubottu> bug 1869538 in casper (Ubuntu) "Focal installer uses EFI System partition on incorrect disk" [Undecided,New] https://launchpad.net/bugs/1869538
+
+ 15:28 <vorlon> sounds like that's a duplicate of one in progress, xnox to follow through
+
+ 15:29 <bdmurray> bug 1866852 is mclemenceau's also
+
+ 15:29 <ubottu> bug 1866852 in grub2 (Ubuntu) "System Display black screen on reboot or after a clean shutdown with USB-C Dock Monitor" [Undecided,Confirmed] https://launchpad.net/bugs/1866852
+
+ 15:30 <bdmurray> We've said this isn't doable for 20.04 but let's tag it rls-gg-incoming
+
+ 15:31 <vorlon> not doable for 20.04.0, but should we still target it to focal?
+
+ 15:32 <bdmurray> yes, let's do that
+
+ 15:33 <bdmurray> okay, that's a lot of them but I'll go through and prioritize the undecided ones today / tomorrow
+
+ 15:34 <bdmurray> #topic Team proposed-migration report
+
+ 15:34 <bdmurray> vorlon:
+
+ 15:34 <vorlon> debhelper
+
+ 15:34 <vorlon> who had this one last week, the dkms stuff?
+
+ 15:34 <rbalint> i made progress but not finished
+
+ 15:35 <vorlon> ok
+
+ 15:35 <vorlon> carried
+
+ 15:35 <vorlon> libgd2 is new; missing builds
+
+ 15:35 <vorlon> I can take this
+
+ 15:35 <vorlon> (it's riscv64, so I'll bump the build score)
+
+ 15:36 <vorlon> plymouth is just blocked on gtk+3.0, which I expect the desktop team is on top of, no assignee needed
+
+ 15:36 <vorlon> gcc-10, missing builds, doko?
+
+ 15:36 <vorlon> seems to be a riscv64 build in progress
+
+ 15:36 <vorlon> so no investigation needed
+
+ 15:36 <vorlon> and that's actually everything that's > 3days old, so let's see if any of the others needs looking at
+
+ 15:36 <doko> yes, will take about a week or more
+
+ 15:37 <xnox> vorlon:  livecd-rootfs needs a bump again on riscv64?
+
+ 15:37 <xnox> vorlon:  or should something be done to make livecd-rootfs installable, despite missing depends?
+
+ 15:37 <vorlon> util-linux is a candidate but needs systemd to migrate, systemd is listed as a candidate, anyone know why it's not done?
+
+ 15:37 <bdmurray> I rested u-r-u and apport
+
+ 15:37 <rbalint> vorlon, systemd just migrated
+
+ 15:37 <sil2100> Oh yes, I just asked that on -release, since I have no idea how to proceed with livecd-rootfs
+
+ 15:38 <vorlon> ok, so nothing to do there
+
+ 15:39 <vorlon> nothing else looks interesting
+
+ 15:39 <vorlon> bdmurray: done
+
+ 15:40 <vorlon> doko: "a week or more" - the last gcc-10 build took 1day 4 hours; are you counting autopkgtest time?
+
+ 15:40 <bdmurray> #topic AOB
+
+ 15:40 <bdmurray> some people have a three day "weekend" correct?
+
+ 15:40 <vorlon> or 4?
+
+ 15:40 <rbalint> for me: 4
+
+ 15:40 <sil2100> 4 for me as well
+
+ 15:40 <bdmurray> oh even better lots of time to get away
+
+ 15:40 <slyon> 4, too
+
+ 15:41 * bdmurray rolls eyes
+
+ 15:42 <bdmurray> So I have an issue with a package that Martin made which creates apport test crash files. This now fails b/c of an apport security update https://bazaar.launchpad.net/~ubuntu-core-dev/ubuntu/focal/apport/ubuntu/revision/2757
+
+ 15:43 <bdmurray> because apport.lock can't be created
+
+ 15:44 <bdmurray> this test crashes are used to test the error tracker so I'd like to sort this out
+
+ 15:44 <bdmurray> If anybody has a suggestion I'm all ears / eyes
+
+ 15:45 <xnox> hm
+
+ 15:46 <vorlon> bdmurray: is this because the tests are running as non-root?
+
+ 15:47 <xnox> bdmurray:  if you run that test under a systemd unit, you can ask for PrivateRun something, and then there will be epehmeral /var/lock for you that you will have the rights to write to
+
+ 15:47 <vorlon> I'm not clear on why this would have changed the test
+
+ 15:47 <xnox> bdmurray:  or just run as root
+
+ 15:47 <doko> vorlon: the last gcc-10 build had the testsuite disabled
+
+ 15:47 <vorlon> ah
+
+ 15:47 <bdmurray> https://bazaar.launchpad.net/~daisy-pluckers/error-tracker-deployment/test-crashes/files
+
+ 15:47 <xnox> vorlon:  because /var/lock/apport has different permissions?
+
+ 15:47 <bdmurray> Its a package which generate crashes and then apport reports out of it
+
+ 15:48 <xnox> https://www.freedesktop.org/software/systemd/man/systemd.exec.html#PrivateTmp=
+
+ 15:49 <bdmurray> so maybe run generate-sigsegv-crash.py as root?
+
+ 15:50 <vorlon> perhaps so
+
+ 15:50 <mclemenceau> o/
+
+ 15:50 <bdmurray> okay that's something thanks!
+
+ 15:50 <xnox> mclemenceau:  horay =)
+
+ 15:51 <bdmurray> anything else?
+
+ 15:52 <bdmurray> okay, thanks everybody
+
+ 15:52 <bdmurray> #endmeeting
+
+
+
+Generated by MeetBot 0.1.5 (http://wiki.ubuntu.com/meetingology)
