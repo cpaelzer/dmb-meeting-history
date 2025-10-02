@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+## SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Christian Ehrhardt <paelzer@gmail.com>
+
 # Usage: ./fetch_ubuntu_logs.sh urls.txt
 # or:   cat urls.txt | ./fetch_ubuntu_logs.sh
 
